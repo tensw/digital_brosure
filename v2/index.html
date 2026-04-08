@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>학술정보관 AI 도입 사례 - Digital Brochure</title>
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  overflow: hidden;
+  height: 100vh;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0a1628;
+  color: #ffffff;
+  line-height: 1.6;
+}
+
+/* ── Card (no scroll, toggle display) ── */
+.card {
+  display: none;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 60px 24px;
+}
+.card.active {
+  display: flex;
+}
+
+/* ── Cover ── */
+.cover { text-align: center; position: relative; overflow: hidden; }
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(77,171,247,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(77,171,247,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 500px;
+  background: radial-gradient(ellipse, rgba(77,171,247,0.12) 0%, rgba(15,52,96,0.3) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: coverPulse 6s ease-in-out infinite;
+}
+@keyframes coverPulse {
+  0%, 100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+}
+.cover .container { position: relative; z-index: 1; }
+.cover-label { font-size: 12px; text-transform: uppercase; letter-spacing: 4px; color: rgba(255,255,255,0.35); margin-bottom: 40px; }
+.cover-label::before, .cover-label::after { content: '───'; margin: 0 12px; color: rgba(77,171,247,0.3); }
+.cover-title { font-size: clamp(38px, 6.5vw, 64px); font-weight: 900; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 24px; }
+.cover-title .accent { color: #4dabf7; text-shadow: 0 0 40px rgba(77,171,247,0.3); }
+.cover-divider { width: 48px; height: 2px; background: linear-gradient(90deg, transparent, #4dabf7, transparent); margin: 0 auto 24px; }
+.cover-subtitle { font-size: clamp(14px, 2vw, 17px); color: rgba(255,255,255,0.4); margin-bottom: 48px; font-weight: 400; letter-spacing: 1px; }
+.cover-org { font-size: clamp(13px, 2vw, 16px); color: rgba(255,255,255,0.55); font-weight: 500; letter-spacing: 3px; text-transform: uppercase; }
+
+/* ── Content Card ── */
+.container { width: 100%; max-width: 1200px; margin: 0 auto; }
+.tag-pill { display: inline-block; background: rgba(77,171,247,0.15); color: #4dabf7; border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 600; margin-bottom: 16px; }
+.card-headline { font-size: clamp(22px, 4vw, 34px); font-weight: 700; margin-bottom: 28px; line-height: 1.35; }
+.visual-frame { border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); overflow: hidden; margin-bottom: 24px; background: rgba(255,255,255,0.02); overscroll-behavior: contain; }
+.visual-frame iframe { display: block; width: 100%; height: 70vh; border: none; overscroll-behavior: contain; }
+.visual-frame iframe.youtube { height: auto; aspect-ratio: 16/9; }
+.highlight { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 20px; }
+.highlight strong { color: #4dabf7; font-weight: 600; }
+.link-btn { display: inline-block; border: 1px solid rgba(77,171,247,0.4); border-radius: 8px; color: #4dabf7; background: rgba(77,171,247,0.08); padding: 10px 20px; font-size: 14px; font-weight: 500; text-decoration: none; transition: background 0.2s, border-color 0.2s; }
+.link-btn:hover { background: rgba(77,171,247,0.16); border-color: rgba(77,171,247,0.6); }
+
+/* ── Iframe scaler (for chatbot) ── */
+.iframe-scaler {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 24px;
+  background: rgba(255,255,255,0.02);
+}
+.iframe-scaler iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 133.33%;
+  height: 133.33%;
+  border: none;
+  transform: scale(0.75);
+  transform-origin: 0 0;
+}
+
+/* ── Shorts Split / Page Viewer / Phone Frame ── */
+.shorts-split { display: flex; gap: 24px; align-items: center; justify-content: space-between; width: 100%; }
+.shorts-left { flex: 2; min-width: 0; }
+.shorts-right { flex: 1; display: flex; justify-content: flex-end; }
+.phone-frame { width: 340px; height: 680px; background: #000; border-radius: 36px; border: 4px solid #333; padding: 12px; position: relative; box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
+.phone-frame::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 80px; height: 6px; background: #222; border-radius: 3px; }
+.phone-frame video { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; }
+.page-viewer { width: 100%; }
+.page-spread { display: flex; gap: 4px; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); background: #fff; }
+.page-spread img { flex: 1; width: 50%; height: auto; display: block; object-fit: contain; }
+.page-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 12px; }
+.page-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); background: rgba(10,22,40,0.8); color: rgba(255,255,255,0.6); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.page-btn:hover { background: rgba(77,171,247,0.2); border-color: #4dabf7; color: #4dabf7; }
+.page-btn:disabled { opacity: 0.2; cursor: default; }
+.page-info { font-size: 12px; color: rgba(255,255,255,0.4); font-variant-numeric: tabular-nums; }
+
+/* ── Nav Controls ── */
+.nav-controls { position: fixed; right: 32px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 100; }
+.nav-btn { width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); background: rgba(10,22,40,0.8); color: rgba(255,255,255,0.6); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); transition: all 0.2s; }
+.nav-btn:hover { background: rgba(77,171,247,0.2); border-color: #4dabf7; color: #4dabf7; }
+.nav-btn:disabled { opacity: 0.2; cursor: default; }
+.nav-indicator { text-align: center; font-size: 11px; color: rgba(255,255,255,0.4); font-variant-numeric: tabular-nums; }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .card { padding: 40px 16px; }
+  .visual-frame iframe { height: 55vh; }
+  .iframe-scaler { height: 55vh; }
+  .cover-org { font-size: 14px; letter-spacing: 1px; }
+}
+@media (max-width: 768px) {
+  .nav-controls { right: 12px; }
+  .nav-btn { width: 40px; height: 40px; font-size: 16px; }
+  .shorts-split { flex-direction: column; }
+  .shorts-left { max-width: 100%; }
+  .phone-frame { width: 220px; height: 440px; }
+}
+body { zoom: 0.9; }
+</style>
+</head>
+<body>
+
+<!-- Card 0 — Cover -->
+<div class="card cover active" data-index="0">
+  <div class="container">
+    <p class="cover-label">성균관대학교 학술정보관</p>
+    <h1 class="cover-title">학술정보관의 <span class="accent">지능화</span>,<br/>AI 도입 사례</h1>
+    <div class="cover-divider"></div>
+    <p class="cover-subtitle">연구물 홍보 · 연구자 성과 관리 · 네비게이션 에이전트</p>
+    <div class="cover-org">SKKU Library Digital Brochure</div>
+  </div>
+</div>
+
+<!-- Card 1 — 연구물 분석 및 영상 생성 -->
+<div class="card" data-index="1">
+  <div class="container">
+    <span class="tag-pill">연구물 홍보</span>
+    <h2 class="card-headline">논문이 영상이 되는 순간</h2>
+    <div class="visual-frame">
+
+      <iframe class="youtube" data-src="https://www.youtube.com/embed/by2rvW8brxE?enablejsapi=1" allowfullscreen></iframe>
+    </div>
+    <p class="highlight">연구 논문, 아티클, 리포트 등 텍스트 기반 연구물을 AI가 자동 분석하여 <strong>핵심 내용을 추출</strong>하고, 이를 기반으로 홍보용 영상을 자동 생성합니다.</p>
+    <a class="link-btn" href="https://scholarhub.skku.edu/login" target="_blank" rel="noopener">ScholarHub 바로가기 →</a>
+  </div>
+</div>
+
+<!-- Card 2 — 생성영상 1 (쇼츠) -->
+<div class="card" data-index="2" id="card-shorts">
+  <div class="container">
+    <span class="tag-pill">연구물 홍보</span>
+    <h2 class="card-headline">AI가 만든 연구 홍보 영상</h2>
+    <div class="shorts-split">
+      <div class="shorts-left">
+        <div class="page-viewer">
+          <div class="page-spread" id="page-spread">
+            <img id="page-left" src="../assets/pages/page-01.png" alt="page 1">
+            <img id="page-right" src="../assets/pages/page-02.png" alt="page 2">
+          </div>
+          <div class="page-controls">
+            <button class="page-btn" id="page-prev" onclick="pageNav(-1)" aria-label="이전 페이지">&#8249;</button>
+            <span class="page-info" id="page-info">1-2 / 12</span>
+            <button class="page-btn" id="page-next" onclick="pageNav(1)" aria-label="다음 페이지">&#8250;</button>
+          </div>
+        </div>
+      </div>
+      <div class="shorts-right">
+        <div class="phone-frame">
+          <video id="shorts-video" src="../assets/video.mp4" loop playsinline style="cursor:pointer;" onclick="this.paused?this.play():this.pause()"></video>
+        </div>
+      </div>
+    </div>
+    <p class="highlight">AI가 논문의 핵심 내용을 요약·시각화하여 <strong>60초 이내의 숏폼 영상</strong>으로 자동 변환합니다. SNS와 모바일 환경에 최적화된 연구 홍보 콘텐츠를 제작합니다.</p>
+  </div>
+</div>
+
+<!-- Card 3 — 생성영상 2 -->
+<div class="card" data-index="3">
+  <div class="container">
+    <span class="tag-pill">연구물 홍보</span>
+    <h2 class="card-headline">AI가 만든 연구 홍보 영상</h2>
+    <div class="visual-frame">
+
+      <iframe class="youtube" data-src="https://www.youtube.com/embed/2O8Ae6ilEys?enablejsapi=1" allowfullscreen></iframe>
+    </div>
+    <p class="highlight">AI가 연구물의 구조와 맥락을 분석하여 <strong>5분 내외의 롱폼 홍보 영상</strong>을 자동 생성합니다. 연구 배경부터 결론까지 스토리라인을 구성하여 심층적인 정보를 전달합니다.</p>
+  </div>
+</div>
+
+<!-- Card 4 — 연구자 매칭 및 성과 관리 -->
+<div class="card" data-index="4">
+  <div class="container">
+    <span class="tag-pill">연구자 매칭 및 성과 관리</span>
+    <h2 class="card-headline">연구자 지문으로 추적하는 연구 성과</h2>
+    <div class="visual-frame">
+      <iframe data-src="https://biblo-rims-front.vercel.app/dashboard"></iframe>
+    </div>
+    <p class="highlight">연구자 고유의 <strong>핑거프린트(fingerprint)</strong>를 기반으로 학교 소속 연구자의 발표 논문, 인용 현황, 공동연구 네트워크를 추적·매핑합니다. 주저자·공저자 관계를 시각화하여 연구 협력 현황을 한눈에 파악할 수 있습니다.</p>
+    <a class="link-btn" href="https://biblo-rims-front.vercel.app/dashboard" target="_blank" rel="noopener">대시보드 바로가기 →</a>
+  </div>
+</div>
+
+<!-- Card 5 — 연구자 성과 분석 리포트 -->
+<div class="card" data-index="5">
+  <div class="container">
+    <span class="tag-pill">연구자 매칭 및 성과 관리</span>
+    <h2 class="card-headline">데이터 기반 연구 성과 리포트</h2>
+    <div class="visual-frame">
+      <iframe data-src="https://biblo-rims-front.vercel.app/reports"></iframe>
+    </div>
+    <p class="highlight">연구자 지문 데이터를 활용하여 개인별 <strong>연구 성과 분석 리포트</strong>를 자동 생성합니다. 발표 실적, 인용 지표, 연구 분야 트렌드 등을 종합 분석하여 연구 역량을 객관적으로 평가합니다.</p>
+    <a class="link-btn" href="https://biblo-rims-front.vercel.app/reports" target="_blank" rel="noopener">리포트 바로가기 →</a>
+  </div>
+</div>
+
+<!-- Card 6 — 지식 생성 -->
+<div class="card" data-index="6">
+  <div class="container">
+    <span class="tag-pill">네비게이션 에이전트</span>
+    <h2 class="card-headline">지식 그래프로 관리하는 FAQ</h2>
+    <div class="visual-frame">
+
+      <iframe class="youtube" data-src="https://www.youtube.com/embed/pdZsvBZZaC4?enablejsapi=1" allowfullscreen></iframe>
+    </div>
+    <p class="highlight">관리자가 온톨로지 기반으로 <strong>지식을 체계적으로 구조화</strong>하고, FAQ 응답의 정확도와 품질을 지속적으로 관리·개선할 수 있는 도구입니다. 새로운 질문 패턴을 학습하여 응답 범위를 확장합니다.</p>
+    <a class="link-btn" href="https://biblo-ontology-prod.shop/admin/login" target="_blank" rel="noopener">관리자 페이지 바로가기 →</a>
+  </div>
+</div>
+
+<!-- Card 7 — FAQ 채팅 -->
+<div class="card" data-index="7">
+  <div class="container">
+    <span class="tag-pill">네비게이션 에이전트</span>
+    <h2 class="card-headline">학술정보관, AI에게 물어보세요</h2>
+    <div class="iframe-scaler">
+      <iframe data-src="https://biblo-ontology-prod.shop/?campus=hsc"></iframe>
+    </div>
+    <p class="highlight">이용자의 질문에 <strong>AI가 실시간으로 응답</strong>하는 FAQ 채팅봇입니다. 학술정보관 이용 안내, 시설 예약, 자료 검색 방법 등 다양한 문의에 24시간 대응하며, 자연어 기반의 대화형 인터페이스를 제공합니다.</p>
+  </div>
+</div>
+
+<!-- Navigation controls -->
+<div class="nav-controls">
+  <button class="nav-btn" id="btn-prev" onclick="goTo(current-1)" aria-label="이전">&#8593;</button>
+  <div class="nav-indicator" id="nav-indicator">1 / 8</div>
+  <button class="nav-btn" id="btn-next" onclick="goTo(current+1)" aria-label="다음">&#8595;</button>
+</div>
+
+<script>
+(function() {
+  var cards = document.querySelectorAll('.card');
+  var total = cards.length;
+  var current = 0;
+  var locked = false;
+  window.current = current;
+
+  function goTo(n) {
+    if (locked) return;
+    if (n > current) n = current + 1;
+    if (n < current) n = current - 1;
+    n = Math.max(0, Math.min(total - 1, n));
+    if (n === current) return;
+
+    locked = true;
+    var prevCard = cards[current];
+    prevCard.classList.remove('active');
+    current = n;
+    window.current = current;
+    cards[current].classList.add('active');
+    lazyLoad(cards[current]);
+    // 2칸 앞 카드 미리 로드 (preload)
+    if (current + 2 < total) lazyLoad(cards[current + 2]);
+
+    setTimeout(function() { locked = false; }, 400);
+
+    document.getElementById('nav-indicator').textContent = (current + 1) + ' / ' + total;
+    document.getElementById('btn-prev').disabled = (current === 0);
+    document.getElementById('btn-next').disabled = (current === total - 1);
+
+    // 이전 카드의 유튜브 iframe 정지
+    var prevIframes = prevCard.querySelectorAll('iframe.youtube');
+    for (var i = 0; i < prevIframes.length; i++) {
+      prevIframes[i].contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+    }
+
+    // Stop shorts video when leaving card 2
+    var video = document.getElementById('shorts-video');
+    if (video && current !== 2) {
+      video.pause();
+      video.currentTime = 0;
+    }
+  }
+  window.goTo = goTo;
+
+  // 유튜브 iframe 클릭 후 자동 blur (1초 후 포커스 반환)
+  window.addEventListener('blur', function() {
+    var el = document.activeElement;
+    if (el && el.tagName === 'IFRAME' && el.classList.contains('youtube')) {
+      setTimeout(function() {
+        el.blur();
+        window.focus();
+      }, 1000);
+    }
+  });
+
+  // 채팅봇 iframe인지 확인 (카드 7만 차단)
+  function isChatbotFocused() {
+    var el = document.activeElement;
+    return el && el.tagName === 'IFRAME' && el.closest('[data-index="7"]');
+  }
+
+  // Mouse wheel
+  document.addEventListener('wheel', function(e) {
+    if (isChatbotFocused()) return;
+    if (locked) return;
+    e.preventDefault();
+    if (e.deltaY > 0) goTo(current + 1);
+    else if (e.deltaY < 0) goTo(current - 1);
+  }, { passive: false });
+
+  // Keyboard
+  document.addEventListener('keydown', function(e) {
+    if (isChatbotFocused()) return;
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
+    else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); goTo(current - 1); }
+  });
+
+  // Lazy load: iframe src 설정 (최초 1회)
+  function lazyLoad(card) {
+    var iframes = card.querySelectorAll('iframe[data-src]');
+    for (var i = 0; i < iframes.length; i++) {
+      iframes[i].src = iframes[i].getAttribute('data-src');
+      iframes[i].removeAttribute('data-src');
+    }
+  }
+
+  // Init
+  document.getElementById('btn-prev').disabled = true;
+  // 카드 1을 미리 로드
+  lazyLoad(cards[1]);
+
+  // Page viewer
+  var pageTotal = 12;
+  var pageIndex = 0;
+  window.pageNav = function(dir) {
+    pageIndex = pageIndex + (dir * 2);
+    pageIndex = Math.max(0, Math.min(pageTotal - 2, pageIndex));
+    document.getElementById('page-left').src = '../assets/pages/page-' + String(pageIndex + 1).padStart(2, '0') + '.png';
+    document.getElementById('page-right').src = '../assets/pages/page-' + String(pageIndex + 2).padStart(2, '0') + '.png';
+    document.getElementById('page-info').textContent = (pageIndex + 1) + '-' + (pageIndex + 2) + ' / ' + pageTotal;
+    document.getElementById('page-prev').disabled = (pageIndex === 0);
+    document.getElementById('page-next').disabled = (pageIndex >= pageTotal - 2);
+  };
+  document.getElementById('page-prev').disabled = true;
+})();
+</script>
+</body>
+</html>
