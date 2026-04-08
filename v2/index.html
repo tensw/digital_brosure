@@ -17,17 +17,25 @@ html, body {
   line-height: 1.6;
 }
 
-/* ── Card (no scroll, toggle display) ── */
+/* ── Card (slide transition) ── */
 .card {
-  display: none;
-  min-height: 100vh;
+  position: fixed;
+  inset: 0;
+  display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   padding: 60px 24px;
+  transform: translateY(100%);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  z-index: 1;
 }
 .card.active {
-  display: flex;
+  transform: translateY(0);
+  z-index: 2;
+}
+.card.passed {
+  transform: translateY(-100%);
 }
 
 /* ── Cover ── */
@@ -75,6 +83,9 @@ html, body {
 .card-headline { font-size: clamp(22px, 4vw, 34px); font-weight: 700; margin-bottom: 28px; line-height: 1.35; }
 .visual-frame { border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); overflow: hidden; margin-bottom: 24px; background: rgba(255,255,255,0.02); overscroll-behavior: contain; }
 .visual-frame iframe { display: block; width: 100%; height: 70vh; border: none; overscroll-behavior: contain; }
+/* RIMS iframe 상단 네비게이션 숨김 */
+[data-index="4"] .visual-frame iframe,
+[data-index="5"] .visual-frame iframe { margin-top: -60px; height: calc(70vh + 60px); }
 .visual-frame iframe.youtube { height: auto; aspect-ratio: 16/9; }
 .highlight { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 20px; }
 .highlight strong { color: #4dabf7; font-weight: 600; }
@@ -288,9 +299,19 @@ body { zoom: 0.9; }
 
     locked = true;
     var prevCard = cards[current];
-    prevCard.classList.remove('active');
+    var direction = n > current ? 1 : -1;
+
+    if (direction === 1) {
+      // 아래로: 현재 카드 위로 밀어내고 다음 카드 올라옴
+      prevCard.classList.remove('active');
+      prevCard.classList.add('passed');
+    } else {
+      // 위로: 현재 카드 아래로 내리고 이전 카드 내려옴
+      prevCard.classList.remove('active');
+    }
     current = n;
     window.current = current;
+    if (direction === -1) cards[current].classList.remove('passed');
     cards[current].classList.add('active');
     lazyLoad(cards[current]);
     // 앞뒤 카드 미리 로드 (preload)
