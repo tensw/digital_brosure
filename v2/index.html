@@ -122,8 +122,23 @@ html, body {
 .phone-frame::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 80px; height: 6px; background: #222; border-radius: 3px; }
 .phone-frame video { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; }
 .page-viewer { width: 100%; }
-.page-spread { display: flex; gap: 4px; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); background: #fff; }
-.page-spread img { flex: 1; width: 50%; height: auto; display: block; object-fit: contain; }
+.page-spread { display: flex; gap: 4px; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); background: #fff; perspective: 1200px; transform-style: preserve-3d; cursor: grab; user-select: none; }
+.page-spread:active { cursor: grabbing; }
+.page-spread img { flex: 1; width: 50%; height: auto; display: block; object-fit: contain; pointer-events: none; }
+.page-spread.flip-forward { animation: flipForward 0.5s ease-in-out; }
+.page-spread.flip-backward { animation: flipBackward 0.5s ease-in-out; }
+@keyframes flipForward {
+  0% { transform: rotateY(0deg); }
+  45% { transform: rotateY(-90deg); }
+  55% { transform: rotateY(-90deg); }
+  100% { transform: rotateY(0deg); }
+}
+@keyframes flipBackward {
+  0% { transform: rotateY(0deg); }
+  45% { transform: rotateY(90deg); }
+  55% { transform: rotateY(90deg); }
+  100% { transform: rotateY(0deg); }
+}
 .page-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 12px; }
 .page-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); background: rgba(10,22,40,0.8); color: rgba(255,255,255,0.6); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
 .page-btn:hover { background: rgba(77,171,247,0.2); border-color: #4dabf7; color: #4dabf7; }
@@ -410,16 +425,89 @@ body { zoom: 0.9; }
   // Page viewer
   var pageTotal = 12;
   var pageIndex = 0;
+  var pageFlipping = false;
+
   window.pageNav = function(dir) {
-    pageIndex = pageIndex + (dir * 2);
-    pageIndex = Math.max(0, Math.min(pageTotal - 2, pageIndex));
-    document.getElementById('page-left').src = '../assets/pages/page-' + String(pageIndex + 1).padStart(2, '0') + '.png';
-    document.getElementById('page-right').src = '../assets/pages/page-' + String(pageIndex + 2).padStart(2, '0') + '.png';
-    document.getElementById('page-info').textContent = (pageIndex + 1) + '-' + (pageIndex + 2) + ' / ' + pageTotal;
-    document.getElementById('page-prev').disabled = (pageIndex === 0);
-    document.getElementById('page-next').disabled = (pageIndex >= pageTotal - 2);
+    if (pageFlipping) return;
+    var newIndex = pageIndex + (dir * 2);
+    newIndex = Math.max(0, Math.min(pageTotal - 2, newIndex));
+    if (newIndex === pageIndex) return;
+
+    pageFlipping = true;
+    var spread = document.getElementById('page-spread');
+    var animClass = dir > 0 ? 'flip-forward' : 'flip-backward';
+    spread.classList.add(animClass);
+
+    // 애니메이션 중간에 이미지 교체
+    setTimeout(function() {
+      pageIndex = newIndex;
+      document.getElementById('page-left').src = '../assets/pages/page-' + String(pageIndex + 1).padStart(2, '0') + '.png';
+      document.getElementById('page-right').src = '../assets/pages/page-' + String(pageIndex + 2).padStart(2, '0') + '.png';
+      document.getElementById('page-info').textContent = (pageIndex + 1) + '-' + (pageIndex + 2) + ' / ' + pageTotal;
+      document.getElementById('page-prev').disabled = (pageIndex === 0);
+      document.getElementById('page-next').disabled = (pageIndex >= pageTotal - 2);
+    }, 225);
+
+    setTimeout(function() {
+      spread.classList.remove(animClass);
+      pageFlipping = false;
+    }, 500);
   };
   document.getElementById('page-prev').disabled = true;
+
+  // 마우스 드래그로 페이지 넘기기
+  var spread = document.getElementById('page-spread');
+  var dragStartX = 0;
+  var isDragging = false;
+
+  spread.addEventListener('mousedown', function(e) {
+    dragStartX = e.clientX;
+    isDragging = true;
+    resetAutoFlip();
+  });
+  document.addEventListener('mousemove', function(e) {
+    if (!isDragging) return;
+  });
+  document.addEventListener('mouseup', function(e) {
+    if (!isDragging) return;
+    isDragging = false;
+    var diff = e.clientX - dragStartX;
+    if (Math.abs(diff) > 40) pageNav(diff < 0 ? 1 : -1);
+  });
+
+  // 터치 드래그
+  spread.addEventListener('touchstart', function(e) {
+    dragStartX = e.touches[0].clientX;
+    isDragging = true;
+    resetAutoFlip();
+  }, { passive: true });
+  spread.addEventListener('touchend', function(e) {
+    if (!isDragging) return;
+    isDragging = false;
+    var diff = e.changedTouches[0].clientX - dragStartX;
+    if (Math.abs(diff) > 40) pageNav(diff < 0 ? 1 : -1);
+  });
+
+  // 자동 넘기기 (2초 간격, 카드 2 활성 시)
+  var autoFlipTimer = null;
+  function startAutoFlip() {
+    stopAutoFlip();
+    autoFlipTimer = setInterval(function() {
+      if (current !== 2) return;
+      if (pageIndex >= pageTotal - 2) {
+        pageIndex = -2; // pageNav에서 0으로 리셋됨
+      }
+      pageNav(1);
+    }, 2000);
+  }
+  function stopAutoFlip() {
+    if (autoFlipTimer) { clearInterval(autoFlipTimer); autoFlipTimer = null; }
+  }
+  function resetAutoFlip() {
+    stopAutoFlip();
+    setTimeout(startAutoFlip, 5000); // 수동 조작 후 5초 뒤 자동 재시작
+  }
+  startAutoFlip();
 })();
 </script>
 </body>
