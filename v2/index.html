@@ -200,7 +200,7 @@ body { zoom: 0.9; }
 <div class="card" data-index="2" id="card-shorts">
   <div class="container">
     <span class="tag-pill">연구물 홍보</span>
-    <h2 class="card-headline">AI가 만든 연구 홍보 영상</h2>
+    <h2 class="card-headline">AI가 만든 연구 홍보 Shorts</h2>
     <div class="shorts-split">
       <div class="shorts-left">
         <div class="page-viewer">
@@ -462,7 +462,6 @@ body { zoom: 0.9; }
   spread.addEventListener('mousedown', function(e) {
     dragStartX = e.clientX;
     isDragging = true;
-    resetAutoFlip();
   });
   document.addEventListener('mousemove', function(e) {
     if (!isDragging) return;
@@ -478,7 +477,6 @@ body { zoom: 0.9; }
   spread.addEventListener('touchstart', function(e) {
     dragStartX = e.touches[0].clientX;
     isDragging = true;
-    resetAutoFlip();
   }, { passive: true });
   spread.addEventListener('touchend', function(e) {
     if (!isDragging) return;
@@ -487,26 +485,6 @@ body { zoom: 0.9; }
     if (Math.abs(diff) > 40) pageNav(diff < 0 ? 1 : -1);
   });
 
-  // 자동 넘기기 (2초 간격, 카드 2 활성 시)
-  var autoFlipTimer = null;
-  function startAutoFlip() {
-    stopAutoFlip();
-    autoFlipTimer = setInterval(function() {
-      if (current !== 2) return;
-      if (pageIndex >= pageTotal - 2) {
-        pageIndex = -2; // pageNav에서 0으로 리셋됨
-      }
-      pageNav(1);
-    }, 2000);
-  }
-  function stopAutoFlip() {
-    if (autoFlipTimer) { clearInterval(autoFlipTimer); autoFlipTimer = null; }
-  }
-  function resetAutoFlip() {
-    stopAutoFlip();
-    setTimeout(startAutoFlip, 5000); // 수동 조작 후 5초 뒤 자동 재시작
-  }
-  startAutoFlip();
 })();
 </script>
 </body>
