@@ -80,7 +80,10 @@ html, body {
 /* ── Content Card ── */
 .container { width: 100%; max-width: 1200px; margin: 0 auto; }
 .tag-pill { display: inline-block; background: rgba(77,171,247,0.15); color: #4dabf7; border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 600; margin-bottom: 16px; }
-.card-headline { font-size: clamp(22px, 4vw, 34px); font-weight: 700; margin-bottom: 28px; line-height: 1.35; }
+.headline-row { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+.card-headline { font-size: clamp(22px, 4vw, 34px); font-weight: 700; line-height: 1.35; margin: 0; }
+.headline-link { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #4dabf7; text-decoration: none; border: 1px solid rgba(77,171,247,0.3); border-radius: 6px; padding: 4px 12px; background: rgba(77,171,247,0.06); transition: all 0.2s; white-space: nowrap; }
+.headline-link:hover { background: rgba(77,171,247,0.15); border-color: #4dabf7; }
 .visual-frame { border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); overflow: hidden; margin-bottom: 24px; background: rgba(255,255,255,0.02); overscroll-behavior: contain; }
 .visual-frame iframe { display: block; width: 100%; height: 70vh; border: none; overscroll-behavior: contain; }
 /* RIMS iframe 상단 네비게이션 숨김 */
@@ -186,7 +189,10 @@ body { zoom: 0.9; }
 <div class="card" data-index="1">
   <div class="container">
     <span class="tag-pill">연구물 홍보</span>
-    <h2 class="card-headline">논문이 영상이 되는 순간</h2>
+    <div class="headline-row">
+      <h2 class="card-headline">논문이 영상이 되는 순간</h2>
+      <a class="headline-link" href="https://scholarhub.skku.edu/login" target="_blank" rel="noopener">바로가기 ↗</a>
+    </div>
     <div class="visual-frame">
 
       <iframe class="youtube" data-src="https://www.youtube.com/embed/by2rvW8brxE?enablejsapi=1" allowfullscreen></iframe>
@@ -242,7 +248,10 @@ body { zoom: 0.9; }
 <div class="card" data-index="4">
   <div class="container">
     <span class="tag-pill">연구자 매칭 및 성과 관리</span>
-    <h2 class="card-headline">연구자 지문으로 추적하는 연구 성과</h2>
+    <div class="headline-row">
+      <h2 class="card-headline">연구자 지문으로 추적하는 연구 성과</h2>
+      <a class="headline-link" href="https://biblo-rims-front.vercel.app/dashboard" target="_blank" rel="noopener">바로가기 ↗</a>
+    </div>
     <div class="visual-frame">
       <iframe data-src="https://biblo-rims-front.vercel.app/papers"></iframe>
     </div>
@@ -255,7 +264,10 @@ body { zoom: 0.9; }
 <div class="card" data-index="5">
   <div class="container">
     <span class="tag-pill">연구자 매칭 및 성과 관리</span>
-    <h2 class="card-headline">데이터 기반 연구 성과 리포트</h2>
+    <div class="headline-row">
+      <h2 class="card-headline">데이터 기반 연구 성과 리포트</h2>
+      <a class="headline-link" href="https://biblo-rims-front.vercel.app/reports" target="_blank" rel="noopener">바로가기 ↗</a>
+    </div>
     <div class="visual-frame">
       <iframe data-src="https://biblo-rims-front.vercel.app/reports"></iframe>
     </div>
@@ -264,11 +276,30 @@ body { zoom: 0.9; }
   </div>
 </div>
 
-<!-- Card 6 — 지식 생성 -->
+<!-- Card 6 — 연구성과 온톨로지 관리 -->
 <div class="card" data-index="6">
   <div class="container">
+    <span class="tag-pill">연구자 매칭 및 성과 관리</span>
+    <div class="headline-row">
+      <h2 class="card-headline">지식 그래프로 관리하는 연구성과</h2>
+      <a class="headline-link" href="https://biblo-rims-front.vercel.app/admin/ontology/fields" target="_blank" rel="noopener">바로가기 ↗</a>
+    </div>
+    <div class="visual-frame">
+      <iframe data-src="https://biblo-rims-front.vercel.app/admin/ontology/fields"></iframe>
+    </div>
+    <p class="highlight">온톨로지 기반으로 조직의 <strong>연구 성과를 체계적으로 구조화</strong>하고 관리·개선할 수 있는 도구입니다.</p>
+    <a class="link-btn" href="https://biblo-rims-front.vercel.app/admin/ontology/fields" target="_blank" rel="noopener">온톨로지 관리 바로가기 →</a>
+  </div>
+</div>
+
+<!-- Card 7 — 지식 생성 -->
+<div class="card" data-index="7">
+  <div class="container">
     <span class="tag-pill">네비게이션 에이전트</span>
-    <h2 class="card-headline">지식 그래프로 관리하는 FAQ</h2>
+    <div class="headline-row">
+      <h2 class="card-headline">지식 그래프로 관리하는 FAQ</h2>
+      <a class="headline-link" href="https://biblo-ontology-prod.shop/admin/login" target="_blank" rel="noopener">바로가기 ↗</a>
+    </div>
     <div class="visual-frame">
       <iframe data-src="https://biblo-rims-front.vercel.app/admin/ontology/fields"></iframe>
     </div>
@@ -277,11 +308,14 @@ body { zoom: 0.9; }
   </div>
 </div>
 
-<!-- Card 7 — FAQ 채팅 -->
-<div class="card" data-index="7">
+<!-- Card 8 — FAQ 채팅 -->
+<div class="card" data-index="8">
   <div class="container">
     <span class="tag-pill">네비게이션 에이전트</span>
-    <h2 class="card-headline">학술정보관, AI에게 물어보세요</h2>
+    <div class="headline-row">
+      <h2 class="card-headline">학술정보관, AI에게 물어보세요</h2>
+      <a class="headline-link" href="https://biblo-ontology-prod.shop/?campus=hsc" target="_blank" rel="noopener">바로가기 ↗</a>
+    </div>
     <div class="iframe-scaler">
       <iframe data-src="https://biblo-ontology-prod.shop/?campus=hsc"></iframe>
     </div>
@@ -289,10 +323,25 @@ body { zoom: 0.9; }
   </div>
 </div>
 
+<!-- Card 9 — AI 학술 검색 -->
+<div class="card" data-index="9">
+  <div class="container">
+    <span class="tag-pill">AI 학술 검색</span>
+    <div class="headline-row">
+      <h2 class="card-headline">검색 한 번으로, 논문의 맥락까지</h2>
+      <a class="headline-link" href="https://lib.skku.edu/search" target="_blank" rel="noopener">바로가기 ↗</a>
+    </div>
+    <div class="visual-frame">
+      <iframe data-src="https://lib.skku.edu/search"></iframe>
+    </div>
+    <p class="highlight"><strong>AI 기반 시맨틱 검색</strong>으로 키워드가 아닌 맥락을 이해하여 가장 관련성 높은 학술 자료를 추천합니다.</p>
+  </div>
+</div>
+
 <!-- Navigation controls -->
 <div class="nav-controls">
   <button class="nav-btn" id="btn-prev" onclick="goTo(current-1)" aria-label="이전">&#8593;</button>
-  <div class="nav-indicator" id="nav-indicator">1 / 8</div>
+  <div class="nav-indicator" id="nav-indicator">1 / 10</div>
   <button class="nav-btn" id="btn-next" onclick="goTo(current+1)" aria-label="다음">&#8595;</button>
 </div>
 
@@ -367,7 +416,7 @@ body { zoom: 0.9; }
   // 채팅봇 iframe인지 확인 (카드 7만 차단)
   function isChatbotFocused() {
     var el = document.activeElement;
-    return el && el.tagName === 'IFRAME' && el.closest('[data-index="7"]');
+    return el && el.tagName === 'IFRAME' && el.closest('[data-index="8"]');
   }
 
   // Mouse wheel
