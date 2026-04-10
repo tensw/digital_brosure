@@ -276,7 +276,7 @@ body { zoom: 0.9; }
   </div>
 </div>
 
-<!--
+<!-- Card 6 — 논문 2: 숏폼 -->
 <div class="card" data-index="6" id="card-shorts-2">
   <div class="container">
     <span class="tag-pill">논문 2</span>
@@ -290,7 +290,7 @@ body { zoom: 0.9; }
           </div>
           <div class="page-controls">
             <button class="page-btn" id="page-prev-2" onclick="pageNav2(-1)" aria-label="이전 페이지">&#8249;</button>
-            <span class="page-info" id="page-info-2">1-2 / 12</span>
+            <span class="page-info" id="page-info-2">1-2 / 7</span>
             <button class="page-btn" id="page-next-2" onclick="pageNav2(1)" aria-label="다음 페이지">&#8250;</button>
           </div>
         </div>
@@ -305,33 +305,49 @@ body { zoom: 0.9; }
   </div>
 </div>
 
+<!-- Card 7 — 논문 2: 롱폼 -->
 <div class="card" data-index="7">
   <div class="container">
     <span class="tag-pill">논문 2</span>
     <div class="headline-row">
       <h2 class="card-headline">논문 홍보 플랫폼 결과물(논문 2): 롱폼</h2>
-      <a class="headline-link" href="#" target="_blank" rel="noopener">바로가기 ↗</a>
+      <a class="headline-link" href="https://youtu.be/7b5ayo9WSaQ" target="_blank" rel="noopener">바로가기 ↗</a>
     </div>
     <div class="visual-frame">
-      <iframe data-src="LONGFORM_PAPER2_URL_HERE"></iframe>
+      <iframe class="youtube" data-src="https://www.youtube.com/embed/7b5ayo9WSaQ?enablejsapi=1" allowfullscreen></iframe>
     </div>
     <p class="highlight">AI가 연구물의 구조와 맥락을 분석하여 <strong>롱폼 홍보 영상</strong>을 자동 생성합니다. 연구 배경부터 결론까지 스토리라인을 구성하여 심층적인 정보를 전달합니다.</p>
   </div>
 </div>
 
+<!-- Card 8 — 논문 2: 매거진 -->
 <div class="card" data-index="8">
   <div class="container">
     <span class="tag-pill">논문 2</span>
     <div class="headline-row">
       <h2 class="card-headline">논문 홍보 플랫폼 결과물(논문 2): 매거진</h2>
     </div>
-    <div class="pdf-viewer">
-      <iframe data-src="../assets/paper2/magazine.pdf"></iframe>
+    <div class="visual-frame">
+      <iframe data-src="../assets/paper2/magazine.html"></iframe>
     </div>
     <p class="highlight">AI가 논문의 핵심 내용을 재구성하여 <strong>시각적으로 풍부한 매거진 형태</strong>의 홍보 콘텐츠를 자동 생성합니다.</p>
   </div>
 </div>
--->
+
+<!-- Card 9 — 논문 2: 아카이빙 페이지 -->
+<div class="card" data-index="9">
+  <div class="container">
+    <span class="tag-pill">논문 홍보 플랫폼</span>
+    <div class="headline-row">
+      <h2 class="card-headline">논문 홍보 플랫폼 아카이빙 페이지</h2>
+      <a class="headline-link" href="https://articlearchive.vercel.app/curation_page/paper2.html" target="_blank" rel="noopener">바로가기 ↗</a>
+    </div>
+    <div class="iframe-scaler">
+      <iframe data-src="https://articlearchive.vercel.app/curation_page/paper2.html"></iframe>
+    </div>
+    <p class="highlight">생성된 모든 홍보 콘텐츠를 <strong>한 곳에서 관리·열람</strong>할 수 있는 아카이빙 페이지입니다. 숏폼, 롱폼, 매거진 등 논문별 콘텐츠를 체계적으로 보관합니다.</p>
+  </div>
+</div>
 
 <!-- Navigation controls -->
 <div class="nav-controls">
@@ -523,7 +539,7 @@ body { zoom: 0.9; }
   });
 
   // ── Page Viewer 2 (Card 5 - 논문 2) ──
-  var pageTotal2 = 12;
+  var pageTotal2 = 7;
   var pageIndex2 = 0;
   var pageFlipping2 = false;
 

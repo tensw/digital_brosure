@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE RESEARCH DAILY - ICSC: Intent-Based Closed-Loop Security Control</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @page { size: A4; margin: 0; }
+
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: #1a1a1a;
+    background: #f5f5f0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    margin: 0 auto;
+    background: #faf9f6;
+    padding: 24mm 22mm 18mm 22mm;
+    position: relative;
+    page-break-after: always;
+    break-after: page;
+  }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+
+  @media screen {
+    .page { margin-bottom: 30px; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+  }
+  @media print {
+    body { background: white; }
+    .page { margin: 0; box-shadow: none; }
+  }
+
+  /* ===== Masthead ===== */
+  .masthead { text-align: center; margin-bottom: 12px; }
+  .masthead-date { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #666; margin-bottom: 4px; }
+  .masthead-title { font-size: 38px; font-weight: 700; letter-spacing: 2px; line-height: 1.1; }
+  .masthead-subtitle { font-size: 8px; letter-spacing: 2.5px; text-transform: uppercase; color: #888; margin-top: 4px; }
+  .masthead-divider { border: none; border-top: 2.5px solid #1a1a1a; margin: 10px 0; }
+  .masthead-divider-thin { border: none; border-top: 0.5px solid #1a1a1a; margin: 0 0 14px 0; }
+  .page-tag { font-size: 7.5px; color: #999; letter-spacing: 1px; margin-bottom: 6px; }
+
+  /* ===== Paper Meta ===== */
+  .paper-source { font-size: 12px; font-weight: 700; color: #2c5282; letter-spacing: 1px; margin-bottom: 3px; }
+  .paper-title { font-size: 20px; font-weight: 700; line-height: 1.35; margin-bottom: 6px; }
+  .paper-authors { font-size: 10px; color: #666; margin-bottom: 16px; line-height: 1.6; }
+
+  /* ===== Metric Cards ===== */
+  .metric-cards {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    border-top: 1.5px solid #1a1a1a; border-bottom: 1.5px solid #1a1a1a;
+    margin-bottom: 18px; padding: 12px 0;
+  }
+  .metric-card { text-align: center; border-right: 0.5px solid #ddd; padding: 0 8px; }
+  .metric-card:last-child { border-right: none; }
+  .metric-value { font-size: 24px; font-weight: 700; line-height: 1.2; }
+  .metric-label { font-size: 7.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #888; margin-top: 3px; }
+
+  /* ===== Section Headers ===== */
+  .section-header {
+    font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    border-bottom: 1.5px solid #1a1a1a; padding-bottom: 5px;
+    margin-bottom: 12px; margin-top: 20px;
+  }
+  .section-header:first-child, .section-header.no-top { margin-top: 0; }
+
+  /* ===== AI Summary ===== */
+  .ai-summary { background: #f0ede6; padding: 12px 16px; margin-bottom: 18px; border-left: 3px solid #2c5282; }
+  .ai-summary p { font-size: 11.5px; line-height: 1.7; color: #333; }
+
+  /* ===== Research Type Badge ===== */
+  .type-badge-container {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 18px; padding: 10px 16px;
+    background: #f7f6f3; border: 0.5px solid #e0ddd6;
+  }
+  .type-icon {
+    width: 34px; height: 34px; background: #2c5282;
+    display: flex; align-items: center; justify-content: center; transform: rotate(45deg); flex-shrink: 0;
+  }
+  .type-icon-inner { color: white; font-size: 15px; transform: rotate(-45deg); }
+  .type-info h3 { font-size: 14px; font-weight: 700; }
+  .type-info p { font-size: 10px; color: #666; margin-top: 2px; }
+
+  /* ===== Bar Chart ===== */
+  .bar-chart { margin-bottom: 18px; }
+  .bar-row { display: grid; grid-template-columns: 140px 1fr 42px; align-items: center; margin-bottom: 7px; font-size: 11px; }
+  .bar-label { color: #333; }
+  .bar-track { height: 16px; background: #eee; }
+  .bar-fill { height: 100%; background: #4a5568; }
+  .bar-value { text-align: right; font-weight: 700; font-size: 11px; }
+
+  /* ===== Two-Column Tables ===== */
+  .two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 18px; }
+  .data-table { width: 100%; border-collapse: collapse; }
+  .data-table-header { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #555; margin-bottom: 7px; }
+  .data-table td { font-size: 11px; padding: 5px 0; border-bottom: 0.5px solid #e8e6e0; }
+  .data-table td:last-child { text-align: right; font-weight: 700; }
+
+  /* ===== Flow Diagram ===== */
+  .flow-diagram { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 0; }
+  .flow-step { text-align: center; position: relative; }
+  .flow-box {
+    background: #f0ede6; border: 0.5px solid #d4d0c8; padding: 10px 6px;
+    font-size: 9px; line-height: 1.45; min-height: 54px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .flow-box.highlight { background: #2c5282; color: white; border-color: #2c5282; }
+  .flow-num { font-size: 7.5px; color: #999; margin-bottom: 3px; letter-spacing: 1px; }
+  .flow-arrow { position: absolute; right: -11px; top: 55%; transform: translateY(-50%); color: #999; font-size: 11px; z-index: 1; }
+
+  /* ===== Key Findings ===== */
+  .findings-list { margin-bottom: 16px; }
+  .finding-item { display: grid; grid-template-columns: 20px 1fr; gap: 8px; margin-bottom: 9px; align-items: start; }
+  .finding-num { font-size: 17px; font-weight: 700; color: #2c5282; line-height: 1; }
+  .finding-text { font-size: 11px; line-height: 1.6; color: #333; }
+  .finding-text strong { color: #1a1a1a; }
+
+  /* ===== Risk Bars ===== */
+  .risk-row { display: grid; grid-template-columns: 110px 1fr 55px; align-items: center; margin-bottom: 7px; }
+  .risk-label { font-size: 11px; color: #333; }
+  .risk-track { height: 11px; background: #eee; }
+  .risk-fill { height: 100%; }
+  .risk-fill.high { background: #c53030; }
+  .risk-fill.medium { background: #d69e2e; }
+  .risk-verdict { text-align: right; font-size: 10px; font-weight: 700; }
+
+  /* ===== Strengths & Limitations ===== */
+  .sl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 16px; }
+  .sl-column h4 { font-size: 11px; font-weight: 700; margin-bottom: 7px; }
+  .sl-column h4.strength { color: #2c5282; }
+  .sl-column h4.limitation { color: #c53030; }
+  .sl-column ul { list-style: none; padding: 0; }
+  .sl-column li {
+    font-size: 10.5px; line-height: 1.55; padding: 4px 0 4px 14px;
+    border-bottom: 0.5px solid #eee; position: relative;
+  }
+  .sl-column li::before { position: absolute; left: 0; font-size: 10px; }
+  .sl-column.strengths li::before { content: "\2713"; color: #2c5282; }
+  .sl-column.limitations li::before { content: "\0021"; color: #c53030; font-weight: 700; }
+
+  /* ===== Methodology ===== */
+  .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .method-item h4 { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: #888; margin-bottom: 4px; }
+  .method-item p { font-size: 10.5px; line-height: 1.6; color: #333; }
+
+  /* ===== Ref Analysis ===== */
+  .ref-analysis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 16px; }
+  .ref-stat-row { display: flex; justify-content: space-between; font-size: 10.5px; padding: 4px 0; border-bottom: 0.5px solid #eee; }
+  .ref-stat-row span:last-child { font-weight: 700; }
+
+  /* ===== Implications Grid ===== */
+  .impl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+  .impl-card { background: #f7f6f3; border: 0.5px solid #e0ddd6; padding: 12px 14px; }
+  .impl-card h4 { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #2c5282; margin-bottom: 6px; }
+  .impl-card p { font-size: 10px; line-height: 1.6; color: #444; }
+
+  /* ===== Roadmap ===== */
+  .roadmap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 0; }
+  .roadmap-card { border: 0.5px solid #d4d0c8; padding: 12px 14px; }
+  .roadmap-card h4 { font-size: 11px; font-weight: 700; margin-bottom: 2px; }
+  .roadmap-card .road-sub { font-size: 9px; color: #2c5282; font-weight: 700; margin-bottom: 6px; }
+  .roadmap-card p { font-size: 9.5px; line-height: 1.55; color: #555; }
+
+  /* ===== Keywords ===== */
+  .keywords-cloud { text-align: center; padding: 16px 0; margin-bottom: 18px; line-height: 2; }
+  .kw-xl { font-size: 26px; font-weight: 700; color: #1a1a1a; }
+  .kw-lg { font-size: 20px; font-weight: 700; color: #333; }
+  .kw-md { font-size: 16px; font-weight: 400; color: #555; }
+  .kw-sm { font-size: 13px; font-weight: 400; color: #777; }
+
+  /* ===== Reference Papers ===== */
+  .ref-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; }
+  .ref-table thead td { font-size: 8px; letter-spacing: 1px; text-transform: uppercase; color: #999; padding-bottom: 5px; border-bottom: 1px solid #1a1a1a; }
+  .ref-table tbody tr { border-bottom: 0.5px solid #e8e6e0; }
+  .ref-table tbody td { padding: 7px 0; vertical-align: top; }
+  .ref-num { font-size: 10.5px; color: #999; width: 22px; }
+  .ref-title { font-size: 10.5px; font-weight: 700; line-height: 1.45; }
+  .ref-meta { font-size: 9px; color: #888; margin-top: 2px; }
+  .ref-context { font-size: 9.5px; color: #666; text-align: right; width: 85px; }
+
+  /* ===== Outlook ===== */
+  .outlook-box { background: #f0ede6; padding: 14px 18px; border-left: 3px solid #2c5282; margin-bottom: 0; }
+  .outlook-box p { font-size: 10.5px; line-height: 1.7; color: #333; margin-bottom: 8px; }
+  .outlook-box p:last-child { margin-bottom: 0; }
+
+  /* ===== Footer ===== */
+  .page-footer {
+    position: absolute; bottom: 12mm; left: 22mm; right: 22mm;
+    display: flex; justify-content: space-between;
+    font-size: 7.5px; color: #aaa; border-top: 0.5px solid #ddd; padding-top: 5px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1: PAPER PROFILE ==================== -->
+<div class="page" id="page1">
+
+  <div class="masthead">
+    <div class="masthead-date">Thursday, April 10, 2026</div>
+    <div class="masthead-title">THE RESEARCH DAILY</div>
+    <div class="masthead-subtitle">Paper Analysis &middot; Key Findings &middot; Research Outlook</div>
+  </div>
+  <hr class="masthead-divider">
+  <hr class="masthead-divider-thin">
+
+  <div class="paper-source">IEEE COMMUNICATIONS MAGAZINE</div>
+  <div class="paper-title">ICSC: Intent-Based Closed-Loop Security Control System for Cloud-Based Security Services</div>
+  <div class="paper-authors">
+    Patrick Lingga<sup>a</sup> &middot; Jaehoon (Paul) Jeong<sup>a</sup> &middot; Linda Dunbar<sup>b</sup><br>
+    <sup>a</sup>Sungkyunkwan University, Republic of Korea &middot; <sup>b</sup>Futurewei Technologies, USA &middot; April 2025
+  </div>
+
+  <div class="metric-cards">
+    <div class="metric-card">
+      <div class="metric-value">15</div>
+      <div class="metric-label">References</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">7</div>
+      <div class="metric-label">Pages</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">5</div>
+      <div class="metric-label">Figures</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" style="font-size:17px;">System<br>Design</div>
+      <div class="metric-label">Research Type</div>
+    </div>
+  </div>
+
+  <div class="section-header no-top">AI Core Summary</div>
+  <div class="ai-summary">
+    <p>IETF I2NSF 프레임워크를 확장하여 Intent Fulfillment(의도 이행)과 Intent Assurance(의도 보증)를 모두 구현한 폐쇄루프 보안 제어 시스템 ICSC를 제안. Data Model Mapper를 통한 자동 정책 번역, ML 기반 실시간 위협 탐지, 자동 재구성을 포함하는 5단계 의도 기반 네트워크 보안 관리 프로세스를 설계하고 DDoS 시나리오로 성능을 검증하였다.</p>
+  </div>
+
+  <div class="section-header">Research Type</div>
+  <div class="type-badge-container">
+    <div class="type-icon"><span class="type-icon-inner">&#9670;</span></div>
+    <div class="type-info">
+      <h3>시스템 설계 + Proof-of-Concept</h3>
+      <p>IETF 표준 기반 프레임워크 확장 설계 및 OpenStack 환경에서의 프로토타입 구현 &mdash; DDoS 시나리오를 통한 MTTD/MTTR 성능 평가</p>
+    </div>
+  </div>
+
+  <div class="section-header">Research Field Allocation</div>
+  <div class="bar-chart">
+    <div class="bar-row">
+      <span class="bar-label">Network Security</span>
+      <div class="bar-track"><div class="bar-fill" style="width:35%;"></div></div>
+      <span class="bar-value">35%</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Software-Defined Net.</span>
+      <div class="bar-track"><div class="bar-fill" style="width:25%;"></div></div>
+      <span class="bar-value">25%</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Cloud Computing</span>
+      <div class="bar-track"><div class="bar-fill" style="width:20%;"></div></div>
+      <span class="bar-value">20%</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Intent-Based Net.</span>
+      <div class="bar-track"><div class="bar-fill" style="width:20%;"></div></div>
+      <span class="bar-value">20%</span>
+    </div>
+  </div>
+
+  <div class="two-col-grid">
+    <div>
+      <div class="data-table-header">Paper Structure</div>
+      <table class="data-table">
+        <tr><td>Background</td><td>SDN/NFV 보안 관리의 한계</td></tr>
+        <tr><td>Research Purpose</td><td>의도 기반 폐쇄루프 보안 시스템</td></tr>
+        <tr><td>Methodology</td><td>I2NSF 확장 + PoC 구현</td></tr>
+        <tr><td>Key Results</td><td>MTTD/MTTR 성능 우위 실증</td></tr>
+        <tr><td>Conclusion</td><td>IBN 기반 적응형 보안 관리</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="data-table-header">Research Scope</div>
+      <table class="data-table">
+        <tr><td>Target System</td><td>클라우드 기반 보안 서비스</td></tr>
+        <tr><td>Core Technologies</td><td>I2NSF, YANG, NETCONF</td></tr>
+        <tr><td>Implementation</td><td>OpenStack, Suricata, ConfD</td></tr>
+        <tr><td>Evaluation</td><td>DDoS 공격 시나리오</td></tr>
+        <tr><td>Limitation Summary</td><td>PoC 수준, 실환경 미검증</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-header">Research Structure</div>
+  <div class="flow-diagram">
+    <div class="flow-step">
+      <div class="flow-num">01</div>
+      <div class="flow-box">IBN + I2NSF<br>한계 분석</div>
+      <span class="flow-arrow">&#9654;</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">02</div>
+      <div class="flow-box">ICSC 아키텍처<br>설계 (5단계)</div>
+      <span class="flow-arrow">&#9654;</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">03</div>
+      <div class="flow-box highlight">정책 번역기 확장<br>Data Model Mapper</div>
+      <span class="flow-arrow">&#9654;</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">04</div>
+      <div class="flow-box">PoC 구현 +<br>DDoS 성능 평가</div>
+      <span class="flow-arrow">&#9654;</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">05</div>
+      <div class="flow-box">연구 과제 및<br>향후 방향 제시</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>BIBLO Research Analytics &middot; Sungkyunkwan University</span>
+    <span>Generated 2026. 4. 10. &middot; FOR RESEARCH PLANNING PURPOSES</span>
+    <span>1/3</span>
+  </div>
+</div>
+
+<!-- ==================== PAGE 2: ANALYSIS ==================== -->
+<div class="page" id="page2">
+
+  <div class="page-tag">BIBLO | Research Intelligence</div>
+
+  <div class="section-header no-top">Key Findings</div>
+  <div class="findings-list">
+    <div class="finding-item">
+      <span class="finding-num">1</span>
+      <div class="finding-text"><strong>MTTD/MTTR 안정성:</strong> ICSC의 평균 탐지 시간(MTTD)과 평균 대응 시간(MTTR)은 클라이언트 수(5&rarr;25) 증가에도 거의 일정한 반면, 수동 운영은 지수적으로 증가. 25개 클라이언트 기준 수동 대비 약 5배 이상 빠른 대응.</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-num">2</span>
+      <div class="finding-text"><strong>Data Model Mapper 자동 매핑:</strong> Zhang-Shasha(ZSS) 트리 편집 거리 알고리즘으로 고수준 CFI YANG 모델과 저수준 NFI YANG 모델 간 자동 매핑 실현. PyangBind 기반 정책 자동 생성으로 완전 자동화된 Intent Fulfillment 달성.</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-num">3</span>
+      <div class="finding-text"><strong>Service Function Chaining(SFC) 자동 배포:</strong> Flow Classifier로 프로토콜별 트래픽을 분류하고, HTTP/HTTPS는 Firewall&rarr;Web Filter, 기타 프로토콜은 Firewall만 통과하도록 자동 구성. 다중 NSF 간 순차적 보안 적용 실현.</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-num">4</span>
+      <div class="finding-text"><strong>구독 기반 실시간 이상 탐지:</strong> Analyzer가 NSF와 구독 계약을 맺어 관련 데이터만 선별 수집. Decision Tree ML 알고리즘으로 DDoS 공격 패턴 실시간 탐지 및 자동 재구성(Rate Limiting, 경로 변경) 수행.</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-num">5</span>
+      <div class="finding-text"><strong>IETF 표준 기반 다중 벤더 호환:</strong> RFC 9315(IBN), RFC 8329(I2NSF) 등 IETF 표준 프레임워크와 YANG 데이터 모델을 채택하여 벤더 종속성 제거. IETF 해커톤을 통해 구현 검증 완료.</div>
+    </div>
+  </div>
+
+  <div class="section-header">Paper Quality Assessment</div>
+  <div style="margin-bottom:16px;">
+    <div class="risk-row">
+      <span class="risk-label">방법론 견고성</span>
+      <div class="risk-track"><div class="risk-fill" style="width:80%;background:#2c5282;"></div></div>
+      <span class="risk-verdict" style="color:#2c5282;">높음</span>
+    </div>
+    <div class="risk-row">
+      <span class="risk-label">데이터 충분성</span>
+      <div class="risk-track"><div class="risk-fill medium" style="width:50%;"></div></div>
+      <span class="risk-verdict" style="color:#d69e2e;">보통</span>
+    </div>
+    <div class="risk-row">
+      <span class="risk-label">재현가능성</span>
+      <div class="risk-track"><div class="risk-fill" style="width:90%;background:#2c5282;"></div></div>
+      <span class="risk-verdict" style="color:#2c5282;">매우 높음</span>
+    </div>
+    <div class="risk-row">
+      <span class="risk-label">참신성</span>
+      <div class="risk-track"><div class="risk-fill" style="width:80%;background:#2c5282;"></div></div>
+      <span class="risk-verdict" style="color:#2c5282;">높음</span>
+    </div>
+  </div>
+
+  <div class="section-header">Strengths &amp; Limitations</div>
+  <div class="sl-grid">
+    <div class="sl-column strengths">
+      <h4 class="strength">Strengths</h4>
+      <ul>
+        <li>IETF I2NSF 표준 기반 다중 벤더 호환성 확보</li>
+        <li>Intent Fulfillment + Assurance 완전 폐쇄루프</li>
+        <li>오픈소스 코드 + 데모 영상 공개 (GitHub)</li>
+        <li>ZSS 알고리즘 기반 자동 데이터 모델 매핑 참신</li>
+        <li>MTTD/MTTR 정량적 성능 비교로 효과성 입증</li>
+      </ul>
+    </div>
+    <div class="sl-column limitations">
+      <h4 class="limitation">Limitations</h4>
+      <ul>
+        <li>PoC 환경의 제한된 실험 &mdash; 실환경 미검증</li>
+        <li>Decision Tree 단일 ML &mdash; 고급 위협 대응 한계</li>
+        <li>DDoS 단일 공격 시나리오만 테스트</li>
+        <li>대규모 네트워크 확장성 미검증</li>
+        <li>정책 충돌 해결 메커니즘 미포함</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-header">Reference Analysis</div>
+  <div class="ref-analysis-grid">
+    <div>
+      <div class="ref-stat-row"><span>Total References</span><span>15</span></div>
+      <div class="ref-stat-row"><span>IETF RFCs / I-Ds</span><span>10 (67%)</span></div>
+      <div class="ref-stat-row"><span>Academic Papers</span><span>4 (27%)</span></div>
+      <div class="ref-stat-row"><span>Industry Reports</span><span>1 (6%)</span></div>
+      <div class="ref-stat-row"><span>Time Range</span><span>2008&ndash;2024</span></div>
+      <div class="ref-stat-row"><span>Self-Citation</span><span>2 (13%)</span></div>
+    </div>
+    <div>
+      <div class="data-table-header">Top References</div>
+      <table class="data-table">
+        <tr><td>Kim et al. (2020)</td><td style="font-size:9px;color:#666;">IBCS 기반 아키텍처</td></tr>
+        <tr><td>Clemm et al. (2022)</td><td style="font-size:9px;color:#666;">RFC 9315 IBN 정의</td></tr>
+        <tr><td>Lopez et al. (2018)</td><td style="font-size:9px;color:#666;">RFC 8329 I2NSF</td></tr>
+        <tr><td>Lingga et al. (2024)</td><td style="font-size:9px;color:#666;">SPT 정책 번역기</td></tr>
+        <tr><td>Leivadeas et al. (2023)</td><td style="font-size:9px;color:#666;">IBN 서베이</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-header">Methodology</div>
+  <div class="method-grid" style="margin-bottom:0;">
+    <div class="method-item">
+      <h4>System Design</h4>
+      <p>I2NSF 프레임워크를 Monitoring Interface + Analytics Interface로 확장. Consumer-Facing, NSF-Facing, Registration 인터페이스와 Security Controller, Analyzer를 포함한 5단계 폐쇄루프 아키텍처 설계.</p>
+    </div>
+    <div class="method-item">
+      <h4>Implementation &amp; Evaluation</h4>
+      <p>OpenStack Ubuntu 20.04, Node.js + React(CFI), Python + MongoDB(번역), ConfD + NETCONF(적용), Suricata IDS/IPS. DDoS 시나리오에서 클라이언트 5&ndash;25개 증가 시 MTTD/MTTR 비교.</p>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>BIBLO Research Analytics &middot; Sungkyunkwan University</span>
+    <span>Generated 2026. 4. 10. &middot; FOR RESEARCH PLANNING PURPOSES</span>
+    <span>2/3</span>
+  </div>
+</div>
+
+<!-- ==================== PAGE 3: OUTLOOK ==================== -->
+<div class="page" id="page3">
+
+  <div class="page-tag">BIBLO | Research Intelligence</div>
+
+  <div class="section-header no-top">Practical Implications</div>
+  <div class="impl-grid">
+    <div class="impl-card">
+      <h4>Industry Application</h4>
+      <p>고수준 보안 의도만 명시하면 정책 번역·배포·모니터링·적응이 자동 수행. 관리자의 전문지식 요구를 낮추고 대응 시간을 단축.</p>
+    </div>
+    <div class="impl-card">
+      <h4>Network Operators</h4>
+      <p>IETF 표준 YANG 모델 기반 벤더 종속 없이 다양한 NSF 통합 관리. SFC 기반 프로토콜별 자동 트래픽 라우팅으로 운영 복잡도 감소.</p>
+    </div>
+    <div class="impl-card">
+      <h4>Standards Bodies</h4>
+      <p>I2NSF에 Monitoring·Analytics Interface 추가 필요성을 실증. RFC 표준화 시 업계 전반의 IBN 보안 채택 가속화 가능.</p>
+    </div>
+  </div>
+
+  <div class="section-header">Follow-up Research Roadmap</div>
+  <div class="roadmap-grid">
+    <div class="roadmap-card">
+      <h4>Scenario A</h4>
+      <div class="road-sub">적응적 정책 시행 고도화</div>
+      <p>정책 충돌 탐지·해결 메커니즘 개발. 다수 NSF 간 일관성 보장 및 무중단 동적 업데이트 트랜잭션 모델 설계.</p>
+    </div>
+    <div class="roadmap-card">
+      <h4>Scenario B</h4>
+      <div class="road-sub">실시간 위협 탐지 고도화</div>
+      <p>LSTM, Transformer 등 DL 기반 이상탐지 통합. Zero-day, APT 등 미지 위협에 대한 행위 기반 탐지 확장.</p>
+    </div>
+    <div class="roadmap-card">
+      <h4>Scenario C</h4>
+      <div class="road-sub">5G &middot; O-RAN 환경 확장</div>
+      <p>5G 코어 및 O-RAN 환경에 ICSC 적용. 네트워크 슬라이싱별 보안 의도 관리 및 엣지 보안 통합.</p>
+    </div>
+  </div>
+
+  <div class="section-header">Research Keywords</div>
+  <div class="keywords-cloud" style="padding:10px 0; margin-bottom:14px;">
+    <span class="kw-xl">Intent-Based Networking</span>&nbsp;
+    <span class="kw-xl">Network Security</span>&nbsp;
+    <span class="kw-lg">I2NSF</span>&nbsp;
+    <span class="kw-lg">Closed-Loop</span>&nbsp;
+    <span class="kw-lg">Cloud Security</span><br>
+    <span class="kw-md">SDN</span>&nbsp;
+    <span class="kw-md">NFV</span>&nbsp;
+    <span class="kw-md">YANG</span>&nbsp;
+    <span class="kw-md">Security Policy</span>&nbsp;
+    <span class="kw-sm">NETCONF</span>&nbsp;
+    <span class="kw-sm">DDoS</span>&nbsp;
+    <span class="kw-sm">OpenStack</span>&nbsp;
+    <span class="kw-sm">Suricata</span>&nbsp;
+    <span class="kw-sm">SFC</span>
+  </div>
+
+  <div class="section-header">Related Key Papers</div>
+  <table class="ref-table" style="margin-bottom:14px;">
+    <thead>
+      <tr>
+        <td class="ref-num">#</td>
+        <td>Paper</td>
+        <td class="ref-context">Context</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ref-num">1</td>
+        <td>
+          <div class="ref-title">IBCS: Intent-Based Cloud Services for Security Applications</div>
+          <div class="ref-meta">J. Kim et al. &middot; IEEE Commun. Mag. &middot; 2020</div>
+        </td>
+        <td class="ref-context">기반 아키텍처</td>
+      </tr>
+      <tr>
+        <td class="ref-num">2</td>
+        <td>
+          <div class="ref-title">Intent-Based Networking &mdash; Concepts and Definitions (RFC 9315)</div>
+          <div class="ref-meta">A. Clemm et al. &middot; IETF &middot; 2022</div>
+        </td>
+        <td class="ref-context">개념적 토대</td>
+      </tr>
+      <tr>
+        <td class="ref-num">3</td>
+        <td>
+          <div class="ref-title">Framework for Interface to Network Security Functions (RFC 8329)</div>
+          <div class="ref-meta">D. Lopez et al. &middot; IETF &middot; 2018</div>
+        </td>
+        <td class="ref-context">표준 프레임워크</td>
+      </tr>
+      <tr>
+        <td class="ref-num">4</td>
+        <td>
+          <div class="ref-title">SPT: Security Policy Translator for NSFs in Cloud-Based Security Services</div>
+          <div class="ref-meta">P. Lingga et al. &middot; IEEE TDSC &middot; 2024</div>
+        </td>
+        <td class="ref-context">선행 연구 확장</td>
+      </tr>
+      <tr>
+        <td class="ref-num">5</td>
+        <td>
+          <div class="ref-title">A Survey on Intent-Based Networking</div>
+          <div class="ref-meta">A. Leivadeas &amp; M. Falkner &middot; IEEE COMST &middot; 2023</div>
+        </td>
+        <td class="ref-context">이론적 배경</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-header">AI Comprehensive Outlook</div>
+  <div class="outlook-box">
+    <p><strong>학술적 기여:</strong> Intent Fulfillment와 Intent Assurance를 IETF I2NSF 표준 위에서 동시에 구현한 최초의 체계적 시스템 설계. ZSS 알고리즘 기반 Data Model Mapper의 YANG 모델 자동 매핑은 기존 수동 매핑의 한계를 극복한 참신한 기여이다.</p>
+    <p><strong>실용적 가치:</strong> 오픈소스 코드 + IETF 해커톤 검증으로 재현성 확보. MTTD/MTTR의 클라이언트 수 무관 안정성은 수동 운영 대비 확장성 우위를 입증한다. 산업 적용을 위해 정책 충돌 해결, DL 기반 위협 탐지, 5G/O-RAN 확장이 핵심 과제이다.</p>
+  </div>
+
+  <div class="page-footer">
+    <span>BIBLO Research Analytics &middot; Sungkyunkwan University</span>
+    <span>Generated 2026. 4. 10. &middot; FOR RESEARCH PLANNING PURPOSES</span>
+    <span>3/3</span>
+  </div>
+</div>
+
+</body>
+</html>
