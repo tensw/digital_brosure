@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>논문 홍보 플랫폼 구축 결과 공유회 - Digital Brochure</title>
+<style>
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  overflow: hidden;
+  height: 100vh;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0a1628;
+  color: #ffffff;
+  line-height: 1.6;
+}
+
+/* ── Card (slide transition) ── */
+.card {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  transform: translateY(100%);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  z-index: 1;
+}
+.card.active {
+  transform: translateY(0);
+  z-index: 2;
+}
+.card.passed {
+  transform: translateY(-100%);
+}
+
+/* ── Cover ── */
+.cover { text-align: center; overflow: hidden; }
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(77,171,247,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(77,171,247,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 500px;
+  background: radial-gradient(ellipse, rgba(77,171,247,0.12) 0%, rgba(15,52,96,0.3) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: coverPulse 6s ease-in-out infinite;
+}
+@keyframes coverPulse {
+  0%, 100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+}
+.cover .container { position: relative; z-index: 1; }
+.cover-label { font-size: 12px; text-transform: uppercase; letter-spacing: 4px; color: rgba(255,255,255,0.35); margin-bottom: 40px; }
+.cover-label::before, .cover-label::after { content: '───'; margin: 0 12px; color: rgba(77,171,247,0.3); }
+.cover-title { font-size: clamp(38px, 6.5vw, 64px); font-weight: 900; line-height: 1.15; letter-spacing: -1.5px; margin-bottom: 24px; }
+.cover-title .accent { color: #4dabf7; text-shadow: 0 0 40px rgba(77,171,247,0.3); }
+.cover-divider { width: 48px; height: 2px; background: linear-gradient(90deg, transparent, #4dabf7, transparent); margin: 0 auto 24px; }
+.cover-subtitle { font-size: clamp(14px, 2vw, 17px); color: rgba(255,255,255,0.4); margin-bottom: 48px; font-weight: 400; letter-spacing: 1px; }
+.cover-org { font-size: clamp(13px, 2vw, 16px); color: rgba(255,255,255,0.55); font-weight: 500; letter-spacing: 3px; text-transform: uppercase; }
+
+/* ── Content Card ── */
+.container { width: 100%; max-width: 1200px; margin: 0 auto; }
+.tag-pill { display: inline-block; background: rgba(77,171,247,0.15); color: #4dabf7; border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 600; margin-bottom: 16px; }
+.headline-row { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+.card-headline { font-size: clamp(22px, 4vw, 34px); font-weight: 700; line-height: 1.35; margin: 0; }
+.headline-link { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #4dabf7; text-decoration: none; border: 1px solid rgba(77,171,247,0.3); border-radius: 6px; padding: 4px 12px; background: rgba(77,171,247,0.06); transition: all 0.2s; white-space: nowrap; }
+.headline-link:hover { background: rgba(77,171,247,0.15); border-color: #4dabf7; }
+.visual-frame { border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); overflow: hidden; margin-bottom: 24px; background: rgba(255,255,255,0.02); overscroll-behavior: contain; }
+.visual-frame iframe { display: block; width: 100%; height: 70vh; border: none; overscroll-behavior: contain; }
+.visual-frame iframe.youtube { height: auto; aspect-ratio: 16/9; }
+.highlight { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 20px; }
+.highlight strong { color: #4dabf7; font-weight: 600; }
+.link-btn { display: inline-block; border: 1px solid rgba(77,171,247,0.4); border-radius: 8px; color: #4dabf7; background: rgba(77,171,247,0.08); padding: 10px 20px; font-size: 14px; font-weight: 500; text-decoration: none; transition: background 0.2s, border-color 0.2s; }
+.link-btn:hover { background: rgba(77,171,247,0.16); border-color: rgba(77,171,247,0.6); }
+
+/* ── Iframe scaler ── */
+.iframe-scaler {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 24px;
+  background: rgba(255,255,255,0.02);
+}
+.iframe-scaler iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 133.33%;
+  height: 133.33%;
+  border: none;
+  transform: scale(0.75);
+  transform-origin: 0 0;
+}
+
+/* ── Shorts Split / Page Viewer / Phone Frame ── */
+.shorts-split { display: flex; gap: 24px; align-items: center; justify-content: space-between; width: 100%; }
+.shorts-left { flex: 2; min-width: 0; }
+.shorts-right { flex: 1; display: flex; justify-content: flex-end; }
+.phone-frame { width: 340px; height: 680px; background: #000; border-radius: 36px; border: 4px solid #333; padding: 12px; position: relative; box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
+.phone-frame::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 80px; height: 6px; background: #222; border-radius: 3px; }
+.phone-frame video { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; }
+.page-viewer { width: 100%; }
+.page-spread { display: flex; gap: 4px; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); background: #fff; perspective: 1200px; transform-style: preserve-3d; cursor: grab; user-select: none; }
+.page-spread:active { cursor: grabbing; }
+.page-spread img { flex: 1; width: 50%; height: auto; display: block; object-fit: contain; pointer-events: none; }
+.page-spread.flip-forward { animation: flipForward 0.5s ease-in-out; }
+.page-spread.flip-backward { animation: flipBackward 0.5s ease-in-out; }
+@keyframes flipForward {
+  0% { transform: rotateY(0deg); }
+  45% { transform: rotateY(-90deg); }
+  55% { transform: rotateY(-90deg); }
+  100% { transform: rotateY(0deg); }
+}
+@keyframes flipBackward {
+  0% { transform: rotateY(0deg); }
+  45% { transform: rotateY(90deg); }
+  55% { transform: rotateY(90deg); }
+  100% { transform: rotateY(0deg); }
+}
+.page-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 12px; }
+.page-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); background: rgba(10,22,40,0.8); color: rgba(255,255,255,0.6); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.page-btn:hover { background: rgba(77,171,247,0.2); border-color: #4dabf7; color: #4dabf7; }
+.page-btn:disabled { opacity: 0.2; cursor: default; }
+.page-info { font-size: 12px; color: rgba(255,255,255,0.4); font-variant-numeric: tabular-nums; }
+
+/* ── PDF Viewer ── */
+.pdf-viewer { border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); overflow: hidden; margin-bottom: 24px; background: #fff; }
+.pdf-viewer iframe { display: block; width: 100%; height: 70vh; border: none; }
+
+/* ── Nav Controls ── */
+.nav-controls { position: fixed; right: 32px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 100; }
+.nav-btn { width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); background: rgba(10,22,40,0.8); color: rgba(255,255,255,0.6); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); transition: all 0.2s; }
+.nav-btn:hover { background: rgba(77,171,247,0.2); border-color: #4dabf7; color: #4dabf7; }
+.nav-btn:disabled { opacity: 0.2; cursor: default; }
+.nav-indicator { text-align: center; font-size: 11px; color: rgba(255,255,255,0.4); font-variant-numeric: tabular-nums; }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .card { padding: 40px 16px; }
+  .visual-frame iframe { height: 55vh; }
+  .iframe-scaler { height: 55vh; }
+  .pdf-viewer iframe { height: 55vh; }
+  .cover-org { font-size: 14px; letter-spacing: 1px; }
+}
+@media (max-width: 768px) {
+  .nav-controls { right: 12px; }
+  .nav-btn { width: 40px; height: 40px; font-size: 16px; }
+  .shorts-split { flex-direction: column; }
+  .shorts-left { max-width: 100%; }
+  .phone-frame { width: 220px; height: 440px; }
+}
+body { zoom: 0.9; }
+</style>
+</head>
+<body>
+
+<!-- Card 0 — Cover -->
+<div class="card cover active" data-index="0">
+  <div class="container">
+    <p class="cover-label">성균관대학교 학술정보관</p>
+    <h1 class="cover-title">논문 홍보 플랫폼<br/><span class="accent">구축 결과</span> 공유회</h1>
+    <div class="cover-divider"></div>
+    <p class="cover-subtitle">PDF to Video · 숏폼 · 롱폼 · 매거진 · 아카이빙</p>
+    <div class="cover-org">SKKU Library Digital Brochure</div>
+  </div>
+</div>
+
+<!-- Card 1 — 논문 홍보 플랫폼: PDF to Video 영상 생성기 -->
+<div class="card" data-index="1">
+  <div class="container">
+    <span class="tag-pill">논문 홍보 플랫폼</span>
+    <div class="headline-row">
+      <h2 class="card-headline">PDF to Video 영상 생성기</h2>
+      <a class="headline-link" href="https://scholarhub.skku.edu/" target="_blank" rel="noopener">바로가기 ↗</a>
+    </div>
+    <div class="visual-frame">
+      <iframe class="youtube" data-src="https://www.youtube.com/embed/E-VgfZ7rW7E?enablejsapi=1" allowfullscreen></iframe>
+    </div>
+    <p class="highlight">연구 논문 PDF를 AI가 자동 분석하여 <strong>핵심 내용을 추출</strong>하고, 숏폼·롱폼·매거진 등 다양한 형태의 홍보 콘텐츠를 자동 생성하는 플랫폼입니다.</p>
+    <a class="link-btn" href="https://scholarhub.skku.edu/" target="_blank" rel="noopener">ScholarHub 바로가기 →</a>
+  </div>
+</div>
+
+<!-- Card 2 — 논문 1: 숏폼 -->
+<div class="card" data-index="2" id="card-shorts-1">
+  <div class="container">
+    <span class="tag-pill">논문 1</span>
+    <h2 class="card-headline">논문 홍보 플랫폼 결과물(논문 1): 숏폼</h2>
+    <div class="shorts-split">
+      <div class="shorts-left">
+        <div class="page-viewer">
+          <div class="page-spread" id="page-spread-1">
+            <img id="page-left-1" src="../assets/paper1/pages/page-01.png" alt="page 1">
+            <img id="page-right-1" src="../assets/paper1/pages/page-02.png" alt="page 2">
+          </div>
+          <div class="page-controls">
+            <button class="page-btn" id="page-prev-1" onclick="pageNav1(-1)" aria-label="이전 페이지">&#8249;</button>
+            <span class="page-info" id="page-info-1">1-2 / 11</span>
+            <button class="page-btn" id="page-next-1" onclick="pageNav1(1)" aria-label="다음 페이지">&#8250;</button>
+          </div>
+        </div>
+      </div>
+      <div class="shorts-right">
+        <div class="phone-frame">
+          <video id="shorts-video-1" src="../assets/paper1/shorts.mp4" loop playsinline style="cursor:pointer;" onclick="this.paused?this.play():this.pause()"></video>
+        </div>
+      </div>
+    </div>
+    <p class="highlight">AI가 논문의 핵심 내용을 요약·시각화하여 <strong>60초 이내의 숏폼 영상</strong>으로 자동 변환합니다. SNS와 모바일 환경에 최적화된 연구 홍보 콘텐츠를 제작합니다.</p>
+  </div>
+</div>
+
+<!-- Card 3 — 논문 1: 롱폼 -->
+<div class="card" data-index="3">
+  <div class="container">
+    <span class="tag-pill">논문 1</span>
+    <div class="headline-row">
+      <h2 class="card-headline">논문 홍보 플랫폼 결과물(논문 1): 롱폼</h2>
+      <a class="headline-link" href="https://youtu.be/5xIDupOozUU" target="_blank" rel="noopener">바로가기 ↗</a>
+    </div>
+    <div class="visual-frame">
+      <iframe class="youtube" data-src="https://www.youtube.com/embed/5xIDupOozUU?enablejsapi=1" allowfullscreen></iframe>
+    </div>
+    <p class="highlight">AI가 연구물의 구조와 맥락을 분석하여 <strong>롱폼 홍보 영상</strong>을 자동 생성합니다. 연구 배경부터 결론까지 스토리라인을 구성하여 심층적인 정보를 전달합니다.</p>
+  </div>
+</div>
+
+<!-- Card 4 — 논문 1: 매거진 -->
+<div class="card" data-index="4">
+  <div class="container">
+    <span class="tag-pill">논문 1</span>
+    <div class="headline-row">
+      <h2 class="card-headline">논문 홍보 플랫폼 결과물(논문 1): 매거진</h2>
+    </div>
+    <div class="visual-frame">
+      <iframe data-src="../assets/paper1/magazine.html"></iframe>
+    </div>
+    <p class="highlight">AI가 논문의 핵심 내용을 재구성하여 <strong>시각적으로 풍부한 매거진 형태</strong>의 홍보 콘텐츠를 자동 생성합니다.</p>
+  </div>
+</div>
+
+<!-- Card 5 — 아카이빙 페이지 -->
+<div class="card" data-index="5">
+  <div class="container">
+    <span class="tag-pill">논문 홍보 플랫폼</span>
+    <div class="headline-row">
+      <h2 class="card-headline">논문 홍보 플랫폼 아카이빙 페이지</h2>
+      <a class="headline-link" href="https://articlearchive.vercel.app/curation_page/paper1.html" target="_blank" rel="noopener">바로가기 ↗</a>
+    </div>
+    <div class="iframe-scaler">
+      <iframe data-src="https://articlearchive.vercel.app/curation_page/paper1.html"></iframe>
+    </div>
+    <p class="highlight">생성된 모든 홍보 콘텐츠를 <strong>한 곳에서 관리·열람</strong>할 수 있는 아카이빙 페이지입니다. 숏폼, 롱폼, 매거진 등 논문별 콘텐츠를 체계적으로 보관합니다.</p>
+  </div>
+</div>
+
+<!--
+<div class="card" data-index="6" id="card-shorts-2">
+  <div class="container">
+    <span class="tag-pill">논문 2</span>
+    <h2 class="card-headline">논문 홍보 플랫폼 결과물(논문 2): 숏폼</h2>
+    <div class="shorts-split">
+      <div class="shorts-left">
+        <div class="page-viewer">
+          <div class="page-spread" id="page-spread-2">
+            <img id="page-left-2" src="../assets/paper2/pages/page-01.png" alt="page 1">
+            <img id="page-right-2" src="../assets/paper2/pages/page-02.png" alt="page 2">
+          </div>
+          <div class="page-controls">
+            <button class="page-btn" id="page-prev-2" onclick="pageNav2(-1)" aria-label="이전 페이지">&#8249;</button>
+            <span class="page-info" id="page-info-2">1-2 / 12</span>
+            <button class="page-btn" id="page-next-2" onclick="pageNav2(1)" aria-label="다음 페이지">&#8250;</button>
+          </div>
+        </div>
+      </div>
+      <div class="shorts-right">
+        <div class="phone-frame">
+          <video id="shorts-video-2" src="../assets/paper2/shorts.mp4" loop playsinline style="cursor:pointer;" onclick="this.paused?this.play():this.pause()"></video>
+        </div>
+      </div>
+    </div>
+    <p class="highlight">AI가 논문의 핵심 내용을 요약·시각화하여 <strong>60초 이내의 숏폼 영상</strong>으로 자동 변환합니다. SNS와 모바일 환경에 최적화된 연구 홍보 콘텐츠를 제작합니다.</p>
+  </div>
+</div>
+
+<div class="card" data-index="7">
+  <div class="container">
+    <span class="tag-pill">논문 2</span>
+    <div class="headline-row">
+      <h2 class="card-headline">논문 홍보 플랫폼 결과물(논문 2): 롱폼</h2>
+      <a class="headline-link" href="#" target="_blank" rel="noopener">바로가기 ↗</a>
+    </div>
+    <div class="visual-frame">
+      <iframe data-src="LONGFORM_PAPER2_URL_HERE"></iframe>
+    </div>
+    <p class="highlight">AI가 연구물의 구조와 맥락을 분석하여 <strong>롱폼 홍보 영상</strong>을 자동 생성합니다. 연구 배경부터 결론까지 스토리라인을 구성하여 심층적인 정보를 전달합니다.</p>
+  </div>
+</div>
+
+<div class="card" data-index="8">
+  <div class="container">
+    <span class="tag-pill">논문 2</span>
+    <div class="headline-row">
+      <h2 class="card-headline">논문 홍보 플랫폼 결과물(논문 2): 매거진</h2>
+    </div>
+    <div class="pdf-viewer">
+      <iframe data-src="../assets/paper2/magazine.pdf"></iframe>
+    </div>
+    <p class="highlight">AI가 논문의 핵심 내용을 재구성하여 <strong>시각적으로 풍부한 매거진 형태</strong>의 홍보 콘텐츠를 자동 생성합니다.</p>
+  </div>
+</div>
+-->
+
+<!-- Navigation controls -->
+<div class="nav-controls">
+  <button class="nav-btn" id="btn-prev" onclick="goTo(current-1)" aria-label="이전">&#8593;</button>
+  <div class="nav-indicator" id="nav-indicator">1 / 9</div>
+  <button class="nav-btn" id="btn-next" onclick="goTo(current+1)" aria-label="다음">&#8595;</button>
+</div>
+
+<script>
+(function() {
+  var cards = document.querySelectorAll('.card');
+  var total = cards.length;
+  var current = 0;
+  var locked = false;
+  window.current = current;
+
+  function goTo(n) {
+    if (locked) return;
+    if (n > current) n = current + 1;
+    if (n < current) n = current - 1;
+    n = Math.max(0, Math.min(total - 1, n));
+    if (n === current) return;
+
+    locked = true;
+    var prevCard = cards[current];
+    var direction = n > current ? 1 : -1;
+
+    if (direction === 1) {
+      prevCard.classList.remove('active');
+      prevCard.classList.add('passed');
+    } else {
+      prevCard.classList.remove('active');
+    }
+    current = n;
+    window.current = current;
+    if (direction === -1) cards[current].classList.remove('passed');
+    cards[current].classList.add('active');
+    lazyLoad(cards[current]);
+    if (current + 1 < total) lazyLoad(cards[current + 1]);
+    if (current + 2 < total) lazyLoad(cards[current + 2]);
+
+    setTimeout(function() { locked = false; }, 400);
+
+    document.getElementById('nav-indicator').textContent = (current + 1) + ' / ' + total;
+    document.getElementById('btn-prev').disabled = (current === 0);
+    document.getElementById('btn-next').disabled = (current === total - 1);
+
+    // 이전 카드의 유튜브 iframe 정지
+    var prevIframes = prevCard.querySelectorAll('iframe.youtube');
+    for (var i = 0; i < prevIframes.length; i++) {
+      prevIframes[i].contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+    }
+
+    // Stop shorts videos when leaving their cards
+    var video1 = document.getElementById('shorts-video-1');
+    if (video1 && current !== 2) {
+      video1.pause();
+      video1.currentTime = 0;
+    }
+    var video2 = document.getElementById('shorts-video-2');
+    if (video2 && current !== 6) {
+      video2.pause();
+      video2.currentTime = 0;
+    }
+  }
+  window.goTo = goTo;
+
+  // 유튜브 iframe 클릭 후 자동 blur
+  window.addEventListener('blur', function() {
+    var el = document.activeElement;
+    if (el && el.tagName === 'IFRAME' && el.classList.contains('youtube')) {
+      setTimeout(function() {
+        el.blur();
+        window.focus();
+      }, 1000);
+    }
+  });
+
+  // iframe 포커스 시 네비게이션 차단 (아카이빙 카드)
+  function isIframeFocused() {
+    var el = document.activeElement;
+    return el && el.tagName === 'IFRAME' && el.closest('[data-index="5"]');
+  }
+
+  // Mouse wheel
+  document.addEventListener('wheel', function(e) {
+    if (isIframeFocused()) return;
+    if (locked) return;
+    e.preventDefault();
+    if (e.deltaY > 0) goTo(current + 1);
+    else if (e.deltaY < 0) goTo(current - 1);
+  }, { passive: false });
+
+  // Keyboard
+  document.addEventListener('keydown', function(e) {
+    if (isIframeFocused()) return;
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
+    else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); goTo(current - 1); }
+    else if (e.key === ' ') {
+      e.preventDefault();
+      // 스페이스바: 현재 카드의 유튜브 재생/정지 토글
+      var yt = cards[current].querySelector('iframe.youtube');
+      if (yt && yt.src) {
+        if (!cards[current]._ytPlaying) {
+          yt.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+          cards[current]._ytPlaying = true;
+        } else {
+          yt.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+          cards[current]._ytPlaying = false;
+        }
+      }
+      // 카드 2의 숏폼 비디오
+      var vid1 = document.getElementById('shorts-video-1');
+      if (vid1 && current === 2) {
+        vid1.paused ? vid1.play() : vid1.pause();
+      }
+      // 카드 5의 숏폼 비디오
+      var vid2 = document.getElementById('shorts-video-2');
+      if (vid2 && current === 6) {
+        vid2.paused ? vid2.play() : vid2.pause();
+      }
+    }
+  });
+
+  // Lazy load
+  function lazyLoad(card) {
+    var iframes = card.querySelectorAll('iframe[data-src]');
+    for (var i = 0; i < iframes.length; i++) {
+      iframes[i].src = iframes[i].getAttribute('data-src');
+      iframes[i].removeAttribute('data-src');
+    }
+  }
+
+  // Init
+  document.getElementById('btn-prev').disabled = true;
+  lazyLoad(cards[1]);
+
+  // ── Page Viewer 1 (Card 2 - 논문 1) ──
+  var pageTotal1 = 11;
+  var pageIndex1 = 0;
+  var pageFlipping1 = false;
+
+  window.pageNav1 = function(dir) {
+    if (pageFlipping1) return;
+    var newIndex = pageIndex1 + (dir * 2);
+    newIndex = Math.max(0, Math.min(pageTotal1 - 2, newIndex));
+    if (newIndex === pageIndex1) return;
+
+    pageFlipping1 = true;
+    var spread = document.getElementById('page-spread-1');
+    var animClass = dir > 0 ? 'flip-forward' : 'flip-backward';
+    spread.classList.add(animClass);
+
+    setTimeout(function() {
+      pageIndex1 = newIndex;
+      document.getElementById('page-left-1').src = '../assets/paper1/pages/page-' + String(pageIndex1 + 1).padStart(2, '0') + '.png';
+      document.getElementById('page-right-1').src = '../assets/paper1/pages/page-' + String(pageIndex1 + 2).padStart(2, '0') + '.png';
+      document.getElementById('page-info-1').textContent = (pageIndex1 + 1) + '-' + (pageIndex1 + 2) + ' / ' + pageTotal1;
+      document.getElementById('page-prev-1').disabled = (pageIndex1 === 0);
+      document.getElementById('page-next-1').disabled = (pageIndex1 >= pageTotal1 - 2);
+    }, 225);
+
+    setTimeout(function() {
+      spread.classList.remove(animClass);
+      pageFlipping1 = false;
+    }, 500);
+  };
+  document.getElementById('page-prev-1').disabled = true;
+
+  // 드래그 & 터치 (Page Viewer 1)
+  var spread1 = document.getElementById('page-spread-1');
+  var dragStartX1 = 0;
+  var isDragging1 = false;
+
+  spread1.addEventListener('mousedown', function(e) { dragStartX1 = e.clientX; isDragging1 = true; });
+  document.addEventListener('mousemove', function(e) { if (!isDragging1) return; });
+  document.addEventListener('mouseup', function(e) {
+    if (!isDragging1) return;
+    isDragging1 = false;
+    var diff = e.clientX - dragStartX1;
+    if (Math.abs(diff) > 40) pageNav1(diff < 0 ? 1 : -1);
+  });
+  spread1.addEventListener('touchstart', function(e) { dragStartX1 = e.touches[0].clientX; isDragging1 = true; }, { passive: true });
+  spread1.addEventListener('touchend', function(e) {
+    if (!isDragging1) return;
+    isDragging1 = false;
+    var diff = e.changedTouches[0].clientX - dragStartX1;
+    if (Math.abs(diff) > 40) pageNav1(diff < 0 ? 1 : -1);
+  });
+
+  // ── Page Viewer 2 (Card 5 - 논문 2) ──
+  var pageTotal2 = 12;
+  var pageIndex2 = 0;
+  var pageFlipping2 = false;
+
+  window.pageNav2 = function(dir) {
+    if (pageFlipping2) return;
+    var newIndex = pageIndex2 + (dir * 2);
+    newIndex = Math.max(0, Math.min(pageTotal2 - 2, newIndex));
+    if (newIndex === pageIndex2) return;
+
+    pageFlipping2 = true;
+    var spread = document.getElementById('page-spread-2');
+    var animClass = dir > 0 ? 'flip-forward' : 'flip-backward';
+    spread.classList.add(animClass);
+
+    setTimeout(function() {
+      pageIndex2 = newIndex;
+      document.getElementById('page-left-2').src = '../assets/paper2/pages/page-' + String(pageIndex2 + 1).padStart(2, '0') + '.png';
+      document.getElementById('page-right-2').src = '../assets/paper2/pages/page-' + String(pageIndex2 + 2).padStart(2, '0') + '.png';
+      document.getElementById('page-info-2').textContent = (pageIndex2 + 1) + '-' + (pageIndex2 + 2) + ' / ' + pageTotal2;
+      document.getElementById('page-prev-2').disabled = (pageIndex2 === 0);
+      document.getElementById('page-next-2').disabled = (pageIndex2 >= pageTotal2 - 2);
+    }, 225);
+
+    setTimeout(function() {
+      spread.classList.remove(animClass);
+      pageFlipping2 = false;
+    }, 500);
+  };
+  document.getElementById('page-prev-2').disabled = true;
+
+  // 드래그 & 터치 (Page Viewer 2)
+  var spread2 = document.getElementById('page-spread-2');
+  var dragStartX2 = 0;
+  var isDragging2 = false;
+
+  spread2.addEventListener('mousedown', function(e) { dragStartX2 = e.clientX; isDragging2 = true; });
+  document.addEventListener('mousemove', function(e) { if (!isDragging2) return; });
+  document.addEventListener('mouseup', function(e) {
+    if (!isDragging2) return;
+    isDragging2 = false;
+    var diff = e.clientX - dragStartX2;
+    if (Math.abs(diff) > 40) pageNav2(diff < 0 ? 1 : -1);
+  });
+  spread2.addEventListener('touchstart', function(e) { dragStartX2 = e.touches[0].clientX; isDragging2 = true; }, { passive: true });
+  spread2.addEventListener('touchend', function(e) {
+    if (!isDragging2) return;
+    isDragging2 = false;
+    var diff = e.changedTouches[0].clientX - dragStartX2;
+    if (Math.abs(diff) > 40) pageNav2(diff < 0 ? 1 : -1);
+  });
+
+})();
+</script>
+</body>
+</html>

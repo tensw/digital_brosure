@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE RESEARCH DAILY - Thermal Expansion-Engineered FeFET Arrays</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @page { size: A4; margin: 0; }
+
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: #1a1a1a;
+    background: #f5f5f0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    margin: 0 auto;
+    background: #faf9f6;
+    padding: 24mm 22mm 18mm 22mm;
+    position: relative;
+    page-break-after: always;
+    break-after: page;
+  }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+
+  @media screen {
+    .page { margin-bottom: 30px; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+  }
+  @media print {
+    body { background: white; }
+    .page { margin: 0; box-shadow: none; }
+  }
+
+  /* ===== Masthead ===== */
+  .masthead { text-align: center; margin-bottom: 12px; }
+  .masthead-date { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #666; margin-bottom: 4px; }
+  .masthead-title { font-size: 38px; font-weight: 700; letter-spacing: 2px; line-height: 1.1; }
+  .masthead-subtitle { font-size: 8px; letter-spacing: 2.5px; text-transform: uppercase; color: #888; margin-top: 4px; }
+  .masthead-divider { border: none; border-top: 2.5px solid #1a1a1a; margin: 10px 0; }
+  .masthead-divider-thin { border: none; border-top: 0.5px solid #1a1a1a; margin: 0 0 14px 0; }
+  .page-tag { font-size: 7.5px; color: #999; letter-spacing: 1px; margin-bottom: 6px; }
+
+  /* ===== Paper Meta ===== */
+  .paper-source { font-size: 12px; font-weight: 700; color: #2c5282; letter-spacing: 1px; margin-bottom: 3px; }
+  .paper-title { font-size: 20px; font-weight: 700; line-height: 1.35; margin-bottom: 6px; }
+  .paper-authors { font-size: 10px; color: #666; margin-bottom: 16px; line-height: 1.6; }
+
+  /* ===== Metric Cards ===== */
+  .metric-cards {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    border-top: 1.5px solid #1a1a1a; border-bottom: 1.5px solid #1a1a1a;
+    margin-bottom: 18px; padding: 12px 0;
+  }
+  .metric-card { text-align: center; border-right: 0.5px solid #ddd; padding: 0 8px; }
+  .metric-card:last-child { border-right: none; }
+  .metric-value { font-size: 24px; font-weight: 700; line-height: 1.2; }
+  .metric-label { font-size: 7.5px; text-transform: uppercase; letter-spacing: 1.5px; color: #888; margin-top: 3px; }
+
+  /* ===== Section Headers ===== */
+  .section-header {
+    font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    border-bottom: 1.5px solid #1a1a1a; padding-bottom: 5px;
+    margin-bottom: 12px; margin-top: 20px;
+  }
+  .section-header:first-child, .section-header.no-top { margin-top: 0; }
+
+  /* ===== AI Summary ===== */
+  .ai-summary { background: #f0ede6; padding: 12px 16px; margin-bottom: 18px; border-left: 3px solid #2c5282; }
+  .ai-summary p { font-size: 11.5px; line-height: 1.7; color: #333; }
+
+  /* ===== Research Type Badge ===== */
+  .type-badge-container {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 18px; padding: 10px 16px;
+    background: #f7f6f3; border: 0.5px solid #e0ddd6;
+  }
+  .type-icon {
+    width: 34px; height: 34px; background: #2c5282;
+    display: flex; align-items: center; justify-content: center; transform: rotate(45deg); flex-shrink: 0;
+  }
+  .type-icon-inner { color: white; font-size: 15px; transform: rotate(-45deg); }
+  .type-info h3 { font-size: 14px; font-weight: 700; }
+  .type-info p { font-size: 10px; color: #666; margin-top: 2px; }
+
+  /* ===== Bar Chart ===== */
+  .bar-chart { margin-bottom: 18px; }
+  .bar-row { display: grid; grid-template-columns: 140px 1fr 42px; align-items: center; margin-bottom: 7px; font-size: 11px; }
+  .bar-label { color: #333; }
+  .bar-track { height: 16px; background: #eee; }
+  .bar-fill { height: 100%; background: #4a5568; }
+  .bar-value { text-align: right; font-weight: 700; font-size: 11px; }
+
+  /* ===== Two-Column Tables ===== */
+  .two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 18px; }
+  .data-table { width: 100%; border-collapse: collapse; }
+  .data-table-header { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #555; margin-bottom: 7px; }
+  .data-table td { font-size: 11px; padding: 5px 0; border-bottom: 0.5px solid #e8e6e0; }
+  .data-table td:last-child { text-align: right; font-weight: 700; }
+
+  /* ===== Flow Diagram ===== */
+  .flow-diagram { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 0; }
+  .flow-step { text-align: center; position: relative; }
+  .flow-box {
+    background: #f0ede6; border: 0.5px solid #d4d0c8; padding: 10px 6px;
+    font-size: 9px; line-height: 1.45; min-height: 54px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .flow-box.highlight { background: #2c5282; color: white; border-color: #2c5282; }
+  .flow-num { font-size: 7.5px; color: #999; margin-bottom: 3px; letter-spacing: 1px; }
+  .flow-arrow { position: absolute; right: -11px; top: 55%; transform: translateY(-50%); color: #999; font-size: 11px; z-index: 1; }
+
+  /* ===== Key Findings ===== */
+  .findings-list { margin-bottom: 16px; }
+  .finding-item { display: grid; grid-template-columns: 20px 1fr; gap: 8px; margin-bottom: 9px; align-items: start; }
+  .finding-num { font-size: 17px; font-weight: 700; color: #2c5282; line-height: 1; }
+  .finding-text { font-size: 11px; line-height: 1.6; color: #333; }
+  .finding-text strong { color: #1a1a1a; }
+
+  /* ===== Risk Bars ===== */
+  .risk-row { display: grid; grid-template-columns: 110px 1fr 55px; align-items: center; margin-bottom: 7px; }
+  .risk-label { font-size: 11px; color: #333; }
+  .risk-track { height: 11px; background: #eee; }
+  .risk-fill { height: 100%; }
+  .risk-fill.high { background: #c53030; }
+  .risk-fill.medium { background: #d69e2e; }
+  .risk-verdict { text-align: right; font-size: 10px; font-weight: 700; }
+
+  /* ===== Strengths & Limitations ===== */
+  .sl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 16px; }
+  .sl-column h4 { font-size: 11px; font-weight: 700; margin-bottom: 7px; }
+  .sl-column h4.strength { color: #2c5282; }
+  .sl-column h4.limitation { color: #c53030; }
+  .sl-column ul { list-style: none; padding: 0; }
+  .sl-column li {
+    font-size: 10.5px; line-height: 1.55; padding: 4px 0 4px 14px;
+    border-bottom: 0.5px solid #eee; position: relative;
+  }
+  .sl-column li::before { position: absolute; left: 0; font-size: 10px; }
+  .sl-column.strengths li::before { content: "\2713"; color: #2c5282; }
+  .sl-column.limitations li::before { content: "\0021"; color: #c53030; font-weight: 700; }
+
+  /* ===== Methodology ===== */
+  .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .method-item h4 { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: #888; margin-bottom: 4px; }
+  .method-item p { font-size: 10.5px; line-height: 1.6; color: #333; }
+
+  /* ===== Ref Analysis ===== */
+  .ref-analysis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 16px; }
+  .ref-stat-row { display: flex; justify-content: space-between; font-size: 10.5px; padding: 4px 0; border-bottom: 0.5px solid #eee; }
+  .ref-stat-row span:last-child { font-weight: 700; }
+
+  /* ===== Implications Grid ===== */
+  .impl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+  .impl-card { background: #f7f6f3; border: 0.5px solid #e0ddd6; padding: 12px 14px; }
+  .impl-card h4 { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #2c5282; margin-bottom: 6px; }
+  .impl-card p { font-size: 10px; line-height: 1.6; color: #444; }
+
+  /* ===== Roadmap ===== */
+  .roadmap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 0; }
+  .roadmap-card { border: 0.5px solid #d4d0c8; padding: 12px 14px; }
+  .roadmap-card h4 { font-size: 11px; font-weight: 700; margin-bottom: 2px; }
+  .roadmap-card .road-sub { font-size: 9px; color: #2c5282; font-weight: 700; margin-bottom: 6px; }
+  .roadmap-card p { font-size: 9.5px; line-height: 1.55; color: #555; }
+
+  /* ===== Keywords ===== */
+  .keywords-cloud { text-align: center; padding: 16px 0; margin-bottom: 18px; line-height: 2; }
+  .kw-xl { font-size: 26px; font-weight: 700; color: #1a1a1a; }
+  .kw-lg { font-size: 20px; font-weight: 700; color: #333; }
+  .kw-md { font-size: 16px; font-weight: 400; color: #555; }
+  .kw-sm { font-size: 13px; font-weight: 400; color: #777; }
+
+  /* ===== Reference Papers ===== */
+  .ref-table { width: 100%; border-collapse: collapse; margin-bottom: 18px; }
+  .ref-table thead td { font-size: 8px; letter-spacing: 1px; text-transform: uppercase; color: #999; padding-bottom: 5px; border-bottom: 1px solid #1a1a1a; }
+  .ref-table tbody tr { border-bottom: 0.5px solid #e8e6e0; }
+  .ref-table tbody td { padding: 7px 0; vertical-align: top; }
+  .ref-num { font-size: 10.5px; color: #999; width: 22px; }
+  .ref-title { font-size: 10.5px; font-weight: 700; line-height: 1.45; }
+  .ref-meta { font-size: 9px; color: #888; margin-top: 2px; }
+  .ref-context { font-size: 9.5px; color: #666; text-align: right; width: 85px; }
+
+  /* ===== Outlook ===== */
+  .outlook-box { background: #f0ede6; padding: 14px 18px; border-left: 3px solid #2c5282; margin-bottom: 0; }
+  .outlook-box p { font-size: 10.5px; line-height: 1.7; color: #333; margin-bottom: 8px; }
+  .outlook-box p:last-child { margin-bottom: 0; }
+
+  /* ===== Footer ===== */
+  .page-footer {
+    position: absolute; bottom: 12mm; left: 22mm; right: 22mm;
+    display: flex; justify-content: space-between;
+    font-size: 7.5px; color: #aaa; border-top: 0.5px solid #ddd; padding-top: 5px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1: PAPER PROFILE ==================== -->
+<div class="page" id="page1">
+
+  <div class="masthead">
+    <div class="masthead-date">Thursday, April 10, 2026</div>
+    <div class="masthead-title">THE RESEARCH DAILY</div>
+    <div class="masthead-subtitle">Paper Analysis &middot; Key Findings &middot; Research Outlook</div>
+  </div>
+  <hr class="masthead-divider">
+  <hr class="masthead-divider-thin">
+
+  <div class="paper-source">ACS NANO &middot; VOL. 20, 4057&ndash;4067</div>
+  <div class="paper-title">Thermal Expansion-Engineered Ferroelectric Transistor Arrays for Scalable Edge AI Computing</div>
+  <div class="paper-authors">
+    Geonwook Kim<sup>#</sup> &middot; Hyunho Seok<sup>#</sup> &middot; Sihoon Son<sup>#</sup> &middot; Hyunbin Choi<sup>#</sup> &middot; Hyunho Kim &middot; Jinhyoung Lee &middot; Gunhyoung Kim &middot; Dongho Lee &middot; Seowoo Son &middot; Taesung Kim*<br>
+    Sungkyunkwan University &middot; Published January 27, 2026
+  </div>
+
+  <div class="metric-cards">
+    <div class="metric-card">
+      <div class="metric-value">57</div>
+      <div class="metric-label">References</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">11</div>
+      <div class="metric-label">Pages</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">4</div>
+      <div class="metric-label">Figures</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" style="font-size:17px;">Experi&shy;mental</div>
+      <div class="metric-label">Research Type</div>
+    </div>
+  </div>
+
+  <div class="section-header no-top">AI Core Summary</div>
+  <div class="ai-summary">
+    <p>열팽창 계수 불일치를 활용한 격자 엔지니어링으로 HZO 박막의 강유전 orthorhombic 상을 안정화하고, 재구성 가능한 MFMIS-FeFET 어레이를 구현하였다. W 게이트 소자는 ~11V 메모리 윈도우, 10<sup>6</sup> 이상 on/off 비율, 10<sup>12</sup> 내구성 사이클을 달성하였으며, 하드웨어 인식 VGG-8 CNN 시뮬레이션에서 CIFAR-10 분류 97.2% 정확도를 기록했다.</p>
+  </div>
+
+  <div class="section-header">Research Type</div>
+  <div class="type-badge-container">
+    <div class="type-icon"><span class="type-icon-inner">&#9670;</span></div>
+    <div class="type-info">
+      <h3>실험 연구 (Experimental)</h3>
+      <p>소자 제작, 전기적 특성 분석, TEM/PFM 구조 분석 및 하드웨어 인식 신경망 시뮬레이션을 통한 정량적 검증 연구</p>
+    </div>
+  </div>
+
+  <div class="section-header">Research Field Allocation</div>
+  <div class="bar-chart">
+    <div class="bar-row">
+      <span class="bar-label">Nanoelectronics</span>
+      <div class="bar-track"><div class="bar-fill" style="width:35%;"></div></div>
+      <span class="bar-value">35%</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Neuromorphic Computing</span>
+      <div class="bar-track"><div class="bar-fill" style="width:30%;"></div></div>
+      <span class="bar-value">30%</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Materials Science</span>
+      <div class="bar-track"><div class="bar-fill" style="width:20%;"></div></div>
+      <span class="bar-value">20%</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-label">Edge AI / Computing</span>
+      <div class="bar-track"><div class="bar-fill" style="width:15%;"></div></div>
+      <span class="bar-value">15%</span>
+    </div>
+  </div>
+
+  <div class="two-col-grid">
+    <div>
+      <div class="data-table-header">Paper Structure</div>
+      <table class="data-table">
+        <tr><td>Background</td><td>von Neumann 병목 한계</td></tr>
+        <tr><td>Research Purpose</td><td>재구성 가능 FeFET 플랫폼</td></tr>
+        <tr><td>Methodology</td><td>열팽창 불일치 격자 공학</td></tr>
+        <tr><td>Key Results</td><td>고성능 강유전 소자 + CNN 검증</td></tr>
+        <tr><td>Conclusion</td><td>확장 가능 Edge AI 플랫폼</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="data-table-header">Research Scope</div>
+      <table class="data-table">
+        <tr><td>Core Materials</td><td>HZO, W, TiN, IGZO</td></tr>
+        <tr><td>Characterization</td><td>TEM, PFM, P&ndash;V, I&ndash;V</td></tr>
+        <tr><td>Array Scale</td><td>350 devices, 9&times;2 array</td></tr>
+        <tr><td>CNN Benchmark</td><td>VGG-8 / CIFAR-10</td></tr>
+        <tr><td>Target Application</td><td>Edge AI, IMC</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-header">Research Structure</div>
+  <div class="flow-diagram">
+    <div class="flow-step">
+      <div class="flow-num">01</div>
+      <div class="flow-box">von Neumann<br>병목 문제</div>
+      <span class="flow-arrow">&#9654;</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">02</div>
+      <div class="flow-box">열팽창 계수<br>격자 엔지니어링</div>
+      <span class="flow-arrow">&#9654;</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">03</div>
+      <div class="flow-box highlight">MFMIS-FeFET<br>소자 제작·분석</div>
+      <span class="flow-arrow">&#9654;</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">04</div>
+      <div class="flow-box">CNN 시뮬레이션<br>+ 아날로그 연산</div>
+      <span class="flow-arrow">&#9654;</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">05</div>
+      <div class="flow-box">확장 가능<br>Edge AI 플랫폼</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>BIBLO Research Analytics &middot; Sungkyunkwan University</span>
+    <span>Generated 2026. 4. 10. &middot; FOR RESEARCH PLANNING PURPOSES</span>
+    <span>1/3</span>
+  </div>
+</div>
+
+<!-- ==================== PAGE 2: ANALYSIS ==================== -->
+<div class="page" id="page2">
+
+  <div class="page-tag">BIBLO | Research Intelligence</div>
+
+  <div class="section-header no-top">Key Findings</div>
+  <div class="findings-list">
+    <div class="finding-item">
+      <span class="finding-num">1</span>
+      <div class="finding-text"><strong>열팽창 불일치 기반 상 안정화:</strong> W 전극(CTE 4.5&times;10<sup>&minus;6</sup> K<sup>&minus;1</sup>)으로 HZO 박막에 균일한 인장 응력을 인가하여 강유전 orthorhombic 상을 안정화. W/HZO/W 구조에서 2P<sub>r</sub> = 95.9 &mu;C/cm&sup2; 달성.</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-num">2</span>
+      <div class="finding-text"><strong>탁월한 메모리 특성:</strong> W-게이트 MFMIS-FeFET에서 ~11V 메모리 윈도우, &gt;10<sup>6</sup> on/off 비율, 10<sup>12</sup> 내구성 사이클 달성. 350개 소자 어레이에서 우수한 균일성 확인.</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-num">3</span>
+      <div class="finding-text"><strong>22단계 아날로그 프로그래밍:</strong> 0.2V 단위 쓰기 전압 조절로 22개 전도도 상태 구현. NL<sub>LTP</sub>=0.065, NL<sub>LTD</sub>=0.352, G<sub>max</sub>/G<sub>min</sub>=160.2 달성.</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-num">4</span>
+      <div class="finding-text"><strong>VGG-8 CNN CIFAR-10 정확도 97.2%:</strong> 소자 비이상성(비대칭 가중치, 이산 전도도, 유한 G<sub>max</sub>/G<sub>min</sub>)을 반영한 하드웨어 인식 시뮬레이션으로 실현 가능성 검증.</div>
+    </div>
+    <div class="finding-item">
+      <span class="finding-num">5</span>
+      <div class="finding-text"><strong>아날로그 도메인 영상 처리:</strong> 9&times;2 FeFET 어레이에서 차분 커널 인코딩을 통해 수직/수평 엣지 검출, 샤프닝, 엠보싱 필터를 실험적으로 시연.</div>
+    </div>
+  </div>
+
+  <div class="section-header">Paper Quality Assessment</div>
+  <div style="margin-bottom:16px;">
+    <div class="risk-row">
+      <span class="risk-label">방법론 견고성</span>
+      <div class="risk-track"><div class="risk-fill" style="width:90%;background:#2c5282;"></div></div>
+      <span class="risk-verdict" style="color:#2c5282;">매우 높음</span>
+    </div>
+    <div class="risk-row">
+      <span class="risk-label">데이터 충분성</span>
+      <div class="risk-track"><div class="risk-fill" style="width:85%;background:#2c5282;"></div></div>
+      <span class="risk-verdict" style="color:#2c5282;">높음</span>
+    </div>
+    <div class="risk-row">
+      <span class="risk-label">재현가능성</span>
+      <div class="risk-track"><div class="risk-fill" style="width:80%;background:#2c5282;"></div></div>
+      <span class="risk-verdict" style="color:#2c5282;">높음</span>
+    </div>
+    <div class="risk-row">
+      <span class="risk-label">참신성</span>
+      <div class="risk-track"><div class="risk-fill" style="width:92%;background:#2c5282;"></div></div>
+      <span class="risk-verdict" style="color:#2c5282;">매우 높음</span>
+    </div>
+  </div>
+
+  <div class="section-header">Strengths &amp; Limitations</div>
+  <div class="sl-grid">
+    <div class="sl-column strengths">
+      <h4 class="strength">Strengths</h4>
+      <ul>
+        <li>열팽창 불일치라는 새로운 상 제어 접근법 제시</li>
+        <li>MIM 캐패시터부터 FeFET까지 체계적 검증</li>
+        <li>350개 소자 어레이에서 우수한 균일성 입증</li>
+        <li>하드웨어 비이상성 반영 CNN 시뮬레이션</li>
+        <li>아날로그 컨볼루션 실험적 시연으로 실용성 확인</li>
+      </ul>
+    </div>
+    <div class="sl-column limitations">
+      <h4 class="limitation">Limitations</h4>
+      <ul>
+        <li>단일 HZO 두께(8nm)에 한정된 연구</li>
+        <li>전체 하드웨어 신경망이 아닌 시뮬레이션</li>
+        <li>RRAM, PCM 등 타 IMC 기술과의 직접 비교 부재</li>
+        <li>대면적 확장성 및 양산 가능성 미검증</li>
+        <li>장기 신뢰성 데이터(고온, 시간 경과) 제한적</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-header">Reference Analysis</div>
+  <div class="ref-analysis-grid">
+    <div>
+      <div class="ref-stat-row"><span>Total References</span><span>57</span></div>
+      <div class="ref-stat-row"><span>Nat. Nanotechnol. / Nat. Electron.</span><span>8 (14%)</span></div>
+      <div class="ref-stat-row"><span>ACS / Adv. Mater. Journals</span><span>18 (32%)</span></div>
+      <div class="ref-stat-row"><span>IEEE / Device Letters</span><span>6 (11%)</span></div>
+      <div class="ref-stat-row"><span>Time Range</span><span>2012&ndash;2025</span></div>
+      <div class="ref-stat-row"><span>Self-Citation</span><span>~7% (4편)</span></div>
+    </div>
+    <div>
+      <div class="data-table-header">Top References</div>
+      <table class="data-table">
+        <tr><td>Sebastian et al. (2020)</td><td style="font-size:9px;color:#666;">IMC 메모리 소자</td></tr>
+        <tr><td>Cheema et al. (2020)</td><td style="font-size:9px;color:#666;">초박막 강유전성</td></tr>
+        <tr><td>Soliman et al. (2023)</td><td style="font-size:9px;color:#666;">FeFET 크로스바</td></tr>
+        <tr><td>Tsai et al. (2022)</td><td style="font-size:9px;color:#666;">응력 기반 HZO</td></tr>
+        <tr><td>Khan et al. (2020)</td><td style="font-size:9px;color:#666;">FeFET 기술 전망</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-header">Methodology</div>
+  <div class="method-grid" style="margin-bottom:0;">
+    <div class="method-item">
+      <h4>Device Fabrication</h4>
+      <p>p-Si 기판 위 W 또는 TiN 전극 스퍼터링, ALD HZO 8nm 증착, RTA 400&deg;C 결정화. IGZO 채널 15nm + HfO<sub>2</sub> 절연층 9nm 적층한 MFMIS 구조</p>
+    </div>
+    <div class="method-item">
+      <h4>Characterization &amp; Simulation</h4>
+      <p>HR-STEM, FFT, PFM으로 구조·분극 분석. P&ndash;V, I&ndash;V, 내구성, LTP/LTD 전기적 특성 평가. 소자 비이상성 반영 VGG-8 CNN 하드웨어 시뮬레이션</p>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>BIBLO Research Analytics &middot; Sungkyunkwan University</span>
+    <span>Generated 2026. 4. 10. &middot; FOR RESEARCH PLANNING PURPOSES</span>
+    <span>2/3</span>
+  </div>
+</div>
+
+<!-- ==================== PAGE 3: OUTLOOK ==================== -->
+<div class="page" id="page3">
+
+  <div class="page-tag">BIBLO | Research Intelligence</div>
+
+  <div class="section-header no-top">Practical Implications</div>
+  <div class="impl-grid" style="margin-bottom:14px;">
+    <div class="impl-card" style="padding:10px 12px;">
+      <h4>Industry Application</h4>
+      <p>CMOS 호환 FeFET 어레이로 Edge AI 가속기 구현. IoT, 자율주행 센서, 웨어러블 의료기기 등 저전력 온디바이스 AI 추론에 적용 가능.</p>
+    </div>
+    <div class="impl-card" style="padding:10px 12px;">
+      <h4>Policy &amp; Standards</h4>
+      <p>비폰노이만 컴퓨팅 표준화 논의에 기여. 강유전 메모리 소자의 내구성 10<sup>12</sup> 사이클 기준 제시로 산업 벤치마크 수립 활용 가능.</p>
+    </div>
+    <div class="impl-card" style="padding:10px 12px;">
+      <h4>Academic Contribution</h4>
+      <p>열팽창 불일치 기반 상 엔지니어링이라는 새로운 설계 원리 제시. 게이트 금속 선택만으로 휘발성/비휘발성 모드 전환 최초 입증.</p>
+    </div>
+  </div>
+
+  <div class="section-header">Follow-up Research Roadmap</div>
+  <div class="roadmap-grid" style="margin-bottom:0;">
+    <div class="roadmap-card" style="padding:10px 12px;">
+      <h4>Scenario A</h4>
+      <div class="road-sub">소자 스케일링 심화 연구</div>
+      <p>HZO 두께(4&ndash;12nm) 최적화, 3D 적층 응력 전달 규명, 나노급 채널 단채널 효과 분석.</p>
+    </div>
+    <div class="roadmap-card" style="padding:10px 12px;">
+      <h4>Scenario B</h4>
+      <div class="road-sub">대규모 하드웨어 신경망</div>
+      <p>대면적 어레이(1k&times;1k) 확장. Transformer, SNN 등 다양한 AI 모델 하드웨어 구현 검증.</p>
+    </div>
+    <div class="roadmap-card" style="padding:10px 12px;">
+      <h4>Scenario C</h4>
+      <div class="road-sub">다기능 뉴로모픽 통합</div>
+      <p>FeFET 메모리·로직·센서 모놀리식 통합. 2D 반도체 채널 결합 초저전력 뉴로모픽 플랫폼.</p>
+    </div>
+  </div>
+
+  <div class="section-header">Research Keywords</div>
+  <div class="keywords-cloud" style="padding:10px 0; margin-bottom:14px; line-height:1.9;">
+    <span class="kw-xl">Ferroelectric Transistor</span>&nbsp;
+    <span class="kw-xl">Edge AI</span>&nbsp;
+    <span class="kw-lg">HZO</span>&nbsp;
+    <span class="kw-lg">In-Memory Computing</span>&nbsp;
+    <span class="kw-lg">Thermal Expansion</span><br>
+    <span class="kw-md">Neuromorphic</span>&nbsp;
+    <span class="kw-md">FeFET</span>&nbsp;
+    <span class="kw-md">MFMIS</span>&nbsp;
+    <span class="kw-md">Nonvolatile Memory</span>&nbsp;
+    <span class="kw-sm">Synaptic Device</span>&nbsp;
+    <span class="kw-sm">Tungsten</span>&nbsp;
+    <span class="kw-sm">Orthorhombic</span>&nbsp;
+    <span class="kw-sm">CNN</span>&nbsp;
+    <span class="kw-sm">Analog Computing</span>&nbsp;
+    <span class="kw-sm">CIFAR-10</span>
+  </div>
+
+  <div class="section-header">Key Reference Papers</div>
+  <table class="ref-table" style="margin-bottom:14px;">
+    <thead>
+      <tr>
+        <td>#</td>
+        <td>Paper</td>
+        <td>Context</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ref-num">1</td>
+        <td>
+          <div class="ref-title">Memory devices and applications for in-memory computing</div>
+          <div class="ref-meta">Sebastian et al. &middot; Nat. Nanotechnol. &middot; 2020</div>
+        </td>
+        <td class="ref-context">이론적 기반</td>
+      </tr>
+      <tr>
+        <td class="ref-num">2</td>
+        <td>
+          <div class="ref-title">Enhanced ferroelectricity in ultrathin films grown directly on silicon</div>
+          <div class="ref-meta">Cheema et al. &middot; Nature &middot; 2020</div>
+        </td>
+        <td class="ref-context">재료 과학 기반</td>
+      </tr>
+      <tr>
+        <td class="ref-num">3</td>
+        <td>
+          <div class="ref-title">First demonstration of IMC crossbar using multi-level Cell FeFET</div>
+          <div class="ref-meta">Soliman et al. &middot; Nat. Commun. &middot; 2023</div>
+        </td>
+        <td class="ref-context">직접 비교 대상</td>
+      </tr>
+      <tr>
+        <td class="ref-num">4</td>
+        <td>
+          <div class="ref-title">Stress-Memorized HZO for High-Performance FeFET Memtransistor</div>
+          <div class="ref-meta">Tsai et al. &middot; ACS Appl. Electron. Mater. &middot; 2022</div>
+        </td>
+        <td class="ref-context">방법론 참조</td>
+      </tr>
+      <tr>
+        <td class="ref-num">5</td>
+        <td>
+          <div class="ref-title">The future of ferroelectric field-effect transistor technology</div>
+          <div class="ref-meta">Khan et al. &middot; Nat. Electron. &middot; 2020</div>
+        </td>
+        <td class="ref-context">기술 전망 맥락</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-header">AI Comprehensive Outlook</div>
+  <div class="outlook-box">
+    <p><strong>학술적 기여:</strong> 열팽창 불일치로 HZO 강유전 상을 제어하는 새로운 설계 원리를 제시. 게이트 금속 선택만으로 휘발성/비휘발성 모드 전환을 입증하여 재구성 가능 컴퓨팅의 이론적 기반을 마련했다. <strong>기술적 성과:</strong> 10<sup>12</sup> 내구성, 10<sup>6</sup> on/off, 22단계 아날로그 프로그래밍은 FeFET 최고 수준이며, 350개 소자 균일성과 97.2% CIFAR-10 정확도로 실용화 가능성을 입증한다. <strong>향후 전망:</strong> 3D 적층, 대면적 어레이, 2D 반도체 융합, 실시간 Edge AI 데모가 핵심 과제이다.</p>
+  </div>
+
+  <div class="page-footer">
+    <span>BIBLO Research Analytics &middot; Sungkyunkwan University</span>
+    <span>Generated 2026. 4. 10. &middot; FOR RESEARCH PLANNING PURPOSES</span>
+    <span>3/3</span>
+  </div>
+</div>
+
+</body>
+</html>
