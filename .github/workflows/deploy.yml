@@ -18,6 +18,8 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            set -e
             cd /home/ubuntu/digital_brosure
-            git pull origin main
+            git fetch origin main
+            git reset --hard origin/main
             pm2 restart biblo-ai || pm2 start ecosystem.config.js
