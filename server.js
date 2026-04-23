@@ -3,7 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = 3000;
-const ROOT = path.join(__dirname, 'v2');
+const ROOT = __dirname;
+const DEFAULT_DOC = '/v2/index.html';
 
 const MIME = {
   '.html': 'text/html',
@@ -25,7 +26,7 @@ const MIME = {
 };
 
 const server = http.createServer((req, res) => {
-  let filePath = req.url === '/' ? '/index.html' : req.url;
+  let filePath = req.url === '/' ? DEFAULT_DOC : req.url;
   filePath = path.join(ROOT, filePath.split('?')[0]);
 
   const ext = path.extname(filePath).toLowerCase();
@@ -35,7 +36,7 @@ const server = http.createServer((req, res) => {
     if (err) {
       if (err.code === 'ENOENT') {
         // SPA fallback
-        fs.readFile(path.join(ROOT, 'index.html'), (e, d) => {
+        fs.readFile(path.join(ROOT, DEFAULT_DOC), (e, d) => {
           if (e) { res.writeHead(500); res.end('Server Error'); return; }
           res.writeHead(200, { 'Content-Type': 'text/html' });
           res.end(d);
