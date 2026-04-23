@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = 3000;
-const ROOT = __dirname;
-const DEFAULT_DOC = '/v2/index.html';
+const ROOT = path.join(__dirname, 'v2');
+const DEFAULT_DOC = '/index.html';
 
 const MIME = {
   '.html': 'text/html',
