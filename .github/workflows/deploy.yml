@@ -18,6 +18,43 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            set -e
             cd /home/ubuntu/digital_brosure
             git pull origin main
+
+            # --- nginx apply with backup + validate + auto-revert ---
+            TS=$(date +%Y%m%d-%H%M%S)
+            BACKUP_DIR=/home/ubuntu/nginx-backups/$TS
+            sudo mkdir -p "$BACKUP_DIR"
+            sudo cp -a /etc/nginx/sites-available "$BACKUP_DIR/sites-available"
+            sudo cp -a /etc/nginx/sites-enabled "$BACKUP_DIR/sites-enabled"
+
+            sudo cp deploy/nginx/biblo.conf /etc/nginx/sites-available/biblo.conf
+            sudo ln -sf /etc/nginx/sites-available/biblo.conf /etc/nginx/sites-enabled/biblo.conf
+
+            # Disable conflicting default site if present
+            if [ -e /etc/nginx/sites-enabled/default ]; then
+              sudo rm /etc/nginx/sites-enabled/default
+            fi
+            # Disable any other previously-enabled site for biblo (best effort)
+            for f in /etc/nginx/sites-enabled/*; do
+              name=$(basename "$f")
+              if [ "$name" != "biblo.conf" ] && sudo grep -qE "server_name[[:space:]]+(www\.)?biblo\.ai" "$f" 2>/dev/null; then
+                sudo rm "$f"
+              fi
+            done
+
+            if sudo nginx -t; then
+              sudo systemctl reload nginx
+              echo "nginx reloaded OK"
+            else
+              echo "nginx -t FAILED, reverting"
+              sudo rm -rf /etc/nginx/sites-available /etc/nginx/sites-enabled
+              sudo cp -a "$BACKUP_DIR/sites-available" /etc/nginx/sites-available
+              sudo cp -a "$BACKUP_DIR/sites-enabled" /etc/nginx/sites-enabled
+              sudo nginx -t
+              exit 1
+            fi
+
+            # --- pm2 restart ---
             pm2 restart biblo-ai || pm2 start ecosystem.config.js
