@@ -79,7 +79,7 @@ body{
 .name{
   font-family:var(--serif);
   font-size:clamp(46px,8vw,84px);
-  line-height:1.02;font-weight:900;letter-spacing:-.02em;margin:0;color:var(--ink);
+  line-height:1.02;font-weight:700;letter-spacing:-.02em;margin:0;color:var(--ink);
 }
 .name .en{display:block;font-family:var(--sans);font-weight:500;font-size:clamp(13px,2vw,16px);letter-spacing:.22em;text-transform:uppercase;color:var(--faint);margin-top:16px;}
 .role{margin:22px 0 0;font-size:clamp(17px,2.4vw,21px);color:var(--ink);font-weight:600;}
@@ -179,7 +179,7 @@ td .kf{color:var(--muted);font-size:12.5px;}
 .btn.ghost{background:#fff;color:var(--accent);}
 
 /* ── Responsive ── */
-@media (max-width:760px){
+@media screen and (max-width:760px){
   .hero{grid-template-columns:1fr;}
   .portrait{max-width:220px;order:-1;margin-bottom:8px;}
   .stats{grid-template-columns:1fr 1fr;}
@@ -190,7 +190,7 @@ td .kf{color:var(--muted);font-size:12.5px;}
   .cards{grid-template-columns:1fr;}
   .sec-sub{display:none;}
 }
-@media (max-width:420px){.stats{grid-template-columns:1fr;}.stat{border-right:0;border-bottom:1px solid var(--line);}.stat:last-child{border-bottom:0;}}
+@media screen and (max-width:420px){.stats{grid-template-columns:1fr;}.stat{border-right:0;border-bottom:1px solid var(--line);}.stat:last-child{border-bottom:0;}}
 
 /* ── Print ── */
 @media print{
