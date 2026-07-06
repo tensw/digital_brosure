@@ -13,6 +13,9 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/fav/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/fav/favicon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/fav/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
 /* ══════════════════════════════════════════════════════════
    CEO Profile — 독립 디자인 (research-note / editorial)
@@ -31,9 +34,9 @@
   --accent-line:#c7d0e2;
   --gold:#9a7b32;          /* restrained editorial highlight */
   --maxw:960px;
-  --serif:"Nanum Myeongjo",Georgia,"Apple SD Gothic Neo","Noto Serif KR","Times New Roman",serif;
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-  --mono:"SF Mono",ui-monospace,"Menlo","Consolas",monospace;
+  --serif:"Noto Sans KR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --sans:"Noto Sans KR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --mono:"Noto Sans KR",-apple-system,ui-monospace,"Menlo",monospace;
 }
 *,*::before,*::after{box-sizing:border-box;}
 html{-webkit-text-size-adjust:100%;}
@@ -76,7 +79,7 @@ body{
 .name{
   font-family:var(--serif);
   font-size:clamp(46px,8vw,84px);
-  line-height:1.02;font-weight:700;letter-spacing:-.01em;margin:0;color:var(--ink);
+  line-height:1.02;font-weight:900;letter-spacing:-.02em;margin:0;color:var(--ink);
 }
 .name .en{display:block;font-family:var(--sans);font-weight:500;font-size:clamp(13px,2vw,16px);letter-spacing:.22em;text-transform:uppercase;color:var(--faint);margin-top:16px;}
 .role{margin:22px 0 0;font-size:clamp(17px,2.4vw,21px);color:var(--ink);font-weight:600;}
@@ -123,8 +126,8 @@ section{margin-top:clamp(40px,6vw,66px);}
 .pgroup{margin-bottom:26px;}
 .pgroup:last-child{margin-bottom:0;}
 .pgroup > h4{
-  font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
-  margin:0 0 12px;font-weight:700;
+  font-size:18px;letter-spacing:-.01em;color:var(--gold);
+  margin:0 0 14px;font-weight:700;
 }
 .plist{list-style:none;margin:0;padding:0;}
 .plist li{
@@ -132,7 +135,7 @@ section{margin-top:clamp(40px,6vw,66px);}
   padding:11px 0;border-top:1px solid var(--line-2);align-items:baseline;
 }
 .plist li:first-child{border-top:0;}
-.plist .yr{font-family:var(--mono);font-size:12.5px;color:var(--muted);letter-spacing:-.02em;white-space:nowrap;padding-top:2px;}
+.plist .yr{font-family:var(--mono);font-size:12.5px;color:var(--muted);letter-spacing:-.02em;white-space:nowrap;padding-top:2px;font-variant-numeric:tabular-nums;}
 .plist .p-name{font-weight:600;color:var(--ink);font-size:15px;}
 .plist .p-meta{display:block;font-weight:400;color:var(--muted);font-size:13px;margin-top:3px;}
 .plist .p-meta b{color:var(--accent);font-weight:600;}
@@ -146,7 +149,7 @@ thead th{
   border-bottom:1.5px solid var(--line);font-weight:700;background:var(--paper-2);white-space:nowrap;
 }
 tbody tr:hover{background:var(--accent-soft);}
-td.num{font-family:var(--mono);font-size:12.5px;color:var(--accent);white-space:nowrap;}
+td.num{font-family:var(--mono);font-size:12.5px;color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums;}
 td .kf{color:var(--muted);font-size:12.5px;}
 .badge{display:inline-block;font-size:11px;padding:2px 9px;border-radius:4px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line);font-weight:600;white-space:nowrap;}
 .badge.reg{background:#eef4ec;color:#3a6b3a;border-color:#c6ddc2;}
