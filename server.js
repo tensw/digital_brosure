@@ -25,31 +25,46 @@ const MIME = {
   '.webp': 'image/webp',
 };
 
-const server = http.createServer((req, res) => {
-  let filePath = req.url === '/' ? DEFAULT_DOC : req.url;
-  filePath = path.join(ROOT, filePath.split('?')[0]);
-
+function sendFile(res, filePath) {
   const ext = path.extname(filePath).toLowerCase();
   const contentType = MIME[ext] || 'application/octet-stream';
-
   fs.readFile(filePath, (err, data) => {
     if (err) {
-      if (err.code === 'ENOENT') {
-        // SPA fallback
-        fs.readFile(path.join(ROOT, DEFAULT_DOC), (e, d) => {
-          if (e) { res.writeHead(500); res.end('Server Error'); return; }
-          res.writeHead(200, { 'Content-Type': 'text/html' });
-          res.end(d);
-        });
-      } else {
-        res.writeHead(500);
-        res.end('Server Error');
-      }
+      // SPA fallback to the brochure index
+      fs.readFile(path.join(ROOT, DEFAULT_DOC), (e, d) => {
+        if (e) { res.writeHead(500); res.end('Server Error'); return; }
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(d);
+      });
       return;
     }
     res.writeHead(200, { 'Content-Type': contentType });
     res.end(data);
   });
+}
+
+const server = http.createServer((req, res) => {
+  const urlPath = req.url === '/' ? DEFAULT_DOC : req.url.split('?')[0];
+  const filePath = path.join(ROOT, urlPath);
+
+  // Extensionless routes (e.g. /ceo) → try /ceo/index.html then /ceo.html
+  if (!path.extname(filePath)) {
+    const candidates = [
+      path.join(filePath, 'index.html'),
+      `${filePath}.html`,
+    ];
+    const tryNext = (i) => {
+      if (i >= candidates.length) { sendFile(res, filePath); return; }
+      fs.stat(candidates[i], (err, st) => {
+        if (!err && st.isFile()) { sendFile(res, candidates[i]); }
+        else { tryNext(i + 1); }
+      });
+    };
+    tryNext(0);
+    return;
+  }
+
+  sendFile(res, filePath);
 });
 
 server.listen(PORT, () => {
