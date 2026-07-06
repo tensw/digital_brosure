@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>김철형 — 대표이사 · AI 아키텍트 | 주식회사 텐소프트웍스</title>
+<meta name="description" content="김철형 — 주식회사 텐소프트웍스 대표이사. 온톨로지·지식그래프 기반 학술정보 AI 검색과 도서 업무자동화를 설계하는 AI 아키텍트. SW 특급기술자(경력 25년 3개월).">
+<meta property="og:title" content="김철형 — 대표이사 · AI 아키텍트">
+<meta property="og:description" content="온톨로지·지식그래프 기반 학술정보 AI 검색과 도서 업무자동화를 설계하는 AI 아키텍트.">
+<meta property="og:type" content="profile">
+<meta property="og:image" content="../assets/fav/og-image.png">
+<link rel="icon" href="../assets/fav/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/fav/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/fav/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/fav/favicon-180.png">
+<style>
+/* ══════════════════════════════════════════════════════════
+   CEO Profile — 독립 디자인 (research-note / editorial)
+   ══════════════════════════════════════════════════════════ */
+:root{
+  --paper:#ffffff;
+  --paper-2:#f7f6f2;
+  --ink:#16181d;
+  --ink-2:#3b414c;
+  --muted:#727a86;
+  --faint:#a6adb8;
+  --line:#e5e3dc;
+  --line-2:#efeee9;
+  --accent:#1a3b6e;        /* deep ink-navy */
+  --accent-soft:#eef1f7;
+  --accent-line:#c7d0e2;
+  --gold:#9a7b32;          /* restrained editorial highlight */
+  --maxw:960px;
+  --serif:"Nanum Myeongjo",Georgia,"Apple SD Gothic Neo","Noto Serif KR","Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --mono:"SF Mono",ui-monospace,"Menlo","Consolas",monospace;
+}
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  font-family:var(--sans);
+  background:var(--paper-2);
+  color:var(--ink);
+  line-height:1.65;
+  font-size:16px;
+  letter-spacing:-0.01em;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── Sheet ── */
+.sheet{
+  max-width:var(--maxw);
+  margin:32px auto;
+  background:var(--paper);
+  border:1px solid var(--line);
+  box-shadow:0 1px 2px rgba(20,24,30,.04),0 18px 50px -30px rgba(20,24,30,.25);
+}
+.pad{padding:clamp(28px,5vw,72px);}
+
+/* ── Top rule / masthead label ── */
+.brandrule{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;padding:14px clamp(28px,5vw,72px);
+  border-bottom:1px solid var(--line);
+  font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);
+}
+.brandrule .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-right:9px;vertical-align:middle;}
+.brandrule a{color:var(--muted);text-decoration:none;}
+.brandrule .r{display:flex;gap:18px;align-items:center;}
+
+/* ── Hero ── */
+.hero{display:grid;grid-template-columns:1fr 232px;gap:clamp(24px,4vw,56px);align-items:start;}
+.eyebrow{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 18px;}
+.eyebrow::before{content:"";display:inline-block;width:26px;height:1px;background:var(--accent-line);vertical-align:middle;margin-right:12px;}
+.name{
+  font-family:var(--serif);
+  font-size:clamp(46px,8vw,84px);
+  line-height:1.02;font-weight:700;letter-spacing:-.01em;margin:0;color:var(--ink);
+}
+.name .en{display:block;font-family:var(--sans);font-weight:500;font-size:clamp(13px,2vw,16px);letter-spacing:.22em;text-transform:uppercase;color:var(--faint);margin-top:16px;}
+.role{margin:22px 0 0;font-size:clamp(17px,2.4vw,21px);color:var(--ink);font-weight:600;}
+.role .sep{color:var(--accent-line);margin:0 10px;font-weight:400;}
+.role .org{color:var(--accent);}
+.affil{margin:10px 0 0;color:var(--muted);font-size:15px;}
+.lede{
+  margin:26px 0 0;max-width:44ch;font-size:clamp(15px,2vw,17px);color:var(--ink-2);line-height:1.72;
+  padding-left:18px;border-left:2px solid var(--accent-line);
+}
+
+.portrait{position:relative;}
+.portrait img{width:100%;aspect-ratio:4/5;height:auto;object-fit:cover;object-position:50% 16%;display:block;border:1px solid var(--line);background:var(--paper-2);}
+.portrait figcaption{margin-top:10px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);text-align:center;}
+
+/* ── Stat band ── */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  margin-top:clamp(30px,5vw,52px);border:1px solid var(--line);border-radius:2px;overflow:hidden;background:var(--paper-2);
+}
+.stat{padding:20px 22px;border-right:1px solid var(--line);}
+.stat:last-child{border-right:0;}
+.stat .n{font-family:var(--serif);font-size:clamp(24px,3.4vw,34px);line-height:1;color:var(--accent);font-weight:700;}
+.stat .n small{font-size:.5em;font-weight:600;color:var(--ink-2);letter-spacing:0;}
+.stat .l{margin-top:9px;font-size:12px;color:var(--muted);letter-spacing:.02em;}
+
+/* ── Sections ── */
+section{margin-top:clamp(40px,6vw,66px);}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin:0 0 22px;padding-bottom:14px;border-bottom:2px solid var(--ink);}
+.sec-no{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.05em;font-weight:600;flex:none;padding-top:2px;}
+.sec-title{font-family:var(--serif);font-size:clamp(22px,3.2vw,30px);font-weight:700;margin:0;line-height:1.1;}
+.sec-sub{margin-left:auto;font-size:12px;color:var(--faint);letter-spacing:.04em;align-self:flex-end;}
+
+/* keyword chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{
+  font-size:13px;padding:6px 13px;border:1px solid var(--accent-line);border-radius:999px;
+  background:var(--accent-soft);color:var(--accent);letter-spacing:-.01em;
+}
+
+/* project groups */
+.pgroup{margin-bottom:26px;}
+.pgroup:last-child{margin-bottom:0;}
+.pgroup > h4{
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
+  margin:0 0 12px;font-weight:700;
+}
+.plist{list-style:none;margin:0;padding:0;}
+.plist li{
+  display:grid;grid-template-columns:118px 1fr;gap:8px 20px;
+  padding:11px 0;border-top:1px solid var(--line-2);align-items:baseline;
+}
+.plist li:first-child{border-top:0;}
+.plist .yr{font-family:var(--mono);font-size:12.5px;color:var(--muted);letter-spacing:-.02em;white-space:nowrap;padding-top:2px;}
+.plist .p-name{font-weight:600;color:var(--ink);font-size:15px;}
+.plist .p-meta{display:block;font-weight:400;color:var(--muted);font-size:13px;margin-top:3px;}
+.plist .p-meta b{color:var(--accent);font-weight:600;}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line-2);vertical-align:top;}
+thead th{
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1.5px solid var(--line);font-weight:700;background:var(--paper-2);white-space:nowrap;
+}
+tbody tr:hover{background:var(--accent-soft);}
+td.num{font-family:var(--mono);font-size:12.5px;color:var(--accent);white-space:nowrap;}
+td .kf{color:var(--muted);font-size:12.5px;}
+.badge{display:inline-block;font-size:11px;padding:2px 9px;border-radius:4px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line);font-weight:600;white-space:nowrap;}
+.badge.reg{background:#eef4ec;color:#3a6b3a;border-color:#c6ddc2;}
+
+/* callout cards (awards / approvals / agreements) */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.ccard{border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:2px;padding:16px 18px;background:var(--paper);}
+.ccard .t{font-size:12px;letter-spacing:.03em;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:7px;}
+.ccard .d{font-size:15px;color:var(--ink);font-weight:600;line-height:1.5;}
+.ccard .m{font-size:13px;color:var(--muted);margin-top:5px;}
+
+/* footer */
+.foot{border-top:1px solid var(--line);margin-top:clamp(44px,6vw,68px);padding-top:26px;display:flex;flex-wrap:wrap;gap:18px 40px;justify-content:space-between;align-items:flex-end;}
+.foot .l .u{font-family:var(--serif);font-size:20px;color:var(--accent);font-weight:700;}
+.foot .l .s{font-size:13px;color:var(--muted);margin-top:4px;}
+.foot .r{font-size:12px;color:var(--faint);text-align:right;line-height:1.7;}
+.notestamp{display:inline-block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);border-radius:999px;padding:4px 12px;margin-top:2px;}
+
+/* print / action button */
+.actions{position:fixed;right:22px;bottom:22px;z-index:20;display:flex;gap:10px;}
+.btn{
+  font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.02em;cursor:pointer;
+  border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:999px;
+  padding:11px 20px;box-shadow:0 8px 24px -10px rgba(26,59,110,.6);transition:transform .12s ease,opacity .12s ease;
+}
+.btn:hover{transform:translateY(-1px);}
+.btn.ghost{background:#fff;color:var(--accent);}
+
+/* ── Responsive ── */
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;}
+  .portrait{max-width:220px;order:-1;margin-bottom:8px;}
+  .stats{grid-template-columns:1fr 1fr;}
+  .stat:nth-child(2){border-right:0;}
+  .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--line);}
+  .plist li{grid-template-columns:1fr;gap:2px;}
+  .plist .yr{padding-top:0;}
+  .cards{grid-template-columns:1fr;}
+  .sec-sub{display:none;}
+}
+@media (max-width:420px){.stats{grid-template-columns:1fr;}.stat{border-right:0;border-bottom:1px solid var(--line);}.stat:last-child{border-bottom:0;}}
+
+/* ── Print ── */
+@media print{
+  :root{--maxw:100%;}
+  body{background:#fff;font-size:11.5px;line-height:1.5;}
+  .actions{display:none !important;}
+  .sheet{box-shadow:none;border:0;margin:0;max-width:100%;}
+  .brandrule{padding-left:0;padding-right:0;}
+  .pad{padding:0;}
+  @page{margin:14mm 14mm;}
+  .hero{grid-template-columns:1fr 150px;gap:24px;}
+  .portrait img{filter:none;}
+  .name{font-size:40px;}
+  section{margin-top:22px;page-break-inside:auto;}
+  .sec-head{border-bottom-width:1.5px;margin-bottom:12px;padding-bottom:8px;}
+  .sec-title{font-size:17px;}
+  .stat .n{font-size:20px;}
+  .lfocus,tbody tr:hover{background:transparent !important;}
+  .plist li,tr,.ccard,.pgroup{page-break-inside:avoid;}
+  .ccard{break-inside:avoid;}
+  a{color:inherit;text-decoration:none;}
+  .btn{display:none;}
+}
+</style>
+</head>
+<body>
+
+<article class="sheet" id="top">
+
+  <div class="brandrule">
+    <span><span class="dot"></span>BIBLO.AI · PROFILE</span>
+    <span class="r">
+      <a href="https://biblo.ai/ceo">biblo.ai/ceo</a>
+      <span>2026 · v1</span>
+    </span>
+  </div>
+
+  <div class="pad">
+
+    <!-- ══ HERO ══ -->
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Founder &amp; CEO · AI Architect</p>
+        <h1 class="name">김철형<span class="en">Kim Chul-hyung</span></h1>
+        <p class="role"><span class="org">주식회사 텐소프트웍스</span><span class="sep">|</span>대표이사</p>
+        <p class="affil">성균관대학교 대학원 인공지능융합학과 · SW 특급기술자(저작권관리사)</p>
+        <p class="lede">지식을 <b>구조</b>로 잇습니다. 온톨로지와 지식그래프 위에서 학술정보 통합검색, 논문 관리·연구자 매칭, 도서 업무자동화를 설계하는 AI 아키텍트입니다.</p>
+      </div>
+      <figure class="portrait">
+        <img src="photo.jpg" alt="김철형 대표이사 프로필 사진" width="464" height="696">
+        <figcaption>Kim Chul-hyung · Tensoftworks</figcaption>
+      </figure>
+    </header>
+
+    <!-- ══ STAT BAND ══ -->
+    <div class="stats">
+      <div class="stat"><div class="n">25<small>년 3개월</small></div><div class="l">SW 근무·기술경력</div></div>
+      <div class="stat"><div class="n">특급<small></small></div><div class="l">SW기술자 참여인력 등급</div></div>
+      <div class="stat"><div class="n">7<small>+ 건</small></div><div class="l">등록·출원 특허 / 지식재산</div></div>
+      <div class="stat"><div class="n">정부<small> 승인·R&amp;D</small></div><div class="l">산업부 사업재편 · 중기부 과제</div></div>
+    </div>
+
+    <!-- ══ 01 직무 키워드 ══ -->
+    <section>
+      <div class="sec-head"><span class="sec-no">01</span><h2 class="sec-title">전문 영역</h2><span class="sec-sub">Domains of Practice</span></div>
+      <div class="chips">
+        <span class="chip">AI 아키텍처</span>
+        <span class="chip">인공지능 SW 개발</span>
+        <span class="chip">AI Agent 질의응답</span>
+        <span class="chip">온톨로지 기반 AI 검색</span>
+        <span class="chip">지식그래프 · Knowledge Graph</span>
+        <span class="chip">도서·학술정보 통합검색</span>
+        <span class="chip">논문 관리 · 연구자 매칭</span>
+        <span class="chip">AI 도서 업무자동화</span>
+        <span class="chip">생성형 AI 관광퀴즈 플랫폼</span>
+        <span class="chip">이커머스 · 판촉몰 · 직접판매</span>
+        <span class="chip">공공기관 웹서비스 운영</span>
+        <span class="chip">UI/UX · IT 프로젝트 관리</span>
+      </div>
+    </section>
+
+    <!-- ══ 02 대표 프로젝트 ══ -->
+    <section>
+      <div class="sec-head"><span class="sec-no">02</span><h2 class="sec-title">대표 프로젝트</h2><span class="sec-sub">Selected Work</span></div>
+
+      <div class="pgroup">
+        <h4>AI · 학술정보</h4>
+        <ul class="plist">
+          <li><span class="yr">2024.12–2025.02</span><span><span class="p-name">AI 기반 논문홍보 플랫폼 구축</span><span class="p-meta">AI 아키텍처 · <b>성균관대학교</b></span></span></li>
+          <li><span class="yr">2024.11–2025.02</span><span><span class="p-name">AI 기반 학술정보관 웹사이트 개선</span><span class="p-meta">인공지능 SW 개발 · <b>성균관대학교</b></span></span></li>
+          <li><span class="yr">2024.08–2025.07</span><span><span class="p-name">생성형 AI 기반 관광퀴즈 게임 플랫폼 연구·개발</span><span class="p-meta">AI 아키텍처 · <b>중소벤처기업부</b></span></span></li>
+          <li><span class="yr">최근</span><span><span class="p-name">평택대학교 AI 지식융합 생태계 구축 및 인프라 고도화</span><span class="p-meta">AI/지식융합 인프라 구축 · <b>평택대학교</b></span></span></li>
+          <li><span class="yr">최근</span><span><span class="p-name">이맥스시스템 AI 시스템 개발</span><span class="p-meta">AI 시스템 개발 · <b>㈜이맥스시스템</b></span></span></li>
+          <li><span class="yr">최근</span><span><span class="p-name">AI 융합 독립운동기념관 탐방 퀴즈 플랫폼 개발</span><span class="p-meta">AI 플랫폼 개발</span></span></li>
+        </ul>
+      </div>
+
+      <div class="pgroup">
+        <h4>학술 · 고전번역</h4>
+        <ul class="plist">
+          <li><span class="yr">2023.11–2023.12</span><span><span class="p-name">성균관대 한국경학자료집성 시스템 이관</span><span class="p-meta">IT시스템 관리 · <b>한국고전번역원</b></span></span></li>
+          <li><span class="yr">2023.09–2023.12</span><span><span class="p-name">국가 고전번역 종합정보망 개편</span><span class="p-meta">사업총괄 · <b>한국고전번역원</b></span></span></li>
+        </ul>
+      </div>
+
+      <div class="pgroup">
+        <h4>커머스 · 핀테크 · 플랫폼</h4>
+        <ul class="plist">
+          <li><span class="yr">2023.06–2024.03</span><span><span class="p-name">기프티쇼비즈 판촉몰 개발 및 SM 운영·개선</span><span class="p-meta">사업총괄 · <b>㈜케이티알파</b></span></span></li>
+          <li><span class="yr">2022.05–2022.11</span><span><span class="p-name">서빙로봇 주문·주문관리·메뉴관리 시스템 개발</span><span class="p-meta">SW 아키텍처 · <b>㈜우아한형제들</b></span></span></li>
+          <li><span class="yr">2020.01–2021.07</span><span><span class="p-name">AI 쇼핑플랫폼 SELEC7</span><span class="p-meta">정보기술기획 · 특허출원</span></span></li>
+          <li><span class="yr">2019.07–2020.12</span><span><span class="p-name">웹 에디터 기반 CMS 솔루션 코드블럭(CODBLOCK)</span><span class="p-meta">정보기술기획</span></span></li>
+          <li><span class="yr">2018.09–2019.03</span><span><span class="p-name">신한은행 AI 펀드추천 솔루션 신한로보</span><span class="p-meta">IT 프로젝트 관리 · <b>신한은행</b></span></span></li>
+          <li><span class="yr">2018.07–2018.08</span><span><span class="p-name">AI 펀드포트폴리오 로보어드바이저 앱 제작</span><span class="p-meta">정보기술기획 · <b>㈜크래프트테크놀로지스</b></span></span></li>
+          <li><span class="yr">2018.07–2019.07</span><span><span class="p-name">멀티 웹사이트 생성·관리 CMS 플랫폼 TENPLATE</span><span class="p-meta">정보기술기획</span></span></li>
+          <li><span class="yr">2015.01–2018.07</span><span><span class="p-name">APP 자동화 솔루션 프리즘(freesm)</span><span class="p-meta">시스템 SW 개발 · <b>나노디엠에스㈜</b></span></span></li>
+        </ul>
+      </div>
+
+      <div class="pgroup">
+        <h4>관광 · 문화 · 공공</h4>
+        <ul class="plist">
+          <li><span class="yr">2023.10–2023.12</span><span><span class="p-name">대한민국 구석구석 신규서비스 · 리워드 지급 서비스 개발</span><span class="p-meta">사업총괄 · <b>한국관광공사</b></span></span></li>
+          <li><span class="yr">2023.07–2023.12</span><span><span class="p-name">소장자료 관리 및 웹서비스 시스템 유지보수</span><span class="p-meta">사업총괄 · <b>독립기념관</b></span></span></li>
+          <li><span class="yr">2023.01–2023.12</span><span><span class="p-name">서울시체육회 및 41개 회원종목단체 웹사이트 통합 유지보수</span><span class="p-meta">IT시스템 관리 · <b>서울특별시체육회</b></span></span></li>
+          <li><span class="yr">2022.07–2022.10</span><span><span class="p-name">2022 어촌여행 애플리케이션 개발</span><span class="p-meta">응용 SW 개발 · <b>수협중앙회</b></span></span></li>
+          <li><span class="yr">2022.05–2022.11</span><span><span class="p-name">2022 소장자료 아카이브 구축사업</span><span class="p-meta">응용 SW 개발 · <b>독립기념관</b></span></span></li>
+        </ul>
+      </div>
+
+      <div class="pgroup">
+        <h4>도서관 · 저작권 · 공공행정</h4>
+        <ul class="plist">
+          <li><span class="yr">2012.09–2013.01</span><span><span class="p-name">법원도서관 홈페이지 디자인 변경 및 기능개선</span><span class="p-meta">IT 프로젝트 관리 · <b>법원도서관</b></span></span></li>
+          <li><span class="yr">2011.09–2011.12</span><span><span class="p-name">법원도서관 웹콘텐츠 보안·기능개선·운영장비 교체</span><span class="p-meta">IT 프로젝트 관리 · <b>법원도서관</b></span></span></li>
+          <li><span class="yr">2011.07–2011.10</span><span><span class="p-name">동북아 역사DB 시스템 구축사업</span><span class="p-meta">UI/UX 개발 · <b>동북아역사재단</b></span></span></li>
+          <li><span class="yr">2010.01–2010.10</span><span><span class="p-name">불법저작물 추적 관리시스템 구축(icop3)</span><span class="p-meta">UI/UX 개발 · <b>저작권보호센터</b></span></span></li>
+          <li><span class="yr">2008.06–2009.02</span><span><span class="p-name">2008 공무원총조사 시스템 개발</span><span class="p-meta">UI/UX 개발 · <b>행정안전부</b></span></span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══ 03 특허 ══ -->
+    <section>
+      <div class="sec-head"><span class="sec-no">03</span><h2 class="sec-title">특허 및 지식재산</h2><span class="sec-sub">Patents &amp; IP</span></div>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>구분</th><th>출원/등록번호</th><th>명칭</th><th>분야</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge reg">국내 등록</span></td><td class="num">KR102358855B1</td><td>웹 페이지를 생성하는 방법 및 장치</td><td class="kf">웹페이지 생성 · CMS · 블록 기반 저작</td></tr>
+          <tr><td><span class="badge reg">미국 특허</span></td><td class="num">US</td><td>METHOD AND APPARATUS FOR GENERATING WEB PAGE</td><td class="kf">Web page generation · CMS automation</td></tr>
+          <tr><td><span class="badge">출원</span></td><td class="num">10-2025-0135084</td><td>AI 에이전트 질의응답 기반 서비스 제공 장치·방법·프로그램</td><td class="kf">AI Agent · 질의응답 · 서비스 자동화</td></tr>
+          <tr><td><span class="badge">출원</span></td><td class="num">10-2024-0160229</td><td>통합적으로 논문을 관리하는 서버·방법·프로그램</td><td class="kf">논문 관리 · 학술정보 통합관리</td></tr>
+          <tr><td><span class="badge">출원</span></td><td class="num">10-2024-0165833</td><td>연구자 매칭을 위한 서버·방법·프로그램</td><td class="kf">연구자 매칭 · 학술 네트워크 · 추천</td></tr>
+          <tr><td><span class="badge">출원</span></td><td class="num">—</td><td>AI 학술정보 통합검색 솔루션용 논문 매칭 서버·방법·프로그램</td><td class="kf">AI 학술정보 검색 · 논문 매칭</td></tr>
+          <tr><td><span class="badge">출원</span></td><td class="num">—</td><td>AI 쇼핑플랫폼 SELEC7</td><td class="kf">AI 쇼핑 플랫폼 · 커머스 검색·추천</td></tr>
+          <tr><td><span class="badge">출원</span></td><td class="num">—</td><td>웹 에디터 기반 CMS 솔루션 코드블럭(CODBLOCK)</td><td class="kf">CMS · 웹 에디터 · 웹페이지 생성</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <!-- ══ 04 수상 ══ -->
+    <section>
+      <div class="sec-head"><span class="sec-no">04</span><h2 class="sec-title">수상 및 대외 인정</h2><span class="sec-sub">Awards &amp; Recognition</span></div>
+      <div class="cards">
+        <div class="ccard"><div class="t">대한민국 리딩기업대상</div><div class="d">이커머스 R&amp;D 혁신대상 — 2년 연속 수상</div></div>
+        <div class="ccard"><div class="t">AI 도서 검색 솔루션 Biblo</div><div class="d">성균관대학교 학술정보관 AI 도서 검색 솔루션 적용</div><div class="m">대외 보도로 성과 인정</div></div>
+      </div>
+    </section>
+
+    <!-- ══ 05 인증·승인 ══ -->
+    <section>
+      <div class="sec-head"><span class="sec-no">05</span><h2 class="sec-title">자격 · 인증 · 정부 승인</h2><span class="sec-sub">Credentials</span></div>
+      <div class="cards">
+        <div class="ccard"><div class="t">자격증</div><div class="d">저작권관리사</div></div>
+        <div class="ccard"><div class="t">기술등급</div><div class="d">SW기술자 기준 특급 (참여인력 등급)</div></div>
+        <div class="ccard"><div class="t">연구조직</div><div class="d">벤처기업 부설연구소 인정</div></div>
+        <div class="ccard"><div class="t">정부 승인 · 산업통상자원부</div><div class="d">사업재편 승인 — AI 기반 도서 업무자동화</div></div>
+      </div>
+    </section>
+
+    <!-- ══ 06 협약 ══ -->
+    <section>
+      <div class="sec-head"><span class="sec-no">06</span><h2 class="sec-title">협약 및 전략사업</h2><span class="sec-sub">Partnerships</span></div>
+      <div class="cards">
+        <div class="ccard"><div class="t">업무 교류 협약</div><div class="d">건국대학교 중원도서관</div></div>
+        <div class="ccard"><div class="t">AI 기반 독서 진흥 사업</div><div class="d">구리시 — 인공지능(AI) 기반 독서 진흥 추진</div></div>
+        <div class="ccard"><div class="t">사업재편 승인</div><div class="d">산업통상자원부 — AI 기반 도서 업무자동화</div></div>
+        <div class="ccard"><div class="t">연구개발 과제</div><div class="d">중소벤처기업부 — 생성형 AI 기반 관광퀴즈 게임 플랫폼</div></div>
+      </div>
+    </section>
+
+    <!-- ══ 07 전체 수행 이력 ══ -->
+    <section>
+      <div class="sec-head"><span class="sec-no">07</span><h2 class="sec-title">전체 수행 이력</h2><span class="sec-sub">Full Career · 증빙 완료</span></div>
+      <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>기간</th><th>사업명</th><th>담당</th><th>발주처 / 기관</th></tr></thead>
+        <tbody>
+          <tr><td class="num">2024.12–25.02</td><td>AI 기반 논문홍보 플랫폼 구축</td><td class="kf">AI 아키텍처</td><td>성균관대학교</td></tr>
+          <tr><td class="num">2024.11–25.02</td><td>AI 기반 학술정보관 웹사이트 개선</td><td class="kf">AI SW 개발</td><td>성균관대학교</td></tr>
+          <tr><td class="num">2024.08–25.07</td><td>생성형 AI 관광퀴즈 게임 플랫폼 연구·개발</td><td class="kf">AI 아키텍처</td><td>중소벤처기업부</td></tr>
+          <tr><td class="num">2023.12–24.03</td><td>기프티쇼비즈 판촉 SM 운영·개선 용역</td><td class="kf">사업총괄</td><td>㈜케이티알파</td></tr>
+          <tr><td class="num">2023.06–24.03</td><td>기프티쇼비즈 판촉몰 사업 개발 용역</td><td class="kf">사업총괄</td><td>㈜케이티알파</td></tr>
+          <tr><td class="num">2023.11–23.12</td><td>성균관대 한국경학자료집성 시스템 이관</td><td class="kf">IT시스템 관리</td><td>한국고전번역원</td></tr>
+          <tr><td class="num">2023.09–23.12</td><td>국가 고전번역 종합정보망 개편</td><td class="kf">사업총괄</td><td>한국고전번역원</td></tr>
+          <tr><td class="num">2023.10–23.12</td><td>대한민국 구석구석 신규서비스·리워드 지급 서비스</td><td class="kf">사업총괄</td><td>한국관광공사</td></tr>
+          <tr><td class="num">2023.07–23.12</td><td>2023 소장자료 관리 및 웹서비스 유지보수</td><td class="kf">사업총괄</td><td>독립기념관</td></tr>
+          <tr><td class="num">2023.01–23.12</td><td>서울시체육회 및 41개 회원종목단체 웹사이트 통합 유지보수</td><td class="kf">IT시스템 관리</td><td>서울특별시체육회</td></tr>
+          <tr><td class="num">2022.07–22.10</td><td>2022 어촌여행 애플리케이션 개발</td><td class="kf">응용 SW 개발</td><td>수협중앙회</td></tr>
+          <tr><td class="num">2022.06–22.11</td><td>서빙로봇 주문·주문관리·메뉴관리 시스템 개발</td><td class="kf">SW 아키텍처</td><td>㈜우아한형제들</td></tr>
+          <tr><td class="num">2022.05–22.11</td><td>2022 소장자료 아카이브 구축사업</td><td class="kf">응용 SW 개발</td><td>독립기념관</td></tr>
+          <tr><td class="num">2020.01–21.07</td><td>AI 쇼핑플랫폼 SELEC7 (특허출원)</td><td class="kf">정보기술기획</td><td>—</td></tr>
+          <tr><td class="num">2019.07–20.12</td><td>웹 에디터 기반 CMS 솔루션 코드블럭(CODBLOCK)</td><td class="kf">정보기술기획</td><td>—</td></tr>
+          <tr><td class="num">2018.09–19.03</td><td>신한은행 AI 펀드추천 솔루션 신한로보</td><td class="kf">IT 프로젝트 관리</td><td>신한은행</td></tr>
+          <tr><td class="num">2018.07–19.07</td><td>멀티 웹사이트 생성·관리 CMS 플랫폼 TENPLATE</td><td class="kf">정보기술기획</td><td>—</td></tr>
+          <tr><td class="num">2018.07–18.08</td><td>AI 펀드포트폴리오 로보어드바이저 앱 제작</td><td class="kf">정보기술기획</td><td>㈜크래프트테크놀로지스</td></tr>
+          <tr><td class="num">2015.01–18.07</td><td>APP 자동화 솔루션 프리즘(freesm)</td><td class="kf">시스템 SW 개발</td><td>나노디엠에스㈜</td></tr>
+          <tr><td class="num">2012.09–13.01</td><td>법원도서관 홈페이지 디자인 변경 및 기능개선</td><td class="kf">IT 프로젝트 관리</td><td>법원도서관</td></tr>
+          <tr><td class="num">2011.09–11.12</td><td>법원도서관 보안개선·기능개선·운영장비 교체</td><td class="kf">IT 프로젝트 관리</td><td>법원도서관</td></tr>
+          <tr><td class="num">2011.07–11.10</td><td>동북아 역사DB 시스템 구축사업</td><td class="kf">UI/UX 개발</td><td>동북아역사재단</td></tr>
+          <tr><td class="num">2011.04–11.06</td><td>경상대 남명학 고문헌 DB 구축 사업</td><td class="kf">UI/UX 디자인</td><td>㈜엠투에스</td></tr>
+          <tr><td class="num">2010.11–10.12</td><td>명지대 서양고서 DB 모바일서비스</td><td class="kf">UI/UX 개발</td><td>명지대학교</td></tr>
+          <tr><td class="num">2010.10–10.12</td><td>법원도서관 중문 홈페이지 구축</td><td class="kf">IT 프로젝트 관리</td><td>법원도서관</td></tr>
+          <tr><td class="num">2010.05–10.07</td><td>법원도서관 영문 홈페이지 개편·기능개선</td><td class="kf">IT 프로젝트 관리</td><td>법원도서관</td></tr>
+          <tr><td class="num">2010.01–10.10</td><td>불법저작물 추적 관리시스템 구축(icop3)</td><td class="kf">UI/UX 개발</td><td>저작권보호센터</td></tr>
+          <tr><td class="num">2009.09–09.12</td><td>디지털도서관 홈페이지 개편·기능개선</td><td class="kf">IT 프로젝트 관리</td><td>디지털도서관</td></tr>
+          <tr><td class="num">2009.06–09.09</td><td>법원도서관 홈페이지 개편·기능개선</td><td class="kf">IT 프로젝트 관리</td><td>대법원도서관</td></tr>
+          <tr><td class="num">2008.12–09.04</td><td>한국장애인인력관리시스템 구축</td><td class="kf">UI/UX 개발</td><td>한국장애인총연합회</td></tr>
+          <tr><td class="num">2008.06–09.02</td><td>2008 공무원총조사 시스템 개발</td><td class="kf">UI/UX 개발</td><td>행정안전부</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <!-- ══ FOOTER ══ -->
+    <footer class="foot">
+      <div class="l">
+        <div class="u">biblo.ai/ceo</div>
+        <div class="s">주식회사 텐소프트웍스 · 대표이사 김철형</div>
+        <span class="notestamp">연구노트처럼 계속 업데이트됩니다</span>
+      </div>
+      <div class="r">
+        본 프로필의 이력·특허·수상·협약은 모두 증빙 완료 항목입니다.<br>
+        최종 업데이트 2026-07-06 · v1
+      </div>
+    </footer>
+
+  </div>
+</article>
+
+<div class="actions">
+  <button class="btn" onclick="window.print()">인쇄 · PDF 저장</button>
+  <button class="btn ghost" onclick="document.getElementById('top').scrollIntoView({behavior:'smooth'})">맨 위로</button>
+</div>
+
+</body>
+</html>
