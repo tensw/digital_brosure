@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* biblo.ai/skku → /skku/ 자동 보정 (상대경로 자산 안전) */if(/^https?:/.test(location.protocol)&&/\/skku$/.test(location.pathname))location.replace(location.href.replace(/\/skku(?=$|[?#])/,'/skku/'));</script>
+<title>성균관대학교 학술정보관 AI 구축사례</title>
+<link rel="icon" href="assets/fav/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/fav/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/fav/favicon-180.png">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+/* ══════════════ Tokens (원본 덱 디자인 시스템) ══════════════ */
+:root{
+  --grad: linear-gradient(90deg,#ff9a3c 0%,#ff5f9e 38%,#a24dff 70%,#4d8cff 100%);
+  --grad-pill: linear-gradient(90deg,#ff8a3c,#ff5f9e 55%,#7b6bff);
+  --pink:#ff5f9e; --blue:#5b8cff; --gold:#ffc24d; --purple:#a24dff;
+  --bg-dark:#08070e; --ink:#ffffff; --muted:rgba(255,255,255,0.62); --faint:rgba(255,255,255,0.42);
+  --card:rgba(255,255,255,0.035); --line:rgba(255,255,255,0.12);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  overflow: hidden; height: 100vh; margin: 0;
+  font-family:"Pretendard Variable",Pretendard,"Wanted Sans","맑은 고딕","Malgun Gothic",system-ui,sans-serif;
+  background: var(--bg-dark); color: var(--ink); line-height: 1.55; letter-spacing:-0.01em;
+  -webkit-font-smoothing:antialiased;
+}
+strong{ font-weight:700; }
+.gt{ background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.pink{ color:var(--pink); } .blue{ color:var(--blue); } .gold{ color:var(--gold); }
+
+/* ══════════════ Card transition (v2 엔진 유지) ══════════════ */
+.card{ position:fixed; inset:0; display:flex; align-items:safe center; justify-content:center;
+  padding:52px 48px; transform:translateY(100%); transition:transform .6s cubic-bezier(.4,0,.2,1);
+  overflow-y:auto; z-index:1; background:var(--bg-dark); }
+.card.active{ transform:translateY(0); z-index:2; }
+.card.passed{ transform:translateY(-100%); }
+.container{ width:100%; max-width:1180px; margin:0 auto; }
+
+/* 퍼플 로우폴리 배경 (표지·섹션·클로징) */
+.bg-purple{ background:
+  radial-gradient(120% 90% at 78% 30%, rgba(162,77,255,.32), transparent 55%),
+  radial-gradient(90% 80% at 20% 80%, rgba(255,95,158,.18), transparent 60%),
+  linear-gradient(135deg,#1a1030 0%,#2a1a48 45%,#3a2158 100%); }
+.bg-purple::before{ content:''; position:absolute; inset:0; opacity:.5; pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:64px 64px; -webkit-clip-path:polygon(0 0,100% 0,100% 100%,0 100%); }
+
+/* ══════════════ 커버 ══════════════ */
+.cover{ text-align:left; }
+.cover .container{ position:relative; z-index:1; max-width:1000px; }
+.cover-eyebrow{ font-size:15px; font-weight:600; color:rgba(255,255,255,.85); margin-bottom:28px; }
+.cover-eyebrow .chip{ display:inline-block; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25);
+  border-radius:8px; padding:4px 14px; margin-right:8px; }
+.cover h1{ font-size:clamp(40px,6.4vw,74px); font-weight:900; line-height:1.14; letter-spacing:-2px; margin:0 0 22px; }
+.cover h1 .ai{ font-weight:900; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.cover-sub{ font-size:clamp(17px,2.4vw,26px); font-weight:700; color:rgba(255,255,255,.9); margin-bottom:34px; }
+.cover-list{ display:flex; flex-wrap:wrap; gap:10px; }
+.cover-list span{ font-size:14px; font-weight:600; color:#fff; padding:7px 16px; border-radius:999px;
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.16); }
+.cover-org{ margin-top:38px; font-size:13px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,.5); }
+
+/* ══════════════ 콘텐츠 헤더 (섹션번호 + 타이틀) ══════════════ */
+.head{ display:flex; align-items:center; gap:22px; margin-bottom:14px; }
+.secnum{ flex:0 0 auto; width:74px; height:74px; background:#fff; color:#0a0a12; font-weight:900;
+  font-size:38px; display:flex; align-items:center; justify-content:center; border-radius:8px; letter-spacing:-1px; }
+.head h2{ font-size:clamp(24px,3.5vw,40px); font-weight:800; margin:0; line-height:1.2; letter-spacing:-1px; }
+.head h2 .div{ color:var(--faint); font-weight:600; }
+.lead{ font-size:clamp(15px,1.9vw,20px); font-weight:600; color:rgba(255,255,255,.82); margin:0 0 30px; padding-left:96px; line-height:1.6; }
+@media(max-width:760px){ .lead{ padding-left:0; } }
+
+/* ══════════════ AS-IS / TO-BE 비교 ══════════════ */
+.compare{ display:grid; grid-template-columns:1fr 66px 1fr; align-items:center; gap:0; margin-bottom:26px; }
+.cmp{ border-radius:20px; padding:26px 28px; min-height:230px; }
+.cmp.asis{ background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.14); }
+.cmp.tobe{ background:linear-gradient(160deg,rgba(255,95,158,.10),rgba(122,107,255,.10)); position:relative; }
+.cmp.tobe::before{ content:''; position:absolute; inset:0; border-radius:20px; padding:1.5px;
+  background:var(--grad); -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; }
+.cmp .lbl{ display:inline-block; font-size:13px; font-weight:800; letter-spacing:.5px; padding:5px 16px; border-radius:999px; margin-bottom:16px; }
+.cmp.asis .lbl{ background:rgba(255,255,255,.12); color:rgba(255,255,255,.7); }
+.cmp.tobe .lbl{ background:var(--grad-pill); color:#fff; }
+.cmp h3{ font-size:clamp(17px,2.1vw,23px); font-weight:800; margin:0 0 16px; line-height:1.35; }
+.cmp ul{ margin:0; padding:0; list-style:none; }
+.cmp li{ font-size:14.5px; color:var(--muted); line-height:1.6; padding:5px 0 5px 20px; position:relative; }
+.cmp li::before{ content:''; position:absolute; left:2px; top:12px; width:6px; height:6px; border-radius:50%; }
+.cmp.asis li::before{ background:rgba(255,255,255,.35); }
+.cmp.tobe li::before{ background:var(--pink); }
+.cmp-mid{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; color:var(--faint); }
+.cmp-mid .ring{ width:56px; height:56px; border-radius:50%; border:1px dashed rgba(255,255,255,.3);
+  display:flex; align-items:center; justify-content:center; font-size:22px; color:var(--pink); }
+.cmp-mid .cap{ font-size:11px; text-align:center; line-height:1.3; }
+@media(max-width:760px){ .compare{ grid-template-columns:1fr; gap:14px; } .cmp-mid .ring{ transform:rotate(90deg); } }
+
+/* ══════════════ 파이프라인 flow ══════════════ */
+.flow{ display:flex; align-items:stretch; gap:0; flex-wrap:wrap; margin-bottom:26px; }
+.fnode{ flex:1 1 0; min-width:130px; background:var(--card); border:1px solid var(--line);
+  border-radius:16px; padding:22px 16px; text-align:center; }
+.fnode .ft{ font-size:16px; font-weight:800; margin-bottom:8px; }
+.fnode .fd{ font-size:13px; color:var(--muted); line-height:1.5; }
+.farr{ display:flex; align-items:center; color:var(--purple); font-size:26px; padding:0 8px; font-weight:700; }
+@media(max-width:760px){ .flow{ flex-direction:column; } .farr{ transform:rotate(90deg); justify-content:center; padding:8px 0; } }
+
+/* ══════════════ 2×2 밸류 그리드 ══════════════ */
+.grid2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:26px; }
+.gcard{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:22px 24px; }
+.gcard h4{ margin:0 0 8px; font-size:17px; font-weight:800; }
+.gcard h4 .k{ color:var(--pink); }
+.gcard p{ margin:0; font-size:14px; color:var(--muted); line-height:1.6; }
+@media(max-width:760px){ .grid2{ grid-template-columns:1fr; } }
+
+/* ══════════════ 요약 알약 + 결론 ══════════════ */
+.sumrow{ display:flex; align-items:center; justify-content:center; gap:0; margin:8px 0 18px; flex-wrap:wrap; }
+.sump{ font-size:16px; font-weight:800; color:#fff; padding:12px 30px; border-radius:999px; background:var(--grad-pill); }
+.sump.b{ background:linear-gradient(90deg,#7b6bff,#4d8cff); }
+.sumplus{ width:38px; height:38px; border-radius:50%; background:#2a2436; border:1px solid rgba(255,255,255,.2);
+  display:flex; align-items:center; justify-content:center; margin:0 -6px; z-index:1; font-size:18px; color:#fff; }
+.concl{ text-align:center; font-size:clamp(16px,2vw,22px); font-weight:800; margin:6px 0 4px; }
+.bigkey{ text-align:center; font-size:clamp(28px,4.4vw,52px); font-weight:900; letter-spacing:-1.5px;
+  background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.downarr{ text-align:center; color:var(--faint); font-size:24px; margin:2px 0; }
+
+/* ══════════════ 데모 (오렌지 주석 + 프레임 iframe) ══════════════ */
+.annot{ text-align:right; font-size:14px; font-weight:800; color:#ff9a3c; margin:0 2px 12px; }
+.demo-frame{ border-radius:16px; border:1px solid var(--line); overflow:hidden; background:#0d0d16;
+  box-shadow:0 10px 40px rgba(0,0,0,.5); overscroll-behavior:contain; }
+.demo-frame iframe{ display:block; width:100%; height:66vh; border:none; overscroll-behavior:contain; }
+.demo-frame iframe.youtube{ height:auto; aspect-ratio:16/9; }
+.link-row{ display:flex; gap:12px; align-items:center; margin-top:16px; flex-wrap:wrap; }
+.link-btn{ display:inline-block; border-radius:10px; color:#fff; background:var(--grad-pill); padding:11px 22px;
+  font-size:14px; font-weight:700; text-decoration:none; }
+.link-note{ font-size:13px; color:var(--faint); }
+
+/* MARC before/after (편목 데모) */
+.marc-compare{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:22px; }
+.marc-col{ border-radius:16px; padding:22px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px; line-height:2; }
+.marc-col.plain{ background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.14); }
+.marc-col.biblo{ background:linear-gradient(160deg,rgba(255,95,158,.08),rgba(122,107,255,.08)); border:1px solid rgba(162,77,255,.4); }
+.marc-col .m-head{ font-family:"Pretendard",sans-serif; font-size:14px; font-weight:800; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; }
+.marc-col.plain .m-head{ color:rgba(255,255,255,.6); }
+.marc-col.biblo .m-head .t{ background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.marc-col .badge{ font-size:11px; font-weight:700; padding:3px 10px; border-radius:999px; }
+.marc-col.plain .badge{ background:rgba(255,255,255,.1); color:rgba(255,255,255,.55); }
+.marc-col.biblo .badge{ background:var(--grad-pill); color:#fff; }
+.marc-line{ color:rgba(255,255,255,.72); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.marc-line .tag{ color:rgba(255,255,255,.4); margin-right:6px; }
+.marc-miss{ color:rgba(255,255,255,.32); font-style:italic; }
+.marc-add{ color:#ffd9ea; }
+.marc-add .tag{ color:var(--pink); }
+@media(max-width:760px){ .marc-compare{ grid-template-columns:1fr; } }
+
+/* MARC 보강 견본 (marc50) */
+.book-hd{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:15px 18px; margin-bottom:14px; }
+.book-hd .bh-t{ font-size:18px; font-weight:800; }
+.book-hd .bh-m{ font-size:13px; color:var(--muted); margin-top:3px; font-variant-numeric:tabular-nums; }
+.book-hd .bh-chips{ margin-top:9px; display:flex; gap:6px; flex-wrap:wrap; }
+.book-hd .bh-chips span{ font-size:11px; font-weight:700; color:#fff; background:rgba(255,255,255,.1); border-radius:999px; padding:3px 11px; }
+.keepnote{ font-size:12.5px; color:var(--faint); margin:0 0 14px; line-height:1.55; }
+.keepnote b{ color:rgba(255,255,255,.72); }
+.fill{ display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:15px; }
+.fill-row{ display:grid; grid-template-columns:118px 1fr; gap:12px; align-items:start; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:11px 14px; }
+.fill-row .fl{ font-family:ui-monospace,Menlo,monospace; font-size:12px; }
+.fill-row .fl .tg{ font-weight:800; color:var(--pink); }
+.fill-row .fl .fn{ display:block; color:var(--faint); font-family:"Pretendard",sans-serif; margin-top:3px; font-size:10.5px; }
+.fill-row .fv{ font-size:13px; color:rgba(255,255,255,.85); line-height:1.5; }
+.fill-row .was{ color:var(--faint); font-size:11px; }
+.statbar{ display:flex; gap:9px; flex-wrap:wrap; justify-content:center; margin-bottom:14px; }
+.statbar span{ font-size:12.5px; font-weight:700; color:var(--muted); background:rgba(255,255,255,.05); border:1px solid var(--line); border-radius:999px; padding:6px 14px; }
+.statbar b{ color:var(--pink); }
+@media(max-width:760px){ .fill{ grid-template-columns:1fr; } }
+
+/* 청구기호 부여 (callno) */
+.ladder{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin:14px 0; justify-content:center; }
+.lnode{ text-align:center; padding:10px 15px; border-radius:11px; background:var(--card); border:1px solid var(--line); min-width:78px; }
+.lnode .lc{ font-weight:800; font-size:16px; } .lnode .lt{ display:block; font-size:11px; color:var(--muted); margin-top:2px; }
+.lnode.center{ background:linear-gradient(160deg,rgba(255,95,158,.16),rgba(122,107,255,.16)); border-color:rgba(162,77,255,.55); }
+.lnode.center .lc{ color:#fff; }
+.lsep{ color:var(--faint); font-size:18px; }
+.cn-big{ text-align:center; margin:8px 0 16px; }
+.cn-big .cn{ font-size:clamp(30px,5vw,52px); font-weight:900; letter-spacing:-1px; font-variant-numeric:tabular-nums; }
+.cn-big .cut{ color:var(--pink); }
+.cn-big .ok{ display:inline-block; margin-left:12px; font-size:13px; font-weight:800; color:#7ee0a0; vertical-align:middle; }
+.cn-why{ list-style:none; padding:0; margin:0 0 16px; max-width:900px; margin-left:auto; margin-right:auto; }
+.cn-why li{ font-size:14px; color:var(--muted); padding:5px 0 5px 20px; position:relative; line-height:1.5; }
+.cn-why li::before{ content:'✓'; position:absolute; left:0; color:var(--pink); font-weight:800; }
+.cn-status{ text-align:center; font-size:14px; font-weight:800; color:#7ee0a0; }
+
+/* 챗봇 목업 */
+.chat-mock{ max-width:560px; margin:0 auto 22px; background:#0d1b30; border:1px solid rgba(162,77,255,.3); border-radius:18px; padding:22px; }
+.chat-bubble{ max-width:82%; padding:13px 17px; border-radius:16px; font-size:14.5px; line-height:1.55; margin-bottom:12px; }
+.chat-bubble.user{ margin-left:auto; background:var(--grad-pill); color:#fff; border-bottom-right-radius:4px; }
+.chat-bubble.bot{ background:rgba(255,255,255,.07); color:rgba(255,255,255,.9); border-bottom-left-radius:4px; }
+
+/* 폰 프레임 (biblo.ai 규격: 340×680 · radius 36 · border 4px #333 · pad 12) */
+.phone-wrap{ display:flex; justify-content:center; margin-bottom:22px; }
+.phone-frame{ width:340px; height:680px; background:#000; border-radius:36px; border:4px solid #333; padding:12px;
+  position:relative; box-shadow:0 8px 40px rgba(0,0,0,.5); display:flex; }
+.phone-frame::before{ content:''; position:absolute; top:8px; left:50%; transform:translateX(-50%); width:80px; height:6px; background:#222; border-radius:3px; z-index:2; }
+.phone-frame iframe{ width:100%; height:100%; border:none; border-radius:24px; background:#fff; position:relative; z-index:1; }
+
+/* 좌 텍스트 + 우 폰 시연 split 레이아웃 (챗봇·독서커뮤니티) */
+.demo-split{ display:grid; grid-template-columns:1fr auto; gap:44px; align-items:center; }
+.demo-split .ds-left{ min-width:0; }
+.demo-split .ds-left .lead{ padding-left:0; }
+.demo-split .ds-right{ display:flex; flex-direction:column; align-items:center; gap:12px; }
+.ds-caption{ font-size:12px; font-weight:700; color:#ff9a3c; }
+/* 폰 안 목업 fallback (iframe 로드 실패/차단 시 뒤에서 노출) */
+.phone-fallback{ position:absolute; inset:12px; border-radius:24px; z-index:0; overflow:hidden;
+  background:#0d1b30; padding:18px 14px; display:flex; flex-direction:column; gap:10px; }
+.phone-fallback .pf-title{ font-size:12px; font-weight:800; color:var(--pink); text-align:center; margin-bottom:4px; }
+@media(max-width:900px){ .demo-split{ grid-template-columns:1fr; gap:24px; } .demo-split .ds-right{ order:-1; } }
+
+/* 스크린샷 뷰어 (브라우저 프레임) — 연구자 매칭 */
+.browser{ border-radius:14px; border:1px solid var(--line); overflow:hidden; background:#0d0d16; box-shadow:0 10px 40px rgba(0,0,0,.5); }
+.browser-bar{ display:flex; align-items:center; gap:7px; padding:9px 14px; background:#15151f; border-bottom:1px solid var(--line); }
+.browser-bar i{ width:11px; height:11px; border-radius:50%; display:inline-block; }
+.browser-bar .r{ background:#ff5f57; } .browser-bar .y{ background:#febc2e; } .browser-bar .g{ background:#28c840; }
+.browser-bar .url{ margin-left:12px; font-size:11.5px; color:var(--faint); font-family:ui-monospace,Menlo,monospace; }
+.shot-view{ position:relative; max-height:60vh; overflow:auto; background:#fff; }
+.shot-view img{ width:100%; display:block; }
+/* 개념 밴드 + 풀폭 스크린샷 (연구자 매칭) */
+.vchips{ display:flex; gap:10px; flex-wrap:wrap; margin:0 0 18px; }
+.vchips span{ font-size:13px; font-weight:700; color:#fff; padding:8px 16px; border-radius:999px;
+  background:rgba(255,255,255,.06); border:1px solid var(--line); }
+.vchips span b{ color:var(--pink); }
+.shot-full .shot-view{ max-height:52vh; }
+
+/* 클로징 로고 캐러셀 */
+.thanks h2{ font-size:clamp(26px,4vw,46px); font-weight:900; text-align:center; letter-spacing:-1px; line-height:1.3; margin:0 0 18px; }
+.thanks .big{ font-size:clamp(40px,7vw,84px); font-weight:900; text-align:center; }
+.logos{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:34px; }
+.logos span{ font-size:14px; font-weight:800; color:rgba(255,255,255,.85); padding:12px 22px; border-radius:12px;
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); }
+
+/* ══════════════ 목차(개요) ══════════════ */
+.agenda-eyebrow{ font-size:13px; font-weight:800; letter-spacing:3px; color:var(--pink); margin-bottom:10px; }
+.agenda-title{ font-size:clamp(24px,3.6vw,40px); font-weight:900; letter-spacing:-1px; margin:0 0 26px; }
+.agenda{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.ag-item{ display:flex; gap:16px; align-items:center; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 20px; }
+.ag-n{ flex:0 0 auto; width:46px; height:46px; border-radius:10px; background:var(--grad-pill); color:#fff; font-weight:900; font-size:20px; display:flex; align-items:center; justify-content:center; }
+.ag-t{ font-size:17px; font-weight:800; margin-bottom:4px; }
+.ag-k{ font-size:12.5px; color:var(--muted); line-height:1.5; }
+.ag-k b{ color:var(--pink); font-weight:700; }
+@media(max-width:760px){ .agenda{ grid-template-columns:1fr; } }
+
+/* 섹션 표준용어 태그 (발견성) */
+.sec-tag{ display:inline-block; margin:0 0 12px 96px; font-size:13px; font-weight:800; letter-spacing:.3px;
+  padding:6px 16px; border-radius:999px; background:var(--grad-pill); color:#fff; }
+@media(max-width:760px){ .sec-tag{ margin-left:0; } }
+
+/* ══════════════ 네비 ══════════════ */
+.nav-controls{ position:fixed; right:26px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:12px; z-index:100; }
+.nav-btn{ width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,.18); background:rgba(15,12,24,.75);
+  color:rgba(255,255,255,.7); font-size:19px; cursor:pointer; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(8px); transition:all .2s; }
+.nav-btn:hover{ background:rgba(162,77,255,.28); border-color:var(--purple); color:#fff; }
+.nav-btn:disabled{ opacity:.2; cursor:default; }
+.nav-indicator{ text-align:center; font-size:11px; color:var(--faint); font-variant-numeric:tabular-nums; }
+.progress{ position:fixed; top:0; left:0; height:3px; background:var(--grad); z-index:200; transition:width .4s ease; }
+
+@media(max-width:820px){ .card{ padding:36px 18px; } .secnum{ width:54px; height:54px; font-size:28px; }
+  .demo-frame iframe{ height:56vh; } .nav-controls{ right:10px; } .nav-btn{ width:40px; height:40px; } .phone-frame{ width:270px; height:540px; } }
+body{ zoom:.92; }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- ══ Card 0 · 커버 ══ -->
+<div class="card cover bg-purple active" data-index="0">
+  <div class="container">
+    <p class="cover-eyebrow"><span class="chip">성균관대학교</span> 학술정보관</p>
+    <h1><span class="ai">AI</span>, 학술정보관을<br/>재설계하다</h1>
+    <p class="cover-sub">지능형 대학 도서관 플랫폼 구축 사례</p>
+    <div class="cover-list">
+      <span>도서검색</span><span>장서분석·편목 자동화</span><span>논문홍보 시스템</span>
+      <span>연구자 매칭</span><span>도서관 챗봇</span><span>번개독서모임</span>
+    </div>
+    <div class="cover-org">SKKU Library · 6 AI Case Studies</div>
+  </div>
+</div>
+
+<!-- ══ 목차 · 6대 영역 ══ -->
+<div class="card" data-index="1">
+  <div class="container">
+    <p class="agenda-eyebrow">AGENDA</p>
+    <h2 class="agenda-title">학술정보관 AI 구축 <span class="gt">6대 영역</span></h2>
+    <div class="agenda">
+      <div class="ag-item"><div class="ag-n">01</div><div><div class="ag-t">도서 검색</div><div class="ag-k">AI 시멘틱 검색 · <b>하이브리드</b> · 13축 책지문</div></div></div>
+      <div class="ag-item"><div class="ag-n">02</div><div><div class="ag-t">장서 분석 · 편목</div><div class="ag-k"><b>수서 · 분류 · 목록(편목)</b> · MARC · 청구기호</div></div></div>
+      <div class="ag-item"><div class="ag-n">03</div><div><div class="ag-t">논문 홍보</div><div class="ag-k">AI 논문 영상 · 홍보 콘텐츠 <b>자동 생성</b></div></div></div>
+      <div class="ag-item"><div class="ag-n">04</div><div><div class="ag-t">연구자 매칭</div><div class="ag-k">성과 <b>실시간 분석</b> · AI 투고 전략서</div></div></div>
+      <div class="ag-item"><div class="ag-n">05</div><div><div class="ag-t">도서관 챗봇</div><div class="ag-k">온톨로지 FAQ · <b>근거 있는 응답</b></div></div></div>
+      <div class="ag-item"><div class="ag-n">06</div><div><div class="ag-t">독서 커뮤니티</div><div class="ag-k">번개독서 <b>'번독'</b> · 취향 매칭</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 01 도서검색 · 개념 (AS-IS/TO-BE) ══ -->
+<div class="card" data-index="2">
+  <div class="container">
+    <div class="sec-tag">도서 검색</div>
+    <div class="head"><div class="secnum">01</div><h2>AI 시멘틱 검색 <span class="div">:</span> 질문의 의미를 이해하다</h2></div>
+    <p class="lead">사람은 <strong class="pink">의도</strong>로 묻지만, 기존 검색은 글자만 맞추고 순수 생성형 AI는 <strong class="pink">출처를 지어냅니다.</strong></p>
+    <div class="compare">
+      <div class="cmp asis">
+        <span class="lbl">AS-IS</span>
+        <h3>기존 검색은<br/>글자만 본다</h3>
+        <ul>
+          <li>"위로받고 싶을 때 읽는 책" 같은 <strong>의도 질의를 이해 못 함</strong></li>
+          <li>국내 3대 서점 실측 — 교보·예스24·알라딘 <strong>모두 실패</strong>(0건·토큰 치환)</li>
+          <li>순수 생성형 AI는 답을 지어냄 — <strong>출처의 51.5%만</strong> 근거 있음</li>
+        </ul>
+      </div>
+      <div class="cmp-mid"><div class="ring">→</div><div class="cap">하이브리드로<br/>전환</div></div>
+      <div class="cmp tobe">
+        <span class="lbl">TO-BE</span>
+        <h3>정확성과 <span class="pink">발견성</span>을<br/>한 흐름으로</h3>
+        <ul>
+          <li>정확히 맞는 자료는 <strong>빠르게</strong> — 서명·저자·ISBN 패스트 트랙</li>
+          <li>말뜻이 가까운 자료는 <strong>13축 책지문</strong>으로 깊게 발견</li>
+          <li>답을 짓지 않고 <strong>실재 자료·출처만</strong> 제시 — 학술기관이 신뢰할 검색</li>
+        </ul>
+      </div>
+    </div>
+    <div class="sumrow"><span class="sump">키워드의 정확성</span><span class="sumplus">+</span><span class="sump b">시멘틱의 발견성</span></div>
+    <div class="concl">대학도서관 <span class="pink">최초 AI 검색</span> · 문화체육관광부 장관상 (성균관대 학술정보관)</div>
+    <div class="bigkey">AI 시멘틱 검색</div>
+  </div>
+</div>
+
+<!-- ══ 01 도서검색 · 시연 ══ -->
+<div class="card" data-index="3">
+  <div class="container">
+    <div class="head"><div class="secnum">01</div><h2>실제 BIBLO 검색 화면</h2></div>
+    <div class="browser">
+      <div class="browser-bar"><i class="r"></i><i class="y"></i><i class="g"></i><span class="url">성균관대학교 학술정보관 · 도서 검색</span></div>
+      <div class="shot-view"><img src="assets/search/biblo-search.png" alt="BIBLO 도서 검색 홈 — 대화형 검색·좌석 현황·시설 안내"></div>
+    </div>
+    <div class="link-row" style="margin-top:16px">
+      <a class="link-btn" href="http://3.38.233.135/" target="_blank" rel="noopener">라이브 검색 · 새 창에서 열기 ↗</a>
+      <span class="link-note">"대화하듯" 자연어로 질문하면 AI가 맥락을 이해해 자료를 추천합니다.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 02 장서분석·편목 · 개념 (AS-IS/TO-BE — 핵심 서사) ══ -->
+<div class="card" data-index="4">
+  <div class="container">
+    <div class="sec-tag">수서 · 분류 · 목록 · 편목</div>
+    <div class="head"><div class="secnum">02</div><h2>장서분석 · AI 편목 자동화 <span class="div">:</span> 인력의 한계를 데이터로 넘다</h2></div>
+    <p class="lead">사서가 쌓은 마크가 <strong class="pink">의미필드는 텅 빈 채</strong> 목록에 잠들어 있습니다. AI가 그 공백을 채워 <strong class="pink">데이터로 운영하는 도서관</strong>을 만듭니다.</p>
+    <div class="compare">
+      <div class="cmp asis">
+        <span class="lbl">AS-IS</span>
+        <h3>마크가<br/>목록에 잠들어 있다</h3>
+        <ul>
+          <li>의미필드 대량 공백 — <strong>520 요약 4.6% · 521 독자 1.5% · 655 장르 0.3%</strong> (성대 실측)</li>
+          <li>"무엇에 관한·누구를 위한 책인지" <strong>95~99%가 빈칸</strong></li>
+          <li>마크를 외부에서 '받아 붙이는 것'으로 여겨 사서 판단·이용 흔적이 잠듦</li>
+          <li>만성 인력으론 <strong>수백만 장서</strong>를 손으로 채울 수 없음</li>
+        </ul>
+      </div>
+      <div class="cmp-mid"><div class="ring">→</div><div class="cap">AI가<br/>채운다</div></div>
+      <div class="cmp tobe">
+        <span class="lbl">TO-BE</span>
+        <h3>AI가 채우고,<br/><span class="pink">데이터로</span> 운영</h3>
+        <ul>
+          <li><strong>13축 책지문 68~72만 권</strong>으로 빈 의미필드를 내용 기반 자동 생성</li>
+          <li>KORMARC 표준(KS X 6006-0) 적합 생성 · <strong>사서가 최종 검수</strong>(HITL)</li>
+          <li>마크+대출을 통계로 → 장서 비중·공백·독서문화를 데이터로 운영</li>
+          <li>완성된 데이터는 <strong>KERIS·WorldCat</strong>에서도 통하는 자산</li>
+        </ul>
+      </div>
+    </div>
+    <div class="sumrow"><span class="sump">빈 의미필드 자동 완성</span><span class="sumplus">+</span><span class="sump b">데이터로 운영하는 도서관</span></div>
+    <div class="concl">사서의 판단은 지우지 않고, <span class="pink">잠든 마크를 데이터로</span> 깨웁니다</div>
+    <div class="bigkey">AI 편목 · AI LAS</div>
+  </div>
+</div>
+
+<!-- ══ 02 편목 · 시연1 (MARC 보강 견본 · marc50) ══ -->
+<div class="card" data-index="5">
+  <div class="container">
+    <div class="head"><div class="secnum">02</div><h2>MARC 보강 견본 <span class="div">:</span> 성대 빈 MARC를 13축으로 채우다</h2></div>
+    <p class="lead" style="padding-left:96px">성대 소장 실제 도서 한 권 — 제목·저자·청구기호는 원본 그대로 두고, <strong class="pink">비어 있던 의미필드만</strong> 13축 지문으로 채웁니다.</p>
+    <div class="book-hd">
+      <div class="bh-t">프로젝트 헤일메리 <span style="font-weight:600;color:var(--faint);font-size:14px">(영화 특별판)</span></div>
+      <div class="bh-m">앤디 위어 · 알에이치코리아(RHK) · 2026 · ISBN 9788925588735</div>
+      <div class="bh-chips"><span>SF</span><span>소설</span><span>성대 소장</span></div>
+    </div>
+    <p class="keepnote">✔ <b>245 제목 · 100 저자 · 020 ISBN · 260 발행 · 090 청구기호</b>는 성대 원본 그대로 — 아래 비어 있던 의미필드만 채웁니다.</p>
+    <div class="fill">
+      <div class="fill-row"><div class="fl"><span class="tg">520</span> 요약<span class="fn">← 13축·줄거리</span></div><div class="fv"><span class="was">성대 공백 →</span> 기억을 잃은 채 우주에서 깨어난 주인공이 인류를 멸망시킬 위기의 지구를 구하는 임무를 수행. '아스트로파지'를 조사하며 우정과 연대로 지구를 구원한다.</div></div>
+      <div class="fill-row"><div class="fl"><span class="tg">521</span> 이용대상<span class="fn">← 13축·독자</span></div><div class="fv"><span class="was">공백 →</span> SF 소설 팬 · 과학적 사실에 기반한 소설을 좋아하는 독자 · 앤디 위어 작가의 팬</div></div>
+      <div class="fill-row"><div class="fl"><span class="tg">655</span> 장르<span class="fn">← 13축·장르</span></div><div class="fv"><span class="was">공백 →</span> 소설 · SF</div></div>
+      <div class="fill-row"><div class="fl"><span class="tg">653</span> 키워드<span class="fn">← 13축·개념</span></div><div class="fv"><span class="was">공백 →</span> 인류애 · 연대 · 우정 · 희망 · 사명감 · 유머 · 과학적</div></div>
+      <div class="fill-row"><div class="fl"><span class="tg">586</span> 수상<span class="fn">← 13축·수상</span></div><div class="fv"><span class="was">공백 →</span> 미디어 추천도서</div></div>
+      <div class="fill-row"><div class="fl"><span class="tg">505</span> 목차<span class="fn">← 원문·목차</span></div><div class="fv"><span class="was">공백 →</span> 전 29장 + 감사의 말 + 옮긴이의 말 (총 688쪽)</div></div>
+    </div>
+    <div class="statbar"><span>성대 채움률 <b>520 4.6%</b></span><span><b>521 1.5%</b></span><span><b>655 0.3%</b></span><span>BIBLO 보유 재료 <b>68–73만 권</b></span></div>
+    <div class="concl">자유서술 의미필드라 <span class="pink">표준 위반 없이 즉시</span> 채우고, 최종 확정은 사서가 합니다</div>
+  </div>
+</div>
+
+<!-- ══ 02 편목 · 시연2 (청구기호 부여 · callno) ══ -->
+<div class="card" data-index="6">
+  <div class="container">
+    <div class="head"><div class="secnum">02</div><h2>청구기호 부여 <span class="div">:</span> 소장 패턴에 근거한 분류 초안</h2></div>
+    <p class="lead" style="padding-left:96px">청구기호 부여는 신간 1권당 <strong class="pink">15~30분</strong>이 드는 숙련 분류 작업입니다. 비블로는 도서의 주제를 이미 파악하고 있어 <strong class="pink">분류 초안을 제시</strong>하고, 사서는 검토·승인에 집중합니다.</p>
+    <div class="book-hd">
+      <div class="bh-t">채식주의자</div>
+      <div class="bh-m">한강 · ISBN 9788936433598</div>
+      <div class="bh-chips"><span>문학</span><span>한국소설</span><span>한강</span></div>
+    </div>
+    <p class="keepnote">🧬 비블로가 이해한 주제(13축): <b>한강의 한국 현대 장편소설</b> → 분류 출발점 = 한국 현대소설</p>
+    <div class="ladder">
+      <span class="lnode"><span class="lc">800</span><span class="lt">문학</span></span><span class="lsep">›</span>
+      <span class="lnode"><span class="lc">810</span><span class="lt">한국문학</span></span><span class="lsep">›</span>
+      <span class="lnode"><span class="lc">811</span><span class="lt">한국 문학작품</span></span><span class="lsep">›</span>
+      <span class="lnode center"><span class="lc">811.36</span><span class="lt">현대소설 ★</span></span>
+    </div>
+    <div class="cn-big"><span class="cn">811.36 <span class="cut">ㅎ152ㅊ</span></span><span class="ok">✓ 이 도서관 실제 배가와 일치</span></div>
+    <ul class="cn-why">
+      <li>이웃 8권이 <strong>전부 정확히 811.36</strong>(정글만리·불멸의 이순신 등) — 이 도서관 한국소설 서가</li>
+      <li>저자기호 <strong>ㅎ152ㅊ</strong> = 한강 + 채식주의자 (저자기호표 자동 산출)</li>
+      <li>추천은 <strong>이 도서관의 실제 소장 패턴</strong> 기준 · 청구기호 전부 실측(환각 0)</li>
+    </ul>
+    <div class="cn-status">● 사서 확정 대기 &nbsp;→&nbsp; ✓ 승인·확정 &nbsp;(최종 결정은 사서)</div>
+  </div>
+</div>
+
+<!-- ══ 03 논문홍보 · 개념 ══ -->
+<div class="card" data-index="7">
+  <div class="container">
+    <div class="sec-tag">논문 홍보</div>
+    <div class="head"><div class="secnum">03</div><h2>AI 논문 영상 생성 <span class="div">:</span> 읽는 논문에서 보는 논문으로</h2></div>
+    <p class="lead">복잡하고 어려운 텍스트 논문을 요약해 <strong class="gold">오디오와 영상</strong>으로 만들고, 읽는 논문을 넘어 <strong class="pink">보는 논문 콘텐츠</strong>를 제공합니다.</p>
+    <div class="flow">
+      <div class="fnode"><div class="ft">연구물</div><div class="fd">논문 · 아티클 · 리포트</div></div>
+      <div class="farr">→</div>
+      <div class="fnode"><div class="ft">AI 분석·요약</div><div class="fd">핵심 논지 추출</div></div>
+      <div class="farr">→</div>
+      <div class="fnode"><div class="ft">영상 생성</div><div class="fd">숏폼 · 롱폼 자동 제작</div></div>
+      <div class="farr">→</div>
+      <div class="fnode"><div class="ft">채널 배포</div><div class="fd">홈페이지 · SNS</div></div>
+    </div>
+    <div class="sumrow"><span class="sump">텍스트 요약</span><span class="sumplus">+</span><span class="sump b">오디오·영상 자동 생성</span></div>
+    <div class="concl">읽지 않아도 <span class="pink">보고 듣는</span> 연구 홍보 콘텐츠</div>
+    <div class="bigkey">AI 논문 영상</div>
+  </div>
+</div>
+
+<!-- ══ 03 논문홍보 · 시연1 (숏폼) ══ -->
+<div class="card" data-index="8">
+  <div class="container">
+    <div class="head"><div class="secnum">03</div><h2>AI를 활용한 연구홍보 영상 제작 방법</h2></div>
+    <p class="annot">AI 생성 숏폼 영상 ↓</p>
+    <div class="demo-frame"><iframe class="youtube" data-src="https://www.youtube.com/embed/by2rvW8brxE?enablejsapi=1" allowfullscreen></iframe></div>
+    <div class="link-row"><span class="link-note">논문 핵심을 <strong style="color:#fff">60초 숏폼</strong>으로 자동 변환합니다.</span></div>
+  </div>
+</div>
+
+<!-- ══ 03 논문홍보 · 시연2 (롱폼) ══ -->
+<div class="card" data-index="9">
+  <div class="container">
+    <div class="head"><div class="secnum">03</div><h2>AI가 만든 연구 홍보 영상</h2></div>
+    <p class="annot">AI 생성 롱폼 영상 ↓</p>
+    <div class="demo-frame"><iframe class="youtube" data-src="https://www.youtube.com/embed/2O8Ae6ilEys?enablejsapi=1" allowfullscreen></iframe></div>
+    <div class="link-row"><span class="link-note">배경부터 결론까지 스토리라인을 구성한 <strong style="color:#fff">롱폼 홍보 영상</strong>입니다.</span></div>
+  </div>
+</div>
+
+<!-- ══ 04 연구자 매칭 (1) · 지문으로 실시간 성과 분석 ══ -->
+<div class="card shot-full" data-index="10">
+  <div class="container">
+    <div class="sec-tag">연구자 매칭</div>
+    <div class="head"><div class="secnum">04</div><h2>연구자 매칭 <span class="div">:</span> 지문으로 실시간 성과 분석</h2></div>
+    <p class="lead">연구자 고유의 <strong class="pink">핑거프린트</strong>로 논문·인용·FWCI를 <strong class="pink">실시간으로 추적·분석</strong>합니다. 흩어져 있던 성과가 한 사람의 지문으로 모입니다.</p>
+    <div class="vchips"><span><b>핑거프린트</b> 연구자 고유 프로필</span><span><b>실시간</b> 논문·인용·FWCI 추적</span><span><b>공동연구</b> 네트워크 매핑</span></div>
+    <div class="browser">
+      <div class="browser-bar"><i class="r"></i><i class="y"></i><i class="g"></i><span class="url">biblo-rims · 연구자·실적</span></div>
+      <div class="shot-view"><img src="assets/rims/rims-fingerprint.png" alt="연구자 지문·실적 대시보드"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 04 연구자 매칭 (2) · AI 에이전트가 전략서까지 자동 작성 ══ -->
+<div class="card shot-full" data-index="11">
+  <div class="container">
+    <div class="head"><div class="secnum">04</div><h2>AI 에이전트가 <span class="gt">전략서까지</span> 자동 작성</h2></div>
+    <p class="lead">에이전트가 실적 데이터를 <strong class="pink">스스로 조회·분석</strong>하고, 벤치마크와 대조해 <strong class="pink">투고 전략 보고서</strong>를 근거와 함께 자동으로 작성합니다.</p>
+    <div class="vchips"><span><b>실시간 분석</b> 데이터 자동 조회</span><span><b>벤치마크</b> 대비 진단</span><span><b>보고서 자동 생성</b> 근거 기반</span></div>
+    <div class="browser">
+      <div class="browser-bar"><i class="r"></i><i class="y"></i><i class="g"></i><span class="url">biblo-rims · 에이전트</span></div>
+      <div class="shot-view"><img src="assets/rims/rims-strategy.png" alt="AI 투고 전략서 생성"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 05 도서관 챗봇 · 설명+즉석 시연 (좌 텍스트 / 우 폰) ══ -->
+<div class="card" id="chatbot-demo" data-index="12">
+  <div class="container">
+    <div class="sec-tag">도서관 챗봇</div>
+    <div class="head"><div class="secnum">05</div><h2>도서관 챗봇 <span class="div">:</span> 근거를 갖춘 안내</h2></div>
+    <div class="demo-split">
+      <div class="ds-left">
+        <p class="lead">이용 안내·시설 예약·자료 검색 등 다양한 문의에, <strong class="pink">온톨로지 기반 AI</strong>가 지식 그래프로 검증된 답변을 24시간 제공합니다.</p>
+        <div class="grid2" style="margin-bottom:22px">
+          <div class="gcard"><h4><span class="k">자연어 질의</span></h4><p>이용 안내·시설·자료 문의를 문장 그대로 이해합니다.</p></div>
+          <div class="gcard"><h4><span class="k">온톨로지 탐색</span></h4><p>지식 그래프 기반으로 관련 정보를 추론합니다.</p></div>
+          <div class="gcard"><h4><span class="k">근거 기반 응답</span></h4><p>막연한 안내가 아닌, 출처를 갖춘 답변을 제시합니다.</p></div>
+          <div class="gcard"><h4><span class="k">24시간 응대</span></h4><p>운영 시간과 무관하게 상시 문의에 대응합니다.</p></div>
+        </div>
+        <div class="concl" style="text-align:left">지식 그래프로 검증된 <span class="pink">신뢰할 수 있는 응답</span></div>
+      </div>
+      <div class="ds-right">
+        <div class="phone-frame">
+          <div class="phone-fallback">
+            <div class="pf-title">FAQ 챗봇 · 대화 예시</div>
+            <div class="chat-bubble user" style="font-size:12.5px">중앙도서관 오늘 몇 시까지 열어요?</div>
+            <div class="chat-bubble bot" style="font-size:12.5px">오늘 중앙학술정보관은 09:00–22:00 운영합니다. 시험기간에는 연장 운영될 수 있어요.</div>
+            <div class="chat-bubble user" style="font-size:12.5px">인공지능 신착 도서 추천해줘</div>
+            <div class="chat-bubble bot" style="font-size:12.5px">최근 입수된 인공지능 분야 도서를 관련도순으로 안내해 드릴게요.</div>
+          </div>
+          <iframe data-src="https://biblo-ontology-prod.shop/?campus=hsc"></iframe>
+        </div>
+        <a class="ds-caption" href="https://biblo-ontology-prod.shop/?campus=hsc" target="_blank" rel="noopener" style="text-decoration:none">라이브 챗봇 · 새 창에서 열기 ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 06 독서 커뮤니티 활동 · 설명+즉석 시연 (좌 텍스트 / 우 폰) ══ -->
+<div class="card" data-index="13">
+  <div class="container">
+    <div class="sec-tag">독서 커뮤니티 · 번독</div>
+    <div class="head"><div class="secnum">06</div><h2>독서 커뮤니티 활동 <span class="div">:</span> 도서관을 만남의 공간으로</h2></div>
+    <div class="demo-split">
+      <div class="ds-left">
+        <p class="lead">성균관대 <strong class="pink">'번개독서-번독'</strong>은 관심 도서와 취향을 기반으로 즉석 독서모임을 매칭해, 도서관을 소통과 커뮤니티의 공간으로 확장합니다.</p>
+        <div class="grid2" style="margin-bottom:22px">
+          <div class="gcard"><h4><span class="k">취향 온보딩</span></h4><p>은유·키워드로 독서 취향을 간단히 진단합니다.</p></div>
+          <div class="gcard"><h4><span class="k">번개 매칭</span></h4><p>비슷한 관심사의 이용자와 즉석 모임을 연결합니다.</p></div>
+          <div class="gcard"><h4><span class="k">모임 운영</span></h4><p>모임 개설·참여·기록을 앱에서 관리합니다.</p></div>
+          <div class="gcard"><h4><span class="k">공간 활용</span></h4><p>도서관을 커뮤니티 허브로 확장합니다.</p></div>
+        </div>
+        <div class="concl" style="text-align:left">읽는 공간을 넘어, <span class="pink">함께 읽는</span> 공간으로</div>
+      </div>
+      <div class="ds-right">
+        <div class="phone-frame">
+          <div class="phone-fallback" style="background:#fff;color:#111;align-items:center;justify-content:center;text-align:center">
+            <div class="pf-title" style="color:var(--purple)">번개독서 · 번독</div>
+            <div style="font-size:12.5px;color:#555;line-height:1.6">취향 온보딩으로<br/>독서 커뮤니티를 시작합니다</div>
+          </div>
+          <iframe data-src="https://bookground-app.vercel.app/onboarding/metaphor"></iframe>
+        </div>
+        <a class="ds-caption" href="https://bookground-app.vercel.app/onboarding/metaphor" target="_blank" rel="noopener" style="text-decoration:none">번독 앱 · 새 창에서 열기 ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 네비게이션 -->
+<div class="nav-controls">
+  <button class="nav-btn" id="btn-prev" onclick="goTo(current-1)" aria-label="이전">&#8593;</button>
+  <div class="nav-indicator" id="nav-indicator">1 / 14</div>
+  <button class="nav-btn" id="btn-next" onclick="goTo(current+1)" aria-label="다음">&#8595;</button>
+</div>
+
+<script>
+(function(){
+  var cards=document.querySelectorAll('.card');
+  var total=cards.length, current=0, locked=false;
+  window.current=current;
+  var progress=document.getElementById('progress');
+
+  function goTo(n){
+    if(locked) return;
+    if(n>current) n=current+1; if(n<current) n=current-1;
+    n=Math.max(0,Math.min(total-1,n)); if(n===current) return;
+    locked=true;
+    var prevCard=cards[current], direction=n>current?1:-1;
+    if(direction===1){ prevCard.classList.remove('active'); prevCard.classList.add('passed'); }
+    else{ prevCard.classList.remove('active'); }
+    current=n; window.current=current;
+    if(direction===-1) cards[current].classList.remove('passed');
+    cards[current].classList.add('active');
+    lazyLoad(cards[current]);
+    if(current+1<total) lazyLoad(cards[current+1]);
+    if(current+2<total) lazyLoad(cards[current+2]);
+    setTimeout(function(){ locked=false; },400);
+    document.getElementById('nav-indicator').textContent=(current+1)+' / '+total;
+    document.getElementById('btn-prev').disabled=(current===0);
+    document.getElementById('btn-next').disabled=(current===total-1);
+    progress.style.width=((current)/(total-1)*100)+'%';
+    var prevY=prevCard.querySelectorAll('iframe.youtube');
+    for(var i=0;i<prevY.length;i++){ if(prevY[i].contentWindow) prevY[i].contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}','*'); }
+  }
+  window.goTo=goTo;
+
+  window.addEventListener('blur',function(){
+    var el=document.activeElement;
+    if(el&&el.tagName==='IFRAME'&&el.classList.contains('youtube')){ setTimeout(function(){ el.blur(); window.focus(); },1000); }
+  });
+  function isChatbotFocused(){
+    var el=document.activeElement;
+    return el&&el.tagName==='IFRAME'&&el.closest('#chatbot-demo');
+  }
+  document.addEventListener('wheel',function(e){
+    if(isChatbotFocused()) return; if(locked) return; e.preventDefault();
+    if(e.deltaY>0) goTo(current+1); else if(e.deltaY<0) goTo(current-1);
+  },{passive:false});
+  document.addEventListener('keydown',function(e){
+    if(isChatbotFocused()) return;
+    if(e.key==='ArrowDown'||e.key==='PageDown'){ e.preventDefault(); goTo(current+1); }
+    else if(e.key==='ArrowUp'||e.key==='PageUp'){ e.preventDefault(); goTo(current-1); }
+    else if(e.key===' '){
+      e.preventDefault();
+      var yt=cards[current].querySelector('iframe.youtube');
+      if(yt&&yt.src){
+        if(!cards[current]._ytPlaying){ yt.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}','*'); cards[current]._ytPlaying=true; }
+        else{ yt.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}','*'); cards[current]._ytPlaying=false; }
+      }
+    }
+  });
+  function lazyLoad(card){
+    var ifr=card.querySelectorAll('iframe[data-src]');
+    for(var i=0;i<ifr.length;i++){
+      var src=ifr[i].getAttribute('data-src');
+      if(src==='about:blank') continue;
+      ifr[i].src=src; ifr[i].removeAttribute('data-src');
+    }
+  }
+  window.lazyLoad=lazyLoad;
+  document.getElementById('btn-prev').disabled=true;
+  document.getElementById('nav-indicator').textContent='1 / '+total;
+  progress.style.width='0%';
+})();
+</script>
+</body>
+</html>
