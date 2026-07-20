@@ -1474,7 +1474,7 @@ function renderAgStream(scroll){
 }
 function initAgent(){
   $('#agSched').innerHTML=schedHtml();
-  if(!state.agMsgs.length)state.agMsgs.push({a:'무엇이든 물어보세요. 근거(출처)와 함께 답합니다.',src:'P-TU 에이전트 · 대시보드 연동'});
+  if(!state.agMsgs.length)state.agMsgs.push({a:'무엇이든 물어보세요. 지표·기사에 대해 근거와 함께 답해 드립니다.'});
   state.agInit=true;
 }
 function syncAgent(view){
@@ -1482,8 +1482,7 @@ function syncAgent(view){
   var g=$('#agGreet');if(g)g.innerHTML=greetHtml();
   var cx=$('#agCtx');if(cx)cx.innerHTML=agentCtx(view);
   var whereMap={home:'Executive Home',news:'뉴스 인텔리전스',students:'학생성과',research:'연구산학',finance:'재정경영',strategy:'전략관리',compete:'경쟁력분석',risks:'위험신호',speeches:'연설문',reports:'보고서실'};
-  var w=$('#agWhere');if(w)w.textContent='현재 화면: '+(whereMap[view]||view)+' · 연동';
-  if(state.lastCtx!==view){var first=state.lastCtx===null;state.lastCtx=view;if(!first){var l=ctxLine(view);if(l)state.agMsgs.push({a:l,src:'현재 화면 연동'});}}
+  var w=$('#agWhere');if(w)w.textContent='현재 화면: '+(whereMap[view]||view);
   renderAgStream();
 }
 function agentFreeAsk(txt){
