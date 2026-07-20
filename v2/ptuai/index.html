@@ -459,6 +459,104 @@
   :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
+  /* ===== v3: RBAC 역할 대시보드 ===== */
+  .team-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);margin-bottom:12px;overflow:hidden}
+  .team-h{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid var(--line);cursor:pointer}
+  .team-h .tn{font-size:14.5px;font-weight:800}
+  .team-h .tmeta{font-size:11px;color:var(--muted)}
+  .team-h .tgo{margin-left:auto;color:var(--faint);font-family:var(--mono);font-size:12px}
+  .kr-row{display:grid;grid-template-columns:1fr 210px auto;gap:12px;align-items:center;padding:11px 16px;border-bottom:1px solid var(--line)}
+  .kr-row:last-child{border-bottom:0}
+  @media(max-width:720px){.kr-row{grid-template-columns:1fr;gap:7px}}
+  .kr-name{font-size:12.5px;font-weight:650;color:var(--ink-2)}
+  .kr-prog{position:relative;height:9px;background:var(--surface-2);border-radius:6px}
+  .kr-prog i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;transition:width .4s}
+  .kr-prog .tgtmark{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);opacity:.55}
+  .kr-ctl{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;white-space:nowrap}
+  .kr-ctl .adj{width:24px;height:24px;border-radius:7px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);cursor:pointer;font-size:14px;line-height:1;display:grid;place-items:center}
+  .kr-ctl .adj:hover{border-color:var(--accent);color:var(--accent)}
+  .kr-ctl b{color:var(--ink);font-weight:800}
+  .kr-cur{font-family:var(--mono);font-weight:800;font-size:13px;text-align:right}
+  .cq-tabs{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap}
+  .urg-p{font-size:9px;font-weight:800;font-family:var(--mono);padding:2px 6px;border-radius:5px}
+  .urg-긴급{background:var(--crit-tint);color:var(--crit-ink)}.urg-보통{background:var(--warn-tint);color:var(--warn-ink)}.urg-낮음{background:var(--surface-3);color:var(--muted)}
+  .stt-p{font-size:9px;font-weight:700;font-family:var(--mono);padding:2px 6px;border-radius:5px;background:var(--surface-3);color:var(--muted)}
+  .stt-처리중{background:var(--accent-soft);color:var(--accent)}.stt-완료{background:var(--good-tint);color:var(--good-ink)}
+  .stt-에스컬레이션{background:var(--serious-tint);color:var(--serious-ink)}.stt-미해결{background:var(--crit-tint);color:var(--crit-ink)}
+
+  /* ===== v3: RPA 문서도구 ===== */
+  body.rpa-full .agent-rail{display:none}
+  .rpa-wrap{display:flex;flex-direction:column;gap:12px}
+  .rpa-tools{display:flex;gap:7px;flex-wrap:wrap}
+  .rtool{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:8px 13px;font-size:12.5px;font-weight:650;color:var(--ink-2);cursor:pointer}
+  .rtool:hover{border-color:var(--line-2)}
+  .rtool.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .rpa-stage{display:grid;grid-template-columns:1.4fr 360px;gap:12px;align-items:start}
+  @media(max-width:920px){.rpa-stage{grid-template-columns:1fr}}
+  .rpa-doc{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r);padding:18px;overflow:auto;max-height:calc(100vh - 170px)}
+  .doc{background:#fff;max-width:760px;margin:0 auto;padding:34px 40px;border-radius:6px;box-shadow:var(--shadow);font-family:"Batang","Apple SD Gothic Neo",serif;color:#141414;position:relative}
+  :root[data-theme="dark"] .doc{color:#141414}
+  .doc .modechip{position:absolute;right:14px;top:12px;font-size:10px;font-weight:800;font-family:var(--mono);padding:3px 8px;border-radius:6px;background:#eef2f7;color:#5b6b80}
+  .doc .modechip.global{background:#fae3e3;color:#a82a2a}.doc .modechip.partial{background:#fbf1d8;color:#8a6410}
+  .dochead{display:flex;flex-direction:column;align-items:center;gap:8px;padding-bottom:14px;border-bottom:2px solid #222;margin-bottom:16px}
+  .doclogo{height:34px}
+  .docorg{font-size:19px;font-weight:800;letter-spacing:.06em}
+  .rblock{padding:6px 8px;margin:2px -8px;border-radius:6px;line-height:1.9;font-size:14.5px;position:relative}
+  .rblock .rtext{white-space:normal}
+  .rblock.guide{border:1px dashed #c7cfda;color:#9099a3;font-style:italic;background:#fbfcfd;margin:6px -8px}
+  .rblock.guide .gtext{font-size:13px}
+  .rblock.selected{outline:2px solid var(--accent);outline-offset:1px;background:var(--accent-soft)}
+  .rblock.extra{padding-right:26px}
+  .rblock.pending{background:#fffdf3;border:1px solid #f0d98a;margin:6px -8px;padding:9px 10px}
+  body.partial .rblock:not(.guide):not(.pending){cursor:pointer}
+  body.partial .rblock:not(.pending):hover{background:#f3f6fb}
+  .blabel{display:inline-block;font-size:9.5px;font-weight:800;font-family:var(--mono);color:#8894a6;background:#eef1f5;padding:1px 6px;border-radius:4px;margin-bottom:4px}
+  .blabel.rev{color:#8a6410;background:#fbf1d8}
+  .rblock[contenteditable="true"]{outline:2px solid var(--accent);background:#fff}
+  .difftext{line-height:1.9;font-size:14.5px}
+  .doc del{color:#c0392b;text-decoration:line-through;text-decoration-color:#e07a86;background:#fdeaec}
+  .doc ins{color:#127a3e;text-decoration:none;background:#e3f6ea;font-weight:700}
+  .revctl{margin-top:8px;display:flex;gap:6px}
+  .rv{font-size:11px;font-weight:700;padding:4px 11px;border-radius:7px;border:1px solid;cursor:pointer;background:#fff}
+  .rv.ok{border-color:#0a7a0a;color:#0a7a0a}.rv.ok:hover{background:#e6f5e6}
+  .rv.no{border-color:#c02626;color:#c02626}.rv.no:hover{background:#fae3e3}
+  .reviewbar{display:flex;align-items:center;gap:10px;background:#fbf1d8;border:1px solid #f0d98a;border-radius:10px;padding:9px 13px;margin-bottom:12px;font-size:12.5px;font-weight:700;color:#8a6410}
+  .reviewbar .rb-actions{margin-left:auto;display:flex;gap:6px}
+  .reviewbar .btn{padding:5px 11px;font-size:11.5px}
+  .addslot{border:1px dashed var(--accent);color:var(--accent);border-radius:8px;padding:6px 10px;font-size:12px;font-weight:650;cursor:pointer;margin:8px 0;display:inline-block;background:var(--accent-soft)}
+  .delx{position:absolute;right:4px;top:4px;width:18px;height:18px;border-radius:5px;border:0;background:#fae3e3;color:#a82a2a;cursor:pointer;display:none;font-size:12px;line-height:1}
+  .rblock.extra:hover .delx{display:block}
+  .doc .stamp{text-align:right;margin-top:20px;color:#888;font-size:13px}
+  .rpa-chat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);display:flex;flex-direction:column;position:sticky;top:70px;max-height:calc(100vh - 170px)}
+  .rc-head{display:flex;align-items:center;gap:9px;padding:12px 14px;border-bottom:1px solid var(--line)}
+  .rc-head .ag-av{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#12B37A,#00875A);display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700;flex:none}
+  .rc-head b{font-size:13px;font-weight:750;display:block}.rc-head span{font-size:10px;color:var(--accent);font-family:var(--mono)}
+  .rc-body{flex:1;overflow-y:auto;padding:13px 14px;display:flex;flex-direction:column;gap:9px;min-height:180px}
+  .rmsg{max-width:90%;font-size:12.5px;line-height:1.55;padding:9px 11px;border-radius:11px}
+  .rmsg.bot{align-self:flex-start;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);border-bottom-left-radius:4px}
+  .rmsg.me{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:4px;white-space:pre-wrap}
+  .rmsg.sys{align-self:center;font-size:10.5px;color:var(--faint);font-family:var(--mono)}
+  .ragent{font-size:10px;color:var(--accent);font-weight:700;margin-bottom:3px}
+  .rc-chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 12px 8px}
+  .rchip{font-size:11px;font-weight:600;padding:5px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);cursor:pointer}
+  .rchip:hover{border-color:var(--accent);color:var(--accent)}
+  .rc-foot{padding:10px 12px;border-top:1px solid var(--line);display:flex;gap:7px;align-items:flex-end}
+  .rc-foot textarea{flex:1;resize:none;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:12.5px;color:var(--ink);outline:none;font-family:var(--sans);max-height:160px}
+  .rc-foot textarea:focus{border-color:var(--accent)}
+  .rc-foot button{background:var(--accent);color:#fff;border:0;border-radius:10px;width:38px;height:38px;cursor:pointer;font-size:14px;flex:none}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,10px);background:var(--nav-ink,#2d4936);background:#1b2b20;color:#fff;padding:11px 18px;border-radius:11px;font-size:12.5px;font-weight:600;box-shadow:var(--shadow-lg);z-index:90;opacity:0;transition:.25s;max-width:90vw;text-align:center}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+  @media print{
+    body>*{display:none!important}
+    body.print-rpa #app{display:block!important}
+    body.print-rpa .topbar,body.print-rpa .rpa-tools,body.print-rpa .rpa-chat,body.print-rpa .reviewbar,body.print-rpa .revctl,body.print-rpa .addslot,body.print-rpa .delx,body.print-rpa .modechip,body.print-rpa .blabel,body.print-rpa .crumbs,body.print-rpa .page-head,body.print-rpa .rblock.guide{display:none!important}
+    body.print-rpa .shell,body.print-rpa main,body.print-rpa .rpa-wrap,body.print-rpa .rpa-stage,body.print-rpa .rpa-doc{display:block!important;padding:0!important;margin:0!important;max-height:none!important;border:0!important;background:#fff!important;overflow:visible!important}
+    body.print-rpa .doc{box-shadow:none!important;max-width:none!important}
+    body.print-rpa .doc ins{background:transparent!important;color:#111!important;font-weight:400!important}
+    body.print-rpa .rblock.selected{outline:0!important;background:transparent!important}
+    @page{size:A4;margin:14mm 16mm}
+  }
+
   /* ===== ver2.0 new menus ===== */
   /* keyword workspace */
   .kw-wrap{display:grid;grid-template-columns:236px 1fr;gap:12px;align-items:start}
@@ -580,24 +678,24 @@ var $=function(s,r){return (r||document).querySelector(s)};
 var $$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
 
 /* ============================================================ DATA STORE */
-var MENUS=[
-  {id:'home',label:'Executive Home'},{id:'strategy',label:'전략관리'},{id:'students',label:'학생성과'},
-  {id:'research',label:'연구산학'},{id:'finance',label:'재정경영'},{id:'compete',label:'경쟁력분석'},
-  {id:'risks',label:'위험신호'},{id:'news',label:'뉴스 인텔리전스'},
-  {id:'speeches',label:'연설문'},{id:'reports',label:'보고서실'}
-];
+/* ===== RBAC 3계층 (v3) ===== */
 var ROLES=[
-  {r:'총장',scope:'전체'},{r:'교무위원',scope:'전체'},{r:'부서장',scope:'부서'},{r:'교직원',scope:'제한'},
-  {r:'조교',scope:'제한'},{r:'연구원',scope:'연구'},{r:'학부생',scope:'공개'},{r:'대학원생',scope:'공개'}
+  {r:'총장',tier:'exec',scope:'전 대학'},
+  {r:'도서관장',tier:'dean',scope:'중앙도서관'},
+  {r:'실무자',tier:'staff',scope:'학술정보팀'}
 ];
-/* view access by role */
-var ACCESS={
-  '총장':'*','교무위원':'*','부서장':'*',
-  '교직원':['home','students','research','reports'],
-  '조교':['home','students'],
-  '연구원':['home','research','compete'],
-  '학부생':['home','compete'],'대학원생':['home','research','compete']
+var TIER_MENUS={
+  exec:['home','strategy','students','research','finance','compete','risks','news','speeches','reports','rpa'],
+  dean:['libhome','libteams','complaints','news','reports','rpa'],
+  staff:['staffhome','complaints','rpa']
 };
+var MENU_LABEL={
+  home:'Executive Home',strategy:'전략관리',students:'학생성과',research:'연구산학',finance:'재정경영',
+  compete:'경쟁력분석',risks:'위험신호',news:'뉴스 인텔리전스',speeches:'연설문',reports:'보고서실',
+  rpa:'문서 작성',libhome:'기관 대시보드',libteams:'부서 목표관리',complaints:'민원·문의',staffhome:'내 업무'
+};
+var TIER_HOME={exec:'#/home',dean:'#/libhome',staff:'#/staffhome'};
+function curTier(){var x=ROLES.filter(function(r){return r.r===state.role})[0];return x?x.tier:'exec';}
 var TERMS=[
   {id:'2026-1',label:'2026 · 1학기',cur:true,f:0},
   {id:'2025-2',label:'2025 · 2학기',f:-0.9},
@@ -825,8 +923,52 @@ var SPEECHES=[
    body:'사랑하는 졸업생 여러분, 오늘의 마침표는 새로운 문장의 시작입니다. 평택대는 언제나 여러분의 든든한 배경이 되겠습니다.'}
 ];
 
+/* ===== 도서관(직속기관) 운영 데이터 — 기관장(도서관장) 계층 ===== */
+var LIB={
+  n:'중앙도서관',
+  kpi:[
+    {l:'이용자 만족도',v:'4.1',u:'/5',st:'warn',tgt:'목표 4.3',pct:52},
+    {l:'좌석 점유율',v:'78',u:'%',st:'good',tgt:'적정 70~85%',pct:66},
+    {l:'예산 집행률',v:'63',u:'%',st:'serious',tgt:'분기목표 75%',pct:34},
+    {l:'전자자원 이용률',v:'58',u:'%',st:'warn',tgt:'목표 65%',pct:44},
+    {l:'재학생 1인당 대출',v:'24',u:'권',st:'good',tgt:'전년 22권',pct:61},
+    {l:'프로그램 참여',v:'3,200',u:'명',st:'warn',tgt:'목표 4,000명',pct:40}
+  ],
+  stat:[['장서','48.2','만권'],['전자자원 DB','62','종'],['연간 대출','12.4','만건'],['일평균 방문','1,850','명'],['상호대차','1,240','건'],['직원','23','명']]
+};
+var LIB_TEAMS=[
+  {id:'ais',n:'학술정보팀',lead:'김수서 팀장',staff:8,st:'warn',desc:'수서·정리·전자자원',
+   krs:[{n:'전자자원 이용률',cur:58,tgt:65,u:'%',st:'warn'},{n:'장서 회전율',cur:1.9,tgt:2.2,u:'회',st:'serious'},{n:'신착 정리 소요일',cur:6.2,tgt:5.0,u:'일',st:'warn',lower:true}]},
+  {id:'ref',n:'정보서비스팀',lead:'이봉사 팀장',staff:9,st:'serious',desc:'열람·대출·참고봉사·프로그램',
+   krs:[{n:'이용자 만족도',cur:4.1,tgt:4.3,u:'/5',st:'warn'},{n:'프로그램 참여',cur:3200,tgt:4000,u:'명',st:'serious'},{n:'참고질의 응답률',cur:88,tgt:95,u:'%',st:'warn'}]},
+  {id:'adm',n:'행정운영팀',lead:'박운영 팀장',staff:6,st:'serious',desc:'예산·시설·행정',
+   krs:[{n:'예산 집행률',cur:63,tgt:75,u:'%',st:'serious'},{n:'좌석 가동 최적화',cur:78,tgt:82,u:'%',st:'good'},{n:'시설 민원 처리일',cur:3.4,tgt:2.0,u:'일',st:'warn',lower:true}]}
+];
+/* ===== 민원 큐 — 실무자·기관장 ===== */
+var COMPLAINTS=[
+  {id:'c1',type:'시설',t:'3층 열람실 냉방 약함',urg:'긴급',stt:'처리중',dept:'행정운영팀',sla:'D-0',date:'07-20'},
+  {id:'c2',type:'자료',t:'희망도서 신청 처리 지연 문의',urg:'보통',stt:'접수',dept:'학술정보팀',sla:'D-2',date:'07-20'},
+  {id:'c3',type:'시스템',t:'전자자원 교외접속 로그인 오류',urg:'긴급',stt:'처리중',dept:'학술정보팀',sla:'D-0',date:'07-19'},
+  {id:'c4',type:'자료',t:'대출 연체 자동문자 미수신',urg:'보통',stt:'접수',dept:'정보서비스팀',sla:'D-1',date:'07-19'},
+  {id:'c5',type:'프로그램',t:'논문작성 특강 추가 개설 요청',urg:'낮음',stt:'접수',dept:'정보서비스팀',sla:'D-5',date:'07-18'},
+  {id:'c6',type:'시설',t:'그룹스터디룸 예약 중복',urg:'보통',stt:'완료',dept:'행정운영팀',sla:'완료',date:'07-18'},
+  {id:'c7',type:'시스템',t:'모바일 검색 결과 정렬 오류',urg:'낮음',stt:'접수',dept:'학술정보팀',sla:'D-4',date:'07-17'},
+  {id:'c8',type:'자료',t:'전공서적 훼손 교체 요청',urg:'보통',stt:'처리중',dept:'학술정보팀',sla:'D-1',date:'07-17'}
+];
+/* ===== 챗봇 문의 큐 — 실무자 ===== */
+var CHATQ=[
+  {q:'열람실 운영시간 어떻게 되나요?',cat:'이용안내',stt:'자동응답',n:342},
+  {q:'대출 권수·기간 규정이 궁금해요',cat:'대출규정',stt:'자동응답',n:288},
+  {q:'전자자원(RISS) 교외접속 방법',cat:'전자자원',stt:'에스컬레이션',n:64},
+  {q:'논문 표절검사(카피킬러) 신청은?',cat:'학술지원',stt:'에스컬레이션',n:41},
+  {q:'희망도서 신청 후 언제 입고되나요?',cat:'수서',stt:'미해결',n:37},
+  {q:'분실물(USB) 어디서 찾나요?',cat:'기타',stt:'자동응답',n:29},
+  {q:'졸업생도 도서관 이용 가능한가요?',cat:'이용안내',stt:'에스컬레이션',n:22}
+];
+
 /* ============================================================ STATE */
-var state={role:'총장',term:'2026-1',kwSel:'k1',speechDraft:null,newsTab:'keywords',agMsgs:[],agInit:false,lastCtx:null};
+var state={role:'총장',term:'2026-1',kwSel:'k1',speechDraft:null,newsTab:'keywords',agMsgs:[],agInit:false,lastCtx:null,
+  rpaType:null,rpaMode:null,artOpen:null};
 function termF(){var t=TERMS.filter(function(x){return x.id===state.term})[0];return t?t.f:0}
 
 /* ============================================================ HELPERS */
@@ -1336,6 +1478,254 @@ function buildSpeechDraft(){
   ].map(function(p){p.srcTags=srcTags;return p});
 }
 
+/* ===== v3: 도서관장(기관장) 대시보드 ===== */
+function libTile(k){
+  var pctbar=k.pct!=null?'<div class="itile-pct"><span class="pm">달성</span><span class="pbar"><span class="pmark" style="left:'+k.pct+'%"></span></span><span class="pv">'+k.pct+'%</span></div>':'';
+  return '<div class="itile s-'+k.st+'"><div class="itile-top"><span class="itile-l">'+k.l+'</span>'+pill(k.st)+'</div><div class="itile-v tnum">'+k.v+'<small>'+k.u+'</small></div><div class="itile-note">'+k.tgt+'</div><div class="itile-trend">'+iSpark(parseFloat((k.v+'').replace(/,/g,''))||50,k.st,k.st==='good')+'</div>'+pctbar+'</div>';
+}
+function vLibHome(){
+  var statHtml=LIB.stat.map(function(s){return '<div class="stat"><div class="sl">'+s[0]+'</div><div class="sv tnum">'+s[1]+'<small>'+s[2]+'</small></div></div>'}).join('');
+  var teamRows=LIB_TEAMS.map(function(t){return '<tr data-nav="#/team/'+t.id+'"><td><span class="nm"><i style="background:'+colorOf(t.st)+'"></i>'+t.n+'</span><div style="font-size:11px;color:var(--muted);margin-top:2px">'+t.desc+'</div></td><td class="r">'+t.staff+'명</td><td class="r">'+t.krs.length+'개 KR</td><td class="r go">→</td></tr>'}).join('');
+  return crumbs([{t:'중앙도서관',lvl:0}])+
+    pageHead('중앙도서관','기관 운영 현황',true)+
+    '<div class="stat-row">'+statHtml+'</div>'+
+    '<div class="section-label"><span class="ln">운영 KPI</span>기관 핵심지표</div>'+
+    '<div class="itile-grid">'+LIB.kpi.map(libTile).join('')+'</div>'+
+    '<div class="section-label"><span class="ln">부서</span>팀별 현황</div>'+
+    '<div class="panel"><div class="tbl-wrap"><table class="dt"><thead><tr><th>부서</th><th class="r">인원</th><th class="r">핵심결과</th><th class="r"></th></tr></thead><tbody>'+teamRows+'</tbody></table></div></div>'+
+    '<div class="brief" style="margin-top:14px"><h4>기관 브리핑</h4><p>예산 집행률(63%)과 전자자원 이용률(58%)이 목표를 밑돕니다. <b>행정운영팀 집행 가속</b>과 <b>학술정보팀 전자자원 이용 촉진</b>이 우선입니다. <span style="color:var(--accent);font-weight:700;cursor:pointer" data-nav="#/libteams">부서 목표관리 →</span></p></div>';
+}
+function getTgt(t,i){var k=t.id+'|'+i;return state.teamTgt&&state.teamTgt[k]!=null?state.teamTgt[k]:t.krs[i].tgt;}
+function vLibTeams(){
+  if(!state.teamTgt)state.teamTgt={};
+  var body=LIB_TEAMS.map(function(t){
+    var rows=t.krs.map(function(kr,i){
+      var tgt=getTgt(t,i);
+      var pct=kr.lower?Math.max(4,Math.min(100,Math.round(tgt/kr.cur*100))):Math.max(4,Math.min(100,Math.round(kr.cur/tgt*100)));
+      var met=kr.lower?kr.cur<=tgt:kr.cur>=tgt;
+      var fill=met?'var(--good)':pct>=80?'var(--warn)':'var(--serious)';
+      return '<div class="kr-row"><div class="kr-name">'+kr.n+'</div>'+
+        '<div class="kr-prog"><i style="width:'+pct+'%;background:'+fill+'"></i></div>'+
+        '<div class="kr-ctl"><span class="kr-cur">'+kr.cur+kr.u+'</span><span style="color:var(--faint)">목표</span><button class="adj" data-tgt="'+t.id+'|'+i+'|-">−</button><b>'+tgt+kr.u+'</b><button class="adj" data-tgt="'+t.id+'|'+i+'|+">+</button></div></div>';
+    }).join('');
+    return '<div class="team-card"><div class="team-h" data-nav="#/team/'+t.id+'"><span class="tn">'+t.n+'</span><span class="tmeta">'+t.lead+' · '+t.staff+'명 · '+t.desc+'</span>'+pill(t.st)+'<span class="tgo">상세 →</span></div>'+rows+'</div>';
+  }).join('');
+  return crumbs([{t:'중앙도서관',h:'#/libhome',lvl:0},{t:'부서 목표관리',lvl:1}])+
+    pageHead('부서 목표관리','팀별 핵심결과(KR) · 목표치는 +/−로 직접 조정',true)+body+
+    '<div class="brief" style="margin-top:14px"><h4>관리 브리핑</h4><p>목표치를 조정하면 달성률 막대가 즉시 갱신됩니다. <b>정보서비스팀 프로그램 참여</b>가 목표 대비 가장 뒤처집니다. 우측 에이전트에 "프로그램 참여 목표 올리면?"으로 시뮬레이션해 보세요.</p></div>';
+}
+function vTeam(id){
+  var t=LIB_TEAMS.filter(function(x){return x.id===id})[0];if(!t)return vNotFound();
+  var rows=t.krs.map(function(kr,i){var tgt=getTgt(t,i);var met=kr.lower?kr.cur<=tgt:kr.cur>=tgt;var st=met?'good':kr.st;return '<div class="stat" style="border-left:3px solid '+colorOf(st)+'"><div class="sl">'+kr.n+'</div><div class="sv tnum">'+kr.cur+'<small>'+kr.u+'</small></div><div class="sd">목표 '+tgt+kr.u+'</div></div>'}).join('');
+  return crumbs([{t:'중앙도서관',h:'#/libhome',lvl:0},{t:'부서 목표관리',h:'#/libteams',lvl:1},{t:t.n,lvl:2}])+
+    pageHead(t.n,t.lead+' · '+t.staff+'명 · '+t.desc,true)+
+    '<div class="stat-row">'+rows+'</div>'+
+    '<div class="brief" style="margin-top:14px"><h4>팀 진단</h4><p>'+(t.id==='ref'?'프로그램 참여·이용자 만족도가 핵심 과제입니다. 참고봉사 응답률 제고와 특강 확대가 필요합니다.':t.id==='ais'?'전자자원 이용률과 장서 회전율이 낮습니다. 이용자 교육·큐레이션 강화가 관건입니다.':'예산 집행 속도가 분기목표를 밑돕니다. 하반기 집행계획 재수립이 필요합니다.')+'</p></div>';
+}
+function vComplaints(){
+  var mine=curTier()==='staff';
+  var list=mine?COMPLAINTS.filter(function(c){return c.dept==='학술정보팀'}):COMPLAINTS;
+  var rows=list.map(function(c){return '<tr><td><span class="stt-p">'+c.type+'</span></td><td><span class="nm" style="font-weight:650">'+c.t+'</span></td><td><span class="urg-p urg-'+c.urg+'">'+c.urg+'</span></td><td><span class="stt-p stt-'+c.stt+'">'+c.stt+'</span></td><td class="r" style="color:var(--muted)">'+c.dept+'</td><td class="r" style="font-family:var(--mono);color:'+(c.sla==='D-0'?'var(--crit-ink)':'var(--muted)')+'">'+c.sla+'</td></tr>'}).join('');
+  var cqRows=CHATQ.map(function(q){return '<tr><td><span class="nm" style="font-weight:600">'+q.q+'</span></td><td style="color:var(--muted)">'+q.cat+'</td><td><span class="stt-p stt-'+q.stt+'">'+q.stt+'</span></td><td class="r tnum">'+q.n+'건</td></tr>'}).join('');
+  return crumbs([{t:mine?'학술정보팀':'중앙도서관',h:mine?'#/staffhome':'#/libhome',lvl:0},{t:'민원·문의',lvl:1}])+
+    pageHead('민원·문의',mine?'우리 팀 접수 민원 및 챗봇 에스컬레이션':'기관 전체 민원 및 챗봇 문의',false)+
+    '<div class="section-label"><span class="ln">민원</span>접수 민원 큐</div>'+
+    '<div class="panel"><div class="tbl-wrap"><table class="dt"><thead><tr><th>유형</th><th>내용</th><th>긴급</th><th>상태</th><th class="r">담당</th><th class="r">SLA</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>'+
+    '<div class="section-label"><span class="ln">챗봇</span>챗봇 문의 · 에스컬레이션 정리</div>'+
+    '<div class="panel"><div class="tbl-wrap"><table class="dt"><thead><tr><th>문의</th><th>분류</th><th>처리</th><th class="r">건수</th></tr></thead><tbody>'+cqRows+'</tbody></table></div></div>';
+}
+function vStaffHome(){
+  var mine=COMPLAINTS.filter(function(c){return c.dept==='학술정보팀'});
+  var urgent=mine.filter(function(c){return c.urg==='긴급'&&c.stt!=='완료'}).length;
+  var esc=CHATQ.filter(function(q){return q.stt==='에스컬레이션'||q.stt==='미해결'}).length;
+  return crumbs([{t:'학술정보팀',lvl:0}])+
+    pageHead('내 업무','학술정보팀 · 오늘 처리할 일',false)+
+    '<div class="stat-row" style="margin-bottom:14px">'+
+      '<div class="stat" style="border-left:3px solid var(--crit)"><div class="sl">긴급 민원</div><div class="sv tnum" style="color:var(--crit-ink)">'+urgent+'<small>건</small></div><div class="sd">SLA 임박</div></div>'+
+      '<div class="stat" style="border-left:3px solid var(--serious)"><div class="sl">에스컬레이션 문의</div><div class="sv tnum">'+esc+'<small>건</small></div><div class="sd">응답 필요</div></div>'+
+      '<div class="stat" style="border-left:3px solid var(--accent)"><div class="sl">우리 팀 민원</div><div class="sv tnum">'+mine.length+'<small>건</small></div><div class="sd">접수·처리중</div></div>'+
+      '<div class="stat"><div class="sl">문서 작성</div><div class="sv tnum">RPA</div><div class="sd">공문 작성 도구</div></div>'+
+    '</div>'+
+    '<div class="grid-2e">'+
+      '<div class="panel" data-nav="#/complaints" style="cursor:pointer"><div class="panel-head"><div><h3>민원 큐</h3><div class="sub">긴급 '+urgent+'건 우선</div></div></div>'+
+        '<div class="tbl-wrap"><table class="dt"><tbody>'+mine.slice(0,4).map(function(c){return '<tr><td><span class="nm" style="font-weight:600">'+c.t+'</span></td><td><span class="urg-p urg-'+c.urg+'">'+c.urg+'</span></td><td class="r go">→</td></tr>'}).join('')+'</tbody></table></div></div>'+
+      '<div class="panel" data-nav="#/rpa" style="cursor:pointer"><div class="panel-head"><div><h3>문서 작성 (RPA)</h3><div class="sub">공문 초안·수정·저장</div></div></div><div style="padding:4px 15px 16px;font-size:12px;color:var(--ink-2);line-height:1.6">반복 공문을 블록 단위로 초안작성·전역/부분/수동수정하고 PDF로 저장합니다. <span style="color:var(--accent);font-weight:700">열기 →</span></div></div>'+
+    '</div>';
+}
+
+/* ===== v3: RPA 문서도구 (행정문서-RPA-데모 DNA 계승 · 역할별 문서유형 차등) ===== */
+function escapeHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+/* 글자 단위 LCS diff → <del>/<ins> (원본 verbatim) */
+function diffHtml(oldS,newS){
+  var o=[].concat(Array.prototype.slice.call(oldS||'')),n=[].concat(Array.prototype.slice.call(newS||'')),m=o.length,k=n.length;
+  if(m===0)return '<ins>'+escapeHtml(newS)+'</ins>';
+  if(k===0)return '<del>'+escapeHtml(oldS)+'</del>';
+  var dp=[];for(var a=0;a<=m;a++)dp.push(new Int16Array(k+1));
+  for(var i=m-1;i>=0;i--)for(var j=k-1;j>=0;j--)dp[i][j]=o[i]===n[j]?dp[i+1][j+1]+1:Math.max(dp[i+1][j],dp[i][j+1]);
+  if(dp[0][0]<0.34*Math.max(m,k))return '<del>'+escapeHtml(oldS)+'</del><ins>'+escapeHtml(newS)+'</ins>';
+  var x=0,y=0,buf='',mode='',out='';
+  var flush=function(){if(!buf)return;out+=mode==='='?escapeHtml(buf):mode==='-'?'<del>'+escapeHtml(buf)+'</del>':'<ins>'+escapeHtml(buf)+'</ins>';buf='';};
+  var push=function(ch,mo){if(mo!==mode){flush();mode=mo;}buf+=ch;};
+  while(x<m&&y<k){if(o[x]===n[y]){push(o[x],'=');x++;y++;}else if(dp[x+1][y]>=dp[x][y+1]){push(o[x],'-');x++;}else{push(n[y],'+');y++;}}
+  while(x<m){push(o[x],'-');x++;}while(y<k){push(n[y],'+');y++;}flush();return out;
+}
+/* 문서유형별 블록 팩토리 */
+var RPA_DEFS={
+  gongmun:{name:'공문',org:'평택대학교 사회복지학과',order:['b_recv','b_title','b_intro','b_purpose','b_content','b_coop','b_contact','b_attach'],
+    blocks:function(){return {
+      b_recv:{label:'수신자',filled:true,text:'(주)텐소프트웍스 (ks.kim@tensoftworks.com)'},
+      b_title:{label:'제목',filled:false,text:'',guide:'제목을 입력하세요 (예: 2026학년도 하계 실습 협조 요청)'},
+      b_intro:{label:'본문-인사',filled:false,text:'',guide:'첫 인사·기관 발전 기원 문구'},
+      b_purpose:{label:'본문-목적',filled:false,text:'',guide:'공문 작성의 목적과 배경'},
+      b_content:{label:'내용(가~다)',filled:false,text:'',guide:'가. / 나. / 다. — 교과목·담당교수·기간 등'},
+      b_coop:{label:'협조 요청사항',filled:false,text:'',guide:'상대 기관에 요청할 협조 사항'},
+      b_contact:{label:'관련 문의',filled:false,text:'',guide:'담당 부서·내선번호·이메일'},
+      b_attach:{label:'붙임',filled:false,text:'',guide:'붙임 문서 목록'}};},
+    draft:{b_title:'2026학년도 평택대학교 사회복지학과 하계 실습 협조 요청',
+      b_intro:'1. 귀 기관의 무궁한 발전을 기원하며, 본교 학생의 하계 실습을 승인해 주심에 깊은 감사를 드립니다.',
+      b_purpose:'2. 평택대학교 사회복지학과에서는 아래와 같이 하계 실습생 명단을 송부하오니, 학생 지도 및 실습 운영에 협조하여 주시기 바랍니다.',
+      b_content:'3. 내용\n  가. 교과목명: 인턴십 (전공필수, 3학점)\n  나. 담당교수: 사회복지학과 노영희 교수\n  다. 실습 인정 기준시간: 160시간 이상',
+      b_coop:'4. 협조 요청사항\n  가. 출석부 및 평가표 회신 — 실습 종료 후 7일 이내\n  나. 실습일지 검토',
+      b_contact:'○ 관련 문의: 사회복지학과 학사운영직\n  - 내선번호: 031-000-0000\n  - 이메일: dss05029@ptu.ac.kr',
+      b_attach:'붙임  1. 인턴십 안내문 1부.  2. (양식) 출석부 1부.  3. (양식) 평가표 1부.'},
+    purpose:'2. 평택대학교 사회복지학과에서는 예비 사회복지사로서의 실무 역량 강화와 현장 적응력 배양을 위하여, 아래와 같이 실습생 명단을 송부하오니 학생 지도 및 원활한 실습 운영에 적극적인 협조를 요청드립니다.',
+    tpl:'[공문 초안 요청]\n· 수신 기관: (주)텐소프트웍스\n· 제목/목적: 2026학년도 하계 실습 협조 요청\n· 교과목: 인턴십 (전공필수, 3학점)\n· 담당 교수: 사회복지학과 노영희 교수\n· 실습 기간: 2026. 6. 22.(월) ~ 8. 28.(금) [10주]\n· 인정 시간: 160시간 이상\n· 협조 사항: 출석부·평가표 회신, 실습일지 검토\n→ 위 내용으로 공문 초안 잡아줘.',
+    term:['실습','현장실습']},
+  speech:{name:'연설문',org:'평택대학교',order:['b_head','b_greet','b_open','b_body1','b_body2','b_close','b_sign'],
+    blocks:function(){return {
+      b_head:{label:'행사·일시·장소',filled:true,text:'2026학년도 후기 학위수여식 · 2026. 8. 21.(금) 10:00 · 종합관 대강당'},
+      b_greet:{label:'인사',filled:false,text:'',guide:'존경하는 … 인사말'},
+      b_open:{label:'도입',filled:false,text:'',guide:'행사의 의미·맥락'},
+      b_body1:{label:'본문-비전',filled:false,text:'',guide:'대학의 비전·가치 (PTU 3.0·111년)'},
+      b_body2:{label:'본문-당부',filled:false,text:'',guide:'졸업생을 향한 당부·격려'},
+      b_close:{label:'맺음',filled:false,text:'',guide:'축하·감사로 마무리'},
+      b_sign:{label:'서명',filled:true,text:'평택대학교 총장'}};},
+    draft:{b_greet:'존경하는 내빈 여러분, 그리고 오늘의 주인공인 후기 대학원 졸업생 여러분. 학위 취득을 진심으로 축하드립니다.',
+      b_open:'저는 취임의 자리에서 데이터에 근거하되 결정은 사람의 몫으로 남기겠다고 약속드린 바 있습니다. 오늘 학위를 받는 여러분이야말로, 지식을 판단으로 완성하는 바로 그 사람입니다.',
+      b_body1:'우리 평택대학교는 111년의 역사로 또다른 100년을 준비하고 있습니다. PTU 3.0 비전 아래, 여러분이 이곳에서 익힌 배움이 세상을 섬기는 힘이 되기를 바랍니다.',
+      b_body2:'지난 교직원 조례에서 저는 숫자는 겁주기 위한 것이 아니라 어디에 손을 내밀지 알려주는 지도라고 말했습니다. 여러분이 대학원에서 익힌 연구의 언어가, 세상의 문제를 향한 지도가 되기를 바랍니다.',
+      b_close:'평택대학교는 언제나 여러분의 든든한 배경으로 남겠습니다. 여러분의 도전이 곧 우리 대학의 자랑입니다. 다시 한 번 졸업을 축하합니다.'},
+    purpose:'저는 취임의 자리에서, 데이터에 근거하되 결정은 사람의 몫으로 남기겠다고 약속드렸습니다. 그 약속의 뿌리는 섬김과 헌신이라는 우리 대학의 건학 정신에 있으며, 오늘 학위를 받는 여러분이야말로 그 정신을 세상에서 실천할 바로 그 사람입니다.',
+    tpl:'[연설문 초안 요청]\n· 행사: 2026학년도 후기 학위수여식 축사\n· 대상: 후기 대학원 졸업생\n· 근거 연설문: 취임사, 상반기 교직원 조례 인사말\n· 핵심 메시지: 판단은 사람이 · 111년 역사 · PTU 3.0 · 섬김\n→ 위 내용으로 축사 초안 잡아줘.',
+    term:['학생','졸업생']},
+  letter:{name:'서신',org:'평택대학교',order:['b_to','b_season','b_body','b_close','b_sign'],
+    blocks:function(){return {
+      b_to:{label:'수신·호칭',filled:true,text:'존경하는 (주)텐소프트웍스 대표님께'},
+      b_season:{label:'계절인사',filled:false,text:'',guide:'계절·안부 인사'},
+      b_body:{label:'본문',filled:false,text:'',guide:'감사·축하·요청의 본문'},
+      b_close:{label:'맺음',filled:false,text:'',guide:'건승·발전 기원 맺음말'},
+      b_sign:{label:'서명',filled:true,text:'평택대학교 총장'}};},
+    draft:{b_season:'무더위가 기승을 부리는 계절입니다. 귀사의 무궁한 발전과 대표님의 건강을 기원합니다.',
+      b_body:'다름이 아니오라, 지난 학기 본교 사회복지학과 학생들의 현장실습을 정성껏 지도해 주신 데 대하여 깊은 감사의 말씀을 전합니다. 귀사의 협력은 예비 사회복지사를 길러내는 소중한 토대가 되었습니다.',
+      b_close:'앞으로도 산학협력의 좋은 동반자로 함께하기를 바라며, 귀사의 건승을 기원합니다.'},
+    purpose:'다름이 아니오라, 지난 학기 본교 학생들의 현장실습을 각별한 정성으로 지도해 주신 데 대하여, 대학을 대표하여 진심 어린 감사의 말씀을 전해 드립니다. 귀사의 헌신적인 협력은 예비 전문인을 길러내는 더없이 소중한 토대가 되었습니다.',
+    tpl:'[서신 초안 요청]\n· 종류: 감사 서신\n· 수신: (주)텐소프트웍스 대표\n· 사유: 현장실습 지도 협력에 대한 감사\n· 톤: 정중·따뜻\n→ 위 내용으로 감사 서신 초안 잡아줘.',
+    term:['실습','현장실습']}
+};
+function rpaTypesFor(){return curTier()==='exec'?['speech','letter']:['gongmun'];}
+function rpaLogo(){return (document.querySelector('.blogo img')||{}).src||'';}
+function rpaInit(type){var d=RPA_DEFS[type];state.rpa={type:type,mode:null,sel:null,B:d.blocks(),eb:[],ea:[],seq:0,msgs:[{k:'bot',t:d.name+' 틀을 불러왔습니다. 점선 블록은 아직 비어 있는 항목입니다. 아래 ‘입력 양식 넣기’를 눌러 그대로 보내면 초안을 제안해 드립니다.',a:'안내'}],termApplied:false};}
+function rpaPendingIds(){var B=state.rpa.B;return Object.keys(B).filter(function(id){return B[id].pending;});}
+function rpaOrder(){var d=RPA_DEFS[state.rpa.type];var arr=d.order.slice();
+  /* insert extras: eb after content-ish, ea after attach */
+  return {main:arr,eb:state.rpa.eb,ea:state.rpa.ea};}
+function rpaBlockHTML(id){
+  var b=state.rpa.B[id];if(!b)return '';
+  var label=(state.rpa.mode==='partial')?'<span class="blabel'+(b.pending?' rev':'')+'">'+(b.pending?'검토중 · ':'')+b.label+'</span>':'';
+  if(b.pending){
+    return '<div class="rblock pending" data-rid="'+id+'"><span class="blabel rev">검토중 · '+b.label+'</span><div class="difftext">'+diffHtml(b.prev||'',b.text)+'</div>'+
+      '<div class="revctl"><button class="rv ok" data-racc="'+id+'">수락</button><button class="rv no" data-rrej="'+id+'">되돌리기</button></div></div>';
+  }
+  if(!b.filled)return '<div class="rblock guide" data-rid="'+id+'">'+label+'<span class="gtext">'+b.guide+'</span></div>';
+  var cls='rblock'+(b.removable?' extra':'')+(state.rpa.sel===id?' selected':'');
+  var del=b.removable?'<button class="delx" data-rdel="'+id+'">×</button>':'';
+  return '<div class="'+cls+'" data-rid="'+id+'">'+label+del+'<div class="rtext">'+escapeHtml(b.text).replace(/\n/g,'<br>')+'</div></div>';
+}
+function rpaReviewBar(){var p=rpaPendingIds();if(!p.length)return '';
+  return '<div class="reviewbar"><span class="rb-t">AI 제안 '+p.length+'건 검토 대기</span><span class="rb-actions"><button class="btn" data-raccall="1">모두 수락</button><button class="btn ghost" data-rrejall="1">모두 되돌리기</button></span></div>';}
+function rpaDocHTML(){
+  var d=RPA_DEFS[state.rpa.type],ord=rpaOrder();
+  var chip=state.rpa.mode==='global'?'<span class="modechip global">전역수정 모드</span>':state.rpa.mode==='partial'?'<span class="modechip partial">부분수정 모드 · 블록을 선택하세요</span>':'<span class="modechip">초안작성 모드</span>';
+  var body=ord.main.map(rpaBlockHTML).join('');
+  var extras=ord.eb.map(rpaBlockHTML).join('');
+  var attachExtras=ord.ea.map(rpaBlockHTML).join('');
+  return rpaReviewBar()+
+    '<div class="doc">'+chip+
+      '<div class="dochead"><img class="doclogo" src="'+rpaLogo()+'" alt="평택대학교"><div class="docorg">'+d.org+'</div></div>'+
+      body+extras+
+      (state.rpa.type==='gongmun'?'<div class="addslot" data-radd="body">＋ 항목 추가</div>':'')+
+      attachExtras+
+      (state.rpa.type==='gongmun'?'<div class="addslot" data-radd="attach">＋ 붙임 추가</div>':'')+
+      '<div class="stamp">(직인 대체)</div>'+
+    '</div>';
+}
+function rpaChatHTML(){
+  return '<div class="rpa-chat"><div class="rc-head"><span class="ag-av">AI</span><div><b>문서 에이전트</b><span>'+RPA_DEFS[state.rpa.type].name+' · 근거 기반 제안</span></div></div>'+
+    '<div class="rc-body" id="rcBody">'+state.rpa.msgs.map(function(m){return m.k==='sys'?'<div class="rmsg sys">'+m.t+'</div>':'<div class="rmsg '+m.k+'">'+(m.k==='bot'&&m.a?'<div class="ragent">'+m.a+' 에이전트</div>':'')+m.t+'</div>';}).join('')+'</div>'+
+    '<div class="rc-chips">'+rpaChips()+'</div>'+
+    '<div class="rc-foot"><textarea id="rcInput" rows="1" placeholder="지시를 입력하세요…"></textarea><button id="rcSend">➤</button></div></div>';
+}
+function rpaChips(){
+  var d=RPA_DEFS[state.rpa.type];
+  if(state.rpa.mode==='global')return '<span class="rchip" data-rchip="전반적으로 \''+d.term[0]+'\'을 \''+d.term[1]+'\'으로 통일하고 문맥도 검토해줘">‘'+d.term[0]+'’→‘'+d.term[1]+'’ 통일</span>';
+  if(state.rpa.mode==='partial')return '<span class="rchip" data-rchip="이 문장 목적·근거가 약한데 더 정중하게 보강해줘">선택 문단 정중하게 보강</span>';
+  return '<span class="rchip" data-rchip="'+d.tpl.replace(/"/g,'&quot;')+'">입력 양식 넣기</span>';
+}
+function vRPA(){
+  var types=rpaTypesFor();
+  if(!state.rpa||types.indexOf(state.rpa.type)<0){
+    /* 문서유형 선택 화면 */
+    var cards=types.map(function(tp){var d=RPA_DEFS[tp];var sub=tp==='speech'?'행사 연설문 초안·수정':tp==='letter'?'감사·축하·초청 서신':'대외 발송 공문';
+      return '<div class="panel" data-rpatype="'+tp+'" style="cursor:pointer"><div class="panel-head"><div><h3>'+d.name+'</h3><div class="sub">'+sub+'</div></div></div><div style="padding:4px 15px 16px;font-size:12px;color:var(--ink-2);line-height:1.6">블록 단위 초안작성 · 전역/부분/수동수정 · 검토(수락·되돌리기) · PDF 저장. <span style="color:var(--accent);font-weight:700">선택 →</span></div></div>';}).join('');
+    return crumbs([{t:curTier()==='exec'?'대학 전체':curTier()==='dean'?'중앙도서관':'학술정보팀',h:TIER_HOME[curTier()],lvl:0},{t:'문서 작성',lvl:1}])+
+      pageHead('문서 작성',curTier()==='exec'?'연설문·서신 (RPA)':'공문 (RPA)',false)+
+      '<div class="grid-2e">'+cards+'</div>';
+  }
+  return '<div class="rpa-wrap"><div class="rpa-tools"><button class="rtool'+(state.rpa.mode==='global'?' on':'')+'" data-rmode="global">전역수정</button><button class="rtool'+(state.rpa.mode==='partial'?' on':'')+'" data-rmode="partial">부분수정</button><button class="rtool" data-rsave="1">저장(PDF)</button><button class="rtool" data-rback="1">← 유형 변경</button></div>'+
+    '<div class="rpa-stage"><div class="rpa-doc" id="rpaDoc">'+rpaDocHTML()+'</div>'+rpaChatHTML()+'</div></div>';
+}
+/* RPA 동작 */
+function rpaRerender(){var el=$('#rpaDoc');if(el)el.innerHTML=rpaDocHTML();}
+function rpaSay(k,t,a){state.rpa.msgs.push({k:k,t:t,a:a});var b=$('#rcBody');if(b){b.innerHTML=state.rpa.msgs.map(function(m){return m.k==='sys'?'<div class="rmsg sys">'+m.t+'</div>':'<div class="rmsg '+m.k+'">'+(m.k==='bot'&&m.a?'<div class="ragent">'+m.a+' 에이전트</div>':'')+m.t+'</div>';}).join('');b.scrollTop=b.scrollHeight;}}
+function rpaPropose(id,newText){var b=state.rpa.B[id];if(b.text===newText)return false;b.prev=b.text;b.text=newText;b.filled=true;b.pending=true;return true;}
+function rpaAccept(id){var b=state.rpa.B[id];delete b.pending;delete b.prev;}
+function rpaReject(id){var b=state.rpa.B[id];b.text=b.prev||'';b.filled=!!b.text;delete b.pending;delete b.prev;}
+function rpaRoute(t){
+  if(rpaPendingIds().length){rpaSay('bot','아직 검토 중인 변경이 있습니다. 먼저 수락 또는 되돌리기 해주세요.','검토대기');return;}
+  var d=RPA_DEFS[state.rpa.type];
+  if(/(추가|넣어|하나 더)/.test(t)&&/(붙임|항목)/.test(t)&&state.rpa.type==='gongmun'){rpaAddBlock(/붙임/.test(t)?'attach':'body');rpaRerender();rpaSay('bot','해당 영역에 블록을 추가했습니다.','추가');return;}
+  if(state.rpa.mode==='global'){
+    var pre=d.term[1].replace(d.term[0],'');var re=new RegExp('(?<!'+pre+')'+d.term[0],'g');var cnt=0;
+    Object.keys(state.rpa.B).forEach(function(id){var b=state.rpa.B[id];if(!b.filled||b.pending)return;var after=b.text.replace(re,d.term[1]);if(after!==b.text){rpaPropose(id,after);cnt++;}});
+    state.rpa.termApplied=true;rpaRerender();rpaSay('bot',cnt?('전 블록에서 ‘'+d.term[0]+'’→‘'+d.term[1]+'’ 변경을 '+cnt+'건 제안했습니다. 상단에서 수락/되돌리기 하세요.'):'변경할 내용을 찾지 못했습니다.','전역수정');return;
+  }
+  if(state.rpa.mode==='partial'){
+    if(!state.rpa.sel){rpaSay('bot','먼저 문서에서 보강할 블록을 클릭해 선택하세요.','부분수정');return;}
+    var id=state.rpa.sel,b=state.rpa.B[id];var nt;
+    if(/(목적|근거|보강|정중|격식|다듬|자연)/.test(t)){nt=d.purpose||b.text;}
+    else{nt=b.text.split('해주세요').join('하여 주시기 바랍니다').split('해줘').join('하여 주시기 바랍니다').split('주세요').join('주시기 바랍니다');}
+    if(rpaPropose(id,nt)){rpaRerender();rpaSay('bot','선택한 블록만 보강을 제안했습니다.','부분수정');}else rpaSay('bot','이미 보강된 문장입니다.','부분수정');return;
+  }
+  /* draft */
+  if(/(초안|다듬|작성|잡아|채워|써줘|만들|양식)/.test(t)){
+    var filled=0;RPA_DEFS[state.rpa.type].order.forEach(function(id){var b=state.rpa.B[id];if(b&&!b.filled&&d.draft[id]){rpaPropose(id,d.draft[id]);filled++;}});
+    rpaRerender();rpaSay('bot',filled?('비어 있던 '+filled+'개 블록에 '+d.name+' 초안을 제안했습니다. 추가된 내용은 초록색이며, 상단에서 모두 수락하면 확정됩니다.'):'이미 모든 블록이 채워져 있습니다.','초안작성');return;
+  }
+  rpaSay('bot','현재 모드에서 이해하지 못한 지시입니다. 아래 칩 또는 양식을 활용해 보세요.','안내');
+}
+function rpaAddBlock(region){state.rpa.seq++;var id='x_'+state.rpa.seq;
+  if(region==='attach'){state.rpa.B[id]={label:'붙임 항목',filled:false,text:'',guide:'붙임 문서명·부수',removable:true};state.rpa.ea.push(id);}
+  else{state.rpa.B[id]={label:'기타 항목',filled:false,text:'',guide:'추가 항목 내용',removable:true};state.rpa.eb.push(id);}}
+function rpaSetMode(m){state.rpa.mode=state.rpa.mode===m?null:m;state.rpa.sel=null;render();}
+function rpaSave(){
+  if(rpaPendingIds().length){toast('검토 중인 변경이 있습니다 — 먼저 수락/되돌리기 후 저장하세요.');return;}
+  state.rpa.sel=null;var prev=document.title;document.title='평택대학교_'+RPA_DEFS[state.rpa.type].name+'_2026';
+  var restore=function(){document.title=prev;window.removeEventListener('afterprint',restore);};window.addEventListener('afterprint',restore);
+  toast('인쇄 창에서 ‘PDF로 저장’을 선택하면 문서가 PDF로 추출됩니다.');document.body.classList.add('print-rpa');
+  setTimeout(function(){window.print();setTimeout(function(){document.body.classList.remove('print-rpa');},400);},350);
+}
+function toast(msg){var t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(function(){t.classList.add('show');},10);setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove();},250);},2600);}
+
 function vNotFound(){
   return pageHead('페이지를 찾을 수 없습니다','요청한 경로에 해당하는 화면이 없습니다.',false)+
     '<div class="lock"><div class="ic"></div><h3>알 수 없는 경로</h3><p>메뉴 또는 대시보드에서 다시 이동해 주세요.</p><div class="who"><button class="btn" data-nav="#/home" style="margin-top:12px">Executive Home으로</button></div></div>';
@@ -1351,16 +1741,17 @@ function parseHash(){
   var h=(location.hash||'#/home').replace(/^#\//,'');var parts=h.split('/');
   return {view:parts[0]||'home',params:parts.slice(1)};
 }
+var DRILL_BASE={college:'students',dept:'students',cause:'students',keywords:'news',media:'news',team:'libteams'};
 function allowed(view){
-  var a=ACCESS[state.role];if(a==='*')return true;
-  /* drill views inherit students/home access */
-  var base=({college:'students',dept:'students',cause:'students'})[view]||view;
-  return a.indexOf(view)>=0||a.indexOf(base)>=0;
+  var menus=TIER_MENUS[curTier()]||[];
+  var base=DRILL_BASE[view]||view;
+  return menus.indexOf(view)>=0||menus.indexOf(base)>=0;
 }
 function render(){
   var route=parseHash();var v=route.view,p=route.params;var html;
-  var topView=({college:'students',dept:'students',cause:'students',keywords:'news',media:'news'})[v]||v;
-  if(['home','strategy','students','research','finance','compete','risks','reports','college','dept','cause','news','keywords','media','speeches'].indexOf(v)<0){html=vNotFound();}
+  var topView=DRILL_BASE[v]||v;
+  var VALID=['home','strategy','students','research','finance','compete','risks','reports','college','dept','cause','news','keywords','media','speeches','rpa','libhome','libteams','team','complaints','staffhome'];
+  if(VALID.indexOf(v)<0){html=vNotFound();}
   else if(!allowed(v)){html=vLocked(topView);}
   else{
     switch(v){
@@ -1376,6 +1767,12 @@ function render(){
       case 'news':html=vNews();break;
       case 'speeches':html=vSpeeches();break;
       case 'reports':html=vReports();break;
+      case 'rpa':html=vRPA();break;
+      case 'libhome':html=vLibHome();break;
+      case 'libteams':html=vLibTeams();break;
+      case 'team':html=vTeam(p[0]);break;
+      case 'complaints':html=vComplaints();break;
+      case 'staffhome':html=vStaffHome();break;
       case 'college':html=vCollege(p[0]);break;
       case 'dept':html=vDept(p[0],p[1]);break;
       case 'cause':html=vCause(p[0],p[1],p[2]);break;
@@ -1387,18 +1784,20 @@ function render(){
   buildNav(topView);
   attachCharts();
   if(v==='reports')fillReport();
-  syncAgent(topView);
+  document.body.classList.toggle('rpa-full', v==='rpa' && !!state.rpa);
+  document.body.classList.toggle('partial', v==='rpa' && !!state.rpa && state.rpa.mode==='partial');
+  if(v!=='rpa')syncAgent(topView);
 }
 
 /* ============================================================ CHROME */
 function buildNav(active){
-  $('#mainnav').innerHTML=MENUS.map(function(m){
-    var ok=allowed(m.id);
-    return '<a data-nav="#/'+m.id+'" class="'+(active===m.id?'on':'')+'">'+m.label+(ok?'':'')+'</a>';
+  var menus=TIER_MENUS[curTier()]||[];
+  $('#mainnav').innerHTML=menus.map(function(id){
+    return '<a data-nav="#/'+id+'" class="'+(active===id?'on':'')+'">'+MENU_LABEL[id]+'</a>';
   }).join('');
 }
 function buildMenus(){
-  $('#roleMenu').innerHTML='<div class="dh">열람 권한 (8종)</div>'+ROLES.map(function(r){return '<button data-role="'+r.r+'" class="'+(state.role===r.r?'sel':'')+'">'+r.r+'<span class="rk">'+r.scope+'</span></button>'}).join('');
+  $('#roleMenu').innerHTML='<div class="dh">역할 (RBAC)</div>'+ROLES.map(function(r){return '<button data-role="'+r.r+'" class="'+(state.role===r.r?'sel':'')+'">'+r.r+'<span class="rk">'+r.scope+'</span></button>'}).join('');
   $('#termMenu').innerHTML='<div class="dh">학기 스냅샷</div>'+TERMS.map(function(t){return '<button data-term="'+t.id+'" class="'+(state.term===t.id?'sel':'')+'">'+t.label+(t.cur?'<span class="rk">현재</span>':'<span class="rk">아카이브</span>')+'</button>'}).join('');
 }
 
@@ -1493,7 +1892,7 @@ function syncAgent(view){
   if(!state.agInit)initAgent();
   var g=$('#agGreet');if(g)g.innerHTML=greetHtml();
   var cx=$('#agCtx');if(cx)cx.innerHTML=agentCtx(view);
-  var whereMap={home:'Executive Home',news:'뉴스 인텔리전스',students:'학생성과',research:'연구산학',finance:'재정경영',strategy:'전략관리',compete:'경쟁력분석',risks:'위험신호',speeches:'연설문',reports:'보고서실'};
+  var whereMap={home:'Executive Home',news:'뉴스 인텔리전스',students:'학생성과',research:'연구산학',finance:'재정경영',strategy:'전략관리',compete:'경쟁력분석',risks:'위험신호',speeches:'연설문',reports:'보고서실',libhome:'기관 대시보드',libteams:'부서 목표관리',team:'부서 상세',complaints:'민원·문의',staffhome:'내 업무'};
   var w=$('#agWhere');if(w)w.textContent='현재 화면: '+(whereMap[view]||view);
   renderAgStream();
 }
@@ -1523,6 +1922,31 @@ document.addEventListener('click',function(e){
   if(kw){state.kwSel=kw.getAttribute('data-kw');render();return;}
   var ntab=e.target.closest('[data-ntab]');
   if(ntab){state.newsTab=ntab.getAttribute('data-ntab');render();return;}
+  /* ---- RPA ---- */
+  var rpt=e.target.closest('[data-rpatype]');
+  if(rpt){rpaInit(rpt.getAttribute('data-rpatype'));render();return;}
+  var rmode=e.target.closest('[data-rmode]');
+  if(rmode){rpaSetMode(rmode.getAttribute('data-rmode'));return;}
+  if(e.target.closest('[data-rsave]')){rpaSave();return;}
+  if(e.target.closest('[data-rback]')){state.rpa=null;render();return;}
+  var racc=e.target.closest('[data-racc]');if(racc){rpaAccept(racc.getAttribute('data-racc'));rpaRerender();return;}
+  var rrej=e.target.closest('[data-rrej]');if(rrej){rpaReject(rrej.getAttribute('data-rrej'));rpaRerender();return;}
+  if(e.target.closest('[data-raccall]')){rpaPendingIds().forEach(rpaAccept);rpaRerender();return;}
+  if(e.target.closest('[data-rrejall]')){rpaPendingIds().forEach(rpaReject);rpaRerender();return;}
+  var radd=e.target.closest('[data-radd]');if(radd){rpaAddBlock(radd.getAttribute('data-radd'));rpaRerender();return;}
+  var rdel=e.target.closest('[data-rdel]');if(rdel){var did=rdel.getAttribute('data-rdel');delete state.rpa.B[did];state.rpa.eb=state.rpa.eb.filter(function(x){return x!==did});state.rpa.ea=state.rpa.ea.filter(function(x){return x!==did});rpaRerender();return;}
+  var rchip=e.target.closest('[data-rchip]');if(rchip){var ri=$('#rcInput');if(ri){ri.value=rchip.getAttribute('data-rchip');ri.style.height='auto';ri.style.height=Math.min(160,ri.scrollHeight)+'px';ri.focus();}return;}
+  if(e.target.closest('#rcSend')){var rv=$('#rcInput');if(rv&&rv.value.trim()){var tx=rv.value.trim();rpaSay('me',tx);rv.value='';rv.style.height='auto';setTimeout(function(){rpaRoute(tx);},260);}return;}
+  var rblk=e.target.closest('.rblock[data-rid]');
+  if(rblk && state.rpa && state.rpa.mode==='partial' && !rblk.classList.contains('pending') && !rblk.classList.contains('guide')){
+    state.rpa.sel=rblk.getAttribute('data-rid');rpaRerender();return;}
+  /* ---- 도서관장 목표 조정 ---- */
+  var tgt=e.target.closest('[data-tgt]');
+  if(tgt){var pr=tgt.getAttribute('data-tgt').split('|');var tid=pr[0],ti=+pr[1],dir=pr[2];
+    var team=LIB_TEAMS.filter(function(x){return x.id===tid})[0];var kr=team.krs[ti];
+    if(!state.teamTgt)state.teamTgt={};var key=tid+'|'+ti;var cur=state.teamTgt[key]!=null?state.teamTgt[key]:kr.tgt;
+    var step=kr.tgt>=1000?100:kr.tgt>=100?1:kr.u==='/5'||kr.u==='회'?0.1:1;
+    var nv=dir==='+'?cur+step:cur-step;nv=Math.round(nv*10)/10;if(nv<0)nv=0;state.teamTgt[key]=nv;render();return;}
   var kwask=e.target.closest('[data-kwask]');
   if(kwask){e.stopPropagation();var pr=kwask.getAttribute('data-kwask').split('|');kwAskArticle(pr[0],+pr[1]);return;}
   var mask=e.target.closest('[data-mask]');
@@ -1555,7 +1979,7 @@ document.addEventListener('click',function(e){
   var rkind=e.target.closest('[data-rkind]');
   if(rkind){state.rkind=rkind.getAttribute('data-rkind');render();return;}
   var role=e.target.closest('[data-role]');
-  if(role){state.role=role.getAttribute('data-role');$('#roleName').textContent=state.role;buildMenus();$('#roleMenu').classList.remove('open');render();return;}
+  if(role){state.role=role.getAttribute('data-role');$('#roleName').textContent=state.role;buildMenus();$('#roleMenu').classList.remove('open');state.agMsgs=[];state.agInit=false;location.hash=TIER_HOME[curTier()]||'#/home';render();return;}
   var term=e.target.closest('[data-term]');
   if(term){state.term=term.getAttribute('data-term');var t=TERMS.filter(function(x){return x.id===state.term})[0];$('#termBtn').innerHTML=t.label.replace(' · ',' · ')+' ▾';buildMenus();$('#termMenu').classList.remove('open');render();return;}
   if(e.target.closest('#genReport')){fillReport();return;}
@@ -1572,6 +1996,25 @@ document.addEventListener('click',function(e){
 });
 $('#agSend').addEventListener('click',function(){var av=$('#agInput');if(av&&av.value.trim()){agentFreeAsk(av.value.trim());av.value='';}});
 $('#agInput').addEventListener('keydown',function(e){if(e.key==='Enter'){var v=e.target.value.trim();if(v){agentFreeAsk(v);e.target.value='';}}});
+/* RPA 문서 에이전트 입력(멀티라인 · Enter 전송/Shift+Enter 줄바꿈) + autoGrow */
+document.addEventListener('keydown',function(e){
+  if(e.target&&e.target.id==='rcInput'){
+    e.target.style.height='auto';e.target.style.height=Math.min(160,e.target.scrollHeight)+'px';
+    if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();var tx=e.target.value.trim();if(tx){rpaSay('me',tx);e.target.value='';e.target.style.height='auto';setTimeout(function(){rpaRoute(tx);},260);}}
+  }
+});
+document.addEventListener('input',function(e){if(e.target&&e.target.id==='rcInput'){e.target.style.height='auto';e.target.style.height=Math.min(160,e.target.scrollHeight)+'px';}});
+/* RPA 수동수정: 블록 더블클릭 → 직접 편집(검토 없이 즉시 확정) */
+document.addEventListener('dblclick',function(e){
+  var blk=e.target.closest('.rblock[data-rid]');if(!blk||!state.rpa)return;
+  var id=blk.getAttribute('data-rid');var b=state.rpa.B[id];if(!b||b.pending)return;
+  var tx=blk.querySelector('.rtext');if(!tx){b.filled=true;b.text='';rpaRerender();tx=$('#rpaDoc [data-rid="'+id+'"] .rtext');}
+  if(!tx)return;
+  tx.setAttribute('contenteditable','true');tx.focus();blk.classList.add('editing');
+  var save=function(){b.text=tx.innerText.replace(/ /g,' ').replace(/\n{3,}/g,'\n\n').trim();b.filled=!!b.text;tx.removeAttribute('contenteditable');rpaRerender();
+    var t=document.createElement('div');t.className='toast show';t.textContent='수동수정: ‘'+b.label+'’ 블록을 직접 편집했습니다.';document.body.appendChild(t);setTimeout(function(){t.remove();},1800);};
+  tx.addEventListener('blur',save,{once:true});
+});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){$('#roleMenu').classList.remove('open');$('#termMenu').classList.remove('open');}});
 window.addEventListener('hashchange',render);
 
