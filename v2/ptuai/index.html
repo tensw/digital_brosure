@@ -160,12 +160,24 @@
   .ag-foot button:hover{filter:brightness(1.06)}
   /* mobile: chat agent takes the whole screen; dashboard hidden unless agent closed */
   @media(max-width:880px){
+    /* 헤더 항상 고정 + 로고 중앙 */
+    .topbar{position:fixed;left:0;right:0;top:0;z-index:60}
+    body{padding-top:56px}
+    .topbar-in{justify-content:center;gap:0}
+    nav.mainnav{display:none}
+    .brand{position:static}
+    .brand .blogo{align-items:center}
+    .brand .tagline{display:none}
+    .top-right{position:absolute;right:clamp(10px,3vw,16px);top:50%;transform:translateY(-50%);gap:6px}
+    .pill-btn.date{display:none}
+    /* 에이전트 전체화면 + 입력창 하단 고정 */
     .shell{flex-direction:column}
-    .agent-rail{position:fixed;inset:56px 0 0 0;width:auto!important;height:auto;padding:12px 14px 12px;background:var(--plane);z-index:45}
+    .agent-rail{position:fixed;inset:56px 0 0 0;width:auto!important;height:auto;padding:12px 14px 0;background:var(--plane);z-index:45}
+    .ag-foot{padding-bottom:calc(11px + env(safe-area-inset-bottom))}
     body:not(.ag-closed) main{display:none}
     body.ag-closed .agent-rail{display:none}
     body.ag-closed main{display:block}
-    .ag-fab{right:16px;bottom:16px}
+    .ag-fab{right:16px;bottom:calc(16px + env(safe-area-inset-bottom))}
   }
   .sched{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);padding:15px 15px 13px}
   .sched-h{display:flex;align-items:center;gap:8px;margin-bottom:3px}
