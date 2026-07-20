@@ -6,23 +6,23 @@
 <title>평택대학교 총장 Executive Dashboard</title>
 <style>
   :root{
-    --plane:#EEF1F5; --surface:#FFFFFF; --surface-2:#F6F8FB; --surface-3:#EFF3F8;
-    --ink:#151C28; --ink-2:#3A465A; --muted:#697688; --faint:#95A0B0;
-    --line:#E4E8EF; --line-2:#D2D9E3;
-    --accent:#009B64; --accent-2:#12B37A; --accent-soft:#E6F4EE;
-    --nav:#FFFFFF; --nav-ink:#3A465A; --nav-gold:#B58A2E;
+    --plane:#F3F5F9; --surface:#FFFFFF; --surface-2:#F7F9FC; --surface-3:#EDF1F7;
+    --ink:#141A24; --ink-2:#39465A; --muted:#6B7889; --faint:#98A2B2;
+    --line:#EAEDF3; --line-2:#DDE3EC;
+    --accent:#009B64; --accent-2:#12B37A; --accent-soft:#E7F5EF;
+    --nav:#FFFFFF; --nav-ink:#39465A; --nav-gold:#B58A2E;
     --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
     --good-tint:#E6F5E6; --warn-tint:#FBF1D8; --serious-tint:#FBE9E1; --crit-tint:#FAE3E3;
     --good-ink:#0a7a0a; --warn-ink:#8a6410; --serious-ink:#b5502b; --crit-ink:#a82a2a;
     --s-plan:#009B64; --s-fund:#eb6834; --s-3:#1baf7a;
     --delta-up:#0a7a0a; --delta-down:#c02626;
-    --grid:#EAEDF2; --axis:#C7CFDA;
-    --shadow-sm:0 1px 2px rgba(21,28,40,.05);
-    --shadow:0 1px 2px rgba(21,28,40,.04),0 6px 20px -10px rgba(21,28,40,.16);
-    --shadow-lg:0 14px 44px -12px rgba(21,28,40,.3);
+    --grid:#EDF0F5; --axis:#CBD2DD;
+    --shadow-sm:0 1px 2px rgba(20,26,36,.04);
+    --shadow:0 2px 5px -1px rgba(20,26,36,.05),0 10px 26px -14px rgba(20,26,36,.16);
+    --shadow-lg:0 22px 54px -16px rgba(20,26,36,.26);
     --sans:"Pretendard Variable","Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",system-ui,"Malgun Gothic",sans-serif;
     --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;
-    --r:14px;
+    --r:16px;
   }
   :root[data-theme="dark"]{
     --plane:#0C1017; --surface:#161C26; --surface-2:#1B222E; --surface-3:#202836;
@@ -129,7 +129,7 @@
   .ag-fab:hover{filter:brightness(1.07)}
   body.ag-closed .agent-rail{display:none}
   body.ag-closed .ag-fab{display:flex}
-  .ag-scroll{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding-right:3px;scrollbar-width:thin}
+  .ag-scroll{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:12px;padding-right:3px;scrollbar-width:thin}
   .ag-scroll::-webkit-scrollbar{width:5px}.ag-scroll::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:3px}
   .ag-greet{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-radius:14px;padding:14px 16px;box-shadow:var(--shadow)}
   .ag-greet b{font-size:15.5px;font-weight:800;display:block;letter-spacing:-.01em}
@@ -160,19 +160,22 @@
   .ag-foot button:hover{filter:brightness(1.06)}
   /* mobile: chat agent takes the whole screen; dashboard hidden unless agent closed */
   @media(max-width:880px){
-    /* 헤더 항상 고정 + 로고 중앙 */
+    /* 헤더 항상 고정 + 로고 중앙(3분할 그리드: [여백 | 로고 | 컨트롤]) */
     .topbar{position:fixed;left:0;right:0;top:0;z-index:60}
-    body{padding-top:56px}
-    .topbar-in{justify-content:center;gap:0}
+    body{padding-top:52px}
+    .topbar-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:0;height:52px}
     nav.mainnav{display:none}
-    .brand{position:static}
+    .brand{grid-column:2;justify-self:center;flex:none}
     .brand .blogo{align-items:center}
+    .brand .blogo img{height:22px}
     .brand .tagline{display:none}
-    .top-right{position:absolute;right:clamp(10px,3vw,16px);top:50%;transform:translateY(-50%);gap:6px}
+    .top-right{grid-column:3;justify-self:end;margin-left:0;gap:5px}
     .pill-btn.date{display:none}
+    .pill-btn,.icon-btn{padding:5px 8px;font-size:11px}
+    .icon-btn{width:30px;height:30px}
     /* 에이전트 전체화면 + 입력창 하단 고정 */
     .shell{flex-direction:column}
-    .agent-rail{position:fixed;inset:56px 0 0 0;width:auto!important;height:auto;padding:12px 14px 0;background:var(--plane);z-index:45}
+    .agent-rail{position:fixed;inset:52px 0 0 0;width:auto!important;padding:12px 14px 0;background:var(--plane);z-index:45}
     .ag-foot{padding-bottom:calc(11px + env(safe-area-inset-bottom))}
     body:not(.ag-closed) main{display:none}
     body.ag-closed .agent-rail{display:none}
@@ -626,6 +629,26 @@
   .dp-acts button{font-size:11px;font-weight:650;padding:4px 10px;border-radius:7px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);cursor:pointer}
   .dp-acts .acc{border-color:var(--good);color:var(--good-ink)}.dp-acts .acc:hover{background:var(--good-tint)}
   .dp-acts .rej{border-color:var(--crit);color:var(--crit-ink)}.dp-acts .rej:hover{background:var(--crit-tint)}
+  /* ===== v3 refinement polish (B3) — 콘텐츠 불변, 세련도 향상 ===== */
+  body{letter-spacing:-.006em}
+  .panel,.stat,.kpi,.itile,.ag-card,.team-card,.area,.idea-card,.art-card,.sp-card,.cause,.report,.pillar,.kw-item{
+    transition:box-shadow .18s cubic-bezier(.2,.7,.2,1),transform .18s cubic-bezier(.2,.7,.2,1),border-color .18s,background .15s}
+  .stat{border-radius:14px}
+  .kpi-val,.itile-v,.stat .sv,.page-head h1{letter-spacing:-.03em}
+  .panel-head h3{letter-spacing:-.012em}
+  .section-label{margin:30px 2px 15px}
+  main>.crumbs+.page-head+.section-label,.page-head+.section-label{margin-top:8px}
+  .topbar{box-shadow:0 1px 0 var(--line),0 2px 8px -6px rgba(20,26,36,.12)}
+  nav.mainnav a{transition:background .14s,color .14s,opacity .14s}
+  .stat:hover,.ag-card:hover{box-shadow:var(--shadow)}
+  .panel{border-color:var(--line)}
+  .brief{border-radius:14px}
+  .status-pill,.mini-pill{letter-spacing:.01em}
+  table.dt tbody tr{transition:background .12s}
+  ::selection{background:var(--accent-soft);color:var(--accent)}
+  .agq-chips{display:flex;flex-direction:column;gap:5px;margin-top:10px}
+  .agq{font-size:11.5px;font-weight:600;padding:6px 10px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.14s}
+  .agq:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
 </style>
 </head>
 <body>
@@ -1819,12 +1842,20 @@ function greetHtml(){
 }
 function schedHtml(){
   /* it: [time,title,place,isNow,public] · 공개/비공개 구분 (PPTX 슬라이드18 IDEA1) */
-  var items=[['09:00','교무위원회','본관 3층',true,false],['11:00','대학혁신지원 사업 집행 점검','대학혁신지원사업단',false,true],['14:00','재학생 충원율 확보 방안 회의','기획경영본부',false,false],['15:30','기관평가 인증 TF','기획경영본부',false,false],['17:00','법인 이사회 사전보고','이사장실',false,false]];
+  var t=curTier();
+  var SETS={
+    exec:[['09:00','교무위원회','본관 3층',true,false],['11:00','대학혁신지원 사업 집행 점검','대학혁신지원사업단',false,true],['14:00','재학생 충원율 확보 방안 회의','기획경영본부',false,false],['15:30','기관평가 인증 TF','기획경영본부',false,false],['17:00','법인 이사회 사전보고','이사장실',false,false]],
+    dean:[['10:00','도서관 운영위원회','중앙도서관 3층',true,true],['13:30','전자자원 구독 갱신 협의','학술정보팀',false,false],['15:00','예산 집행 점검','행정운영팀',false,false],['16:30','논문작성 특강 준비 보고','정보서비스팀',false,true]],
+    staff:[['09:30','열람실 냉방 민원 현장 확인','3층 열람실',true,false],['11:00','전자자원 교외접속 오류 대응','학술정보팀',false,false],['14:00','희망도서 수서 처리','수서실',false,false],['16:00','공문 발송(실습 협조)','문서함',false,false]]
+  };
+  var items=SETS[t]||SETS.exec;
+  var head=t==='exec'?'오늘의 일정':t==='dean'?'도서관 주요 일정':'오늘 할 일';
+  var foot=t==='exec'?'비서팀 캘린더 연동':t==='dean'?'기관 일정 연동':'업무 큐 연동';
   function vis(pub){return '<span style="font-size:8.5px;font-weight:800;font-family:var(--mono);padding:1px 5px;border-radius:4px;margin-left:6px;'+(pub?'background:var(--good-tint);color:var(--good-ink)':'background:var(--surface-3);color:var(--muted)')+'">'+(pub?'공개':'비공개')+'</span>';}
-  return '<div class="sched"><div class="sched-h"><b>오늘의 일정</b></div>'+
+  return '<div class="sched"><div class="sched-h"><b>'+head+'</b></div>'+
     '<div class="sched-sub">Google Calendar <span class="today">오늘</span></div>'+
     '<div class="sched-list">'+items.map(function(it){return '<div class="sched-item'+(it[3]?' now':'')+'"><span class="sdot"></span><div><div class="stime">'+it[0]+'</div><div class="stitle">'+it[1]+vis(it[4])+'</div><div class="stag">'+it[2]+'</div></div></div>'}).join('')+'</div>'+
-    '<div class="sched-foot">비서팀 캘린더 연동</div></div>';
+    '<div class="sched-foot">'+foot+'</div></div>';
 }
 function ctwCard(){
   var u=univRoll();
@@ -1857,6 +1888,24 @@ function agentCtx(view){
   if(view==='risks')return ctxCard('위험신호',[['긴급','2건'],['점검','2건'],['주의','3건']],'#/risks');
   if(view==='speeches')return ctxCard('연설문 아카이브',[['축적','3편'],['구성원 공유','2편']],'#/speeches');
   if(view==='reports')return ctxCard('보고서실',[['자동 생성','주간 / 월간']],'#/reports');
+  /* --- 도서관장 --- */
+  if(view==='libhome'||view==='libteams'||view==='team'){
+    var wk=LIB_TEAMS.filter(function(t){return t.st==='serious'}).length;
+    return ctxCard('중앙도서관 요약',[['이용자 만족도','4.1/5'],['예산 집행률','63%'],['전자자원 이용률','58%'],['점검 필요 팀',wk+'개']],'#/libhome')+
+      ctxCard('부서 KR 진척',[['학술정보팀','주의'],['정보서비스팀','점검'],['행정운영팀','점검']],'#/libteams');
+  }
+  /* --- 민원(공통) --- */
+  if(view==='complaints'){
+    var tier=curTier();var list=tier==='staff'?COMPLAINTS.filter(function(c){return c.dept==='학술정보팀'}):COMPLAINTS;
+    var urg=list.filter(function(c){return c.urg==='긴급'&&c.stt!=='완료'}).length;
+    var esc=CHATQ.filter(function(q){return q.stt==='에스컬레이션'||q.stt==='미해결'}).length;
+    return ctxCard('민원·문의 요약',[['긴급 민원',urg+'건'],['처리중',list.filter(function(c){return c.stt==='처리중'}).length+'건'],['챗봇 에스컬레이션',esc+'건']],'#/complaints');
+  }
+  /* --- 실무자 --- */
+  if(view==='staffhome'){
+    var mine=COMPLAINTS.filter(function(c){return c.dept==='학술정보팀'});
+    return ctxCard('내 업무 요약',[['긴급 민원',mine.filter(function(c){return c.urg==='긴급'&&c.stt!=='완료'}).length+'건'],['우리 팀 민원',mine.length+'건'],['에스컬레이션',CHATQ.filter(function(q){return q.stt==='에스컬레이션'||q.stt==='미해결'}).length+'건']],'#/complaints');
+  }
   return '';
 }
 function ctxLine(view){
@@ -1883,9 +1932,19 @@ function renderAgStream(scroll){
   }).join('');
   if(scroll){var sc=$('#agScroll');if(sc)sc.scrollTop=sc.scrollHeight;}
 }
+function roleChips(){
+  var t=curTier();
+  var chips=t==='exec'?['재학충원율 왜 낮아?','경쟁대학 대비 취업률은?','학령인구 기사, 우리는 어떻게?','오늘 핵심만 요약']
+    :t==='dean'?['우리 도서관 상태 어때?','전자자원 이용률 목표 올리면?','정보서비스팀 왜 점검이야?']
+    :['오늘 처리할 민원 정리해줘','챗봇이 못 답한 문의는?'];
+  return '<div class="agq-chips">'+chips.map(function(c){return '<span class="agq" data-agq="'+c+'">'+c+'</span>'}).join('')+'</div>';
+}
 function initAgent(){
   $('#agSched').innerHTML=schedHtml();
-  if(!state.agMsgs.length)state.agMsgs.push({a:'무엇이든 물어보세요. 지표·기사에 대해 근거와 함께 답해 드립니다.'});
+  if(!state.agMsgs.length){
+    var t=curTier();var intro=t==='exec'?'총장님, 무엇이든 물어보세요. 지표·기사·정책 대응까지 근거와 함께 답해 드립니다.':t==='dean'?'관장님, 우리 기관 지표와 부서 목표 관리를 도와드립니다.':'오늘 처리할 민원과 문의를 정리해 드립니다.';
+    state.agMsgs.push({a:intro+roleChips()});
+  }
   state.agInit=true;
 }
 function syncAgent(view){
@@ -1897,14 +1956,42 @@ function syncAgent(view){
   renderAgStream();
 }
 function agentFreeAsk(txt){
+  var tier=curTier();var i,j;
   var words=txt.split(/\s+/).filter(function(w){return w.length>1});
-  var i,j;
-  for(i=0;i<KEYWORDS.length;i++){for(j=0;j<KEYWORDS[i].arts.length;j++){var a=KEYWORDS[i].arts[j];
-    if(words.some(function(w){return a.t.indexOf(w)>=0})){agentPush({q:txt,a:'<b>'+a.t+'</b><br>'+a.sum,src:a.src+' · '+a.date});return;}}}
+  /* ===== 도서관장 시나리오 S6~S8 ===== */
+  if(tier==='dean'){
+    if(/(상태|현황|어때|진단)/.test(txt)){agentPush({q:txt,a:'중앙도서관 종합 요약입니다. <b>이용자 만족도 4.1/5</b>(목표 4.3), <b>예산 집행률 63%</b>(분기목표 75%·지연), <b>전자자원 이용률 58%</b>(목표 65%)가 개선 과제입니다. 좌석 점유율(78%)은 양호합니다.',src:'중앙도서관 운영 KPI',cta:'#/libhome'});return;}
+    if(/(목표|올리면|상향|시뮬)/.test(txt)&&/(전자자원|이용률)/.test(txt)){agentPush({q:txt,a:'전자자원 이용률 목표를 상향하면 현재 58%와 격차가 커집니다. 달성을 위해 ①이용자 교육 프로그램 확대 ②학과 연계 DB 큐레이션 ③모바일 접속 개선이 필요합니다. <b>부서 목표관리</b>에서 목표치를 직접 조정해 보세요.',src:'학술정보팀 KR · 시뮬레이션',cta:'#/libteams'});return;}
+    if(/(목표|올리면|시뮬)/.test(txt)&&/(프로그램|참여)/.test(txt)){agentPush({q:txt,a:'프로그램 참여 목표(현재 3,200명 / 목표 4,000명)를 상향하면 달성률이 낮아집니다. 특강 회차 확대·학과 연계·홍보 강화가 수반되어야 합니다. 목표치는 <b>부서 목표관리</b>에서 +/−로 조정됩니다.',src:'정보서비스팀 KR',cta:'#/libteams'});return;}
+    if(/(정보서비스|만족도)/.test(txt)){agentPush({q:txt,a:'<b>정보서비스팀(점검)</b>: 이용자 만족도 4.1(목표 4.3), 프로그램 참여 3,200명(목표 4,000), 참고질의 응답률 88%(목표 95%). 참고봉사 응답 속도와 특강 확대가 핵심 과제입니다.',src:'정보서비스팀',cta:'#/team/ref'});return;}
+    if(/(학술정보|전자자원|장서)/.test(txt)){agentPush({q:txt,a:'<b>학술정보팀(주의)</b>: 전자자원 이용률 58%(목표 65%), 장서 회전율 1.9회(목표 2.2). 이용자 교육·큐레이션 강화가 필요합니다.',src:'학술정보팀',cta:'#/team/ais'});return;}
+    if(/(예산|집행|행정)/.test(txt)){agentPush({q:txt,a:'<b>행정운영팀(점검)</b>: 예산 집행률 63%(분기목표 75%)로 지연되고 있습니다. 하반기 집행계획 재수립이 필요합니다.',src:'행정운영팀',cta:'#/team/adm'});return;}
+    if(/(민원|문의)/.test(txt)){agentPush({q:txt,a:'기관 전체 민원 중 <b>긴급 '+COMPLAINTS.filter(function(c){return c.urg==='긴급'&&c.stt!=='완료'}).length+'건</b>(냉방·전자자원 접속)이 우선입니다.',src:'민원 큐',cta:'#/complaints'});return;}
+  }
+  /* ===== 실무자 시나리오 S9~S11 ===== */
+  if(tier==='staff'){
+    if(/(챗봇|에스컬|못 답|미해결)/.test(txt)){var esc=CHATQ.filter(function(q){return q.stt==='에스컬레이션'||q.stt==='미해결'});agentPush({q:txt,a:'챗봇이 자동응답하지 못한 문의 <b>'+esc.length+'건</b>: '+esc.map(function(q){return '“'+q.q+'”'}).join(', ')+'. 전자자원 교외접속·표절검사 안내를 우선 회신하세요.',src:'챗봇 문의 큐',cta:'#/complaints'});return;}
+    if(/(민원|처리|오늘|정리|할 일)/.test(txt)){var mine=COMPLAINTS.filter(function(c){return c.dept==='학술정보팀'&&c.stt!=='완료'});var u=mine.filter(function(c){return c.urg==='긴급'});agentPush({q:txt,a:'학술정보팀 처리 대상 <b>'+mine.length+'건</b>입니다. 우선순위: '+u.map(function(c){return '① '+c.t}).join(' / ')+' (SLA D-0). 이어서 희망도서 수서·검색 정렬 오류 순으로 처리하세요.',src:'민원 큐 · SLA',cta:'#/complaints'});return;}
+    if(/(공문|문서|작성)/.test(txt)){agentPush({q:txt,a:'공문 작성은 <b>문서 작성(RPA)</b>에서 블록 단위로 초안·수정·저장할 수 있습니다.',src:'RPA',cta:'#/rpa'});return;}
+  }
+  /* ===== 총장: 정책 맥락형 Q&A (S3) ===== */
+  var policy=[
+    [/(학령인구|정원|미충원)/,'학령인구·정원 이슈는 우리에게 <b>재학생 유지</b> 문제로 직결됩니다. 재학충원율 85.3%는 경쟁대학군 <b>최하위권(20%ile)</b>이므로, 정원 감축 유인책보다 <b>실용음악·커뮤니케이션디자인학과 이탈 방지</b>가 우선입니다.','#/students'],
+    [/(등록금|재정|국고)/,'등록금 동결 장기화 속에서 우리 <b>재정집행률 61.3%</b>가 분기목표를 밑돕니다. 비등록금 수입 다변화와 <b>대학혁신지원·RISE 집행 가속</b>이 핵심 대응입니다.','#/finance'],
+    [/(AI|생성형|디지털)/,'생성형 AI 확산은 기회입니다. 우리는 이미 <b>총장 경영 대시보드·P-TU 에이전트</b>로 데이터 기반 의사결정을 시연 중이며, 행정 자동화(RPA)·AI 리터러시 교양 확대로 연결할 수 있습니다.','#/news'],
+    [/(취업|일자리)/,'취업률 55%는 경쟁대학군 하위권입니다. <b>스마트모빌리티학과 등 현장실습 연계 확대</b>와 전공일치 취업 지원이 우선 대응입니다.','#/students']
+  ];
+  if(/(우리|어떻게|대응|해야)/.test(txt)){for(i=0;i<policy.length;i++){if(policy[i][0].test(txt)){agentPush({q:txt,a:policy[i][1],src:'정책 대응 · 우리 대학 지표 결합',cta:policy[i][2]});return;}}}
+  /* 종합 요약 (S5) */
+  if(/(요약|핵심|브리핑)/.test(txt)&&tier==='exec'){agentPush({q:txt,a:'오늘의 핵심입니다. ① <b>신입 충원율 100%</b> 달성 ② <b>재학충원 85.3%·취업률 55%</b> 목표 하회(경쟁대학군 하위권) ③ 국고사업 집행 지연 ④ <b>긴급 경보 2건</b>(실용음악 이탈·기관평가 전임교원). 우선 개입: 재학생 이탈 방지.',src:'Executive 브리핑',cta:'#/risks'});return;}
+  /* 기사/미디어/지표 매칭 */
+  for(i=0;i<KEYWORDS.length;i++){for(j=0;j<KEYWORDS[i].arts.length;j++){var ar=KEYWORDS[i].arts[j];
+    if(words.some(function(w){return ar.t.indexOf(w)>=0})){agentPush({q:txt,a:'<b>'+ar.t+'</b><br>'+ar.sum,src:ar.src+' · '+ar.date});return;}}}
   for(i=0;i<MEDIA.length;i++){var m=MEDIA[i];if(words.some(function(w){return m.t.indexOf(w)>=0})){agentPush({q:txt,a:'<b>'+m.t+'</b><br>'+m.sum,src:m.media+' · '+m.date+' 보도'});return;}}
   var map=[['재학','retfill'],['유지','retfill'],['신입','newfill'],['충원',/재학/.test(txt)?'retfill':'newfill'],['취업','emp'],['재정','exec'],['집행','exec'],['발전','plan'],['기관평가','accr'],['전임','accr']];
-  for(i=0;i<map.length;i++){if(txt.indexOf(map[i][0])>=0){var c=CHAT[map[i][1]];if(c){agentPush({q:txt,a:c.a,src:c.src,cta:c.cta});return;}}}
-  agentPush({q:txt,a:'공식 근거를 확인할 수 없어 지어내지 않겠습니다. 다른 표현으로 물어보시거나, 담당 부서(기획경영본부)로 확인을 연결해 드리겠습니다.',src:'확인 불가 → 기획경영본부 에스컬레이션',esc:true});
+  if(tier==='exec')for(i=0;i<map.length;i++){if(txt.indexOf(map[i][0])>=0){var c=CHAT[map[i][1]];if(c){agentPush({q:txt,a:c.a,src:c.src,cta:c.cta});return;}}}
+  var dept=tier==='dean'?'행정운영팀':tier==='staff'?'팀장':'기획경영본부';
+  agentPush({q:txt,a:'공식 근거를 확인할 수 없어 지어내지 않겠습니다. 다른 표현으로 물어보시거나, 담당 부서('+dept+')로 확인을 연결해 드리겠습니다.',src:'확인 불가 → '+dept+' 에스컬레이션',esc:true});
 }
 function openChatTopic(topic,custom){
   var c=custom||CHAT[topic];
@@ -1922,6 +2009,8 @@ document.addEventListener('click',function(e){
   if(kw){state.kwSel=kw.getAttribute('data-kw');render();return;}
   var ntab=e.target.closest('[data-ntab]');
   if(ntab){state.newsTab=ntab.getAttribute('data-ntab');render();return;}
+  var agq=e.target.closest('[data-agq]');
+  if(agq){agentFreeAsk(agq.getAttribute('data-agq'));return;}
   /* ---- RPA ---- */
   var rpt=e.target.closest('[data-rpatype]');
   if(rpt){rpaInit(rpt.getAttribute('data-rpatype'));render();return;}
