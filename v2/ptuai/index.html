@@ -1,0 +1,1490 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>평택대학교 총장 Executive Dashboard</title>
+<style>
+  :root{
+    --plane:#EEF1F5; --surface:#FFFFFF; --surface-2:#F6F8FB; --surface-3:#EFF3F8;
+    --ink:#151C28; --ink-2:#3A465A; --muted:#697688; --faint:#95A0B0;
+    --line:#E4E8EF; --line-2:#D2D9E3;
+    --accent:#009B64; --accent-2:#12B37A; --accent-soft:#E6F4EE;
+    --nav:#FFFFFF; --nav-ink:#3A465A; --nav-gold:#B58A2E;
+    --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
+    --good-tint:#E6F5E6; --warn-tint:#FBF1D8; --serious-tint:#FBE9E1; --crit-tint:#FAE3E3;
+    --good-ink:#0a7a0a; --warn-ink:#8a6410; --serious-ink:#b5502b; --crit-ink:#a82a2a;
+    --s-plan:#009B64; --s-fund:#eb6834; --s-3:#1baf7a;
+    --delta-up:#0a7a0a; --delta-down:#c02626;
+    --grid:#EAEDF2; --axis:#C7CFDA;
+    --shadow-sm:0 1px 2px rgba(21,28,40,.05);
+    --shadow:0 1px 2px rgba(21,28,40,.04),0 6px 20px -10px rgba(21,28,40,.16);
+    --shadow-lg:0 14px 44px -12px rgba(21,28,40,.3);
+    --sans:"Pretendard Variable","Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",system-ui,"Malgun Gothic",sans-serif;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;
+    --r:14px;
+  }
+  :root[data-theme="dark"]{
+    --plane:#0C1017; --surface:#161C26; --surface-2:#1B222E; --surface-3:#202836;
+    --ink:#E9EDF3; --ink-2:#BFC9D6; --muted:#8593A4; --faint:#5E6B7C;
+    --line:#252E3A; --line-2:#323C4A;
+    --accent:#25C088; --accent-2:#45D2A0; --accent-soft:#0E2A20;
+    --nav:#FFFFFF; --nav-ink:#3A465A; --nav-gold:#B58A2E;
+    --good-tint:#12241255; --warn-tint:#2A210F66; --serious-tint:#2C170F66; --crit-tint:#2A131366;
+    --good-ink:#4Fb44f; --warn-ink:#e0a33c; --serious-ink:#ef9670; --crit-ink:#e66767;
+    --s-plan:#25C088; --s-fund:#d95926; --s-3:#199e70;
+    --delta-up:#42b342; --delta-down:#e86a6a;
+    --grid:#232B37; --axis:#374252;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.55);
+    --shadow-lg:0 16px 48px -14px rgba(0,0,0,.7);
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --plane:#0C1017; --surface:#161C26; --surface-2:#1B222E; --surface-3:#202836;
+    --ink:#E9EDF3; --ink-2:#BFC9D6; --muted:#8593A4; --faint:#5E6B7C;
+    --line:#252E3A; --line-2:#323C4A;
+    --accent:#25C088; --accent-2:#45D2A0; --accent-soft:#0E2A20;
+    --nav:#FFFFFF; --nav-ink:#3A465A; --nav-gold:#B58A2E;
+    --good-tint:#12241255; --warn-tint:#2A210F66; --serious-tint:#2C170F66; --crit-tint:#2A131366;
+    --good-ink:#4Fb44f; --warn-ink:#e0a33c; --serious-ink:#ef9670; --crit-ink:#e66767;
+    --s-plan:#25C088; --s-fund:#d95926; --s-3:#199e70;
+    --delta-up:#42b342; --delta-down:#e86a6a;
+    --grid:#232B37; --axis:#374252;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.55);
+    --shadow-lg:0 16px 48px -14px rgba(0,0,0,.7);
+  }}
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--plane);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;letter-spacing:-.004em}
+  a{color:inherit;text-decoration:none}
+  .tnum{font-variant-numeric:tabular-nums}
+  button{font-family:var(--sans)}
+
+  /* topbar */
+  .topbar{background:var(--nav);color:var(--nav-ink);position:sticky;top:0;z-index:40;border-bottom:1px solid var(--line);box-shadow:var(--shadow-sm)}
+  .topbar-in{max-width:1480px;margin:0 auto;display:flex;align-items:center;gap:18px;padding:0 clamp(12px,2vw,24px);height:56px}
+  .brand{display:flex;align-items:center;gap:10px;flex:none;cursor:pointer}
+  .brand .mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#12B37A,#00875A);
+    display:grid;place-items:center;color:#fff;font-weight:800;font-size:14px;box-shadow:var(--shadow-sm)}
+  .brand .blogo{display:flex;flex-direction:column;align-items:flex-start;gap:3px;flex:none}
+  .brand .blogo img{height:30px;display:block}
+  .brand .tagline{font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);font-weight:700;font-family:var(--mono);padding-left:3px}
+  .brand span{color:var(--nav-ink);font-size:11px;opacity:.7;font-family:var(--mono)}
+  nav.mainnav{display:flex;gap:1px;margin-left:6px;overflow-x:auto;scrollbar-width:none}
+  nav.mainnav::-webkit-scrollbar{display:none}
+  nav.mainnav a{color:var(--nav-ink);font-size:13px;padding:7px 10px;border-radius:8px;white-space:nowrap;
+    font-weight:500;opacity:.8;transition:.15s;display:flex;align-items:center;gap:5px}
+  nav.mainnav a:hover{background:#EEF2F6;opacity:1}
+  nav.mainnav a.on{background:#009B64;color:#fff;opacity:1;font-weight:650}
+  nav.mainnav a .lk{font-size:10px;opacity:.6}
+  .top-right{margin-left:auto;display:flex;align-items:center;gap:7px;flex:none}
+  .pill-btn{display:flex;align-items:center;gap:6px;background:#F2F5F9;color:#3A465A;
+    border:1px solid #E1E6EE;border-radius:9px;padding:6px 9px;font-size:12px;cursor:pointer;font-weight:500;white-space:nowrap}
+  .pill-btn:hover{background:#E6EBF2;color:#151C28}
+  .pill-btn .role-dot{width:7px;height:7px;border-radius:50%;background:var(--nav-gold)}
+  .pill-btn.date{font-family:var(--mono);font-size:11px;opacity:.9}
+  .icon-btn{width:33px;height:33px;display:grid;place-items:center;border-radius:9px;cursor:pointer;
+    background:#F2F5F9;border:1px solid #E1E6EE;color:#3A465A;font-size:15px}
+  .icon-btn:hover{background:#E6EBF2;color:#151C28}
+  .menu-wrap{position:relative}
+  .dropdown{position:absolute;right:0;top:calc(100% + 8px);background:var(--surface);border:1px solid var(--line);
+    border-radius:12px;box-shadow:var(--shadow-lg);padding:6px;min-width:190px;z-index:60;display:none}
+  .dropdown.open{display:block}
+  .dropdown .dh{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);padding:7px 10px 5px;font-weight:600;font-family:var(--mono)}
+  .dropdown button{display:flex;width:100%;align-items:center;gap:8px;background:none;border:0;text-align:left;
+    padding:8px 10px;border-radius:8px;cursor:pointer;color:var(--ink-2);font-size:13px}
+  .dropdown button:hover{background:var(--surface-2)}
+  .dropdown button.sel{color:var(--accent);font-weight:650}
+  .dropdown button .rk{margin-left:auto;font-size:10px;color:var(--faint);font-family:var(--mono)}
+  .dropdown button.sel .rk{color:var(--accent)}
+
+  /* calendar */
+  .calbar{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:56px;z-index:30}
+  .calbar-in{max-width:1480px;margin:0 auto;padding:8px clamp(12px,2vw,24px);display:flex;align-items:center;gap:12px}
+  .cal-label{display:flex;align-items:center;gap:7px;flex:none;font-size:11.5px;font-weight:650;color:var(--ink-2)}
+  .cal-label .cal-ic{width:21px;height:21px;border-radius:6px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:11px}
+  .cal-label span{font-family:var(--mono);font-size:10px;color:var(--faint);font-weight:500}
+  .cal-track{display:flex;gap:7px;overflow-x:auto;scrollbar-width:thin}
+  .cal-track::-webkit-scrollbar{height:4px}.cal-track::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:3px}
+  .cal-item{flex:none;display:flex;align-items:center;gap:7px;background:var(--surface-2);border:1px solid var(--line);
+    border-radius:9px;padding:5px 10px;font-size:12px;white-space:nowrap}
+  .cal-item time{font-family:var(--mono);font-size:11px;color:var(--accent);font-weight:650}
+  .cal-item.now{border-color:var(--accent);background:var(--accent-soft)}
+  .cal-item .tag{font-size:9.5px;color:var(--faint);border-left:1px solid var(--line-2);padding-left:7px}
+
+  .shell{max-width:1480px;margin:0 auto;display:flex;align-items:flex-start;gap:clamp(14px,1.5vw,22px);padding:0 clamp(12px,2vw,24px)}
+  main{flex:1;min-width:0;padding:clamp(14px,2vw,24px) 0}
+  /* right agent rail (ver2.0) */
+  .agent-rail{width:378px;flex:none;position:sticky;top:68px;align-self:flex-start;height:calc(100vh - 84px);display:flex;flex-direction:column;padding:clamp(14px,2vw,24px) 0;transition:width .18s}
+  .agent-rail.wide{width:min(560px,46vw)}
+  .ag-bar{flex:none;display:flex;align-items:center;gap:6px;padding:0 2px 11px}
+  .ag-bar-t{font-size:12px;font-weight:750;color:var(--ink-2);display:flex;align-items:center;gap:6px}
+  .ag-bar-t::before{content:"✨";font-size:13px}
+  .ag-bar .sp{flex:1}
+  .ag-ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;cursor:pointer;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);font-size:15px;line-height:1}
+  .ag-ic:hover{background:var(--surface-3);color:var(--ink)}
+  .ag-fab{position:fixed;right:22px;bottom:22px;z-index:70;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border:0;box-shadow:var(--shadow-lg);cursor:pointer;font-size:23px;display:none;align-items:center;justify-content:center}
+  .ag-fab:hover{filter:brightness(1.07)}
+  body.ag-closed .agent-rail{display:none}
+  body.ag-closed .ag-fab{display:flex}
+  .ag-scroll{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding-right:3px;scrollbar-width:thin}
+  .ag-scroll::-webkit-scrollbar{width:5px}.ag-scroll::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:3px}
+  .ag-greet{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-radius:14px;padding:14px 16px;box-shadow:var(--shadow)}
+  .ag-greet b{font-size:15.5px;font-weight:800;display:block;letter-spacing:-.01em}
+  .ag-greet span{font-size:11px;opacity:.92;font-family:var(--mono);display:block;margin-top:4px}
+  .ag-card{background:var(--surface);border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow-sm);padding:12px 14px}
+  .ag-card h5{margin:0 0 9px;font-size:12px;font-weight:750;color:var(--ink);display:flex;align-items:center;gap:6px}
+  .ag-card h5 .lk{margin-left:auto;font-size:10.5px;color:var(--accent);font-weight:700;cursor:pointer}
+  .ag-card h5 .lk:hover{text-decoration:underline}
+  .ag-kpi{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:12px;border-bottom:1px solid var(--line-2)}
+  .ag-kpi:last-child{border-bottom:0}
+  .ag-kpi i{width:8px;height:8px;border-radius:50%;flex:none}
+  .ag-kpi .kl{color:var(--ink-2);font-weight:600}
+  .ag-kpi .kv{margin-left:auto;font-family:var(--mono);font-weight:800;font-size:12.5px}
+  .ag-ins{font-size:12px;line-height:1.6;color:var(--ink-2)}
+  .ag-ins b{color:var(--ink);font-weight:700;background:linear-gradient(transparent 60%,rgba(0,155,100,.18) 60%)}
+  .ag-ins .row{display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:1px solid var(--line-2)}
+  .ag-ins .row:last-child{border-bottom:0}
+  .ag-ins .tg{font-size:9px;font-weight:800;font-family:var(--mono);padding:2px 6px;border-radius:5px;flex:none}
+  .ag-chat-h{display:flex;align-items:center;gap:9px;padding:6px 2px 0;border-top:1px dashed var(--line-2);margin-top:2px;padding-top:12px}
+  .ag-chat-h .ag-av{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#12B37A,#00875A);display:grid;place-items:center;color:#fff;font-size:12px;flex:none;font-weight:700}
+  .ag-chat-h b{font-size:13px;font-weight:750;display:block;line-height:1.2}
+  .ag-chat-h span{font-size:10px;color:var(--accent);font-family:var(--mono);display:block;font-weight:600}
+  .ag-stream{display:flex;flex-direction:column;gap:10px;padding:2px 0 4px}
+  .ag-foot{flex:none;display:flex;gap:7px;padding-top:11px}
+  .ag-foot input{flex:1;background:var(--surface);border:1px solid var(--line-2);border-radius:11px;padding:11px 13px;font-size:12.5px;color:var(--ink);outline:none;box-shadow:var(--shadow-sm)}
+  .ag-foot input:focus{border-color:var(--accent)}
+  .ag-foot button{background:var(--accent);color:#fff;border:0;border-radius:11px;width:42px;height:42px;cursor:pointer;font-size:15px;flex:none}
+  .ag-foot button:hover{filter:brightness(1.06)}
+  /* mobile: chat agent takes the whole screen; dashboard hidden unless agent closed */
+  @media(max-width:880px){
+    .shell{flex-direction:column}
+    .agent-rail{position:fixed;inset:56px 0 0 0;width:auto!important;height:auto;padding:12px 14px 12px;background:var(--plane);z-index:45}
+    body:not(.ag-closed) main{display:none}
+    body.ag-closed .agent-rail{display:none}
+    body.ag-closed main{display:block}
+    .ag-fab{right:16px;bottom:16px}
+  }
+  .sched{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);padding:15px 15px 13px}
+  .sched-h{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+  .sched-h .cal-ic{width:24px;height:24px;border-radius:7px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:12px;flex:none}
+  .sched-h b{font-size:13px;font-weight:750}
+  .sched-sub{font-size:10px;color:var(--faint);font-family:var(--mono);margin:0 0 10px 32px;display:flex;align-items:center;gap:6px}
+  .sched-sub .today{background:var(--accent-soft);color:var(--accent);border-radius:5px;padding:1px 6px;font-weight:700}
+  .sched-list{position:relative;padding-left:2px}
+  .sched-list::before{content:"";position:absolute;left:7px;top:14px;bottom:14px;width:2px;background:var(--line)}
+  .sched-item{display:grid;grid-template-columns:16px 1fr;gap:10px;padding:8px 0;position:relative}
+  .sdot{width:12px;height:12px;border-radius:50%;border:2px solid var(--line-2);background:var(--surface);margin-top:3px;z-index:1}
+  .sched-item.now .sdot{border-color:var(--accent);background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .sched-item.now .stitle{color:var(--accent)}
+  .stime{font-family:var(--mono);font-size:11px;color:var(--accent);font-weight:700;line-height:1.2}
+  .sched-item:not(.now) .stime{color:var(--muted)}
+  .stitle{font-size:12.5px;font-weight:650;line-height:1.3;margin-top:1px;color:var(--ink)}
+  .stag{font-size:10px;color:var(--faint);margin-top:2px}
+  .sched-foot{margin-top:11px;padding-top:11px;border-top:1px solid var(--line);font-size:10.5px;color:var(--faint);display:flex;align-items:center;gap:6px}
+  /* breadcrumb */
+  .crumbs{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-bottom:12px}
+  .crumbs a{color:var(--accent);font-weight:600}
+  .crumbs a:hover{text-decoration:underline}
+  .crumbs .sep{color:var(--faint);font-family:var(--mono)}
+  .crumbs .cur{color:var(--ink);font-weight:700}
+  .crumbs .lvl{font-family:var(--mono);font-size:10px;background:var(--surface-3);color:var(--muted);padding:1px 6px;border-radius:5px;margin-right:4px}
+
+  .page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+  .page-head h1{margin:0;font-size:clamp(18px,2.2vw,23px);font-weight:800;letter-spacing:-.02em}
+  .page-head .desc{margin:4px 0 0;color:var(--muted);font-size:13px}
+  .legend-note{display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:11px;color:var(--muted)}
+  .sig{display:inline-flex;align-items:center;gap:4px}.sig i{width:8px;height:8px;border-radius:50%}.sig b{color:var(--ink-2);font-weight:600}
+
+  .section-label{display:flex;align-items:center;gap:11px;margin:30px 2px 15px;font-size:21px;font-weight:800;letter-spacing:-.02em;color:var(--ink);text-transform:none;line-height:1.2}
+  .section-label::after{content:"";flex:1;height:2px;background:var(--line);border-radius:2px}
+  .section-label .ln{font-family:var(--mono);color:#fff;background:var(--accent);font-size:13px;font-weight:800;padding:4px 10px;border-radius:8px;flex:none;box-shadow:var(--shadow-sm)}
+  @media(max-width:640px){.section-label{font-size:17px}}
+
+  .kpi-grid{display:grid;gap:11px;grid-template-columns:repeat(6,1fr)}
+  @media(max-width:1200px){.kpi-grid{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:640px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+  .kpi{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+    padding:13px 13px 12px;box-shadow:var(--shadow-sm);overflow:hidden;transition:.18s;cursor:pointer}
+  .kpi:hover{box-shadow:var(--shadow);transform:translateY(-2px);border-color:var(--line-2)}
+  .kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--stripe,var(--line-2))}
+  .kpi.s-good{--stripe:var(--good)}.kpi.s-warn{--stripe:var(--warn)}.kpi.s-serious{--stripe:var(--serious)}.kpi.s-crit{--stripe:var(--crit)}
+  .kpi-top{display:flex;align-items:flex-start;justify-content:space-between;gap:6px}
+  .kpi-label{font-size:11.5px;color:var(--muted);font-weight:600;line-height:1.3}
+  .status-pill{display:inline-flex;align-items:center;gap:4px;font-size:9.5px;font-weight:700;padding:2px 6px;border-radius:5px;white-space:nowrap;font-family:var(--mono)}
+  .status-pill i{width:6px;height:6px;border-radius:50%}
+  .p-good{background:var(--good-tint);color:var(--good-ink)}.p-good i{background:var(--good)}
+  .p-warn{background:var(--warn-tint);color:var(--warn-ink)}.p-warn i{background:var(--warn)}
+  .p-serious{background:var(--serious-tint);color:var(--serious-ink)}.p-serious i{background:var(--serious)}
+  .p-crit{background:var(--crit-tint);color:var(--crit-ink)}.p-crit i{background:var(--crit)}
+  .kpi-val{font-size:27px;font-weight:800;letter-spacing:-.03em;margin:8px 0 0;line-height:1}
+  .kpi-val small{font-size:14px;font-weight:700;color:var(--ink-2);margin-left:1px}
+  .kpi-sub{display:flex;align-items:center;gap:7px;margin-top:6px;font-size:11px;color:var(--muted);flex-wrap:wrap}
+  .kpi-sub .tgt{font-family:var(--mono)}
+  .delta{display:inline-flex;align-items:center;gap:2px;font-weight:700;font-family:var(--mono)}
+  .delta.up{color:var(--delta-up)}.delta.down{color:var(--delta-down)}
+  .spark{margin-top:8px;width:100%;height:30px;display:block}
+  .kpi-ask{position:absolute;right:8px;bottom:8px;opacity:0;transform:translateY(3px);transition:.16s;
+    display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:650;color:var(--accent);
+    background:var(--accent-soft);border:1px solid transparent;border-radius:7px;padding:3px 6px;cursor:pointer}
+  .kpi:hover .kpi-ask{opacity:1;transform:translateY(0)}.kpi-ask:hover{border-color:var(--accent)}
+
+  .grid-2{display:grid;gap:12px;grid-template-columns:1.85fr 1fr;align-items:stretch}
+  @media(max-width:980px){.grid-2{grid-template-columns:1fr}}
+  .grid-3{display:grid;gap:12px;grid-template-columns:1fr 1fr 1fr}
+  @media(max-width:980px){.grid-3{grid-template-columns:1fr}}
+  .grid-2e{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+  @media(max-width:760px){.grid-2e{grid-template-columns:1fr}}
+
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);display:flex;flex-direction:column;min-width:0}
+  .panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 15px 9px}
+  .panel-head h3{margin:0;font-size:13.5px;font-weight:750}
+  .panel-head .sub{font-size:11px;color:var(--faint);margin-top:2px}
+  .chart-legend{display:flex;gap:11px;font-size:11px;color:var(--ink-2);font-weight:600;flex-wrap:wrap}
+  .chart-legend .k{display:inline-flex;align-items:center;gap:5px}.chart-legend .k i{width:11px;height:3px;border-radius:2px}
+  .chart-box{padding:2px 12px 12px;position:relative}
+  .chart-box svg{display:block;width:100%;height:auto;overflow:visible}
+  .tt{position:absolute;pointer-events:none;background:var(--nav);color:#fff;border-radius:9px;padding:8px 10px;font-size:11px;box-shadow:var(--shadow-lg);opacity:0;transition:opacity .1s;z-index:20;min-width:118px}
+  .tt .tt-h{font-family:var(--mono);font-size:10px;opacity:.7;margin-bottom:4px}
+  .tt .tt-r{display:flex;align-items:center;gap:6px;justify-content:space-between}
+  .tt .tt-r .l{display:inline-flex;align-items:center;gap:5px}.tt .tt-r i{width:8px;height:8px;border-radius:2px}.tt .tt-r b{font-family:var(--mono);font-weight:700}
+
+  /* judge/alert */
+  .judge{padding:13px 15px 15px;display:flex;flex-direction:column;gap:13px}
+  .jblock h4{margin:0 0 8px;font-size:12px;font-weight:750;display:flex;align-items:center;gap:7px}
+  .jblock h4 .cnt{font-family:var(--mono);font-size:10.5px;background:var(--crit-tint);color:var(--crit-ink);padding:1px 6px;border-radius:5px;font-weight:700}
+  .alert{display:flex;gap:9px;align-items:flex-start;padding:9px 10px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line);cursor:pointer;transition:.15s;margin-bottom:6px}
+  .alert:hover{border-color:var(--accent-2);background:var(--accent-soft)}.alert:last-child{margin-bottom:0}
+  .alert .urg{flex:none;font-size:9px;font-weight:800;font-family:var(--mono);padding:2px 5px;border-radius:5px;margin-top:1px;white-space:nowrap}
+  .u-crit{background:var(--crit);color:#fff}.u-serious{background:var(--serious);color:#3a1a0e}.u-warn{background:var(--warn);color:#4a3608}
+  .alert .atxt{font-size:11.5px;color:var(--ink-2);line-height:1.4}.alert .atxt b{color:var(--ink);font-weight:700}
+  .alert .atxt .loc{display:inline-block;margin-top:3px;font-size:10px;color:var(--accent);font-weight:600}
+  .alert .go{margin-left:auto;color:var(--faint);font-size:14px;flex:none;align-self:center;transition:.15s}
+  .alert:hover .go{color:var(--accent);transform:translateX(2px)}
+  .brief{background:linear-gradient(180deg,var(--accent-soft),transparent);border:1px solid var(--line);border-radius:11px;padding:11px 12px}
+  .brief h4{margin:0 0 6px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-family:var(--mono);font-weight:700}
+  .brief p{margin:0;font-size:12px;line-height:1.55;color:var(--ink-2)}
+  .brief p b{color:var(--ink);font-weight:700;background:linear-gradient(transparent 62%,rgba(250,178,25,.42) 62%)}
+  .drill{border-top:1px dashed var(--line-2);padding-top:11px}
+  .drill h4{margin:0 0 8px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-family:var(--mono);font-weight:700}
+  .drill-flow{display:flex;align-items:center;gap:5px;flex-wrap:wrap;font-size:11px}
+  .drill-flow .n{background:var(--surface-2);border:1px solid var(--line);border-radius:7px;padding:4px 8px;font-weight:600;color:var(--ink-2);cursor:pointer}
+  .drill-flow .n:hover{border-color:var(--accent);color:var(--accent)}
+  .drill-flow .n.hd{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .drill-flow .ar{color:var(--faint);font-family:var(--mono)}
+
+  /* tables */
+  .tbl-wrap{overflow-x:auto;padding:0 4px 8px}
+  table.dt{border-collapse:collapse;width:100%;font-size:12.5px;min-width:480px}
+  table.dt thead th{text-align:left;font-weight:700;color:var(--muted);padding:9px 12px;border-bottom:1.5px solid var(--line-2);font-size:11px;white-space:nowrap}
+  table.dt thead th.r,table.dt td.r{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono)}
+  table.dt tbody td{padding:9px 12px;border-bottom:1px solid var(--line);color:var(--ink-2)}
+  table.dt tbody tr{cursor:pointer;transition:.12s}
+  table.dt tbody tr:hover td{background:var(--surface-2)}
+  table.dt tbody tr:last-child td{border-bottom:0}
+  table.dt td .nm{display:flex;align-items:center;gap:8px;font-weight:600;color:var(--ink)}
+  table.dt td .nm i{width:8px;height:8px;border-radius:50%;flex:none}
+  table.dt td .go{color:var(--faint);font-family:var(--mono)}
+  .mini-pill{font-size:9.5px;font-weight:700;font-family:var(--mono);padding:1px 6px;border-radius:5px}
+
+  /* bars */
+  .bars{padding:6px 15px 15px}
+  .bar-row{display:grid;grid-template-columns:88px 1fr 52px;align-items:center;gap:10px;padding:6px 0}
+  .bar-row .bl{font-size:12px;color:var(--ink-2);font-weight:550}
+  .bar-track{position:relative;height:9px;background:var(--surface-2);border-radius:6px}
+  .bar-fill{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--accent);transition:width .5s cubic-bezier(.2,.7,.2,1)}
+  .bar-fill.ok{background:var(--good)}.bar-fill.mid{background:var(--warn)}.bar-fill.low{background:var(--serious)}.bar-fill.crit{background:var(--crit)}
+  .bar-tgt{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);opacity:.5;border-radius:2px}
+  .bar-val{font-size:12px;font-weight:750;text-align:right;font-variant-numeric:tabular-nums}
+  .bars .foot{font-size:10px;color:var(--faint);margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
+
+  /* stat tiles small */
+  .stat-row{display:grid;gap:11px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));padding:0}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 14px;box-shadow:var(--shadow-sm)}
+  .stat .sl{font-size:11px;color:var(--muted);font-weight:600}
+  .stat .sv{font-size:22px;font-weight:800;margin-top:5px;letter-spacing:-.02em}
+  .stat .sv small{font-size:12px;color:var(--ink-2);font-weight:700}
+  .stat .sd{font-size:10.5px;color:var(--faint);margin-top:3px;font-family:var(--mono)}
+
+  /* tree explorer */
+  .tree{padding:8px 8px 12px}
+  .tnode{border-radius:9px;transition:.12s}
+  .tnode>.tlabel{display:flex;align-items:center;gap:8px;padding:8px 9px;border-radius:9px;cursor:pointer;font-size:12.5px}
+  .tnode>.tlabel:hover{background:var(--surface-2)}
+  .tnode>.tlabel.active{background:var(--accent-soft);color:var(--accent);font-weight:700}
+  .tnode>.tlabel .tw{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .tnode>.tlabel .caret{width:14px;color:var(--faint);transition:.15s;font-size:10px}
+  .tnode.open>.tlabel .caret{transform:rotate(90deg)}
+  .tchildren{display:none;margin-left:14px;border-left:1px solid var(--line);padding-left:6px}
+  .tnode.open>.tchildren{display:block}
+  .tnode .tnode>.tlabel{font-size:12px;color:var(--ink-2)}
+
+  /* okr */
+  .okr-pillars{display:grid;gap:11px;grid-template-columns:repeat(3,1fr)}
+  @media(max-width:760px){.okr-pillars{grid-template-columns:1fr}}
+  .pillar{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:var(--shadow-sm)}
+  .pillar h4{margin:0;font-size:13px;font-weight:750;display:flex;justify-content:space-between;align-items:center}
+  .pillar .pct{font-family:var(--mono);font-size:20px;font-weight:800}
+  .prog{height:7px;background:var(--surface-2);border-radius:5px;margin-top:9px;overflow:hidden}
+  .prog i{display:block;height:100%;border-radius:5px}
+  .kr{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid var(--line);font-size:12.5px}
+  .kr:last-child{border-bottom:0}
+  .kr .tag{font-size:9px;font-weight:800;font-family:var(--mono);padding:2px 5px;border-radius:4px;flex:none}
+  .kr .tag.lead{background:var(--accent-soft);color:var(--accent)}.kr .tag.lag{background:var(--surface-3);color:var(--muted)}
+  .kr .kn{flex:1;color:var(--ink-2);font-weight:550}
+  .kr .kv{font-family:var(--mono);font-weight:700}
+  .kr .kp{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:5px;font-weight:700;flex:none}
+
+  /* benchmark */
+  .bm-row{display:grid;grid-template-columns:130px 1fr 60px;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+  .bm-row:last-child{border-bottom:0}
+  .bm-row .bml{font-size:12.5px;font-weight:600;color:var(--ink-2)}
+  .bm-track{position:relative;height:22px;background:linear-gradient(90deg,var(--crit-tint),var(--warn-tint),var(--good-tint));border-radius:6px}
+  .bm-mark{position:absolute;top:-3px;bottom:-3px;width:3px;background:var(--ink);border-radius:2px}
+  .bm-mark::after{content:attr(data-v);position:absolute;top:-15px;left:50%;transform:translateX(-50%);font-size:9px;font-family:var(--mono);color:var(--ink);white-space:nowrap;font-weight:700}
+  .bm-avg{position:absolute;top:0;bottom:0;width:1px;background:var(--muted);opacity:.6}
+  .bm-pct{font-family:var(--mono);font-size:13px;font-weight:800;text-align:right}
+
+  /* cause */
+  .cause-grid{display:grid;gap:11px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+  .cause{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:var(--shadow-sm);cursor:pointer;transition:.15s}
+  .cause:hover{border-color:var(--accent-2);box-shadow:var(--shadow)}
+  .cause .ch{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:700}
+  .cause .contrib{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:5px}
+  .cause .cv{font-size:19px;font-weight:800;margin:8px 0 2px;letter-spacing:-.02em}
+  .cause .cvd{font-size:11px;color:var(--muted)}
+  .cbar{height:6px;background:var(--surface-2);border-radius:4px;margin-top:9px;overflow:hidden}
+  .cbar i{display:block;height:100%;border-radius:4px}
+
+  /* lock / notice */
+  .lock{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:40px 24px;text-align:center;box-shadow:var(--shadow-sm)}
+  .lock .ic{font-size:34px}.lock h3{margin:12px 0 4px;font-size:16px}.lock p{margin:0;color:var(--muted);font-size:13px}
+  .lock .who{margin-top:14px;font-size:12px;color:var(--ink-2)}
+  .lock .who b{color:var(--accent)}
+
+  /* report */
+  .report{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);padding:20px 22px}
+  .report .rhd{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:16px;flex-wrap:wrap}
+  .report h2{margin:0;font-size:18px;font-weight:800}
+  .report .rmeta{font-size:11px;color:var(--faint);font-family:var(--mono);margin-top:4px}
+  .report h4{margin:18px 0 8px;font-size:13px;color:var(--accent);font-weight:750}
+  .report p{margin:8px 0;font-size:13px;line-height:1.65;color:var(--ink-2)}
+  .report ul{margin:8px 0;padding-left:18px;font-size:13px;color:var(--ink-2);line-height:1.7}
+  .report .rbtns{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{background:var(--accent);color:#fff;border:0;border-radius:9px;padding:8px 14px;font-size:12.5px;font-weight:650;cursor:pointer}
+  .btn.ghost{background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line)}
+  .btn:hover{filter:brightness(1.06)}
+  .tabbar{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap}
+  .tabbar button{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:7px 13px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer}
+  .tabbar button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+  /* chatbot */
+  .chat-scrim{position:fixed;inset:0;background:rgba(10,15,23,.4);backdrop-filter:blur(2px);z-index:80;display:none;align-items:flex-end;justify-content:flex-end;padding:20px}
+  .chat-scrim.open{display:flex}
+  .chatbox{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-lg);width:min(390px,94vw);max-height:min(560px,86vh);display:flex;flex-direction:column;overflow:hidden}
+  .chat-head{display:flex;align-items:center;gap:10px;padding:13px 15px;border-bottom:1px solid var(--line)}
+  .chat-head .cav{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#12B37A,#00875A);display:grid;place-items:center;color:#fff;font-size:13px}
+  .chat-head b{font-size:14px;font-weight:750}.chat-head span{font-size:10.5px;color:var(--faint);display:block;font-family:var(--mono)}
+  .chat-head .x{margin-left:auto;cursor:pointer;color:var(--muted);font-size:20px;width:30px;height:30px;display:grid;place-items:center;border-radius:8px}
+  .chat-head .x:hover{background:var(--surface-2);color:var(--ink)}
+  .chat-body{padding:15px;overflow-y:auto;display:flex;flex-direction:column;gap:11px}
+  .msg{max-width:88%;font-size:12.5px;line-height:1.55;padding:9px 12px;border-radius:12px}
+  .msg.q{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:4px}
+  .msg.a{align-self:flex-start;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);border-bottom-left-radius:4px}
+  .msg.a b{color:var(--ink)}
+  .msg.a .src{margin-top:7px;padding-top:7px;border-top:1px dashed var(--line-2);font-size:10px;color:var(--faint);font-family:var(--mono)}
+  .msg.a .src.esc{color:var(--crit-ink);font-weight:700}
+  .msg.a .cta{margin-top:8px}.msg.a .cta a{display:inline-block;background:var(--accent);color:#fff;border-radius:7px;padding:5px 10px;font-size:11px;font-weight:650}
+  .chat-foot{padding:11px 13px;border-top:1px solid var(--line);display:flex;gap:8px;align-items:center}
+  .chat-foot input{flex:1;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:12.5px;color:var(--ink);outline:none}
+  .chat-foot input:focus{border-color:var(--accent)}
+  .chat-foot button{background:var(--accent);color:#fff;border:0;border-radius:10px;width:38px;height:38px;cursor:pointer;font-size:15px;flex:none}
+
+  .footer{max-width:1480px;margin:0 auto;padding:10px clamp(12px,2vw,24px) 30px;color:var(--faint);font-size:11px;font-family:var(--mono);display:flex;gap:14px;flex-wrap:wrap;justify-content:space-between}
+  .demo-tag{background:var(--warn-tint);color:var(--warn-ink);border-radius:6px;padding:2px 8px;font-weight:700}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+  /* ===== ver2.0 new menus ===== */
+  /* keyword workspace */
+  .kw-wrap{display:grid;grid-template-columns:236px 1fr;gap:12px;align-items:start}
+  @media(max-width:1100px){.kw-wrap{grid-template-columns:1fr}}
+  .kw-list{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);padding:7px;position:sticky;top:120px}
+  @media(max-width:1100px){.kw-list{position:static}}
+  .kw-item{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+  .kw-item:hover{background:var(--surface-2)}
+  .kw-item.on{background:var(--accent-soft);color:var(--accent);font-weight:750}
+  .kw-item .kc{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+  .kw-item.on .kc{color:var(--accent)}
+  .art-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-sm);padding:13px 14px;margin-bottom:10px;transition:.15s}
+  .art-card:hover{border-color:var(--line-2);box-shadow:var(--shadow)}
+  .art-card .at{font-size:13.5px;font-weight:700;line-height:1.4;color:var(--ink)}
+  .art-meta{display:flex;align-items:center;gap:8px;margin-top:5px;font-size:10.5px;color:var(--faint);font-family:var(--mono)}
+  .art-meta .mm{color:var(--accent);font-weight:700}
+  .art-sum{font-size:12px;color:var(--ink-2);line-height:1.55;margin-top:8px}
+  .art-acts{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
+  .a-chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:650;padding:5px 9px;border-radius:8px;cursor:pointer;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2)}
+  .a-chip:hover{border-color:var(--accent);color:var(--accent)}
+  .a-chip.pri{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .a-chip.pri:hover{color:#fff;filter:brightness(1.06)}
+  /* side prompt panel */
+  .kw-chat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);display:flex;flex-direction:column;position:sticky;top:120px;max-height:calc(100vh - 150px)}
+  @media(max-width:1100px){.kw-chat{position:static;max-height:none}}
+  .kw-chat .kch{display:flex;align-items:center;gap:9px;padding:12px 14px;border-bottom:1px solid var(--line)}
+  .kw-chat .kch .cav{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#12B37A,#00875A);display:grid;place-items:center;color:#fff;font-size:12px;flex:none}
+  .kw-chat .kch b{font-size:13px;font-weight:750}.kw-chat .kch span{font-size:10px;color:var(--faint);font-family:var(--mono)}
+  .kw-body{padding:13px 14px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;flex:1;min-height:150px}
+  .kw-foot{padding:10px 12px;border-top:1px solid var(--line);display:flex;gap:7px}
+  .kw-foot input{flex:1;background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:8px 10px;font-size:12px;color:var(--ink);outline:none}
+  .kw-foot input:focus{border-color:var(--accent)}
+  .kw-foot button{background:var(--accent);color:#fff;border:0;border-radius:9px;width:36px;height:36px;cursor:pointer;font-size:14px;flex:none}
+  .kw-empty{color:var(--faint);font-size:12px;text-align:center;padding:24px 8px;line-height:1.6}
+  /* source pill + escalation (P-TU 계승) */
+  .src-pill{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:4px 8px;border-radius:7px;font-size:10px;font-weight:700;font-family:var(--mono);background:var(--accent-soft);color:var(--accent)}
+  .src-pill.esc{background:var(--crit-tint);color:var(--crit-ink)}
+  /* media sentiment */
+  .sent{font-size:9.5px;font-weight:800;font-family:var(--mono);padding:2px 7px;border-radius:5px;white-space:nowrap}
+  .sent.pos{background:var(--good-tint);color:var(--good-ink)}
+  .sent.neu{background:var(--surface-3);color:var(--muted)}
+  .sent.neg{background:var(--crit-tint);color:var(--crit-ink)}
+  /* speech archive + diff review */
+  .sp-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-sm);padding:14px 15px;margin-bottom:10px;cursor:pointer;transition:.15s}
+  .sp-card:hover{border-color:var(--line-2);box-shadow:var(--shadow)}
+  .sp-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .sp-top .spt{font-size:14px;font-weight:750;color:var(--ink)}
+  .sp-tag{font-size:9.5px;font-weight:800;font-family:var(--mono);padding:2px 7px;border-radius:5px;background:var(--accent-soft);color:var(--accent)}
+  .sp-date{font-size:10.5px;color:var(--faint);font-family:var(--mono)}
+  .sp-shared{font-size:10px;color:var(--good-ink);font-weight:700}
+  .sp-sum{font-size:12px;color:var(--ink-2);line-height:1.55;margin-top:7px}
+  .gen-box{background:linear-gradient(180deg,var(--accent-soft),transparent);border:1px solid var(--accent-line,var(--line));border-radius:12px;padding:14px 15px;margin-bottom:14px}
+  .gen-box h4{margin:0 0 4px;font-size:12px;font-weight:750;color:var(--accent);display:flex;align-items:center;gap:6px}
+  .gen-box p{margin:0 0 10px;font-size:11.5px;color:var(--ink-2);line-height:1.5}
+  .gen-src{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+  .gen-src .gs{font-size:10.5px;padding:4px 8px;border-radius:7px;border:1px solid var(--line);background:var(--surface);cursor:pointer;color:var(--ink-2);font-weight:600}
+  .gen-src .gs.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .review-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--warn-tint);border:1px solid var(--warn);border-radius:9px;padding:8px 11px;font-size:11.5px;color:var(--warn-ink);font-weight:650;margin-bottom:11px}
+  .review-bar .rb-acts{margin-left:auto;display:flex;gap:6px}
+  .draft-para{padding:11px 12px;border:1px solid var(--line);border-radius:9px;margin-bottom:9px;background:var(--surface);position:relative}
+  .draft-para.pending{border-color:var(--warn);background:var(--warn-tint)}
+  .draft-para.accepted{border-color:var(--good);background:var(--good-tint)}
+  .draft-para .dp-txt{font-size:12.5px;line-height:1.7;color:var(--ink)}
+  .draft-para .dp-txt ins{background:rgba(12,163,12,.18);text-decoration:none;border-radius:3px;padding:0 2px;color:var(--good-ink)}
+  .draft-para .dp-txt del{background:rgba(208,59,59,.14);border-radius:3px;padding:0 2px;color:var(--crit-ink)}
+  .dp-acts{display:flex;gap:6px;margin-top:9px}
+  .dp-acts button{font-size:11px;font-weight:650;padding:4px 10px;border-radius:7px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);cursor:pointer}
+  .dp-acts .acc{border-color:var(--good);color:var(--good-ink)}.dp-acts .acc:hover{background:var(--good-tint)}
+  .dp-acts .rej{border-color:var(--crit);color:var(--crit-ink)}.dp-acts .rej:hover{background:var(--crit-tint)}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand" data-nav="#/home"><span class="blogo"><img src="data:image/png;base64,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" alt="평택대학교"><span class="tagline">executive dashboard</span></span></div>
+    <nav class="mainnav" id="mainnav" aria-label="주 메뉴"></nav>
+    <div class="top-right">
+      <div class="menu-wrap">
+        <button class="pill-btn date" id="termBtn" aria-haspopup="true">2026 · 1학기 ▾</button>
+        <div class="dropdown" id="termMenu" role="menu"></div>
+      </div>
+      <div class="menu-wrap">
+        <button class="pill-btn" id="roleBtn" aria-haspopup="true"><span class="role-dot"></span><span id="roleName">총장</span> ▾</button>
+        <div class="dropdown" id="roleMenu" role="menu"></div>
+      </div>
+      <button class="icon-btn" id="themeBtn" title="라이트/다크" aria-label="테마 전환">◐</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <main id="app"></main>
+  <aside class="agent-rail" id="agentRail">
+    <div class="ag-bar">
+      <span class="ag-bar-t">P-TU 에이전트</span><span class="sp"></span>
+      <button class="ag-ic" id="agExpand" title="넓게/좁게" aria-label="넓게 보기">⤢</button>
+      <button class="ag-ic" id="agClose" title="닫기" aria-label="에이전트 닫기">×</button>
+    </div>
+    <div class="ag-scroll" id="agScroll">
+      <div class="ag-greet" id="agGreet"></div>
+      <div id="agSched"></div>
+      <div id="agCtx"></div>
+      <div class="ag-chat-h"><span class="ag-av">AI</span><div><b>P-TU 에이전트</b><span id="agWhere">현재 화면 연동</span></div></div>
+      <div class="ag-stream" id="agStream"></div>
+    </div>
+    <div class="ag-foot"><input id="agInput" placeholder="이 화면에 대해 물어보세요…" aria-label="질문"><button id="agSend" aria-label="전송">➤</button></div>
+  </aside>
+</div>
+<button class="ag-fab" id="agFab" title="AI 에이전트 열기" aria-label="AI 에이전트 열기">✨</button>
+<div class="footer">
+  <span>현재값=적재 샘플(더미)데이터 롤업 · 단과대·학과=평택대 실제 구조 기반 시드(교체 대상) · 판단 근거=규칙, 최종 결정=사람.</span>
+  <span class="demo-tag">DEMO · ver 2.0</span>
+</div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+
+/* ============================================================ DATA STORE */
+var MENUS=[
+  {id:'home',label:'Executive Home'},{id:'strategy',label:'전략관리'},{id:'students',label:'학생성과'},
+  {id:'research',label:'연구산학'},{id:'finance',label:'재정경영'},{id:'compete',label:'경쟁력분석'},
+  {id:'risks',label:'위험신호'},{id:'news',label:'뉴스 인텔리전스'},
+  {id:'speeches',label:'연설문'},{id:'reports',label:'보고서실'}
+];
+var ROLES=[
+  {r:'총장',scope:'전체'},{r:'교무위원',scope:'전체'},{r:'부서장',scope:'부서'},{r:'교직원',scope:'제한'},
+  {r:'조교',scope:'제한'},{r:'연구원',scope:'연구'},{r:'학부생',scope:'공개'},{r:'대학원생',scope:'공개'}
+];
+/* view access by role */
+var ACCESS={
+  '총장':'*','교무위원':'*','부서장':'*',
+  '교직원':['home','students','research','reports'],
+  '조교':['home','students'],
+  '연구원':['home','research','compete'],
+  '학부생':['home','compete'],'대학원생':['home','research','compete']
+};
+var TERMS=[
+  {id:'2026-1',label:'2026 · 1학기',cur:true,f:0},
+  {id:'2025-2',label:'2025 · 2학기',f:-0.9},
+  {id:'2025-1',label:'2025 · 1학기',f:-1.6},
+  {id:'2024-2',label:'2024 · 2학기',f:-2.4}
+];
+
+/* colleges → departments. metrics: en=재학생, nf=신입충원%, rf=재학충원%, dr=중도탈락%, gr=졸업%, emp=취업%, bud=재정집행(백만), pap=논문, res=연구비(백만) */
+var COLLEGES=[
+  {id:'ict',n:'ICT융합대학',depts:[
+    {id:'cse',n:'컴퓨터공학과',en:310,nf:101.5,rf:91.2,dr:2.4,gr:85,emp:78.5,bud:210,pap:22,res:95},
+    {id:'ice',n:'정보통신학과',en:240,nf:91.0,rf:90.1,dr:2.8,gr:83,emp:75.2,bud:160,pap:16,res:70},
+    {id:'smc',n:'스마트콘텐츠학과',en:180,nf:102.0,rf:89.5,dr:3.1,gr:81,emp:71.0,bud:120,pap:9,res:40},
+    {id:'ictc',n:'ICT융합학부',en:150,nf:101.0,rf:88.9,dr:3.3,gr:80,emp:70.4,bud:95,pap:7,res:30},
+    {id:'smob',n:'스마트모빌리티학과',en:200,nf:100.5,rf:90.5,dr:3.0,gr:79,emp:64.0,bud:130,pap:8,res:42}
+  ]},
+  {id:'art',n:'예술·디자인대학',depts:[
+    {id:'mus',n:'실용음악학과',en:190,nf:99.0,rf:85.5,dr:4.8,gr:82,emp:66.0,bud:70,pap:4,res:14},
+    {id:'cdz',n:'커뮤니케이션디자인학과',en:175,nf:98.5,rf:88.8,dr:3.4,gr:83,emp:70.5,bud:60,pap:6,res:18}
+  ]},
+  {id:'biz',n:'경영대학',depts:[
+    {id:'ba',n:'경영학과',en:300,nf:98.5,rf:90.5,dr:2.6,gr:84,emp:73.5,bud:90,pap:12,res:35},
+    {id:'itr',n:'국제무역학과',en:210,nf:97.2,rf:89.8,dr:2.9,gr:82,emp:72.0,bud:60,pap:8,res:22},
+    {id:'tour',n:'관광경영학과',en:170,nf:96.8,rf:88.5,dr:3.4,gr:80,emp:70.5,bud:40,pap:5,res:15},
+    {id:'acc',n:'회계세무학과',en:160,nf:98.0,rf:91.0,dr:2.3,gr:86,emp:76.0,bud:45,pap:7,res:18}
+  ]},
+  {id:'hw',n:'보건복지대학',depts:[
+    {id:'sw',n:'사회복지학과',en:260,nf:99.0,rf:90.5,dr:2.6,gr:84,emp:73.5,bud:150,pap:10,res:48},
+    {id:'nur',n:'간호학과',en:280,nf:100.5,rf:94.5,dr:1.5,gr:92,emp:88.0,bud:220,pap:18,res:85},
+    {id:'reh',n:'재활상담학과',en:150,nf:98.5,rf:89.0,dr:3.2,gr:83,emp:74.0,bud:90,pap:8,res:30},
+    {id:'pt',n:'물리치료학과',en:170,nf:99.5,rf:90.8,dr:2.5,gr:88,emp:82.0,bud:110,pap:11,res:45}
+  ]},
+  {id:'hs',n:'인문사회융합대학',depts:[
+    {id:'kor',n:'국어국문학과',en:150,nf:96.0,rf:88.0,dr:3.5,gr:81,emp:65.0,bud:40,pap:9,res:20},
+    {id:'eng',n:'영어영문학과',en:170,nf:97.5,rf:89.2,dr:3.0,gr:82,emp:68.0,bud:48,pap:11,res:25},
+    {id:'ad',n:'광고홍보학과',en:160,nf:98.0,rf:90.0,dr:2.8,gr:83,emp:72.5,bud:42,pap:7,res:18},
+    {id:'ace',n:'아동청소년교육학과',en:140,nf:95.5,rf:87.5,dr:3.6,gr:80,emp:69.0,bud:38,pap:6,res:15}
+  ]},
+  {id:'div',n:'신학대학',depts:[
+    {id:'div1',n:'신학과',en:110,nf:88.0,rf:85.0,dr:3.8,gr:84,emp:60.0,bud:35,pap:6,res:16},
+    {id:'ce',n:'기독교교육학과',en:90,nf:88.8,rf:86.5,dr:3.5,gr:85,emp:62.0,bud:28,pap:4,res:12}
+  ]}
+];
+
+/* strategy / okr (continuity with web-psi 콕핏) */
+var OKR={achieved:3,total:7,pillars:[
+  {n:'재정 건전성 확보',pct:60,color:'var(--warn)'},
+  {n:'교육 성과 제고',pct:98,color:'var(--good)'},
+  {n:'연구 경쟁력 강화',pct:58,color:'var(--serious)'}
+],krs:[
+  {p:'재정',t:'lag',n:'2026 순현금흐름 누적 ≥ 3,000백만',v:'585 / 3,000',pct:19,st:'crit'},
+  {p:'재정',t:'lead',n:'비등록금 수입 비중 ≥ 28%',v:'32.9%',pct:100,st:'good'},
+  {p:'교육',t:'lag',n:'전 학과 평균 충원율 ≥ 95%',v:'96.7%',pct:100,st:'good'},
+  {p:'교육',t:'lag',n:'재학생 만족도 ≥ 4.0',v:'3.72 / 4.00',pct:93,st:'warn'},
+  {p:'교육',t:'lead',n:'충원율 85% 미만 학과 ≤ 2곳',v:'2곳',pct:100,st:'good'},
+  {p:'연구',t:'lag',n:'전년比 연구실적 ≥ +10%',v:'+5.7%',pct:57,st:'serious'},
+  {p:'연구',t:'lead',n:'연구비 집행 ≥ 460백만/년',v:'268 / 460',pct:58,st:'serious'}
+]};
+var STRATEGY_TASKS=[
+  {n:'교육혁신 교과과정 개편',pct:88,st:'good'},{n:'디지털 캠퍼스 고도화',pct:76,st:'warn'},
+  {n:'지역연계 산학 플랫폼',pct:71,st:'warn'},{n:'국제화 유학생 유치',pct:52,st:'serious'},
+  {n:'연구중심 대학원 강화',pct:49,st:'serious'},{n:'평생·성인학습 확대',pct:82,st:'good'},
+  {n:'재정 다변화 수익모델',pct:63,st:'warn'}
+];
+var PLEDGES=[
+  {n:'등록금 동결·장학 확대',pct:81,st:'good'},{n:'취업지원 통합센터',pct:74,st:'warn'},
+  {n:'스마트 도서관 구축',pct:58,st:'serious'},{n:'교원 연구년 확대',pct:66,st:'warn'}
+];
+var FUND_PROJECTS=[
+  {n:'대학혁신지원사업',exec:53,tgt:65,st:'serious',risk:'집행 지연'},
+  {n:'RISE 지역혁신',exec:57,tgt:65,st:'serious',risk:'집행 지연'},
+  {n:'LINC 3.0',exec:72,tgt:65,st:'good',risk:'정상'},
+  {n:'국립대육성(위탁)',exec:69,tgt:65,st:'good',risk:'정상'}
+];
+
+/* finance / cashflow (continuity with web-psi 자금흐름) */
+var CASH={
+  months:['7월','8월','9월','10월','11월','12월','1월','2월','3월','4월','5월','6월'],
+  revenue:[{n:'등록금수입',v:3758,c:'var(--s-plan)'},{n:'국고·RISE',v:1042,c:'var(--s-3)'},{n:'법인전입금',v:306,c:'var(--warn)'},{n:'기타수입',v:280,c:'var(--muted)'}],
+  expense:[{n:'인건비',v:1583},{n:'교육운영비',v:945},{n:'장학금',v:648},{n:'연구비',v:520},{n:'시설관리비',v:395}],
+  totRev:5386,totExp:4091,net:1295,
+  series:[52,58,63,71,80,86,90,95,101,108,120,129.5] /* 순현금 누적(천만? scaled to net~1295) index */
+};
+
+/* benchmark (정보공시 기반 백분위) */
+var BENCH=[
+  {n:'신입생 충원율',v:98.4,pct:72,avg:96.1},
+  {n:'취업률',v:72.1,pct:64,avg:68.4},
+  {n:'전임교원 확보율',v:71.5,pct:38,avg:76.2},
+  {n:'교육비 환원율',v:168,pct:58,avg:161,unit:'%'},
+  {n:'장학금 지급률',v:24.6,pct:61,avg:22.8,unit:'%'},
+  {n:'재학생 충원율',v:89.7,pct:41,avg:91.4}
+];
+
+/* alerts (each carries drill hash + chatbot topic) */
+var ALERTS=[
+  {u:'crit',ul:'긴급',t:'<b>재학생 충원율</b> 목표 대비 −0.8%p 하락',loc:'▸ 예술·디자인대학 · 실용음악학과 집중',hash:'#/dept/art/mus',topic:'retfill'},
+  {u:'crit',ul:'긴급',t:'<b>기관평가 필수지표 1건</b> 기준선 미달 예상',loc:'▸ 전임교원 확보율 (71.5%)',hash:'#/risks',topic:'accr'},
+  {u:'serious',ul:'점검',t:'<b>국고 재정사업 2건</b> 집행률 분기목표 −12%p',loc:'▸ 대학혁신지원 · RISE',hash:'#/finance',topic:'exec'},
+  {u:'warn',ul:'주의',t:'<b>신입생 충원율</b> 정보통신학과 전년比 급락',loc:'▸ 91.0% (−8.8%p)',hash:'#/dept/ict/ice',topic:'newfill'},
+  {u:'warn',ul:'주의',t:'<b>취업률</b> 스마트모빌리티학과 전년 동기 대비 하락',loc:'▸ 64.0% · 현장실습 연계 필요',hash:'#/dept/ict/smob',topic:'emp'}
+];
+
+/* cause variables (원인변수) for a dept's retention issue */
+var CAUSES={
+  retfill:[
+    {k:'성적',v:'학사경고 34명',d:'전년 +9명 · 재학생 4.6%',contrib:31,st:'crit'},
+    {k:'출석',v:'미등록 예정 12명',d:'2학기 등록 미상 위험군',contrib:24,st:'serious'},
+    {k:'상담',v:'상담 참여율 58%',d:'목표 70% 대비 −12%p',contrib:19,st:'warn'},
+    {k:'장학',v:'장학 수혜율 61%',d:'저소득 미신청 다수',contrib:15,st:'warn'},
+    {k:'비교과',v:'참여율 44%',d:'소속감 저하 지표',contrib:11,st:'warn'}
+  ],
+  emp:[
+    {k:'전공일치',v:'전공일치 취업 62%',d:'인문계열 낮음',contrib:34,st:'serious'},
+    {k:'현장실습',v:'실습 참여 51%',d:'목표 70% 미달',contrib:27,st:'warn'},
+    {k:'자격증',v:'취득률 48%',d:'전년比 −6%p',contrib:22,st:'warn'},
+    {k:'상담',v:'취업상담 3.1회',d:'졸업생 1인당',contrib:17,st:'warn'}
+  ]
+};
+
+/* ============================================================ NEW MENUS DATA (ver2.0) */
+/* ① 대학 경영 전략 키워드 — AI 수집 기사 리스트 */
+var KEYWORDS=[
+  {id:'k1',n:'고등교육정책 + 시사점',arts:[
+    {t:'교육부, 2027 대학기본역량진단 개편안 발표',src:'한국대학신문',date:'07-18',sum:'정성평가 비중 확대·재정지원 연계 강화. 우리 대학 발전계획 지표 재정렬 필요.'},
+    {t:'학령인구 절벽, 지방대 정원 자율화 논의 본격화',src:'교수신문',date:'07-15',sum:'정원 감축 유인책과 통폐합 인센티브 병행. 충원율 방어 전략과 직결.'}
+  ]},
+  {id:'k2',n:'대학재정 + 리스크',arts:[
+    {t:'등록금 동결 15년, 사립대 적립금 소진 가속',src:'한국경제',date:'07-17',sum:'등록금 의존형 구조의 한계. 비등록금 수입 다변화가 생존 조건.'},
+    {t:'국고사업 집행률 저조 대학 페널티 신설',src:'대학저널',date:'07-12',sum:'집행 지연 시 차년도 배정 감액. 대학혁신지원·RISE 집행 관리 시급.'}
+  ]},
+  {id:'k3',n:'대학혁신 + 선도사례',arts:[
+    {t:'A대, 무전공 100% 전환 1년 성과 공개',src:'대학지성',date:'07-16',sum:'전공 선택 유예로 중도탈락 18% 감소. 학사 유연화 벤치마킹 포인트.'}
+  ]},
+  {id:'k4',n:'학사혁신 + 벤치마킹',arts:[
+    {t:'마이크로디그리·나노학위 도입 대학 3배 증가',src:'교수신문',date:'07-14',sum:'모듈형 교육과정으로 성인학습자 흡수. 평생교육 확대와 연계 가능.'}
+  ]},
+  {id:'k5',n:'연구경쟁력 + 전략',arts:[
+    {t:'중소규모 대학 연구비 집중투자 전략 주목',src:'한국연구재단',date:'07-13',sum:'선택과 집중으로 SCI 실적 반등. 연구비 집행률 58% 개선 방향 참고.'}
+  ]},
+  {id:'k6',n:'산학협력 + 수익모델',arts:[
+    {t:'LINC 3.0 우수대학, 기술지주회사 수익 다각화',src:'전자신문',date:'07-11',sum:'가족기업 계약학과·기술이전 수입 모델. 산단 수익 구조 참고.'}
+  ]},
+  {id:'k7',n:'생성형 AI와 고등교육 + 전망',arts:[
+    {t:'대학 행정에 생성형 AI 에이전트 도입 확산',src:'디지털타임스',date:'07-19',sum:'문의응대·문서작성 자동화로 행정 효율 40%↑. P-TU 에이전트 정합.'},
+    {t:'AI 리터러시 교양 필수화 대학 늘어',src:'한국대학신문',date:'07-10',sum:'전 학생 대상 AI 기초 교과 신설 흐름.'}
+  ]},
+  {id:'k8',n:'데이터기반 의사결정 + 사례',arts:[
+    {t:'경영 대시보드로 총장 의사결정 지원한 B대',src:'대학저널',date:'07-09',sum:'조기경보·드릴다운으로 이탈 위험군 선제 관리. 본 대시보드 방향과 일치.'}
+  ]},
+  {id:'k9',n:'글로컬대학 + 후속과제',arts:[
+    {t:'글로컬대학30 2차 선정 대학 통합 로드맵 공개',src:'교수신문',date:'07-08',sum:'지역·대학 동반성장 모델. 지역연계 산학 플랫폼 과제와 연계.'}
+  ]},
+  {id:'k10',n:'RISE + 대학 대응전략',arts:[
+    {t:'RISE 체제 전환, 지자체-대학 협력예산 확대',src:'한국대학신문',date:'07-17',sum:'지역혁신중심 재정지원. RISE 집행률 관리와 지역 과제 발굴 필요.'}
+  ]}
+];
+/* ② PTU in Media — 평택대 언론 보도 (sent: pos/neu/neg) */
+var MEDIA=[
+  {media:'한국대학신문',t:'평택대, 대학혁신지원사업 성과평가 우수 등급',date:'07-18',sent:'pos',sum:'교육혁신 교과개편·비교과 확대 성과 인정.'},
+  {media:'경기일보',t:'평택대 간호학과 국가고시 합격률 98% 달성',date:'07-16',sent:'pos',sum:'보건계열 취업 경쟁력 부각.'},
+  {media:'대학저널',t:'평택대, 지역 초·중등 AI 교육 캠프 개최',date:'07-14',sent:'pos',sum:'지역사회 공헌·미래 신입생 접점 확대.'},
+  {media:'경기신문',t:'일부 지방 사립대 신입생 충원 비상… 평택대 포함',date:'07-12',sent:'neg',sum:'학령인구 감소 기사에 대학명 언급. 충원율 대응 메시지 필요.'},
+  {media:'뉴스핌',t:'평택대 산학협력단, 가족기업 100개사 협약',date:'07-10',sent:'neu',sum:'산학 네트워크 확장 보도.'},
+  {media:'평택시사신문',t:'평택대 실용음악학과 정기공연 성황',date:'07-07',sent:'pos',sum:'예술·디자인대학 브랜드 노출.'}
+];
+/* ③ 총장 연설문 아카이브 */
+var SPEECHES=[
+  {id:'sp1',t:'2026학년도 총장 취임사',date:'2026-03-02',tag:'취임식',shared:true,
+   sum:'"판단은 사람이, 실행은 함께" — 데이터 기반 경영과 구성원 존중을 취임 비전으로 제시.',
+   body:'존경하는 평택대학교 구성원 여러분. 저는 오늘 이 자리에서 세 가지를 약속드립니다. 첫째, 데이터에 근거하되 결정은 사람의 몫으로 남기겠습니다. 둘째, 학생 한 명도 놓치지 않는 대학을 만들겠습니다. 셋째, 재정의 건전성 위에 교육과 연구의 자율을 세우겠습니다.'},
+  {id:'sp2',t:'2026학년도 상반기 교직원 회의 인사말',date:'2026-05-20',tag:'교직원회의',shared:true,
+   sum:'충원율·재정 현안 공유와 집행 속도 제고 당부. 현장 중심 소통 강조.',
+   body:'교직원 여러분의 헌신에 감사드립니다. 올해 우리는 재학생 충원율과 국고사업 집행이라는 두 개의 산을 넘어야 합니다. 숫자는 우리를 겁주기 위한 것이 아니라, 어디에 손을 내밀지 알려주는 지도입니다.'},
+  {id:'sp3',t:'전기 학위수여식 축사',date:'2026-02-21',tag:'졸업식',shared:false,
+   sum:'졸업생의 도전을 격려하고 모교의 평생 동반자 역할을 약속.',
+   body:'사랑하는 졸업생 여러분, 오늘의 마침표는 새로운 문장의 시작입니다. 평택대는 언제나 여러분의 든든한 배경이 되겠습니다.'}
+];
+
+/* ============================================================ STATE */
+var state={role:'총장',term:'2026-1',kwSel:'k1',speechDraft:null,newsTab:'keywords',agMsgs:[],agInit:false,lastCtx:null};
+function termF(){var t=TERMS.filter(function(x){return x.id===state.term})[0];return t?t.f:0}
+
+/* ============================================================ HELPERS */
+function round(v,d){var m=Math.pow(10,d||0);return Math.round(v*m)/m}
+function wavg(depts,key){var s=0,w=0;depts.forEach(function(d){s+=d[key]*d.en;w+=d.en});return w?s/w:0}
+function sum(depts,key){return depts.reduce(function(a,d){return a+d[key]},0)}
+function collRoll(c){var d=c.depts,f=termF();return{
+  id:c.id,n:c.n,en:sum(d,'en'),nf:round(wavg(d,'nf')+f,1),rf:round(wavg(d,'rf')+f,1),
+  dr:round(wavg(d,'dr')-f*0.2,1),gr:round(wavg(d,'gr')+f*0.5,1),emp:round(wavg(d,'emp')+f,1),
+  bud:sum(d,'bud'),pap:sum(d,'pap'),res:sum(d,'res'),depts:d
+}}
+function univRoll(){var all=[];COLLEGES.forEach(function(c){all=all.concat(c.depts)});var f=termF();return{
+  en:sum(all,'en'),nf:round(wavg(all,'nf')+f,1),rf:round(wavg(all,'rf')+f,1),
+  dr:round(wavg(all,'dr')-f*0.2,1),gr:round(wavg(all,'gr')+f*0.5,1),emp:round(wavg(all,'emp')+f,1),
+  bud:sum(all,'bud'),pap:sum(all,'pap'),res:sum(all,'res')
+}}
+function colorOf(st){return{good:'var(--good)',warn:'var(--warn)',serious:'var(--serious)',crit:'var(--crit)'}[st]||'var(--muted)'}
+function statLabel(st){return{good:'정상',warn:'주의',serious:'점검',crit:'위험'}[st]}
+/* status from value vs target (higher-better default) */
+function statusHB(v,t){var r=v/t;return r>=1?'good':r>=0.95?'warn':r>=0.88?'serious':'crit'}
+function statusLB(v,t){var r=t/v;return r>=1?'good':r>=0.95?'warn':r>=0.88?'serious':'crit'} /* lower better */
+function pill(st){return '<span class="status-pill p-'+st+'"><i></i>'+statLabel(st)+'</span>'}
+function deltaHtml(d,suffix){if(d==null)return '';var up=d>=0;return '<span class="delta '+(up?'up':'down')+'">'+(up?'▲':'▼')+' '+Math.abs(d).toFixed(1)+(suffix||'%p')+'</span>'}
+
+/* sparkline */
+function spark(data,stroke){var W=118,H=30,p=3;var mn=Math.min.apply(null,data),mx=Math.max.apply(null,data),rng=(mx-mn)||1;
+  var pts=data.map(function(v,i){return [p+i/(data.length-1)*(W-2*p),p+(1-(v-mn)/rng)*(H-2*p)]});
+  var d=pts.map(function(q,i){return (i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)}).join(' ');
+  var area=d+' L'+pts[pts.length-1][0].toFixed(1)+' '+H+' L'+pts[0][0].toFixed(1)+' '+H+' Z';
+  var last=pts[pts.length-1],id='sg'+Math.floor(Math.abs(pts[0][1]*97+data[0]*13));
+  return '<svg class="spark" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="'+id+'" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="'+stroke+'" stop-opacity="0.2"/><stop offset="1" stop-color="'+stroke+'" stop-opacity="0"/></linearGradient></defs><path d="'+area+'" fill="url(#'+id+')"/><path d="'+d+'" fill="none" stroke="'+stroke+'" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="'+last[0].toFixed(1)+'" cy="'+last[1].toFixed(1)+'" r="2.3" fill="'+stroke+'"/></svg>';
+}
+function sparkSyn(base,st){var f=termF();var arr=[];for(var i=0;i<9;i++){arr.push(base-(8-i)*0.6 + (i%2?0.3:-0.2) + f*0.3)}return spark(arr,colorOf(st))}
+
+/* generic line chart with hover */
+var chartSeq=0;
+function lineChart(series,xLabels,yMin,yMax,opts){
+  opts=opts||{};var id='lc'+(chartSeq++);
+  var VB={w:760,h:opts.h||280,l:40,r:opts.r||64,t:14,b:28};
+  function sx(i){return VB.l+i/(xLabels.length-1)*(VB.w-VB.l-VB.r)}
+  function sy(v){return VB.t+(1-(v-yMin)/(yMax-yMin))*(VB.h-VB.t-VB.b)}
+  function ln(data){return data.map(function(v,i){return (i?'L':'M')+sx(i).toFixed(1)+' '+sy(v).toFixed(1)}).join(' ')}
+  var g='',step=(yMax-yMin)/4;
+  for(var yv=yMin;yv<=yMax+0.01;yv+=step){var y=sy(yv);
+    g+='<line x1="'+VB.l+'" x2="'+(VB.w-VB.r)+'" y1="'+y.toFixed(1)+'" y2="'+y.toFixed(1)+'" stroke="var(--grid)" stroke-width="1"/>';
+    g+='<text x="'+(VB.l-8)+'" y="'+(y+3.5).toFixed(1)+'" fill="var(--muted)" font-size="10" text-anchor="end" font-family="var(--mono)">'+round(yv,0)+'</text>';}
+  for(var i=0;i<xLabels.length;i++){if(xLabels.length>8 && i%2)continue;g+='<text x="'+sx(i).toFixed(1)+'" y="'+(VB.h-9)+'" fill="var(--muted)" font-size="9.5" text-anchor="middle">'+xLabels[i]+'</text>';}
+  if(series[0].area){var ap=ln(series[0].data)+' L'+sx(xLabels.length-1).toFixed(1)+' '+sy(yMin)+' L'+VB.l+' '+sy(yMin)+' Z';g+='<path d="'+ap+'" fill="'+series[0].color+'" fill-opacity="0.08"/>';}
+  series.forEach(function(s){g+='<path d="'+ln(s.data)+'" fill="none" stroke="'+s.color+'" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>';
+    var lx=sx(xLabels.length-1),ly=sy(s.data[s.data.length-1]);
+    g+='<circle cx="'+lx.toFixed(1)+'" cy="'+ly.toFixed(1)+'" r="3.4" fill="'+s.color+'" stroke="var(--surface)" stroke-width="2"/>';
+    if(s.endLabel!==false)g+='<text x="'+(lx+7)+'" y="'+(ly+3.5).toFixed(1)+'" fill="'+s.color+'" font-size="10.5" font-weight="700" font-family="var(--mono)">'+s.data[s.data.length-1].toFixed(opts.dec!=null?opts.dec:1)+(opts.suf||'')+'</text>';});
+  g+='<line class="xh" x1="0" x2="0" y1="'+VB.t+'" y2="'+(VB.h-VB.b)+'" stroke="var(--axis)" stroke-width="1" stroke-dasharray="3 3" opacity="0"/>';
+  series.forEach(function(s,si){g+='<circle class="hp hp'+si+'" r="4" fill="'+s.color+'" stroke="var(--surface)" stroke-width="2" opacity="0"/>';});
+  g+='<rect class="hit" x="'+VB.l+'" y="'+VB.t+'" width="'+(VB.w-VB.l-VB.r)+'" height="'+(VB.h-VB.t-VB.b)+'" fill="transparent"/>';
+  var svg='<svg class="lc" viewBox="0 0 '+VB.w+' '+VB.h+'" data-id="'+id+'" role="img" aria-label="추이 그래프">'+g+'</svg>';
+  /* stash config for hover */
+  LC_STORE[id]={series:series,xLabels:xLabels,VB:VB,sx:sx,sy:sy,suf:opts.suf||'%',dec:opts.dec!=null?opts.dec:1};
+  return svg;
+}
+var LC_STORE={};
+function attachCharts(){
+  $$('.lc').forEach(function(svg){
+    var cfg=LC_STORE[svg.getAttribute('data-id')];if(!cfg||svg._wired)return;svg._wired=1;
+    var tt=document.createElement('div');tt.className='tt';svg.parentNode.appendChild(tt);
+    var VB=cfg.VB;
+    svg.addEventListener('mousemove',function(e){
+      var rect=svg.getBoundingClientRect(),scale=VB.w/rect.width;
+      var px=(e.clientX-rect.left)*scale;
+      var i=Math.round((px-VB.l)/((VB.w-VB.l-VB.r)/(cfg.xLabels.length-1)));
+      i=Math.max(0,Math.min(cfg.xLabels.length-1,i));var x=cfg.sx(i);
+      var xh=svg.querySelector('.xh');xh.setAttribute('x1',x);xh.setAttribute('x2',x);xh.setAttribute('opacity','1');
+      var rows='',minY=1e9;
+      cfg.series.forEach(function(s,si){var y=cfg.sy(s.data[i]);minY=Math.min(minY,y);
+        var hp=svg.querySelector('.hp'+si);hp.setAttribute('cx',x);hp.setAttribute('cy',y);hp.setAttribute('opacity','1');
+        rows+='<div class="tt-r"><span class="l"><i style="background:'+s.color+'"></i>'+s.name+'</span><b>'+s.data[i].toFixed(cfg.dec)+cfg.suf+'</b></div>';});
+      tt.innerHTML='<div class="tt-h">'+cfg.xLabels[i]+'</div>'+rows;tt.style.opacity='1';
+      var box=tt.getBoundingClientRect(),lx=x/scale,left=lx-box.width/2;
+      left=Math.max(6,Math.min(rect.width-box.width-6,left));
+      tt.style.left=left+'px';tt.style.top=(minY/scale-box.height-12)+'px';
+    });
+    svg.addEventListener('mouseleave',function(){tt.style.opacity='0';svg.querySelector('.xh').setAttribute('opacity','0');$$('.hp',svg).forEach(function(h){h.setAttribute('opacity','0')});});
+  });
+}
+
+/* bars */
+function barList(rows){
+  return '<div class="bars">'+rows.map(function(b){
+    var cls=b.cls||(b.st?b.st:'');
+    var fillCls=cls==='crit'?'crit':cls==='serious'?'low':cls==='warn'?'mid':cls==='good'?'ok':'';
+    return '<div class="bar-row"><span class="bl">'+b.l+'</span><span class="bar-track"><span class="bar-fill '+fillCls+'" style="width:'+Math.min(100,b.w)+'%"></span>'+(b.t!=null?'<span class="bar-tgt" style="left:'+Math.min(100,b.t)+'%"></span>':'')+'</span><span class="bar-val">'+b.v+'</span></div>';
+  }).join('')+'<div class="foot">막대=실적 · 세로선=목표선</div></div>';
+}
+
+/* ============================================================ VIEWS */
+function crumbs(items){
+  return '<div class="crumbs">'+items.map(function(it,i){
+    var last=i===items.length-1;
+    if(last)return (it.lvl!=null?'<span class="lvl">L'+it.lvl+'</span>':'')+'<span class="cur">'+it.t+'</span>';
+    return (it.lvl!=null?'<span class="lvl">L'+it.lvl+'</span>':'')+'<a data-nav="'+it.h+'">'+it.t+'</a><span class="sep">/</span>';
+  }).join('')+'</div>';
+}
+function pageHead(title,desc,legend){
+  return '<div class="page-head"><div><h1>'+title+'</h1>'+(desc?'<div class="desc">'+desc+'</div>':'')+'</div>'+
+    (legend?'<div class="legend-note"><span class="sig"><i style="background:var(--good)"></i><b>정상</b></span><span class="sig"><i style="background:var(--warn)"></i><b>주의</b></span><span class="sig"><i style="background:var(--serious)"></i><b>점검</b></span><span class="sig"><i style="background:var(--crit)"></i><b>위험</b></span></div>':'')+'</div>';
+}
+
+/* ---- HOME (L0) ---- */
+function vHome(){
+  var u=univRoll();
+  var kpis=[
+    {key:'newfill',label:'신입생 충원율',val:u.nf,unit:'%',target:'100%',delta:round(1.2+termF()*0.3,1),st:statusHB(u.nf,100),hash:'#/students'},
+    {key:'retfill',label:'재학생 충원율',val:u.rf,unit:'%',target:'92.0%',delta:round(-0.8+termF()*0.3,1),st:'crit',hash:'#/students'},
+    {key:'emp',label:'취업률',val:u.emp,unit:'%',target:'70.0%',delta:round(2.5+termF()*0.4,1),st:statusHB(u.emp,70),hash:'#/students'},
+    {key:'exec',label:'재정집행률',val:round(61.3+termF(),1),unit:'%',target:'분기 65%',delta:round(0.4,1),st:'warn',hash:'#/finance'},
+    {key:'plan',label:'발전계획 달성률',val:round(74+termF()*1.5,0),unit:'%',target:'80%',delta:round(6+termF(),1),st:'warn',hash:'#/strategy'},
+    {key:'accr',label:'기관평가 위험지표',val:1,unit:'건',target:'0건',delta:null,st:'crit',hash:'#/risks'}
+  ];
+  var kpiHtml=kpis.map(function(k){
+    return '<div class="kpi s-'+k.st+'" data-nav="'+k.hash+'"><div class="kpi-top"><span class="kpi-label">'+k.label+'</span>'+pill(k.st)+'</div>'+
+      '<div class="kpi-val tnum">'+k.val+'<small>'+k.unit+'</small></div>'+
+      '<div class="kpi-sub"><span class="tgt">목표 '+k.target+'</span>'+(k.delta==null?'<span class="delta" style="color:var(--crit-ink)">목표 0건</span>':deltaHtml(k.delta))+'<span style="color:var(--faint)">전년比</span></div>'+
+      sparkSyn(k.val>100?k.val/2:k.val,k.st)+
+      '<button class="kpi-ask" data-ask="'+k.key+'">💬 왜?</button></div>';
+  }).join('');
+
+  var months=CASH.months.slice(2);
+  var planSeries=[52,55,58,60,63,66,69,71,72.5,74].map(function(v){return round(v+termF()*1.5,1)});
+  var fundSeries=[48,50,51,53,54,56,57,59,60,61.3].map(function(v){return round(v+termF(),1)});
+  var chart=lineChart([
+    {name:'발전계획',color:'var(--s-plan)',data:planSeries,area:true,suf:'%'},
+    {name:'재정사업',color:'var(--s-fund)',data:fundSeries}
+  ],months,40,80,{suf:'%'});
+
+  var alertsHtml=ALERTS.map(function(a){
+    return '<div class="alert" data-nav="'+a.hash+'"><span class="urg u-'+a.u+'">'+a.ul+'</span><span class="atxt">'+a.t+'<span class="loc">'+a.loc+'</span></span><span class="go">→</span></div>';
+  }).join('');
+
+  return crumbs([{t:'대학 전체',lvl:0}])+
+    pageHead('Executive Home',/* 주석처리: '한 화면에서 전략·학생·연구·재정·위험신호를 함께 보는 총장 의사결정 뷰' */'',true)+
+    '<div class="section-label"><span class="ln">01</span>총장 경영 컨트롤 타워 (KPI)</div>'+
+    '<div class="kpi-grid">'+kpiHtml+'</div>'+
+    '<div class="section-label"><span class="ln">02</span>전략 추이 &amp; 총장 판단 레이어</div>'+
+    '<div class="grid-2">'+
+      '<div class="panel"><div class="panel-head"><div><h3>전략 KPI 추이</h3><div class="sub">발전계획 핵심지표 vs 재정지원사업 목표진척 · 최근 10개월</div></div><div class="chart-legend"><span class="k"><i style="background:var(--s-plan)"></i>발전계획</span><span class="k"><i style="background:var(--s-fund)"></i>재정사업</span></div></div><div class="chart-box">'+chart+'</div></div>'+
+      '<div class="panel judge"><div class="jblock"><h4>🔔 총장 확인 필요 <span class="cnt">'+ALERTS.length+'</span></h4>'+alertsHtml+'</div>'+
+        '<div class="brief"><h4>의사결정 브리핑</h4><p>이번 달 충원율·취업률은 개선됐지만 <b>재학생 충원율과 국고사업 집행 속도</b>가 목표를 밑돕니다. 지금은 <b>커뮤니케이션디자인학과 이탈 방지</b>와 <b>재정사업 집행</b>에 개입이 필요합니다.</p></div>'+
+        '<div class="drill"><h4>권장 Drill-down</h4><div class="drill-flow"><span class="n hd" data-nav="#/home">대학 전체</span><span class="ar">→</span><span class="n" data-nav="#/college/art">단과대학</span><span class="ar">→</span><span class="n" data-nav="#/dept/art/mus">학과</span><span class="ar">→</span><span class="n" data-nav="#/cause/art/mus/retfill">원인 변수</span></div></div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="section-label"><span class="ln">03</span>학생 성과 · 연구산학 · 단과대 충원</div>'+
+    '<div class="grid-3">'+
+      '<div class="panel"><div class="panel-head"><div><h3>학생 성과</h3><div class="sub">교육 품질·유지 (0–100)</div></div></div>'+barList([
+        {l:'졸업률',w:u.gr,t:85,v:round(u.gr,0)+'%',st:statusHB(u.gr,85)},
+        {l:'핵심역량',w:76,t:75,v:'76',st:'good'},
+        {l:'상담 참여율',w:68,t:70,v:'68%',st:'warn'},
+        {l:'중도탈락률',w:100-u.dr*8,t:100-3.5*8,v:round(u.dr,1)+'%',st:statusLB(u.dr,3.5)}
+      ])+'</div>'+
+      '<div class="panel"><div class="panel-head"><div><h3>연구 · 산학</h3><div class="sub">대외 경쟁력 (0–100)</div></div></div>'+barList([
+        {l:'논문실적',w:74,t:70,v:'74',st:'good'},{l:'연구비',w:66,t:75,v:'66',st:'warn'},
+        {l:'기술이전',w:57,t:60,v:'57',st:'serious'},{l:'현장실습',w:79,t:75,v:'79',st:'good'}
+      ])+'</div>'+
+      '<div class="panel"><div class="panel-head"><div><h3>단과대별 신입생 충원율</h3></div></div><div class="tbl-wrap"><table class="dt"><tbody>'+
+        COLLEGES.map(function(c){var r=collRoll(c);var st=statusHB(r.nf,100);return '<tr data-nav="#/college/'+c.id+'"><td><span class="nm"><i style="background:'+colorOf(st)+'"></i>'+c.n+'</span></td><td class="r">'+r.nf.toFixed(1)+'%</td><td class="r go">→</td></tr>'}).join('')+
+      '</tbody></table></div></div>'+
+    '</div>'+
+    '<div class="section-label"><span class="ln">04</span>총장 인텔리전스 · 타 대학이 시도하지 않은 메뉴</div>'+
+    '<div class="grid-3">'+
+      '<div class="panel" data-nav="#/news" style="cursor:pointer"><div class="panel-head"><div><h3>🧭 뉴스 인텔리전스</h3><div class="sub">경영 키워드 + PTU in Media 통합</div></div></div><div style="padding:2px 15px 15px;font-size:12px;color:var(--ink-2);line-height:1.6">AI가 수집한 경영 키워드 기사와 평택대 언론 보도를 한곳에서. 기사 "요약해줘"는 우측 에이전트가 정리. <span style="color:var(--accent);font-weight:700">열기 →</span></div></div>'+
+      '<div class="panel" data-nav="#/speeches" style="cursor:pointer"><div class="panel-head"><div><h3>🎙 총장 연설문 아카이브</h3><div class="sub">축적·공유 + AI 초안 제안</div></div></div><div style="padding:2px 15px 15px;font-size:12px;color:var(--ink-2);line-height:1.6">과거 연설문을 근거로 새 연설문 초안을 AI가 제안 → 총장이 확정. <span style="color:var(--accent);font-weight:700">열기 →</span></div></div>'+
+      '<div class="panel" data-nav="#/risks" style="cursor:pointer"><div class="panel-head"><div><h3>🔔 위험신호 조기경보</h3><div class="sub">규칙 기반 · 긴급도 순</div></div></div><div style="padding:2px 15px 15px;font-size:12px;color:var(--ink-2);line-height:1.6">충원율·기관평가·재정집행 등 경보를 자동 게시. 판단은 규칙, 결정은 총장. <span style="color:var(--accent);font-weight:700">열기 →</span></div></div>'+
+    '</div>';
+}
+
+/* ---- STUDENTS (domain, L0→L1) ---- */
+function vStudents(){
+  var u=univRoll();
+  var stat=[
+    {l:'신입생 충원율',v:u.nf.toFixed(1),u:'%',d:'목표 100%'},
+    {l:'재학생 충원율',v:u.rf.toFixed(1),u:'%',d:'목표 92%'},
+    {l:'중도탈락률',v:u.dr.toFixed(1),u:'%',d:'목표 ≤3.5%'},
+    {l:'졸업률',v:u.gr.toFixed(0),u:'%',d:'목표 85%'},
+    {l:'취업률',v:u.emp.toFixed(1),u:'%',d:'건강보험 DB'},
+    {l:'재학생 수',v:u.en.toLocaleString(),u:'명',d:'전체 합계'}
+  ];
+  var trend=lineChart([
+    {name:'신입생 충원율',color:'var(--s-plan)',data:[95.1,96.0,96.5,97.2,97.8,u.nf].map(function(v){return round(v,1)}),area:true},
+    {name:'재학생 충원율',color:'var(--s-fund)',data:[91.2,90.8,90.5,90.2,89.9,u.rf].map(function(v){return round(v,1)})}
+  ],['21-2','22-2','23-2','24-2','25-2','26-1'],82,102,{suf:'%'});
+  return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'학생성과',lvl:1}])+
+    pageHead('학생성과','입학·유지·졸업·취업 — 단과대·학과로 파고들어 원인을 확인',true)+
+    '<div class="stat-row">'+stat.map(function(s){return '<div class="stat"><div class="sl">'+s.l+'</div><div class="sv tnum">'+s.v+'<small>'+s.u+'</small></div><div class="sd">'+s.d+'</div></div>'}).join('')+'</div>'+
+    '<div class="section-label"><span class="ln">추이</span>충원율 연도별 추이</div>'+
+    '<div class="panel"><div class="panel-head"><div><h3>충원율 추이</h3><div class="sub">신입생 vs 재학생 · 학기별</div></div><div class="chart-legend"><span class="k"><i style="background:var(--s-plan)"></i>신입생</span><span class="k"><i style="background:var(--s-fund)"></i>재학생</span></div></div><div class="chart-box">'+trend+'</div></div>'+
+    '<div class="section-label"><span class="ln">L1</span>단과대학별 학생 지표</div>'+
+    collegeTable(['nf','rf','dr','gr','emp'])+
+    '<div class="section-label"><span class="ln">영역2</span>교육·학생 지원 — 역량진단·만족도·이탈 예측</div>'+
+    '<div class="grid-3">'+
+      '<div class="panel"><div class="panel-head"><div><h3>핵심역량 진단 (K-CESA)</h3><div class="sub">6대 핵심역량 · 향상도(0–100)</div></div></div>'+barList([
+        {l:'의사소통',w:78,t:75,v:'78',st:'good'},{l:'창의융합',w:72,t:75,v:'72',st:'warn'},
+        {l:'대인관계',w:76,t:75,v:'76',st:'good'},{l:'자원정보',w:69,t:75,v:'69',st:'serious'},
+        {l:'글로벌',w:64,t:70,v:'64',st:'serious'},{l:'자기관리',w:80,t:75,v:'80',st:'good'}
+      ])+'</div>'+
+      '<div class="panel"><div class="panel-head"><div><h3>학생 만족도</h3><div class="sub">대학생활·교육과정·행정 (5.0)</div></div></div>'+barList([
+        {l:'대학생활',w:74,t:80,v:'3.72',st:'warn'},{l:'교육과정',w:78,t:80,v:'3.90',st:'warn'},
+        {l:'행정서비스',w:70,t:80,v:'3.50',st:'serious'},{l:'강의평가',w:84,t:80,v:'4.20',st:'good'}
+      ])+'</div>'+
+      '<div class="panel"><div class="panel-head"><div><h3>이탈 위험군 예측</h3><div class="sub">학사경고·장기휴학 등 조기경보</div></div></div><div class="tbl-wrap"><table class="dt"><tbody>'+
+        [['실용음악학과','고위험','34명','crit'],['커뮤니케이션디자인학과','주의','19명','serious'],['스마트콘텐츠학과','주의','15명','warn'],['ICT융합학부','관찰','11명','warn']].map(function(r){
+          return '<tr data-nav="#/students"><td><span class="nm"><i style="background:'+colorOf(r[3])+'"></i>'+r[0]+'</span></td><td class="r"><span class="mini-pill p-'+r[3]+'" style="background:var(--'+r[3]+'-tint);color:var(--'+r[3]+'-ink)">'+r[1]+'</span></td><td class="r">'+r[2]+'</td></tr>'}).join('')+
+      '</tbody></table></div><div style="font-size:10px;color:var(--faint);padding:8px 14px">규칙 기반 예측 · 판단은 총장이</div></div>'+
+    '</div>'+
+    '<div class="section-label"><span class="ln">영역1</span>외국인 유학생 현황</div>'+
+    '<div class="grid-2e">'+
+      '<div class="stat-row" style="grid-template-columns:repeat(3,1fr)">'+
+        '<div class="stat"><div class="sl">유학생 수</div><div class="sv tnum">312<small>명</small></div><div class="sd">전년比 +28명</div></div>'+
+        '<div class="stat"><div class="sl">유학생 비율</div><div class="sv tnum">6.4<small>%</small></div><div class="sd">재학생 대비</div></div>'+
+        '<div class="stat" style="border-left:3px solid var(--serious)"><div class="sl">유학생 중도탈락</div><div class="sv tnum">7.1<small>%</small></div><div class="sd">목표 ≤5%</div></div>'+
+      '</div>'+
+      '<div class="panel"><div class="panel-head"><div><h3>유치 국가별 비율</h3></div></div>'+barList([
+        {l:'베트남',w:38,v:'38%',st:'good'},{l:'중국',w:26,v:'26%',st:'good'},{l:'우즈베키스탄',w:16,v:'16%',st:'warn'},{l:'몽골',w:12,v:'12%',st:'warn'},{l:'기타',w:8,v:'8%',st:'warn'}
+      ])+'</div>'+
+    '</div>'+
+    '<div class="brief" style="margin-top:14px"><h4>의사결정 브리핑</h4><p><b>예술·디자인대학 실용음악학과</b>의 재학충원율 급락(중도탈락 4.8%)이 대학 평균을 끌어내립니다. 충원율 경보의 진원지이며, 원인변수(성적·상담) 확인이 필요합니다. <span style="color:var(--accent);font-weight:700;cursor:pointer" data-nav="#/dept/art/mus">실용음악학과 열기 →</span></p></div>';
+}
+function collegeTable(cols){
+  var head={nf:'신입충원',rf:'재학충원',dr:'중도탈락',gr:'졸업률',emp:'취업률',bud:'재정집행',pap:'논문',res:'연구비'};
+  var fmt={nf:function(v){return v.toFixed(1)+'%'},rf:function(v){return v.toFixed(1)+'%'},dr:function(v){return v.toFixed(1)+'%'},gr:function(v){return v.toFixed(0)+'%'},emp:function(v){return v.toFixed(1)+'%'},bud:function(v){return v.toLocaleString()},pap:function(v){return v},res:function(v){return v.toLocaleString()}};
+  return '<div class="panel"><div class="tbl-wrap"><table class="dt"><thead><tr><th>단과대학</th>'+cols.map(function(c){return '<th class="r">'+head[c]+'</th>'}).join('')+'<th class="r"></th></tr></thead><tbody>'+
+    COLLEGES.map(function(c){var r=collRoll(c);var st=statusHB(r.nf,100);
+      return '<tr data-nav="#/college/'+c.id+'"><td><span class="nm"><i style="background:'+colorOf(st)+'"></i>'+c.n+'</span></td>'+
+        cols.map(function(col){var stc=col==='dr'?statusLB(r[col],3.5):col==='rf'?statusHB(r[col],92):col==='emp'?statusHB(r[col],70):col==='gr'?statusHB(r[col],85):statusHB(r[col],100);
+          var showPill=(col==='rf'||col==='dr');
+          return '<td class="r">'+fmt[col](r[col])+(showPill?' <span class="mini-pill p-'+stc+'" style="background:'+({good:'var(--good-tint)',warn:'var(--warn-tint)',serious:'var(--serious-tint)',crit:'var(--crit-tint)'})[stc]+';color:'+({good:'var(--good-ink)',warn:'var(--warn-ink)',serious:'var(--serious-ink)',crit:'var(--crit-ink)'})[stc]+'">'+statLabel(stc)+'</span>':'')+'</td>'}).join('')+
+        '<td class="r go">→</td></tr>'}).join('')+
+    '</tbody></table></div></div>';
+}
+
+/* ---- COLLEGE (L1→L2) ---- */
+function vCollege(cid){
+  var c=COLLEGES.filter(function(x){return x.id===cid})[0];if(!c)return vNotFound();
+  var r=collRoll(c);
+  var stat=[
+    {l:'신입생 충원율',v:r.nf.toFixed(1),u:'%',st:statusHB(r.nf,100)},
+    {l:'재학생 충원율',v:r.rf.toFixed(1),u:'%',st:statusHB(r.rf,92)},
+    {l:'중도탈락률',v:r.dr.toFixed(1),u:'%',st:statusLB(r.dr,3.5)},
+    {l:'취업률',v:r.emp.toFixed(1),u:'%',st:statusHB(r.emp,70)},
+    {l:'재정집행',v:r.bud.toLocaleString(),u:'백만',st:'good'},
+    {l:'재학생 수',v:r.en.toLocaleString(),u:'명',st:'good'}
+  ];
+  var deptRows=c.depts.map(function(d){var st=statusHB(d.rf,92),stn=statusHB(d.nf,100);
+    return '<tr data-nav="#/dept/'+c.id+'/'+d.id+'"><td><span class="nm"><i style="background:'+colorOf(statusLB(d.dr,3.5))+'"></i>'+d.n+'</span></td><td class="r">'+d.nf.toFixed(1)+'%</td><td class="r">'+d.rf.toFixed(1)+'%</td><td class="r">'+d.dr.toFixed(1)+'%</td><td class="r">'+d.emp.toFixed(1)+'%</td><td class="r go">→</td></tr>';
+  }).join('');
+  return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'학생성과',h:'#/students',lvl:1},{t:c.n,lvl:2}])+
+    pageHead(c.n,'단과대 단위 상세 · 학과 행을 클릭하면 학과·원인변수까지 파고듭니다',true)+
+    '<div class="stat-row">'+stat.map(function(s){return '<div class="stat" style="border-left:3px solid '+colorOf(s.st)+'"><div class="sl">'+s.l+'</div><div class="sv tnum">'+s.v+'<small>'+s.u+'</small></div></div>'}).join('')+'</div>'+
+    '<div class="section-label"><span class="ln">L2</span>학과별 지표</div>'+
+    '<div class="panel"><div class="tbl-wrap"><table class="dt"><thead><tr><th>학과</th><th class="r">신입충원</th><th class="r">재학충원</th><th class="r">중도탈락</th><th class="r">취업률</th><th class="r"></th></tr></thead><tbody>'+deptRows+'</tbody></table></div></div>'+
+    '<div class="brief" style="margin-top:14px"><h4>단과대 브리핑</h4><p>이 단과대는 대학 전체 롤업에 <b>'+(r.en/univRoll().en*100).toFixed(0)+'%</b>의 재학생 비중으로 기여합니다. 재학충원율 최저 학과부터 개입 우선순위를 두세요.</p></div>';
+}
+
+/* ---- DEPT (L2→L3) ---- */
+function vDept(cid,did){
+  var c=COLLEGES.filter(function(x){return x.id===cid})[0];if(!c)return vNotFound();
+  var d=c.depts.filter(function(x){return x.id===did})[0];if(!d)return vNotFound();
+  var stat=[
+    {l:'신입생 충원율',v:d.nf.toFixed(1),u:'%',st:statusHB(d.nf,100)},
+    {l:'재학생 충원율',v:d.rf.toFixed(1),u:'%',st:statusHB(d.rf,92)},
+    {l:'중도탈락률',v:d.dr.toFixed(1),u:'%',st:statusLB(d.dr,3.5)},
+    {l:'졸업률',v:d.gr.toFixed(0),u:'%',st:statusHB(d.gr,85)},
+    {l:'취업률',v:d.emp.toFixed(1),u:'%',st:statusHB(d.emp,70)},
+    {l:'논문·연구비',v:d.pap+'건·'+d.res,u:'백만',st:'good'}
+  ];
+  var causeKey=(d.rf<90||d.dr>3.5)?'retfill':'emp';
+  var badge=d.rf<90?'<span class="mini-pill p-crit" style="background:var(--crit-tint);color:var(--crit-ink);font-size:11px;padding:3px 8px">⚠ 충원율 위험군</span>':'';
+  return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'학생성과',h:'#/students',lvl:1},{t:c.n,h:'#/college/'+c.id,lvl:2},{t:d.n,lvl:3}])+
+    pageHead(d.n+' &nbsp;'+badge,c.n+' · 학과 단위 상세 및 원인 변수 분석',true)+
+    '<div class="stat-row">'+stat.map(function(s){return '<div class="stat" style="border-left:3px solid '+colorOf(s.st)+'"><div class="sl">'+s.l+'</div><div class="sv tnum">'+s.v+'<small>'+s.u+'</small></div></div>'}).join('')+'</div>'+
+    '<div class="section-label"><span class="ln">L3</span>원인 변수</div>'+
+    '<div class="cause-grid">'+CAUSES[causeKey].map(function(cz){
+      return '<div class="cause" data-nav="#/cause/'+cid+'/'+did+'/'+causeKey+'"><div class="ch">'+cz.k+'<span class="contrib" style="background:'+({good:'var(--good-tint)',warn:'var(--warn-tint)',serious:'var(--serious-tint)',crit:'var(--crit-tint)'})[cz.st]+';color:'+colorOf(cz.st)+'">기여 '+cz.contrib+'%</span></div><div class="cv">'+cz.v+'</div><div class="cvd">'+cz.d+'</div><div class="cbar"><i style="width:'+(cz.contrib*2.6)+'%;background:'+colorOf(cz.st)+'"></i></div></div>';
+    }).join('')+'</div>'+
+    '<div class="brief" style="margin-top:14px"><h4>학과 브리핑</h4><p>'+(causeKey==='retfill'?'재학충원율 하락의 <b>가장 큰 원인은 성적(학사경고 누적)</b>이며, 상담 참여율 저조가 이를 악화시킵니다. 학사경고자 밀착관리 + 상담 의무화가 즉시 조치안입니다.':'취업률의 <b>전공일치·현장실습 참여</b>가 관건입니다. 현장실습 연계 확대가 우선 조치입니다.')+' <span style="color:var(--accent);font-weight:700;cursor:pointer" data-ask="'+causeKey+'">💬 챗봇에게 원인 묻기</span></p></div>';
+}
+
+/* ---- CAUSE (L3 leaf) ---- */
+function vCause(cid,did,metric){
+  var c=COLLEGES.filter(function(x){return x.id===cid})[0];var d=c?c.depts.filter(function(x){return x.id===did})[0]:null;
+  if(!d)return vNotFound();
+  var list=CAUSES[metric]||CAUSES.retfill;
+  return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'학생성과',h:'#/students',lvl:1},{t:c.n,h:'#/college/'+cid,lvl:2},{t:d.n,h:'#/dept/'+cid+'/'+did,lvl:3},{t:'원인 변수'}])+
+    pageHead((metric==='emp'?'취업률':'재학생 충원율')+' 원인 분석','<b>'+d.n+'</b> · 기여도 순으로 정렬된 원인 변수 — 최종 판단은 총장이',false)+
+    '<div class="panel"><div class="bars" style="padding:14px 16px">'+list.map(function(cz){
+      return '<div style="padding:10px 0;border-bottom:1px solid var(--line)"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px"><span style="font-weight:700;font-size:13px">'+cz.k+' · <span style="color:var(--muted);font-weight:550">'+cz.v+'</span></span><span class="status-pill p-'+cz.st+'"><i></i>기여 '+cz.contrib+'%</span></div><div class="bar-track" style="height:11px"><span class="bar-fill '+({good:'ok',warn:'mid',serious:'low',crit:'crit'})[cz.st]+'" style="width:'+(cz.contrib*2.6)+'%"></span></div><div style="font-size:11px;color:var(--faint);margin-top:5px">'+cz.d+'</div></div>';
+    }).join('')+'</div></div>'+
+    '<div class="brief" style="margin-top:14px"><h4>권장 조치</h4><p>기여도 1·2위 변수(<b>'+list[0].k+' · '+list[1].k+'</b>)에 개입이 집중되어야 효과가 큽니다. 이 화면이 Drill-down의 종착점(원인 변수)입니다. <span style="color:var(--accent);font-weight:700;cursor:pointer" data-ask="'+metric+'">💬 챗봇 상세</span></p></div>';
+}
+
+/* ---- STRATEGY (콕핏 흡수) ---- */
+function vStrategy(){
+  var tabs=state.stab||'okr';
+  var body;
+  if(tabs==='okr'){
+    body='<div class="section-label"><span class="ln">OKR</span>목표 대비 진척 · 달성 핵심결과 '+OKR.achieved+' / '+OKR.total+' (web-psi 콕핏 계승)</div>'+
+      '<div class="okr-pillars">'+OKR.pillars.map(function(p){return '<div class="pillar"><h4>'+p.n+'<span class="pct" style="color:'+p.color+'">'+p.pct+'%</span></h4><div class="prog"><i style="width:'+p.pct+'%;background:'+p.color+'"></i></div></div>'}).join('')+'</div>'+
+      '<div class="panel" style="margin-top:14px"><div class="panel-head"><div><h3>핵심결과(KR) 상세</h3><div class="sub">선행/후행 · 목표 대비</div></div></div><div style="padding:4px 15px 12px">'+
+      OKR.krs.map(function(k){var bg={good:'var(--good-tint)',warn:'var(--warn-tint)',serious:'var(--serious-tint)',crit:'var(--crit-tint)'}[k.st];var fg={good:'var(--good-ink)',warn:'var(--warn-ink)',serious:'var(--serious-ink)',crit:'var(--crit-ink)'}[k.st];
+        return '<div class="kr"><span class="tag '+(k.t==='lead'?'lead':'lag')+'">'+(k.t==='lead'?'선행':'후행')+'</span><span class="kn">'+k.n+'</span><span class="kv">'+k.v+'</span><span class="kp" style="background:'+bg+';color:'+fg+'">'+(k.pct>=100?'달성 ✓':k.pct+'%')+'</span></div>'}).join('')+'</div></div>';
+  }else if(tabs==='tasks'){
+    body='<div class="section-label"><span class="ln">발전계획</span>전략과제별 진척률</div>'+
+      '<div class="panel">'+barList(STRATEGY_TASKS.map(function(t){return {l:t.n,w:t.pct,t:80,v:t.pct+'%',st:t.st}}))+'</div>';
+  }else if(tabs==='pledge'){
+    body='<div class="section-label"><span class="ln">공약</span>총장 공약 진행률</div>'+
+      '<div class="panel">'+barList(PLEDGES.map(function(t){return {l:t.n,w:t.pct,t:100,v:t.pct+'%',st:t.st}}))+'</div>';
+  }else{
+    body='<div class="section-label"><span class="ln">재정사업</span>국고 재정지원사업 집행·위험</div>'+
+      '<div class="panel"><div class="tbl-wrap"><table class="dt"><thead><tr><th>사업명</th><th class="r">집행률</th><th class="r">분기목표</th><th>상태</th></tr></thead><tbody>'+
+      FUND_PROJECTS.map(function(f){return '<tr data-nav="#/finance"><td><span class="nm"><i style="background:'+colorOf(f.st)+'"></i>'+f.n+'</span></td><td class="r">'+f.exec+'%</td><td class="r">'+f.tgt+'%</td><td>'+pill(f.st)+' '+f.risk+'</td></tr>'}).join('')+
+      '</tbody></table></div></div>';
+  }
+  return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'전략관리',lvl:1}])+
+    pageHead('전략관리','발전계획·공약·재정사업 진척 (기존 콕핏 OKR 흡수)',true)+
+    '<div class="tabbar">'+[['okr','목표관리(OKR)'],['tasks','발전계획 과제'],['pledge','총장 공약'],['fund','재정사업']].map(function(t){return '<button class="'+(tabs===t[0]?'on':'')+'" data-stab="'+t[0]+'">'+t[1]+'</button>'}).join('')+'</div>'+body;
+}
+
+/* ---- RESEARCH ---- */
+function vResearch(){
+  var u=univRoll();
+  var stat=[
+    {l:'총 논문실적',v:u.pap,u:'건',d:'전임교원 1인당 환산'},
+    {l:'연구비 집행',v:u.res.toLocaleString(),u:'백만',d:'목표 460'},
+    {l:'기술이전 수입',v:'57',u:'점',d:'지수(0–100)'},
+    {l:'현장실습 참여',v:'79',u:'%',d:'목표 75%'},
+    {l:'전임교원 확보율',v:'71.5',u:'%',d:'법정 대비'},
+    {l:'교원 1인당 학생수',v:'34.2',u:'명',d:'전임교원 기준'}
+  ];
+  return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'연구산학',lvl:1}])+
+    pageHead('연구산학','논문·연구비·기술이전·현장실습 — 대외 경쟁력',true)+
+    '<div class="stat-row">'+stat.map(function(s){return '<div class="stat"><div class="sl">'+s.l+'</div><div class="sv tnum">'+s.v+'<small>'+s.u+'</small></div><div class="sd">'+s.d+'</div></div>'}).join('')+'</div>'+
+    '<div class="section-label"><span class="ln">L1</span>단과대별 연구 지표</div>'+
+    '<div class="panel"><div class="tbl-wrap"><table class="dt"><thead><tr><th>단과대학</th><th class="r">논문(건)</th><th class="r">연구비(백만)</th><th class="r">재학생당 연구비</th><th class="r"></th></tr></thead><tbody>'+
+    COLLEGES.map(function(c){var r=collRoll(c);return '<tr data-nav="#/college/'+c.id+'"><td><span class="nm"><i style="background:var(--s-3)"></i>'+c.n+'</span></td><td class="r">'+r.pap+'</td><td class="r">'+r.res.toLocaleString()+'</td><td class="r">'+(r.res/r.en).toFixed(2)+'</td><td class="r go">→</td></tr>'}).join('')+
+    '</tbody></table></div></div>';
+}
+
+/* ---- FINANCE (자금흐름 흡수) ---- */
+function vFinance(){
+  var depRatio=(CASH.revenue[0].v/CASH.totRev*100);
+  var stat=[
+    {l:'총수입',v:CASH.totRev.toLocaleString(),u:'백만',st:'good'},
+    {l:'총지출',v:CASH.totExp.toLocaleString(),u:'백만',st:'good'},
+    {l:'순현금흐름',v:'+'+CASH.net.toLocaleString(),u:'백만',st:'good'},
+    {l:'등록금 의존율',v:depRatio.toFixed(1),u:'%',st:depRatio>70?'warn':'good'},
+    {l:'재정집행률',v:(61.3+termF()).toFixed(1),u:'%',st:'warn'},
+    {l:'장학금 지급률',v:'24.6',u:'%',st:'good'},
+    {l:'교육비 환원율',v:'168',u:'%',st:'good'},
+    {l:'기부금 유치',v:'306',u:'백만',st:'warn'}
+  ];
+  var series=CASH.series.map(function(v){return round(v+termF()*3,0)});
+  var chart=lineChart([{name:'순현금 누적',color:'var(--s-plan)',data:series,area:true,suf:''}],CASH.months,0,140,{suf:'',dec:0});
+  var revTot=CASH.totRev;
+  return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'재정경영',lvl:1}])+
+    pageHead('재정경영','예산·자금흐름·비율 지표 (기존 자금흐름 흡수)',true)+
+    '<div class="stat-row">'+stat.map(function(s){return '<div class="stat" style="border-left:3px solid '+colorOf(s.st)+'"><div class="sl">'+s.l+'</div><div class="sv tnum">'+s.v+'<small>'+s.u+'</small></div></div>'}).join('')+'</div>'+
+    '<div class="section-label"><span class="ln">추이</span>순현금 누적 · 12개월</div>'+
+    '<div class="panel"><div class="panel-head"><div><h3>순현금 흐름</h3><div class="sub">2025.7–2026.6 · 누적 (백만원, 지수)</div></div></div><div class="chart-box">'+chart+'</div></div>'+
+    '<div class="section-label"><span class="ln">구성</span>수입·지출 구조</div>'+
+    '<div class="grid-2e">'+
+      '<div class="panel"><div class="panel-head"><div><h3>수입 구성</h3><div class="sub">총 '+revTot.toLocaleString()+' 백만</div></div></div>'+barList(CASH.revenue.map(function(r){return {l:r.n,w:r.v/revTot*100,v:r.v.toLocaleString(),cls:'good'}}))+'</div>'+
+      '<div class="panel"><div class="panel-head"><div><h3>지출 구성</h3><div class="sub">총 '+CASH.totExp.toLocaleString()+' 백만</div></div></div>'+barList(CASH.expense.map(function(r){return {l:r.n,w:r.v/CASH.totExp*100,v:r.v.toLocaleString()}}))+'</div>'+
+    '</div>'+
+    '<div class="section-label"><span class="ln">L1</span>단과대별 재정집행</div>'+
+    '<div class="panel"><div class="tbl-wrap"><table class="dt"><thead><tr><th>단과대학</th><th class="r">재정집행(백만)</th><th class="r">재학생당</th><th class="r"></th></tr></thead><tbody>'+
+    COLLEGES.map(function(c){var r=collRoll(c);return '<tr data-nav="#/college/'+c.id+'"><td><span class="nm"><i style="background:var(--s-plan)"></i>'+c.n+'</span></td><td class="r">'+r.bud.toLocaleString()+'</td><td class="r">'+(r.bud/r.en).toFixed(2)+'</td><td class="r go">→</td></tr>'}).join('')+
+    '</tbody></table></div></div>';
+}
+
+/* ---- COMPETE (benchmark) ---- */
+function vCompete(){
+  var the=lineChart([{name:'QS 아시아',color:'var(--s-plan)',data:[601,591,585,572,560,551],area:true}],['2021','2022','2023','2024','2025','2026'],450,650,{suf:'',dec:0});
+  return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'경쟁력분석',lvl:1}])+
+    pageHead('경쟁력분석 · 대외 평판도','정보공시 백분위 + 대학평가 순위 + 언론 노출 — 영역6 대외 평판·인지도',false)+
+    '<div class="panel"><div class="panel-head"><div><h3>정보공시 지표 백분위</h3><div class="sub">막대=하위(빨강)→상위(초록) · 검정선=우리 대학 · 회색선=전국 평균</div></div></div><div style="padding:8px 16px 16px">'+
+    BENCH.map(function(b){return '<div class="bm-row"><span class="bml">'+b.n+'</span><span class="bm-track"><span class="bm-avg" style="left:50%"></span><span class="bm-mark" data-v="'+b.v+(b.unit||'%')+'" style="left:'+b.pct+'%"></span></span><span class="bm-pct" style="color:'+(b.pct>=60?'var(--good)':b.pct>=45?'var(--warn)':'var(--crit)')+'">'+b.pct+'%ile</span></div>'}).join('')+
+    '</div></div>'+
+    '<div class="section-label"><span class="ln">영역6</span>대학 평가 순위 &amp; 언론 노출</div>'+
+    '<div class="grid-2">'+
+      '<div class="panel"><div class="panel-head"><div><h3>국내외 대학 평가 순위 추이</h3><div class="sub">QS 아시아 랭킹 · 낮을수록 상위</div></div></div><div class="chart-box">'+the+'</div></div>'+
+      '<div class="panel"><div class="panel-head"><div><h3>언론 노출 &amp; 홍보 성과</h3><div class="sub">최근 보도 여론 추이 · PTU in Media 연동</div></div></div>'+barList([
+        {l:'긍정 보도',w:66,v:'66%',st:'good'},{l:'중립 보도',w:17,v:'17%',st:'warn'},{l:'부정 보도',w:17,v:'17%',st:'serious'}
+      ])+'<div style="padding:2px 15px 14px"><span class="a-chip" data-nav="#/media">📰 PTU in Media 열기 →</span></div></div>'+
+    '</div>'+
+    '<div class="brief" style="margin-top:14px"><h4>경쟁력 브리핑</h4><p><b>전임교원 확보율(38%ile)</b>과 <b>재학생 충원율(41%ile)</b>이 전국 평균을 밑도는 취약 지표입니다. 특히 전임교원 확보율은 기관평가 위험지표와 연동됩니다. <span style="color:var(--accent);font-weight:700;cursor:pointer" data-nav="#/risks">위험신호로 이동 →</span></p></div>';
+}
+
+/* ---- RISKS ---- */
+function vRisks(){
+  var groups=[['crit','긴급'],['serious','점검'],['warn','주의']];
+  var extra=[
+    {u:'serious',ul:'점검',t:'<b>연구비 집행</b> 목표 460 대비 268백만 (58%)',loc:'▸ 하반기 집행 계획 필요',hash:'#/research',topic:'exec'},
+    {u:'warn',ul:'주의',t:'<b>재학생 만족도</b> 3.72 / 목표 4.00',loc:'▸ 행정서비스 만족 하락',hash:'#/students',topic:'retfill'}
+  ];
+  var all=ALERTS.concat(extra);
+  var html=groups.map(function(g){var items=all.filter(function(a){return a.u===g[0]});if(!items.length)return '';
+    return '<div class="section-label"><span class="ln" style="color:'+colorOf(g[0])+'">'+g[1]+'</span>'+items.length+'건</div>'+
+      '<div class="panel judge" style="padding:12px 15px">'+items.map(function(a){return '<div class="alert" data-nav="'+a.hash+'"><span class="urg u-'+a.u+'">'+a.ul+'</span><span class="atxt">'+a.t+'<span class="loc">'+a.loc+'</span></span><span class="go">→</span></div>'}).join('')+'</div>';
+  }).join('');
+  return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'위험신호',lvl:1}])+
+    pageHead('위험신호','조기경보 규칙에 걸린 사안 · 긴급도 순',true)+html+
+    '<div class="brief" style="margin-top:14px"><h4>경보 규칙</h4><p>재학생 충원율 목표 −1%p↓ · 기관평가 필수지표 미달예상 · 재정집행 분기목표 −10%p↓ · 신입충원 학과군 급락 · 취업률 전년比 하락 시 자동 게시됩니다. <b>판단은 규칙, 결정은 총장.</b></p></div>';
+}
+
+/* ---- REPORTS ---- */
+function vReports(){
+  var u=univRoll();var kind=state.rkind||'weekly';
+  var body='<div class="report" id="reportDoc"><div class="rhd"><div><h2>총장 '+(kind==='weekly'?'주간':'월간')+' 경영보고</h2><div class="rmeta">기준일 2026-06-30 · '+state.term+' · 자동 생성</div></div><div class="rbtns"><button class="btn ghost" data-rkind="'+(kind==='weekly'?'monthly':'weekly')+'">'+(kind==='weekly'?'월간으로':'주간으로')+'</button><button class="btn" id="genReport">🔄 다시 생성</button></div></div>'+
+    '<p id="reportBody"></p></div>';
+  return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'보고서실',lvl:1}])+
+    pageHead('보고서실','현재 대시보드 수치를 근거로 자동 생성되는 총장 보고',false)+body;
+}
+function fillReport(){
+  var u=univRoll();var el=$('#reportBody');if(!el)return;
+  el.innerHTML='<h4>1. 종합 진단</h4><p>이번 기간 대학은 신입생 충원율 <b>'+u.nf.toFixed(1)+'%</b>, 취업률 <b>'+u.emp.toFixed(1)+'%</b>로 목표를 상회했으나, 재학생 충원율 <b>'+u.rf.toFixed(1)+'%</b>는 목표(92%)를 밑돌았습니다. 중도탈락률은 '+u.dr.toFixed(1)+'%입니다.</p>'+
+    '<h4>2. 총장 확인 필요 (긴급)</h4><ul><li>재학생 충원율 −0.8%p 하락 — <b>예술·디자인대학 실용음악학과</b> 집중</li><li>기관평가 필수지표(전임교원 확보율 71.5%) 미달 예상</li><li>국고 재정사업 2건 집행률 분기목표 −12%p</li></ul>'+
+    '<h4>3. 권고 조치</h4><ul><li>실용음악학과 학사경고자 밀착관리·상담 의무화 (충원율 방어)</li><li>대학혁신지원·RISE 하반기 집행계획 재수립</li><li>전임교원 충원 로드맵으로 기관평가 리스크 해소</li></ul>'+
+    '<h4>4. 재정 요약</h4><p>총수입 '+CASH.totRev.toLocaleString()+'백만 / 총지출 '+CASH.totExp.toLocaleString()+'백만 / 순현금 <b>+'+CASH.net.toLocaleString()+'백만</b>. 등록금 의존율 '+(CASH.revenue[0].v/CASH.totRev*100).toFixed(1)+'%.</p>'+
+    '<div class="rbtns" style="margin-top:16px"><button class="btn" onclick="window.print()">🖨 PDF로 내보내기</button><button class="btn ghost" data-nav="#/home">대시보드로</button></div>';
+}
+
+/* ---- ① 경영 전략 키워드 (ver2.0) ---- */
+function kwById(id){return KEYWORDS.filter(function(k){return k.id===id})[0]||KEYWORDS[0]}
+/* ---- 뉴스 인텔리전스 (경영키워드 + PTU in Media 통합, ver2.0) ---- */
+function vNews(){
+  var tab=state.newsTab||'keywords';
+  return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'뉴스 인텔리전스',lvl:1}])+
+    pageHead('뉴스 인텔리전스','AI가 수집한 기사에서 인사이트를 뽑는 통합 뷰 — 경영 키워드와 평택대 언론 보도를 한곳에서. 요약은 오른쪽 에이전트로',false)+
+    '<div class="tabbar">'+[['keywords','🧭 경영 키워드'],['media','📰 PTU in Media']].map(function(t){return '<button class="'+(tab===t[0]?'on':'')+'" data-ntab="'+t[0]+'">'+t[1]+'</button>'}).join('')+'</div>'+
+    (tab==='media'?mediaBody():kwBody());
+}
+function kwBody(){
+  var sel=kwById(state.kwSel);
+  var listHtml=KEYWORDS.map(function(k){return '<div class="kw-item '+(k.id===sel.id?'on':'')+'" data-kw="'+k.id+'">'+k.n+'<span class="kc">'+k.arts.length+'</span></div>'}).join('');
+  var artHtml=sel.arts.map(function(a,i){
+    return '<div class="art-card"><div class="at">'+a.t+'</div>'+
+      '<div class="art-meta"><span class="mm">'+a.src+'</span><span>·</span><span>'+a.date+'</span><span>·</span><span>AI 수집</span></div>'+
+      '<div class="art-sum">'+a.sum+'</div>'+
+      '<div class="art-acts"><span class="a-chip pri" data-kwask="'+sel.id+'|'+i+'">💬 요약해줘</span><span class="a-chip">🔗 원문 링크</span></div></div>';
+  }).join('');
+  return '<div class="brief" style="margin-bottom:14px"><h4>오늘의 브리핑</h4><p>10개 경영 키워드로 <b>수집된 기사 '+KEYWORDS.reduce(function(a,k){return a+k.arts.length},0)+'건</b>. 오늘은 <b>생성형 AI·RISE·대학재정 리스크</b> 관련 보도가 늘었습니다. 관심 기사에서 "요약해줘"를 누르면 오른쪽 에이전트가 정리합니다.</p></div>'+
+    '<div class="kw-wrap">'+
+      '<div class="kw-list">'+listHtml+'</div>'+
+      '<div>'+artHtml+'</div>'+
+    '</div>';
+}
+function mediaBody(){
+  var pos=MEDIA.filter(function(m){return m.sent==='pos'}).length,neg=MEDIA.filter(function(m){return m.sent==='neg'}).length,neu=MEDIA.length-pos-neg;
+  var slabel={pos:'긍정',neu:'중립',neg:'부정'};
+  var rows=MEDIA.map(function(m){
+    return '<tr><td><span class="nm" style="font-weight:700">'+m.t+'</span><div style="font-size:11px;color:var(--muted);margin-top:3px">'+m.sum+'</div></td>'+
+      '<td><span class="sent '+m.sent+'">'+slabel[m.sent]+'</span></td>'+
+      '<td class="r" style="color:var(--muted)">'+m.media+'</td><td class="r">'+m.date+'</td><td class="r"><span class="a-chip" data-mask="'+MEDIA.indexOf(m)+'">요약</span></td></tr>';
+  }).join('');
+  return '<div class="stat-row" style="margin-bottom:14px">'+
+      '<div class="stat" style="border-left:3px solid var(--accent)"><div class="sl">이번 주 보도</div><div class="sv tnum">'+MEDIA.length+'<small>건</small></div></div>'+
+      '<div class="stat" style="border-left:3px solid var(--good)"><div class="sl">긍정</div><div class="sv tnum" style="color:var(--good-ink)">'+pos+'<small>건</small></div></div>'+
+      '<div class="stat" style="border-left:3px solid var(--muted)"><div class="sl">중립</div><div class="sv tnum">'+neu+'<small>건</small></div></div>'+
+      '<div class="stat" style="border-left:3px solid var(--crit)"><div class="sl">부정</div><div class="sv tnum" style="color:var(--crit-ink)">'+neg+'<small>건</small></div></div>'+
+    '</div>'+
+    '<div class="panel"><div class="panel-head"><div><h3>언론 보도 리스트</h3><div class="sub">감성 태그 · 매체 · 일자</div></div></div><div class="tbl-wrap"><table class="dt"><thead><tr><th>제목</th><th>여론</th><th class="r">매체</th><th class="r">일자</th><th class="r"></th></tr></thead><tbody>'+rows+'</tbody></table></div></div>'+
+    '<div class="brief" style="margin-top:14px"><h4>여론 브리핑</h4><p>이번 주 보도는 긍정 '+pos+' · 부정 '+neg+'건. <b>학령인구 감소 기사에 대학명이 함께 언급</b>된 부정 보도 1건은 충원율 대응 메시지와 연동해 관리가 필요합니다. <span style="color:var(--accent);font-weight:700;cursor:pointer" data-nav="#/compete">대외 평판도 →</span></p></div>';
+}
+function kwAskArticle(kid,idx){var k=kwById(kid);var a=k.arts[idx];if(!a)return;
+  agentPush({q:'“'+a.t+'” 기사 요약해줘',a:'<b>'+a.t+'</b><br>'+a.sum+'<br><span style="color:var(--faint);font-size:11px">— '+k.n+' 관련. 대학 경영 관점의 시사점 중심으로 정리했습니다.</span>',src:a.src+' · '+a.date});}
+function mediaAsk(idx){var m=MEDIA[idx];if(!m)return;agentPush({q:'“'+m.t+'” 보도 요약해줘',a:'<b>'+m.t+'</b><br>'+m.sum+'<br><span style="color:var(--faint);font-size:11px">여론: '+({pos:'긍정',neu:'중립',neg:'부정'})[m.sent]+' · '+m.media+'</span>',src:m.media+' · '+m.date+' 보도'});}
+
+/* ---- ③ 총장 연설문 아카이브 (ver2.0, Propose→Review) ---- */
+function vSpeeches(){
+  if(!state.genSrc)state.genSrc=['sp1','sp2'];
+  var archive=SPEECHES.map(function(s){
+    return '<div class="sp-card" data-speech="'+s.id+'"><div class="sp-top"><span class="spt">'+s.t+'</span><span class="sp-tag">'+s.tag+'</span><span class="sp-date">'+s.date+'</span>'+(s.shared?'<span class="sp-shared">● 구성원 공유중</span>':'<span class="sp-date">비공개</span>')+'</div><div class="sp-sum">'+s.sum+'</div></div>';
+  }).join('');
+  var srcChips=SPEECHES.map(function(s){return '<span class="gs '+(state.genSrc.indexOf(s.id)>=0?'on':'')+'" data-gensrc="'+s.id+'">'+s.tag+' ('+s.date.slice(2)+')</span>'}).join('');
+  var genArea;
+  if(state.speechDraft){
+    var pend=state.speechDraft.filter(function(p){return p.status==='pending'}).length;
+    var paras=state.speechDraft.map(function(p,i){
+      var acts=p.status==='pending'
+        ? '<div class="dp-acts"><button class="acc" data-para="'+i+'" data-pact="acc">✓ 수락</button><button class="rej" data-para="'+i+'" data-pact="rej">↺ 되돌리기</button></div>'
+        : '<div class="dp-acts"><span style="font-size:10.5px;color:var(--good-ink);font-weight:700;align-self:center">✓ 확정됨</span></div>';
+      return '<div class="draft-para '+p.status+'"><div class="dp-txt">'+p.html+'</div>'+acts+'</div>';
+    }).join('');
+    genArea='<div class="review-bar">⚠ AI 초안은 <b>제안</b>입니다. 문단별로 검토·확정하세요 — 미검토 '+pend+'건이면 저장이 막힙니다.<span class="rb-acts"><button class="btn ghost" data-paraall="acc" style="padding:5px 10px;font-size:11px">모두 수락</button><button class="btn ghost" data-paraall="rej" style="padding:5px 10px;font-size:11px">모두 되돌리기</button></span></div>'+
+      '<div style="font-size:11px;color:var(--faint);font-family:var(--mono);margin-bottom:9px">초록 표시 = 근거 연설문에서 계승한 표현 · 판단은 총장이</div>'+
+      paras+
+      '<div class="rbtns" style="margin-top:12px"><button class="btn" data-savespeech="1"'+(pend?' style="opacity:.45;cursor:not-allowed"':'')+'>📌 아카이브에 저장</button><button class="btn ghost" data-cancelspeech="1">취소</button></div>';
+  }else{
+    genArea='<div class="gen-src">'+srcChips+'</div>'+
+      '<div style="font-size:11.5px;color:var(--ink-2);margin-bottom:10px;line-height:1.5">선택한 연설문을 근거로 AI가 초안을 <b>제안</b>합니다. 예) "취임식 연설문과 지난 교직원회의 연설문을 바탕으로 <b>후기 대학원 졸업식 연설문</b>을 작성해줘"</div>'+
+      '<button class="btn" data-genspeech="1">✨ 졸업식 연설문 초안 생성</button>';
+  }
+  return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'연설문 아카이브',lvl:1}])+
+    pageHead('총장 연설문 아카이브','행사 연설문을 축적·공유하고, 축적된 연설문을 근거로 새 연설문을 AI가 초안 제안 — 전사적 비전 공유와 헌신',false)+
+    '<div class="gen-box"><h4>✨ AI 연설문 작성 (근거: 축적 아카이브 · Propose→Review)</h4><p>AI는 초안만 제안하고, 문단별 수락/되돌리기 후 총장이 확정합니다. 판단은 사람이.</p>'+genArea+'</div>'+
+    '<div class="section-label"><span class="ln">아카이브</span>축적된 연설문 '+SPEECHES.length+'편</div>'+archive;
+}
+function buildSpeechDraft(){
+  var srcTags=state.genSrc.map(function(id){var s=SPEECHES.filter(function(x){return x.id===id})[0];return s?s.tag:''}).filter(Boolean).join(' · ');
+  return [
+    {status:'pending',html:'사랑하는 후기 대학원 졸업생 여러분, 그리고 함께해 주신 교직원 여러분. 여러분의 학문적 여정에 깊은 축하를 전합니다.'},
+    {status:'pending',html:'저는 취임의 자리에서 <ins>데이터에 근거하되 결정은 사람의 몫으로 남기겠다</ins>고 약속드린 바 있습니다. 오늘 학위를 받는 여러분이야말로, 지식을 판단으로 완성하는 그 사람입니다.'},
+    {status:'pending',html:'지난 교직원 회의에서 저는 <ins>숫자는 겁주기 위한 것이 아니라 어디에 손을 내밀지 알려주는 지도</ins>라고 말했습니다. 여러분이 대학원에서 익힌 연구의 언어가, 세상의 문제를 향한 지도가 되기를 바랍니다.'},
+    {status:'pending',html:'평택대학교는 <ins>언제나 여러분의 든든한 배경</ins>으로 남겠습니다. 여러분의 도전이 곧 우리 대학의 자랑입니다. 축하합니다.'}
+  ].map(function(p){p.srcTags=srcTags;return p});
+}
+
+function vNotFound(){
+  return pageHead('페이지를 찾을 수 없습니다','요청한 경로에 해당하는 화면이 없습니다.',false)+
+    '<div class="lock"><div class="ic">🧭</div><h3>알 수 없는 경로</h3><p>메뉴 또는 대시보드에서 다시 이동해 주세요.</p><div class="who"><button class="btn" data-nav="#/home" style="margin-top:12px">Executive Home으로</button></div></div>';
+}
+function vLocked(view){
+  var m=MENUS.filter(function(x){return x.id===view})[0];
+  return pageHead((m?m.label:'제한 영역'),'현재 권한으로는 열람할 수 없는 영역입니다.',false)+
+    '<div class="lock"><div class="ic">🔒</div><h3>열람 권한이 없습니다</h3><p>이 영역은 상위 권한에서만 열람할 수 있습니다.</p><div class="who">현재 권한: <b>'+state.role+'</b> · 필요한 권한: <b>총장 / 교무위원 / 부서장</b> 등</div><button class="btn" data-nav="#/home" style="margin-top:14px">허용된 화면으로</button></div>';
+}
+
+/* ============================================================ ROUTER */
+function parseHash(){
+  var h=(location.hash||'#/home').replace(/^#\//,'');var parts=h.split('/');
+  return {view:parts[0]||'home',params:parts.slice(1)};
+}
+function allowed(view){
+  var a=ACCESS[state.role];if(a==='*')return true;
+  /* drill views inherit students/home access */
+  var base=({college:'students',dept:'students',cause:'students'})[view]||view;
+  return a.indexOf(view)>=0||a.indexOf(base)>=0;
+}
+function render(){
+  var route=parseHash();var v=route.view,p=route.params;var html;
+  var topView=({college:'students',dept:'students',cause:'students',keywords:'news',media:'news'})[v]||v;
+  if(['home','strategy','students','research','finance','compete','risks','reports','college','dept','cause','news','keywords','media','speeches'].indexOf(v)<0){html=vNotFound();}
+  else if(!allowed(v)){html=vLocked(topView);}
+  else{
+    switch(v){
+      case 'home':html=vHome();break;
+      case 'students':html=vStudents();break;
+      case 'strategy':html=vStrategy();break;
+      case 'research':html=vResearch();break;
+      case 'finance':html=vFinance();break;
+      case 'compete':html=vCompete();break;
+      case 'risks':html=vRisks();break;
+      case 'keywords':state.newsTab='keywords';html=vNews();break;
+      case 'media':state.newsTab='media';html=vNews();break;
+      case 'news':html=vNews();break;
+      case 'speeches':html=vSpeeches();break;
+      case 'reports':html=vReports();break;
+      case 'college':html=vCollege(p[0]);break;
+      case 'dept':html=vDept(p[0],p[1]);break;
+      case 'cause':html=vCause(p[0],p[1],p[2]);break;
+      default:html=vNotFound();
+    }
+  }
+  $('#app').innerHTML=html;
+  window.scrollTo(0,0);
+  buildNav(topView);
+  attachCharts();
+  if(v==='reports')fillReport();
+  syncAgent(topView);
+}
+
+/* ============================================================ CHROME */
+function buildNav(active){
+  $('#mainnav').innerHTML=MENUS.map(function(m){
+    var ok=allowed(m.id);
+    return '<a data-nav="#/'+m.id+'" class="'+(active===m.id?'on':'')+'">'+m.label+(ok?'':'<span class="lk">🔒</span>')+'</a>';
+  }).join('');
+}
+function buildMenus(){
+  $('#roleMenu').innerHTML='<div class="dh">열람 권한 (8종)</div>'+ROLES.map(function(r){return '<button data-role="'+r.r+'" class="'+(state.role===r.r?'sel':'')+'">'+r.r+'<span class="rk">'+r.scope+'</span></button>'}).join('');
+  $('#termMenu').innerHTML='<div class="dh">학기 스냅샷</div>'+TERMS.map(function(t){return '<button data-term="'+t.id+'" class="'+(state.term===t.id?'sel':'')+'">'+t.label+(t.cur?'<span class="rk">현재</span>':'<span class="rk">아카이브</span>')+'</button>'}).join('');
+}
+
+/* chatbot answers */
+var CHAT={
+  newfill:{q:'신입생 충원율이 목표에 못 미치는 이유는?',a:'전체 <b>'+(univRoll().nf.toFixed(1))+'%</b>로 목표 100% 대비 미달입니다. 주도 학과는 <b>정보통신학과(91.0%, 전년比 −8.8%p)</b>이며 나머지 학과는 97% 이상입니다.',src:'신입생 충원율 KPI 정의표',cta:'#/dept/ict/ice'},
+  retfill:{q:'재학생 충원율이 위험 상태인 이유는?',a:'현재 <b>'+(univRoll().rf.toFixed(1))+'%</b>로 목표 92% 대비 미달입니다. <b>예술·디자인대학 실용음악학과</b>의 중도탈락(4.8%)·학사경고 누적이 진원지입니다.',src:'재학생 충원율 · 실용음악학과',cta:'#/dept/art/mus'},
+  emp:{q:'취업률 관련 주의 사항은?',a:'전체 <b>'+(univRoll().emp.toFixed(1))+'%</b>로 목표를 초과했으나 인문계열 3개 학과가 전년比 하락했습니다. 전공일치·현장실습 참여가 관건입니다.',src:'취업률 · 건강보험 DB',cta:'#/students'},
+  exec:{q:'재정집행률이 낮은 이유는?',a:'누적 <b>61.3%</b>로 분기목표 65% 대비 −3.7%p입니다. <b>대학혁신지원·RISE</b> 2개 국고사업 집행이 각 12%p 지연됐습니다.',src:'재정경영 · 사업별 집행',cta:'#/finance'},
+  plan:{q:'발전계획 달성률 현황은?',a:'핵심지표 <b>74%</b>로 목표 80%까지 −6%p입니다. 7개 과제 중 국제화·연구중심 2개가 지연 중입니다.',src:'전략관리 · 발전계획',cta:'#/strategy'},
+  accr:{q:'기관평가 미달 예상 지표는?',a:'<b>전임교원 확보율(71.5%)</b> 1건이 인증 기준선 미달 예상입니다. 즉시 개입이 필요한 긴급 항목입니다.',src:'경쟁력분석 · 정보공시',cta:'#/compete'}
+};
+/* ============================================================ RIGHT AGENT RAIL (ver2.0) */
+function greetPart(){var h=(new Date()).getHours();return h<11?'좋은 아침입니다':h<17?'좋은 오후입니다':'좋은 저녁입니다';}
+function greetHtml(){
+  var who=state.role==='총장'?'총장님':state.role+'님';
+  var d=new Date();var ds=(d.getMonth()+1)+'월 '+d.getDate()+'일 · '+['일','월','화','수','목','금','토'][d.getDay()]+'요일';
+  return '<div class="ag-greet"><b>'+who+', '+greetPart()+'.</b><span>'+ds+' · 오늘의 브리핑을 정리했습니다</span></div>';
+}
+function schedHtml(){
+  var items=[['09:00','교무위원회','본관 3층',true],['11:00','대학혁신지원 사업 집행 점검','대학혁신지원사업단',false],['14:00','재학생 충원율 확보 방안 회의','기획경영본부',false],['15:30','기관평가 인증 TF','기획경영본부',false],['17:00','법인 이사회 사전보고','이사장실',false]];
+  return '<div class="sched"><div class="sched-h"><span class="cal-ic">📅</span><b>오늘의 일정</b></div>'+
+    '<div class="sched-sub">Google Calendar <span class="today">오늘</span></div>'+
+    '<div class="sched-list">'+items.map(function(it){return '<div class="sched-item'+(it[3]?' now':'')+'"><span class="sdot"></span><div><div class="stime">'+it[0]+'</div><div class="stitle">'+it[1]+'</div><div class="stag">'+it[2]+'</div></div></div>'}).join('')+'</div>'+
+    '<div class="sched-foot">🔗 비서팀 캘린더 연동</div></div>';
+}
+function ctwCard(){
+  var u=univRoll();
+  var ks=[['신입 충원율',u.nf.toFixed(1)+'%',statusHB(u.nf,100)],['재학 충원율',u.rf.toFixed(1)+'%','crit'],['취업률',u.emp.toFixed(1)+'%',statusHB(u.emp,70)],['재정집행률',(61.3+termF()).toFixed(1)+'%','warn'],['발전계획',Math.round(74+termF()*1.5)+'%','warn'],['기관평가 위험','1건','crit']];
+  return '<div class="ag-card"><h5>🗼 경영 컨트롤 타워<span class="lk" data-nav="#/home">전체 →</span></h5>'+
+    ks.map(function(k){return '<div class="ag-kpi"><i style="background:'+colorOf(k[2])+'"></i><span class="kl">'+k[0]+'</span><span class="kv">'+k[1]+'</span></div>'}).join('')+'</div>';
+}
+function newsInsightCard(){
+  var arts=KEYWORDS.reduce(function(a,k){return a+k.arts.length},0);
+  var pos=MEDIA.filter(function(m){return m.sent==='pos'}).length,neg=MEDIA.filter(function(m){return m.sent==='neg'}).length;
+  return '<div class="ag-card"><h5>📰 미디어·키워드 인사이트<span class="lk" data-nav="#/news">열기 →</span></h5><div class="ag-ins">'+
+    '<div class="row"><span class="tg" style="background:var(--accent-soft);color:var(--accent)">키워드</span><span>수집 기사 <b>'+arts+'건</b> · 생성형 AI·RISE 급증</span></div>'+
+    '<div class="row"><span class="tg" style="background:var(--good-tint);color:var(--good-ink)">긍정 '+pos+'</span><span>간호 국시·혁신사업 우수 보도</span></div>'+
+    '<div class="row"><span class="tg" style="background:var(--crit-tint);color:var(--crit-ink)">부정 '+neg+'</span><span>학령인구 감소 기사에 대학명 언급</span></div>'+
+    '</div></div>';
+}
+function ctxCard(title,rows,hash){
+  return '<div class="ag-card"><h5>'+title+(hash?'<span class="lk" data-nav="'+hash+'">열기 →</span>':'')+'</h5>'+
+    rows.map(function(r){return '<div class="ag-kpi"><span class="kl">'+r[0]+'</span><span class="kv">'+r[1]+'</span></div>'}).join('')+'</div>';
+}
+function agentCtx(view){
+  var u=univRoll();
+  if(view==='home')return ctwCard()+newsInsightCard();
+  if(view==='news')return newsInsightCard();
+  if(view==='students')return ctxCard('학생성과 요약',[['신입 충원율',u.nf.toFixed(1)+'%'],['재학 충원율',u.rf.toFixed(1)+'%'],['중도탈락',u.dr.toFixed(1)+'%'],['취업률',u.emp.toFixed(1)+'%']],'#/students');
+  if(view==='research')return ctxCard('연구산학 요약',[['논문실적',u.pap+'건'],['연구비',u.res.toLocaleString()+'백만'],['전임교원 확보율','71.5%'],['교원 1인당','34.2명']],'#/research');
+  if(view==='finance')return ctxCard('재정경영 요약',[['순현금','+'+CASH.net.toLocaleString()+'백만'],['등록금 의존율',(CASH.revenue[0].v/CASH.totRev*100).toFixed(1)+'%'],['재정집행률',(61.3+termF()).toFixed(1)+'%']],'#/finance');
+  if(view==='strategy')return ctxCard('전략관리 요약',[['달성 KR',OKR.achieved+' / '+OKR.total],['재정 건전성','60%'],['연구경쟁력','58%']],'#/strategy');
+  if(view==='compete')return ctxCard('대외 평판 요약',[['전임교원','38%ile'],['재학충원','41%ile'],['QS 아시아','551위']],'#/compete');
+  if(view==='risks')return ctxCard('위험신호',[['긴급','2건'],['점검','2건'],['주의','3건']],'#/risks');
+  if(view==='speeches')return ctxCard('연설문 아카이브',[['축적','3편'],['구성원 공유','2편']],'#/speeches');
+  if(view==='reports')return ctxCard('보고서실',[['자동 생성','주간 / 월간']],'#/reports');
+  return '';
+}
+function ctxLine(view){
+  return ({
+    home:'📍 Executive Home입니다. 재학생 충원율('+univRoll().rf.toFixed(1)+'%)과 국고사업 집행이 목표를 밑돕니다.',
+    students:'📍 학생성과 화면입니다. 실용음악학과 재학충원율 급락이 대학 평균을 끌어내립니다.',
+    research:'📍 연구산학 화면입니다. 연구비 집행이 목표(460)의 58% 수준입니다.',
+    finance:'📍 재정경영 화면입니다. 재정집행률이 분기목표를 밑돕니다.',
+    strategy:'📍 전략관리 화면입니다. 달성 핵심결과 '+OKR.achieved+'/'+OKR.total+'.',
+    compete:'📍 경쟁력분석 화면입니다. 전임교원 확보율 38%ile가 취약합니다.',
+    risks:'📍 위험신호 화면입니다. 긴급 2건을 우선 확인하세요.',
+    news:'📍 뉴스 인텔리전스입니다. 기사에서 "요약해줘"를 누르면 제가 정리합니다.',
+    speeches:'📍 연설문 아카이브입니다. 축적 연설문을 근거로 초안을 제안할 수 있습니다.',
+    reports:'📍 보고서실입니다. 현재 수치로 주간/월간 보고를 자동 생성합니다.'
+  })[view];
+}
+function agentPush(o){state.agMsgs.push(o);renderAgStream(true);}
+function renderAgStream(scroll){
+  var el=$('#agStream');if(!el)return;
+  el.innerHTML=state.agMsgs.map(function(m){
+    return (m.q?'<div class="msg q">'+m.q+'</div>':'')+'<div class="msg a">'+m.a+
+      (m.src?'<div class="src'+(m.esc?' esc':'')+'">'+(m.esc?'⚠ ':'')+'[출처] '+m.src+'</div>':'')+
+      (m.cta?'<div class="cta"><a data-nav="'+m.cta+'">관련 화면 열기 →</a></div>':'')+'</div>';
+  }).join('');
+  if(scroll){var sc=$('#agScroll');if(sc)sc.scrollTop=sc.scrollHeight;}
+}
+function initAgent(){
+  $('#agSched').innerHTML=schedHtml();
+  if(!state.agMsgs.length)state.agMsgs.push({a:'무엇이든 <b>지금 보고 계신 화면 기준</b>으로 물어보세요. 근거(출처)와 함께 답하고, 근거가 없으면 지어내지 않고 담당 부서로 연결합니다.',src:'P-TU 에이전트 · 대시보드 연동'});
+  state.agInit=true;
+}
+function syncAgent(view){
+  if(!state.agInit)initAgent();
+  var g=$('#agGreet');if(g)g.innerHTML=greetHtml();
+  var cx=$('#agCtx');if(cx)cx.innerHTML=agentCtx(view);
+  var whereMap={home:'Executive Home',news:'뉴스 인텔리전스',students:'학생성과',research:'연구산학',finance:'재정경영',strategy:'전략관리',compete:'경쟁력분석',risks:'위험신호',speeches:'연설문',reports:'보고서실'};
+  var w=$('#agWhere');if(w)w.textContent='현재 화면: '+(whereMap[view]||view)+' · 연동';
+  if(state.lastCtx!==view){var first=state.lastCtx===null;state.lastCtx=view;if(!first){var l=ctxLine(view);if(l)state.agMsgs.push({a:l,src:'현재 화면 연동'});}}
+  renderAgStream();
+}
+function agentFreeAsk(txt){
+  var words=txt.split(/\s+/).filter(function(w){return w.length>1});
+  var i,j;
+  for(i=0;i<KEYWORDS.length;i++){for(j=0;j<KEYWORDS[i].arts.length;j++){var a=KEYWORDS[i].arts[j];
+    if(words.some(function(w){return a.t.indexOf(w)>=0})){agentPush({q:txt,a:'<b>'+a.t+'</b><br>'+a.sum,src:a.src+' · '+a.date});return;}}}
+  for(i=0;i<MEDIA.length;i++){var m=MEDIA[i];if(words.some(function(w){return m.t.indexOf(w)>=0})){agentPush({q:txt,a:'<b>'+m.t+'</b><br>'+m.sum,src:m.media+' · '+m.date+' 보도'});return;}}
+  var map=[['재학','retfill'],['유지','retfill'],['신입','newfill'],['충원',/재학/.test(txt)?'retfill':'newfill'],['취업','emp'],['재정','exec'],['집행','exec'],['발전','plan'],['기관평가','accr'],['전임','accr']];
+  for(i=0;i<map.length;i++){if(txt.indexOf(map[i][0])>=0){var c=CHAT[map[i][1]];if(c){agentPush({q:txt,a:c.a,src:c.src,cta:c.cta});return;}}}
+  agentPush({q:txt,a:'공식 근거를 확인할 수 없어 지어내지 않겠습니다. 다른 표현으로 물어보시거나, 담당 부서(기획경영본부)로 확인을 연결해 드리겠습니다.',src:'확인 불가 → 기획경영본부 에스컬레이션',esc:true});
+}
+function openChatTopic(topic,custom){
+  var c=custom||CHAT[topic];
+  if(!c)c={q:'이 지표에 대해 알려줘',a:'공식 근거를 확인할 수 없어 지어내지 않겠습니다. 담당 부서(기획경영본부)로 연결해 드릴까요?',src:'확인 불가 → 기획경영본부 에스컬레이션',esc:true};
+  agentPush({q:c.q,a:c.a,src:c.src,esc:c.esc,cta:c.cta});
+}
+
+/* ============================================================ EVENTS */
+document.addEventListener('click',function(e){
+  /* specific controls first — some live INSIDE a data-nav card (e.g. KPI "왜?") */
+  var ask=e.target.closest('[data-ask]');
+  if(ask){e.stopPropagation();openChatTopic(ask.getAttribute('data-ask'));return;}
+  /* ---- ver2.0 new-menu controls ---- */
+  var kw=e.target.closest('[data-kw]');
+  if(kw){state.kwSel=kw.getAttribute('data-kw');render();return;}
+  var ntab=e.target.closest('[data-ntab]');
+  if(ntab){state.newsTab=ntab.getAttribute('data-ntab');render();return;}
+  var kwask=e.target.closest('[data-kwask]');
+  if(kwask){e.stopPropagation();var pr=kwask.getAttribute('data-kwask').split('|');kwAskArticle(pr[0],+pr[1]);return;}
+  var mask=e.target.closest('[data-mask]');
+  if(mask){e.stopPropagation();mediaAsk(+mask.getAttribute('data-mask'));return;}
+  var gsrc=e.target.closest('[data-gensrc]');
+  if(gsrc){var gid=gsrc.getAttribute('data-gensrc');if(!state.genSrc)state.genSrc=[];var gi=state.genSrc.indexOf(gid);if(gi>=0)state.genSrc.splice(gi,1);else state.genSrc.push(gid);render();return;}
+  if(e.target.closest('[data-genspeech]')){if(!state.genSrc||!state.genSrc.length){alert('근거로 삼을 연설문을 1편 이상 선택하세요.');return;}state.speechDraft=buildSpeechDraft();render();return;}
+  var para=e.target.closest('[data-para]');
+  if(para){var pi=+para.getAttribute('data-para'),pa=para.getAttribute('data-pact');if(state.speechDraft){state.speechDraft[pi].status=pa==='acc'?'accepted':'rejected';render();}return;}
+  var paraall=e.target.closest('[data-paraall]');
+  if(paraall){var pv=paraall.getAttribute('data-paraall')==='acc'?'accepted':'rejected';if(state.speechDraft)state.speechDraft.forEach(function(p){p.status=pv});render();return;}
+  if(e.target.closest('[data-savespeech]')){
+    var pending=state.speechDraft&&state.speechDraft.filter(function(p){return p.status==='pending'}).length;
+    if(pending){alert('미검토 문단 '+pending+'건이 남아 저장할 수 없습니다. 문단별로 수락/되돌리기 하세요.');return;}
+    var kept=state.speechDraft.filter(function(p){return p.status==='accepted'});
+    SPEECHES.unshift({id:'sp'+(SPEECHES.length+1),t:'후기 대학원 졸업식 축사 (AI 초안 확정)',date:state.term.replace('-','.0')+'.현재',tag:'졸업식',shared:false,
+      sum:'축적 아카이브(취임사·교직원회의)를 근거로 총장이 확정한 초안. 확정 문단 '+kept.length+'개.',
+      body:kept.map(function(p){return p.html.replace(/<\/?ins>/g,'')}).join(' ')});
+    state.speechDraft=null;render();alert('아카이브에 저장되었습니다. (데모)');return;}
+  if(e.target.closest('[data-cancelspeech]')){state.speechDraft=null;render();return;}
+  var speech=e.target.closest('[data-speech]');
+  if(speech){var sp=SPEECHES.filter(function(x){return x.id===speech.getAttribute('data-speech')})[0];if(sp)openChatTopic(null,{q:'“'+sp.t+'” 전문 보기',a:'<b>'+sp.t+'</b> ('+sp.tag+' · '+sp.date+')<br><br>'+sp.body,src:'연설문 아카이브'});return;}
+  if(e.target.closest('#agSend')){var av=$('#agInput');if(av&&av.value.trim()){agentFreeAsk(av.value.trim());av.value='';}return;}
+  var nav=e.target.closest('[data-nav]');
+  if(nav){
+    location.hash=nav.getAttribute('data-nav');e.preventDefault();return;
+  }
+  var stab=e.target.closest('[data-stab]');
+  if(stab){state.stab=stab.getAttribute('data-stab');render();return;}
+  var rkind=e.target.closest('[data-rkind]');
+  if(rkind){state.rkind=rkind.getAttribute('data-rkind');render();return;}
+  var role=e.target.closest('[data-role]');
+  if(role){state.role=role.getAttribute('data-role');$('#roleName').textContent=state.role;buildMenus();$('#roleMenu').classList.remove('open');render();return;}
+  var term=e.target.closest('[data-term]');
+  if(term){state.term=term.getAttribute('data-term');var t=TERMS.filter(function(x){return x.id===state.term})[0];$('#termBtn').innerHTML=t.label.replace(' · ',' · ')+' ▾';buildMenus();$('#termMenu').classList.remove('open');render();return;}
+  if(e.target.closest('#genReport')){fillReport();return;}
+  /* dropdowns */
+  if(e.target.closest('#roleBtn')){e.stopPropagation();$('#roleMenu').classList.toggle('open');$('#termMenu').classList.remove('open');return;}
+  if(e.target.closest('#termBtn')){e.stopPropagation();$('#termMenu').classList.toggle('open');$('#roleMenu').classList.remove('open');return;}
+  if(e.target.closest('#themeBtn')){var cur=document.documentElement.getAttribute('data-theme');var next=cur==='dark'?'light':cur==='light'?'dark':(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'light':'dark');document.documentElement.setAttribute('data-theme',next);return;}
+  /* agent panel open/close/expand (Gemini-style) */
+  if(e.target.closest('#agClose')){document.body.classList.add('ag-closed');return;}
+  if(e.target.closest('#agFab')){document.body.classList.remove('ag-closed');var sc=$('#agScroll');if(sc)sc.scrollTop=0;return;}
+  if(e.target.closest('#agExpand')){$('#agentRail').classList.toggle('wide');return;}
+  /* close dropdowns */
+  $('#roleMenu').classList.remove('open');$('#termMenu').classList.remove('open');
+});
+$('#agSend').addEventListener('click',function(){var av=$('#agInput');if(av&&av.value.trim()){agentFreeAsk(av.value.trim());av.value='';}});
+$('#agInput').addEventListener('keydown',function(e){if(e.key==='Enter'){var v=e.target.value.trim();if(v){agentFreeAsk(v);e.target.value='';}}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){$('#roleMenu').classList.remove('open');$('#termMenu').classList.remove('open');}});
+window.addEventListener('hashchange',render);
+
+/* init */
+buildMenus();
+if(!location.hash)location.hash='#/home';
+render();
+})();
+</script>
+</body>
+</html>
