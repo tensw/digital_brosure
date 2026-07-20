@@ -197,6 +197,46 @@
   .page-head .desc{margin:4px 0 0;color:var(--muted);font-size:13px}
   .legend-note{display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:11px;color:var(--muted)}
   .sig{display:inline-flex;align-items:center;gap:4px}.sig i{width:8px;height:8px;border-radius:50%}.sig b{color:var(--ink-2);font-weight:600}
+  /* KPI 6대 영역 컨트롤타워 (PPTX 슬라이드 15~17) */
+  .area{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);margin-bottom:13px;overflow:hidden}
+  .area-h{display:flex;align-items:center;gap:11px;padding:12px 16px;border-bottom:1px solid var(--line);position:relative}
+  .area-h::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--ac)}
+  .area-no{font-family:var(--mono);font-size:10px;font-weight:800;color:#fff;background:var(--ac);padding:3px 8px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+  .area-h h3{margin:0;font-size:15px;font-weight:800;letter-spacing:-.01em}
+  .area-lk{margin-left:auto;font-size:11.5px;color:var(--muted);font-weight:650;cursor:pointer;white-space:nowrap}
+  .area-lk:hover{color:var(--ac)}
+  .itile-grid{display:grid;gap:11px;grid-template-columns:repeat(4,1fr);padding:14px 16px}
+  @media(max-width:1200px){.itile-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.itile-grid{grid-template-columns:1fr}}
+  .itile{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:12px 13px 11px;cursor:pointer;transition:.16s;position:relative;overflow:hidden}
+  .itile:hover{background:var(--surface);box-shadow:var(--shadow);transform:translateY(-2px);border-color:var(--line-2)}
+  .itile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--stripe,var(--line-2))}
+  .itile.s-good{--stripe:var(--good)}.itile.s-warn{--stripe:var(--warn)}.itile.s-serious{--stripe:var(--serious)}.itile.s-crit{--stripe:var(--crit)}
+  .itile-top{display:flex;align-items:flex-start;justify-content:space-between;gap:6px;min-height:28px}
+  .itile-l{font-size:11.5px;color:var(--ink-2);font-weight:700;line-height:1.3}
+  .itile-v{font-size:23px;font-weight:800;letter-spacing:-.03em;margin:7px 0 0;line-height:1}
+  .itile-v small{font-size:12px;font-weight:700;color:var(--ink-2);margin-left:1px}
+  .itile-note{font-size:10px;color:var(--faint);margin-top:4px;line-height:1.35;min-height:25px}
+  .itile-trend{margin-top:3px}
+  .itile-trend .spark{margin-top:2px;height:26px}
+  .itile-pct{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:9px;color:var(--faint);font-family:var(--mono)}
+  .itile-pct .pm{white-space:nowrap}
+  .itile-pct .pbar{position:relative;flex:1;height:6px;border-radius:4px;background:linear-gradient(90deg,var(--crit-tint),var(--warn-tint),var(--good-tint))}
+  .itile-pct .pmark{position:absolute;top:-2px;bottom:-2px;width:3px;background:var(--ink);border-radius:2px;transform:translateX(-50%)}
+  .itile-pct .pv{font-weight:700;color:var(--ink-2);white-space:nowrap}
+  .itile-pct.muted{color:var(--faint);font-style:italic}
+  .viz-legend{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:11px;color:var(--muted);margin:0 2px 12px;padding:9px 13px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px}
+  .viz-legend b{color:var(--ink-2);font-weight:700}
+  .viz-legend .vl{display:inline-flex;align-items:center;gap:6px}
+  .grid-4{display:grid;gap:12px;grid-template-columns:repeat(4,1fr)}
+  @media(max-width:980px){.grid-4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.grid-4{grid-template-columns:1fr}}
+  .idea-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);padding:14px;cursor:pointer;transition:.16s}
+  .idea-card:hover{box-shadow:var(--shadow);transform:translateY(-2px);border-color:var(--line-2)}
+  .idea-card .ino{font-family:var(--mono);font-size:10px;font-weight:800;color:var(--accent);letter-spacing:.06em}
+  .idea-card h4{margin:5px 0 6px;font-size:14px;font-weight:800}
+  .idea-card p{margin:0;font-size:11.5px;color:var(--ink-2);line-height:1.55}
+  .idea-card .go{margin-top:9px;font-size:11px;color:var(--accent);font-weight:700}
 
   .section-label{display:flex;align-items:center;gap:11px;margin:30px 2px 15px;font-size:21px;font-weight:800;letter-spacing:-.02em;color:var(--ink);text-transform:none;line-height:1.2}
   .section-label::after{content:"";flex:1;height:2px;background:var(--line);border-radius:2px}
@@ -517,8 +557,8 @@
 </div>
 <button class="ag-fab" id="agFab" title="AI 에이전트 열기" aria-label="AI 에이전트 열기">✨</button>
 <div class="footer">
-  <span>현재값=적재 샘플(더미)데이터 롤업 · 단과대·학과=평택대 실제 구조 기반 시드(교체 대상) · 판단 근거=규칙, 최종 결정=사람.</span>
-  <span class="demo-tag">DEMO · ver 2.0</span>
+  <span>평택대학교 · 총장 Executive Dashboard</span>
+  
 </div>
 
 <script>
@@ -632,12 +672,60 @@ var CASH={
 
 /* benchmark (정보공시 기반 백분위) */
 var BENCH=[
-  {n:'신입생 충원율',v:98.4,pct:72,avg:96.1},
-  {n:'취업률',v:72.1,pct:64,avg:68.4},
-  {n:'전임교원 확보율',v:71.5,pct:38,avg:76.2},
-  {n:'교육비 환원율',v:168,pct:58,avg:161,unit:'%'},
-  {n:'장학금 지급률',v:24.6,pct:61,avg:22.8,unit:'%'},
-  {n:'재학생 충원율',v:89.7,pct:41,avg:91.4}
+  {n:'신입생 충원율',v:100.0,pct:80,avg:99.3},
+  {n:'취업률',v:55.0,pct:20,avg:58.4},
+  {n:'전임교원 확보율',v:71.5,pct:60,avg:71.5},
+  {n:'교육비 환원율',v:168,pct:60,avg:165,unit:'%'},
+  {n:'장학금 지급률',v:24.6,pct:80,avg:23.4,unit:'%'},
+  {n:'재학생 충원율',v:85.3,pct:20,avg:88.7}
+];
+/* 경쟁대학군 — 입시·지원자 풀에서 자주 비교되는 실제 경쟁 대학 (대학정보공시 기반 현실적 추정치)
+   me=평택대. 지표: nf 신입충원 / rf 재학충원 / emp 취업률 / tf 전임교원확보 / dr 중도탈락(낮을수록 양호)
+   / sch 장학금지급률 / edu 교육비환원율 / sat 만족도(5점) */
+var PEERS=[
+  {n:'평택대학교',me:true,nf:100.0,rf:85.3,emp:55.0,tf:71.5,dr:3.4,sch:24.6,edu:168,sat:3.72},
+  {n:'홍익대(세종)',nf:100.0,rf:93.0,emp:63.0,tf:80.0,dr:2.2,sch:21.0,edu:184,sat:3.94},
+  {n:'서경대학교',nf:100.0,rf:90.5,emp:60.2,tf:73.5,dr:2.6,sch:23.0,edu:171,sat:3.86},
+  {n:'백석대학교',nf:99.6,rf:88.4,emp:58.5,tf:66.8,dr:2.8,sch:26.2,edu:162,sat:3.81},
+  {n:'안양대학교',nf:98.9,rf:86.8,emp:56.4,tf:69.8,dr:3.0,sch:24.2,edu:157,sat:3.73},
+  {n:'신한대학교',nf:97.8,rf:84.6,emp:53.8,tf:67.5,dr:3.6,sch:22.8,edu:153,sat:3.66}
+];
+
+/* ===== 메인 = 총장 경영 컨트롤타워: KPI 6대 영역 (PPTX 슬라이드 15~16) =====
+   각 지표는 슬라이드 17의 3원칙(①연도별 추이 ②경쟁대학 백분위 ③신호등)으로 시각화 */
+var AREAS=[
+  {no:1,t:'신입생 모집 및 학적',c:'#8B2942',hash:'#/students',inds:[
+    {l:'신입생 충원율·경쟁률',v:'100',u:'%',note:'경쟁률 5.2:1 · 등록률 96%',st:'good',up:true,pct:80},
+    {l:'재학생 충원율',v:'85.3',u:'%',note:'학과·대학별 유지·충원율',st:'crit',up:false,pct:20},
+    {l:'중도 탈락률',v:'3.4',u:'%',note:'자퇴·제적자 수 및 비율',st:'serious',up:false,pct:20},
+    {l:'외국인 유학생 현황',v:'312',u:'명',note:'비율 6.4% · 중도탈락 7.1%',st:'warn',up:true,pct:55}
+  ]},
+  {no:2,t:'교육 및 학생 지원',c:'#1F3A6E',hash:'#/students',inds:[
+    {l:'취업률',v:'55',u:'%',note:'건강보험 DB · 유지취업률',st:'crit',up:false,pct:20},
+    {l:'학습·역량 진단(K-CESA)',v:'73',u:'점',note:'6대 핵심역량 향상도',st:'warn',up:true,pct:60},
+    {l:'학생 만족도',v:'3.72',u:'/5',note:'대학생활·교육·행정',st:'warn',up:false,pct:20},
+    {l:'중도탈락 예측 위험군',v:'79',u:'명',note:'학사경고·장기휴학 이탈위험',st:'serious',up:true,pct:null}
+  ]},
+  {no:3,t:'교원 및 연구',c:'#1E5C3A',hash:'#/research',inds:[
+    {l:'전임교원 확보율',v:'71.5',u:'%',note:'법정 기준 대비',st:'serious',up:true,pct:60},
+    {l:'교원 1인당 학생 수',v:'34.2',u:'명',note:'전임교원 1인당 담당 학생',st:'warn',up:false,pct:44},
+    {l:'연구 성과',v:'138',u:'건',note:'SCI·등재지 논문 · 연구비 268백만',st:'good',up:true,pct:62}
+  ]},
+  {no:4,t:'재정 및 자산',c:'#B58A2E',hash:'#/finance',inds:[
+    {l:'재정지원사업 수주',v:'4',u:'건',note:'혁신·LINC 3.0·RISE·육성',st:'good',up:true,pct:60},
+    {l:'교육비 환원율',v:'168',u:'%',note:'학생 재투자 비율',st:'good',up:true,pct:60},
+    {l:'등록금 의존율·기부금',v:'69.8',u:'%',note:'기부금 유치 306백만',st:'warn',up:false,pct:46},
+    {l:'장학금 지급률',v:'24.6',u:'%',note:'등록금 대비 비율',st:'good',up:true,pct:80},
+    {l:'재정 집행률',v:'61.3',u:'%',note:'분기목표 65%',st:'warn',up:true,pct:52}
+  ]},
+  {no:5,t:'중장기 발전계획 및 평가',c:'#5B3A82',hash:'#/strategy',inds:[
+    {l:'발전계획 이행률',v:'74',u:'%',note:'전략과제·부서별 KPI 진척',st:'warn',up:true,pct:57},
+    {l:'대학 기관평가인증 지표',v:'1',u:'건',note:'필수지표 미달 예상',st:'crit',up:false,pct:40}
+  ]},
+  {no:6,t:'대외 평판도 및 인지도',c:'#243A66',hash:'#/compete',inds:[
+    {l:'국내외 대학 평가 순위',v:'551',u:'위',note:'QS 아시아 · 개선 추세',st:'warn',up:true,pct:45},
+    {l:'언론 노출·홍보 성과',v:'66',u:'%',note:'긍정 여론 · 보도 6건',st:'good',up:true,pct:60}
+  ]}
 ];
 
 /* alerts (each carries drill hash + chatbot topic) */
@@ -732,6 +820,15 @@ function termF(){var t=TERMS.filter(function(x){return x.id===state.term})[0];re
 /* ============================================================ HELPERS */
 function round(v,d){var m=Math.pow(10,d||0);return Math.round(v*m)/m}
 function wavg(depts,key){var s=0,w=0;depts.forEach(function(d){s+=d[key]*d.en;w+=d.en});return w?s/w:0}
+/* ===== 고정 수치 (LOCKED — 평택대 실제값, 절대 수정 금지) =====
+   재학생 충원율 85.3% · 신입생 충원율 100% · 취업률 55%
+   대학 롤업(가중평균)이 정확히 이 값이 되도록 학과 시드를 1회 비례 스케일. 상대 서열은 보존. */
+var FIXED_KPI={nf:100,rf:85.3,emp:55};
+function fixKPIs(){
+  var all=[];COLLEGES.forEach(function(c){all=all.concat(c.depts)});
+  var s={nf:FIXED_KPI.nf/wavg(all,'nf'),rf:FIXED_KPI.rf/wavg(all,'rf'),emp:FIXED_KPI.emp/wavg(all,'emp')};
+  all.forEach(function(d){d.nf=d.nf*s.nf;d.rf=d.rf*s.rf;d.emp=d.emp*s.emp;});
+}
 function sum(depts,key){return depts.reduce(function(a,d){return a+d[key]},0)}
 function collRoll(c){var d=c.depts,f=termF();return{
   id:c.id,n:c.n,en:sum(d,'en'),nf:round(wavg(d,'nf')+f,1),rf:round(wavg(d,'rf')+f,1),
@@ -835,24 +932,24 @@ function pageHead(title,desc,legend){
 }
 
 /* ---- HOME (L0) ---- */
+function iSpark(base,st,up){var arr=[];for(var i=0;i<8;i++){arr.push(base+(up?-1:1)*(7-i)*base*0.011 + (i%2?base*0.004:-base*0.003));}arr.push(base);return spark(arr,colorOf(st));}
+function areaTile(a,ind){
+  var base=parseFloat(ind.v)||0;
+  var pctbar=ind.pct!=null
+    ? '<div class="itile-pct"><span class="pm">경쟁대학</span><span class="pbar"><span class="pmark" style="left:'+ind.pct+'%"></span></span><span class="pv">'+ind.pct+'%ile</span></div>'
+    : '';
+  return '<div class="itile s-'+ind.st+'" data-nav="'+a.hash+'">'+
+    '<div class="itile-top"><span class="itile-l">'+ind.l+'</span>'+pill(ind.st)+'</div>'+
+    '<div class="itile-v tnum">'+ind.v+'<small>'+ind.u+'</small></div>'+
+    '<div class="itile-note">'+ind.note+'</div>'+
+    '<div class="itile-trend">'+iSpark(base,ind.st,ind.up)+'</div>'+
+    pctbar+'</div>';
+}
+function areaBlock(a){
+  return '<section class="area"><div class="area-h" style="--ac:'+a.c+'"><span class="area-no">AREA 0'+a.no+'</span><h3>'+a.t+'</h3><span class="area-lk" data-nav="'+a.hash+'">전체 →</span></div>'+
+    '<div class="itile-grid">'+a.inds.map(function(ind){return areaTile(a,ind)}).join('')+'</div></section>';
+}
 function vHome(){
-  var u=univRoll();
-  var kpis=[
-    {key:'newfill',label:'신입생 충원율',val:u.nf,unit:'%',target:'100%',delta:round(1.2+termF()*0.3,1),st:statusHB(u.nf,100),hash:'#/students'},
-    {key:'retfill',label:'재학생 충원율',val:u.rf,unit:'%',target:'92.0%',delta:round(-0.8+termF()*0.3,1),st:'crit',hash:'#/students'},
-    {key:'emp',label:'취업률',val:u.emp,unit:'%',target:'70.0%',delta:round(2.5+termF()*0.4,1),st:statusHB(u.emp,70),hash:'#/students'},
-    {key:'exec',label:'재정집행률',val:round(61.3+termF(),1),unit:'%',target:'분기 65%',delta:round(0.4,1),st:'warn',hash:'#/finance'},
-    {key:'plan',label:'발전계획 달성률',val:round(74+termF()*1.5,0),unit:'%',target:'80%',delta:round(6+termF(),1),st:'warn',hash:'#/strategy'},
-    {key:'accr',label:'기관평가 위험지표',val:1,unit:'건',target:'0건',delta:null,st:'crit',hash:'#/risks'}
-  ];
-  var kpiHtml=kpis.map(function(k){
-    return '<div class="kpi s-'+k.st+'" data-nav="'+k.hash+'"><div class="kpi-top"><span class="kpi-label">'+k.label+'</span>'+pill(k.st)+'</div>'+
-      '<div class="kpi-val tnum">'+k.val+'<small>'+k.unit+'</small></div>'+
-      '<div class="kpi-sub"><span class="tgt">목표 '+k.target+'</span>'+(k.delta==null?'<span class="delta" style="color:var(--crit-ink)">목표 0건</span>':deltaHtml(k.delta))+'<span style="color:var(--faint)">전년比</span></div>'+
-      sparkSyn(k.val>100?k.val/2:k.val,k.st)+
-      '<button class="kpi-ask" data-ask="'+k.key+'">💬 왜?</button></div>';
-  }).join('');
-
   var months=CASH.months.slice(2);
   var planSeries=[52,55,58,60,63,66,69,71,72.5,74].map(function(v){return round(v+termF()*1.5,1)});
   var fundSeries=[48,50,51,53,54,56,57,59,60,61.3].map(function(v){return round(v+termF(),1)});
@@ -860,44 +957,20 @@ function vHome(){
     {name:'발전계획',color:'var(--s-plan)',data:planSeries,area:true,suf:'%'},
     {name:'재정사업',color:'var(--s-fund)',data:fundSeries}
   ],months,40,80,{suf:'%'});
-
   var alertsHtml=ALERTS.map(function(a){
     return '<div class="alert" data-nav="'+a.hash+'"><span class="urg u-'+a.u+'">'+a.ul+'</span><span class="atxt">'+a.t+'<span class="loc">'+a.loc+'</span></span><span class="go">→</span></div>';
   }).join('');
-
   return crumbs([{t:'대학 전체',lvl:0}])+
-    pageHead('Executive Home',/* 주석처리: '한 화면에서 전략·학생·연구·재정·위험신호를 함께 보는 총장 의사결정 뷰' */'',true)+
-    '<div class="section-label"><span class="ln">01</span>총장 경영 컨트롤 타워 (KPI)</div>'+
-    '<div class="kpi-grid">'+kpiHtml+'</div>'+
-    '<div class="section-label"><span class="ln">02</span>전략 추이 &amp; 총장 판단 레이어</div>'+
+    pageHead('Executive Home','',true)+
+    '<div class="section-label"><span class="ln">01</span>총장 경영 컨트롤 타워</div>'+
+    AREAS.map(areaBlock).join('')+
+    '<div class="section-label"><span class="ln">02</span>전략 추이 &amp; 확인 필요 사항</div>'+
     '<div class="grid-2">'+
       '<div class="panel"><div class="panel-head"><div><h3>전략 KPI 추이</h3><div class="sub">발전계획 핵심지표 vs 재정지원사업 목표진척 · 최근 10개월</div></div><div class="chart-legend"><span class="k"><i style="background:var(--s-plan)"></i>발전계획</span><span class="k"><i style="background:var(--s-fund)"></i>재정사업</span></div></div><div class="chart-box">'+chart+'</div></div>'+
       '<div class="panel judge"><div class="jblock"><h4>🔔 총장 확인 필요 <span class="cnt">'+ALERTS.length+'</span></h4>'+alertsHtml+'</div>'+
-        '<div class="brief"><h4>의사결정 브리핑</h4><p>이번 달 충원율·취업률은 개선됐지만 <b>재학생 충원율과 국고사업 집행 속도</b>가 목표를 밑돕니다. 지금은 <b>커뮤니케이션디자인학과 이탈 방지</b>와 <b>재정사업 집행</b>에 개입이 필요합니다.</p></div>'+
+        '<div class="brief"><h4>의사결정 브리핑</h4><p>이번 달 <b>신입생 충원율은 100%를 달성</b>했으나 <b>재학생 충원율(85.3%)·취업률(55%)</b>이 목표를 크게 밑돕니다. 지금은 <b>재학생 이탈 방지</b>와 <b>취업 역량·재정사업 집행</b>에 개입이 필요합니다.</p></div>'+
         '<div class="drill"><h4>권장 Drill-down</h4><div class="drill-flow"><span class="n hd" data-nav="#/home">대학 전체</span><span class="ar">→</span><span class="n" data-nav="#/college/art">단과대학</span><span class="ar">→</span><span class="n" data-nav="#/dept/art/mus">학과</span><span class="ar">→</span><span class="n" data-nav="#/cause/art/mus/retfill">원인 변수</span></div></div>'+
       '</div>'+
-    '</div>'+
-    '<div class="section-label"><span class="ln">03</span>학생 성과 · 연구산학 · 단과대 충원</div>'+
-    '<div class="grid-3">'+
-      '<div class="panel"><div class="panel-head"><div><h3>학생 성과</h3><div class="sub">교육 품질·유지 (0–100)</div></div></div>'+barList([
-        {l:'졸업률',w:u.gr,t:85,v:round(u.gr,0)+'%',st:statusHB(u.gr,85)},
-        {l:'핵심역량',w:76,t:75,v:'76',st:'good'},
-        {l:'상담 참여율',w:68,t:70,v:'68%',st:'warn'},
-        {l:'중도탈락률',w:100-u.dr*8,t:100-3.5*8,v:round(u.dr,1)+'%',st:statusLB(u.dr,3.5)}
-      ])+'</div>'+
-      '<div class="panel"><div class="panel-head"><div><h3>연구 · 산학</h3><div class="sub">대외 경쟁력 (0–100)</div></div></div>'+barList([
-        {l:'논문실적',w:74,t:70,v:'74',st:'good'},{l:'연구비',w:66,t:75,v:'66',st:'warn'},
-        {l:'기술이전',w:57,t:60,v:'57',st:'serious'},{l:'현장실습',w:79,t:75,v:'79',st:'good'}
-      ])+'</div>'+
-      '<div class="panel"><div class="panel-head"><div><h3>단과대별 신입생 충원율</h3></div></div><div class="tbl-wrap"><table class="dt"><tbody>'+
-        COLLEGES.map(function(c){var r=collRoll(c);var st=statusHB(r.nf,100);return '<tr data-nav="#/college/'+c.id+'"><td><span class="nm"><i style="background:'+colorOf(st)+'"></i>'+c.n+'</span></td><td class="r">'+r.nf.toFixed(1)+'%</td><td class="r go">→</td></tr>'}).join('')+
-      '</tbody></table></div></div>'+
-    '</div>'+
-    '<div class="section-label"><span class="ln">04</span>총장 인텔리전스 · 타 대학이 시도하지 않은 메뉴</div>'+
-    '<div class="grid-3">'+
-      '<div class="panel" data-nav="#/news" style="cursor:pointer"><div class="panel-head"><div><h3>🧭 뉴스 인텔리전스</h3><div class="sub">경영 키워드 + PTU in Media 통합</div></div></div><div style="padding:2px 15px 15px;font-size:12px;color:var(--ink-2);line-height:1.6">AI가 수집한 경영 키워드 기사와 평택대 언론 보도를 한곳에서. 기사 "요약해줘"는 우측 에이전트가 정리. <span style="color:var(--accent);font-weight:700">열기 →</span></div></div>'+
-      '<div class="panel" data-nav="#/speeches" style="cursor:pointer"><div class="panel-head"><div><h3>🎙 총장 연설문 아카이브</h3><div class="sub">축적·공유 + AI 초안 제안</div></div></div><div style="padding:2px 15px 15px;font-size:12px;color:var(--ink-2);line-height:1.6">과거 연설문을 근거로 새 연설문 초안을 AI가 제안 → 총장이 확정. <span style="color:var(--accent);font-weight:700">열기 →</span></div></div>'+
-      '<div class="panel" data-nav="#/risks" style="cursor:pointer"><div class="panel-head"><div><h3>🔔 위험신호 조기경보</h3><div class="sub">규칙 기반 · 긴급도 순</div></div></div><div style="padding:2px 15px 15px;font-size:12px;color:var(--ink-2);line-height:1.6">충원율·기관평가·재정집행 등 경보를 자동 게시. 판단은 규칙, 결정은 총장. <span style="color:var(--accent);font-weight:700">열기 →</span></div></div>'+
     '</div>';
 }
 
@@ -917,7 +990,7 @@ function vStudents(){
     {name:'재학생 충원율',color:'var(--s-fund)',data:[91.2,90.8,90.5,90.2,89.9,u.rf].map(function(v){return round(v,1)})}
   ],['21-2','22-2','23-2','24-2','25-2','26-1'],82,102,{suf:'%'});
   return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'학생성과',lvl:1}])+
-    pageHead('학생성과','입학·유지·졸업·취업 — 단과대·학과로 파고들어 원인을 확인',true)+
+    pageHead('학생성과','신입·재학·졸업·취업 지표',true)+
     '<div class="stat-row">'+stat.map(function(s){return '<div class="stat"><div class="sl">'+s.l+'</div><div class="sv tnum">'+s.v+'<small>'+s.u+'</small></div><div class="sd">'+s.d+'</div></div>'}).join('')+'</div>'+
     '<div class="section-label"><span class="ln">추이</span>충원율 연도별 추이</div>'+
     '<div class="panel"><div class="panel-head"><div><h3>충원율 추이</h3><div class="sub">신입생 vs 재학생 · 학기별</div></div><div class="chart-legend"><span class="k"><i style="background:var(--s-plan)"></i>신입생</span><span class="k"><i style="background:var(--s-fund)"></i>재학생</span></div></div><div class="chart-box">'+trend+'</div></div>'+
@@ -981,7 +1054,7 @@ function vCollege(cid){
     return '<tr data-nav="#/dept/'+c.id+'/'+d.id+'"><td><span class="nm"><i style="background:'+colorOf(statusLB(d.dr,3.5))+'"></i>'+d.n+'</span></td><td class="r">'+d.nf.toFixed(1)+'%</td><td class="r">'+d.rf.toFixed(1)+'%</td><td class="r">'+d.dr.toFixed(1)+'%</td><td class="r">'+d.emp.toFixed(1)+'%</td><td class="r go">→</td></tr>';
   }).join('');
   return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'학생성과',h:'#/students',lvl:1},{t:c.n,lvl:2}])+
-    pageHead(c.n,'단과대 단위 상세 · 학과 행을 클릭하면 학과·원인변수까지 파고듭니다',true)+
+    pageHead(c.n,'단과대 상세 지표',true)+
     '<div class="stat-row">'+stat.map(function(s){return '<div class="stat" style="border-left:3px solid '+colorOf(s.st)+'"><div class="sl">'+s.l+'</div><div class="sv tnum">'+s.v+'<small>'+s.u+'</small></div></div>'}).join('')+'</div>'+
     '<div class="section-label"><span class="ln">L2</span>학과별 지표</div>'+
     '<div class="panel"><div class="tbl-wrap"><table class="dt"><thead><tr><th>학과</th><th class="r">신입충원</th><th class="r">재학충원</th><th class="r">중도탈락</th><th class="r">취업률</th><th class="r"></th></tr></thead><tbody>'+deptRows+'</tbody></table></div></div>'+
@@ -1003,7 +1076,7 @@ function vDept(cid,did){
   var causeKey=(d.rf<90||d.dr>3.5)?'retfill':'emp';
   var badge=d.rf<90?'<span class="mini-pill p-crit" style="background:var(--crit-tint);color:var(--crit-ink);font-size:11px;padding:3px 8px">⚠ 충원율 위험군</span>':'';
   return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'학생성과',h:'#/students',lvl:1},{t:c.n,h:'#/college/'+c.id,lvl:2},{t:d.n,lvl:3}])+
-    pageHead(d.n+' &nbsp;'+badge,c.n+' · 학과 단위 상세 및 원인 변수 분석',true)+
+    pageHead(d.n+' &nbsp;'+badge,c.n,true)+
     '<div class="stat-row">'+stat.map(function(s){return '<div class="stat" style="border-left:3px solid '+colorOf(s.st)+'"><div class="sl">'+s.l+'</div><div class="sv tnum">'+s.v+'<small>'+s.u+'</small></div></div>'}).join('')+'</div>'+
     '<div class="section-label"><span class="ln">L3</span>원인 변수</div>'+
     '<div class="cause-grid">'+CAUSES[causeKey].map(function(cz){
@@ -1018,7 +1091,7 @@ function vCause(cid,did,metric){
   if(!d)return vNotFound();
   var list=CAUSES[metric]||CAUSES.retfill;
   return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'학생성과',h:'#/students',lvl:1},{t:c.n,h:'#/college/'+cid,lvl:2},{t:d.n,h:'#/dept/'+cid+'/'+did,lvl:3},{t:'원인 변수'}])+
-    pageHead((metric==='emp'?'취업률':'재학생 충원율')+' 원인 분석','<b>'+d.n+'</b> · 기여도 순으로 정렬된 원인 변수 — 최종 판단은 총장이',false)+
+    pageHead((metric==='emp'?'취업률':'재학생 충원율')+' 원인 분석','<b>'+d.n+'</b> · 기여도 순 원인 변수',false)+
     '<div class="panel"><div class="bars" style="padding:14px 16px">'+list.map(function(cz){
       return '<div style="padding:10px 0;border-bottom:1px solid var(--line)"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px"><span style="font-weight:700;font-size:13px">'+cz.k+' · <span style="color:var(--muted);font-weight:550">'+cz.v+'</span></span><span class="status-pill p-'+cz.st+'"><i></i>기여 '+cz.contrib+'%</span></div><div class="bar-track" style="height:11px"><span class="bar-fill '+({good:'ok',warn:'mid',serious:'low',crit:'crit'})[cz.st]+'" style="width:'+(cz.contrib*2.6)+'%"></span></div><div style="font-size:11px;color:var(--faint);margin-top:5px">'+cz.d+'</div></div>';
     }).join('')+'</div></div>'+
@@ -1030,7 +1103,7 @@ function vStrategy(){
   var tabs=state.stab||'okr';
   var body;
   if(tabs==='okr'){
-    body='<div class="section-label"><span class="ln">OKR</span>목표 대비 진척 · 달성 핵심결과 '+OKR.achieved+' / '+OKR.total+' (web-psi 콕핏 계승)</div>'+
+    body='<div class="section-label"><span class="ln">OKR</span>목표 대비 진척 · 달성 핵심결과 '+OKR.achieved+' / '+OKR.total+'</div>'+
       '<div class="okr-pillars">'+OKR.pillars.map(function(p){return '<div class="pillar"><h4>'+p.n+'<span class="pct" style="color:'+p.color+'">'+p.pct+'%</span></h4><div class="prog"><i style="width:'+p.pct+'%;background:'+p.color+'"></i></div></div>'}).join('')+'</div>'+
       '<div class="panel" style="margin-top:14px"><div class="panel-head"><div><h3>핵심결과(KR) 상세</h3><div class="sub">선행/후행 · 목표 대비</div></div></div><div style="padding:4px 15px 12px">'+
       OKR.krs.map(function(k){var bg={good:'var(--good-tint)',warn:'var(--warn-tint)',serious:'var(--serious-tint)',crit:'var(--crit-tint)'}[k.st];var fg={good:'var(--good-ink)',warn:'var(--warn-ink)',serious:'var(--serious-ink)',crit:'var(--crit-ink)'}[k.st];
@@ -1048,7 +1121,7 @@ function vStrategy(){
       '</tbody></table></div></div>';
   }
   return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'전략관리',lvl:1}])+
-    pageHead('전략관리','발전계획·공약·재정사업 진척 (기존 콕핏 OKR 흡수)',true)+
+    pageHead('전략관리','발전계획·공약·재정사업 진척',true)+
     '<div class="tabbar">'+[['okr','목표관리(OKR)'],['tasks','발전계획 과제'],['pledge','총장 공약'],['fund','재정사업']].map(function(t){return '<button class="'+(tabs===t[0]?'on':'')+'" data-stab="'+t[0]+'">'+t[1]+'</button>'}).join('')+'</div>'+body;
 }
 
@@ -1064,7 +1137,7 @@ function vResearch(){
     {l:'교원 1인당 학생수',v:'34.2',u:'명',d:'전임교원 기준'}
   ];
   return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'연구산학',lvl:1}])+
-    pageHead('연구산학','논문·연구비·기술이전·현장실습 — 대외 경쟁력',true)+
+    pageHead('연구산학','논문·연구비·기술이전·현장실습',true)+
     '<div class="stat-row">'+stat.map(function(s){return '<div class="stat"><div class="sl">'+s.l+'</div><div class="sv tnum">'+s.v+'<small>'+s.u+'</small></div><div class="sd">'+s.d+'</div></div>'}).join('')+'</div>'+
     '<div class="section-label"><span class="ln">L1</span>단과대별 연구 지표</div>'+
     '<div class="panel"><div class="tbl-wrap"><table class="dt"><thead><tr><th>단과대학</th><th class="r">논문(건)</th><th class="r">연구비(백만)</th><th class="r">재학생당 연구비</th><th class="r"></th></tr></thead><tbody>'+
@@ -1089,7 +1162,7 @@ function vFinance(){
   var chart=lineChart([{name:'순현금 누적',color:'var(--s-plan)',data:series,area:true,suf:''}],CASH.months,0,140,{suf:'',dec:0});
   var revTot=CASH.totRev;
   return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'재정경영',lvl:1}])+
-    pageHead('재정경영','예산·자금흐름·비율 지표 (기존 자금흐름 흡수)',true)+
+    pageHead('재정경영','예산·자금흐름·비율 지표',true)+
     '<div class="stat-row">'+stat.map(function(s){return '<div class="stat" style="border-left:3px solid '+colorOf(s.st)+'"><div class="sl">'+s.l+'</div><div class="sv tnum">'+s.v+'<small>'+s.u+'</small></div></div>'}).join('')+'</div>'+
     '<div class="section-label"><span class="ln">추이</span>순현금 누적 · 12개월</div>'+
     '<div class="panel"><div class="panel-head"><div><h3>순현금 흐름</h3><div class="sub">2025.7–2026.6 · 누적 (백만원, 지수)</div></div></div><div class="chart-box">'+chart+'</div></div>'+
@@ -1107,9 +1180,18 @@ function vFinance(){
 /* ---- COMPETE (benchmark) ---- */
 function vCompete(){
   var the=lineChart([{name:'QS 아시아',color:'var(--s-plan)',data:[601,591,585,572,560,551],area:true}],['2021','2022','2023','2024','2025','2026'],450,650,{suf:'',dec:0});
+  var peerRows=PEERS.map(function(u){
+    var me=u.me;
+    function cell(v,st){return '<td class="r"'+(me&&st?' style="font-weight:800;color:'+colorOf(st)+'"':'')+'>'+v+'</td>';}
+    return '<tr'+(me?' style="background:var(--accent-soft)"':'')+' data-nav="#/students"><td><span class="nm"'+(me?' style="color:var(--accent);font-weight:800"':'')+'>'+u.n+(me?' ★':'')+'</span></td>'+
+      cell(u.nf.toFixed(1)+'%',me?'good':0)+cell(u.rf.toFixed(1)+'%',me?'crit':0)+cell(u.emp.toFixed(1)+'%',me?'crit':0)+cell(u.tf.toFixed(1)+'%',me?'warn':0)+cell(u.dr.toFixed(1)+'%',me?'serious':0)+'</tr>';
+  }).join('');
   return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'경쟁력분석',lvl:1}])+
-    pageHead('경쟁력분석 · 대외 평판도','정보공시 백분위 + 대학평가 순위 + 언론 노출 — 영역6 대외 평판·인지도',false)+
-    '<div class="panel"><div class="panel-head"><div><h3>정보공시 지표 백분위</h3><div class="sub">막대=하위(빨강)→상위(초록) · 검정선=우리 대학 · 회색선=전국 평균</div></div></div><div style="padding:8px 16px 16px">'+
+    pageHead('경쟁력분석','입시·지원자 풀 경쟁대학 대비 상대 위치 · 대학평가 · 언론 노출',false)+
+    '<div class="section-label"><span class="ln">경쟁대학</span>경쟁대학 비교</div>'+
+    '<div class="panel"><div class="panel-head"><div><h3>경쟁대학 지표 비교</h3><div class="sub">서경대 · 안양대 · 홍익대(세종) · 신한대 · 백석대 · 대학정보공시 기반</div></div></div><div class="tbl-wrap"><table class="dt"><thead><tr><th>대학</th><th class="r">신입충원</th><th class="r">재학충원</th><th class="r">취업률</th><th class="r">전임교원</th><th class="r">중도탈락</th></tr></thead><tbody>'+peerRows+'</tbody></table></div></div>'+
+    '<div class="section-label"><span class="ln">백분위</span>경쟁대학군 내 상대 위치</div>'+
+    '<div class="panel"><div class="panel-head"><div><h3>지표별 백분위</h3><div class="sub">막대=하위(빨강)→상위(초록) · 검정선=평택대 · 회색선=경쟁대학 평균</div></div></div><div style="padding:8px 16px 16px">'+
     BENCH.map(function(b){return '<div class="bm-row"><span class="bml">'+b.n+'</span><span class="bm-track"><span class="bm-avg" style="left:50%"></span><span class="bm-mark" data-v="'+b.v+(b.unit||'%')+'" style="left:'+b.pct+'%"></span></span><span class="bm-pct" style="color:'+(b.pct>=60?'var(--good)':b.pct>=45?'var(--warn)':'var(--crit)')+'">'+b.pct+'%ile</span></div>'}).join('')+
     '</div></div>'+
     '<div class="section-label"><span class="ln">영역6</span>대학 평가 순위 &amp; 언론 노출</div>'+
@@ -1119,7 +1201,7 @@ function vCompete(){
         {l:'긍정 보도',w:66,v:'66%',st:'good'},{l:'중립 보도',w:17,v:'17%',st:'warn'},{l:'부정 보도',w:17,v:'17%',st:'serious'}
       ])+'<div style="padding:2px 15px 14px"><span class="a-chip" data-nav="#/media">📰 PTU in Media 열기 →</span></div></div>'+
     '</div>'+
-    '<div class="brief" style="margin-top:14px"><h4>경쟁력 브리핑</h4><p><b>전임교원 확보율(38%ile)</b>과 <b>재학생 충원율(41%ile)</b>이 전국 평균을 밑도는 취약 지표입니다. 특히 전임교원 확보율은 기관평가 위험지표와 연동됩니다. <span style="color:var(--accent);font-weight:700;cursor:pointer" data-nav="#/risks">위험신호로 이동 →</span></p></div>';
+    '<div class="brief" style="margin-top:14px"><h4>경쟁력 브리핑</h4><p>경쟁대학군 대비 <b>재학생 충원율·취업률·학생 만족도(각 20%ile)</b>가 하위권으로 최우선 개입 지점입니다. 반면 <b>신입생 충원율·장학금 지급률(각 80%ile)</b>은 상위권입니다. <span style="color:var(--accent);font-weight:700;cursor:pointer" data-nav="#/risks">위험신호로 이동 →</span></p></div>';
 }
 
 /* ---- RISKS ---- */
@@ -1136,7 +1218,7 @@ function vRisks(){
   }).join('');
   return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'위험신호',lvl:1}])+
     pageHead('위험신호','조기경보 규칙에 걸린 사안 · 긴급도 순',true)+html+
-    '<div class="brief" style="margin-top:14px"><h4>경보 규칙</h4><p>재학생 충원율 목표 −1%p↓ · 기관평가 필수지표 미달예상 · 재정집행 분기목표 −10%p↓ · 신입충원 학과군 급락 · 취업률 전년比 하락 시 자동 게시됩니다. <b>판단은 규칙, 결정은 총장.</b></p></div>';
+    '<div class="brief" style="margin-top:14px"><h4>경보 규칙</h4><p>재학생 충원율 목표 −1%p↓ · 기관평가 필수지표 미달예상 · 재정집행 분기목표 −10%p↓ · 신입충원 학과군 급락 · 취업률 전년比 하락 시 자동 게시됩니다.</p></div>';
 }
 
 /* ---- REPORTS ---- */
@@ -1145,11 +1227,11 @@ function vReports(){
   var body='<div class="report" id="reportDoc"><div class="rhd"><div><h2>총장 '+(kind==='weekly'?'주간':'월간')+' 경영보고</h2><div class="rmeta">기준일 2026-06-30 · '+state.term+' · 자동 생성</div></div><div class="rbtns"><button class="btn ghost" data-rkind="'+(kind==='weekly'?'monthly':'weekly')+'">'+(kind==='weekly'?'월간으로':'주간으로')+'</button><button class="btn" id="genReport">🔄 다시 생성</button></div></div>'+
     '<p id="reportBody"></p></div>';
   return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'보고서실',lvl:1}])+
-    pageHead('보고서실','현재 대시보드 수치를 근거로 자동 생성되는 총장 보고',false)+body;
+    pageHead('보고서실','현재 수치 기반 자동 생성 보고',false)+body;
 }
 function fillReport(){
   var u=univRoll();var el=$('#reportBody');if(!el)return;
-  el.innerHTML='<h4>1. 종합 진단</h4><p>이번 기간 대학은 신입생 충원율 <b>'+u.nf.toFixed(1)+'%</b>, 취업률 <b>'+u.emp.toFixed(1)+'%</b>로 목표를 상회했으나, 재학생 충원율 <b>'+u.rf.toFixed(1)+'%</b>는 목표(92%)를 밑돌았습니다. 중도탈락률은 '+u.dr.toFixed(1)+'%입니다.</p>'+
+  el.innerHTML='<h4>1. 종합 진단</h4><p>이번 기간 대학은 신입생 충원율 <b>'+u.nf.toFixed(0)+'%</b>로 목표를 달성했으나, 취업률 <b>'+u.emp.toFixed(0)+'%</b>(목표 70%)와 재학생 충원율 <b>'+u.rf.toFixed(1)+'%</b>(목표 92%)가 목표를 밑돌았습니다. 중도탈락률은 '+u.dr.toFixed(1)+'%입니다.</p>'+
     '<h4>2. 총장 확인 필요 (긴급)</h4><ul><li>재학생 충원율 −0.8%p 하락 — <b>예술·디자인대학 실용음악학과</b> 집중</li><li>기관평가 필수지표(전임교원 확보율 71.5%) 미달 예상</li><li>국고 재정사업 2건 집행률 분기목표 −12%p</li></ul>'+
     '<h4>3. 권고 조치</h4><ul><li>실용음악학과 학사경고자 밀착관리·상담 의무화 (충원율 방어)</li><li>대학혁신지원·RISE 하반기 집행계획 재수립</li><li>전임교원 충원 로드맵으로 기관평가 리스크 해소</li></ul>'+
     '<h4>4. 재정 요약</h4><p>총수입 '+CASH.totRev.toLocaleString()+'백만 / 총지출 '+CASH.totExp.toLocaleString()+'백만 / 순현금 <b>+'+CASH.net.toLocaleString()+'백만</b>. 등록금 의존율 '+(CASH.revenue[0].v/CASH.totRev*100).toFixed(1)+'%.</p>'+
@@ -1162,7 +1244,7 @@ function kwById(id){return KEYWORDS.filter(function(k){return k.id===id})[0]||KE
 function vNews(){
   var tab=state.newsTab||'keywords';
   return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'뉴스 인텔리전스',lvl:1}])+
-    pageHead('뉴스 인텔리전스','AI가 수집한 기사에서 인사이트를 뽑는 통합 뷰 — 경영 키워드와 평택대 언론 보도를 한곳에서. 요약은 오른쪽 에이전트로',false)+
+    pageHead('뉴스 인텔리전스','경영 키워드와 평택대 언론 보도',false)+
     '<div class="tabbar">'+[['keywords','🧭 경영 키워드'],['media','📰 PTU in Media']].map(function(t){return '<button class="'+(tab===t[0]?'on':'')+'" data-ntab="'+t[0]+'">'+t[1]+'</button>'}).join('')+'</div>'+
     (tab==='media'?mediaBody():kwBody());
 }
@@ -1175,7 +1257,7 @@ function kwBody(){
       '<div class="art-sum">'+a.sum+'</div>'+
       '<div class="art-acts"><span class="a-chip pri" data-kwask="'+sel.id+'|'+i+'">💬 요약해줘</span><span class="a-chip">🔗 원문 링크</span></div></div>';
   }).join('');
-  return '<div class="brief" style="margin-bottom:14px"><h4>오늘의 브리핑</h4><p>10개 경영 키워드로 <b>수집된 기사 '+KEYWORDS.reduce(function(a,k){return a+k.arts.length},0)+'건</b>. 오늘은 <b>생성형 AI·RISE·대학재정 리스크</b> 관련 보도가 늘었습니다. 관심 기사에서 "요약해줘"를 누르면 오른쪽 에이전트가 정리합니다.</p></div>'+
+  return '<div class="brief" style="margin-bottom:14px"><h4>오늘의 브리핑</h4><p>10개 경영 키워드로 <b>수집된 기사 '+KEYWORDS.reduce(function(a,k){return a+k.arts.length},0)+'건</b>. 오늘은 <b>생성형 AI·RISE·대학재정 리스크</b> 관련 보도가 늘었습니다.</p></div>'+
     '<div class="kw-wrap">'+
       '<div class="kw-list">'+listHtml+'</div>'+
       '<div>'+artHtml+'</div>'+
@@ -1218,8 +1300,8 @@ function vSpeeches(){
         : '<div class="dp-acts"><span style="font-size:10.5px;color:var(--good-ink);font-weight:700;align-self:center">✓ 확정됨</span></div>';
       return '<div class="draft-para '+p.status+'"><div class="dp-txt">'+p.html+'</div>'+acts+'</div>';
     }).join('');
-    genArea='<div class="review-bar">⚠ AI 초안은 <b>제안</b>입니다. 문단별로 검토·확정하세요 — 미검토 '+pend+'건이면 저장이 막힙니다.<span class="rb-acts"><button class="btn ghost" data-paraall="acc" style="padding:5px 10px;font-size:11px">모두 수락</button><button class="btn ghost" data-paraall="rej" style="padding:5px 10px;font-size:11px">모두 되돌리기</button></span></div>'+
-      '<div style="font-size:11px;color:var(--faint);font-family:var(--mono);margin-bottom:9px">초록 표시 = 근거 연설문에서 계승한 표현 · 판단은 총장이</div>'+
+    genArea='<div class="review-bar">검토 대기 '+pend+'건 · 모든 문단을 확정해야 저장됩니다.<span class="rb-acts"><button class="btn ghost" data-paraall="acc" style="padding:5px 10px;font-size:11px">모두 수락</button><button class="btn ghost" data-paraall="rej" style="padding:5px 10px;font-size:11px">모두 되돌리기</button></span></div>'+
+      '<div style="font-size:11px;color:var(--faint);font-family:var(--mono);margin-bottom:9px">초록 = 축적 연설문에서 가져온 표현</div>'+
       paras+
       '<div class="rbtns" style="margin-top:12px"><button class="btn" data-savespeech="1"'+(pend?' style="opacity:.45;cursor:not-allowed"':'')+'>📌 아카이브에 저장</button><button class="btn ghost" data-cancelspeech="1">취소</button></div>';
   }else{
@@ -1228,8 +1310,8 @@ function vSpeeches(){
       '<button class="btn" data-genspeech="1">✨ 졸업식 연설문 초안 생성</button>';
   }
   return crumbs([{t:'대학 전체',h:'#/home',lvl:0},{t:'연설문 아카이브',lvl:1}])+
-    pageHead('총장 연설문 아카이브','행사 연설문을 축적·공유하고, 축적된 연설문을 근거로 새 연설문을 AI가 초안 제안 — 전사적 비전 공유와 헌신',false)+
-    '<div class="gen-box"><h4>✨ AI 연설문 작성 (근거: 축적 아카이브 · Propose→Review)</h4><p>AI는 초안만 제안하고, 문단별 수락/되돌리기 후 총장이 확정합니다. 판단은 사람이.</p>'+genArea+'</div>'+
+    pageHead('총장 연설문 아카이브','행사 연설문 아카이브 · AI 초안 작성',false)+
+    '<div class="gen-box"><h4>✨ AI 연설문 작성</h4><p>축적된 연설문을 근거로 초안을 작성한 뒤 문단별로 확정합니다.</p>'+genArea+'</div>'+
     '<div class="section-label"><span class="ln">아카이브</span>축적된 연설문 '+SPEECHES.length+'편</div>'+archive;
 }
 function buildSpeechDraft(){
@@ -1310,9 +1392,9 @@ function buildMenus(){
 
 /* chatbot answers */
 var CHAT={
-  newfill:{q:'신입생 충원율이 목표에 못 미치는 이유는?',a:'전체 <b>'+(univRoll().nf.toFixed(1))+'%</b>로 목표 100% 대비 미달입니다. 주도 학과는 <b>정보통신학과(91.0%, 전년比 −8.8%p)</b>이며 나머지 학과는 97% 이상입니다.',src:'신입생 충원율 KPI 정의표',cta:'#/dept/ict/ice'},
-  retfill:{q:'재학생 충원율이 위험 상태인 이유는?',a:'현재 <b>'+(univRoll().rf.toFixed(1))+'%</b>로 목표 92% 대비 미달입니다. <b>예술·디자인대학 실용음악학과</b>의 중도탈락(4.8%)·학사경고 누적이 진원지입니다.',src:'재학생 충원율 · 실용음악학과',cta:'#/dept/art/mus'},
-  emp:{q:'취업률 관련 주의 사항은?',a:'전체 <b>'+(univRoll().emp.toFixed(1))+'%</b>로 목표를 초과했으나 인문계열 3개 학과가 전년比 하락했습니다. 전공일치·현장실습 참여가 관건입니다.',src:'취업률 · 건강보험 DB',cta:'#/students'},
+  newfill:{q:'신입생 충원율 현황은?',a:'전체 <b>'+(univRoll().nf.toFixed(0))+'%</b>로 목표 100%를 달성했습니다. 다만 <b>정보통신학과</b> 등 일부 학과는 상대적으로 낮아 학과별 관리가 필요합니다.',src:'신입생 충원율 KPI 정의표',cta:'#/dept/ict/ice'},
+  retfill:{q:'재학생 충원율이 위험 상태인 이유는?',a:'현재 <b>'+(univRoll().rf.toFixed(1))+'%</b>로 목표 92% 대비 −6.7%p 미달입니다. <b>예술·디자인대학 실용음악학과</b>의 중도탈락·학사경고 누적이 진원지입니다.',src:'재학생 충원율 · 실용음악학과',cta:'#/dept/art/mus'},
+  emp:{q:'취업률이 낮은 이유는?',a:'전체 <b>'+(univRoll().emp.toFixed(0))+'%</b>로 목표(70%)를 크게 밑돕니다. 전공일치 취업·현장실습 참여 저조가 핵심 원인이며, 스마트모빌리티학과 등 일부 학과가 특히 낮습니다.',src:'취업률 · 건강보험 DB',cta:'#/dept/ict/smob'},
   exec:{q:'재정집행률이 낮은 이유는?',a:'누적 <b>61.3%</b>로 분기목표 65% 대비 −3.7%p입니다. <b>대학혁신지원·RISE</b> 2개 국고사업 집행이 각 12%p 지연됐습니다.',src:'재정경영 · 사업별 집행',cta:'#/finance'},
   plan:{q:'발전계획 달성률 현황은?',a:'핵심지표 <b>74%</b>로 목표 80%까지 −6%p입니다. 7개 과제 중 국제화·연구중심 2개가 지연 중입니다.',src:'전략관리 · 발전계획',cta:'#/strategy'},
   accr:{q:'기관평가 미달 예상 지표는?',a:'<b>전임교원 확보율(71.5%)</b> 1건이 인증 기준선 미달 예상입니다. 즉시 개입이 필요한 긴급 항목입니다.',src:'경쟁력분석 · 정보공시',cta:'#/compete'}
@@ -1325,15 +1407,17 @@ function greetHtml(){
   return '<div class="ag-greet"><b>'+who+', '+greetPart()+'.</b><span>'+ds+' · 오늘의 브리핑을 정리했습니다</span></div>';
 }
 function schedHtml(){
-  var items=[['09:00','교무위원회','본관 3층',true],['11:00','대학혁신지원 사업 집행 점검','대학혁신지원사업단',false],['14:00','재학생 충원율 확보 방안 회의','기획경영본부',false],['15:30','기관평가 인증 TF','기획경영본부',false],['17:00','법인 이사회 사전보고','이사장실',false]];
+  /* it: [time,title,place,isNow,public] · 공개/비공개 구분 (PPTX 슬라이드18 IDEA1) */
+  var items=[['09:00','교무위원회','본관 3층',true,false],['11:00','대학혁신지원 사업 집행 점검','대학혁신지원사업단',false,true],['14:00','재학생 충원율 확보 방안 회의','기획경영본부',false,false],['15:30','기관평가 인증 TF','기획경영본부',false,false],['17:00','법인 이사회 사전보고','이사장실',false,false]];
+  function vis(pub){return '<span style="font-size:8.5px;font-weight:800;font-family:var(--mono);padding:1px 5px;border-radius:4px;margin-left:6px;'+(pub?'background:var(--good-tint);color:var(--good-ink)':'background:var(--surface-3);color:var(--muted)')+'">'+(pub?'공개':'비공개')+'</span>';}
   return '<div class="sched"><div class="sched-h"><span class="cal-ic">📅</span><b>오늘의 일정</b></div>'+
     '<div class="sched-sub">Google Calendar <span class="today">오늘</span></div>'+
-    '<div class="sched-list">'+items.map(function(it){return '<div class="sched-item'+(it[3]?' now':'')+'"><span class="sdot"></span><div><div class="stime">'+it[0]+'</div><div class="stitle">'+it[1]+'</div><div class="stag">'+it[2]+'</div></div></div>'}).join('')+'</div>'+
+    '<div class="sched-list">'+items.map(function(it){return '<div class="sched-item'+(it[3]?' now':'')+'"><span class="sdot"></span><div><div class="stime">'+it[0]+'</div><div class="stitle">'+it[1]+vis(it[4])+'</div><div class="stag">'+it[2]+'</div></div></div>'}).join('')+'</div>'+
     '<div class="sched-foot">🔗 비서팀 캘린더 연동</div></div>';
 }
 function ctwCard(){
   var u=univRoll();
-  var ks=[['신입 충원율',u.nf.toFixed(1)+'%',statusHB(u.nf,100)],['재학 충원율',u.rf.toFixed(1)+'%','crit'],['취업률',u.emp.toFixed(1)+'%',statusHB(u.emp,70)],['재정집행률',(61.3+termF()).toFixed(1)+'%','warn'],['발전계획',Math.round(74+termF()*1.5)+'%','warn'],['기관평가 위험','1건','crit']];
+  var ks=[['신입 충원율',u.nf.toFixed(0)+'%',statusHB(u.nf,100)],['재학 충원율',u.rf.toFixed(1)+'%','crit'],['취업률',u.emp.toFixed(0)+'%',statusHB(u.emp,70)],['재정집행률',(61.3+termF()).toFixed(1)+'%','warn'],['발전계획',Math.round(74+termF()*1.5)+'%','warn'],['기관평가 위험','1건','crit']];
   return '<div class="ag-card"><h5>🗼 경영 컨트롤 타워<span class="lk" data-nav="#/home">전체 →</span></h5>'+
     ks.map(function(k){return '<div class="ag-kpi"><i style="background:'+colorOf(k[2])+'"></i><span class="kl">'+k[0]+'</span><span class="kv">'+k[1]+'</span></div>'}).join('')+'</div>';
 }
@@ -1358,7 +1442,7 @@ function agentCtx(view){
   if(view==='research')return ctxCard('연구산학 요약',[['논문실적',u.pap+'건'],['연구비',u.res.toLocaleString()+'백만'],['전임교원 확보율','71.5%'],['교원 1인당','34.2명']],'#/research');
   if(view==='finance')return ctxCard('재정경영 요약',[['순현금','+'+CASH.net.toLocaleString()+'백만'],['등록금 의존율',(CASH.revenue[0].v/CASH.totRev*100).toFixed(1)+'%'],['재정집행률',(61.3+termF()).toFixed(1)+'%']],'#/finance');
   if(view==='strategy')return ctxCard('전략관리 요약',[['달성 KR',OKR.achieved+' / '+OKR.total],['재정 건전성','60%'],['연구경쟁력','58%']],'#/strategy');
-  if(view==='compete')return ctxCard('대외 평판 요약',[['전임교원','38%ile'],['재학충원','41%ile'],['QS 아시아','551위']],'#/compete');
+  if(view==='compete')return ctxCard('경쟁대학 대비 요약',[['재학충원','20%ile'],['취업률','20%ile'],['전임교원','60%ile']],'#/compete');
   if(view==='risks')return ctxCard('위험신호',[['긴급','2건'],['점검','2건'],['주의','3건']],'#/risks');
   if(view==='speeches')return ctxCard('연설문 아카이브',[['축적','3편'],['구성원 공유','2편']],'#/speeches');
   if(view==='reports')return ctxCard('보고서실',[['자동 생성','주간 / 월간']],'#/reports');
@@ -1371,7 +1455,7 @@ function ctxLine(view){
     research:'📍 연구산학 화면입니다. 연구비 집행이 목표(460)의 58% 수준입니다.',
     finance:'📍 재정경영 화면입니다. 재정집행률이 분기목표를 밑돕니다.',
     strategy:'📍 전략관리 화면입니다. 달성 핵심결과 '+OKR.achieved+'/'+OKR.total+'.',
-    compete:'📍 경쟁력분석 화면입니다. 전임교원 확보율 38%ile가 취약합니다.',
+    compete:'📍 경쟁력분석 화면입니다. 경쟁대학군 대비 재학충원율·취업률이 하위권(20%ile)입니다.',
     risks:'📍 위험신호 화면입니다. 긴급 2건을 우선 확인하세요.',
     news:'📍 뉴스 인텔리전스입니다. 기사에서 "요약해줘"를 누르면 제가 정리합니다.',
     speeches:'📍 연설문 아카이브입니다. 축적 연설문을 근거로 초안을 제안할 수 있습니다.',
@@ -1390,7 +1474,7 @@ function renderAgStream(scroll){
 }
 function initAgent(){
   $('#agSched').innerHTML=schedHtml();
-  if(!state.agMsgs.length)state.agMsgs.push({a:'무엇이든 <b>지금 보고 계신 화면 기준</b>으로 물어보세요. 근거(출처)와 함께 답하고, 근거가 없으면 지어내지 않고 담당 부서로 연결합니다.',src:'P-TU 에이전트 · 대시보드 연동'});
+  if(!state.agMsgs.length)state.agMsgs.push({a:'무엇이든 물어보세요. 근거(출처)와 함께 답합니다.',src:'P-TU 에이전트 · 대시보드 연동'});
   state.agInit=true;
 }
 function syncAgent(view){
@@ -1481,6 +1565,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'){$('#roleMen
 window.addEventListener('hashchange',render);
 
 /* init */
+fixKPIs();
 buildMenus();
 if(!location.hash)location.hash='#/home';
 render();
