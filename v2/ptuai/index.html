@@ -649,6 +649,23 @@
   .agq-chips{display:flex;flex-direction:column;gap:5px;margin-top:10px}
   .agq{font-size:11.5px;font-weight:600;padding:6px 10px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.14s}
   .agq:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+  /* ===== v3 F: 기사 원문 모달 ===== */
+  .art-modal{position:fixed;inset:0;z-index:85;background:rgba(15,20,28,.5);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:24px}
+  .art-modal.open{display:flex}
+  .art-box{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lg);width:min(680px,95vw);max-height:88vh;display:flex;flex-direction:column;overflow:hidden}
+  .art-mhead{display:flex;align-items:flex-start;gap:10px;padding:16px 20px 0}
+  .am-meta{font-size:11px;color:var(--accent);font-weight:700;font-family:var(--mono);line-height:1.5}
+  .am-x{margin-left:auto;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;width:30px;height:30px;cursor:pointer;color:var(--muted);font-size:18px;line-height:1;flex:none}
+  .am-x:hover{background:var(--surface-3);color:var(--ink)}
+  .am-title{margin:9px 20px 0;font-size:19px;font-weight:800;line-height:1.42;letter-spacing:-.02em}
+  .am-body{padding:14px 20px;overflow-y:auto;min-height:0;font-size:13.5px;line-height:1.85;color:var(--ink-2)}
+  .am-body p{margin:0 0 12px}.am-body p:last-child{margin-bottom:0}
+  .am-body .lede{color:var(--ink);font-weight:600}
+  .am-acts{display:flex;gap:8px;padding:13px 20px;border-top:1px solid var(--line);flex-wrap:wrap}
+  @media(max-width:880px){.art-modal{padding:0;align-items:flex-end}.art-box{width:100%;max-height:92vh;border-radius:18px 18px 0 0}}
+  .ai-brief h4::before{content:"AI";font-family:var(--mono);font-size:9px;font-weight:800;background:var(--accent);color:#fff;padding:1px 5px;border-radius:5px;margin-right:6px;vertical-align:1px}
+  .art-card{cursor:pointer}
+  table.dt tbody tr[data-mart]{cursor:pointer}
 </style>
 </head>
 <body>
@@ -691,8 +708,15 @@
 <button class="ag-fab" id="agFab" title="AI 에이전트 열기" aria-label="AI 에이전트 열기">AI</button>
 <div class="footer">
   <span>평택대학교 · 총장 Executive Dashboard</span>
-  
+
 </div>
+
+<div class="art-modal" id="artModal"><div class="art-box" role="dialog" aria-label="기사 원문">
+  <div class="art-mhead"><div class="am-meta" id="amMeta"></div><button class="am-x" id="amX" aria-label="닫기">×</button></div>
+  <h2 class="am-title" id="amTitle"></h2>
+  <div class="am-body" id="amBody"></div>
+  <div class="am-acts" id="amActs"></div>
+</div></div>
 
 <script>
 (function(){
@@ -1429,12 +1453,12 @@ function kwBody(){
   var sel=kwById(state.kwSel);
   var listHtml=KEYWORDS.map(function(k){return '<div class="kw-item '+(k.id===sel.id?'on':'')+'" data-kw="'+k.id+'">'+k.n+'<span class="kc">'+k.arts.length+'</span></div>'}).join('');
   var artHtml=sel.arts.map(function(a,i){
-    return '<div class="art-card"><div class="at">'+a.t+'</div>'+
+    return '<div class="art-card" data-kwart="'+sel.id+'|'+i+'"><div class="at">'+a.t+'</div>'+
       '<div class="art-meta"><span class="mm">'+a.src+'</span><span>·</span><span>'+a.date+'</span><span>·</span><span>AI 수집</span></div>'+
       '<div class="art-sum">'+a.sum+'</div>'+
-      '<div class="art-acts"><span class="a-chip pri" data-kwask="'+sel.id+'|'+i+'">요약해줘</span><span class="a-chip">원문 링크</span></div></div>';
+      '<div class="art-acts"><span class="a-chip" data-kwart="'+sel.id+'|'+i+'">원문 보기</span><span class="a-chip pri" data-kwask="'+sel.id+'|'+i+'">요약해줘</span></div></div>';
   }).join('');
-  return '<div class="brief" style="margin-bottom:14px"><h4>오늘의 브리핑</h4><p>10개 경영 키워드로 <b>수집된 기사 '+KEYWORDS.reduce(function(a,k){return a+k.arts.length},0)+'건</b>. 오늘은 <b>생성형 AI·RISE·대학재정 리스크</b> 관련 보도가 늘었습니다.</p></div>'+
+  return '<div class="brief ai-brief" style="margin-bottom:14px"><h4>AI 아침 브리핑</h4><p>총장님, 오늘 <b>수집된 기사 '+KEYWORDS.reduce(function(a,k){return a+k.arts.length},0)+'건</b>을 검토했습니다. <b>생성형 AI·RISE·대학재정 리스크</b> 보도가 두드러집니다. 우리 재학충원·취업이 취약한 만큼 <b>학령인구·정원 정책</b> 기사를 우선 확인하시길 권합니다. 기사를 누르면 원문과 "우리 상황에선?" 대응을 볼 수 있습니다.</p></div>'+
     '<div class="kw-wrap">'+
       '<div class="kw-list">'+listHtml+'</div>'+
       '<div>'+artHtml+'</div>'+
@@ -1443,10 +1467,10 @@ function kwBody(){
 function mediaBody(){
   var pos=MEDIA.filter(function(m){return m.sent==='pos'}).length,neg=MEDIA.filter(function(m){return m.sent==='neg'}).length,neu=MEDIA.length-pos-neg;
   var slabel={pos:'긍정',neu:'중립',neg:'부정'};
-  var rows=MEDIA.map(function(m){
-    return '<tr><td><span class="nm" style="font-weight:700">'+m.t+'</span><div style="font-size:11px;color:var(--muted);margin-top:3px">'+m.sum+'</div></td>'+
+  var rows=MEDIA.map(function(m){var mi=MEDIA.indexOf(m);
+    return '<tr data-mart="'+mi+'"><td><span class="nm" style="font-weight:700">'+m.t+'</span><div style="font-size:11px;color:var(--muted);margin-top:3px">'+m.sum+'</div></td>'+
       '<td><span class="sent '+m.sent+'">'+slabel[m.sent]+'</span></td>'+
-      '<td class="r" style="color:var(--muted)">'+m.media+'</td><td class="r">'+m.date+'</td><td class="r"><span class="a-chip" data-mask="'+MEDIA.indexOf(m)+'">요약</span></td></tr>';
+      '<td class="r" style="color:var(--muted)">'+m.media+'</td><td class="r">'+m.date+'</td><td class="r"><span class="a-chip" data-mask="'+mi+'">요약</span></td></tr>';
   }).join('');
   return '<div class="stat-row" style="margin-bottom:14px">'+
       '<div class="stat" style="border-left:3px solid var(--accent)"><div class="sl">이번 주 보도</div><div class="sv tnum">'+MEDIA.length+'<small>건</small></div></div>'+
@@ -1460,6 +1484,45 @@ function mediaBody(){
 function kwAskArticle(kid,idx){var k=kwById(kid);var a=k.arts[idx];if(!a)return;
   agentPush({q:'“'+a.t+'” 기사 요약해줘',a:'<b>'+a.t+'</b><br>'+a.sum+'<br><span style="color:var(--faint);font-size:11px">— '+k.n+' 관련. 대학 경영 관점의 시사점 중심으로 정리했습니다.</span>',src:a.src+' · '+a.date});}
 function mediaAsk(idx){var m=MEDIA[idx];if(!m)return;agentPush({q:'“'+m.t+'” 보도 요약해줘',a:'<b>'+m.t+'</b><br>'+m.sum+'<br><span style="color:var(--faint);font-size:11px">여론: '+({pos:'긍정',neu:'중립',neg:'부정'})[m.sent]+' · '+m.media+'</span>',src:m.media+' · '+m.date+' 보도'});}
+/* ===== F: 기사 원문 · 요약 · 정책 맥락 Q&A ===== */
+function articleFull(a){
+  if(a.full)return a.full;
+  return '<p class="lede">'+a.sum+'</p>'+
+    '<p>'+a.t+'. 고등교육계에 따르면 이번 사안은 대학 운영 전반에 파급이 예상되며, 각 대학은 여건에 맞춘 대응 전략 수립이 요구된다.</p>'+
+    '<p>전문가들은 “데이터에 기반한 선제적 의사결정과 구성원 공감대 형성이 관건”이라며, 단기 대응과 중장기 체질 개선을 병행해야 한다고 지적했다.</p>'+
+    '<p>교육부와 관련 기관은 후속 지침 및 재정지원 연계 방안을 순차적으로 발표할 예정이다. 대학가는 정책 방향에 촉각을 곤두세우고 있다.</p>';
+}
+function policyForText(t){
+  var P=[
+    [/(학령인구|정원|미충원|충원|절벽)/,'재학충원율 85.3%는 경쟁대학군 <b>최하위권(20%ile)</b>입니다. 정원 감축 유인책보다 <b>실용음악·커뮤니케이션디자인학과 이탈 방지</b>(중도탈락 관리)가 우리 상황의 우선 대응입니다.','#/students'],
+    [/(등록금|재정|리스크|국고|집행)/,'우리 <b>재정집행률 61.3%</b>가 분기목표를 밑돕니다. 비등록금 수입 다변화와 <b>대학혁신지원·RISE 집행 가속</b>이 핵심 대응입니다.','#/finance'],
+    [/(AI|생성형|디지털|데이터)/,'우리는 이미 <b>총장 경영 대시보드·P-TU 에이전트</b>로 데이터 기반 의사결정을 시연 중입니다. 행정 자동화(RPA)·AI 리터러시 교양 확대로 연결하는 것이 실질 대응입니다.','#/news'],
+    [/(취업|일자리|산학|수익모델)/,'취업률 55%는 경쟁대학군 하위권입니다. <b>스마트모빌리티학과 등 현장실습 연계 확대</b>와 전공일치 취업 지원이 우선 대응입니다.','#/students'],
+    [/(글로컬|RISE|지역)/,'RISE·글로컬 흐름에서 우리는 지역연계 산학 플랫폼과 <b>국고 집행 관리</b>가 관건입니다. 재정집행률 제고와 지역 과제 발굴을 연동해야 합니다.','#/finance'],
+    [/(혁신|벤치마킹|학사)/,'학사·교육혁신은 우리 <b>중도탈락·재학충원</b> 개선과 직결됩니다. 무전공·유연학사 등 선도사례를 이탈 위험군 관리에 접목할 수 있습니다.','#/students']
+  ];
+  for(var i=0;i<P.length;i++)if(P[i][0].test(t))return {a:P[i][1],cta:P[i][2]};
+  return {a:'이 기사의 흐름을 우리 대학 지표와 결합하면, <b>재학충원(20%ile)·취업률(20%ile)</b>이 취약 지점입니다. 해당 정책이 이 지표에 미칠 영향을 우선 점검하시길 권합니다.',cta:'#/compete'};
+}
+function openArticle(kind,a1,a2){
+  var art,meta;
+  if(kind==='kw'){var k=kwById(a1);art=k.arts[a2];meta=art.src+' · '+art.date+' · '+k.n;}
+  else{art=MEDIA[a1];meta=art.media+' · '+art.date+' · PTU in Media';}
+  state.artOpen={t:art.t,sum:art.sum,src:(kind==='kw'?art.src+' · '+art.date:art.media+' · '+art.date+' 보도')};
+  $('#amMeta').textContent=meta;$('#amTitle').textContent=art.t;$('#amBody').innerHTML=articleFull(art);
+  var acts='<button class="btn" data-artsum="1">AI 요약</button>';
+  if(curTier()==='exec')acts+='<button class="btn ghost" data-artpol="1">우리 상황에선?</button>';
+  acts+='<button class="btn ghost" data-artclose="1">닫기</button>';
+  $('#amActs').innerHTML=acts;
+  $('#artModal').classList.add('open');
+}
+function closeArticle(){$('#artModal').classList.remove('open');}
+function artToAgent(mode){
+  var o=state.artOpen;if(!o)return;
+  document.body.classList.remove('ag-closed');closeArticle();
+  if(mode==='sum'){agentPush({q:'“'+o.t+'” 요약해줘',a:'<b>'+o.t+'</b><br>'+o.sum,src:o.src});}
+  else{var p=policyForText(o.t);agentPush({q:'“'+o.t.slice(0,18)+'…” 우리 상황에선 어떻게?',a:p.a,src:'정책 대응 · 우리 대학 지표 결합',cta:p.cta});}
+}
 
 /* ---- ③ 총장 연설문 아카이브 (ver2.0, Propose→Review) ---- */
 function vSpeeches(){
@@ -2040,6 +2103,15 @@ document.addEventListener('click',function(e){
   if(kwask){e.stopPropagation();var pr=kwask.getAttribute('data-kwask').split('|');kwAskArticle(pr[0],+pr[1]);return;}
   var mask=e.target.closest('[data-mask]');
   if(mask){e.stopPropagation();mediaAsk(+mask.getAttribute('data-mask'));return;}
+  /* 기사 원문 모달 (F) */
+  var kwart=e.target.closest('[data-kwart]');
+  if(kwart){var pk=kwart.getAttribute('data-kwart').split('|');openArticle('kw',pk[0],+pk[1]);return;}
+  var mart=e.target.closest('[data-mart]');
+  if(mart){openArticle('media',+mart.getAttribute('data-mart'));return;}
+  if(e.target.closest('[data-artsum]')){artToAgent('sum');return;}
+  if(e.target.closest('[data-artpol]')){artToAgent('pol');return;}
+  if(e.target.closest('[data-artclose]')||e.target.closest('#amX')){closeArticle();return;}
+  if(e.target.id==='artModal'){closeArticle();return;}
   var gsrc=e.target.closest('[data-gensrc]');
   if(gsrc){var gid=gsrc.getAttribute('data-gensrc');if(!state.genSrc)state.genSrc=[];var gi=state.genSrc.indexOf(gid);if(gi>=0)state.genSrc.splice(gi,1);else state.genSrc.push(gid);render();return;}
   if(e.target.closest('[data-genspeech]')){if(!state.genSrc||!state.genSrc.length){alert('근거로 삼을 연설문을 1편 이상 선택하세요.');return;}state.speechDraft=buildSpeechDraft();render();return;}
@@ -2104,7 +2176,7 @@ document.addEventListener('dblclick',function(e){
     var t=document.createElement('div');t.className='toast show';t.textContent='수동수정: ‘'+b.label+'’ 블록을 직접 편집했습니다.';document.body.appendChild(t);setTimeout(function(){t.remove();},1800);};
   tx.addEventListener('blur',save,{once:true});
 });
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){$('#roleMenu').classList.remove('open');$('#termMenu').classList.remove('open');}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){$('#roleMenu').classList.remove('open');$('#termMenu').classList.remove('open');closeArticle();}});
 window.addEventListener('hashchange',render);
 
 /* init */
