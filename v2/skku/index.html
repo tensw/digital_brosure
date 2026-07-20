@@ -232,6 +232,16 @@ strong{ font-weight:700; }
 .logos span{ font-size:14px; font-weight:800; color:rgba(255,255,255,.85); padding:12px 22px; border-radius:12px;
   background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); }
 
+/* ══════════════ 섹션 표지(디바이더) ══════════════ */
+.sec-cover .container{ position:relative; z-index:1; max-width:1000px; text-align:left; }
+.sec-cover-n{ font-size:clamp(64px,13vw,150px); font-weight:900; line-height:.9; letter-spacing:-5px;
+  background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:10px; }
+.sec-cover-eyebrow{ font-size:14px; font-weight:800; letter-spacing:4px; color:rgba(255,255,255,.55); text-transform:uppercase; margin-bottom:14px; }
+.sec-cover-title{ font-size:clamp(34px,6vw,64px); font-weight:900; letter-spacing:-2px; line-height:1.1; margin:0 0 24px; }
+.sec-cover-kw{ display:flex; flex-wrap:wrap; gap:10px; }
+.sec-cover-kw span{ font-size:14px; font-weight:700; color:#fff; padding:8px 18px; border-radius:999px;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); }
+
 /* ══════════════ 목차(개요) ══════════════ */
 .agenda-eyebrow{ font-size:13px; font-weight:800; letter-spacing:3px; color:var(--pink); margin-bottom:10px; }
 .agenda-title{ font-size:clamp(24px,3.6vw,40px); font-weight:900; letter-spacing:-1px; margin:0 0 26px; }
@@ -296,8 +306,18 @@ body{ zoom:.92; }
   </div>
 </div>
 
+<!-- ══ 섹션표지 01 · AI 기반 도서 검색 ══ -->
+<div class="card sec-cover bg-purple" data-index="2">
+  <div class="container">
+    <div class="sec-cover-n">01</div>
+    <p class="sec-cover-eyebrow">Section 01</p>
+    <h2 class="sec-cover-title">AI 기반 도서 검색</h2>
+    <div class="sec-cover-kw"><span>AI 시멘틱 검색</span><span>하이브리드</span><span>13축 책지문</span></div>
+  </div>
+</div>
+
 <!-- ══ 01 도서검색 · 개념 (AS-IS/TO-BE) ══ -->
-<div class="card" data-index="2">
+<div class="card" data-index="3">
   <div class="container">
     <div class="sec-tag">도서 검색</div>
     <div class="head"><div class="secnum">01</div><h2>AI 시멘틱 검색 <span class="div">:</span> 질문의 의미를 이해하다</h2></div>
@@ -330,7 +350,7 @@ body{ zoom:.92; }
 </div>
 
 <!-- ══ 01 도서검색 · 시연 ══ -->
-<div class="card" data-index="3">
+<div class="card" data-index="4">
   <div class="container">
     <div class="head"><div class="secnum">01</div><h2>실제 BIBLO 검색 화면</h2></div>
     <div class="browser">
@@ -344,8 +364,18 @@ body{ zoom:.92; }
   </div>
 </div>
 
+<!-- ══ 섹션표지 02 · 수서·분류·목록·편목 ══ -->
+<div class="card sec-cover bg-purple" data-index="5">
+  <div class="container">
+    <div class="sec-cover-n">02</div>
+    <p class="sec-cover-eyebrow">Section 02</p>
+    <h2 class="sec-cover-title">수서 · 분류 · 목록 · 편목</h2>
+    <div class="sec-cover-kw"><span>장서 분석</span><span>AI 편목 자동화</span><span>MARC 보강</span><span>청구기호 부여</span><span>AI LAS</span></div>
+  </div>
+</div>
+
 <!-- ══ 02 장서분석·편목 · 개념 (AS-IS/TO-BE — 핵심 서사) ══ -->
-<div class="card" data-index="4">
+<div class="card" data-index="6">
   <div class="container">
     <div class="sec-tag">수서 · 분류 · 목록 · 편목</div>
     <div class="head"><div class="secnum">02</div><h2>장서분석 · AI 편목 자동화 <span class="div">:</span> 인력의 한계를 데이터로 넘다</h2></div>
@@ -380,7 +410,7 @@ body{ zoom:.92; }
 </div>
 
 <!-- ══ 02 편목 · 시연1 (MARC 보강 견본 · marc50) ══ -->
-<div class="card" data-index="5">
+<div class="card" data-index="7">
   <div class="container">
     <div class="head"><div class="secnum">02</div><h2>MARC 보강 견본 <span class="div">:</span> 성대 빈 MARC를 13축으로 채우다</h2></div>
     <p class="lead" style="padding-left:96px">성대 소장 실제 도서 한 권 — 제목·저자·청구기호는 원본 그대로 두고, <strong class="pink">비어 있던 의미필드만</strong> 13축 지문으로 채웁니다.</p>
@@ -404,7 +434,7 @@ body{ zoom:.92; }
 </div>
 
 <!-- ══ 02 편목 · 시연2 (청구기호 부여 · callno) ══ -->
-<div class="card" data-index="6">
+<div class="card" data-index="8">
   <div class="container">
     <div class="head"><div class="secnum">02</div><h2>청구기호 부여 <span class="div">:</span> 소장 패턴에 근거한 분류 초안</h2></div>
     <p class="lead" style="padding-left:96px">청구기호 부여는 신간 1권당 <strong class="pink">15~30분</strong>이 드는 숙련 분류 작업입니다. 비블로는 도서의 주제를 이미 파악하고 있어 <strong class="pink">분류 초안을 제시</strong>하고, 사서는 검토·승인에 집중합니다.</p>
@@ -430,8 +460,31 @@ body{ zoom:.92; }
   </div>
 </div>
 
+<!-- ══ 02 편목 · 시연3 (AI 분류 자동화 실제 화면 · iframe) ══ -->
+<div class="card" data-index="9">
+  <div class="container">
+    <div class="head"><div class="secnum">02</div><h2>AI 기반 분류 자동화 실제 화면</h2></div>
+    <p class="annot">MARC 분류 자동화 라이브 화면 ↓</p>
+    <div class="demo-frame"><iframe data-src="https://marc-classify.vercel.app/"></iframe></div>
+    <div class="link-row" style="margin-top:16px">
+      <a class="link-btn" href="https://marc-classify.vercel.app/" target="_blank" rel="noopener">새 창에서 열기 ↗</a>
+      <span class="link-note">도서의 주제를 분석해 <strong style="color:#fff">분류·청구기호 초안</strong>을 자동 제안합니다.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 섹션표지 03 · 논문 홍보 플랫폼 ══ -->
+<div class="card sec-cover bg-purple" data-index="10">
+  <div class="container">
+    <div class="sec-cover-n">03</div>
+    <p class="sec-cover-eyebrow">Section 03</p>
+    <h2 class="sec-cover-title">논문 홍보 플랫폼</h2>
+    <div class="sec-cover-kw"><span>AI 논문 영상</span><span>숏폼 · 롱폼</span><span>홍보 콘텐츠 자동 생성</span></div>
+  </div>
+</div>
+
 <!-- ══ 03 논문홍보 · 개념 ══ -->
-<div class="card" data-index="7">
+<div class="card" data-index="11">
   <div class="container">
     <div class="sec-tag">논문 홍보</div>
     <div class="head"><div class="secnum">03</div><h2>AI 논문 영상 생성 <span class="div">:</span> 읽는 논문에서 보는 논문으로</h2></div>
@@ -452,7 +505,7 @@ body{ zoom:.92; }
 </div>
 
 <!-- ══ 03 논문홍보 · 시연1 (숏폼) ══ -->
-<div class="card" data-index="8">
+<div class="card" data-index="12">
   <div class="container">
     <div class="head"><div class="secnum">03</div><h2>AI를 활용한 연구홍보 영상 제작 방법</h2></div>
     <p class="annot">AI 생성 숏폼 영상 ↓</p>
@@ -462,7 +515,7 @@ body{ zoom:.92; }
 </div>
 
 <!-- ══ 03 논문홍보 · 시연2 (롱폼) ══ -->
-<div class="card" data-index="9">
+<div class="card" data-index="13">
   <div class="container">
     <div class="head"><div class="secnum">03</div><h2>AI가 만든 연구 홍보 영상</h2></div>
     <p class="annot">AI 생성 롱폼 영상 ↓</p>
@@ -471,8 +524,18 @@ body{ zoom:.92; }
   </div>
 </div>
 
+<!-- ══ 섹션표지 04 · 연구자 매칭 플랫폼 ══ -->
+<div class="card sec-cover bg-purple" data-index="14">
+  <div class="container">
+    <div class="sec-cover-n">04</div>
+    <p class="sec-cover-eyebrow">Section 04</p>
+    <h2 class="sec-cover-title">연구자 매칭 플랫폼</h2>
+    <div class="sec-cover-kw"><span>연구자 핑거프린트</span><span>실시간 성과 분석</span><span>AI 투고 전략서</span></div>
+  </div>
+</div>
+
 <!-- ══ 04 연구자 매칭 (1) · 지문으로 실시간 성과 분석 ══ -->
-<div class="card shot-full" data-index="10">
+<div class="card shot-full" data-index="15">
   <div class="container">
     <div class="sec-tag">연구자 매칭</div>
     <div class="head"><div class="secnum">04</div><h2>연구자 매칭 <span class="div">:</span> 지문으로 실시간 성과 분석</h2></div>
@@ -486,7 +549,7 @@ body{ zoom:.92; }
 </div>
 
 <!-- ══ 04 연구자 매칭 (2) · AI 에이전트가 전략서까지 자동 작성 ══ -->
-<div class="card shot-full" data-index="11">
+<div class="card shot-full" data-index="16">
   <div class="container">
     <div class="head"><div class="secnum">04</div><h2>AI 에이전트가 <span class="gt">전략서까지</span> 자동 작성</h2></div>
     <p class="lead">에이전트가 실적 데이터를 <strong class="pink">스스로 조회·분석</strong>하고, 벤치마크와 대조해 <strong class="pink">투고 전략 보고서</strong>를 근거와 함께 자동으로 작성합니다.</p>
@@ -498,8 +561,18 @@ body{ zoom:.92; }
   </div>
 </div>
 
+<!-- ══ 섹션표지 05 · 학술정보관 챗봇 ══ -->
+<div class="card sec-cover bg-purple" data-index="17">
+  <div class="container">
+    <div class="sec-cover-n">05</div>
+    <p class="sec-cover-eyebrow">Section 05</p>
+    <h2 class="sec-cover-title">학술정보관 챗봇</h2>
+    <div class="sec-cover-kw"><span>온톨로지 FAQ</span><span>근거 기반 응답</span><span>24시간 응대</span></div>
+  </div>
+</div>
+
 <!-- ══ 05 도서관 챗봇 · 설명+즉석 시연 (좌 텍스트 / 우 폰) ══ -->
-<div class="card" id="chatbot-demo" data-index="12">
+<div class="card" id="chatbot-demo" data-index="18">
   <div class="container">
     <div class="sec-tag">도서관 챗봇</div>
     <div class="head"><div class="secnum">05</div><h2>도서관 챗봇 <span class="div">:</span> 근거를 갖춘 안내</h2></div>
@@ -531,8 +604,18 @@ body{ zoom:.92; }
   </div>
 </div>
 
+<!-- ══ 섹션표지 06 · 독서 커뮤니티 플랫폼 ══ -->
+<div class="card sec-cover bg-purple" data-index="19">
+  <div class="container">
+    <div class="sec-cover-n">06</div>
+    <p class="sec-cover-eyebrow">Section 06</p>
+    <h2 class="sec-cover-title">독서 커뮤니티 플랫폼</h2>
+    <div class="sec-cover-kw"><span>번개독서 '번독'</span><span>취향 매칭</span><span>도서관 커뮤니티</span></div>
+  </div>
+</div>
+
 <!-- ══ 06 독서 커뮤니티 활동 · 설명+즉석 시연 (좌 텍스트 / 우 폰) ══ -->
-<div class="card" data-index="13">
+<div class="card" data-index="20">
   <div class="container">
     <div class="sec-tag">독서 커뮤니티 · 번독</div>
     <div class="head"><div class="secnum">06</div><h2>독서 커뮤니티 활동 <span class="div">:</span> 도서관을 만남의 공간으로</h2></div>
@@ -564,7 +647,7 @@ body{ zoom:.92; }
 <!-- 네비게이션 -->
 <div class="nav-controls">
   <button class="nav-btn" id="btn-prev" onclick="goTo(current-1)" aria-label="이전">&#8593;</button>
-  <div class="nav-indicator" id="nav-indicator">1 / 14</div>
+  <div class="nav-indicator" id="nav-indicator">1 / 21</div>
   <button class="nav-btn" id="btn-next" onclick="goTo(current+1)" aria-label="다음">&#8595;</button>
 </div>
 
