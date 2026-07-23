@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = 3000;
-const ROOT = path.join(__dirname, 'v2');
+const ROOT = path.resolve(path.join(__dirname, 'v2'));
 const DEFAULT_DOC = '/index.html';
 
 const MIME = {
@@ -44,8 +44,19 @@ function sendFile(res, filePath) {
 }
 
 const server = http.createServer((req, res) => {
-  const urlPath = req.url === '/' ? DEFAULT_DOC : req.url.split('?')[0];
+  const rawPath = req.url === '/' ? DEFAULT_DOC : req.url.split('?')[0];
+  let urlPath;
+  try { urlPath = decodeURIComponent(rawPath); }
+  catch (e) { res.writeHead(400, { 'Content-Type': 'text/plain' }); res.end('Bad Request'); return; }
   const filePath = path.join(ROOT, urlPath);
+
+  // Defense-in-depth: never serve outside the web root (path traversal guard).
+  const resolved = path.resolve(filePath);
+  if (resolved !== ROOT && !resolved.startsWith(ROOT + path.sep)) {
+    res.writeHead(403, { 'Content-Type': 'text/plain' });
+    res.end('Forbidden');
+    return;
+  }
 
   // Extensionless routes (e.g. /ceo) → try /ceo/index.html then /ceo.html
   if (!path.extname(filePath)) {
