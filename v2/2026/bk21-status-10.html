@@ -88,6 +88,30 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
  font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em}
 .col .seg .sx{font-size:14.5px;font-weight:500;letter-spacing:-.3px;color:#4b5563}
 .col .seg .sx b{color:#111827;font-weight:700}
+
+/* ══ 18번(bk21-match-light26.html) 가운데 컨텐츠 이식 ══════════════════
+   레이아웃(블록 구분선·소제목·단기/중기/장기 태그행·결과 알약)은 18번 그대로.
+   담는 껍데기(.col 흰 라운드 · .ch 파란 헤더 띠 · .bd)와 아래 세 가지는 10번 DNA.
+     가로   좌우 82px 열 · 네 칸 균등 (10번은 세 칸 균등이 기준)
+     타이틀 .ch 20px · 소제목 .bt-gx39 20px   (10번 .ch)
+     본문   14.5px / 500 / 1.5              (10번 .col ul li)
+   18번 원래 값은 소제목 14 · 본문 12.5px 로 더 작다. */
+.blk-gx39{padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid #eef1f7}
+.blk-gx39:last-child{border-bottom:0;padding-bottom:0;margin-bottom:0}
+/* 칸이 좁아 소제목이 두 줄로 접힌다. 오른쪽 › 자리를 비워 글자와 겹치지 않게. */
+.bt-gx39{font-size:20px;font-weight:800;color:#1e5cf0;letter-spacing:-.6px;line-height:1.35;
+ border-bottom:1.5px solid #d7e3ff;padding-bottom:9px;padding-right:18px;position:relative}
+.bt-gx39:after{content:"\203A";position:absolute;right:0;top:0;color:#b9c8e8;font-size:18px;line-height:1.35}
+.rows-gx39{margin-top:12px}
+.rw-gx39{display:flex;align-items:flex-start;gap:12px;padding:5px 0}
+.rw-gx39 .tg-gx39{flex:none;width:56px;text-align:center;border-radius:8px;background:#eef2f8;color:#3f4759;
+ font:800 13px/1 inherit;padding:8px 0}
+.rw-gx39 .tx-gx39{font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;color:#4b5563}
+.rw-gx39 .tx-gx39 b{color:#111827;font-weight:700}
+.arw-gx39{text-align:center;color:#9dbaff;font-size:20px;line-height:1;margin:4px 0 8px}
+/* 두 줄로 접히므로 행간을 준다(한 줄일 때와 높이만 달라진다). */
+.res-gx39{border-radius:999px;background:linear-gradient(100deg,#4b8cff,#1e5cf0);color:#fff;
+ text-align:center;padding:11px 16px;font-size:16px;font-weight:800;letter-spacing:-.4px;line-height:1.45}
 </style></head><body>
 <div class="slide"><div id="stage">
 
@@ -113,23 +137,44 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
    </div>
   </div>
 
+  <!-- 18번(bk21-match-light26.html) 가운데 컨텐츠(배경/목적)를 그대로 옮겼다.
+        담는 껍데기(.col/.ch/.bd)와 글자 크기는 이 장(10번) 것을 그대로 쓴다. -->
   <div class="col">
-   <div class="ch">세 갈래 분해</div>
+   <div class="ch">배경</div>
    <div class="bd">
-   <svg class="don" width="190" height="190" viewBox="0 0 42 42">
-    <circle cx="21" cy="21" r="15.9" fill="none" stroke="#eaf0fb" stroke-width="9"/>
-    <circle cx="21" cy="21" r="15.9" fill="none" stroke="#1e5cf0" stroke-width="9"
-      stroke-dasharray="49.6 50.4" stroke-dashoffset="25" transform="rotate(-90 21 21)"/>
-    <circle cx="21" cy="21" r="15.9" fill="none" stroke="#8fb4ff" stroke-width="9"
-      stroke-dasharray="43.7 56.3" stroke-dashoffset="-24.6" transform="rotate(-90 21 21)"/>
-    <circle cx="21" cy="21" r="15.9" fill="none" stroke="#c9dbff" stroke-width="9"
-      stroke-dasharray="6.7 93.3" stroke-dashoffset="-68.3" transform="rotate(-90 21 21)"/>
-    <text x="21" y="20.4" text-anchor="middle" font-size="5.4" font-weight="800" fill="#1e5cf0">49.6%</text>
-    <text x="21" y="25.2" text-anchor="middle" font-size="2.5" fill="#98a1b2">외부 저자</text></svg>
-   <div class="unit">(단위 : %)</div>
-   <div class="seg"><span class="sg" style="background:#1e4be8;color:#fff">외부</span><span class="sx"><b>2,618,171</b>줄 · 교외 공저자</span></div>
-   <div class="seg"><span class="sg" style="background:#dbe7ff;color:#1e4be8">미분류</span><span class="sx"><b>2,305,898</b>줄 · 판정 보류</span></div>
-   <div class="seg"><span class="sg" style="background:#eef2f8;color:#5b6474">확정</span><span class="sx"><b>356,232</b>줄 · 성과 집계 대상</span></div>
+    <div class="blk-gx39">
+     <div class="bt-gx39">저자행은 많은데 사람에 닿지 않는다</div>
+     <ul>
+      <li>저자행 <b>5,280,301</b>줄 중 교내로 확정된 것은 <b>356,232</b>줄, 전체의 <b>6.7%</b></li>
+      <li>미분류가 <b>2,305,898</b>줄(43.7%)로 남아 있다</li>
+      <li>소속 문자열이 없거나 판별 신호가 부족한 행이 대부분</li>
+     </ul>
+    </div>
+    <div class="blk-gx39">
+     <div class="bt-gx39">확정분도 대부분 엔진이 만든 것이 아니다</div>
+     <ul>
+      <li>확정 356,232줄 중 <b>356,017</b>줄은 제출 원장에서 직접 이어붙인 행</li>
+      <li>판별 엔진이 실제로 판정한 것은 <b>8,302</b>줄</li>
+      <li>원장 연결분은 <b>제출 명부가 정확하다는 전제</b> 위에 서 있다</li>
+     </ul>
+    </div>
+   </div>
+  </div>
+
+  <div class="col">
+   <div class="ch">목적</div>
+   <div class="bd">
+    <ul>
+     <li>미분류 저자행을 줄여 <b>성과 집계 대상</b>을 넓힌다</li>
+     <li>원장 의존을 낮추고 <b>엔진 판정 비율</b>을 올린다</li>
+    </ul>
+    <div class="rows-gx39">
+     <div class="rw-gx39"><span class="tg-gx39">단기</span><span class="tx-gx39">식별자 보유 행부터 회수한다. AUID <b>858,249</b> · ORCID <b>85,577</b>이 이미 저자행에 붙어 있다.</span></div>
+     <div class="rw-gx39"><span class="tg-gx39">중기</span><span class="tx-gx39">소속 문자열이 있는 <b>4,121,282</b>줄에 이름+소속 규칙과 LLM 판별을 확대 적용한다.</span></div>
+     <div class="rw-gx39"><span class="tg-gx39">장기</span><span class="tx-gx39">확정이 지문·공저망을 갱신하고 그 지문이 다음 판정을 돕는 <b>선순환</b>을 굳힌다.</span></div>
+    </div>
+    <div class="arw-gx39">▼</div>
+    <div class="res-gx39">엔진 판정분 8,302줄 → 원장 의존 없는 확정으로</div>
    </div>
   </div>
 
