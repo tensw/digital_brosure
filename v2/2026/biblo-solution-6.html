@@ -1,0 +1,138 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>코어 백본 위에 선 6개 솔루션</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(180deg,#0f6ae8 0%,#1a5ee0 34%,#2b45d8 68%,#3a2fd2 100%);background-attachment:fixed;color:#fff;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(180deg,#0f6ae8 0%,#1a5ee0 34%,#2b45d8 68%,#3a2fd2 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;
+ overflow:visible;background:transparent}
+
+/* ─── 상단 ─── */
+h1{position:absolute;left:82px;top:91px;font-size:56px;font-weight:800;letter-spacing:.5px;color:#fff}
+.h1s{position:absolute;left:82px;top:163px;font-size:16px;font-weight:600;letter-spacing:-.3px;
+ color:rgba(255,255,255,.8)}
+
+/* ─── 규칙선 ─── */
+.rule{position:absolute;left:82px;right:82px;height:1px;background:rgba(255,255,255,.42)}
+.r1{top:203px} .r2{top:551px} .r3{top:719px}
+
+/* ─── 5 컬럼 ─── */
+.cols{position:absolute;left:82px;right:82px;top:203px;height:348px;display:flex}
+.col{flex:1;padding:24px 26px 0 0;position:relative}
+.col+.col{padding-left:26px;border-left:1px solid rgba(255,255,255,.32)}
+.col .n{font:800 46px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
+ transform:skewX(-9deg);display:inline-block;color:#fff}
+.col h2{margin-top:12px;font-size:38px;font-weight:800;line-height:1.3;letter-spacing:-.5px;color:#fff}
+.col .hl{margin-top:10px;font-size:15px;font-weight:800;line-height:1.35;letter-spacing:-.4px;
+ color:#a9ff5e;word-break:keep-all}
+.col .tg{display:inline-block;margin:0 7px 0 0;vertical-align:middle;position:relative;top:-1px}
+.tg{display:inline-block;margin-left:7px;font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;
+ padding:4px 7px;border-radius:5px;background:rgba(169,255,94,.18);color:#a9ff5e;vertical-align:middle}
+.tg2{background:rgba(255,255,255,.18);color:#fff}
+.merge .hl{margin-top:8px;font-size:15px;font-weight:800;letter-spacing:-.4px;color:#a9ff5e}
+.col p{margin-top:9px;font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
+ color:rgba(255,255,255,.9);word-break:keep-all}
+.col .m{position:absolute;left:0;right:26px;bottom:16px;
+ font:700 11px/1.6 ui-monospace,Menlo,monospace;color:#bfe25a;word-break:keep-all}
+.col+.col .m{left:26px}
+
+/* ─── 6 병합 셀 (1~5 를 하나로) ─── */
+.merge{position:absolute;left:82px;right:82px;top:551px;height:168px;display:flex;align-items:center;
+ gap:30px;padding:0 4px}
+.merge .n{font:800 46px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
+ transform:skewX(-9deg);display:inline-block;color:#a9ff5e;flex:none}
+.merge .tx{flex:none;width:510px}
+.merge h2{font-size:38px;font-weight:800;line-height:1.3;letter-spacing:-.5px;color:#fff}
+.merge h2 span{color:#a9ff5e}
+.merge p{margin-top:9px;font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
+ color:rgba(255,255,255,.9);word-break:keep-all}
+.merge .bul{flex:1;border-left:1px solid rgba(255,255,255,.32);padding-left:30px;list-style:none}
+.merge .bul li{display:flex;align-items:center;gap:10px;font-size:14.5px;font-weight:600;
+ line-height:1.5;letter-spacing:-.3px;color:#fff;padding:3px 0}
+.merge .bul li::before{content:"";width:7px;height:7px;border-radius:50%;background:#a9ff5e;flex:none}
+.merge .m{flex:none;font:700 11px/1.6 ui-monospace,Menlo,monospace;color:rgba(255,255,255,.72);
+ text-align:right;width:150px}
+
+/* ─── 하단 ─── */
+.concl{position:absolute;left:0;right:0;top:747px;text-align:center;
+ font-size:30px;font-weight:800;line-height:1.6;letter-spacing:-.4px;color:#fff}
+</style></head><body>
+<div class="slide"><div id="stage">
+
+ <h1>AI SOLUTION</h1>
+ <div class="h1s">대학과 도서관이 보유한 데이터를 하나의 공통 기반으로 연결합니다</div>
+
+ <div class="rule r1"></div>
+ <div class="cols" id="cols"></div>
+ <div class="rule r2"></div>
+
+ <div class="merge">
+  <span class="n">6</span>
+  <div class="tx">
+   <h2>AI 성과관리 <span class="tg tg2">BK21</span><span class="tg">앵커</span></h2>
+   <div class="hl">학교의 모든 데이터를 KPI로</div>
+   <p>연구성과관리에서 확정한 개인 연구성과와 학교의 여러 행정 데이터를 학과·사업단·학교 단위 KPI 로 연결합니다. BK21 과 앵커 사업의 현황·목표·위험 신호를 한곳에서 관리합니다.</p>
+  </div>
+  <ul class="bul">
+   <li>BK21·앵커 사업 참여자와 실적 관리</li>
+   <li>학교의 여러 데이터를 공통 KPI 로 연결</li>
+   <li>학과·사업단·학교 단위 성과 현황</li>
+   <li>연도별 변화와 비교 분석</li>
+   <li>데이터 품질과 미확인 항목 표시</li>
+  </ul>
+  <div class="m">사용자 기획처·사업<br>산출 학과·사업단·학교 KPI</div>
+ </div>
+ <div class="rule r3"></div>
+
+ <div class="concl">
+  하나의 데이터가 다음 솔루션의 기반이 됩니다
+ </div>
+</div></div>
+
+<script>
+/* ══ 근거 ══ docs/BIBLO_전기능_전체지도.md §0 「구조 — 코어 백본 + 6개 솔루션」 표 그대로 ══ */
+const S=[
+ {n:'1', name:'AI 검색엔진', tag:'도서관AI',
+  hl:'책·논문을 의미로 찾는다',
+  d:'정확한 제목이나 검색어를 몰라도 일상적인 문장으로 필요한 책·논문·연구자를 찾을 수 있습니다.',
+  m:'사용자 도서관 이용자<br>산출 검색 코퍼스·벡터'},
+ {n:'2', name:'연구성과관리', tag:'',
+  hl:'이 논문 저자가 우리 학교 누구인가',
+  d:'저자 매칭 엔진이 논문 속 저자를 실제 교내 연구자와 연결해 학교·학과·연구자별 연구력을 관리합니다.',
+  m:'사용자 연구처<br>산출 저자매핑·지문·공저망·개인 연구력'},
+ {n:'3', name:'홍보 영상', tag:'',
+  hl:'논문을 영상·쇼츠로',
+  d:'논문 원문에서 연구 배경·핵심 결과·그림과 표·주요 메시지를 추출해 영상과 쇼츠를 자동으로 만듭니다.',
+  m:'사용자 홍보처<br>산출 원문 구조분해→영상'},
+ {n:'4', name:'사서 에이전트', tag:'도서관AI',
+  hl:'교내 LAS에 AI를 얹는다',
+  d:'기존 교내 LAS 를 교체하지 않고, LAS 에 쌓인 대출·소장·서지 데이터에 AI 기능을 더합니다.',
+  m:'사용자 사서·도서관<br>산출 장서·수서·편목 판단'},
+ {n:'5', name:'AI 에이전트', tag:'',
+  hl:'관내 모든 데이터를 보는 창',
+  d:'기관이 보유한 모든 데이터에 AI·MCP 기능을 연결합니다. 질문만으로 필요한 데이터를 조회하고 근거를 확인합니다.',
+  m:'사용자 전산·기획<br>역할 가로 인터페이스'}
+];;
+document.getElementById('cols').innerHTML = S.map(c=>`
+ <div class="col">
+   <span class="n">${c.n}</span>
+   <h2>${c.name}</h2>
+   <div class="hl">${c.tag?`<span class="tg">${c.tag}</span>`:''}${c.hl}</div>
+   <p>${c.d}</p>
+   <div class="m">${c.m}</div>
+ </div>`).join('');
+
+const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();
+addEventListener('resize',fit);
+addEventListener('pageshow',fit);
+addEventListener('load',fit);
+if(window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+</script></body></html>
