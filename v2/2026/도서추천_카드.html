@@ -9,11 +9,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
- --bg0:#191307; --bg1:#3b2d11; --bg2:#6d5520; --bg3:#9a7a2c;
- --ink:#f7f3e9; --ink2:rgba(247,243,233,.72); --ink3:rgba(247,243,233,.48);
- --glass:rgba(48,38,18,.34); --glass2:rgba(40,32,15,.32);
- --line:rgba(247,243,233,.24); --line2:rgba(247,243,233,.12);
- --dark:#0e0c07; --shadow:0 30px 70px rgba(20,14,3,.42);
+ --bg0:#1d2450; --bg1:#1d2450; --bg2:#232b5e; --bg3:#2b3574;
+ --ink:#eef2ff; --ink2:rgba(238,242,255,.72); --ink3:rgba(238,242,255,.48);
+ --glass:rgba(28,36,84,.34); --glass2:rgba(24,31,74,.32);
+ --line:rgba(238,242,255,.24); --line2:rgba(238,242,255,.12);
+ --dark:#141a3c; --shadow:0 30px 70px rgba(20,14,3,.42);
  --r:26px;
 }
 html,body{height:100%}
@@ -26,19 +26,19 @@ body{
 .scene{position:fixed;inset:0;z-index:0;overflow:hidden}
 .scene::before{content:'';position:absolute;inset:0;
  background:
-  radial-gradient(120% 90% at 78% 8%, var(--bg3) 0%, transparent 55%),
-  radial-gradient(100% 80% at 20% 95%, #2c3a33 0%, transparent 58%),
-  linear-gradient(158deg, var(--bg1) 0%, var(--bg2) 46%, #6a5320 78%, var(--bg0) 100%);
+  radial-gradient(120% 90% at 78% 8%, rgba(60,80,170,.34) 0%, transparent 55%),
+  radial-gradient(100% 80% at 20% 95%, rgba(30,40,100,.5) 0%, transparent 58%),
+  var(--bg0);
 }
 .slat{position:absolute;left:0;top:0;bottom:0;width:22vw;min-width:180px;
  background:repeating-linear-gradient(90deg,
-  rgba(20,12,3,.62) 0 9px, rgba(58,38,14,.30) 9px 15px, rgba(20,12,3,.14) 15px 30px);
+  rgba(10,14,38,.55) 0 9px, rgba(40,52,110,.26) 9px 15px, rgba(10,14,38,.12) 15px 30px);
  mask-image:linear-gradient(90deg,#000 0 58%,transparent 100%);
  -webkit-mask-image:linear-gradient(90deg,#000 0 58%,transparent 100%);opacity:.85}
 .floor{position:absolute;left:0;right:0;bottom:0;height:26vh;
- background:linear-gradient(180deg,transparent 0%, rgba(148,118,68,.34) 40%, rgba(168,138,88,.5) 100%)}
+ background:linear-gradient(180deg,transparent 0%, rgba(40,54,120,.34) 40%, rgba(52,68,146,.5) 100%)}
 .dots{position:absolute;inset:0;
- background-image:radial-gradient(rgba(255,247,224,.5) 1px, transparent 1px);
+ background-image:radial-gradient(rgba(214,228,255,.42) 1px, transparent 1px);
  background-size:26px 26px;
  mask-image:radial-gradient(70% 55% at 82% 12%,#000 0%,transparent 72%);
  -webkit-mask-image:radial-gradient(70% 55% at 82% 12%,#000 0%,transparent 72%);opacity:.4}
