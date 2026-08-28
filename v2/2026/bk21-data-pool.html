@@ -93,13 +93,13 @@ svg.scene{display:block;width:100%;height:auto;max-height:470px;overflow:visible
   <div class="hd">
     <div>
       <div class="kicker">BIBLO · DATA POOL</div>
-      <h1>흩어진 기록이<br><span>하나의 풀</span>이 되기까지.</h1>
+      <h1>여섯 솔루션의 기록이<br><span>서로의 데이터</span>가 됩니다</h1>
     </div>
     <div class="spacer"></div>
     <div class="meta" id="meta"></div>
   </div>
 
-  <div class="lead">논문·저자·연구자·관계·분야·인용이 각각 다른 원장에 흩어져 있습니다. BIBLO는 이것을 <b>같은 키로 이어 하나의 풀</b>로 만들고, 그 위에 BK 참여 태그를 얹어 성과지표를 만듭니다. 아래 큐브는 여섯 솔루션이 각각 무엇을 구축해 풀에 넣는지 보여줍니다.</div>
+  <div class="lead">여섯 솔루션은 각자 일하면서 기록을 남깁니다. 무엇을 찾았고 어떤 책을 샀고 누가 무엇을 썼는지가 <b>같은 키로 이어져 한 벌</b>이 됩니다. 이렇게 쌓인 데이터를 검색·분석·추천·성과 KPI 가 함께 씁니다.</div>
 
   <div class="stage">
     <svg class="scene" id="scene" viewBox="0 180 1436 570" role="img" aria-label="데이터 풀 구조도"></svg>
@@ -108,13 +108,13 @@ svg.scene{display:block;width:100%;height:auto;max-height:470px;overflow:visible
 
   <div class="layers">
     <div class="lay"><div class="h">LAYER 1</div>
-      <div class="t">하나의 풀</div>
-      <div class="d">여섯 솔루션이 넣은 책·논문·저자·관계·분야·인용을 <b>같은 키로 이어</b> 한 벌로 만듭니다.
-        어느 솔루션이 넣었든 같은 논문, 같은 사람으로 묶입니다.</div></div>
+      <div class="t">사용할수록 쌓이는 데이터</div>
+      <div class="d">솔루션을 쓰는 동안 기록이 남습니다. 검색어와 대출, 논문과 저자, 장서와 편목이
+        <b>따로 모으는 작업 없이</b> 그대로 데이터가 됩니다.</div></div>
     <div class="lay"><div class="h">LAYER 2</div>
-      <div class="t">성과 태그</div>
-      <div class="d">그 위에 BK 참여 태그를 얹습니다. <b>34개 교육연구단</b>과 참여자 <b>5,366명</b>(교수 455·신진 158·대학원생 4,753)을
-        태깅하면 학과·사업단 단위 성과지표가 됩니다.</div></div>
+      <div class="t">다른 솔루션의 집계와 판단</div>
+      <div class="d">한 솔루션이 남긴 기록을 다른 솔루션이 씁니다. 검색 기록은 <b>수서 판단</b>이 되고,
+        저자 매칭은 <b>학과·사업단 성과지표</b>가 됩니다.</div></div>
   </div>
 
 </div>
@@ -267,8 +267,8 @@ function draw(){
       transform:`matrix(1,${HKF.toFixed(4)},-1,${HKF.toFixed(4)},${HUB.x},${topY})`}));
   }
   hg.appendChild(el('circle',{cx:HUB.x,cy:HUB.y,r:7,fill:'#dbeafe',filter:'url(#glow)'}));
-  const t1=el('text',{x:HUB.x,y:HUB.y+166,'text-anchor':'middle',class:'hub-t'}); t1.textContent='BIBLO 데이터 풀';
-  const t2=el('text',{x:HUB.x,y:HUB.y+186,'text-anchor':'middle',class:'hub-s'}); t2.textContent='ONE KEY · SIX LEDGERS';
+  const t1=el('text',{x:HUB.x,y:HUB.y+166,'text-anchor':'middle',class:'hub-t'}); t1.textContent='BIBLO 공통 데이터 풀';
+  const t2=el('text',{x:HUB.x,y:HUB.y+186,'text-anchor':'middle',class:'hub-s'}); t2.textContent='ONE KEY · SIX SOLUTIONS';
   hg.appendChild(t1); hg.appendChild(t2);
   S.appendChild(hg);
 
