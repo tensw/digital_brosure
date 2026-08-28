@@ -12,19 +12,21 @@ body{font:14px/1.6 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothi
 html,body{overflow:hidden}
 .slide{position:relative;width:100vw;height:100vh;overflow:hidden}
 #stage{position:absolute;left:50%;top:50%;width:1600px;transform-origin:50% 50%}
-.wrap{width:1600px;margin:0;padding:44px 82px 40px}
+.wrap{width:1600px;height:900px;margin:0;padding:40px 82px 28px}
 .hd{display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap;margin-bottom:6px}
 .kicker{font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
-h1{font-size:38px;font-weight:800;letter-spacing:-1.2px;margin-top:14px;line-height:1.15}
+h1{font-size:56px;font-weight:800;letter-spacing:.5px;margin-top:12px;line-height:1.14}
 h1 span{color:var(--hot)}
-.lead{color:var(--ink2);font-size:13.5px;margin-top:12px;max-width:56ch;line-height:1.75;word-break:keep-all}
+.lead{color:var(--ink2);font-size:16px;font-weight:600;letter-spacing:-.3px;
+  margin-top:16px;padding-top:16px;border-top:1px solid rgba(96,165,250,.14);
+  max-width:none;line-height:1.7;word-break:keep-all;text-wrap:balance}
 .lead b{color:var(--ink)}
 .spacer{flex:1}
 .meta{font:600 11px/1.9 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink3);text-align:right;letter-spacing:.06em}
 .meta b{color:var(--ink2);font-weight:700}
 
 .stage{position:relative;margin:-6px 0 0}
-svg.scene{display:block;width:100%;height:auto;overflow:visible}
+svg.scene{display:block;width:100%;height:auto;max-height:470px;overflow:visible}
 .face{stroke:var(--edge);stroke-width:.9;stroke-opacity:.62}
 .f-top{fill:#7fb2ff;fill-opacity:.045}
 .f-l{fill:#1e3a6e;fill-opacity:.16}
@@ -74,7 +76,7 @@ svg.scene{display:block;width:100%;height:auto;overflow:visible}
 .pd code{font:600 11px ui-monospace,Menlo,monospace;background:rgba(96,165,250,.12);
   padding:2px 6px;border-radius:5px;color:var(--gl2)}
 
-.layers{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.layers{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
 @media(max-width:900px){.layers{grid-template-columns:1fr}}
 .lay{border:1px solid rgba(96,165,250,.18);border-radius:18px;padding:18px 20px;
   background:linear-gradient(180deg,rgba(16,28,56,.5),rgba(8,14,30,.5))}
@@ -91,9 +93,6 @@ svg.scene{display:block;width:100%;height:auto;overflow:visible}
     <div>
       <div class="kicker">BIBLO · DATA POOL</div>
       <h1>흩어진 기록이<br><span>하나의 풀</span>이 되기까지.</h1>
-      <div class="lead">논문·저자·연구자·관계·분야·인용이 각각 다른 원장에 흩어져 있습니다.
-        BIBLO는 이것을 <b>같은 키로 이어 하나의 풀</b>로 만들고, 그 위에 BK 참여 태그를 얹어 성과지표를 만듭니다.
-        아래 큐브는 여섯 솔루션이 각각 무엇을 구축해 풀에 넣는지 보여줍니다.</div>
     </div>
     <div class="spacer"></div>
     <div class="meta" id="meta"></div>
@@ -115,6 +114,7 @@ svg.scene{display:block;width:100%;height:auto;overflow:visible}
         개인 기초값에 태깅합니다. 태그가 바뀌어도 1층은 그대로입니다.</div></div>
   </div>
 
+  <div class="lead">논문·저자·연구자·관계·분야·인용이 각각 다른 원장에 흩어져 있습니다. BIBLO는 이것을 <b>같은 키로 이어 하나의 풀</b>로 만들고, 그 위에 BK 참여 태그를 얹어 성과지표를 만듭니다. 아래 큐브는 여섯 솔루션이 각각 무엇을 구축해 풀에 넣는지 보여줍니다.</div>
 </div>
 </div></div>
 <div class="panel" id="panel"></div>
@@ -338,8 +338,7 @@ draw();
 /* ── 화면 크기에 맞춰 무대 배율 조정 (큰 화면에서는 확대) ── */
 const SW_=1600;
 function fitStage(){
-  const st=document.getElementById('stage'), w=st.querySelector('.wrap');
-  const SH_=w.offsetHeight;
+  const st=document.getElementById('stage'), SH_=900;
   st.style.height=SH_+'px';
   const k=Math.min(innerWidth/SW_, innerHeight/SH_);
   st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;
