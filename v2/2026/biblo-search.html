@@ -51,7 +51,17 @@
 .lead-7q2v8{font-size:19px;font-weight:600;letter-spacing:-.4px;color:#c4d3ee;line-height:1.6}
 .lead-7q2v8 b{color:#fff;font-weight:800}
 .lead-7q2v8 em{display:block;margin-top:6px;font-style:normal;font-size:15px;color:#7f92b8}
-.cert-7q2v8{display:inline-flex;align-items:center;gap:14px;margin-top:20px;padding:11px 18px 11px 11px;
+.modal-7q2v8{position:fixed;inset:0;z-index:60;display:none;place-items:center;
+  background:rgba(2,4,12,.86);backdrop-filter:blur(6px);padding:4vh 16px}
+.modal-7q2v8.on{display:grid}
+.mbox-7q2v8{position:relative;max-height:92vh}
+.mbox-7q2v8 img{display:block;max-height:92vh;max-width:min(760px,92vw);width:auto;height:auto;
+  border-radius:10px;box-shadow:0 30px 90px rgba(0,0,0,.7)}
+.mclose-7q2v8{position:absolute;right:-14px;top:-14px;width:36px;height:36px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.28);background:#0b1226;color:#dbe6ff;cursor:pointer;
+  font:700 18px/1 ui-monospace,Menlo,monospace}
+.mclose-7q2v8:hover{border-color:#9fc7ff;color:#fff}
+.cert-7q2v8{cursor:pointer;font:inherit;display:inline-flex;align-items:center;gap:14px;margin-top:20px;padding:11px 18px 11px 11px;
   border:1px solid rgba(120,150,220,.26);border-radius:14px;background:rgba(12,20,42,.6);
   text-decoration:none;transition:.16s}
 .cert-7q2v8:hover{border-color:rgba(150,190,255,.5);background:rgba(16,26,54,.8)}
@@ -120,14 +130,21 @@
 
  <div class="sug-7q2v8" id="sug-7q2v8"></div>
  <div class="cap-7q2v8" id="cap-7q2v8">
-  <div class="lead-7q2v8">키워드와 자연어 질문을 한 창에서. <b>1초 안에 결과.</b>
-   <em>찾는 것이 흐릿하면 사서처럼 되물어 좁혀 준다.</em></div>
-  <a class="cert-7q2v8" href="cert-search-engine.jpg" target="_blank" rel="noopener">
+  <div class="lead-7q2v8">정확한 키워드에서 시작해 <b>내용의 맥락까지</b> 이어지는 검색.
+   <em>사람이 서가를 거니는 순서 그대로.</em></div>
+  <button class="cert-7q2v8" id="cert-7q2v8" type="button">
    <img src="cert-search-engine.jpg" alt="비블로 검색엔진 시험성적서">
    <span><b>AI 검색엔진 시험성적서</b>
     <s>KOLAS 공인 · 한국녹색기후기술원 26-10082 · KS X ISO/IEC 25023:2016<br>
      기능 정확성(FCr-1-G) · 평균 반환 시간(PTb-3-G) · 2026-08-19</s></span>
-  </a>
+  </button>
+ </div>
+
+ <div class="modal-7q2v8" id="modal-7q2v8" role="dialog" aria-modal="true" aria-label="AI 검색엔진 시험성적서">
+  <div class="mbox-7q2v8">
+   <button class="mclose-7q2v8" id="mclose-7q2v8" type="button" aria-label="닫기">×</button>
+   <img src="cert-search-engine.jpg" alt="비블로 AI 검색엔진 시험성적서">
+  </div>
  </div>
 </div>
 <script>
@@ -145,17 +162,29 @@ const Q=[
  ['사서처럼',      '되물어 좁혀 준다']
 ];
 const HINT=[
- '키워드도 문장도 그대로',
- '마음이 지칠 때 위로가 되는 잔잔한 에세이',
- '이 책과 결이 비슷한 다른 작가의 책',
- '전자전기 최근 3년 성과점수',
- '이 분야에서 함께 쓸 만한 교내 공저자'
+ '키워드와 자연어 질문을 한 창에서. 1초 안에 결과.',
+ '제목을 몰라도 내용의 결로 찾아냅니다',
+ '무엇을 찾는지 흐릿하면 사서처럼 되물어 좁혀 줍니다',
+ '책·논문·연구자를 한 번에 가로질러 찾습니다',
+ '키워드가 하나도 안 겹쳐도 뜻이 닿으면 찾아냅니다'
 ];
-const HINT_S=['키워드도 문장도 그대로','위로가 되는 잔잔한 에세이','결이 비슷한 다른 작가',
-              '최근 3년 성과점수','함께 쓸 교내 공저자'];
+const HINT_S=['키워드와 자연어를 한 창에서','내용의 결로 찾아냅니다','사서처럼 되물어 좁혀 줍니다',
+              '책·논문·연구자를 한 번에','뜻이 닿으면 찾아냅니다'];
 const hints=()=>(innerWidth<760?HINT_S:HINT);
 sug.innerHTML=Q.map(([a,b])=>`<div class="s-${T}">${a}<u>${b}</u></div>`).join('');
 
+
+/* ── 시험성적서 레이어 팝업 ── */
+(function(){
+ const md=$('modal'), bt=$('cert'), cl=$('mclose');
+ if(!md||!bt)return;
+ const open=()=>md.classList.add('on');
+ const close=()=>md.classList.remove('on');
+ bt.addEventListener('click',open);
+ cl&&cl.addEventListener('click',close);
+ md.addEventListener('click',e=>{if(e.target===md)close();});
+ addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+})();
 
 /* ── 알약 크기·위치 ── */
 let W=0,H=0,DPR=1,PW=0,PH=0,CX=0,CY=0;
