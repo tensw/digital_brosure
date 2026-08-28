@@ -20,9 +20,10 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 .r1{top:203px} .r2{top:551px} .r3{top:719px}
 
 /* ─── 5 컬럼 ─── */
-.cols{position:absolute;left:82px;right:82px;top:203px;height:348px;display:flex}
-.col{flex:1;padding:24px 26px 0 0;position:relative}
-.col+.col{padding-left:26px;border-left:1px solid #e3e8f2}
+.cols{position:absolute;left:82px;right:82px;top:203px;height:348px;display:flex;gap:14px}
+.col{flex:1;position:relative;min-width:0;background:#fff;border-radius:18px;padding:22px 22px 24px;
+ box-shadow:0 1px 2px rgba(17,24,39,.04),0 10px 28px -18px rgba(17,24,39,.18)}
+.col+.col{border-left:0}
 .col .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
  transform:skewX(-9deg);display:inline-block;color:#c7d0e6}
 .col h2{margin-top:10px;font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#1e4be8}
@@ -40,6 +41,7 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 
 /* ─── 6 병합 셀 (1~5 를 하나로) ─── */
 .merge{position:absolute;left:82px;right:82px;top:551px;height:168px;display:flex;align-items:center;
+ background:#fff;border-radius:18px;box-shadow:0 1px 2px rgba(17,24,39,.04),0 10px 28px -18px rgba(17,24,39,.18);
  gap:30px;padding:0 4px}
 .merge .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
  transform:skewX(-9deg);display:inline-block;color:#c7d0e6;flex:none}
@@ -62,7 +64,7 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 /* ── 08장 카드 형식 (수치·진행바·비율) ── */
 .col .cv{font:800 28px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:13px;color:#111827}
 .col .cv em,.merge .cv em{font-style:normal;font-size:13px;font-weight:700;color:#98a1b2;margin-left:5px;letter-spacing:0}
-.col .cb{height:6px;border-radius:99px;background:#e7ecf7;margin-top:12px;overflow:hidden;width:262px}
+.col .cb{height:6px;border-radius:99px;background:#e7ecf7;margin-top:12px;overflow:hidden;width:100%}
 .col .cb i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1e4be8,#5b83ff)}
 .col .cp{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:9px}
 .merge .cv{font:800 30px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:8px;color:#111827}
