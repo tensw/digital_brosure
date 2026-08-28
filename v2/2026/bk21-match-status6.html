@@ -16,14 +16,13 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
  color:#4b5563}
 
 /* ─── 규칙선 ─── */
-.rule{position:absolute;left:82px;right:82px;height:1px;background:#e3e8f2}
+.rule{position:absolute;left:82px;right:82px;height:1px;background:#c3ccdf}
 .r1{top:203px} .r2{top:551px} .r3{top:719px}
 
 /* ─── 5 컬럼 ─── */
-.cols{position:absolute;left:82px;right:82px;top:203px;height:348px;display:flex;gap:14px}
-.col{flex:1;position:relative;min-width:0;background:#fff;border-radius:18px;padding:22px 22px 24px;
- box-shadow:0 1px 2px rgba(17,24,39,.04),0 10px 28px -18px rgba(17,24,39,.18)}
-.col+.col{border-left:0}
+.cols{position:absolute;left:82px;right:82px;top:203px;height:348px;display:flex;background:#fff}
+.col{flex:1;position:relative;min-width:0;padding:22px 24px 24px}
+.col+.col{border-left:1px solid #c3ccdf}
 .col .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
  transform:skewX(-9deg);display:inline-block;color:#c7d0e6}
 .col h2{margin-top:10px;font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#1e4be8}
@@ -41,7 +40,7 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 
 /* ─── 6 병합 셀 (1~5 를 하나로) ─── */
 .merge{position:absolute;left:82px;right:82px;top:551px;height:168px;display:flex;align-items:center;
- background:#fff;border-radius:18px;box-shadow:0 1px 2px rgba(17,24,39,.04),0 10px 28px -18px rgba(17,24,39,.18);
+ background:#fff;
  gap:30px;padding:0 4px}
 .merge .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
  transform:skewX(-9deg);display:inline-block;color:#c7d0e6;flex:none}
@@ -50,7 +49,7 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 .merge h2 span{color:#a9ff5e}
 .merge p{margin-top:10px;font-size:13px;font-weight:500;line-height:1.7;letter-spacing:-.3px;
  color:#4b5563;word-break:keep-all}
-.merge .bul{flex:1;border-left:1px solid #e3e8f2;padding-left:30px;list-style:none}
+.merge .bul{flex:1;border-left:1px solid #c3ccdf;padding-left:30px;list-style:none}
 .merge .bul li{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;
  line-height:1.5;letter-spacing:-.3px;color:#111827;padding:4px 0}
 .merge .bul li::before{content:"";width:7px;height:7px;border-radius:50%;background:#a9ff5e;flex:none}
