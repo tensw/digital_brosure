@@ -12,14 +12,14 @@
 .halo-7q2v8{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
 
 /* ── 워드마크 ── */
-.mark-7q2v8{position:absolute;left:50%;top:7.5vh;transform:translateX(-50%);z-index:4;
+.mark-7q2v8{position:absolute;left:50%;top:12vh;transform:translateX(-50%);z-index:4;
  display:flex;align-items:center;gap:11px;opacity:.9}
 .mark-7q2v8 b{font:700 12.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.34em;color:#cfd9f5}
 .mark-7q2v8 s{text-decoration:none;font:600 10.5px/1 ui-monospace,Menlo,monospace;
  letter-spacing:.15em;color:var(--ink3)}
 
 /* ── 알약 검색바 ── */
-.pill-7q2v8{position:absolute;left:50%;top:36%;transform:translate(-50%,-50%);z-index:3;
+.pill-7q2v8{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;
  display:flex;align-items:center;gap:clamp(14px,1.5vw,26px);
  padding:0 clamp(10px,1vw,16px) 0 clamp(20px,2.2vw,34px);
  border-radius:999px;background:#0d0d12;
@@ -73,23 +73,6 @@
   font:600 10px/1.6 ui-monospace,Menlo,monospace;color:#7186ad}
 .sug-7q2v8{position:absolute;left:50%;transform:translateX(-50%);z-index:4;
  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:min(92vw,980px);padding:0 8px}
-.res-7q2v8{width:100%;display:flex;flex-direction:column;align-items:center;gap:12px}
-.rq-7q2v8{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:center}
-.rq-7q2v8 i{font-style:normal;font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;
- padding:6px 10px;border-radius:999px;background:rgba(96,165,250,.16);color:#9fc7ff;
- border:1px solid rgba(120,160,255,.3)}
-.rq-7q2v8 em{font-style:normal;font:700 11.5px/1 ui-monospace,Menlo,monospace;color:#7f92b8}
-.rq-7q2v8 b{font-size:13px;font-weight:700;color:#dbe6ff;letter-spacing:-.2px}
-.rl-7q2v8{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;max-width:1000px}
-.ri-7q2v8{display:flex;flex-direction:column;gap:3px;padding:9px 14px;border-radius:11px;
- background:rgba(255,255,255,.05);border:1px solid rgba(160,180,255,.16);min-width:0}
-.ri-7q2v8 b{font-size:12.5px;font-weight:700;color:#eaf0ff;letter-spacing:-.2px;white-space:nowrap}
-.ri-7q2v8 s{text-decoration:none;font:600 10.5px/1 ui-monospace,Menlo,monospace;color:#8094bc}
-.ri-7q2v8.ax-7q2v8{background:rgba(96,165,250,.10);border-color:rgba(120,160,255,.28)}
-.rn-7q2v8{font-size:12.5px;color:#8fa2c9;font-weight:600;letter-spacing:-.2px}
-.rn-7q2v8 b{color:#cfe0ff;font-weight:800}
-.fade-7q2v8{opacity:0;transform:translateY(6px);transition:opacity .34s,transform .34s}
-.fade-7q2v8.on-7q2v8{opacity:1;transform:none}
 .s-7q2v8{border-radius:999px;padding:8px 14px;white-space:nowrap;cursor:pointer;
  font-weight:600;font-size:clamp(11px,1.05vw,13.5px);color:#b9c6e8;
  background:rgba(255,255,255,.045);border:1px solid rgba(160,180,255,.18);
@@ -147,6 +130,8 @@
 
  <div class="sug-7q2v8" id="sug-7q2v8"></div>
  <div class="cap-7q2v8" id="cap-7q2v8">
+  <div class="lead-7q2v8">정확한 키워드에서 시작해 <b>내용의 맥락까지</b> 이어지는 검색.
+   <em>사람이 서가를 거니는 순서 그대로.</em></div>
   <button class="cert-7q2v8" id="cert-7q2v8" type="button">
    <img src="cert-search-engine.jpg" alt="비블로 검색엔진 시험성적서">
    <span><b>AI 검색엔진 시험성적서</b>
@@ -170,53 +155,23 @@ const wrap=$('wrap'), halo=$('halo'), pill=$('pill'), ph=$('ph'),
 const ctx=halo.getContext('2d');
 
 /* ── 예시 질의 · BIBLO 가 실제로 답하는 것들 ── */
-/* ══ 데모 시나리오 ══ 근거: 검색품질 절 · AI 사서기능 절 (report2026_biblo2.1.html) ══ */
-const CASES=[
- {q:'물고기는 존재하지 않는다',
-  tag:'통합검색', time:'0.1초', hit:'정확히 한 권',
-  note:'긴 제목도 중의적 제목도 <b>한 번에 한 권</b>으로 떨어진다.',
-  items:[['물고기는 존재하지 않는다','룰루 밀러 · 곰출판 · 소장 중']]},
-
- {q:'한강의 채식주의자와 비슷한 책 찾아줘',
-  tag:'시맨틱검색', time:'', hit:'키워드로는 불가능',
-  note:'제목도 저자도 안 겹치는 책을 <b>내용의 결</b>로 찾는다. 엔진이 읽은 축은 이렇다.',
-  axis:[['분야·장르','한국 현대 장편소설'],['주제·개념','폭력과 거부'],
-        ['정서·톤','서늘한'],['목적·효용','다시 읽히는 문제작']]},
-
- {q:'마음이 지칠 때 위로가 되는 잔잔한 에세이',
-  tag:'기분·상태', time:'2.2초', hit:'정밀 매칭 20권',
-  note:'12축 중 <b>4개 축</b>이 켜졌다. 질의 어디에도 이 책들의 제목·저자가 없다.',
-  items:[['마음이 마음에게','김준 · 지식인하우스'],['너의 마음에 햇살이 들기를','김지영 · 책마음'],
-         ['괜찮아지는 중입니다','안송이 · 문학테라피'],['내가 힘들었다는 너에게','신소영 · 웅진지식하우스']]},
-
- {q:'행복한 당신의 일상',
-  tag:'소장자료검색', time:'0.1초', hit:'7건',
-  note:'무한정 넓히지 않는다. <b>행복·당신·일상</b>의 맥락 안에서만 확장한다.'},
-
- {q:'폐암 논문 찾아줘',
-  tag:'논문검색', time:'', hit:'지시어 제거',
-  note:'“논문·찾아줘”를 걷어내고 <b>폐암</b>만 남긴다. 한 글자 핵심어도 버리지 않는다.',
-  axis:[['통엔티티 보호','삼중음성유방암 → 1건에서 1,293건'],['1글자 보호','암·간·뇌 단독도 정상 검색']]},
-
- {q:'체리새우 비밀글입니다',
-  tag:'없으면 추천', time:'', hit:'소장 0건', warn:1,
-  note:'<b>0건 화면이 없다.</b> 사서처럼 “이런 책은 어때요?” 하고 실소장 6권을 권한다.',
-  items:[['엔드게임 살인사건','다니엘 콜'],['체리새우','황영미'],['백조 선인장','박권하'],
-         ['빨강 연필','신수현'],['유기','하용준'],['일루미네이티드','매트 브론리위']]}
+const Q=[
+ ['통합검색',      '정확한 키워드'],
+ ['소장자료검색',  '키워드 맥락으로 확장'],
+ ['시맨틱검색',    '내용의 결로 닿는'],
+ ['사서처럼',      '되물어 좁혀 준다']
 ];
-
-/* ── 결과 그리기 ── */
-function paint(c){
- const axis=(c.axis||[]).map(([a,b])=>`<div class="ri-7q2v8 ax-7q2v8"><b>${a}</b><s>${b}</s></div>`).join('');
- const items=(c.items||[]).map(([a,b])=>`<div class="ri-7q2v8"><b>${a}</b><s>${b}</s></div>`).join('');
- sug.innerHTML=`<div class="res-7q2v8 fade-7q2v8">
-   <div class="rq-7q2v8"><i>${c.tag}</i>${c.time?`<em>${c.time}</em>`:''}<b>${c.hit}</b></div>
-   <div class="rn-7q2v8">${c.note}</div>
-   ${(axis||items)?`<div class="rl-7q2v8">${axis}${items}</div>`:''}
-  </div>`;
- layout();
- requestAnimationFrame(()=>sug.querySelector('.res-7q2v8').classList.add('on-7q2v8'));
-}
+const HINT=[
+ '키워드와 자연어 질문을 한 창에서. 1초 안에 결과.',
+ '제목을 몰라도 내용의 결로 찾아냅니다',
+ '무엇을 찾는지 흐릿하면 사서처럼 되물어 좁혀 줍니다',
+ '책·논문·연구자를 한 번에 가로질러 찾습니다',
+ '키워드가 하나도 안 겹쳐도 뜻이 닿으면 찾아냅니다'
+];
+const HINT_S=['키워드와 자연어를 한 창에서','내용의 결로 찾아냅니다','사서처럼 되물어 좁혀 줍니다',
+              '책·논문·연구자를 한 번에','뜻이 닿으면 찾아냅니다'];
+const hints=()=>(innerWidth<760?HINT_S:HINT);
+sug.innerHTML=Q.map(([a,b])=>`<div class="s-${T}">${a}<u>${b}</u></div>`).join('');
 
 
 /* ── 시험성적서 레이어 팝업 ── */
@@ -249,12 +204,12 @@ function layout(){
  // 칩 줄은 캡션 위에 반드시 남게 배치한다
  const capH=cap.getBoundingClientRect().height||34;
  const sugH=sug.getBoundingClientRect().height||40;
-  const floor=H*0.36+PH/2+14;                       // 알약을 절대 침범하지 않는 하한
- const want=H*0.36+PH/2+Math.max(26,H*0.045);
+ const floor=H/2+PH/2+14;                       // 알약을 절대 침범하지 않는 하한
+ const want=H/2+PH/2+Math.max(30,H*0.065);
  const limit=H-(H*0.052+capH)-sugH-14;
  sug.style.top=Math.round(Math.max(floor, Math.min(want, limit)))+'px';
  sug.style.maxWidth=Math.round(Math.min(W*0.92, 980))+'px';
- CX=W/2; CY=H*0.36;
+ CX=W/2; CY=H/2;
  halo.width=Math.round(W*DPR); halo.height=Math.round(H*DPR);
  bake();
 }
@@ -322,32 +277,17 @@ function draw(ts){
   requestAnimationFrame(draw);
  }
 }
-/* ── 타이핑 데모: 질의를 치고 → 결과를 아래에 편다 ── */
-let ci=-1, timers=[];
-const clearT=()=>{timers.forEach(clearTimeout);timers=[];};
-const wait=(ms,fn)=>timers.push(setTimeout(fn,ms));
-
-function typeQ(text, done){
- ph.style.opacity='1'; ph.textContent='';
- let i=0;
- const step=()=>{
-  ph.textContent=text.slice(0,++i);
-  if(i<text.length) wait(28+Math.random()*34, step); else wait(260, done);
- };
- step();
+/* ── 플레이스홀더 순환 ── */
+let hi=0;
+function cycle(){
+ const L2=hints(); hi=(hi+1)%L2.length;
+ ph.style.transition='opacity .32s'; ph.style.opacity='0';
+ setTimeout(()=>{ph.textContent=L2[hi]; ph.style.opacity='1';},320);
 }
-function runCase(){
- clearT();
- ci=(ci+1)%CASES.length;
- const c=CASES[ci];
- sug.innerHTML='';
- typeQ(c.q, ()=>{
-  paint(c);
-  wait(4200, runCase);          // 결과를 보여주는 시간
- });
-}
-wait(500, runCase);
-document.addEventListener('visibilitychange',()=>{ if(document.hidden) clearT(); });
+let cyc=setInterval(cycle, 3400);
+sug.addEventListener('click',e=>{const s=e.target.closest('.s-'+T); if(!s)return;
+ clearInterval(cyc); ph.textContent=s.childNodes[0].textContent.trim()+' 결과 보기';
+ cyc=setInterval(cycle,3400);});
 
 let rt=0;
 addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{layout();
@@ -357,7 +297,7 @@ document.addEventListener('visibilitychange',()=>{run=!document.hidden;
  if(run&&!STILL){t0=0;requestAnimationFrame(draw);}});
 RM.addEventListener?.('change',e=>{STILL=e.matches;
  if(STILL){ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,halo.width,halo.height);ctx.drawImage(BASE,0,0);
-   } else {t0=0;requestAnimationFrame(draw);}});
+   clearInterval(cyc);} else {t0=0;requestAnimationFrame(draw);cyc=setInterval(cycle,3400);}});
 
 layout();
 if(STILL){ctx.setTransform(1,0,0,1,0,0);ctx.drawImage(BASE,0,0); clearInterval(cyc);}
