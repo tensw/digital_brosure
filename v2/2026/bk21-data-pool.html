@@ -45,14 +45,14 @@ svg.scene{display:block;width:100%;height:auto;overflow:visible}
 .hub-s{font:600 11px/1 ui-monospace,Menlo,monospace;fill:var(--ink3);letter-spacing:.16em}
 
 /* 상세 패널 */
-.panel{position:fixed;left:0;right:0;bottom:0;z-index:30;
-  border-top:1px solid rgba(96,165,250,.28);border-radius:22px 22px 0 0;
+.panel{position:fixed;left:50%;bottom:0;z-index:30;width:min(1060px,86vw);
+  border:1px solid rgba(96,165,250,.28);border-bottom:0;border-radius:22px 22px 0 0;
   background:linear-gradient(180deg,rgba(18,32,62,.94),rgba(6,12,28,.97));
-  backdrop-filter:blur(14px);padding:24px 82px 30px;min-height:150px;
-  max-height:60vh;overflow:auto;box-shadow:0 -20px 60px rgba(0,0,0,.6);
-  transform:translateY(102%);transition:transform .4s cubic-bezier(.22,.61,.36,1)}
-.panel.show{transform:translateY(0)}
-.pclose{position:absolute;right:28px;top:20px;width:30px;height:30px;border-radius:50%;
+  backdrop-filter:blur(14px);padding:24px 32px 28px;min-height:150px;
+  max-height:58vh;overflow:auto;box-shadow:0 -20px 60px rgba(0,0,0,.6);
+  transform:translate(-50%,102%);transition:transform .4s cubic-bezier(.22,.61,.36,1)}
+.panel.show{transform:translate(-50%,0)}
+.pclose{position:absolute;right:22px;top:20px;width:30px;height:30px;border-radius:50%;
   border:1px solid rgba(129,140,248,.3);background:transparent;color:var(--ink2);
   font:700 15px/1 ui-monospace,Menlo,monospace;cursor:pointer}
 .pclose:hover{border-color:var(--hot);color:var(--hot)}
