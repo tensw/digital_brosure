@@ -12,7 +12,7 @@ body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSyst
 html,body{overflow:hidden}
 .slide{position:relative;width:100vw;height:100vh;overflow:hidden}
 #stage{position:absolute;left:50%;top:50%;width:1600px;transform-origin:50% 50%}
-.wrap{width:1600px;height:900px;margin:0;padding:40px 82px 28px}
+.wrap{width:1600px;height:900px;margin:0;padding:38px 82px 16px}
 .hd{display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap;margin-bottom:6px}
 .kicker{font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
 h1{font-size:3.15em;font-weight:800;letter-spacing:.5px;margin-top:12px;line-height:1.16}
@@ -77,13 +77,14 @@ svg.scene{display:block;width:100%;height:auto;max-height:470px;overflow:visible
 .pd code{font:600 11px ui-monospace,Menlo,monospace;background:rgba(96,165,250,.12);
   padding:2px 6px;border-radius:5px;color:var(--gl2)}
 
-.layers{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+.layers{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
 @media(max-width:900px){.layers{grid-template-columns:1fr}}
 .lay{border:1px solid rgba(96,165,250,.18);border-radius:18px;padding:18px 20px;
   background:linear-gradient(180deg,rgba(16,28,56,.5),rgba(8,14,30,.5))}
 .lay .h{font:700 10.5px/1 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.2em;margin-bottom:9px}
-.lay .t{font-size:15px;font-weight:800;letter-spacing:-.3px}
-.lay .d{color:var(--ink2);font-size:12px;line-height:1.75;margin-top:8px}
+.lay .t{font-size:15px;font-weight:800;letter-spacing:-.4px;color:var(--hot)}
+.lay .d{margin-top:9px;font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
+  color:rgba(255,255,255,.9);word-break:keep-all}
 .lay .d b{color:var(--ink)}
 @media(max-width:820px){.wrap{padding:26px 16px 50px}h1{font-size:28px}}
 </style>
