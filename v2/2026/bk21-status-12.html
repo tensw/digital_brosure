@@ -1,0 +1,118 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MATCHING STATUS 12</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;
+ overflow:visible;background:transparent}
+
+/* ─── 상단 ─── */
+h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-spacing:.5px;color:#111827}
+.h1s{position:absolute;left:82px;top:163px;font-size:16px;font-weight:600;letter-spacing:-.3px;
+ color:#4b5563}
+
+/* ─── 규칙선 ─── */
+.rule{position:absolute;left:82px;right:82px;height:1px;background:#c3ccdf;z-index:3}
+.r1{top:203px} .r2{top:551px} .r3{top:719px}
+
+/* ─── 5 컬럼 ─── */
+.cols{position:absolute;left:82px;right:82px;top:203px;height:348px;display:flex;background:#fff}
+.col{flex:1;position:relative;min-width:0;padding:22px 24px 24px}
+.col+.col{border-left:1px solid #c3ccdf}
+.col .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
+ transform:skewX(-9deg);display:inline-block;color:#c7d0e6}
+.col h2{margin-top:10px;font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#1e4be8}
+
+.col .tg{display:inline-block;margin:0 7px 0 0;vertical-align:middle;position:relative;top:-1px}
+.tg{display:inline-block;margin-left:8px;font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;
+ padding:4px 7px;border-radius:5px;background:#eef2ff;color:#2b5ce6;vertical-align:middle}
+.tg2{background:#eef2ff;color:#2b5ce6}
+.merge .hl{margin-top:8px;font-size:15px;font-weight:800;letter-spacing:-.4px;color:#a9ff5e}
+.col p{margin-top:9px;font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
+ color:#4b5563;word-break:keep-all}
+.col .m{position:absolute;left:0;right:26px;bottom:16px;
+ font:700 11px/1.6 ui-monospace,Menlo,monospace;color:#bfe25a;word-break:keep-all}
+.col+.col .m{left:26px}
+
+/* ─── 6 병합 셀 (1~5 를 하나로) ─── */
+.merge{position:absolute;left:82px;right:82px;top:551px;height:168px;display:flex;align-items:center;
+ background:#fff;
+ gap:30px;padding:0 4px}
+.merge .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
+ transform:skewX(-9deg);display:inline-block;color:#c7d0e6;flex:none}
+.merge .tx{flex:none;width:510px}
+.merge h2{font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#1e4be8}
+.merge h2 span{color:#a9ff5e}
+.merge p{margin-top:10px;font-size:13px;font-weight:500;line-height:1.7;letter-spacing:-.3px;
+ color:#4b5563;word-break:keep-all}
+.merge .bul{flex:1;border-left:1px solid #c3ccdf;padding-left:30px;list-style:none}
+.merge .bul li{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;
+ line-height:1.5;letter-spacing:-.3px;color:#111827;padding:4px 0}
+.merge .bul li::before{content:"";width:7px;height:7px;border-radius:50%;background:#a9ff5e;flex:none}
+.merge .m{flex:none;font:700 11px/1.6 ui-monospace,Menlo,monospace;color:#98a1b2;
+ text-align:right;width:150px}
+
+/* ─── 하단 ─── */
+.concl{position:absolute;left:0;right:0;top:747px;text-align:center;
+ font-size:26px;font-weight:800;line-height:1.6;letter-spacing:-.4px;color:#111827}
+
+/* ── 08장 카드 형식 (수치·진행바·비율) ── */
+.col .cv{font:800 28px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:13px;color:#111827}
+.col .cv em,.merge .cv em{font-style:normal;font-size:13px;font-weight:700;color:#98a1b2;margin-left:5px;letter-spacing:0}
+.col .cb{height:6px;border-radius:99px;background:#e7ecf7;margin-top:12px;overflow:hidden;width:100%}
+.col .cb i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1e4be8,#5b83ff)}
+.col .cp{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:9px}
+.merge .cv{font:800 30px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:8px;color:#111827}
+</style></head><body>
+<div class="slide"><div id="stage">
+
+ <h1>MATCHING STATUS</h1>
+ <div class="h1s">저자행 5,280,301줄이 어디로 갈렸고, 그중 엔진이 실제로 판정한 것은 얼마인가</div>
+
+ <div class="rule r1"></div>
+ <div class="cols" id="cols"></div>
+ <div class="rule r2"></div>
+
+ <div class="merge">
+  <span class="n">6</span>
+  <div class="tx">
+   <h2>저자행<span class="tg">TOTAL</span></h2>
+   <div class="cv">5,280,301<em>줄</em></div>
+   <p>논문 140,850편에서 파싱한 전체 저자행. 위 세 갈래로 나뉜 뒤 확정분만 성과가 된다.</p>
+  </div>
+  <ul class="bul"><li>교내 확정 356,232 · 6.7%</li><li>외부 저자 2,618,171 · 49.6%</li><li>미분류 2,305,898 · 43.7%</li></ul>
+  <div class="m">기준 2026-08-25<br>성균관대 · BK21</div>
+ </div>
+ <div class="rule r3"></div>
+
+ <div class="concl">확정 356,232줄 가운데 엔진이 실제로 판정한 것은 8,302줄이다</div>
+</div></div>
+
+<script>
+/* ══ 근거 ══ docs/BIBLO_전기능_전체지도.md §0 「구조 — 코어 백본 + 6개 솔루션」 표 그대로 ══ */
+const S=[{"n": "1", "name": "교내 확정", "tag": "LINKED", "hl": "356,232", "unit": "줄", "pct": 6.7, "d": "성균관대 구성원으로 판별돼 사번이 붙은 저자행. 이 행만 성과 집계에 들어간다.", "m": "전체의 6.7%"}, {"n": "2", "name": "외부 저자", "tag": "EXTERNAL", "hl": "2,618,171", "unit": "줄", "pct": 49.6, "d": "교외 소속으로 확인된 공저자. 사번은 없지만 이름·소속·ORCID 를 보존해 협력망 분석에 쓴다.", "m": "전체의 49.6%"}, {"n": "3", "name": "미분류", "tag": "PENDING", "hl": "2,305,898", "unit": "줄", "pct": 43.7, "d": "교내·교외 판정을 아직 내리지 못한 저자행. 소속 문자열이 없거나 판별 신호가 부족하다.", "m": "전체의 43.7%"}, {"n": "4", "name": "확정 인물", "tag": "PEOPLE", "hl": "11,930", "unit": "명", "pct": 100, "d": "확정된 저자행이 붙은 성균관대 구성원 수. 동명이인을 갈라 한 사람으로 묶은 결과다.", "m": "논문 140,850편 기준"}, {"n": "5", "name": "엔진 판정", "tag": "ENGINE", "hl": "8,302", "unit": "줄", "pct": 2.3, "d": "확정 356,232줄에서 제출 원장 연결분을 뺀 값. 판별 엔진이 실제로 판정한 몫이다.", "m": "확정의 2.3%"}];;
+document.getElementById('cols').innerHTML = S.map(c=>`
+ <div class="col">
+   <span class="n">${c.n}</span>
+   <h2>${c.name}<span class="tg">${c.tag}</span></h2>
+   <div class="cv">${c.hl}<em>${c.unit}</em></div>
+   <div class="cb"><i style="width:${c.pct}%"></i></div>
+   <div class="cp">${c.m}</div>
+   <p>${c.d}</p>
+ </div>`).join('');
+
+const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();
+addEventListener('resize',fit);
+addEventListener('pageshow',fit);
+addEventListener('load',fit);
+if(window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+</script></body></html>
