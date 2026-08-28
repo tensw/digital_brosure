@@ -17,10 +17,10 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 
 /* ─── 규칙선 ─── */
 .rule{position:absolute;left:82px;right:82px;height:1px;background:#c3ccdf;z-index:3}
-.r1{top:203px} .r2{top:551px} .r3{top:719px}
+.r1{top:203px} .r2{top:487px}
 
 /* ─── 5 컬럼 ─── */
-.cols{position:absolute;left:82px;right:82px;top:203px;height:348px;display:flex;background:#fff}
+.cols{position:absolute;left:82px;right:82px;top:203px;height:284px;display:flex;background:#fff}
 .col{flex:1;position:relative;min-width:0;padding:22px 24px 24px}
 .col+.col{border-left:1px solid #c3ccdf}
 .col .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
@@ -31,7 +31,6 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 .tg{display:inline-block;margin-left:8px;font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;
  padding:4px 7px;border-radius:5px;background:#eef2ff;color:#2b5ce6;vertical-align:middle}
 .tg2{background:#eef2ff;color:#2b5ce6}
-.merge .hl{margin-top:8px;font-size:15px;font-weight:800;letter-spacing:-.4px;color:#a9ff5e}
 .col p{margin-top:9px;font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
  color:#4b5563;word-break:keep-all}
 .col .m{position:absolute;left:0;right:26px;bottom:16px;
@@ -39,34 +38,49 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 .col+.col .m{left:26px}
 
 /* ─── 6 병합 셀 (1~5 를 하나로) ─── */
-.merge{position:absolute;left:82px;right:82px;top:551px;height:168px;display:flex;align-items:center;
- background:#fff;
- gap:30px;padding:0 4px}
-.merge .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
- transform:skewX(-9deg);display:inline-block;color:#c7d0e6;flex:none}
-.merge .tx{flex:none;width:510px}
-.merge h2{font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#1e4be8}
-.merge h2 span{color:#a9ff5e}
-.merge p{margin-top:10px;font-size:13px;font-weight:500;line-height:1.7;letter-spacing:-.3px;
- color:#4b5563;word-break:keep-all}
-.merge .bul{flex:1;border-left:1px solid #c3ccdf;padding-left:30px;list-style:none}
-.merge .bul li{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;
- line-height:1.5;letter-spacing:-.3px;color:#111827;padding:4px 0}
-.merge .bul li::before{content:"";width:7px;height:7px;border-radius:50%;background:#a9ff5e;flex:none}
-.merge .m{flex:none;font:700 11px/1.6 ui-monospace,Menlo,monospace;color:#98a1b2;
- text-align:right;width:150px}
 
 /* ─── 하단 ─── */
-.concl{position:absolute;left:0;right:0;top:747px;text-align:center;
- font-size:26px;font-weight:800;line-height:1.6;letter-spacing:-.4px;color:#111827}
 
 /* ── 08장 카드 형식 (수치·진행바·비율) ── */
 .col .cv{font:800 28px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:13px;color:#111827}
-.col .cv em,.merge .cv em{font-style:normal;font-size:13px;font-weight:700;color:#98a1b2;margin-left:5px;letter-spacing:0}
+.col .cv em{font-style:normal;font-size:13px;font-weight:700;color:#98a1b2;margin-left:5px;letter-spacing:0}
 .col .cb{height:6px;border-radius:99px;background:#e7ecf7;margin-top:12px;overflow:hidden;width:100%}
 .col .cb i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1e4be8,#5b83ff)}
 .col .cp{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:9px}
-.merge .cv{font:800 30px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:8px;color:#111827}
+
+/* ══ 18번(bk21-match-light26.html) 가운데 컨텐츠 이식 ══════════════════
+   레이아웃(2단 박스·헤더 띠·블록 구분선·태그행·결과 알약)은 18번 그대로.
+   아래 세 가지만 이 장(11번)의 DNA 로 덮는다.
+     가로   좌우 82px 열 · 두 칸 균등 분할 (11번은 5칸 균등이 기준이다)
+     타이틀 20px / 800 / -.6px          (11번 .col h2)
+     본문   14.5px / 500 / 1.5 / -.3px  (11번 .col p)
+   18번 원래 값은 헤더 14.5px · 소제목 14px · 본문 12.5px 로 더 작다. */
+.two-gx39{position:absolute;left:82px;right:82px;top:499px;
+ display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.bx-gx39{background:#fff;border-radius:14px;overflow:hidden;
+ box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 30px -22px rgba(30,92,240,.35)}
+.bh-gx39{background:linear-gradient(100deg,#4b8cff,#1e5cf0);color:#fff;text-align:center;
+ padding:10px;font-size:20px;font-weight:800;letter-spacing:-.6px}
+.bb-gx39{padding:15px 22px 16px}
+.blk-gx39{padding-bottom:11px;margin-bottom:11px;border-bottom:1px solid #eef1f7}
+.blk-gx39:last-child{border-bottom:0;padding-bottom:0;margin-bottom:0}
+.bt-gx39{font-size:20px;font-weight:800;color:#1e5cf0;letter-spacing:-.6px;
+ border-bottom:1.5px solid #d7e3ff;padding-bottom:9px;position:relative}
+.bt-gx39:after{content:"\203A";position:absolute;right:0;top:-2px;color:#b9c8e8;font-size:18px}
+.ul-gx39{list-style:none;margin-top:9px}
+.ul-gx39 li{position:relative;padding-left:16px;font-size:14.5px;font-weight:500;line-height:1.5;
+ letter-spacing:-.3px;color:#4b5563;margin-top:4px}
+.ul-gx39 li:before{content:"";position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;background:#1e5cf0}
+.ul-gx39 li b{color:#111827;font-weight:700}
+.rows-gx39{margin-top:11px}
+.rw-gx39{display:flex;align-items:flex-start;gap:14px;padding:4px 0}
+.rw-gx39 .tg-gx39{flex:none;width:62px;text-align:center;border-radius:8px;background:#eef2f8;color:#3f4759;
+ font:800 13px/1 inherit;padding:9px 0}
+.rw-gx39 .tx-gx39{font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;color:#4b5563}
+.rw-gx39 .tx-gx39 b{color:#111827;font-weight:700}
+.arw-gx39{text-align:center;color:#9dbaff;font-size:20px;line-height:1;margin:3px 0 6px}
+.res-gx39{border-radius:999px;background:linear-gradient(100deg,#4b8cff,#1e5cf0);color:#fff;
+ text-align:center;padding:10px;font-size:20px;font-weight:800;letter-spacing:-.6px}
 </style></head><body>
 <div class="slide"><div id="stage">
 
@@ -77,19 +91,45 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
  <div class="cols" id="cols"></div>
  <div class="rule r2"></div>
 
- <div class="merge">
-  <span class="n">6</span>
-  <div class="tx">
-   <h2>저자행<span class="tg">TOTAL</span></h2>
-   <div class="cv">5,280,301<em>줄</em></div>
-   <p>논문 140,850편에서 파싱한 전체 저자행. 위 세 갈래로 나뉜 뒤 확정분만 성과가 된다.</p>
-  </div>
-  <ul class="bul"><li>교내 확정 356,232 · 6.7%</li><li>외부 저자 2,618,171 · 49.6%</li><li>미분류 2,305,898 · 43.7%</li></ul>
-  <div class="m">기준 2026-08-25<br>성균관대 · BK21</div>
- </div>
- <div class="rule r3"></div>
+ <!-- 18번(bk21-match-light26.html)의 가운데 컨텐츠(배경/목적 2단)를 그대로 옮겼다.
+      마크업·클래스 이름(-gx39)은 원본 그대로. 글자 크기와 가로 폭만 이 장(11번) 값으로 덮는다. -->
+ <div class="two-gx39">
+  <div class="bx-gx39"><div class="bh-gx39">배경</div><div class="bb-gx39">
+   <div class="blk-gx39">
+    <div class="bt-gx39">저자행은 많은데 사람에 닿지 않는다</div>
+    <ul class="ul-gx39">
+     <li>저자행 <b>5,280,301</b>줄 중 교내로 확정된 것은 <b>356,232</b>줄, 전체의 <b>6.7%</b></li>
+     <li>미분류가 <b>2,305,898</b>줄(43.7%)로 남아 있다</li>
+     <li>소속 문자열이 없거나 판별 신호가 부족한 행이 대부분</li>
+    </ul>
+   </div>
+   <div class="blk-gx39">
+    <div class="bt-gx39">확정분도 대부분 엔진이 만든 것이 아니다</div>
+    <ul class="ul-gx39">
+     <li>확정 356,232줄 중 <b>356,017</b>줄은 제출 원장에서 직접 이어붙인 행</li>
+     <li>판별 엔진이 실제로 판정한 것은 <b>8,302</b>줄</li>
+     <li>원장 연결분은 <b>제출 명부가 정확하다는 전제</b> 위에 서 있다</li>
+    </ul>
+   </div>
+  </div></div>
 
- <div class="concl">확정 356,232줄 가운데 엔진이 실제로 판정한 것은 8,302줄이다</div>
+  <div class="bx-gx39"><div class="bh-gx39">목적</div><div class="bb-gx39">
+   <ul class="ul-gx39">
+    <li>미분류 저자행을 줄여 <b>성과 집계 대상</b>을 넓힌다</li>
+    <li>원장 의존을 낮추고 <b>엔진 판정 비율</b>을 올린다</li>
+   </ul>
+   <div class="rows-gx39">
+    <div class="rw-gx39"><span class="tg-gx39">단기</span><span class="tx-gx39">
+     식별자 보유 행부터 회수한다. AUID <b>858,249</b> · ORCID <b>85,577</b>이 이미 저자행에 붙어 있다.</span></div>
+    <div class="rw-gx39"><span class="tg-gx39">중기</span><span class="tx-gx39">
+     소속 문자열이 있는 <b>4,121,282</b>줄에 이름+소속 규칙과 LLM 판별을 확대 적용한다.</span></div>
+    <div class="rw-gx39"><span class="tg-gx39">장기</span><span class="tx-gx39">
+     확정이 지문·공저망을 갱신하고 그 지문이 다음 판정을 돕는 <b>선순환</b>을 굳힌다.</span></div>
+   </div>
+   <div class="arw-gx39">▼</div>
+   <div class="res-gx39">엔진 판정분 8,302줄 → 원장 의존 없는 확정으로</div>
+  </div></div>
+ </div>
 </div></div>
 
 <script>
