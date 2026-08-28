@@ -1,0 +1,84 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BK21 저자 매칭 — 정제가 만든 변화</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ -webkit-font-smoothing:antialiased;color:#111827}
+body{background:#fff;min-height:100vh}
+.pg-61iu{width:1600px;margin:0;padding:56 82px 52px}
+.kk-61iu{font:700 12.5px/1 inherit;color:#3b7bf6}
+h1{font-size:26px;font-weight:800;letter-spacing:-.9px;margin-top:14px}
+.grid-61iu{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:34px}
+.big-61iu{grid-row:span 2;background:#f5f7fc;border-radius:16px;padding:34px 36px 38px}
+.sm-61iu{background:#f5f7fc;border-radius:16px;padding:28px 32px;position:relative;overflow:hidden}
+h2{font-size:20px;font-weight:800;letter-spacing:-.7px;line-height:1.5}
+h2 span{color:#3b7bf6}
+h2 em{font-style:normal;font-size:13px;font-weight:700;color:#8b95a8;margin-left:6px}
+.p-61iu{font-size:12.5px;line-height:1.9;color:#5b6474;margin-top:14px}
+.cmp-61iu{margin-top:34px;padding-left:14px;border-left:2px solid #dbe1ee}
+.rw-61iu{display:flex;align-items:center;gap:14px;margin-top:14px}
+.rw-61iu i{display:block;height:52px;border-radius:9px}
+.rw-61iu .lb-61iu{font-size:12.5px;font-weight:800;letter-spacing:-.2px}
+.rw-61iu .lb-61iu u{display:block;text-decoration:none;font-size:10.5px;font-weight:600;color:#9aa4b8;margin-top:4px}
+.ic-61iu{position:absolute;right:30px;top:50%;transform:translateY(-50%);opacity:.9}
+</style></head><body>
+<div class="stg2026"><div id="stg2026">
+<div class="pg-61iu">
+ <div class="kk-61iu">Achieved</div>
+ <h1>게재처 정규화와 저자 정제가 만든 변화</h1>
+
+ <div class="grid-61iu">
+  <div class="big-61iu">
+   <h2>등급 미상 논문이<br><span>23.0%로 줄었어요</span><em>(정규화 전 대비)</em></h2>
+   <p class="p-61iu">게재처 표기가 원천마다 흩어져 있어 저널 등급을 붙이지 못한 논문이 많았습니다.
+    ISSN 기준으로 게재처를 통합해 <b>17,101 → 13,872</b>(중복 18.9%)로 줄이고,
+    게재처 중앙값으로 등급을 보강해 미상 비율을 40.3%에서 23.0%로 낮췄습니다.</p>
+   <div class="cmp-61iu">
+    <div class="rw-61iu"><i style="width:82%;background:#e3e8f2"></i>
+     <span class="lb-61iu">40.3%<u>정규화 전</u></span></div>
+    <div class="rw-61iu"><i style="width:47%;background:#7ba6ff"></i>
+     <span class="lb-61iu">23.0%<u>중앙값 보강 후</u></span></div>
+   </div>
+  </div>
+
+  <div class="sm-61iu">
+   <h2>게재처 정본이<br><span>13,872건으로 정리</span></h2>
+   <p class="p-61iu">같은 저널이 원천마다 다르게 적혀 있던 것을 ISSN 으로 묶었습니다.
+    자리표시 ISSN 7개는 이름으로 예외 처리하고, 시리즈 18건에 플래그를 달았습니다.</p>
+   <svg class="ic-61iu" width="46" height="46" viewBox="0 0 24 24" fill="none"
+     stroke="#9dbcff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 6h16M4 12h16M4 18h10"/></svg>
+  </div>
+
+  <div class="sm-61iu">
+   <h2>확정 인물이<br><span>11,930명</span></h2>
+   <p class="p-61iu">저자행 <b>5,280,301</b>줄에서 동명이인을 갈라 <b>11,930</b>명을 확정했습니다.
+    1인당 평균 <b>29.9</b>줄이 붙습니다.</p>
+   <svg class="ic-61iu" width="46" height="46" viewBox="0 0 24 24" fill="#9dbcff">
+    <circle cx="9" cy="8" r="3.4"/><path d="M2.6 20a6.4 6.4 0 0 1 12.8 0z"/>
+    <circle cx="17.4" cy="9" r="2.6"/><path d="M15.8 20a5.4 5.4 0 0 1 5.6-5.2V20z"/></svg>
+  </div>
+ </div>
+</div></div></div>
+<style>
+/* ── 2장 규칙 승계: 1600x900 무대 · 좌우 82px · min(vw/1600, vh/900) 배율 ── */
+html,body{overflow:hidden}
+.stg2026{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stg2026{position:absolute;left:50%;top:50%;width:1600px;transform-origin:50% 50%}
+</style>
+<script>
+(function(){
+ function fit(){
+  var st=document.getElementById('stg2026'); if(!st)return;
+  var h=st.scrollHeight;   // 최상위 형제가 여럿일 수 있어 무대 전체 높이로 잰다
+  var SH=Math.max(900,h); st.style.height=SH+'px';
+  var k=Math.min(innerWidth/1600, innerHeight/SH);
+  st.style.transform='translate(-50%,-50%) scale('+k.toFixed(4)+')';
+ }
+ fit(); addEventListener('resize',fit); addEventListener('load',fit);
+ addEventListener('pageshow',fit);
+ if(window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
+ if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+})();
+</script>
+</body></html>

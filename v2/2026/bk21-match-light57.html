@@ -1,0 +1,194 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BK21 저자 매칭 현황 — 라이트</title>
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--ink:#111827;--ink2:#4b5563;--ink3:#98a1b2;
+ --bl:#1e4be8;--bl2:#2b5ce6;--soft:#eef2ff;--line:#e3e8f2}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+.slide-53fi{width:1600px;margin:0;padding:46 82px 30px;position:relative}
+.slide-53fi + .slide-53fi{border-top:1px solid var(--line);min-height:auto;padding-top:56px}
+
+/* 상단 라벨 쌍 */
+.tags-53fi{display:flex;gap:8px;align-items:center}
+.tag-53fi{border-radius:999px;padding:7px 17px;font:700 12.5px/1 inherit;letter-spacing:-.1px}
+.tag-53fi.b-53fi{background:var(--bl);color:#fff}
+.tag-53fi.g-53fi{background:#e7ebf3;color:#5b6474}
+
+/* 제목 줄 */
+.tl-53fi{display:flex;align-items:flex-end;gap:36px;margin-top:24px;flex-wrap:wrap}
+h1{font-size:40px;font-weight:800;letter-spacing:-1.5px;line-height:1.24;flex:1;min-width:min(100%,520px)}
+h1 span{color:var(--bl)}
+.sub-53fi{font-size:12.5px;line-height:1.85;color:var(--ink2);max-width:34ch;text-align:right;padding-bottom:6px}
+.sub-53fi b{color:var(--ink);font-weight:700}
+
+/* 카드 3장 */
+.cards-53fi{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+.card-53fi{background:var(--card);border-radius:18px;padding:26px 26px 28px;
+ box-shadow:0 1px 2px rgba(17,24,39,.04),0 10px 28px -18px rgba(17,24,39,.18)}
+.cn-53fi{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:var(--ink3)}
+.card-53fi h3{font-size:20px;font-weight:800;letter-spacing:-.6px;color:var(--bl);margin-top:15px}
+.cv-53fi{font:800 30px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:14px}
+.cv-53fi em{font-style:normal;font-size:13px;font-weight:700;color:var(--ink3);margin-left:5px;letter-spacing:0}
+.cb-53fi{height:6px;border-radius:99px;background:#eaeefa;margin-top:13px;overflow:hidden}
+.cb-53fi i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--bl),#5b83ff)}
+.cp-53fi{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:var(--ink3);margin-top:9px;letter-spacing:.02em}
+.cp-53fi b{color:var(--bl2)}
+.card-53fi p{font-size:12.5px;line-height:1.8;color:var(--ink2);margin-top:14px}
+
+/* 카드 → 결론 박스 연결선 */
+.link-53fi{height:56px;position:relative}
+.link-53fi svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+
+/* 결론 박스 */
+.concl-53fi{background:var(--bl);border-radius:14px;padding:26px 34px 30px;text-align:center;color:#fff}
+.concl-53fi h2{font-size:16.5px;font-weight:800;letter-spacing:-.4px}
+.concl-53fi p{font-size:12.5px;line-height:1.95;color:rgba(255,255,255,.86);margin-top:13px;
+ max-width:96ch;margin-left:auto;margin-right:auto}
+.concl-53fi p b{color:#fff;font-weight:700}
+
+/* 판별 레이어 표 */
+.tbl-53fi{width:100%;border-collapse:collapse;margin-top:26px;background:var(--card);
+ border-radius:16px;overflow:hidden;box-shadow:0 10px 28px -20px rgba(17,24,39,.2)}
+.tbl-53fi th{text-align:left;font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;
+ color:var(--ink3);padding:15px 20px;border-bottom:1px solid var(--line)}
+.tbl-53fi td{padding:13px 20px;font-size:12.5px;border-bottom:1px solid #f0f3f9;vertical-align:middle}
+.tbl-53fi tr:last-child td{border-bottom:0}
+.lt-53fi{font-weight:800;white-space:nowrap;width:150px}
+.lb-53fi{width:210px}
+.lb-53fi i{display:block;height:7px;min-width:6px;border-radius:99px;background:linear-gradient(90deg,var(--bl),#7ea0ff)}
+.lv-53fi{font:800 13px/1 ui-monospace,Menlo,monospace;text-align:right;width:96px;letter-spacing:-.4px}
+.ld-53fi{color:var(--ink2)}
+
+/* 푸터 */
+.ft-53fi{margin-top:34px;padding-top:22px;display:flex;justify-content:space-between;
+ border-top:1px solid var(--line);font:700 10.5px/1 ui-monospace,Menlo,monospace;
+ letter-spacing:.16em;color:var(--ink3)}
+.note-53fi{font-size:12px;line-height:1.9;color:var(--ink2);margin-top:22px}
+.note-53fi b{color:var(--ink)}
+@media(max-width:900px){.cards-53fi{grid-template-columns:1fr}.link-53fi{display:none}
+ h1{font-size:30px}.sub-53fi{text-align:left;max-width:none}}
+</style></head><body>
+<div class="stg2026"><div id="stg2026">
+
+<section class="slide-53fi">
+ <div class="tags-53fi"><span class="tag-53fi b-53fi">Matching</span><span class="tag-53fi g-53fi">저자 매칭 현황</span></div>
+ <div class="tl-53fi">
+  <h1>저자행 528만 줄이<br><span>세 갈래로 갈린다</span></h1>
+  <div class="sub-53fi">논문 한 편에는 저자가 여럿 있고, 그 저자를 성균관대 사람과 이어붙이는 것이 매칭이다.
+   기준 <b>2026-08-25</b> · 논문 <b>140,850</b>편 · 확정 인물 <b>11,930</b>명</div>
+ </div>
+
+ <div class="cards-53fi">
+   <article class="card-53fi">
+    <div class="cn-53fi">GROUP 01</div>
+    <h3>교내 확정</h3>
+    <div class="cv-53fi">356,232<em>줄</em></div>
+    <div class="cb-53fi"><i style="width:6.7%"></i></div>
+    <div class="cp-53fi">전체의 6.7% · <b>LINKED</b></div>
+    <p>성균관대 구성원으로 판별돼 사번이 붙은 저자행. 이 행만 성과 집계에 들어간다.</p>
+   </article>
+   <article class="card-53fi">
+    <div class="cn-53fi">GROUP 02</div>
+    <h3>외부 저자</h3>
+    <div class="cv-53fi">2,618,171<em>줄</em></div>
+    <div class="cb-53fi"><i style="width:49.6%"></i></div>
+    <div class="cp-53fi">전체의 49.6% · <b>EXTERNAL</b></div>
+    <p>교외 소속으로 확인된 공저자. 사번은 없지만 이름·소속·ORCID 를 보존해 협력망 분석에 쓴다.</p>
+   </article>
+   <article class="card-53fi">
+    <div class="cn-53fi">GROUP 03</div>
+    <h3>미분류</h3>
+    <div class="cv-53fi">2,305,898<em>줄</em></div>
+    <div class="cb-53fi"><i style="width:43.7%"></i></div>
+    <div class="cp-53fi">전체의 43.7% · <b>PENDING</b></div>
+    <p>교내·교외 판정을 아직 내리지 못한 저자행. 소속 문자열이 없거나 판별 신호가 부족하다.</p>
+   </article>
+ </div>
+
+ <div class="link-53fi"><svg viewBox="0 0 1160 56" preserveAspectRatio="none">
+   <path d="M193 0 V26 Q193 38 205 38 H955 Q967 38 967 26 V0" fill="none" stroke="#c3cfee" stroke-width="1.4"/>
+   <path d="M580 0 V38" fill="none" stroke="#c3cfee" stroke-width="1.4"/>
+   <path d="M580 38 V56" fill="none" stroke="#1e4be8" stroke-width="1.6"/>
+  </svg></div>
+
+ <div class="concl-53fi">
+  <h2>확정 356,232줄 가운데 엔진이 실제로 판정한 것은 8,302줄이다</h2>
+  <p>교내 확정 356,232줄 중 <b>356,017줄</b>은 BK21·RIMS 제출 원장에서 직접 이어붙인 것으로 판별 엔진을 거치지 않았다.
+   원장 연결분은 <b>제출 명부가 정확하다는 전제</b> 위에 서 있다.
+   미분류 2,305,898줄(43.7%)은 소속 문자열이 없거나 판별 신호가 부족해 아직 갈래가 정해지지 않았다.</p>
+ </div>
+
+ <div class="ft-53fi"><span>MATCHING</span><span>BK21 STATUS. 01</span></div>
+</section>
+
+<section class="slide-53fi">
+ <div class="tags-53fi"><span class="tag-53fi b-53fi">Layers</span><span class="tag-53fi g-53fi">판별 레이어</span></div>
+ <div class="tl-53fi">
+  <h1>확정은 <span>여덟 갈래 근거</span>로 나뉜다</h1>
+  <div class="sub-53fi">교내 확정 356,232줄이 어떤 근거로 붙었는지. 막대는 가장 큰 항목 대비 비율이다.</div>
+ </div>
+
+ <table class="tbl-53fi">
+  <thead><tr><th>근거</th><th>비중</th><th style="text-align:right">저자행</th><th>설명</th></tr></thead>
+  <tbody>
+    <tr><td class="lt-53fi">원장 연결</td>
+     <td class="lb-53fi"><i style="width:100.0%"></i></td>
+     <td class="lv-53fi">356,017</td><td class="ld-53fi">BK21·RIMS 제출 원장에서 직접 이어붙인 행. 판별 엔진을 타지 않았다.</td></tr>
+    <tr><td class="lt-53fi">L1 · 식별자</td>
+     <td class="lb-53fi"><i style="width:1.1%"></i></td>
+     <td class="lv-53fi">3,785</td><td class="ld-53fi">Scopus AUID · ORCID · 이메일 같은 고유 식별자 일치</td></tr>
+    <tr><td class="lt-53fi">L2 · 이름+소속</td>
+     <td class="lb-53fi"><i style="width:0.7%"></i></td>
+     <td class="lv-53fi">2,391</td><td class="ld-53fi">전체 이름과 성균관대 소속 문자열이 함께 일치</td></tr>
+    <tr><td class="lt-53fi">L4 · LLM 판별</td>
+     <td class="lb-53fi"><i style="width:0.3%"></i></td>
+     <td class="lv-53fi">898</td><td class="ld-53fi">분야·저널·공저자 지문을 LLM 이 교차검증</td></tr>
+    <tr><td class="lt-53fi">U 접두 규칙</td>
+     <td class="lb-53fi"><i style="width:0.2%"></i></td>
+     <td class="lv-53fi">854</td><td class="ld-53fi">학번·사번 접두 규칙으로 자동 연결</td></tr>
+    <tr><td class="lt-53fi">HITL · 사람검토</td>
+     <td class="lb-53fi"><i style="width:0.1%"></i></td>
+     <td class="lv-53fi">207</td><td class="ld-53fi">담당자가 직접 확인해 확정</td></tr>
+    <tr><td class="lt-53fi">논문 병합</td>
+     <td class="lb-53fi"><i style="width:0.0%"></i></td>
+     <td class="lv-53fi">154</td><td class="ld-53fi">DOI 중복 통합 과정에서 승계</td></tr>
+    <tr><td class="lt-53fi">L3 · 확률</td>
+     <td class="lb-53fi"><i style="width:0.0%"></i></td>
+     <td class="lv-53fi">13</td><td class="ld-53fi">확률 모형 판정</td></tr>
+  </tbody>
+ </table>
+
+ <div class="note-53fi">
+  <b>대상 범위.</b> 저자 정보가 끝까지 파싱된 논문 140,850편의 저자행이다.
+  BIBLO 전체 논문 원장은 이보다 크며, 저자 파싱이 끝나지 않은 논문은 이 화면에 포함되지 않는다.<br>
+  <b>읽는 법.</b> 원장 연결 356,017줄을 빼면 엔진 판정분은 8,302줄이다.
+  이 8,302줄이 판별 엔진의 실제 작동 범위다.
+ </div>
+
+ <div class="ft-53fi"><span>LAYERS</span><span>BK21 STATUS. 02</span></div>
+</section>
+</div></div>
+<style>
+/* ── 2장 규칙 승계: 1600x900 무대 · 좌우 82px · min(vw/1600, vh/900) 배율 ── */
+html,body{overflow:hidden}
+.stg2026{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stg2026{position:absolute;left:50%;top:50%;width:1600px;transform-origin:50% 50%}
+</style>
+<script>
+(function(){
+ function fit(){
+  var st=document.getElementById('stg2026'); if(!st)return;
+  var h=st.scrollHeight;   // 최상위 형제가 여럿일 수 있어 무대 전체 높이로 잰다
+  var SH=Math.max(900,h); st.style.height=SH+'px';
+  var k=Math.min(innerWidth/1600, innerHeight/SH);
+  st.style.transform='translate(-50%,-50%) scale('+k.toFixed(4)+')';
+ }
+ fit(); addEventListener('resize',fit); addEventListener('load',fit);
+ addEventListener('pageshow',fit);
+ if(window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
+ if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+})();
+</script>
+</body></html>
