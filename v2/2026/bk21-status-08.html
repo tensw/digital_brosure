@@ -16,25 +16,14 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
  color:#4b5563}
 
 /* ─── 규칙선 ─── */
-.rule{position:absolute;left:82px;right:82px;height:1px;background:#c3ccdf;z-index:3}
-.r1{top:203px} .r2{top:551px}
 
 /* ─── 5 컬럼 ─── */
-.cols{position:absolute;left:82px;right:82px;top:203px;height:348px;display:flex;background:#fff}
 .col{flex:1;position:relative;min-width:0;padding:22px 24px 24px}
 .col+.col{border-left:1px solid #c3ccdf}
-.col .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
- transform:skewX(-9deg);display:inline-block;color:#c7d0e6}
-.col h2{margin-top:10px;font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#1e4be8}
 
-.col .tg{display:inline-block;margin:0 7px 0 0;vertical-align:middle;position:relative;top:-1px}
 .tg{display:inline-block;margin-left:8px;font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;
  padding:4px 7px;border-radius:5px;background:#eef2ff;color:#2b5ce6;vertical-align:middle}
 .tg2{background:#eef2ff;color:#2b5ce6}
-.col p{margin-top:9px;font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
- color:#4b5563;word-break:keep-all}
-.col .m{position:absolute;left:0;right:26px;bottom:16px;
- font:700 11px/1.6 ui-monospace,Menlo,monospace;color:#bfe25a;word-break:keep-all}
 .col+.col .m{left:26px}
 
 /* ─── 6 병합 셀 (1~5 를 하나로) ─── */
@@ -42,17 +31,13 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 /* ─── 하단 ─── */
 
 /* ── 08장 카드 형식 (수치·진행바·비율) ── */
-.col .cv{font:800 28px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:13px;color:#111827}
-.col .cv em{font-style:normal;font-size:13px;font-weight:700;color:#98a1b2;margin-left:5px;letter-spacing:0}
-.col .cb{height:6px;border-radius:99px;background:#e7ecf7;margin-top:12px;overflow:hidden;width:100%}
-.col .cb i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1e4be8,#5b83ff)}
-.col .cp{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:9px}
 
 /* ── 15번(bk21-match-light57.html)에서 그대로 가져온 결론부 ──
    .merge(가운데 흰 박스)를 걷어낸 자리에 ㄷ자 커넥터 + 파란 박스를 넣는다.
    원본은 화면 끝까지 꽉 차는 배치지만, 이 장은 좌우 82px 안쪽으로 짜여 있어
    위 카드·구분선과 세로선이 맞도록 같은 82px 열에 맞췄다. 모양 값은 손대지 않았다. */
-.mid-53fi{position:absolute;left:82px;right:82px;top:551px}
+/* 커넥터는 카드 바로 아래에서 시작한다(15번과 같은 붙임). 카드 203~457. */
+.mid-53fi{position:absolute;left:82px;right:82px;top:457px}
 .link-53fi{height:56px;position:relative}
 .link-53fi svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .concl-53fi{background:#1e4be8;border-radius:14px;padding:26px 34px 30px;text-align:center;color:#fff}
@@ -60,15 +45,31 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 .concl-53fi p{font-size:12.5px;line-height:1.95;color:rgba(255,255,255,.86);margin-top:13px;
  max-width:96ch;margin-left:auto;margin-right:auto}
 .concl-53fi p b{color:#fff;font-weight:700}
+
+/* ── 15번(bk21-match-light57.html) 카드를 그대로 옮겼다. 값은 손대지 않았다.
+      이 장은 무대 절대배치라 자리만 잡아 준다(좌우 82px · 커넥터 위까지). ── */
+.cards-53fi{position:absolute;left:82px;right:82px;top:203px;
+ display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card-53fi{background:#fff;border-radius:18px;padding:26px 26px 28px;
+ box-shadow:0 1px 2px rgba(17,24,39,.04),0 10px 28px -18px rgba(17,24,39,.18)}
+.card-53fi h3{font-size:20px;font-weight:800;letter-spacing:-.6px;color:#1e4be8;margin-top:15px}
+.card-53fi p{font-size:12.5px;line-height:1.8;color:#4b5563;margin-top:14px}
+.cn-53fi{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:#98a1b2}
+.cv-53fi{font:800 30px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:14px;color:#111827}
+.cv-53fi em{font-style:normal;font-size:13px;font-weight:700;color:#98a1b2;margin-left:5px;letter-spacing:0}
+.cb-53fi{height:6px;border-radius:99px;background:#eaeefa;margin-top:13px;overflow:hidden}
+.cb-53fi i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1e4be8,#5b83ff)}
+.cp-53fi{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:9px;letter-spacing:.02em}
+.cp-53fi b{color:#2b5ce6}
 </style></head><body>
 <div class="slide"><div id="stage">
 
  <h1>MATCHING STATUS</h1>
  <div class="h1s">저자행 5,280,301줄이 어디로 갈렸고, 그중 엔진이 실제로 판정한 것은 얼마인가</div>
 
- <div class="rule r1"></div>
- <div class="cols" id="cols"></div>
- <div class="rule r2"></div>
+ <!-- 15번(bk21-match-light57.html)의 라운드 카드를 그대로 가져왔다.
+      앞서 쓰던 납작한 흰 슬래브 5칸(.cols/.col)과 위아래 구분선(r1·r2)은 걷어냈다. -->
+ <div class="cards-53fi" id="cards-53fi"></div>
 
  <!-- 15번(bk21-match-light57.html)의 ㄷ자 커넥터 + 파란 결론 박스를 그대로 옮겼다.
       클래스 이름(-53fi)도 원본 그대로 둔다. 이 파일에는 같은 이름이 없어 충돌하지 않는다. -->
@@ -90,16 +91,22 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 
 <script>
 /* ══ 근거 ══ docs/BIBLO_전기능_전체지도.md §0 「구조 — 코어 백본 + 6개 솔루션」 표 그대로 ══ */
-const S=[{"n": "1", "name": "교내 확정", "tag": "LINKED", "hl": "356,232", "unit": "줄", "pct": 6.7, "d": "성균관대 구성원으로 판별돼 사번이 붙은 저자행. 이 행만 성과 집계에 들어간다.", "m": "전체의 6.7%"}, {"n": "2", "name": "외부 저자", "tag": "EXTERNAL", "hl": "2,618,171", "unit": "줄", "pct": 49.6, "d": "교외 소속으로 확인된 공저자. 사번은 없지만 이름·소속·ORCID 를 보존해 협력망 분석에 쓴다.", "m": "전체의 49.6%"}, {"n": "3", "name": "미분류", "tag": "PENDING", "hl": "2,305,898", "unit": "줄", "pct": 43.7, "d": "교내·교외 판정을 아직 내리지 못한 저자행. 소속 문자열이 없거나 판별 신호가 부족하다.", "m": "전체의 43.7%"}, {"n": "4", "name": "확정 인물", "tag": "PEOPLE", "hl": "11,930", "unit": "명", "pct": 100, "d": "확정된 저자행이 붙은 성균관대 구성원 수. 동명이인을 갈라 한 사람으로 묶은 결과다.", "m": "논문 140,850편 기준"}, {"n": "5", "name": "엔진 판정", "tag": "ENGINE", "hl": "8,302", "unit": "줄", "pct": 2.3, "d": "확정 356,232줄에서 제출 원장 연결분을 뺀 값. 판별 엔진이 실제로 판정한 몫이다.", "m": "확정의 2.3%"}];;
-document.getElementById('cols').innerHTML = S.map(c=>`
- <div class="col">
-   <span class="n">${c.n}</span>
-   <h2>${c.name}<span class="tg">${c.tag}</span></h2>
-   <div class="cv">${c.hl}<em>${c.unit}</em></div>
-   <div class="cb"><i style="width:${c.pct}%"></i></div>
-   <div class="cp">${c.m}</div>
+const S=[
+ {"g":"GROUP 01","name":"교내 확정","tag":"LINKED","hl":"356,232","unit":"줄","pct":6.7,
+  "m":"전체의 6.7%","d":"성균관대 구성원으로 판별돼 사번이 붙은 저자행. 이 행만 성과 집계에 들어간다."},
+ {"g":"GROUP 02","name":"외부 저자","tag":"EXTERNAL","hl":"2,618,171","unit":"줄","pct":49.6,
+  "m":"전체의 49.6%","d":"교외 소속으로 확인된 공저자. 사번은 없지만 이름·소속·ORCID 를 보존해 협력망 분석에 쓴다."},
+ {"g":"GROUP 03","name":"미분류","tag":"PENDING","hl":"2,305,898","unit":"줄","pct":43.7,
+  "m":"전체의 43.7%","d":"교내·교외 판정을 아직 내리지 못한 저자행. 소속 문자열이 없거나 판별 신호가 부족하다."}];
+document.getElementById('cards-53fi').innerHTML = S.map(c=>`
+ <article class="card-53fi">
+   <div class="cn-53fi">${c.g}</div>
+   <h3>${c.name}</h3>
+   <div class="cv-53fi">${c.hl}<em>${c.unit}</em></div>
+   <div class="cb-53fi"><i style="width:${c.pct}%"></i></div>
+   <div class="cp-53fi">${c.m} · <b>${c.tag}</b></div>
    <p>${c.d}</p>
- </div>`).join('');
+ </article>`).join('');
 
 const SW=1600,SH=900;
 function fit(){const st=document.getElementById('stage');
