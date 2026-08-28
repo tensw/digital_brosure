@@ -47,8 +47,28 @@
 .go-7q2v8:hover{transform:scale(1.06);box-shadow:0 0 40px rgba(60,130,255,.85),inset 0 1px 0 rgba(255,255,255,.5)}
 
 /* ── 예시 질의 ── */
-.cap-7q2v8{position:absolute;left:12px;right:12px;bottom:4vh;z-index:4;text-align:center}
-.lead-7q2v8{font-size:19px;font-weight:600;letter-spacing:-.4px;color:#c4d3ee;line-height:1.6}
+.cap-7q2v8{position:absolute;left:40px;right:40px;bottom:4vh;z-index:4}
+.grid-7q2v8{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.bx-7q2v8{border:1px solid rgba(150,180,255,.18);border-radius:16px;padding:16px 17px 17px;
+ background:linear-gradient(180deg,rgba(22,30,58,.62),rgba(10,15,32,.62));backdrop-filter:blur(6px);
+ text-align:left;display:flex;flex-direction:column}
+.bx-7q2v8 .n-7q2v8{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;color:#6fc8ff}
+.bx-7q2v8 h3{margin-top:9px;font-size:15px;font-weight:800;letter-spacing:-.4px;color:#eaf0ff;line-height:1.35}
+.bx-7q2v8 .s-x{margin-top:6px;font-size:11.5px;color:#8398c2;letter-spacing:-.2px}
+.bx-7q2v8 ul{margin-top:11px;list-style:none;display:flex;flex-direction:column;gap:6px}
+.bx-7q2v8 li{position:relative;padding-left:13px;font-size:11.5px;line-height:1.55;color:#b9c8e8}
+.bx-7q2v8 li:before{content:"";position:absolute;left:0;top:7px;width:4px;height:4px;border-radius:50%;
+ background:rgba(140,200,255,.62)}
+.bx-7q2v8 .m-x{margin-top:auto;padding-top:11px;font:700 11px/1.5 ui-monospace,Menlo,monospace;color:#9fd4ff}
+.cert-7q2v8{margin-top:11px;display:flex;align-items:center;gap:10px;padding:8px 10px;cursor:pointer;
+ border:1px solid rgba(120,150,220,.3);border-radius:11px;background:rgba(12,20,42,.6);font:inherit;
+ text-align:left;transition:.16s}
+.cert-7q2v8:hover{border-color:rgba(150,190,255,.55);background:rgba(16,26,54,.85)}
+.cert-7q2v8 img{width:30px;height:42px;object-fit:cover;object-position:top;border-radius:3px;
+ border:1px solid rgba(255,255,255,.14);display:block;flex:none}
+.cert-7q2v8 s{text-decoration:none;font:700 10px/1.5 ui-monospace,Menlo,monospace;color:#9fc7ff}
+.lead-7q2v8{position:absolute;left:0;right:0;top:20%;z-index:4;text-align:center;
+ font-size:19px;font-weight:600;letter-spacing:-.4px;color:#c4d3ee;line-height:1.6}
 .lead-7q2v8 b{color:#fff;font-weight:800}
 .lead-7q2v8 em{display:block;margin-top:6px;font-style:normal;font-size:15px;color:#7f92b8}
 .modal-7q2v8{position:fixed;inset:0;z-index:60;display:none;place-items:center;
@@ -61,16 +81,6 @@
   border:1px solid rgba(255,255,255,.28);background:#0b1226;color:#dbe6ff;cursor:pointer;
   font:700 18px/1 ui-monospace,Menlo,monospace}
 .mclose-7q2v8:hover{border-color:#9fc7ff;color:#fff}
-.cert-7q2v8{cursor:pointer;font:inherit;display:inline-flex;align-items:center;gap:14px;margin-top:20px;padding:11px 18px 11px 11px;
-  border:1px solid rgba(120,150,220,.26);border-radius:14px;background:rgba(12,20,42,.6);
-  text-decoration:none;transition:.16s}
-.cert-7q2v8:hover{border-color:rgba(150,190,255,.5);background:rgba(16,26,54,.8)}
-.cert-7q2v8 img{width:38px;height:54px;object-fit:cover;object-position:top;border-radius:4px;
-  border:1px solid rgba(255,255,255,.14);display:block}
-.cert-7q2v8 span{text-align:left}
-.cert-7q2v8 b{display:block;font-size:12.5px;font-weight:800;color:#dbe6ff;letter-spacing:-.2px}
-.cert-7q2v8 s{display:block;margin-top:4px;text-decoration:none;
-  font:600 10px/1.6 ui-monospace,Menlo,monospace;color:#7186ad}
 .sug-7q2v8{position:absolute;left:50%;transform:translateX(-50%);z-index:4;
  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:min(92vw,980px);padding:0 8px}
 .s-7q2v8{border-radius:999px;padding:8px 14px;white-space:nowrap;cursor:pointer;
@@ -109,6 +119,9 @@
   <b>BIBLO SOLUTION</b><s>· AI검색엔진</s>
  </div>
 
+ <div class="lead-7q2v8">정확한 키워드에서 시작해 <b>내용의 맥락까지</b> 이어지는 검색.
+  <em>사람이 서가를 거니는 순서 그대로.</em></div>
+
  <div class="pill-7q2v8" id="pill-7q2v8">
   <svg class="plus-7q2v8" id="plus-7q2v8" viewBox="0 0 24 24" fill="none"
    stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
@@ -130,14 +143,7 @@
 
  <div class="sug-7q2v8" id="sug-7q2v8"></div>
  <div class="cap-7q2v8" id="cap-7q2v8">
-  <div class="lead-7q2v8">정확한 키워드에서 시작해 <b>내용의 맥락까지</b> 이어지는 검색.
-   <em>사람이 서가를 거니는 순서 그대로.</em></div>
-  <button class="cert-7q2v8" id="cert-7q2v8" type="button">
-   <img src="cert-search-engine.jpg" alt="비블로 검색엔진 시험성적서">
-   <span><b>AI 검색엔진 시험성적서</b>
-    <s>KOLAS 공인 · 한국녹색기후기술원 26-10082 · KS X ISO/IEC 25023:2016<br>
-     기능 정확성(FCr-1-G) · 평균 반환 시간(PTb-3-G) · 2026-08-19</s></span>
-  </button>
+  <div class="grid-7q2v8" id="grid-7q2v8"></div>
  </div>
 
  <div class="modal-7q2v8" id="modal-7q2v8" role="dialog" aria-modal="true" aria-label="AI 검색엔진 시험성적서">
@@ -173,6 +179,29 @@ const HINT_S=['키워드와 자연어를 한 창에서','내용의 결로 찾아
 const hints=()=>(innerWidth<760?HINT_S:HINT);
 sug.innerHTML=Q.map(([a,b])=>`<div class="s-${T}">${a}<u>${b}</u></div>`).join('');
 
+
+/* ── 하단 01~05 박스 ── */
+const BOX=[
+ {n:'01',t:'키워드와 자연어를<br>한 창에서',s:'통합검색',
+  li:['정확한 제목·저자·ISBN 은 그대로','문장으로 물어도 같은 창에서 받는다'],m:'1건 · 0.1초'},
+ {n:'02',t:'제목을 몰라도<br>내용의 결로',s:'시맨틱검색',
+  li:['제목·키워드가 하나도 안 겹쳐도 닿는다','책지문 벡터가 이웃을 찾는다'],m:'의미 벡터 76.0만'},
+ {n:'03',t:'사서처럼<br>되물어 좁힌다',s:'AI 사서기능',
+  li:['없으면 “이런 책은 어때요?” 로 추천','모호하면 세 문항으로 좁힌다'],m:'0건 화면이 없다'},
+ {n:'04',t:'매주 쌓이는<br>12축 책지문',s:'데이터 토대',
+  li:['책 한 권을 12개 검색 칸으로 나눠 담는다','도입 도서관이 늘수록 품질이 오른다'],m:'책지문 89.5만 · 색인어 24.6개'},
+ {n:'05',t:'인증받은<br>AI 검색엔진',s:'공인 시험성적서',
+  li:['KOLAS 공인 · 한국녹색기후기술원','기능 정확성 · 평균 반환 시간 2개 항목'],m:'KS X ISO/IEC 25023:2016',cert:1}
+];
+document.getElementById('grid-7q2v8').innerHTML=BOX.map(b=>`
+ <div class="bx-7q2v8">
+  <div class="n-7q2v8">${b.n}</div><h3>${b.t}</h3><div class="s-x">${b.s}</div>
+  <ul>${b.li.map(x=>`<li>${x}</li>`).join('')}</ul>
+  <div class="m-x">${b.m}</div>
+  ${b.cert?`<button class="cert-7q2v8" id="cert-7q2v8" type="button">
+    <img src="cert-search-engine.jpg" alt="비블로 검색엔진 시험성적서">
+    <s>성적서 26-10082<br>2026-08-19 · 크게 보기</s></button>`:''}
+ </div>`).join('');
 
 /* ── 시험성적서 레이어 팝업 ── */
 (function(){
