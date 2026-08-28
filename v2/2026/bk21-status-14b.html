@@ -1,0 +1,100 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MATCHING STATUS 14b</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;
+ overflow:visible;background:transparent}
+
+/* ─── 상단 ─── */
+h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-spacing:.5px;color:#111827}
+.h1s{position:absolute;left:82px;top:163px;font-size:16px;font-weight:600;letter-spacing:-.3px;
+ color:#4b5563}
+
+/* ─── 하단 ─── */
+.concl{position:absolute;left:0;right:0;top:747px;text-align:center;
+ font-size:26px;font-weight:800;line-height:1.6;letter-spacing:-.4px;color:#111827}
+
+
+/* ── 21장 컨텐츠 이식 · 박스 형태는 원본 그대로, 크기·가로 비율은 10장 DNA ── */
+.mid{position:absolute;left:82px;right:82px;top:203px}
+.grid-61iu{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.big-61iu{grid-row:span 2;background:#fff;border-radius:16px;padding:34px 36px 38px;
+ box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 30px -22px rgba(30,92,240,.35)}
+.sm-61iu{background:#fff;border-radius:16px;padding:28px 32px;position:relative;overflow:hidden;
+ box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 30px -22px rgba(30,92,240,.35)}
+.mid h2{font-size:20px;font-weight:800;letter-spacing:-.6px;line-height:1.5;color:#111827}
+.mid h2 span{color:#1e4be8}
+.mid h2 em{font-style:normal;font-size:13px;font-weight:700;color:#98a1b2;margin-left:6px;letter-spacing:0}
+.p-61iu{font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;color:#4b5563;
+ margin-top:14px;word-break:keep-all}
+.p-61iu b{color:#111827;font-weight:700}
+.cmp-61iu{margin-top:34px;padding-left:14px;border-left:2px solid #dbe1ee}
+.rw-61iu{display:flex;align-items:center;gap:16px;margin-top:14px}
+.rw-61iu i{display:block;height:52px;border-radius:9px;flex:none}
+.rw-61iu .lb-61iu{font:800 28px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;color:#111827}
+.rw-61iu .lb-61iu u{display:block;text-decoration:none;font:600 11.5px/1 ui-monospace,Menlo,monospace;
+ color:#98a1b2;margin-top:9px;letter-spacing:0}
+.ic-61iu{position:absolute;right:30px;top:50%;transform:translateY(-50%);opacity:.9}
+</style></head><body>
+<div class="slide"><div id="stage">
+
+ <h1>MATCHING STATUS</h1>
+ <div class="h1s">저자행 5,280,301줄이 어디로 갈렸고, 그중 엔진이 실제로 판정한 것은 얼마인가</div>
+
+ <div class="mid">
+ <div class="grid-61iu">
+   <div class="big-61iu">
+    <h2>등급 미상 논문이<br><span>23.0%로 줄었어요</span><em>(정규화 전 대비)</em></h2>
+    <p class="p-61iu">게재처 표기가 원천마다 흩어져 있어 저널 등급을 붙이지 못한 논문이 많았습니다.
+     ISSN 기준으로 게재처를 통합해 <b>17,101 → 13,872</b>(중복 18.9%)로 줄이고,
+     게재처 중앙값으로 등급을 보강해 미상 비율을 40.3%에서 23.0%로 낮췄습니다.</p>
+    <div class="cmp-61iu">
+     <div class="rw-61iu"><i style="width:82%;background:#e3e8f2"></i>
+      <span class="lb-61iu">40.3%<u>정규화 전</u></span></div>
+     <div class="rw-61iu"><i style="width:47%;background:#7ba6ff"></i>
+      <span class="lb-61iu">23.0%<u>중앙값 보강 후</u></span></div>
+    </div>
+   </div>
+ 
+   <div class="sm-61iu">
+    <h2>게재처 정본이<br><span>13,872건으로 정리</span></h2>
+    <p class="p-61iu">같은 저널이 원천마다 다르게 적혀 있던 것을 ISSN 으로 묶었습니다.
+     자리표시 ISSN 7개는 이름으로 예외 처리하고, 시리즈 18건에 플래그를 달았습니다.</p>
+    <svg class="ic-61iu" width="46" height="46" viewBox="0 0 24 24" fill="none"
+      stroke="#9dbcff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+     <path d="M4 6h16M4 12h16M4 18h10"/></svg>
+   </div>
+ 
+   <div class="sm-61iu">
+    <h2>확정 인물이<br><span>11,930명</span></h2>
+    <p class="p-61iu">저자행 <b>5,280,301</b>줄에서 동명이인을 갈라 <b>11,930</b>명을 확정했습니다.
+     1인당 평균 <b>29.9</b>줄이 붙습니다.</p>
+    <svg class="ic-61iu" width="46" height="46" viewBox="0 0 24 24" fill="#9dbcff">
+     <circle cx="9" cy="8" r="3.4"/><path d="M2.6 20a6.4 6.4 0 0 1 12.8 0z"/>
+     <circle cx="17.4" cy="9" r="2.6"/><path d="M15.8 20a5.4 5.4 0 0 1 5.6-5.2V20z"/></svg>
+   </div>
+  </div>
+ </div>
+
+ <div class="concl">확정 356,232줄 가운데 엔진이 실제로 판정한 것은 8,302줄이다</div>
+</div></div>
+
+<script>
+
+
+const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();
+addEventListener('resize',fit);
+addEventListener('pageshow',fit);
+addEventListener('load',fit);
+if(window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+</script></body></html>
