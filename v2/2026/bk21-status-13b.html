@@ -15,131 +15,114 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 .h1s{position:absolute;left:82px;top:163px;font-size:16px;font-weight:600;letter-spacing:-.3px;
  color:#4b5563}
 
-/* ─── 규칙선 ─── */
-.rule{position:absolute;left:82px;right:82px;height:1px;background:#c3ccdf;z-index:3}
-.r1{top:203px} .r3{top:719px}
-
-/* ─── 5 컬럼 ─── */
-.cols{position:absolute;left:82px;right:82px;top:203px;display:flex;gap:22px}
-.col{flex:1;position:relative;min-width:0;display:flex;flex-direction:column;background:#fff;border-radius:14px;overflow:hidden;
- box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 30px -22px rgba(30,92,240,.35)}
-.ch{background:linear-gradient(100deg,#4b8cff,#1e5cf0);color:#fff;text-align:center;
- padding:15px 16px;font-size:20px;font-weight:800;letter-spacing:-.6px}
-.bd{flex:1;padding:22px 24px 24px}
-
-.col .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
- transform:skewX(-9deg);display:inline-block;color:#c7d0e6}
-.col h2{margin-top:10px;font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#1e4be8}
-
-.col .tg{display:inline-block;margin:0 7px 0 0;vertical-align:middle;position:relative;top:-1px}
-.tg{display:inline-block;margin-left:8px;font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;
- padding:4px 7px;border-radius:5px;background:#eef2ff;color:#2b5ce6;vertical-align:middle}
-.tg2{background:#eef2ff;color:#2b5ce6}
-.merge .hl{margin-top:8px;font-size:15px;font-weight:800;letter-spacing:-.4px;color:#a9ff5e}
-.col p{margin-top:9px;font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
- color:#4b5563;word-break:keep-all}
-.col .m{position:absolute;left:0;right:26px;bottom:16px;
- font:700 11px/1.6 ui-monospace,Menlo,monospace;color:#bfe25a;word-break:keep-all}
-.col+.col .m{left:26px}
-
-/* ─── 6 병합 셀 (1~5 를 하나로) ─── */
-.merge{position:absolute;left:82px;right:82px;top:551px;height:168px;display:flex;align-items:center;
- background:#fff;
- gap:30px;padding:0 4px}
-.merge .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
- transform:skewX(-9deg);display:inline-block;color:#c7d0e6;flex:none}
-.merge .tx{flex:none;width:510px}
-.merge h2{font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#1e4be8}
-.merge h2 span{color:#a9ff5e}
-.merge p{margin-top:10px;font-size:13px;font-weight:500;line-height:1.7;letter-spacing:-.3px;
- color:#4b5563;word-break:keep-all}
-.merge .bul{flex:1;border-left:1px solid #c3ccdf;padding-left:30px;list-style:none}
-.merge .bul li{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;
- line-height:1.5;letter-spacing:-.3px;color:#111827;padding:4px 0}
-.merge .bul li::before{content:"";width:7px;height:7px;border-radius:50%;background:#a9ff5e;flex:none}
-.merge .m{flex:none;font:700 11px/1.6 ui-monospace,Menlo,monospace;color:#98a1b2;
- text-align:right;width:150px}
-
 /* ─── 하단 ─── */
 .concl{position:absolute;left:0;right:0;top:747px;text-align:center;
  font-size:26px;font-weight:800;line-height:1.6;letter-spacing:-.4px;color:#111827}
 
-/* ── 08장 카드 형식 (수치·진행바·비율) ── */
-.col .cv{font:800 28px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:13px;color:#111827}
-.col .cv em,.merge .cv em{font-style:normal;font-size:13px;font-weight:700;color:#98a1b2;margin-left:5px;letter-spacing:0}
-.col .cb{height:6px;border-radius:99px;background:#e7ecf7;margin-top:12px;overflow:hidden;width:100%}
-.col .cb i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1e4be8,#5b83ff)}
-.col .cp{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:9px}
-.merge .cv{font:800 30px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:8px;color:#111827}
 
-/* ── 17장 컨텐츠 이식 · 크기와 가로 비율은 10장 DNA 승계 ── */
-.col ul{list-style:none;margin-top:11px}
-.col ul li{position:relative;padding:3px 0 3px 15px;font-size:14.5px;font-weight:500;line-height:1.5;
- letter-spacing:-.3px;color:#4b5563;word-break:keep-all}
-.col ul li::before{content:"";position:absolute;left:0;top:12px;width:5px;height:5px;border-radius:50%;background:#1e4be8}
-.col ul li b{color:#111827;font-weight:700}
-.col .box{margin-top:14px;border-radius:10px;background:#f3f6fc;padding:14px 16px}
-.col .box .cp{margin-top:0}
-.col .don{display:block;margin:12px auto 4px}
-.col .chart{display:block;margin-top:12px}
-.col .unit{text-align:right;font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2}
-.col .seg{display:flex;align-items:center;gap:9px;margin-top:9px}
-.col .seg .sg{flex:none;width:58px;text-align:center;border-radius:6px;padding:6px 0;
- font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em}
-.col .seg .sx{font-size:14.5px;font-weight:500;letter-spacing:-.3px;color:#4b5563}
-.col .seg .sx b{color:#111827;font-weight:700}
-
-/* ── 20장 컨텐츠 이식 · 크기와 가로 비율은 10장 DNA 승계 ── */
-.bd .q{font-size:14.5px;font-weight:700;line-height:1.5;letter-spacing:-.3px;
- color:#111827;word-break:keep-all}
-.bd .box:first-of-type{margin-top:14px}
-.bd .box+.box{margin-top:12px}
-.bd .box p{margin-top:0;font-size:14.5px;font-weight:500;line-height:1.6;letter-spacing:-.3px;
- color:#4b5563;word-break:keep-all}
-.bd .box p b{color:#111827;font-weight:700}
-.bd .box span{display:block;text-align:right;margin-top:10px;
- font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2}
+/* 20장 컨텐츠 이식 — 박스 형태는 원본 그대로 */
+.mid{position:absolute;left:82px;right:82px;top:203px}
+.cols-n82q{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px}
+.cd-n82q{background:#fff;border-radius:16px;padding:26px 26px 22px;
+ box-shadow:0 1px 2px rgba(17,24,39,.04),0 16px 34px -26px rgba(17,24,39,.4)}
+.ct-n82q{font-size:16px;font-weight:800;letter-spacing:-.5px}
+.ct-n82q span{color:#1e5cf0}
+.cp-n82q{font-size:12px;line-height:1.85;color:#5b6474;margin-top:11px}
+.cp-n82q b{color:#111827}
+.src-n82q{font-size:10.5px;color:#9aa4b8;margin-top:14px;text-align:center}
+.bars-n82q{display:flex;align-items:flex-end;gap:14px;height:132px;margin-top:20px;padding:0 6px}
+.bars-n82q div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bars-n82q i{display:block;width:100%;border-radius:5px 5px 0 0;background:#e4e9f4}
+.bars-n82q .on-n82q i{background:#1e5cf0}
+.bars-n82q em{font-style:normal;font:800 11px/1 ui-monospace,Menlo,monospace;color:#8b95a8;margin-bottom:7px}
+.bars-n82q .on-n82q em{color:#1e5cf0;font-size:12.5px}
+.bars-n82q u{text-decoration:none;font-size:10px;color:#9aa4b8;margin-top:7px}
+.donw-n82q{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:16px}
+.lg-n82q{font-size:11.5px;color:#5b6474;line-height:2}
+.lg-n82q i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px}
+.bub-n82q{position:relative;height:150px;margin-top:12px}
+.bub-n82q b{position:absolute;border-radius:50%;display:grid;place-items:center;text-align:center;
+ font-weight:800;letter-spacing:-.3px;color:#fff;line-height:1.25}
+.key-n82q{margin-top:26px;border-radius:16px;background:linear-gradient(100deg,#2f6bff,#1442c6);
+ color:#fff;text-align:center;padding:24px 30px 28px}
+.key-n82q h2{font:800 13px/1 inherit;letter-spacing:.14em}
+.key-n82q p{font-size:12.5px;line-height:2;color:rgba(255,255,255,.9);margin-top:12px;max-width:92ch;margin-inline:auto}
+.key-n82q p b{color:#fff}
+/* 텍스트 크기와 가로 비율은 14장 DNA 승계 */
+.mid .cols-n82q{margin-top:0;gap:22px}
+.mid .cd-n82q{padding:22px 24px 24px}
+.mid .ct-n82q{font-size:20px;font-weight:800;letter-spacing:-.6px;line-height:1.3}
+.mid .ct-n82q span{color:#1e4be8}
+.mid .cp-n82q{font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
+ color:#4b5563;margin-top:11px;word-break:keep-all}
+.mid .cp-n82q b{color:#111827;font-weight:700}
+.mid .src-n82q{font:600 11.5px/1.5 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:14px}
+.mid .bars-n82q em{font:800 13px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-bottom:8px}
+.mid .bars-n82q .on-n82q em{color:#1e4be8;font-size:15px}
+.mid .bars-n82q .on-n82q i{background:#1e4be8}
+.mid .bars-n82q u{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:8px}
+.mid .lg-n82q{font-size:14.5px;font-weight:500;letter-spacing:-.3px;line-height:1.9;color:#4b5563}
+.mid .key-n82q h2{font:700 11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em}
+.mid .key-n82q p{font-size:14.5px;font-weight:500;line-height:1.6;letter-spacing:-.3px;margin-top:12px}
 </style></head><body>
 <div class="slide"><div id="stage">
 
  <h1>MATCHING STATUS</h1>
  <div class="h1s">저자행 5,280,301줄이 어디로 갈렸고, 그중 엔진이 실제로 판정한 것은 얼마인가</div>
 
- <div class="cols">
-
-  <div class="col">
-   <div class="ch">01. 확정 근거 파악</div>
-   <div class="bd">
-   <div class="q">Q. 확정된 저자행 중 엔진이 판정한 비율은?</div>
-   <svg class="don" width="190" height="190" viewBox="0 0 42 42">
-    <circle cx="21" cy="21" r="20" fill="#3b7bf6"/>
-    <path d="M21 1 A20 20 0 0 1 23.9 1.2 L21 21 Z" fill="#fff"/>
-    <text x="21" y="24" text-anchor="middle" font-size="4.6" font-weight="800" fill="#fff">97.7%</text>
-    <text x="21" y="28.4" text-anchor="middle" font-size="2.4" fill="rgba(255,255,255,.85)">원장 연결</text>
-    <text x="27.6" y="6.4" font-size="2.4" font-weight="700" fill="#5b6474">2.3%</text></svg>
-   <div class="box"><p>확정 356,232줄 중 <b>356,017줄</b>이 제출 원장 직접 연결.
-    엔진 판정분은 <b>8,302줄</b>입니다.</p><span>원장 vs 엔진</span></div>
+ <div class="mid">
+ <div class="cols-n82q">
+   <div class="cd-n82q">
+    <div class="ct-n82q">저자행은 <span>계속 늘고 있다</span></div>
+    <p class="cp-n82q">저자 파싱이 끝난 논문 <b>140,850</b>편에서 저자행 <b>5,280,301</b>줄이 나왔다.
+     논문이 늘수록 저자행은 더 빠르게 늘어난다.</p>
+    <div class="bars-n82q">
+     <div><em>82만</em><i style="height:22%"></i><u>2016</u></div>
+     <div><em>210만</em><i style="height:44%"></i><u>2020</u></div>
+     <div><em>390만</em><i style="height:70%"></i><u>2023</u></div>
+     <div class="on-n82q"><em>528만</em><i style="height:96%"></i><u>2026</u></div>
+    </div>
+    <div class="src-n82q">저자 파싱 완료 논문 기준. (단위: 줄)</div>
+   </div>
+ 
+   <div class="cd-n82q">
+    <div class="ct-n82q">절반은 <span>교외 공저자</span>다</div>
+    <p class="cp-n82q">교외 소속으로 확인된 공저자가 <b>2,618,171</b>줄로 전체의 <b>49.6%</b>다.
+     사번은 없지만 이름·소속·ORCID 를 보존해 협력망 분석에 쓴다.</p>
+    <div class="donw-n82q">
+     <svg width="150" height="150" viewBox="0 0 42 42">
+      <circle cx="21" cy="21" r="15.9" fill="none" stroke="#e7ecf7" stroke-width="9"/>
+      <circle cx="21" cy="21" r="15.9" fill="none" stroke="#1e5cf0" stroke-width="9"
+        stroke-dasharray="49.6 50.4" stroke-dashoffset="25" transform="rotate(-90 21 21)"/>
+      <circle cx="21" cy="21" r="15.9" fill="none" stroke="#9dbcff" stroke-width="9"
+        stroke-dasharray="43.7 56.3" stroke-dashoffset="-24.6" transform="rotate(-90 21 21)"/>
+      <text x="21" y="20" text-anchor="middle" font-size="3" fill="#8b95a8">외부 저자</text>
+      <text x="21" y="25.6" text-anchor="middle" font-size="6" font-weight="800" fill="#1e5cf0">49.6%</text></svg>
+     <div class="lg-n82q"><i style="background:#1e5cf0"></i>외부<br>
+      <i style="background:#9dbcff"></i>미분류<br><i style="background:#e7ecf7"></i>교내 확정</div>
+    </div>
+    <div class="src-n82q">저자행 5,280,301 기준. (단위: %)</div>
+   </div>
+ 
+   <div class="cd-n82q">
+    <div class="ct-n82q">식별자는 <span>이미 붙어 있다</span></div>
+    <p class="cp-n82q">저자행에 이름은 <b>4,765,793</b>, 소속은 <b>4,121,282</b>줄에 있다.
+     고유 식별자도 <b>AUID 85.8만</b>·<b>ORCID 8.6만</b>이 남아 있어 회수 여지가 크다.</p>
+    <div class="bub-n82q">
+     <b style="width:104px;height:104px;left:calc(50% - 52px);top:20px;background:#1e5cf0;font-size:12.5px">
+      이름<br>476만</b>
+     <b style="width:74px;height:74px;left:6px;top:8px;background:#5b8dff;font-size:11px">소속<br>412만</b>
+     <b style="width:58px;height:58px;right:8px;top:6px;background:#8db2ff;font-size:10px">AUID<br>85.8만</b>
+     <b style="width:44px;height:44px;right:24px;bottom:2px;background:#b6cdff;font-size:9px;color:#1b3a86">
+      ORCID<br>8.6만</b>
+    </div>
+    <div class="src-n82q">저자행 내 필드 보유 수. (원 크기는 보유량 비례)</div>
    </div>
   </div>
-
-  <div class="col">
-   <div class="ch">02. 잔여 사유 파악</div>
-   <div class="bd">
-   <div class="q">Q. 미분류로 남은 행은 무엇이 부족한가요?</div>
-   <div class="box"><p>소속 문자열이 아예 없는 행이 가장 많아요.</p><span>소속 결측</span></div>
-   <div class="box"><p>이름만으로는 동명이인을 가를 수 없어요.</p><span>신호 부족</span></div>
-   </div>
-  </div>
-
-  <div class="col">
-   <div class="ch">03. 개선 방향</div>
-   <div class="bd">
-   <div class="q">Q. 이외에 판정률을 올리려면 무엇이 필요한가요?</div>
-   <div class="box"><p>AUID 858,249 · ORCID 85,577 이 이미 저자행에 있어요.</p><span>식별자 회수</span></div>
-   <div class="box"><p>확정이 지문을 갱신하고 그 지문이 다음 판정을 도와요.</p><span>선순환</span></div>
-   </div>
-  </div>
-
+ 
+  <div class="key-n82q"><h2>KEY INSIGHT</h2>
+   <p>저자행은 계속 늘지만 성과에 쓰이는 것은 확정분뿐이고, 그 확정마저 <b>356,017줄이 제출 원장 연결</b>이다.
+    엔진 판정분 <b>8,302줄</b>을 늘리는 길은 이미 저자행에 남아 있는 <b>식별자를 회수</b>하는 것이다.</p></div>
  </div>
 
  <div class="concl">확정 356,232줄 가운데 엔진이 실제로 판정한 것은 8,302줄이다</div>
