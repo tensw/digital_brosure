@@ -17,10 +17,10 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 
 /* ─── 규칙선 ─── */
 .rule{position:absolute;left:82px;right:82px;height:1px;background:#c3ccdf;z-index:3}
-.r1{top:203px} .r2{top:551px} .r3{top:719px}
+.r1{top:203px} .r3{top:719px}
 
 /* ─── 5 컬럼 ─── */
-.cols{position:absolute;left:82px;right:82px;top:203px;height:348px;display:flex;background:#fff}
+.cols{position:absolute;left:82px;right:82px;top:203px;height:516px;display:flex;background:#fff}
 .col{flex:1;position:relative;min-width:0;padding:22px 24px 24px}
 .col+.col{border-left:1px solid #c3ccdf}
 .col .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
@@ -67,6 +67,23 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 .col .cb i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1e4be8,#5b83ff)}
 .col .cp{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:9px}
 .merge .cv{font:800 30px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:8px;color:#111827}
+
+/* ── 17장 컨텐츠 이식 · 크기와 가로 비율은 10장 DNA 승계 ── */
+.col ul{list-style:none;margin-top:11px}
+.col ul li{position:relative;padding:3px 0 3px 15px;font-size:14.5px;font-weight:500;line-height:1.5;
+ letter-spacing:-.3px;color:#4b5563;word-break:keep-all}
+.col ul li::before{content:"";position:absolute;left:0;top:12px;width:5px;height:5px;border-radius:50%;background:#1e4be8}
+.col ul li b{color:#111827;font-weight:700}
+.col .box{margin-top:14px;border-radius:10px;background:#f3f6fc;padding:14px 16px}
+.col .box .cp{margin-top:0}
+.col .don{display:block;margin:12px auto 4px}
+.col .chart{display:block;margin-top:12px}
+.col .unit{text-align:right;font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2}
+.col .seg{display:flex;align-items:center;gap:9px;margin-top:9px}
+.col .seg .sg{flex:none;width:58px;text-align:center;border-radius:6px;padding:6px 0;
+ font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em}
+.col .seg .sx{font-size:14.5px;font-weight:500;letter-spacing:-.3px;color:#4b5563}
+.col .seg .sx b{color:#111827;font-weight:700}
 </style></head><body>
 <div class="slide"><div id="stage">
 
@@ -74,18 +91,64 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
  <div class="h1s">저자행 5,280,301줄이 어디로 갈렸고, 그중 엔진이 실제로 판정한 것은 얼마인가</div>
 
  <div class="rule r1"></div>
- <div class="cols" id="cols"></div>
- <div class="rule r2"></div>
+ <div class="cols">
 
- <div class="merge">
-  <span class="n">6</span>
-  <div class="tx">
-   <h2>저자행<span class="tg">TOTAL</span></h2>
-   <div class="cv">5,280,301<em>줄</em></div>
-   <p>논문 140,850편에서 파싱한 전체 저자행. 위 세 갈래로 나뉜 뒤 확정분만 성과가 된다.</p>
+  <div class="col">
+   <span class="n">1</span>
+   <h2>전체 현황</h2>
+   <ul>
+    <li>저자행 <b>5,280,301</b>줄 · 논문 <b>140,850</b>편</li>
+    <li>확정 인물 <b>11,930</b>명 · 교직원 원장 <b>364,319</b></li>
+    <li>이름 보유 <b>4,765,793</b> · 소속 보유 <b>4,121,282</b></li>
+    <li>저자 파싱이 끝난 논문만 집계 대상</li>
+   </ul>
+   <div class="box">
+    <div class="cp">저자 연결 완료 논문</div>
+    <div class="cv">138,635<em>/ 140,850</em></div>
+    <div class="cb"><i style="width:98.4%"></i></div>
+   </div>
   </div>
-  <ul class="bul"><li>교내 확정 356,232 · 6.7%</li><li>외부 저자 2,618,171 · 49.6%</li><li>미분류 2,305,898 · 43.7%</li></ul>
-  <div class="m">기준 2026-08-25<br>성균관대 · BK21</div>
+
+  <div class="col">
+   <span class="n">2</span>
+   <h2>세 갈래 분해</h2>
+   <svg class="don" width="190" height="190" viewBox="0 0 42 42">
+    <circle cx="21" cy="21" r="15.9" fill="none" stroke="#eaf0fb" stroke-width="9"/>
+    <circle cx="21" cy="21" r="15.9" fill="none" stroke="#1e5cf0" stroke-width="9"
+      stroke-dasharray="49.6 50.4" stroke-dashoffset="25" transform="rotate(-90 21 21)"/>
+    <circle cx="21" cy="21" r="15.9" fill="none" stroke="#8fb4ff" stroke-width="9"
+      stroke-dasharray="43.7 56.3" stroke-dashoffset="-24.6" transform="rotate(-90 21 21)"/>
+    <circle cx="21" cy="21" r="15.9" fill="none" stroke="#c9dbff" stroke-width="9"
+      stroke-dasharray="6.7 93.3" stroke-dashoffset="-68.3" transform="rotate(-90 21 21)"/>
+    <text x="21" y="20.4" text-anchor="middle" font-size="5.4" font-weight="800" fill="#1e5cf0">49.6%</text>
+    <text x="21" y="25.2" text-anchor="middle" font-size="2.5" fill="#98a1b2">외부 저자</text></svg>
+   <div class="unit">(단위 : %)</div>
+   <div class="seg"><span class="sg" style="background:#1e4be8;color:#fff">외부</span><span class="sx"><b>2,618,171</b>줄 · 교외 공저자</span></div>
+   <div class="seg"><span class="sg" style="background:#dbe7ff;color:#1e4be8">미분류</span><span class="sx"><b>2,305,898</b>줄 · 판정 보류</span></div>
+   <div class="seg"><span class="sg" style="background:#eef2f8;color:#5b6474">확정</span><span class="sx"><b>356,232</b>줄 · 성과 집계 대상</span></div>
+  </div>
+
+  <div class="col">
+   <span class="n">3</span>
+   <h2>판별 근거 상위 신호</h2>
+   <svg class="chart" width="100%" height="210" viewBox="0 0 300 168">
+    <rect x="176" y="8" width="118" height="132" fill="#eaf1ff"/>
+    <line x1="24" y1="140" x2="294" y2="140" stroke="#eef1f7"/><line x1="24" y1="107" x2="294" y2="107" stroke="#eef1f7"/><line x1="24" y1="74" x2="294" y2="74" stroke="#eef1f7"/><line x1="24" y1="41" x2="294" y2="41" stroke="#eef1f7"/><line x1="24" y1="8" x2="294" y2="8" stroke="#eef1f7"/>
+    <text x="18" y="144" font-size="8" fill="#98a1b2" text-anchor="end">0</text><text x="18" y="111" font-size="8" fill="#98a1b2" text-anchor="end">800</text><text x="18" y="78" font-size="8" fill="#98a1b2" text-anchor="end">1600</text><text x="18" y="45" font-size="8" fill="#98a1b2" text-anchor="end">2400</text><text x="18" y="12" font-size="8" fill="#98a1b2" text-anchor="end">3200</text>
+    <polyline points="42,26 90,49 138,133 186,140 234,143 282,145" fill="none"
+      stroke="#1e5cf0" stroke-width="2.4" stroke-linejoin="round"/>
+    <circle cx="42" cy="26" r="3.4" fill="#fff" stroke="#1e5cf0" stroke-width="2.2"/><circle cx="90" cy="49" r="3.4" fill="#fff" stroke="#1e5cf0" stroke-width="2.2"/><circle cx="138" cy="133" r="3.4" fill="#fff" stroke="#1e5cf0" stroke-width="2.2"/><circle cx="186" cy="140" r="3.4" fill="#fff" stroke="#1e5cf0" stroke-width="2.2"/><circle cx="234" cy="143" r="3.4" fill="#fff" stroke="#1e5cf0" stroke-width="2.2"/><circle cx="282" cy="145" r="3.4" fill="#fff" stroke="#1e5cf0" stroke-width="2.2"/>
+    <text x="42" y="17" font-size="8.5" font-weight="800" fill="#1e5cf0" text-anchor="middle">2,892</text><text x="90" y="40" font-size="8.5" font-weight="800" fill="#1e5cf0" text-anchor="middle">2,391</text><text x="138" y="124" font-size="8.5" font-weight="800" fill="#1e5cf0" text-anchor="middle">898</text><text x="186" y="131" font-size="8.5" font-weight="800" fill="#1e5cf0" text-anchor="middle">560</text><text x="234" y="134" font-size="8.5" font-weight="800" fill="#1e5cf0" text-anchor="middle">534</text><text x="282" y="136" font-size="8.5" font-weight="800" fill="#1e5cf0" text-anchor="middle">312</text>
+    <text x="42" y="158" font-size="7.6" fill="#98a1b2" text-anchor="middle">AUID</text><text x="90" y="158" font-size="7.6" fill="#98a1b2" text-anchor="middle">이름+소속</text><text x="138" y="158" font-size="7.6" fill="#98a1b2" text-anchor="middle">LLM</text><text x="186" y="158" font-size="7.6" fill="#98a1b2" text-anchor="middle">U접두</text><text x="234" y="158" font-size="7.6" fill="#98a1b2" text-anchor="middle">ORCID</text><text x="282" y="158" font-size="7.6" fill="#98a1b2" text-anchor="middle">이메일</text>
+   </svg>
+   <ul>
+    <li>고유 식별자(<b>AUID·ORCID</b>)가 가장 강한 신호</li>
+    <li>이름+소속 일치가 <b>2,391</b>줄로 뒤를 잇는다</li>
+    <li>LLM 판별은 <b>898</b>줄 · 지문 교차검증 통과분만</li>
+    <li>사람 검토(HITL)는 <b>207</b>줄로 최소</li>
+   </ul>
+  </div>
+
  </div>
  <div class="rule r3"></div>
 
@@ -93,17 +156,7 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 </div></div>
 
 <script>
-/* ══ 근거 ══ docs/BIBLO_전기능_전체지도.md §0 「구조 — 코어 백본 + 6개 솔루션」 표 그대로 ══ */
-const S=[{"n": "1", "name": "교내 확정", "tag": "LINKED", "hl": "356,232", "unit": "줄", "pct": 6.7, "d": "성균관대 구성원으로 판별돼 사번이 붙은 저자행. 이 행만 성과 집계에 들어간다.", "m": "전체의 6.7%"}, {"n": "2", "name": "외부 저자", "tag": "EXTERNAL", "hl": "2,618,171", "unit": "줄", "pct": 49.6, "d": "교외 소속으로 확인된 공저자. 사번은 없지만 이름·소속·ORCID 를 보존해 협력망 분석에 쓴다.", "m": "전체의 49.6%"}, {"n": "3", "name": "미분류", "tag": "PENDING", "hl": "2,305,898", "unit": "줄", "pct": 43.7, "d": "교내·교외 판정을 아직 내리지 못한 저자행. 소속 문자열이 없거나 판별 신호가 부족하다.", "m": "전체의 43.7%"}, {"n": "4", "name": "확정 인물", "tag": "PEOPLE", "hl": "11,930", "unit": "명", "pct": 100, "d": "확정된 저자행이 붙은 성균관대 구성원 수. 동명이인을 갈라 한 사람으로 묶은 결과다.", "m": "논문 140,850편 기준"}, {"n": "5", "name": "엔진 판정", "tag": "ENGINE", "hl": "8,302", "unit": "줄", "pct": 2.3, "d": "확정 356,232줄에서 제출 원장 연결분을 뺀 값. 판별 엔진이 실제로 판정한 몫이다.", "m": "확정의 2.3%"}];;
-document.getElementById('cols').innerHTML = S.map(c=>`
- <div class="col">
-   <span class="n">${c.n}</span>
-   <h2>${c.name}<span class="tg">${c.tag}</span></h2>
-   <div class="cv">${c.hl}<em>${c.unit}</em></div>
-   <div class="cb"><i style="width:${c.pct}%"></i></div>
-   <div class="cp">${c.m}</div>
-   <p>${c.d}</p>
- </div>`).join('');
+
 
 const SW=1600,SH=900;
 function fit(){const st=document.getElementById('stage');
