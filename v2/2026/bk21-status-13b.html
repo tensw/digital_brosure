@@ -1,0 +1,161 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MATCHING STATUS 13b</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;
+ overflow:visible;background:transparent}
+
+/* ─── 상단 ─── */
+h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-spacing:.5px;color:#111827}
+.h1s{position:absolute;left:82px;top:163px;font-size:16px;font-weight:600;letter-spacing:-.3px;
+ color:#4b5563}
+
+/* ─── 규칙선 ─── */
+.rule{position:absolute;left:82px;right:82px;height:1px;background:#c3ccdf;z-index:3}
+.r1{top:203px} .r3{top:719px}
+
+/* ─── 5 컬럼 ─── */
+.cols{position:absolute;left:82px;right:82px;top:203px;display:flex;gap:22px}
+.col{flex:1;position:relative;min-width:0;display:flex;flex-direction:column;background:#fff;border-radius:14px;overflow:hidden;
+ box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 30px -22px rgba(30,92,240,.35)}
+.ch{background:linear-gradient(100deg,#4b8cff,#1e5cf0);color:#fff;text-align:center;
+ padding:15px 16px;font-size:20px;font-weight:800;letter-spacing:-.6px}
+.bd{flex:1;padding:22px 24px 24px}
+
+.col .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
+ transform:skewX(-9deg);display:inline-block;color:#c7d0e6}
+.col h2{margin-top:10px;font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#1e4be8}
+
+.col .tg{display:inline-block;margin:0 7px 0 0;vertical-align:middle;position:relative;top:-1px}
+.tg{display:inline-block;margin-left:8px;font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;
+ padding:4px 7px;border-radius:5px;background:#eef2ff;color:#2b5ce6;vertical-align:middle}
+.tg2{background:#eef2ff;color:#2b5ce6}
+.merge .hl{margin-top:8px;font-size:15px;font-weight:800;letter-spacing:-.4px;color:#a9ff5e}
+.col p{margin-top:9px;font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
+ color:#4b5563;word-break:keep-all}
+.col .m{position:absolute;left:0;right:26px;bottom:16px;
+ font:700 11px/1.6 ui-monospace,Menlo,monospace;color:#bfe25a;word-break:keep-all}
+.col+.col .m{left:26px}
+
+/* ─── 6 병합 셀 (1~5 를 하나로) ─── */
+.merge{position:absolute;left:82px;right:82px;top:551px;height:168px;display:flex;align-items:center;
+ background:#fff;
+ gap:30px;padding:0 4px}
+.merge .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
+ transform:skewX(-9deg);display:inline-block;color:#c7d0e6;flex:none}
+.merge .tx{flex:none;width:510px}
+.merge h2{font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#1e4be8}
+.merge h2 span{color:#a9ff5e}
+.merge p{margin-top:10px;font-size:13px;font-weight:500;line-height:1.7;letter-spacing:-.3px;
+ color:#4b5563;word-break:keep-all}
+.merge .bul{flex:1;border-left:1px solid #c3ccdf;padding-left:30px;list-style:none}
+.merge .bul li{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;
+ line-height:1.5;letter-spacing:-.3px;color:#111827;padding:4px 0}
+.merge .bul li::before{content:"";width:7px;height:7px;border-radius:50%;background:#a9ff5e;flex:none}
+.merge .m{flex:none;font:700 11px/1.6 ui-monospace,Menlo,monospace;color:#98a1b2;
+ text-align:right;width:150px}
+
+/* ─── 하단 ─── */
+.concl{position:absolute;left:0;right:0;top:747px;text-align:center;
+ font-size:26px;font-weight:800;line-height:1.6;letter-spacing:-.4px;color:#111827}
+
+/* ── 08장 카드 형식 (수치·진행바·비율) ── */
+.col .cv{font:800 28px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:13px;color:#111827}
+.col .cv em,.merge .cv em{font-style:normal;font-size:13px;font-weight:700;color:#98a1b2;margin-left:5px;letter-spacing:0}
+.col .cb{height:6px;border-radius:99px;background:#e7ecf7;margin-top:12px;overflow:hidden;width:100%}
+.col .cb i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1e4be8,#5b83ff)}
+.col .cp{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:9px}
+.merge .cv{font:800 30px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:8px;color:#111827}
+
+/* ── 17장 컨텐츠 이식 · 크기와 가로 비율은 10장 DNA 승계 ── */
+.col ul{list-style:none;margin-top:11px}
+.col ul li{position:relative;padding:3px 0 3px 15px;font-size:14.5px;font-weight:500;line-height:1.5;
+ letter-spacing:-.3px;color:#4b5563;word-break:keep-all}
+.col ul li::before{content:"";position:absolute;left:0;top:12px;width:5px;height:5px;border-radius:50%;background:#1e4be8}
+.col ul li b{color:#111827;font-weight:700}
+.col .box{margin-top:14px;border-radius:10px;background:#f3f6fc;padding:14px 16px}
+.col .box .cp{margin-top:0}
+.col .don{display:block;margin:12px auto 4px}
+.col .chart{display:block;margin-top:12px}
+.col .unit{text-align:right;font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2}
+.col .seg{display:flex;align-items:center;gap:9px;margin-top:9px}
+.col .seg .sg{flex:none;width:58px;text-align:center;border-radius:6px;padding:6px 0;
+ font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em}
+.col .seg .sx{font-size:14.5px;font-weight:500;letter-spacing:-.3px;color:#4b5563}
+.col .seg .sx b{color:#111827;font-weight:700}
+
+/* ── 20장 컨텐츠 이식 · 크기와 가로 비율은 10장 DNA 승계 ── */
+.bd .q{font-size:14.5px;font-weight:700;line-height:1.5;letter-spacing:-.3px;
+ color:#111827;word-break:keep-all}
+.bd .box:first-of-type{margin-top:14px}
+.bd .box+.box{margin-top:12px}
+.bd .box p{margin-top:0;font-size:14.5px;font-weight:500;line-height:1.6;letter-spacing:-.3px;
+ color:#4b5563;word-break:keep-all}
+.bd .box p b{color:#111827;font-weight:700}
+.bd .box span{display:block;text-align:right;margin-top:10px;
+ font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2}
+</style></head><body>
+<div class="slide"><div id="stage">
+
+ <h1>MATCHING STATUS</h1>
+ <div class="h1s">저자행 5,280,301줄이 어디로 갈렸고, 그중 엔진이 실제로 판정한 것은 얼마인가</div>
+
+ <div class="cols">
+
+  <div class="col">
+   <div class="ch">01. 확정 근거 파악</div>
+   <div class="bd">
+   <div class="q">Q. 확정된 저자행 중 엔진이 판정한 비율은?</div>
+   <svg class="don" width="190" height="190" viewBox="0 0 42 42">
+    <circle cx="21" cy="21" r="20" fill="#3b7bf6"/>
+    <path d="M21 1 A20 20 0 0 1 23.9 1.2 L21 21 Z" fill="#fff"/>
+    <text x="21" y="24" text-anchor="middle" font-size="4.6" font-weight="800" fill="#fff">97.7%</text>
+    <text x="21" y="28.4" text-anchor="middle" font-size="2.4" fill="rgba(255,255,255,.85)">원장 연결</text>
+    <text x="27.6" y="6.4" font-size="2.4" font-weight="700" fill="#5b6474">2.3%</text></svg>
+   <div class="box"><p>확정 356,232줄 중 <b>356,017줄</b>이 제출 원장 직접 연결.
+    엔진 판정분은 <b>8,302줄</b>입니다.</p><span>원장 vs 엔진</span></div>
+   </div>
+  </div>
+
+  <div class="col">
+   <div class="ch">02. 잔여 사유 파악</div>
+   <div class="bd">
+   <div class="q">Q. 미분류로 남은 행은 무엇이 부족한가요?</div>
+   <div class="box"><p>소속 문자열이 아예 없는 행이 가장 많아요.</p><span>소속 결측</span></div>
+   <div class="box"><p>이름만으로는 동명이인을 가를 수 없어요.</p><span>신호 부족</span></div>
+   </div>
+  </div>
+
+  <div class="col">
+   <div class="ch">03. 개선 방향</div>
+   <div class="bd">
+   <div class="q">Q. 이외에 판정률을 올리려면 무엇이 필요한가요?</div>
+   <div class="box"><p>AUID 858,249 · ORCID 85,577 이 이미 저자행에 있어요.</p><span>식별자 회수</span></div>
+   <div class="box"><p>확정이 지문을 갱신하고 그 지문이 다음 판정을 도와요.</p><span>선순환</span></div>
+   </div>
+  </div>
+
+ </div>
+
+ <div class="concl">확정 356,232줄 가운데 엔진이 실제로 판정한 것은 8,302줄이다</div>
+</div></div>
+
+<script>
+/* 컨텐츠 출처: 20장 bk21-match-light91.html 의 가운데 카드 3장 (수치 그대로)
+   크기·가로 비율: 10장 bk21-status-10.html DNA 승계 */
+const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();
+addEventListener('resize',fit);
+addEventListener('pageshow',fit);
+addEventListener('load',fit);
+if(window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+</script></body></html>
