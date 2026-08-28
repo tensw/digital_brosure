@@ -15,95 +15,75 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 .h1s{position:absolute;left:82px;top:163px;font-size:16px;font-weight:600;letter-spacing:-.3px;
  color:#4b5563}
 
-/* ─── 규칙선 ─── */
-.rule{position:absolute;left:82px;right:82px;height:1px;background:#c3ccdf;z-index:3}
-.r1{top:203px} .r2{top:551px} .r3{top:719px}
-
-/* ─── 5 컬럼 ─── */
-.cols{position:absolute;left:82px;right:82px;top:203px;height:348px;display:flex;background:#fff}
-.col{flex:1;position:relative;min-width:0;padding:22px 24px 24px}
-.col+.col{border-left:1px solid #c3ccdf}
-.col .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
- transform:skewX(-9deg);display:inline-block;color:#c7d0e6}
-.col h2{margin-top:10px;font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#1e4be8}
-
-.col .tg{display:inline-block;margin:0 7px 0 0;vertical-align:middle;position:relative;top:-1px}
-.tg{display:inline-block;margin-left:8px;font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;
- padding:4px 7px;border-radius:5px;background:#eef2ff;color:#2b5ce6;vertical-align:middle}
-.tg2{background:#eef2ff;color:#2b5ce6}
-.merge .hl{margin-top:8px;font-size:15px;font-weight:800;letter-spacing:-.4px;color:#a9ff5e}
-.col p{margin-top:9px;font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
- color:#4b5563;word-break:keep-all}
-.col .m{position:absolute;left:0;right:26px;bottom:16px;
- font:700 11px/1.6 ui-monospace,Menlo,monospace;color:#bfe25a;word-break:keep-all}
-.col+.col .m{left:26px}
-
-/* ─── 6 병합 셀 (1~5 를 하나로) ─── */
-.merge{position:absolute;left:82px;right:82px;top:551px;height:168px;display:flex;align-items:center;
- background:#fff;
- gap:30px;padding:0 4px}
-.merge .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
- transform:skewX(-9deg);display:inline-block;color:#c7d0e6;flex:none}
-.merge .tx{flex:none;width:510px}
-.merge h2{font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#1e4be8}
-.merge h2 span{color:#a9ff5e}
-.merge p{margin-top:10px;font-size:13px;font-weight:500;line-height:1.7;letter-spacing:-.3px;
- color:#4b5563;word-break:keep-all}
-.merge .bul{flex:1;border-left:1px solid #c3ccdf;padding-left:30px;list-style:none}
-.merge .bul li{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;
- line-height:1.5;letter-spacing:-.3px;color:#111827;padding:4px 0}
-.merge .bul li::before{content:"";width:7px;height:7px;border-radius:50%;background:#a9ff5e;flex:none}
-.merge .m{flex:none;font:700 11px/1.6 ui-monospace,Menlo,monospace;color:#98a1b2;
- text-align:right;width:150px}
-
 /* ─── 하단 ─── */
 .concl{position:absolute;left:0;right:0;top:747px;text-align:center;
  font-size:26px;font-weight:800;line-height:1.6;letter-spacing:-.4px;color:#111827}
 
-/* ── 08장 카드 형식 (수치·진행바·비율) ── */
-.col .cv{font:800 28px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:13px;color:#111827}
-.col .cv em,.merge .cv em{font-style:normal;font-size:13px;font-weight:700;color:#98a1b2;margin-left:5px;letter-spacing:0}
-.col .cb{height:6px;border-radius:99px;background:#e7ecf7;margin-top:12px;overflow:hidden;width:100%}
-.col .cb i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1e4be8,#5b83ff)}
-.col .cp{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:9px}
-.merge .cv{font:800 30px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:8px;color:#111827}
+
+/* ── 21장 컨텐츠 이식 · 박스 형태는 원본 그대로, 크기·가로 비율은 10장 DNA ── */
+.mid{position:absolute;left:82px;right:82px;top:203px}
+.grid-61iu{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.big-61iu{grid-row:span 2;background:#f5f7fc;border-radius:16px;padding:34px 36px 38px}
+.sm-61iu{background:#f5f7fc;border-radius:16px;padding:28px 32px;position:relative;overflow:hidden}
+.mid h2{font-size:20px;font-weight:800;letter-spacing:-.6px;line-height:1.5;color:#111827}
+.mid h2 span{color:#1e4be8}
+.mid h2 em{font-style:normal;font-size:13px;font-weight:700;color:#98a1b2;margin-left:6px;letter-spacing:0}
+.p-61iu{font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;color:#4b5563;
+ margin-top:14px;word-break:keep-all}
+.p-61iu b{color:#111827;font-weight:700}
+.cmp-61iu{margin-top:34px;padding-left:14px;border-left:2px solid #dbe1ee}
+.rw-61iu{display:flex;align-items:center;gap:16px;margin-top:14px}
+.rw-61iu i{display:block;height:52px;border-radius:9px;flex:none}
+.rw-61iu .lb-61iu{font:800 28px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;color:#111827}
+.rw-61iu .lb-61iu u{display:block;text-decoration:none;font:600 11.5px/1 ui-monospace,Menlo,monospace;
+ color:#98a1b2;margin-top:9px;letter-spacing:0}
+.ic-61iu{position:absolute;right:30px;top:50%;transform:translateY(-50%);opacity:.9}
 </style></head><body>
 <div class="slide"><div id="stage">
 
  <h1>MATCHING STATUS</h1>
  <div class="h1s">저자행 5,280,301줄이 어디로 갈렸고, 그중 엔진이 실제로 판정한 것은 얼마인가</div>
 
- <div class="rule r1"></div>
- <div class="cols" id="cols"></div>
- <div class="rule r2"></div>
-
- <div class="merge">
-  <span class="n">6</span>
-  <div class="tx">
-   <h2>저자행<span class="tg">TOTAL</span></h2>
-   <div class="cv">5,280,301<em>줄</em></div>
-   <p>논문 140,850편에서 파싱한 전체 저자행. 위 세 갈래로 나뉜 뒤 확정분만 성과가 된다.</p>
+ <div class="mid">
+ <div class="grid-61iu">
+   <div class="big-61iu">
+    <h2>등급 미상 논문이<br><span>23.0%로 줄었어요</span><em>(정규화 전 대비)</em></h2>
+    <p class="p-61iu">게재처 표기가 원천마다 흩어져 있어 저널 등급을 붙이지 못한 논문이 많았습니다.
+     ISSN 기준으로 게재처를 통합해 <b>17,101 → 13,872</b>(중복 18.9%)로 줄이고,
+     게재처 중앙값으로 등급을 보강해 미상 비율을 40.3%에서 23.0%로 낮췄습니다.</p>
+    <div class="cmp-61iu">
+     <div class="rw-61iu"><i style="width:82%;background:#e3e8f2"></i>
+      <span class="lb-61iu">40.3%<u>정규화 전</u></span></div>
+     <div class="rw-61iu"><i style="width:47%;background:#7ba6ff"></i>
+      <span class="lb-61iu">23.0%<u>중앙값 보강 후</u></span></div>
+    </div>
+   </div>
+ 
+   <div class="sm-61iu">
+    <h2>게재처 정본이<br><span>13,872건으로 정리</span></h2>
+    <p class="p-61iu">같은 저널이 원천마다 다르게 적혀 있던 것을 ISSN 으로 묶었습니다.
+     자리표시 ISSN 7개는 이름으로 예외 처리하고, 시리즈 18건에 플래그를 달았습니다.</p>
+    <svg class="ic-61iu" width="46" height="46" viewBox="0 0 24 24" fill="none"
+      stroke="#9dbcff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+     <path d="M4 6h16M4 12h16M4 18h10"/></svg>
+   </div>
+ 
+   <div class="sm-61iu">
+    <h2>확정 인물이<br><span>11,930명</span></h2>
+    <p class="p-61iu">저자행 <b>5,280,301</b>줄에서 동명이인을 갈라 <b>11,930</b>명을 확정했습니다.
+     1인당 평균 <b>29.9</b>줄이 붙습니다.</p>
+    <svg class="ic-61iu" width="46" height="46" viewBox="0 0 24 24" fill="#9dbcff">
+     <circle cx="9" cy="8" r="3.4"/><path d="M2.6 20a6.4 6.4 0 0 1 12.8 0z"/>
+     <circle cx="17.4" cy="9" r="2.6"/><path d="M15.8 20a5.4 5.4 0 0 1 5.6-5.2V20z"/></svg>
+   </div>
   </div>
-  <ul class="bul"><li>교내 확정 356,232 · 6.7%</li><li>외부 저자 2,618,171 · 49.6%</li><li>미분류 2,305,898 · 43.7%</li></ul>
-  <div class="m">기준 2026-08-25<br>성균관대 · BK21</div>
  </div>
- <div class="rule r3"></div>
 
  <div class="concl">확정 356,232줄 가운데 엔진이 실제로 판정한 것은 8,302줄이다</div>
 </div></div>
 
 <script>
-/* ══ 근거 ══ docs/BIBLO_전기능_전체지도.md §0 「구조 — 코어 백본 + 6개 솔루션」 표 그대로 ══ */
-const S=[{"n": "1", "name": "교내 확정", "tag": "LINKED", "hl": "356,232", "unit": "줄", "pct": 6.7, "d": "성균관대 구성원으로 판별돼 사번이 붙은 저자행. 이 행만 성과 집계에 들어간다.", "m": "전체의 6.7%"}, {"n": "2", "name": "외부 저자", "tag": "EXTERNAL", "hl": "2,618,171", "unit": "줄", "pct": 49.6, "d": "교외 소속으로 확인된 공저자. 사번은 없지만 이름·소속·ORCID 를 보존해 협력망 분석에 쓴다.", "m": "전체의 49.6%"}, {"n": "3", "name": "미분류", "tag": "PENDING", "hl": "2,305,898", "unit": "줄", "pct": 43.7, "d": "교내·교외 판정을 아직 내리지 못한 저자행. 소속 문자열이 없거나 판별 신호가 부족하다.", "m": "전체의 43.7%"}, {"n": "4", "name": "확정 인물", "tag": "PEOPLE", "hl": "11,930", "unit": "명", "pct": 100, "d": "확정된 저자행이 붙은 성균관대 구성원 수. 동명이인을 갈라 한 사람으로 묶은 결과다.", "m": "논문 140,850편 기준"}, {"n": "5", "name": "엔진 판정", "tag": "ENGINE", "hl": "8,302", "unit": "줄", "pct": 2.3, "d": "확정 356,232줄에서 제출 원장 연결분을 뺀 값. 판별 엔진이 실제로 판정한 몫이다.", "m": "확정의 2.3%"}];;
-document.getElementById('cols').innerHTML = S.map(c=>`
- <div class="col">
-   <span class="n">${c.n}</span>
-   <h2>${c.name}<span class="tg">${c.tag}</span></h2>
-   <div class="cv">${c.hl}<em>${c.unit}</em></div>
-   <div class="cb"><i style="width:${c.pct}%"></i></div>
-   <div class="cp">${c.m}</div>
-   <p>${c.d}</p>
- </div>`).join('');
+
 
 const SW=1600,SH=900;
 function fit(){const st=document.getElementById('stage');
