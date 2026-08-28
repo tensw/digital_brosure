@@ -47,26 +47,31 @@
 .go-7q2v8:hover{transform:scale(1.06);box-shadow:0 0 40px rgba(60,130,255,.85),inset 0 1px 0 rgba(255,255,255,.5)}
 
 /* ── 예시 질의 ── */
-.cap-7q2v8{position:absolute;left:40px;right:40px;bottom:4vh;z-index:4}
-.grid-7q2v8{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-.bx-7q2v8{border:1px solid rgba(150,180,255,.18);border-radius:16px;padding:16px 17px 17px;
+.cap-7q2v8{position:absolute;left:50%;bottom:4vh;z-index:4;width:1600px;padding:0 82px;
+ transform-origin:50% 100%;transform:translateX(-50%)}
+.grid-7q2v8{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+/* 3장 LAYER 1·2 규격 승계 */
+.bx-7q2v8{position:relative;border:1px solid rgba(96,165,250,.18);border-radius:18px;padding:18px 20px;
  background:linear-gradient(180deg,rgba(22,30,58,.62),rgba(10,15,32,.62));backdrop-filter:blur(6px);
  text-align:left;display:flex;flex-direction:column}
-.bx-7q2v8 .n-7q2v8{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;color:#6fc8ff}
-.bx-7q2v8 h3{margin-top:9px;font-size:15px;font-weight:800;letter-spacing:-.4px;color:#eaf0ff;line-height:1.35}
-.bx-7q2v8 .s-x{margin-top:6px;font-size:11.5px;color:#8398c2;letter-spacing:-.2px}
-.bx-7q2v8 ul{margin-top:11px;list-style:none;display:flex;flex-direction:column;gap:6px}
-.bx-7q2v8 li{position:relative;padding-left:13px;font-size:11.5px;line-height:1.55;color:#b9c8e8}
-.bx-7q2v8 li:before{content:"";position:absolute;left:0;top:7px;width:4px;height:4px;border-radius:50%;
+.bx-7q2v8 .n-7q2v8{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;color:#7c88b8;
+ margin-bottom:9px}
+.bx-7q2v8 h3{font-size:15px;font-weight:800;letter-spacing:-.4px;color:#6fc8ff;line-height:1.35}
+.bx-7q2v8 .s-x{margin-top:5px;font:700 10.5px/1 ui-monospace,Menlo,monospace;color:#7c88b8;letter-spacing:.06em}
+.bx-7q2v8 ul{margin-top:9px;list-style:none;display:flex;flex-direction:column;gap:5px}
+.bx-7q2v8 li{position:relative;padding-left:14px;font-size:14.5px;font-weight:500;line-height:1.5;
+ letter-spacing:-.3px;color:rgba(255,255,255,.9);word-break:keep-all}
+.bx-7q2v8 li:before{content:"";position:absolute;left:0;top:9px;width:4px;height:4px;border-radius:50%;
  background:rgba(140,200,255,.62)}
-.bx-7q2v8 .m-x{margin-top:auto;padding-top:11px;font:700 11px/1.5 ui-monospace,Menlo,monospace;color:#9fd4ff}
-.cert-7q2v8{margin-top:11px;display:flex;align-items:center;gap:10px;padding:8px 10px;cursor:pointer;
- border:1px solid rgba(120,150,220,.3);border-radius:11px;background:rgba(12,20,42,.6);font:inherit;
- text-align:left;transition:.16s}
-.cert-7q2v8:hover{border-color:rgba(150,190,255,.55);background:rgba(16,26,54,.85)}
-.cert-7q2v8 img{width:30px;height:42px;object-fit:cover;object-position:top;border-radius:3px;
- border:1px solid rgba(255,255,255,.14);display:block;flex:none}
-.cert-7q2v8 s{text-decoration:none;font:700 10px/1.5 ui-monospace,Menlo,monospace;color:#9fc7ff}
+.bx-7q2v8 .m-x{margin-top:auto;padding-top:12px;font:700 12px/1.5 ui-monospace,Menlo,monospace;color:#9fd4ff}
+.cert-7q2v8{position:absolute;right:14px;top:14px;display:flex;align-items:center;gap:6px;
+ padding:5px 8px 5px 5px;cursor:pointer;border:1px solid rgba(120,150,220,.32);border-radius:9px;
+ background:rgba(12,20,42,.7);font:inherit;transition:.16s}
+.cert-7q2v8:hover{border-color:rgba(150,190,255,.6);background:rgba(16,26,54,.9)}
+.cert-7q2v8 img{width:18px;height:25px;object-fit:cover;object-position:top;border-radius:2px;
+ border:1px solid rgba(255,255,255,.16);display:block;flex:none}
+.cert-7q2v8 s{text-decoration:none;font:700 9.5px/1 ui-monospace,Menlo,monospace;color:#9fc7ff;
+ letter-spacing:.02em;white-space:nowrap}
 .lead-7q2v8{position:absolute;left:0;right:0;top:20%;z-index:4;text-align:center;
  font-size:19px;font-weight:600;letter-spacing:-.4px;color:#c4d3ee;line-height:1.6}
 .lead-7q2v8 b{color:#fff;font-weight:800}
@@ -198,9 +203,8 @@ document.getElementById('grid-7q2v8').innerHTML=BOX.map(b=>`
   <div class="n-7q2v8">${b.n}</div><h3>${b.t}</h3><div class="s-x">${b.s}</div>
   <ul>${b.li.map(x=>`<li>${x}</li>`).join('')}</ul>
   <div class="m-x">${b.m}</div>
-  ${b.cert?`<button class="cert-7q2v8" id="cert-7q2v8" type="button">
-    <img src="cert-search-engine.jpg" alt="비블로 검색엔진 시험성적서">
-    <s>성적서 26-10082<br>2026-08-19 · 크게 보기</s></button>`:''}
+  ${b.cert?`<button class="cert-7q2v8" id="cert-7q2v8" type="button" title="시험성적서 크게 보기">
+    <img src="cert-search-engine.jpg" alt="비블로 검색엔진 시험성적서"><s>시험성적서</s></button>`:''}
  </div>`).join('');
 
 /* ── 시험성적서 레이어 팝업 ── */
@@ -239,6 +243,9 @@ function layout(){
  sug.style.top=Math.round(Math.max(floor, Math.min(want, limit)))+'px';
  sug.style.maxWidth=Math.round(Math.min(W*0.92, 980))+'px';
  CX=W/2; CY=H/2;
+ /* 하단 박스는 3장과 같은 규칙(1600x900 기준)으로 확대·축소한다 */
+ const kk=Math.min(innerWidth/1600, innerHeight/900);   // 3장과 동일한 기준
+ cap.style.transform='translateX(-50%) scale('+kk.toFixed(4)+')';
  halo.width=Math.round(W*DPR); halo.height=Math.round(H*DPR);
  bake();
 }
