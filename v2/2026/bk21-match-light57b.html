@@ -1,6 +1,6 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BK21 저자 매칭 현황 — 라이트</title>
+<title>BK21 판별 레이어 — 여덟 갈래 근거</title>
 <style>
 :root{--bg:#f4f6fa;--card:#fff;--ink:#111827;--ink2:#4b5563;--ink3:#98a1b2;
  --bl:#1e4be8;--bl2:#2b5ce6;--soft:#eef2ff;--line:#e3e8f2}
@@ -73,51 +73,47 @@ h1 span{color:var(--bl)}
 <div class="stg2026"><div id="stg2026">
 
 <section class="slide-53fi">
- <div class="tags-53fi"><span class="tag-53fi b-53fi">Matching</span><span class="tag-53fi g-53fi">저자 매칭 현황</span></div>
+ <div class="tags-53fi"><span class="tag-53fi b-53fi">Layers</span><span class="tag-53fi g-53fi">판별 레이어</span></div>
  <div class="tl-53fi">
-  <h1>저자행 528만 줄이<br><span>세 갈래로 갈린다</span></h1>
-  <div class="sub-53fi">논문 한 편에는 저자가 여럿 있고, 그 저자를 성균관대 사람과 이어붙이는 것이 매칭이다.
-   기준 <b>2026-08-25</b> · 논문 <b>140,850</b>편 · 확정 인물 <b>11,930</b>명</div>
+  <h1>확정은 <span>여덟 갈래 근거</span>로 나뉜다</h1>
+  <div class="sub-53fi">교내 확정 356,232줄이 어떤 근거로 붙었는지. 막대는 가장 큰 항목 대비 비율이다.</div>
  </div>
 
- <div class="cards-53fi">
-   <article class="card-53fi">
-    <div class="cn-53fi">GROUP 01</div>
-    <h3>교내 확정</h3>
-    <div class="cv-53fi">356,232<em>줄</em></div>
-    <div class="cb-53fi"><i style="width:6.7%"></i></div>
-    <div class="cp-53fi">전체의 6.7% · <b>LINKED</b></div>
-    <p>성균관대 구성원으로 판별돼 사번이 붙은 저자행. 이 행만 성과 집계에 들어간다.</p>
-   </article>
-   <article class="card-53fi">
-    <div class="cn-53fi">GROUP 02</div>
-    <h3>외부 저자</h3>
-    <div class="cv-53fi">2,618,171<em>줄</em></div>
-    <div class="cb-53fi"><i style="width:49.6%"></i></div>
-    <div class="cp-53fi">전체의 49.6% · <b>EXTERNAL</b></div>
-    <p>교외 소속으로 확인된 공저자. 사번은 없지만 이름·소속·ORCID 를 보존해 협력망 분석에 쓴다.</p>
-   </article>
-   <article class="card-53fi">
-    <div class="cn-53fi">GROUP 03</div>
-    <h3>미분류</h3>
-    <div class="cv-53fi">2,305,898<em>줄</em></div>
-    <div class="cb-53fi"><i style="width:43.7%"></i></div>
-    <div class="cp-53fi">전체의 43.7% · <b>PENDING</b></div>
-    <p>교내·교외 판정을 아직 내리지 못한 저자행. 소속 문자열이 없거나 판별 신호가 부족하다.</p>
-   </article>
- </div>
+ <table class="tbl-53fi">
+  <thead><tr><th>근거</th><th>비중</th><th style="text-align:right">저자행</th><th>설명</th></tr></thead>
+  <tbody>
+    <tr><td class="lt-53fi">원장 연결</td>
+     <td class="lb-53fi"><i style="width:100.0%"></i></td>
+     <td class="lv-53fi">356,017</td><td class="ld-53fi">BK21·RIMS 제출 원장에서 직접 이어붙인 행. 판별 엔진을 타지 않았다.</td></tr>
+    <tr><td class="lt-53fi">L1 · 식별자</td>
+     <td class="lb-53fi"><i style="width:1.1%"></i></td>
+     <td class="lv-53fi">3,785</td><td class="ld-53fi">Scopus AUID · ORCID · 이메일 같은 고유 식별자 일치</td></tr>
+    <tr><td class="lt-53fi">L2 · 이름+소속</td>
+     <td class="lb-53fi"><i style="width:0.7%"></i></td>
+     <td class="lv-53fi">2,391</td><td class="ld-53fi">전체 이름과 성균관대 소속 문자열이 함께 일치</td></tr>
+    <tr><td class="lt-53fi">L4 · LLM 판별</td>
+     <td class="lb-53fi"><i style="width:0.3%"></i></td>
+     <td class="lv-53fi">898</td><td class="ld-53fi">분야·저널·공저자 지문을 LLM 이 교차검증</td></tr>
+    <tr><td class="lt-53fi">U 접두 규칙</td>
+     <td class="lb-53fi"><i style="width:0.2%"></i></td>
+     <td class="lv-53fi">854</td><td class="ld-53fi">학번·사번 접두 규칙으로 자동 연결</td></tr>
+    <tr><td class="lt-53fi">HITL · 사람검토</td>
+     <td class="lb-53fi"><i style="width:0.1%"></i></td>
+     <td class="lv-53fi">207</td><td class="ld-53fi">담당자가 직접 확인해 확정</td></tr>
+    <tr><td class="lt-53fi">논문 병합</td>
+     <td class="lb-53fi"><i style="width:0.0%"></i></td>
+     <td class="lv-53fi">154</td><td class="ld-53fi">DOI 중복 통합 과정에서 승계</td></tr>
+    <tr><td class="lt-53fi">L3 · 확률</td>
+     <td class="lb-53fi"><i style="width:0.0%"></i></td>
+     <td class="lv-53fi">13</td><td class="ld-53fi">확률 모형 판정</td></tr>
+  </tbody>
+ </table>
 
- <div class="link-53fi"><svg viewBox="0 0 1160 56" preserveAspectRatio="none">
-   <path d="M193 0 V26 Q193 38 205 38 H955 Q967 38 967 26 V0" fill="none" stroke="#c3cfee" stroke-width="1.4"/>
-   <path d="M580 0 V38" fill="none" stroke="#c3cfee" stroke-width="1.4"/>
-   <path d="M580 38 V56" fill="none" stroke="#1e4be8" stroke-width="1.6"/>
-  </svg></div>
-
- <div class="concl-53fi">
-  <h2>확정 356,232줄 가운데 엔진이 실제로 판정한 것은 8,302줄이다</h2>
-  <p>교내 확정 356,232줄 중 <b>356,017줄</b>은 BK21·RIMS 제출 원장에서 직접 이어붙인 것으로 판별 엔진을 거치지 않았다.
-   원장 연결분은 <b>제출 명부가 정확하다는 전제</b> 위에 서 있다.
-   미분류 2,305,898줄(43.7%)은 소속 문자열이 없거나 판별 신호가 부족해 아직 갈래가 정해지지 않았다.</p>
+ <div class="note-53fi">
+  <b>대상 범위.</b> 저자 정보가 끝까지 파싱된 논문 140,850편의 저자행이다.
+  BIBLO 전체 논문 원장은 이보다 크며, 저자 파싱이 끝나지 않은 논문은 이 화면에 포함되지 않는다.<br>
+  <b>읽는 법.</b> 원장 연결 356,017줄을 빼면 엔진 판정분은 8,302줄이다.
+  이 8,302줄이 판별 엔진의 실제 작동 범위다.
  </div>
 </section>
 
