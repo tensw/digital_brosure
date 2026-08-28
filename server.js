@@ -74,7 +74,17 @@ const server = http.createServer((req, res) => {
     const tryNext = (i) => {
       if (i >= candidates.length) { sendFile(res, filePath); return; }
       fs.stat(candidates[i], (err, st) => {
-        if (!err && st.isFile()) { sendFile(res, candidates[i]); }
+        if (!err && st.isFile()) {
+          // 폴더의 index.html 을 줄 때는 주소 끝에 / 를 붙여 리다이렉트한다.
+          // / 가 없으면 그 문서 안의 상대경로(iframe·이미지)가 상위 폴더 기준으로 잡혀 깨진다.
+          if (i === 0 && !urlPath.endsWith('/')) {
+            const qs = req.url.includes('?') ? '?' + req.url.split('?').slice(1).join('?') : '';
+            res.writeHead(301, { Location: encodeURI(urlPath) + '/' + qs });
+            res.end();
+            return;
+          }
+          sendFile(res, candidates[i]);
+        }
         else { tryNext(i + 1); }
       });
     };
