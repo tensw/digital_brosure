@@ -20,71 +20,174 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
  font-size:26px;font-weight:800;line-height:1.6;letter-spacing:-.4px;color:#111827}
 
 
-/* ── 21장 컨텐츠 이식 · 박스 형태는 원본 그대로, 크기·가로 비율은 10장 DNA ── */
-.mid{position:absolute;left:82px;right:82px;top:203px}
-.grid-61iu{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.big-61iu{grid-row:span 2;background:#fff;border-radius:16px;padding:34px 36px 38px;
- box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 30px -22px rgba(30,92,240,.35)}
-.sm-61iu{background:#fff;border-radius:16px;padding:28px 32px;position:relative;overflow:hidden;
- box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 30px -22px rgba(30,92,240,.35)}
-.mid h2{font-size:20px;font-weight:800;letter-spacing:-.6px;line-height:1.5;color:#111827}
-.mid h2 span{color:#1e4be8}
-.mid h2 em{font-style:normal;font-size:13px;font-weight:700;color:#98a1b2;margin-left:6px;letter-spacing:0}
-.p-61iu{font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;color:#4b5563;
- margin-top:14px;word-break:keep-all}
-.p-61iu b{color:#111827;font-weight:700}
-.cmp-61iu{margin-top:34px;padding-left:14px;border-left:2px solid #dbe1ee}
-.rw-61iu{display:flex;align-items:center;gap:16px;margin-top:14px}
-.rw-61iu i{display:block;height:52px;border-radius:9px;flex:none}
-.rw-61iu .lb-61iu{font:800 28px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;color:#111827}
-.rw-61iu .lb-61iu u{display:block;text-decoration:none;font:600 11.5px/1 ui-monospace,Menlo,monospace;
- color:#98a1b2;margin-top:9px;letter-spacing:0}
-.ic-61iu{position:absolute;right:30px;top:50%;transform:translateY(-50%);opacity:.9}
+
+/* ═══ layout-ref-02 이식 — 무대 규칙은 16장 승계(1600x900 · 좌우 82px · min(vw/1600,vh/900)) ═══ */
+:root{
+ --navy:#2d3192; --blue-t:#1a52ab; --blue-b:#2b399a;
+ --p1:#f4f5f9;
+ --bar1:#c8cfdd; --bar2:#a9b7ef; --bar3:#a5e034;
+ --ink:#1b2340; --ink2:#5a6480; --ink3:#96a0bb; --line:#d7dbe6;
+}
+/* ─────────── 요약 표 ─────────── */
+.tb{position:absolute;left:64px;top:158px;width:560px}
+.tb .cap{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;color:var(--ink)}
+.tb .cap::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--navy);flex:none}
+.tb .cap u{text-decoration:none;margin-left:auto;font-size:11px;font-weight:600;color:var(--ink3)}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{padding:9px 10px;text-align:center;font-size:13px;font-weight:700}
+th{background:#e9ecf4;color:var(--ink2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+td{color:var(--ink);border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left;color:var(--ink2)}
+
+/* ─────────── 국면 밴드 ─────────── */
+.bands{position:absolute;inset:0}
+.band{position:absolute}
+.b1{background:var(--p1)}
+.b2{z-index:2;border-radius:20px 20px 0 0;
+ background:linear-gradient(180deg,var(--blue-t) 0%,var(--blue-b) 100%);
+ box-shadow:-3px 0 0 rgba(176,205,237,.85), 3px 0 0 rgba(176,205,237,.35),
+            0 24px 48px -24px rgba(16,40,110,.55)}
+.b3{background:var(--navy)}
+
+.blab{position:absolute;z-index:4}
+.blab .y{font-size:45px;font-weight:800;letter-spacing:-2px;line-height:1}
+.blab .d{font-size:14px;font-weight:700;margin-top:11px;line-height:1.5}
+.b1 .y{color:var(--navy)} .b1 .d{color:var(--ink2)}
+.b2 .y,.b3 .y{color:#fff} .b2 .d,.b3 .d{color:rgba(255,255,255,.82)}
+
+/* 막대 영역 */
+.plot{position:absolute;left:0;right:0;bottom:18px}
+.axis{position:absolute;left:0;right:0;bottom:0;height:1px}
+.bar{position:absolute;bottom:0;border-radius:2px 2px 0 0}
+.bv{position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);
+ font-size:12px;font-weight:700;white-space:nowrap}
+.xl{position:absolute;transform:translateX(-50%);font-size:11.5px;font-weight:700;
+ color:#8791ad;white-space:nowrap}
+
+/* 2구간 헤더 (이벤트) */
+.evh{position:absolute;z-index:5;text-align:center;color:#fff}
+.evh u{text-decoration:none;display:block;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.8)}
+.evh b{display:block;font-size:21px;font-weight:800;letter-spacing:-.6px;margin-top:9px}
+.evh s{text-decoration:none;display:block;margin:12px auto 0;width:11px;height:11px;
+ background:rgba(255,255,255,.5);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.evline{position:absolute;z-index:5;height:1px;background:rgba(255,255,255,.3)}
+
+/* 2구간 안쪽 리스트 박스 */
+.lst{position:absolute;z-index:5;border-radius:16px;padding:17px 16px 4px;
+ background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.13)}
+.lst h4{font-size:16px;font-weight:800;text-align:center;color:#fff;letter-spacing:-.3px}
+.lst p{margin-top:13px;padding:12px 4px;text-align:center;font-size:12.5px;font-weight:600;
+ color:rgba(255,255,255,.92);border-top:1px solid rgba(255,255,255,.26);line-height:1.4}
+
+/* 화살표 */
+.arrow{position:absolute;z-index:2;
+ background:linear-gradient(180deg,#a5e034 0%,#6fd3a8 45%,#3aa8e8 100%);
+ clip-path:polygon(50% 0,100% 22%,72% 22%,72% 100%,28% 100%,28% 22%,0 22%)}
+
+/* 리더선 · 콜아웃 */
+svg.ld{position:absolute;inset:0;z-index:6;pointer-events:none;overflow:visible}
+svg.ld path{fill:none;stroke:rgba(255,255,255,.55);stroke-width:1}
+svg.ld circle{fill:#fff}
+.cal{position:absolute;z-index:6;color:#fff;font-size:13.5px;font-weight:700;line-height:1.5}
+.cal u{text-decoration:none;display:block;font-size:12px;font-weight:500;
+ color:rgba(255,255,255,.75);margin-top:5px}
+.cal .mk{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.cal .mk i{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.16);
+ box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+.cal .mk b{font-size:10px;font-weight:600;letter-spacing:.14em;color:rgba(255,255,255,.6)}
+.tb{left:82px;top:203px;z-index:5}
+.tb .cap{font-size:20px;letter-spacing:-.6px}
+.tb .cap u{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2}
+th,td{font-size:14.5px;padding:11px 10px}
+/* 회색(2017-19)·네이비(2022) 밴드는 좌우로 화면 끝까지 흘린다 */
+.slide{overflow:hidden}
+#stage{overflow:visible}
 </style></head><body>
 <div class="slide"><div id="stage">
 
  <h1>MATCHING STATUS</h1>
  <div class="h1s">저자행 5,280,301줄이 어디로 갈렸고, 그중 엔진이 실제로 판정한 것은 얼마인가</div>
 
- <div class="mid">
- <div class="grid-61iu">
-   <div class="big-61iu">
-    <h2>등급 미상 논문이<br><span>23.0%로 줄었어요</span><em>(정규화 전 대비)</em></h2>
-    <p class="p-61iu">게재처 표기가 원천마다 흩어져 있어 저널 등급을 붙이지 못한 논문이 많았습니다.
-     ISSN 기준으로 게재처를 통합해 <b>17,101 → 13,872</b>(중복 18.9%)로 줄이고,
-     게재처 중앙값으로 등급을 보강해 미상 비율을 40.3%에서 23.0%로 낮췄습니다.</p>
-    <div class="cmp-61iu">
-     <div class="rw-61iu"><i style="width:82%;background:#e3e8f2"></i>
-      <span class="lb-61iu">40.3%<u>정규화 전</u></span></div>
-     <div class="rw-61iu"><i style="width:47%;background:#7ba6ff"></i>
-      <span class="lb-61iu">23.0%<u>중앙값 보강 후</u></span></div>
-    </div>
-   </div>
- 
-   <div class="sm-61iu">
-    <h2>게재처 정본이<br><span>13,872건으로 정리</span></h2>
-    <p class="p-61iu">같은 저널이 원천마다 다르게 적혀 있던 것을 ISSN 으로 묶었습니다.
-     자리표시 ISSN 7개는 이름으로 예외 처리하고, 시리즈 18건에 플래그를 달았습니다.</p>
-    <svg class="ic-61iu" width="46" height="46" viewBox="0 0 24 24" fill="none"
-      stroke="#9dbcff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-     <path d="M4 6h16M4 12h16M4 18h10"/></svg>
-   </div>
- 
-   <div class="sm-61iu">
-    <h2>확정 인물이<br><span>11,930명</span></h2>
-    <p class="p-61iu">저자행 <b>5,280,301</b>줄에서 동명이인을 갈라 <b>11,930</b>명을 확정했습니다.
-     1인당 평균 <b>29.9</b>줄이 붙습니다.</p>
-    <svg class="ic-61iu" width="46" height="46" viewBox="0 0 24 24" fill="#9dbcff">
-     <circle cx="9" cy="8" r="3.4"/><path d="M2.6 20a6.4 6.4 0 0 1 12.8 0z"/>
-     <circle cx="17.4" cy="9" r="2.6"/><path d="M15.8 20a5.4 5.4 0 0 1 5.6-5.2V20z"/></svg>
-   </div>
-  </div>
+ <div class="tb">
+  <div class="cap">침체기를 이겨낸 유능한 기업<u>단위 : 백만원</u></div>
+  <table>
+   <thead><tr><th>년도</th><th>2017</th><th>2018</th><th>2019</th><th>2020</th></tr></thead>
+   <tbody><tr><td>연간 매출액</td><td>1,048</td><td>1,555</td><td>2,100</td><td>564</td></tr></tbody>
+  </table>
  </div>
 
- <div class="concl">확정 356,232줄 가운데 엔진이 실제로 판정한 것은 8,302줄이다</div>
+ <div class="bands" id="bands"></div>
+ <svg class="ld" id="ld" viewBox="0 0 1600 900"></svg>
 </div></div>
 
 <script>
+/* ══ 무대 1600x900 기준 좌표 (16장 타이틀·표 아래로 20px 내림) ══ */
+const BOT=858, BASE=840, TOP=345, B2T=263, K=0.40, BW=24;
+const BLEED=1400;                 /* 화면 끝까지 흘릴 여유 폭 */
+
+const PH=[
+ { cls:'b1', x:0, w:810, top:TOP, lx:116, ly:30, bl:BLEED, br:0,
+   y:'2017-19', d:'글로벌 이동 수요 증가<br>2년 만에 거래액 3배 이상 성장',
+   bar:'var(--bar1)', vc:'#5a6480', axis:'rgba(120,132,168,.5)', x0:136, pitch:48.4,
+   bars:[["'17.1Q",219],['',160],['',275],['',208],
+         ["'18.1Q",323],['',214],['',444],['',684],
+         ["'19.1Q",296],['',405],['',572],['',825],
+         ["'20.1Q",228]] },
+ { cls:'b2', x:810, w:332, top:B2T, lx:32, ly:154, bl:0, br:0,
+   y:'2020-21', d:'글로벌 팬데믹으로<br>인한 침체기',
+   bar:'var(--bar2)', vc:'#fff', axis:'rgba(255,255,255,.28)', x0:870, pitch:47.3,
+   bars:[['',36],['',183],['',116],["'21.1Q",66],['',165]] },
+ { cls:'b3', x:1142, w:458, top:TOP, lx:45, ly:26, bl:0, br:BLEED,
+   y:'2022', d:'새로운 성장 동력 확보 &amp;<br>회복기 시작',
+   bar:'var(--bar3)', vc:'#cbee85', axis:'rgba(255,255,255,.28)', x0:1207, pitch:48,
+   bars:[['',336],['',421]] }
+];
+
+const bands=document.getElementById('bands');
+bands.innerHTML=PH.map(p=>{
+  const bars=p.bars.map((b,i)=>{
+    const bx=p.x0+p.pitch*i-p.x-BW/2;   /* .plot 원점이 원래 밴드 시작점이라 좌표 그대로 */
+    return `<span class="bar" style="left:${bx.toFixed(1)}px;width:${BW}px;`
+         + `height:${(b[1]*K).toFixed(1)}px;background:${p.bar}">`
+         + `<span class="bv" style="color:${p.vc}">${b[1]}</span></span>`;
+  }).join('');
+  return `<div class="band ${p.cls}" style="left:${p.x-p.bl}px;width:${p.w+p.bl+p.br}px;`
+       + `top:${p.top}px;height:${BOT-p.top}px">
+    <div class="blab" style="left:${p.lx+p.bl}px;top:${p.ly}px">
+      <div class="y">${p.y}</div><div class="d">${p.d}</div></div>
+    <div class="plot" style="left:${p.bl}px;right:${p.br}px;height:${BASE-p.top}px">
+      <div class="axis" style="background:${p.axis}"></div>${bars}</div>
+  </div>`;
+}).join('');
+
+bands.insertAdjacentHTML('beforeend',
+  PH.flatMap(p=>p.bars.map((b,i)=> b[0]
+    ? `<span class="xl" style="left:${(p.x0+p.pitch*i).toFixed(1)}px;top:${BOT+16}px">${b[0]}</span>`
+    : '')).join('')
+  + `<span class="xl" style="left:1323px;top:${BOT+16}px">'22</span>`);
+
+bands.insertAdjacentHTML('beforeend',
+ `<div class="evh" style="left:810px;top:${B2T+28}px;width:332px">
+    <u>2021년 6월</u><b>Pre-A 유치(10억 원)</b><s></s></div>
+  <div class="evline" style="left:830px;width:292px;top:${B2T+134}px"></div>
+  <div class="lst" style="left:830px;top:${B2T+248}px;width:292px">
+    <h4>사업 재정비</h4>
+    <p>조직 개편 · 개선</p><p>R&amp;D 조직 통합</p><p>CTO 신규 영입</p>
+  </div>
+  <div class="arrow" style="left:1296px;top:${BASE-350}px;width:78px;height:350px"></div>`);
+
+const t336=BASE-336*K, t421=BASE-421*K;
+document.getElementById('ld').innerHTML=
+ `<path d="M1207 ${t336-30} V ${t336-100} H 1398"/>
+  <circle cx="1207" cy="${t336-30}" r="4"/>
+  <path d="M1258 ${t421+62} H 1398"/>`;
+document.getElementById('stage').insertAdjacentHTML('beforeend',
+ `<div class="cal" style="left:1406px;top:${t336-120}px;width:170px">
+    Beta 런칭 &amp; 신규 거래처 발굴<u>(21.3Q)</u></div>
+  <div class="cal" style="left:1406px;top:${t421+20}px;width:170px">
+    <span class="mk"><i></i><b>PARTNER</b></span>
+    콘서트 투어 연계<br>차량 공급 계약 체결<u>파트너 계약 (21.4Q)</u></div>`);
+
 
 
 const SW=1600,SH=900;
