@@ -268,11 +268,26 @@ function draw(ts){
  ctx.globalAlpha=1;
  if(!STILL){
   ctx.setTransform(DPR,0,0,DPR,0,0);
+  /* 기존 흐름광 — 은은한 푸른 빛 */
   ctx.globalCompositeOperation='lighter';
   const p=((T2*0.16)%1.6)-0.3, sx=CX+(p-0.5)*PW*1.7;
   const g=ctx.createRadialGradient(sx,CY,0,sx,CY,PW*0.30);
-  g.addColorStop(0,'rgba(190,210,255,.10)'); g.addColorStop(1,'rgba(190,210,255,0)');
+  g.addColorStop(0,'rgba(190,210,255,.08)'); g.addColorStop(1,'rgba(190,210,255,0)');
   ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+
+  /* 흰 블러 띠 — source-atop 이라 점묘 그라디언트가 있는 자리에만 얹힌다.
+     검은 배경에는 번지지 않는다. */
+  ctx.globalCompositeOperation='source-atop';
+  ctx.filter='blur(30px)';
+  const wx=CX+Math.sin(T2*0.38)*PW*0.46, wy=CY+Math.sin(T2*0.23)*PH*0.30;
+  const wg=ctx.createRadialGradient(wx,wy,0,wx,wy,PW*0.52);
+  wg.addColorStop(0,   'rgba(255,255,255,.62)');
+  wg.addColorStop(0.40,'rgba(255,255,255,.30)');
+  wg.addColorStop(0.75,'rgba(255,255,255,.10)');
+  wg.addColorStop(1,   'rgba(255,255,255,0)');
+  ctx.fillStyle=wg; ctx.fillRect(0,0,W,H);
+  ctx.filter='none';
+
   ctx.globalCompositeOperation='source-over';
   requestAnimationFrame(draw);
  }
