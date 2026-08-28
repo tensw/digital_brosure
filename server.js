@@ -30,15 +30,22 @@ function sendFile(res, filePath) {
   const contentType = MIME[ext] || 'application/octet-stream';
   fs.readFile(filePath, (err, data) => {
     if (err) {
-      // SPA fallback to the brochure index
-      fs.readFile(path.join(ROOT, DEFAULT_DOC), (e, d) => {
-        if (e) { res.writeHead(500); res.end('Server Error'); return; }
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(d);
-      });
+      // 없는 경로는 404 로 끝낸다. 예전에는 대문(브로슈어)을 대신 내보내서,
+      // 오타난 주소나 미배포 경로가 전부 브로슈어로 보이고 새로 올린 페이지와 헷갈렸다.
+      res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end('<meta charset="utf-8"><title>404</title>'
+        + '<body style="margin:0;display:grid;place-items:center;height:100vh;'
+        + 'background:#0b1226;color:#93a6cc;font:15px/1.7 -apple-system,system-ui,sans-serif">'
+        + '<div style="text-align:center"><div style="font:800 44px/1 ui-monospace,Menlo,monospace;'
+        + 'color:#e9eefb;letter-spacing:-1px">404</div>'
+        + '<p style="margin-top:14px">요청하신 경로가 없습니다.</p>'
+        + '<p style="margin-top:6px"><a href="/" style="color:#7fa9e0">biblo.ai 로 이동</a></p></div>');
       return;
     }
-    res.writeHead(200, { 'Content-Type': contentType });
+    // HTML 은 브라우저가 임의로 캐시하지 않게 한다 (배포 직후 옛 화면이 뜨던 문제)
+    const headers = { 'Content-Type': contentType };
+    if (ext === '.html') headers['Cache-Control'] = 'no-cache, must-revalidate';
+    res.writeHead(200, headers);
     res.end(data);
   });
 }
