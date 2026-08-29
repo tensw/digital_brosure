@@ -44,6 +44,11 @@ h1 em{font-style:normal;background:linear-gradient(100deg,#7fd4ff,#a9b6ff 60%,#e
 .body b{color:var(--ink);font-weight:700}
 
 .hero{position:relative;display:flex;align-items:center}
+/* 강조 그라데이션 — BIBLO_영업_원페이저.html .h1-7m3v9 span 그대로 */
+.hero h1 em{background-image:linear-gradient(90deg,#38bdf8,#a78bfa 45%,#f472b6 72%,#fbbf24)}
+/* 제목이 길어져 카드 폭과 글자 크기를 맞춘다 */
+.hero .glass{width:min(700px,100%)}
+.hero h1{font-size:clamp(30px,3.4vw,48px);letter-spacing:-1.6px}
 /* ── 중간 간지 (12장) — 우측 정렬 대형 챕터 ── */
 .hero.slide-2q6r4.divx{align-items:flex-end;justify-content:center}
 .divx-in{text-align:right;max-width:min(980px,86vw)}
@@ -541,12 +546,13 @@ window.BGS_2q6r4={
  <div class="hero slide-2q6r4" id="sl-hero-2q6r4">
   <div class="glass"><div class="pad">
    <span class="pill">RESEARCH &amp; LIBRARY PLATFORM</span>
-   <h1>데이터로 움직이는<br><em>AI도서관</em></h1>
+   <h1>대학과 도서관의 데이터를<br><em>연결하는 AI 플랫폼</em></h1>
    <div class="dots"></div>
-   <p class="body">대학의 연구 실적은 도서관에 <b>이미 쌓인 기록</b>에서 나옵니다.
-    누가 어떤 책을 빌렸고 어떤 논문을 누가 썼는지 같은 것들.
-    비블로는 그 기록을 읽어 살 책을 고르고, 논문마다 저자를 찾아 붙이고,
-    그 결과를 실적 수치로 정리합니다. <b>평소 운영 기록이 그대로 실적이 됩니다.</b></p>
+   <p class="body">대학과 도서관에는 책·논문·연구자·대출·소장·사업 데이터가 이미 쌓여 있습니다.
+    시스템마다 흩어져 있어 필요한 자료를 찾거나, 논문을 실제 연구자에게 연결하거나,
+    학교의 성과를 한눈에 보기 어려울 뿐입니다.
+    <b>BIBLO 는 기관이 보유한 데이터를 하나의 공통 기반으로 연결합니다.</b>
+    연결된 데이터는 검색·연구성과 관리·홍보영상·사서 업무·AI 질의·KPI 관리에 반복해서 쓰입니다.</p>
   </div></div>
   <div class="scroll"><i></i>SCROLL</div>
  </div>
