@@ -6,14 +6,21 @@
 html{overflow-x:hidden}
 body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
  background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
-.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+/* 27장(bk21-status-09)과 같은 배경 — 파랑 바탕에 떠 있는 원 세 개.
+   배경만 칠하면 글자가 안 읽혀 배경 위 글자(h1 · h1s · concl)도 그 장의 흰색 규칙을 따른다. */
+:root{--bg-b11:#1b9df2;--bg2-b11:#4fb8f7;--bg3-b11:#0d7ec9}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:var(--bg-b11)}
+.blob-b11{position:absolute;border-radius:50%;pointer-events:none}
+.b1-b11{width:1180px;height:1180px;background:var(--bg2-b11);opacity:.55;left:34%;top:-30%}
+.b2-b11{width:820px;height:820px;background:var(--bg2-b11);opacity:.38;left:64%;top:44%}
+.b3-b11{width:560px;height:560px;background:var(--bg3-b11);opacity:.22;left:-12%;top:52%}
 #stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;
  overflow:visible;background:transparent}
 
 /* ─── 상단 ─── */
-h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-spacing:.5px;color:#111827}
+h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-spacing:.5px;color:#fff}
 .h1s{position:absolute;left:82px;top:163px;font-size:16px;font-weight:600;letter-spacing:-.3px;
- color:#4b5563}
+ color:rgba(255,255,255,.86)}
 
 /* ─── 규칙선 ─── */
 .rule{position:absolute;left:82px;right:82px;height:1px;background:#c3ccdf;z-index:3}
@@ -62,7 +69,7 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 
 /* ─── 하단 ─── */
 .concl{position:absolute;left:0;right:0;top:747px;text-align:center;
- font-size:26px;font-weight:800;line-height:1.6;letter-spacing:-.4px;color:#111827}
+ font-size:26px;font-weight:800;line-height:1.6;letter-spacing:-.4px;color:#fff}
 
 /* ── 08장 카드 형식 (수치·진행바·비율) ── */
 .col .cv{font:800 28px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:13px;color:#111827}
@@ -89,7 +96,9 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 .col .seg .sx{font-size:14.5px;font-weight:500;letter-spacing:-.3px;color:#4b5563}
 .col .seg .sx b{color:#111827;font-weight:700}
 </style></head><body>
-<div class="slide"><div id="stage">
+<div class="slide">
+ <span class="blob-b11 b1-b11"></span><span class="blob-b11 b2-b11"></span><span class="blob-b11 b3-b11"></span>
+ <div id="stage">
 
  <h1>MATCHING STATUS</h1>
  <div class="h1s">저자행 5,280,301줄이 어디로 갈렸고, 그중 엔진이 실제로 판정한 것은 얼마인가</div>
