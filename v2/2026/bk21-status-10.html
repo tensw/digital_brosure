@@ -115,13 +115,66 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 .res-gx39{border-radius:999px;background:linear-gradient(100deg,#4b8cff,#1e5cf0);color:#fff;
  text-align:center;padding:11px 16px;font-size:16px;font-weight:800;letter-spacing:-.4px;line-height:1.45}
 
-/* ── 6.1 카피용 ── 카드 안에서 큰 숫자 · 캡션 · 한 줄 주장 ── */
-.big{font:800 34px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.6px;color:#1e4be8;margin-top:2px}
-.big em{font-style:normal;font-size:14px;font-weight:700;color:#98a1b2;margin-left:6px;letter-spacing:0}
-.cap{margin-top:7px;font:600 11.5px/1.5 ui-monospace,Menlo,monospace;color:#98a1b2;letter-spacing:.01em}
-.say{margin-top:14px;font-size:15px;font-weight:700;line-height:1.55;letter-spacing:-.4px;color:#111827}
-.say b{color:#1e4be8}
-.col .bd ul{margin-top:auto;padding-top:13px;border-top:1px solid #eef1f7}
+/* 기준일 — 화면에 없으면 나중에 어느 시점 값인지 못 찾는다 */
+.h1s .asof{margin-left:12px;font:700 11px/1 ui-monospace,Menlo,monospace;
+ letter-spacing:.06em;color:#98a1b2;vertical-align:1px}
+
+/* ══ 16번(bk21-status-13b.html) 카드·시각화·KEY INSIGHT CSS 를 그대로 가져왔다 ══ */
+.mid{position:absolute;left:82px;right:82px;top:203px}
+.cols-n82q{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px}
+.cd-n82q{background:#fff;border-radius:16px;padding:26px 26px 22px;
+ box-shadow:0 1px 2px rgba(17,24,39,.04),0 16px 34px -26px rgba(17,24,39,.4)}
+.ct-n82q{font-size:16px;font-weight:800;letter-spacing:-.5px}
+.ct-n82q span{color:#1e5cf0}
+.cp-n82q{font-size:12px;line-height:1.85;color:#5b6474;margin-top:11px}
+.cp-n82q b{color:#111827}
+.src-n82q{font-size:10.5px;color:#9aa4b8;margin-top:14px;text-align:center}
+.bars-n82q{display:flex;align-items:flex-end;gap:14px;height:132px;margin-top:20px;padding:0 6px}
+.bars-n82q div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bars-n82q i{display:block;width:100%;border-radius:5px 5px 0 0;background:#e4e9f4}
+.bars-n82q .on-n82q i{background:#1e5cf0}
+.bars-n82q em{font-style:normal;font:800 11px/1 ui-monospace,Menlo,monospace;color:#8b95a8;margin-bottom:7px}
+.bars-n82q .on-n82q em{color:#1e5cf0;font-size:12.5px}
+.bars-n82q u{text-decoration:none;font-size:10px;color:#9aa4b8;margin-top:7px}
+.key-n82q{margin-top:26px;border-radius:16px;background:linear-gradient(100deg,#2f6bff,#1442c6);
+ color:#fff;text-align:center;padding:24px 30px 28px}
+.key-n82q h2{font:800 13px/1 inherit;letter-spacing:.14em}
+.key-n82q p{font-size:12.5px;line-height:2;color:rgba(255,255,255,.9);margin-top:12px;max-width:92ch;margin-inline:auto}
+.key-n82q p b{color:#fff}
+.mid .cols-n82q{margin-top:0;gap:22px}
+.mid .cd-n82q{padding:22px 24px 24px}
+.mid .ct-n82q{font-size:20px;font-weight:800;letter-spacing:-.6px;line-height:1.3}
+.mid .ct-n82q span{color:#1e4be8}
+.mid .cp-n82q{font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
+ color:#4b5563;margin-top:11px;word-break:keep-all}
+.mid .cp-n82q b{color:#111827;font-weight:700}
+.mid .src-n82q{font:600 11.5px/1.5 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:14px}
+.mid .bars-n82q em{font:800 13px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-bottom:8px}
+.mid .bars-n82q .on-n82q em{color:#1e4be8;font-size:15px}
+.mid .bars-n82q .on-n82q i{background:#1e4be8}
+.mid .bars-n82q u{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:8px}
+.mid .lg-n82q{font-size:14.5px;font-weight:500;letter-spacing:-.3px;line-height:1.9;color:#4b5563}
+.mid .key-n82q h2{font:700 11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em}
+.mid .key-n82q p{font-size:14.5px;font-weight:500;line-height:1.6;letter-spacing:-.3px;margin-top:12px}
+/* 이 장에만 쓰는 것 — 구글 대비 박스와 근거 목록 */
+.vs-n82q{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:16px}
+.vs-n82q .b{border-radius:11px;padding:13px 14px}
+.vs-n82q .g{background:#f2f4f8;border:1px solid #e2e7f0}
+.vs-n82q .u{background:#eef3ff;border:1px solid #cfe0ff}
+.vs-n82q .h{display:block;font:800 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em}
+.vs-n82q .g .h{color:#7b8798} .vs-n82q .u .h{color:#1e4be8}
+.vs-n82q .n{margin-top:9px;font:800 24px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.2px}
+.vs-n82q .g .n{color:#64748b} .vs-n82q .u .n{color:#1e4be8}
+.vs-n82q .n i{font-style:normal;font-size:11px;font-weight:700;color:#98a1b2;margin-left:6px;letter-spacing:0}
+.vs-n82q p{margin-top:10px;font-size:12.5px;line-height:1.65;letter-spacing:-.3px;color:#5b6474}
+.vs-n82q .u p b{color:#111827;font-weight:700}
+.ev-n82q{list-style:none;margin-top:auto;padding-top:13px;border-top:1px solid #eef1f7}
+.ev-n82q li{position:relative;padding-left:14px;font-size:13px;line-height:1.6;
+ letter-spacing:-.3px;color:#4b5563;margin-top:6px}
+.ev-n82q li:before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;
+ border-radius:50%;background:#1e4be8}
+.ev-n82q li b{color:#111827;font-weight:700}
+.cd-n82q{display:flex;flex-direction:column}
 /* 기준일 — 화면에 없으면 나중에 어느 시점 값인지 못 찾는다 */
 .h1s .asof{margin-left:12px;font:700 11px/1 ui-monospace,Menlo,monospace;
  letter-spacing:.06em;color:#98a1b2;vertical-align:1px}
@@ -131,56 +184,73 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
  <h1>SEARCH QUALITY</h1>
  <div class="h1s">글자가 안 맞아도, 구글이 멈춰도, 계열이 달라도 검색은 논문으로 끝난다<span class="asof">실측 2026-07-26</span></div>
 
- <div class="cols">
+ <!-- 16번(bk21-status-13b.html)의 카드·시각화·KEY INSIGHT 구조를 그대로 응용했다.
+      클래스 이름(-n82q)도 원본 그대로. 내용은 서비스설계서 6.1 세 대목이다. -->
+ <div class="mid">
+  <div class="cols-n82q">
 
-  <!-- biblo-service-design.html 6.1 의 세 대목을 카피로 정리해 넣었다.
-       카드 껍데기(.col/.ch/.bd)와 글자 크기는 이 장(10번) 것을 그대로 쓴다. -->
-  <div class="col">
-   <div class="ch">빈손으로 끝나지 않는다</div>
-   <div class="bd">
-    <div class="big">12,546<em>건</em></div>
-    <div class="cap">0건이던 「저자 식별 및 중복 제거」</div>
-    <p class="say">글자가 안 맞아도 <b>뜻으로</b> 찾는다.<br>오탈자에도, 전문 용어에도 결과가 비지 않는다.</p>
-    <ul>
+   <div class="cd-n82q">
+    <div class="ct-n82q">검색결과가 <span>비지 않는다</span></div>
+    <p class="cp-n82q">글자가 안 맞아도 뜻으로 찾는다. 모든 단어를 다 든 논문이 없으면
+     <b>일부만 든 논문을 많이 든 순</b>으로 편다.</p>
+    <div class="bars-n82q">
+     <div><em>0건</em><i style="height:2%"></i><u>그대로</u></div>
+     <div class="on-n82q"><em>12,546</em><i style="height:96%"></i><u>비블로</u></div>
+     <div><em>1건</em><i style="height:2%"></i><u>그대로</u></div>
+     <div class="on-n82q"><em>1,293</em><i style="height:38%"></i><u>비블로</u></div>
+    </div>
+    <div class="src-n82q">「저자 식별 및 중복 제거」 · 「삼중음성유방암」 실측</div>
+    <ul class="ev-n82q">
      <li>지문 <b>84.3만 편</b>을 2축 벡터로 임베딩 · KNN <b>1.6ms</b></li>
-     <li>정책 사전 <b>132개</b>로 노이즈 제거 — 「삼중음성유방암」 <b>1건 → 1,293건</b></li>
-     <li>다 든 논문이 없으면 일부만 든 논문을 많이 든 순으로 편다</li>
+     <li>정책 사전 <b>132개</b>가 노이즈를 걷어낸다</li>
     </ul>
    </div>
-  </div>
 
-  <div class="col">
-   <div class="ch">구글이 멈추는 곳에서 한 걸음 더</div>
-   <div class="bd">
-    <div class="big">전 항목<em>+ 구독 원문</em></div>
-    <div class="cap">구글 스칼라 고급검색 전 항목 대응</div>
-    <p class="say">구글은 <b>초록과 링크</b>에서 멈춘다.<br>우리는 <b>구독 학술지 원문</b>을 연다.</p>
-    <ul>
-     <li>모두 포함 · 정확 문구 · OR · NOT — 전부 된다</li>
-     <li>저자관계 <b>362만 행</b> · 학술지 <b>95%</b> 채움 · 연도 <b>100%</b></li>
-     <li>정제·검증 데이터라 무관한 결과가 안 섞인다</li>
+   <div class="cd-n82q">
+    <div class="ct-n82q">구글은 <span>평면 목록</span>으로 준다</div>
+    <p class="cp-n82q">같은 질의 「논문저자 매칭」. 구글은 <b>29,500개</b>를 한 줄로 늘어놓고
+     예술 펀드·부동산이 섞인다. 우리는 <b>연구 주제 세 갈래</b>로 갈라 준다.</p>
+    <div class="vs-n82q">
+     <div class="b g"><span class="h">GOOGLE SCHOLAR</span>
+      <div class="n">29,500<i>개 · 0.21초</i></div>
+      <p>⚠ 예술지원 매칭펀드<br>⚠ 서울시 장기전세주택 Matching</p></div>
+     <div class="b u"><span class="h">BIBLO</span>
+      <div class="n">3<i>갈래로 분해</i></div>
+      <p>저자 식별 <b>4,221</b> · 저자 귀속 <b>2,891</b><br>동음이의어 해결 <b>4,207</b></p></div>
+    </div>
+    <div class="src-n82q">같은 질의 「논문저자 매칭」 실측</div>
+    <ul class="ev-n82q">
+     <li>고급검색 <b>모두 포함·정확 문구·OR·NOT</b> 전부 대응</li>
+     <li>구글은 초록에서 멈추고 우리는 <b>구독 원문</b>까지 연다</li>
     </ul>
    </div>
-  </div>
 
-  <div class="col">
-   <div class="ch">그 계열의 말로 찾는다</div>
-   <div class="bd">
-    <div class="big">60.0<em>%</em></div>
-    <div class="cap">이과 지표 비중 · 문과는 이론 26.2%</div>
-    <p class="say">같은 지문도 <b>이과는 지표로, 문과는 이론으로</b> 채워진다.<br>그 차이를 검색에 그대로 쓴다.</p>
-    <ul>
-     <li>이과·의학보건 — 지표 <b>60.0%</b> · 데이터셋 63.9% · 이론 8.9%</li>
-     <li>문과·인문예술 — 이론 <b>26.2%</b>(계열 최고) · 지표 8.0%</li>
-     <li>이과는 지표 검색, 문과는 이론 검색으로 좁힌다 (R2 61만 편 실측)</li>
+   <div class="cd-n82q">
+    <div class="ct-n82q">계열마다 <span>다른 얼굴</span>이다</div>
+    <p class="cp-n82q">같은 14축 지문도 <b>이과는 지표로, 문과는 이론으로</b> 채워진다.
+     그 차이를 계열별 검색에 그대로 쓴다.</p>
+    <div class="bars-n82q">
+     <div class="on-n82q"><em>60.0</em><i style="height:96%"></i><u>이과 지표</u></div>
+     <div><em>8.9</em><i style="height:14%"></i><u>이과 이론</u></div>
+     <div><em>8.0</em><i style="height:13%"></i><u>문과 지표</u></div>
+     <div class="on-n82q"><em>26.2</em><i style="height:42%"></i><u>문과 이론</u></div>
+    </div>
+    <div class="src-n82q">R2 61만 편 실측. (단위: %)</div>
+    <ul class="ev-n82q">
+     <li>이과·의학보건은 데이터셋도 <b>63.9%</b></li>
+     <li>이과는 지표 검색, 문과는 이론 검색으로 좁힌다</li>
     </ul>
    </div>
+
   </div>
 
+  <div class="key-n82q"><h2>KEY INSIGHT</h2>
+   <p>구독 없이도 <b>검색결과가 비지 않는다</b>. 글자가 안 맞으면 뜻으로 찾고,
+    구글이 초록과 링크에서 멈추는 자리에서 <b>구독 학술지 원문</b>까지 연다.
+    저자관계 <b>362만 행</b> · 학술지 <b>95%</b> 채움 · 연도 <b>100%</b>가 고급검색을 받친다.</p></div>
  </div>
 
-
- <div class="concl">검색이 빈손으로 끝나지 않는다</div>
+ <div class="concl">검색결과가 비지 않는다</div>
 </div></div>
 
 <script>
