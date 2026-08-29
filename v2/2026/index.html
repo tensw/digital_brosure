@@ -50,10 +50,12 @@ h1 em{font-style:normal;background:linear-gradient(100deg,#7fd4ff,#a9b6ff 60%,#e
 .hero .glass{width:min(700px,100%)}
 .hero h1{font-size:clamp(30px,3.4vw,48px);letter-spacing:-1.6px}
 /* ── 중간 간지 (12장) — 우측 정렬 대형 챕터 ── */
-.hero.slide-2q6r4.divx{align-items:flex-end;justify-content:center}
-.divx-in{text-align:right;max-width:min(980px,86vw)}
+.hero.slide-2q6r4.divx{flex-direction:row;align-items:center;justify-content:space-between;gap:4vw}
+.divx .glass{flex:0 1 620px;min-width:0}
+.divx-in{flex:0 1 auto}
+.divx-in{text-align:right;max-width:min(680px,42vw)}
 .divx-in .k{font:700 11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.34em;color:var(--ink3)}
-.divx-in h2{margin-top:20px;font-size:clamp(48px,6.4vw,104px);font-weight:800;
+.divx-in h2{margin-top:20px;font-size:clamp(38px,4.4vw,72px);font-weight:800;
  letter-spacing:-3px;line-height:1.06;color:var(--ink)}
 .divx-in h2 em{font-style:normal;margin-right:.16em;
  background:linear-gradient(100deg,#7fd4ff,#a9b6ff 60%,#e5c7ff);
@@ -578,6 +580,16 @@ window.BGS_2q6r4={
 
  <!-- 24·25·26 장 사본 (12·13·14 자리) -->
 <div class="hero slide-2q6r4 divx" id="sl-hero-2q6r4-b">
+    <div class="glass"><div class="pad">
+   <span class="pill">RESEARCH &amp; LIBRARY PLATFORM</span>
+   <h1>대학과 도서관의 데이터를<br><em>연결하는 AI 플랫폼</em></h1>
+   <div class="dots"></div>
+   <p class="body">대학과 도서관에는 책·논문·연구자·대출·소장·사업 데이터가 이미 쌓여 있습니다.
+    시스템마다 흩어져 있어 필요한 자료를 찾거나, 논문을 실제 연구자에게 연결하거나,
+    학교의 성과를 한눈에 보기 어려울 뿐입니다.
+    <b>BIBLO 는 기관이 보유한 데이터를 하나의 공통 기반으로 연결합니다.</b>
+    연결된 데이터는 검색·연구성과 관리·홍보영상·사서 업무·AI 질의·KPI 관리에 반복해서 쓰입니다.</p>
+  </div></div>
   <div class="divx-in">
    <span class="k">CHAPTER</span>
    <h2><em>Ⅱ.</em>연구성과관리</h2>
