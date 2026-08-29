@@ -141,7 +141,8 @@ function draw(){
     <stop offset="100%" stop-color="#38bdf8" stop-opacity=".85"/></linearGradient>`;
   S.appendChild(d);
 
-  // 축을 5번째 신호(공저 관계망) 높이에 맞춘다 — 좌측 라인이 여기 한 점으로 겹친다
+  // 구체 중심이자 좌측 7개 신호선이 모두 수렴하는 점.
+  // 신호 행 높이(76+i*88)와는 별개 값이다. 5번째 행은 428, 여기는 392.
   const CY=392;
   const CORE=700, R=156, X0=CORE-R;
   const PXC=1250, RING2=74, TIPX=PXC-RING2;   // 확정연구자 바깥에서 두 번째 링 위가 수렴점
