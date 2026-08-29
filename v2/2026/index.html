@@ -464,9 +464,9 @@ window.SLIDES_2q6r4=[
  {kind:'frame',src:'도서추천_카드.html', bg:'own', name:'도서 추천 카드'},
  {kind:'frame',src:'biblo-book-data.html', bg:'own', name:'책 데이터 보유 현황'},
  {kind:'frame',src:'biblo-search-b.html', bg:'own', name:'검색 · 무지개'},
- {kind:'frame',src:'bk21-status-10.html', bg:'own', name:'매칭 현황 요약 10'},
- {kind:'frame',src:'bk21-status-11b.html', bg:'own', name:'매칭 현황 요약 11b'},
- {kind:'frame',src:'bk21-status-09b.html', bg:'own', name:'검색 → 주제 확장 → 논문'},
+ {kind:'frame',src:'bk21-status-10.html', bg:'lite', name:'매칭 현황 요약 10'},
+ {kind:'frame',src:'bk21-status-11b.html', bg:'lite', name:'매칭 현황 요약 11b'},
+ {kind:'frame',src:'bk21-status-09b.html', bg:'lite', name:'검색 → 주제 확장 → 논문'},
  {kind:'frame',src:'biblo-paper-search.html', bg:'own', name:'논문 확장검색'},
  {kind:'node', id:'sl-hero-2q6r4-b', bg:'wave', name:'데이터로 움직이는 AI도서관 2'},
  {kind:'node', id:'sl-five-2q6r4-b', bg:'wave', name:'연구성과관리가 답하는 다섯 가지 질문'},
@@ -495,6 +495,13 @@ window.BGS_2q6r4={
    const r=document.createElement('div'); r.className='grain-8j3v';
    const c=document.createElement('canvas'); c.id='gc-8j3v';
    r.appendChild(c); layer.appendChild(r);
+ }},
+ /* 8·9·10 이 함께 쓰는 밝은 배경. 세 파일이 각자 칠하던 것과 같은 값이다.
+    한 레이어로 묶으면 그 구간에서 배경이 다시 칠해지지 않는다(12·13 의 wave 와 같은 방식). */
+ lite:{make(layer){
+   const g=document.createElement('div');
+   g.style.cssText='position:absolute;inset:0;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)';
+   layer.appendChild(g);
  }},
  wave:{make(layer){
    const c=document.createElement('canvas'); c.id='bg'; layer.appendChild(c);

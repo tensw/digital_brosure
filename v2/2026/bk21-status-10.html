@@ -288,4 +288,13 @@ addEventListener('pageshow',fit);
 addEventListener('load',fit);
 if(window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
-</script></body></html>
+</script>
+<style>
+/* 덱 안에서는 배경을 칠하지 않는다 — 8·9·10 이 한 배경 레이어(bg:'lite')를 함께 쓴다.
+   단독으로 열 때는 이 클래스가 붙지 않아 원래 배경이 그대로 보인다. */
+.emb-bg0 , .emb-bg0 body, .emb-bg0 .slide{background:transparent !important}
+</style>
+<script>
+if(window.self!==window.top) document.documentElement.classList.add('emb-bg0');
+</script>
+</body></html>
