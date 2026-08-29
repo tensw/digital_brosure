@@ -1,0 +1,125 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>분야 온톨로지와 공저 관계망</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;
+ overflow:visible;background:transparent}
+
+/* ─── 상단 ─── */
+h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-spacing:.5px;color:#111827}
+.h1s{position:absolute;left:82px;top:163px;font-size:16px;font-weight:600;letter-spacing:-.3px;
+ color:#4b5563}
+
+/* ─── 규칙선 ─── */
+
+/* ─── 5 컬럼 ─── */
+.col{flex:1;position:relative;min-width:0;padding:22px 24px 24px}
+.col+.col{border-left:1px solid #c3ccdf}
+
+.tg{display:inline-block;margin-left:8px;font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;
+ padding:4px 7px;border-radius:5px;background:#eef2ff;color:#2b5ce6;vertical-align:middle}
+.tg2{background:#eef2ff;color:#2b5ce6}
+.col+.col .m{left:26px}
+
+/* ─── 6 병합 셀 (1~5 를 하나로) ─── */
+
+/* ─── 하단 ─── */
+
+/* ── 08장 카드 형식 (수치·진행바·비율) ── */
+
+/* ── 15번(bk21-match-light57.html)에서 그대로 가져온 결론부 ──
+   .merge(가운데 흰 박스)를 걷어낸 자리에 ㄷ자 커넥터 + 파란 박스를 넣는다.
+   원본은 화면 끝까지 꽉 차는 배치지만, 이 장은 좌우 82px 안쪽으로 짜여 있어
+   위 카드·구분선과 세로선이 맞도록 같은 82px 열에 맞췄다. 모양 값은 손대지 않았다. */
+/* 커넥터는 카드 바로 아래에서 시작한다(15번과 같은 붙임). 카드 203~457. */
+.mid-53fi{position:absolute;left:82px;right:82px;top:457px}
+.link-53fi{height:56px;position:relative}
+.link-53fi svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.concl-53fi{background:#1e4be8;border-radius:14px;padding:26px 34px 30px;text-align:center;color:#fff}
+.concl-53fi h2{font-size:16.5px;font-weight:800;letter-spacing:-.4px}
+.concl-53fi p{font-size:12.5px;line-height:1.95;color:rgba(255,255,255,.86);margin-top:13px;
+ max-width:96ch;margin-left:auto;margin-right:auto}
+.concl-53fi p b{color:#fff;font-weight:700}
+
+/* ── 15번(bk21-match-light57.html) 카드를 그대로 옮겼다. 값은 손대지 않았다.
+      이 장은 무대 절대배치라 자리만 잡아 준다(좌우 82px · 커넥터 위까지). ── */
+.cards-53fi{position:absolute;left:82px;right:82px;top:203px;
+ display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card-53fi{background:#fff;border-radius:18px;padding:26px 26px 28px;
+ box-shadow:0 1px 2px rgba(17,24,39,.04),0 10px 28px -18px rgba(17,24,39,.18)}
+.card-53fi h3{font-size:20px;font-weight:800;letter-spacing:-.6px;color:#1e4be8;margin-top:15px}
+.card-53fi p{font-size:12.5px;line-height:1.8;color:#4b5563;margin-top:14px}
+.cn-53fi{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:#98a1b2}
+.cv-53fi{font:800 30px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:14px;color:#111827}
+.cv-53fi em{font-style:normal;font-size:13px;font-weight:700;color:#98a1b2;margin-left:5px;letter-spacing:0}
+.cb-53fi{height:6px;border-radius:99px;background:#eaeefa;margin-top:13px;overflow:hidden}
+.cb-53fi i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1e4be8,#5b83ff)}
+.cp-53fi{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:9px;letter-spacing:.02em}
+.cp-53fi b{color:#2b5ce6}
+
+h1{font-size:44px;letter-spacing:-1.5px;line-height:1.2}
+h1 .ac{color:#1e4be8}
+.h1s b{color:#111827;font-weight:700}
+.card-53fi p{font-size:13.5px;line-height:1.75}
+</style></head><body>
+<div class="slide"><div id="stage">
+
+ <h1>분야 온톨로지와 <span class="ac">공저 관계망</span></h1>
+ <div class="h1s">동명이인을 가르려고 만든 구조가 <b>협력 탐색과 연구지원에 다시</b> 쓰인다</div>
+
+ <!-- 15번(bk21-match-light57.html)의 라운드 카드를 그대로 가져왔다.
+      앞서 쓰던 납작한 흰 슬래브 5칸(.cols/.col)과 위아래 구분선(r1·r2)은 걷어냈다. -->
+ <div class="cards-53fi" id="cards-53fi"></div>
+
+ <!-- 15번(bk21-match-light57.html)의 ㄷ자 커넥터 + 파란 결론 박스를 그대로 옮겼다.
+      클래스 이름(-53fi)도 원본 그대로 둔다. 이 파일에는 같은 이름이 없어 충돌하지 않는다. -->
+ <div class="mid-53fi">
+  <div class="link-53fi"><svg viewBox="0 0 1160 56" preserveAspectRatio="none">
+    <path d="M193 0 V26 Q193 38 205 38 H955 Q967 38 967 26 V0" fill="none" stroke="#c3cfee" stroke-width="1.4"/>
+    <path d="M580 0 V38" fill="none" stroke="#c3cfee" stroke-width="1.4"/>
+    <path d="M580 38 V56" fill="none" stroke="#1e4be8" stroke-width="1.6"/>
+   </svg></div>
+
+  <div class="concl-53fi">
+   <h2>벡터 유사도만으로 동일인을 확정하지 않는다</h2>
+   <p>저자매칭을 위해 만든 <b>공저 관계와 분야 프로필</b>은 연구자 탐색, 협력 구조 분석, 공동연구자 추천, 연구지원에 다시 쓰인다.
+    한 번 쓰고 버리는 계산이 아니라 <b>시스템의 데이터 자산</b>으로 남는다.</p>
+  </div>
+ </div>
+</div></div>
+
+<script>
+/* ══ 근거 ══ docs/BIBLO_전기능_전체지도.md §0 「구조 — 코어 백본 + 6개 솔루션」 표 그대로 ══ */
+const S=[
+ {"g":"LAYER 01","name":"분야 온톨로지","tag":"FIELD","hl":"14","unit":"개 대분야","pct":100,
+  "m":"JCR 분야 한글 매핑","d":"논문의 WoS·JCR·Scopus 분야와 연구자의 분야 프로필을 표준 체계로 잇는다. 문자열이 같은지가 아니라 상위·하위·인접 관계로 맥락을 비교한다. 분야 데이터가 없으면 저널·키워드·확정 논문을 보조 증거로 쓴다."},
+ {"g":"LAYER 02","name":"공저 관계망","tag":"NETWORK","hl":"932,329","unit":"엣지","pct":100,
+  "m":"연구자 노드 · 공저 엣지","d":"확정 논문의 공동저자 관계를 저장한다. 누구와 몇 편을 썼는지, 최근에도 협력이 이어지는지, 교내인지 교외인지. 새 논문의 공저자 중 이미 확정된 사람이 있는지가 동명이인을 가른다."},
+ {"g":"LAYER 03","name":"벡터와 논리의 결합","tag":"HYBRID","hl":"6","unit":"종 증거","pct":100,
+  "m":"강한 부정 신호는 유사도를 제한","d":"식별자·이름 게이트는 결정 규칙, 소속·기간·분야는 점수, 공저는 그래프, 프로필 임베딩은 의미, AI 는 회색 구간 해석, 사람은 최종 판단. 종류가 다른 증거를 결합한다."}];
+document.getElementById('cards-53fi').innerHTML = S.map(c=>`
+ <article class="card-53fi">
+   <div class="cn-53fi">${c.g}</div>
+   <h3>${c.name}</h3>
+   <div class="cv-53fi">${c.hl}<em>${c.unit}</em></div>
+   <div class="cb-53fi"><i style="width:${c.pct}%"></i></div>
+   <div class="cp-53fi">${c.m} · <b>${c.tag}</b></div>
+   <p>${c.d}</p>
+ </article>`).join('');
+
+const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();
+addEventListener('resize',fit);
+addEventListener('pageshow',fit);
+addEventListener('load',fit);
+if(window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+</script></body></html>

@@ -1,0 +1,146 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>기술 구조와 기술적 특이점</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;
+ overflow:visible;background:transparent}
+
+/* ─── 상단 ─── */
+h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-spacing:.5px;color:#111827}
+.h1s{position:absolute;left:82px;top:163px;font-size:16px;font-weight:600;letter-spacing:-.3px;
+ color:#4b5563}
+
+/* ─── 규칙선 ─── */
+.rule{position:absolute;left:82px;right:82px;height:1px;background:#c3ccdf;z-index:3}
+.r1{top:203px} .r2{top:551px} .r3{top:719px}
+
+/* ─── 5 컬럼 ─── */
+.cols{position:absolute;left:82px;right:82px;top:203px;height:348px;display:flex;background:#fff}
+.col{flex:1;position:relative;min-width:0;padding:22px 24px 24px}
+.col+.col{border-left:1px solid #c3ccdf}
+.col .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
+ transform:skewX(-9deg);display:inline-block;color:#c7d0e6}
+.col h2{margin-top:10px;font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#1e4be8}
+
+.col .tg{display:inline-block;margin:0 7px 0 0;vertical-align:middle;position:relative;top:-1px}
+.tg{display:inline-block;margin-left:8px;font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;
+ padding:4px 7px;border-radius:5px;background:#eef2ff;color:#2b5ce6;vertical-align:middle}
+.tg2{background:#eef2ff;color:#2b5ce6}
+.merge .hl{margin-top:8px;font-size:15px;font-weight:800;letter-spacing:-.4px;color:#a9ff5e}
+.col p{margin-top:9px;font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
+ color:#4b5563;word-break:keep-all}
+.col .m{position:absolute;left:0;right:26px;bottom:16px;
+ font:700 11px/1.6 ui-monospace,Menlo,monospace;color:#bfe25a;word-break:keep-all}
+.col+.col .m{left:26px}
+
+/* ─── 6 병합 셀 (1~5 를 하나로) ─── */
+.merge{position:absolute;left:82px;right:82px;top:551px;height:168px;display:flex;align-items:center;
+ background:#fff;
+ gap:30px;padding:0 4px}
+.merge .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
+ transform:skewX(-9deg);display:inline-block;color:#c7d0e6;flex:none}
+.merge .tx{flex:none;width:510px}
+.merge h2{font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#1e4be8}
+.merge h2 span{color:#a9ff5e}
+.merge p{margin-top:10px;font-size:13px;font-weight:500;line-height:1.7;letter-spacing:-.3px;
+ color:#4b5563;word-break:keep-all}
+.merge .bul{flex:1;border-left:1px solid #c3ccdf;padding-left:30px;list-style:none}
+.merge .bul li{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;
+ line-height:1.5;letter-spacing:-.3px;color:#111827;padding:4px 0}
+.merge .bul li::before{content:"";width:7px;height:7px;border-radius:50%;background:#a9ff5e;flex:none}
+.merge .m{flex:none;font:700 11px/1.6 ui-monospace,Menlo,monospace;color:#98a1b2;
+ text-align:right;width:150px}
+
+/* ─── 하단 ─── */
+.concl{position:absolute;left:0;right:0;top:747px;text-align:center;
+ font-size:26px;font-weight:800;line-height:1.6;letter-spacing:-.4px;color:#111827}
+
+/* ── 08장 카드 형식 (수치·진행바·비율) ── */
+.col .cv{font:800 28px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:13px;color:#111827}
+.col .cv em,.merge .cv em{font-style:normal;font-size:13px;font-weight:700;color:#98a1b2;margin-left:5px;letter-spacing:0}
+.col .cb{height:6px;border-radius:99px;background:#e7ecf7;margin-top:12px;overflow:hidden;width:100%}
+.col .cb i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1e4be8,#5b83ff)}
+.col .cp{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:9px}
+.merge .cv{font:800 30px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:8px;color:#111827}
+
+/* ── 특이점 8가지 (2행 4열) + 기술 구조 밴드 ── */
+h1{font-size:44px;letter-spacing:-1.5px;line-height:1.2}
+h1 .ac{color:#1e4be8}
+.h1s b{color:#111827;font-weight:700}
+.r1{top:203px} .r2{top:425px} .r3{top:647px} .r4{top:792px}
+.cols{position:absolute;left:82px;right:82px;top:203px;height:222px;display:flex;background:#fff}
+.cols.c2{top:425px}
+.col{flex:1;position:relative;min-width:0;padding:20px 22px 18px}
+.col+.col{border-left:1px solid #c3ccdf}
+.col .n{font:800 26px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;color:#c7d0e6}
+.col h2{margin-top:8px;font-size:17px;font-weight:800;line-height:1.3;letter-spacing:-.5px;color:#1e4be8}
+.col p{margin-top:9px;font-size:13px;font-weight:500;line-height:1.55;letter-spacing:-.3px;
+ color:#4b5563;word-break:keep-all}
+.arch{position:absolute;left:82px;right:82px;top:647px;height:145px;display:flex;align-items:center;
+ background:#fff;gap:24px;padding:0 22px}
+.arch .ax{flex:none;width:250px}
+.arch h2{font-size:18px;font-weight:800;letter-spacing:-.5px;color:#1e4be8}
+.arch p{margin-top:8px;font-size:13px;font-weight:500;line-height:1.5;letter-spacing:-.3px;color:#4b5563}
+.acol{flex:1;min-width:0;list-style:none;border-left:1px solid #c3ccdf;padding-left:20px}
+.acol li{font-size:13px;font-weight:500;line-height:1.55;letter-spacing:-.3px;color:#4b5563;word-break:keep-all}
+.acol li b{display:block;margin-bottom:6px;font-size:13.5px;font-weight:800;color:#111827}
+.arch .am{flex:none;width:210px;font:700 10.5px/1.75 ui-monospace,Menlo,monospace;color:#98a1b2;text-align:right}
+.concl{top:822px;font-size:23px}
+</style></head><body>
+<div class="slide"><div id="stage">
+
+ <h1>기술적 특이점 <span class="ac">여덟 가지</span></h1>
+ <div class="h1s">싼 신호부터 걷어내고, 규칙과 AI 가 서로를 검증하고, <b>확정 결과를 다시 증거로 쌓는다</b></div>
+
+ <div class="rule r1"></div>
+ <div class="cols" id="row1"></div>
+ <div class="rule r2"></div>
+ <div class="cols c2" id="row2"></div>
+ <div class="rule r3"></div>
+
+ <div class="arch">
+  <div class="ax">
+   <h2>기술 구조<span class="tg">STRUCTURE</span></h2>
+   <p>논문 정본과 연구자 정본을 관계 구조가 잇는다.</p>
+  </div>
+  <ul class="acol"><li><b>논문 정본</b>식별자·서지 · 저자행과 역할 · 게재처 정본 · 인용 지표</li></ul>
+  <ul class="acol"><li><b>연구자 정본</b>사번·소속·재직 · 외부 저자 ID · 연구자 지문 · 프로필 임베딩</li></ul>
+  <ul class="acol"><li><b>관계 구조</b>논문↔연구자 · 연구자↔연구자 · 논문↔분야·저널 · 연구자↔학과·사업단</li></ul>
+  <div class="am">Next.js · PostgreSQL / Supabase<br>pgvector · Voyage 1,024차원<br>규칙엔진 + 공저 그래프 + 선택적 LLM</div>
+ </div>
+ <div class="rule r4"></div>
+
+ <div class="concl">자동화율보다 오매칭 방지를 우선한다. 불확실하면 확정하지 않는다</div>
+</div></div>
+
+<script>
+const T=[
+ {n:'01',t:'식별자를 맹신하지 않는다',d:'외부 ID 일치는 강한 증거지만 이름 검증을 통과해야 한다. ID 가 같아도 이름이 다르면 오염을 의심하고, ID 가 달라도 다른 증거가 충분하면 동일인 가능성을 연다.'},
+ {n:'02',t:'성씨 빈도와 이름 하드 게이트',d:'김·이·박은 이름 일부가 같다고 높은 점수를 받지 못한다. 이름이 충분히 일치하지 않으면 공저자·소속이 아무리 맞아도 총점에 상한을 둔다.'},
+ {n:'03',t:'비용 순서로 단계적 소거',d:'식별자 → 문자열 → DB 관계 → 벡터 → LLM 순으로 계산이 비싸진다. 앞 단계에서 모수를 줄여 고비용 연산은 남은 소수에게만 적용한다.'},
+ {n:'04',t:'규칙과 AI 의 이중 검증',d:'같은 입력을 규칙 엔진과 생성형 AI 가 서로 다른 방식으로 판단한다. 두 결론이 함께 충족될 때만 자동 확정한다.'},
+ {n:'05',t:'쓸수록 강해지는 연구자 지문',d:'확정 결과가 이름·소속·분야·저널·공저 관계를 갱신해 다음 매칭의 증거가 된다. 과거 판정이 사라지지 않고 자산으로 쌓인다.'},
+ {n:'06',t:'관계망과 온톨로지의 재사용',d:'저자매칭을 위해 만든 공저 관계와 분야 프로필이 연구자 탐색, 협력 구조 분석, 공동연구자 추천, 연구지원에 다시 쓰인다.'},
+ {n:'07',t:'설명 가능한 판정',d:'결론과 함께 이름·소속·공저자·분야·활동기간·외부 ID 근거를 보여준다. 담당자가 판정을 검증하고 수정할 수 있다.'},
+ {n:'08',t:'출처와 품질을 분리 표시',d:'원천값·정제값·추론값·사람 확정값을 구분한다. 값이 없거나 기준을 충족하지 못하면 추정해 채우지 않고 미확인으로 남긴다.'},
+];
+const cell=c=>`<div class="col"><span class="n">${c.n}</span><h2>${c.t}</h2><p>${c.d}</p></div>`;
+document.getElementById('row1').innerHTML=T.slice(0,4).map(cell).join('');
+document.getElementById('row2').innerHTML=T.slice(4).map(cell).join('');
+
+const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();
+addEventListener('resize',fit);
+addEventListener('pageshow',fit);
+addEventListener('load',fit);
+if(window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+</script></body></html>
