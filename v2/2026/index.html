@@ -545,7 +545,10 @@ body{overflow:hidden}
  border-radius:18px;overflow:hidden;flex:none}
 /* 번호는 뺐다. 좌에서 우로 놓인 순서가 이미 단계를 말한다.
    칸 사이는 경계선 대신 꺾쇠 하나로 가른다 — 다음 단계로 넘어간다는 방향이 선다. */
-.fc18{position:relative;padding:25px 26px 24px;display:flex;flex-direction:column;justify-content:center}
+/* 가운데 정렬 — 왼쪽 정렬이면 꺾쇠가 다음 칸 제목 바로 앞에 붙어
+   그 칸에 딸린 것처럼 보인다. 가운데로 두면 두 텍스트 사이에 놓인다. */
+.fc18{position:relative;padding:25px 26px 24px;display:flex;flex-direction:column;
+ justify-content:center;text-align:center}
 .fc18+.fc18:before{content:"";position:absolute;left:-7px;top:50%;width:12px;height:12px;
  margin-top:-6px;transform:rotate(45deg);
  border-top:2px solid rgba(170,205,255,.45);border-right:2px solid rgba(170,205,255,.45)}
