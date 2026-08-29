@@ -510,6 +510,35 @@ body{overflow:hidden}
 /* 18장(실측 규모)도 같은 고정 무대로. 이 장만 6vw 좌우 여백에 글자는 px 고정이라
    화면이 커져도 통계 숫자가 그대로였다(1600 에서 좌우 96px, 1920 에서 115.2px).
    12·13장 사본과 같은 규칙으로 맞춘다 — 1600x900 무대, 좌우 82px. */
+
+/* 18장 — 논문 한 편에서 나온 결과물 3종. biblo.ai 브로슈어 3·4번 카드에서 가져왔다.
+   칸 비율을 각 매체의 가로비와 같게 두면 세 칸의 높이가 저절로 맞는다
+   (논문 스프레드 1486x2022 두 쪽 = 1.47, 롱폼 16:9 = 1.778, 쇼츠 9:16 = 0.5625). */
+.sh18{flex:none;margin-bottom:20px}
+.sh18 .k{font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
+.sh18 h2{margin-top:12px;font-size:44.1px;font-weight:800;line-height:1.16;letter-spacing:-1.4px;color:var(--ink)}
+.sh18 h2 b{background-image:linear-gradient(90deg,#38bdf8,#a78bfa 45%,#f472b6 72%,#fbbf24);
+ -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.trio18{display:grid;grid-template-columns:1.47fr 1.778fr .5625fr;gap:18px;align-items:start;flex:none}
+.t18{min-width:0}
+.med18{position:relative;width:100%;border-radius:14px;overflow:hidden;cursor:pointer;
+ background:#05080f;border:1px solid rgba(150,180,255,.18);
+ box-shadow:0 18px 46px -20px rgba(2,6,20,.9)}
+.med18 img,.med18 video,.med18 iframe{display:block;width:100%;height:100%;object-fit:cover;border:0}
+.paper18 .med18{aspect-ratio:1.47;display:flex;background:#fff}
+.paper18 .med18 img{width:50%;object-fit:contain;background:#fff}
+.long18 .med18{aspect-ratio:1.778}
+.short18 .med18{aspect-ratio:.5625}
+/* 재생 버튼 — 누르면 재생된다는 표시. 재생 중에는 감춘다 */
+.play18{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;
+ border-radius:50%;background:rgba(8,12,26,.62);border:1px solid rgba(200,220,255,.5);
+ backdrop-filter:blur(6px);pointer-events:none;transition:opacity .18s}
+.play18:after{content:"";position:absolute;left:23px;top:18px;border-style:solid;
+ border-width:11px 0 11px 17px;border-color:transparent transparent transparent #eaf2ff}
+.med18.on18 .play18{opacity:0}
+.cap18{margin-top:11px;display:flex;align-items:baseline;gap:9px;
+ font-size:14.5px;font-weight:700;letter-spacing:-.3px;color:var(--ink)}
+.cap18 span{font:600 11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.04em;color:var(--ink3)}
 #sl-stats-2q6r4{padding:0;overflow:hidden;justify-content:stretch}
 #sl-stats-2q6r4 > .stg-2q6r4{
  position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;
@@ -752,7 +781,34 @@ window.BGS_2q6r4={
 
  <section class="slide-2q6r4" id="sl-stats-2q6r4">
   <div class="stg-2q6r4">
-  <div class="glass"><div class="stats" id="stats"></div></div>
+  <div class="sh18">
+   <div class="k">RESEARCH PROMOTION</div>
+   <h2>논문 한 편에서 나온 <b>롱폼 영상과 쇼츠</b></h2>
+  </div>
+  <div class="trio18">
+   <div class="t18 paper18">
+    <div class="med18" id="pv18" title="눌러서 다음 쪽">
+     <img id="pgL18" src="../assets/pages/page-01.png" alt="논문 1쪽">
+     <img id="pgR18" src="../assets/pages/page-02.png" alt="논문 2쪽">
+    </div>
+    <div class="cap18">논문 원문 <span id="pgN18">1-2 / 12</span></div>
+   </div>
+   <div class="t18 long18">
+    <div class="med18" id="lf18" data-yt18="2O8Ae6ilEys">
+     <img src="https://img.youtube.com/vi/2O8Ae6ilEys/maxresdefault.jpg" alt="롱폼 홍보영상">
+     <i class="play18"></i>
+    </div>
+    <div class="cap18">롱폼 홍보영상 <span>5:41</span></div>
+   </div>
+   <div class="t18 short18">
+    <div class="med18" id="sf18">
+     <video id="sv18" src="../assets/video.mp4" loop playsinline preload="metadata"></video>
+     <i class="play18"></i>
+    </div>
+    <div class="cap18">쇼츠 <span>60초 이내</span></div>
+   </div>
+  </div>
+  <div class="glass" style="margin-top:26px"><div class="stats" id="stats"></div></div>
   <div class="foot">
   <b>실측 기준.</b> 신 RIMS <code>dev</code> 복원본 · 운영 사이트 · 「데이터로 움직이는 도서관」 보고서 · 수서편찬 설계 백서.
   회수 커버리지가 100%가 아니므로 절대 편수는 하한값으로 읽습니다.<br>
@@ -1541,6 +1597,41 @@ function fitNodeStages(){
   st.style.transform=`translate(-50%,-50%) scale(${s.toFixed(4)})`;
  });
 }
+
+/* ── 18장 결과물 3종 — 누르면 논문은 다음 쪽, 두 영상은 재생 ──────────
+   유튜브는 미리 걸지 않는다. 노드 슬라이드라 지연 로딩을 타지 않아
+   첫 진입에 통째로 받게 된다. 누를 때 iframe 을 만든다. */
+(function(){
+ const pv=document.getElementById('pv18');
+ if(pv){
+  const L=document.getElementById('pgL18'), R=document.getElementById('pgR18'),
+        N=document.getElementById('pgN18'), TOTAL=12;
+  let sp=0;                                   // 스프레드 번호 0..5
+  const two=n=>String(n).padStart(2,'0');
+  pv.addEventListener('click',()=>{
+   sp=(sp+1)%(TOTAL/2);
+   const a=sp*2+1, b=a+1;
+   L.src=`../assets/pages/page-${two(a)}.png`; L.alt=`논문 ${a}쪽`;
+   R.src=`../assets/pages/page-${two(b)}.png`; R.alt=`논문 ${b}쪽`;
+   N.textContent=`${a}-${b} / ${TOTAL}`;
+  });
+ }
+ const lf=document.getElementById('lf18');
+ if(lf) lf.addEventListener('click',()=>{
+  if(lf.dataset.on18) return;
+  lf.dataset.on18='1'; lf.classList.add('on18');
+  const f=document.createElement('iframe');
+  f.src=`https://www.youtube.com/embed/${lf.dataset.yt18}?autoplay=1&rel=0`;
+  f.allow='autoplay; encrypted-media; fullscreen';
+  f.setAttribute('allowfullscreen','');
+  lf.innerHTML=''; lf.appendChild(f);
+ });
+ const sf=document.getElementById('sf18'), sv=document.getElementById('sv18');
+ if(sf&&sv) sf.addEventListener('click',()=>{
+  if(sv.paused){ sv.play(); sf.classList.add('on18'); }
+  else { sv.pause(); sf.classList.remove('on18'); }
+ });
+})();
 fitNodeStages();
 addEventListener('resize',fitNodeStages);
 addEventListener('load',fitNodeStages);
