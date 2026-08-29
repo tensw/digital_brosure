@@ -507,6 +507,17 @@ body{overflow:hidden}
    그 방식은 16:9 에서만 맞고 21:9 에서 좌우가 418px 대 131px 로 벌어졌으며
    상하 레터박스와 배율은 어느 비율에서도 맞지 않았다. 같은 고정 무대로 바꾼다.
    14번(BK21_판별_신호망)은 이미 같은 규격이라 손대지 않았다. */
+/* 18장(실측 규모)도 같은 고정 무대로. 이 장만 6vw 좌우 여백에 글자는 px 고정이라
+   화면이 커져도 통계 숫자가 그대로였다(1600 에서 좌우 96px, 1920 에서 115.2px).
+   12·13장 사본과 같은 규칙으로 맞춘다 — 1600x900 무대, 좌우 82px. */
+#sl-stats-2q6r4{padding:0;overflow:hidden;justify-content:stretch}
+#sl-stats-2q6r4 > .stg-2q6r4{
+ position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;
+ padding:74px 82px 92px;display:flex;flex-direction:column;justify-content:center;
+ transition-property:opacity}
+/* .foot 의 6vw 좌우 여백은 뷰포트를 따라간다. 무대가 이미 82px 을 주므로 0 으로.
+   위아래 60/80px 도 무대 안에서는 과해 통계 줄이 위로 몰렸다. */
+#sl-stats-2q6r4 .foot{padding:34px 0 0}
 #sl-hero-2q6r4-b, #sl-five-2q6r4-b{padding:0;overflow:hidden;justify-content:stretch}
 #sl-hero-2q6r4-b > .stg-2q6r4, #sl-five-2q6r4-b > .stg-2q6r4{
  position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;
@@ -626,6 +637,7 @@ window.SLIDES_2q6r4=[
  {kind:'frame',src:'biblo-researcher-perf.html', bg:'own', name:'연구자 개인성과'},
  {kind:'node', id:'sl-hero-2q6r4-c', bg:'wave', name:'데이터로 움직이는 AI도서관 3'},
  {kind:'node', id:'sl-five-2q6r4-c', bg:'wave', name:'전략적 도입 효과 4가지 2'},
+ {kind:'node', id:'sl-stats-2q6r4', bg:'wave',  name:'실측 규모'},
  {kind:'frame',src:'biblo-where-we-stand.html', bg:'own', name:'지금 어디까지 왔는가'},
  {kind:'frame',src:'biblo-bottleneck.html', bg:'own', name:'무엇이 막고 있는가'},
  {kind:'frame',src:'bk21-tech-notes.html', bg:'own', name:'기술 구조와 기술적 특이점'},
@@ -643,8 +655,6 @@ window.SLIDES_2q6r4=[
  {kind:'frame',src:'bk21-venue-results.html', bg:'own', name:'게재처 정규화 결과'},
  {kind:'frame',src:'biblo-librarian-dash-b.html', bg:'own', name:'사서 대시보드 2'},
  {kind:'node', id:'sl-hero-2q6r4',  bg:'wave',  name:'데이터로 움직이는 AI도서관'},
- {kind:'node', id:'sl-five-2q6r4',  bg:'wave',  name:'다섯 갈래로 나뉜 하나의 데이터'},
- {kind:'node', id:'sl-stats-2q6r4', bg:'wave',  name:'실측 규모'},
  {kind:'frame',src:'bk21-pipeline-workmap.html', bg:'own', name:'파이프라인 작업맵'},
  {kind:'frame',src:'biblo-book-cycle-map.html', bg:'own', name:'도서서비스 순환구조'},
  {kind:'frame',src:'biblo-research-cycle-map.html', bg:'own', name:'연구서비스 순환구조'},
@@ -739,22 +749,15 @@ window.BGS_2q6r4={
   <div class="scroll"><i></i>SCROLL</div>
  </div>
 
- <section class="slide-2q6r4" id="sl-five-2q6r4">
-  <div class="sh">
-   <div class="k">WHAT WE BUILT</div>
-   <h2>다섯 갈래로 나뉜 하나의 데이터</h2>
-   <p>각 제품은 자기 일을 하려고 데이터를 쌓습니다. 그 데이터가 다음 제품의 재료가 되고,
-      마지막에는 연구 성과 지표가 됩니다. 성과를 재려고 따로 조사할 일이 없습니다.</p>
-  </div>
-  <div class="grid" id="cards"></div>
- </section>
 
  <section class="slide-2q6r4" id="sl-stats-2q6r4">
+  <div class="stg-2q6r4">
   <div class="glass"><div class="stats" id="stats"></div></div>
   <div class="foot">
   <b>실측 기준.</b> 신 RIMS <code>dev</code> 복원본 · 운영 사이트 · 「데이터로 움직이는 도서관」 보고서 · 수서편찬 설계 백서.
   회수 커버리지가 100%가 아니므로 절대 편수는 하한값으로 읽습니다.<br>
   <b>BIBLO</b> · TenSoftWorks
+  </div>
   </div>
  </section>
 
@@ -962,23 +965,6 @@ build(); addEventListener('resize',()=>{build(); if(reduce) frame(performance.no
 requestAnimationFrame(frame);
 
 /* ── 내용 ───────────────────────────────────── */
-const P=[
- {n:'01',t:'비블로 북',s:'LSP · 도서관 운영 전 과정',
-  li:['수서 · 발주 · 편목 · 청구기호 · 장서관리','12축 책지문과 벡터 색인','이용자 서비스 49종'],
-  m:'서지 148만 · 책지문 89.5만'},
- {n:'02',t:'논문 검색엔진',s:'성과를 셀 대상을 만든다',
-  li:['국내 KCI 전수 + 세계 1.1억 편 색인','ISSN 기준 게재처 정규화','인용 · FWCI · 저널등급 적재'],
-  m:'논문 140,693 · 게재처 13,872'},
- {n:'03',t:'비블로 스칼라',s:'누구의 실적인지 확정',
-  li:['저자행 파싱과 교내·교외 판정','5단 레이어 동명이인 판별','역할 판정과 공저 관계망'],
-  m:'저자행 528만 · 인물 11,930'},
- {n:'04',t:'논문 홍보 영상',s:'좋은 논문을 골라 확산',
-  li:['PDF 구조 분해 · 섹션 · 그림 · 표','그림 해석문 자동 생성','영상 지시서 → 렌더 → 업로드'],
-  m:'프로젝트 31건 운영'},
- {n:'05',t:'비블로 챗봇',s:'근거 없으면 답하지 않는다',
-  li:['등록 블록에서만 인용','문장마다 근거 블록','운영 참모 도구 22종'],
-  m:'Frame 12종 · 지식 블록'},
-];
 /* 13장(연구성과관리 여는 장) 전용 — 전략적 도입 효과 4가지 */
 const PB=[
  {n:'01',t:'자료 보관소에서<br>AI 연구 지식 허브로',s:'도서관의 위상 변화',
@@ -1052,13 +1038,6 @@ document.getElementById('cards-c').innerHTML=PC.map(p=>`
   <ul>${p.li.map(x=>`<li>${x}</li>`).join('')}</ul>
   <div class="m">${p.m}</div>
  </div></div>`).join('');
-document.querySelectorAll('#cards').forEach(el=>el.innerHTML=P.map(p=>`
- <div class="glass card"><div class="pad">
-  <div class="n">${p.n}</div><h3>${p.t}</h3><div class="s">${p.s}</div>
-  <div class="dots"></div>
-  <ul>${p.li.map(x=>`<li>${x}</li>`).join('')}</ul>
-  <div class="m">${p.m}</div>
- </div></div>`).join(''));
 const ST=[['148만','책 서지'],['1.1억','학술 서지 색인'],['528만','저자행'],
           ['11,930','판별된 연구자'],['34','BK21 연구단']];
 document.querySelectorAll('#stats').forEach(el=>el.innerHTML=ST.map(([v,k])=>
