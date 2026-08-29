@@ -1,0 +1,141 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MATCHING STATUS 12</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;
+ overflow:visible;background:transparent}
+
+/* ─── 상단 ─── */
+h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-spacing:.5px;color:#111827}
+.h1s{position:absolute;left:82px;top:163px;font-size:16px;font-weight:600;letter-spacing:-.3px;
+ color:#4b5563}
+
+/* ─── 규칙선 ─── */
+.rule{position:absolute;left:82px;right:82px;height:1px;background:#c3ccdf;z-index:3}
+.r1{top:203px} .r3{top:719px}
+
+/* ─── 3 컬럼 (10장 DNA: 좌우 82px · 등폭 · 1px 구분선) ─── */
+.cols{position:absolute;left:82px;right:82px;top:203px;height:516px;display:flex;background:#fff}
+.col{flex:1;position:relative;min-width:0;padding:22px 24px 24px}
+.col+.col{border-left:1px solid #c3ccdf}
+.col .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
+ transform:skewX(-9deg);display:inline-block;color:#c7d0e6}
+.col h2{margin-top:10px;font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#1e4be8}
+.col h2 span{color:#111827}
+.col p{margin-top:9px;font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
+ color:#4b5563;word-break:keep-all}
+.col p b{color:#111827;font-weight:700}
+.col .cap{position:absolute;left:24px;right:24px;bottom:22px;text-align:center;
+ font:600 11.5px/1.6 ui-monospace,Menlo,monospace;color:#98a1b2}
+
+/* ── 19장 컨텐츠 이식 · 크기와 가로 비율은 10장 DNA 승계 ── */
+/* 1 막대 */
+.col .bars{display:flex;align-items:flex-end;gap:18px;height:248px;margin-top:24px;padding:0 4px}
+.col .bars div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.col .bars i{display:block;width:100%;border-radius:6px 6px 0 0;background:#e7ecf7}
+.col .bars .on i{background:linear-gradient(180deg,#5b83ff,#1e4be8)}
+.col .bars em{font-style:normal;font:800 13px/1 ui-monospace,Menlo,monospace;color:#8b95a8;margin-bottom:8px}
+.col .bars .on em{color:#1e4be8;font-size:15px}
+.col .bars u{text-decoration:none;font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:9px}
+/* 2 도넛 */
+.col .don{display:block;margin:14px auto 0}
+.col .lg{margin-top:14px;display:flex;flex-direction:column;gap:9px;padding-left:6px}
+.col .lg span{display:flex;align-items:center;gap:11px;font-size:14.5px;font-weight:500;
+ letter-spacing:-.3px;color:#4b5563}
+.col .lg span i{width:11px;height:11px;border-radius:50%;flex:none}
+.col .lg span b{color:#111827;font-weight:700}
+/* 3 버블 */
+.col .bub{position:relative;height:262px;margin-top:18px}
+.col .bub b{position:absolute;border-radius:50%;display:grid;place-items:center;text-align:center;
+ font-weight:800;letter-spacing:-.3px;color:#fff;line-height:1.25}
+
+/* ─── 하단 ─── */
+.concl{position:absolute;left:0;right:0;top:747px;text-align:center;
+ font-size:26px;font-weight:800;line-height:1.6;letter-spacing:-.4px;color:#111827}
+</style></head><body>
+<div class="slide"><div id="stage">
+
+ <h1>MATCHING STATUS</h1>
+ <div class="h1s">저자행 5,280,301줄이 어디로 갈렸고, 그중 엔진이 실제로 판정한 것은 얼마인가</div>
+
+ <div class="rule r1"></div>
+ <div class="cols">
+
+  <div class="col">
+   <span class="n">1</span>
+   <h2>저자행은 <span>계속 늘고 있다</span></h2>
+   <p>저자 파싱이 끝난 논문 <b>140,850</b>편에서 저자행 <b>5,280,301</b>줄이 나왔다.
+    논문이 늘수록 저자행은 더 빠르게 늘어난다.</p>
+   <div class="bars">
+    <div><em>82만</em><i style="height:22%"></i><u>2016</u></div>
+    <div><em>210만</em><i style="height:44%"></i><u>2020</u></div>
+    <div><em>390만</em><i style="height:70%"></i><u>2023</u></div>
+    <div class="on"><em>528만</em><i style="height:96%"></i><u>2026</u></div>
+   </div>
+   <div class="cap">저자 파싱 완료 논문 기준. (단위: 줄)</div>
+  </div>
+
+  <div class="col">
+   <span class="n">2</span>
+   <h2>절반은 <span>교외 공저자</span>다</h2>
+   <p>교외 소속으로 확인된 공저자가 <b>2,618,171</b>줄로 전체의 <b>49.6%</b>다.
+    사번은 없지만 이름·소속·ORCID 를 보존해 협력망 분석에 쓴다.</p>
+   <svg class="don" width="182" height="182" viewBox="0 0 42 42">
+    <circle cx="21" cy="21" r="15.9" fill="none" stroke="#eaf0fb" stroke-width="9"/>
+    <circle cx="21" cy="21" r="15.9" fill="none" stroke="#1e4be8" stroke-width="9"
+      stroke-dasharray="49.6 50.4" stroke-dashoffset="25" transform="rotate(-90 21 21)"/>
+    <circle cx="21" cy="21" r="15.9" fill="none" stroke="#8fb4ff" stroke-width="9"
+      stroke-dasharray="43.7 56.3" stroke-dashoffset="-24.6" transform="rotate(-90 21 21)"/>
+    <circle cx="21" cy="21" r="15.9" fill="none" stroke="#c9dbff" stroke-width="9"
+      stroke-dasharray="6.7 93.3" stroke-dashoffset="-68.3" transform="rotate(-90 21 21)"/>
+    <text x="21" y="20.4" text-anchor="middle" font-size="5.4" font-weight="800" fill="#1e4be8">49.6%</text>
+    <text x="21" y="25.2" text-anchor="middle" font-size="2.5" fill="#98a1b2">외부 저자</text></svg>
+   <div class="lg">
+    <span><i style="background:#1e4be8"></i>외부 저자 <b>2,618,171</b>줄</span>
+    <span><i style="background:#8fb4ff"></i>미분류 <b>2,305,898</b>줄</span>
+    <span><i style="background:#c9dbff"></i>교내 확정 <b>356,232</b>줄</span>
+   </div>
+   <div class="cap">저자행 5,280,301 기준. (단위: %)</div>
+  </div>
+
+  <div class="col">
+   <span class="n">3</span>
+   <h2>식별자는 <span>이미 붙어 있다</span></h2>
+   <p>저자행에 이름은 <b>4,765,793</b>, 소속은 <b>4,121,282</b>줄에 있다.
+    고유 식별자도 <b>AUID 85.8만</b>·<b>ORCID 8.6만</b>이 남아 있어 회수 여지가 크다.</p>
+   <div class="bub">
+    <b style="width:158px;height:158px;left:calc(50% - 79px);top:38px;background:#1e4be8;font-size:18px">
+     이름<br>476만</b>
+    <b style="width:114px;height:114px;left:0;top:14px;background:#5b8dff;font-size:15px">소속<br>412만</b>
+    <b style="width:90px;height:90px;right:0;top:8px;background:#8db2ff;font-size:13px">AUID<br>85.8만</b>
+    <b style="width:68px;height:68px;right:18px;bottom:2px;background:#b6cdff;font-size:11.5px;color:#1b3a86">
+     ORCID<br>8.6만</b>
+   </div>
+   <div class="cap">저자행 내 필드 보유 수. (원 크기는 보유량 비례)</div>
+  </div>
+
+ </div>
+ <div class="rule r3"></div>
+
+ <div class="concl">확정 356,232줄 가운데 엔진이 실제로 판정한 것은 8,302줄이다</div>
+</div></div>
+
+<script>
+/* 컨텐츠 출처: 19장 bk21-match-light61.html 의 가운데 카드 3장 (수치 그대로)
+   크기·가로 비율: 10장 bk21-status-10.html DNA 승계 */
+const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();
+addEventListener('resize',fit);
+addEventListener('pageshow',fit);
+addEventListener('load',fit);
+if(window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+</script></body></html>
