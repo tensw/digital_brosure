@@ -38,12 +38,13 @@
 .bx-7q2v8 li:before{content:"";position:absolute;left:0;top:9px;width:4px;height:4px;border-radius:50%;
  background:rgba(140,200,255,.62)}
 .bx-7q2v8 .m-x{margin-top:auto;padding-top:12px;font:700 12px/1.5 ui-monospace,Menlo,monospace;color:#9fd4ff}
-.ttl-7q2v8{position:absolute;left:0;right:0;top:15.5%;z-index:4;text-align:center;
- /* 4장(biblo-search) 제목 규격 승계 — 56px/800/ls .5px/lh 1.2.
-    다만 이 제목은 4장보다 20% 작게 둔다(56 x 0.8 = 44.8px). */
- font-size:44.8px;font-weight:800;letter-spacing:.5px;color:#fff;line-height:1.2}
-.lead-7q2v8{position:absolute;left:0;right:0;top:25.5%;z-index:4;text-align:center;
- font-size:19px;font-weight:600;letter-spacing:-.4px;color:#c4d3ee;line-height:1.6}
+/* 4장(biblo-search)과 같은 규칙 — 제목·서브를 1600px 블록에 묶어
+   min(vw/1600, vh/900) 배율로 함께 확대·축소한다. 절대배치로 두면
+   글자 크기가 px 로 고정돼 화면이 커져도 제목만 그대로 남는다. */
+.hdr-7q2v8{position:absolute;left:50%;top:15.5%;z-index:4;width:1600px;text-align:center;
+ transform-origin:50% 0;transform:translateX(-50%)}
+.ttl-7q2v8{font-size:4em;font-weight:800;letter-spacing:.5px;color:#fff;line-height:1.2}
+.lead-7q2v8{margin-top:26px;font-size:19px;font-weight:600;letter-spacing:-.4px;color:#c4d3ee;line-height:1.6}
 .lead-7q2v8 b{color:#fff;font-weight:800}
 .lead-7q2v8 em{display:block;margin-top:6px;font-style:normal;font-size:15px;color:#7f92b8}
 .sug-7q2v8{position:absolute;left:50%;transform:translateX(-50%);z-index:4;
@@ -112,10 +113,11 @@
   <b>BIBLO SOLUTION</b><s>· AI검색엔진</s>
  </div>
 
- <h1 class="ttl-7q2v8">도서관이 가져가야 할 논문 검색</h1>
-
- <div class="lead-7q2v8">값비싼 구독 없이, <b>실재하는 논문</b>만 찾아준다.
-  <em>KCI 254만 + OpenAlex 1억 770만을 우리 색인으로 갖고 0.2~0.9초에.</em></div>
+  <div class="hdr-7q2v8" id="hdr-7q2v8">
+  <h1 class="ttl-7q2v8">도서관이 가져가야 할 논문 검색</h1>
+  <div class="lead-7q2v8">값비싼 구독 없이, <b>실재하는 논문</b>만 찾아준다
+   <em>KCI 254만 + OpenAlex 1억 770만을 우리 색인으로 갖고 0.2~0.9초에</em></div>
+ </div>
 
  <!-- 검색박스는 biblo_rims_front/docs/biblo-search-2.html 것을 그대로 가져왔다.
       클래스·id 접미사(-3w8n1)도 원본 그대로. 이 파일의 -7q2v8 과 겹치지 않는다. -->
@@ -213,6 +215,8 @@ function layout(){
  /* 하단 박스는 3장과 같은 규칙(1600x900 기준)으로 확대·축소한다 */
  const kk=Math.min(innerWidth/1600, innerHeight/900);   // 3장과 동일한 기준
  cap.style.transform='translateX(-50%) scale('+kk.toFixed(4)+')';
+ const hdr=document.getElementById('hdr-7q2v8');
+ if(hdr) hdr.style.transform='translateX(-50%) scale('+kk.toFixed(4)+')';
 }
 /* 점묘 halo 는 걷어냈다. 새 검색박스가 자기 글로우를 갖고 있어
    두 겹이 겹쳐 보였다. 애니메이션 루프도 함께 지웠다. */
