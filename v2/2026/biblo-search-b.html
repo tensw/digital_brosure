@@ -47,7 +47,8 @@
 .cert-7q2v8 s{text-decoration:none;font:700 9.5px/1 ui-monospace,Menlo,monospace;color:#9fc7ff;
  letter-spacing:.02em;white-space:nowrap}
 .ttl-7q2v8{position:absolute;left:0;right:0;top:15.5%;z-index:4;text-align:center;
- font-size:44px;font-weight:800;letter-spacing:.5px;color:#fff;line-height:1.2}
+ /* 44px 에서 30% 줄였다 */
+ font-size:30.8px;font-weight:800;letter-spacing:-.4px;color:#fff;line-height:1.2}
 .lead-7q2v8{position:absolute;left:0;right:0;top:25.5%;z-index:4;text-align:center;
  font-size:19px;font-weight:600;letter-spacing:-.4px;color:#c4d3ee;line-height:1.6}
 .lead-7q2v8 b{color:#fff;font-weight:800}
@@ -128,10 +129,10 @@
   <b>BIBLO SOLUTION</b><s>· AI검색엔진</s>
  </div>
 
- <h1 class="ttl-7q2v8">Ⅰ. AI 검색엔진</h1>
+ <h1 class="ttl-7q2v8">도서관이 가져가야 할 논문 검색</h1>
 
- <div class="lead-7q2v8">정확한 키워드에서 시작해 <b>내용의 맥락까지</b> 이어지는 검색.
-  <em>사람이 서가를 거니는 순서 그대로.</em></div>
+ <div class="lead-7q2v8">값비싼 구독 없이, <b>실재하는 논문</b>만 찾아준다.
+  <em>KCI 254만 + OpenAlex 1억 770만을 우리 색인으로 갖고 0.2~0.9초에.</em></div>
 
  <!-- 검색박스는 biblo_rims_front/docs/biblo-search-2.html 것을 그대로 가져왔다.
       클래스·id 접미사(-3w8n1)도 원본 그대로. 이 파일의 -7q2v8 과 겹치지 않는다. -->
@@ -173,36 +174,36 @@ const ICONS=[document.getElementById('mic-3w8n1'), document.getElementById('doc-
 
 /* ── 예시 질의 · BIBLO 가 실제로 답하는 것들 ── */
 const Q=[
- ['통합검색',      '정확한 키워드'],
- ['소장자료검색',  '키워드 맥락으로 확장'],
- ['시맨틱검색',    '내용의 결로 닿는'],
- ['사서처럼',      '되물어 좁혀 준다']
+ ['학술어 변환',  '일상어를 연구자 말로'],
+ ['정확검색',     '내부 색인·엄격'],
+ ['의미 검색',    '뜻으로 닿는'],
+ ['근거 그래프',  '주장과 근거']
 ];
 const HINT=[
- '키워드와 자연어 질문을 한 창에서. 1초 안에 결과.',
- '제목을 몰라도 내용의 결로 찾아냅니다',
- '무엇을 찾는지 흐릿하면 사서처럼 되물어 좁혀 줍니다',
- '책·논문·연구자를 한 번에 가로질러 찾습니다',
- '키워드가 하나도 안 겹쳐도 뜻이 닿으면 찾아냅니다'
+ '무엇이든 물어보세요…',
+ '저자 식별을 다룬 국내 논문 찾아줘',
+ '삼중음성유방암 최신 연구 동향',
+ '이 주제와 뜻이 가까운 논문도 같이',
+ '구독 없이 볼 수 있는 오픈액세스만'
 ];
-const HINT_S=['키워드와 자연어를 한 창에서','내용의 결로 찾아냅니다','사서처럼 되물어 좁혀 줍니다',
-              '책·논문·연구자를 한 번에','뜻이 닿으면 찾아냅니다'];
+const HINT_S=['무엇이든 물어보세요…','저자 식별 논문','삼중음성유방암 동향',
+ '뜻이 가까운 논문','오픈액세스만'];
 const hints=()=>(innerWidth<760?HINT_S:HINT);
 sug.innerHTML=Q.map(([a,b])=>`<div class="s-${T}">${a}<u>${b}</u></div>`).join('');
 
 
 /* ── 하단 01~05 박스 ── */
 const BOX=[
- {n:'01',t:'키워드와 자연어를<br>한 창에서',s:'통합검색',
-  li:['정확한 제목·저자·ISBN 은 그대로','문장으로 물어도 같은 창에서 받는다'],m:'1건 · 0.1초'},
- {n:'02',t:'제목을 몰라도<br>내용의 결로',s:'시맨틱검색',
-  li:['제목·키워드가 하나도 안 겹쳐도 닿는다','책지문 벡터가 이웃을 찾는다'],m:'의미 벡터 76.0만'},
- {n:'03',t:'사서처럼<br>되물어 좁힌다',s:'AI 사서기능',
-  li:['없으면 “이런 책은 어때요?” 로 추천','모호하면 세 문항으로 좁힌다'],m:'0건 화면이 없다'},
- {n:'04',t:'매주 쌓이는<br>12축 책지문',s:'데이터 토대',
-  li:['책 한 권을 12개 검색 칸으로 나눠 담는다','도입 도서관이 늘수록 품질이 오른다'],m:'책지문 89.5만 · 색인어 24.6개'},
- {n:'05',t:'인증받은<br>AI 검색엔진',s:'공인 시험성적서',
-  li:['KOLAS 공인 · 한국녹색기후기술원','기능 정확성 · 평균 반환 시간 2개 항목'],m:'KS X ISO/IEC 25023:2016',cert:1}
+ {n:'01',t:'구독 없이<br>찾아준다',s:'무료·오픈액세스',
+  li:['Scopus·WoS 구독이 없어도 된다','KCI 254만 + OpenAlex 1.1억'],m:'합계 약 1.1억 편'},
+ {n:'02',t:'지어내지 않고<br>찾아준다',s:'LLM 과 경쟁하지 않는다',
+  li:['생성형 AI 는 없는 논문도 만든다','우리는 근거를 발견한다 · DOI 확인'],m:'환각 없음 · 전건 검증',cert:1},
+ {n:'03',t:'색인을<br>우리가 소유',s:'구독이 아니라 자산',
+  li:['우리 DB 안에서 끝난다','외부 의존과 지연이 없다'],m:'응답 0.2~0.9초'},
+ {n:'04',t:'글자가 아니라<br>뜻으로',s:'0건 화면이 없다',
+  li:['지문 84.3만 편을 2축 벡터로','한 단어만 걸려도 편다'],m:'KNN 1.6ms'},
+ {n:'05',t:'구글 스칼라<br>전 항목 + 원문',s:'고급 검색',
+  li:['모두 포함·정확 문구·OR·NOT','구독 학술지는 바로 원문 열람'],m:'저자관계 362만 행'}
 ];
 document.getElementById('grid-7q2v8').innerHTML=BOX.map(b=>`
  <div class="bx-7q2v8">
