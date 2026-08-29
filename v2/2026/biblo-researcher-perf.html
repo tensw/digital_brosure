@@ -6,7 +6,7 @@
  --g4:#f472b6;--g3:#a78bfa;--g2:#38bdf8;--g1:#2dd4bf;--g0:#64748b;--warn:#fbbf24;--bad:#fb7185;--ok:#34d399}
 *{box-sizing:border-box;margin:0;padding:0}
 html{overflow-x:hidden}
-body{font:14px/1.6 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo",system-ui,sans-serif;
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
  background:radial-gradient(1100px 720px at 50% 45%,#0b1226 0%,#060a16 58%,#03050c 100%);
  color:var(--ink);-webkit-font-smoothing:antialiased}
 html,body{overflow:hidden}
@@ -18,10 +18,11 @@ html,body{overflow:hidden}
    헤더를 무대 안으로 넣어야 타이틀·서브설명이 보드와 같은 비율로 커지고 줄어든다. */
 .wrap{width:1600px;height:900px;padding:44px 82px 26px;display:flex;flex-direction:column}
 .kicker{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
-h1{font-size:33px;font-weight:800;letter-spacing:-1.1px;margin-top:12px;line-height:1.16}
+/* 작업가이드 폰트 규격: 한글 제목 3.15em(44px), 서브 16px/600 */
+h1{font-size:44px;font-weight:800;letter-spacing:-1.5px;margin-top:12px;line-height:1.16}
 h1 span{background:linear-gradient(90deg,var(--in),var(--out));-webkit-background-clip:text;
  background-clip:text;-webkit-text-fill-color:transparent}
-.lead{color:var(--ink2);font-size:13.5px;margin-top:11px;max-width:118ch;line-height:1.75}
+.lead{color:var(--ink2);font-size:16px;font-weight:600;margin-top:12px;max-width:100ch;line-height:1.6}
 .lead b{color:var(--ink)}
 .hd{display:flex;gap:24px;align-items:flex-end;flex:none}
 .spacer{flex:1}
