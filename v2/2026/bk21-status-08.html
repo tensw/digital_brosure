@@ -37,7 +37,7 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
    원본은 화면 끝까지 꽉 차는 배치지만, 이 장은 좌우 82px 안쪽으로 짜여 있어
    위 카드·구분선과 세로선이 맞도록 같은 82px 열에 맞췄다. 모양 값은 손대지 않았다. */
 /* 커넥터는 카드 바로 아래에서 시작한다(15번과 같은 붙임). 카드 203~457. */
-.mid-53fi{position:absolute;left:82px;right:82px;top:438px}
+.mid-53fi{position:absolute;left:82px;right:82px;top:457px}
 .link-53fi{height:56px;position:relative}
 .link-53fi svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .concl-53fi{background:#1e4be8;border-radius:14px;padding:26px 34px 30px;text-align:center;color:#fff}
@@ -57,17 +57,15 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 .cn-53fi{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:#98a1b2}
 .cv-53fi{font:800 30px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:14px;color:#111827}
 .cv-53fi em{font-style:normal;font-size:13px;font-weight:700;color:#98a1b2;margin-left:5px;letter-spacing:0}
+.cb-53fi{height:6px;border-radius:99px;background:#eaeefa;margin-top:13px;overflow:hidden}
+.cb-53fi i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1e4be8,#5b83ff)}
 .cp-53fi{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:9px;letter-spacing:.02em}
 .cp-53fi b{color:#2b5ce6}
-
-/* 기준일 — 화면에 남기지 않으면 나중에 어느 시점 값인지 못 찾는다 */
-.h1s .asof{margin-left:12px;font:700 11px/1 ui-monospace,Menlo,monospace;
- letter-spacing:.06em;color:#98a1b2;vertical-align:1px}
 </style></head><body>
 <div class="slide"><div id="stage">
 
- <h1>SEARCH QUALITY</h1>
- <div class="h1s">글자가 안 맞아도, 구글이 멈춰도, 계열이 달라도 검색은 논문으로 끝난다<span class="asof">실측 2026-07-26</span></div>
+ <h1>MATCHING STATUS</h1>
+ <div class="h1s">저자행 5,280,301줄이 어디로 갈렸고, 그중 엔진이 실제로 판정한 것은 얼마인가</div>
 
  <!-- 15번(bk21-match-light57.html)의 라운드 카드를 그대로 가져왔다.
       앞서 쓰던 납작한 흰 슬래브 5칸(.cols/.col)과 위아래 구분선(r1·r2)은 걷어냈다. -->
@@ -83,10 +81,10 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
    </svg></div>
 
   <div class="concl-53fi">
-   <h2>검색이 빈손으로 끝나지 않는다</h2>
-   <p>글자가 안 맞으면 <b>뜻으로</b> 찾고, 구글이 초록에서 멈추면 <b>구독 원문까지</b> 연다.
-    계열이 다르면 그 계열의 언어로 좁힌다. 정책 사전 132개가 노이즈를 걷어내
-    「삼중음성유방암」은 <b>1건에서 1,293건</b>이 됐다.</p>
+   <h2>확정 356,232줄 가운데 엔진이 실제로 판정한 것은 8,302줄이다</h2>
+   <p>교내 확정 356,232줄 중 <b>356,017줄</b>은 BK21·RIMS 제출 원장에서 직접 이어붙인 것으로 판별 엔진을 거치지 않았다.
+    원장 연결분은 <b>제출 명부가 정확하다는 전제</b> 위에 서 있다.
+    미분류 2,305,898줄(43.7%)은 소속 문자열이 없거나 판별 신호가 부족해 아직 갈래가 정해지지 않았다.</p>
   </div>
  </div>
 </div></div>
@@ -94,21 +92,19 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 <script>
 /* ══ 근거 ══ docs/BIBLO_전기능_전체지도.md §0 「구조 — 코어 백본 + 6개 솔루션」 표 그대로 ══ */
 const S=[
- {"g":"MEANING","name":"빈손으로 끝나지 않는다","hl":"12,546","unit":"건",
-  "m":"0건이던 「저자 식별 및 중복 제거」 · 지문 84.3만 편 · KNN 1.6ms",
-  "d":"글자가 안 맞아도 뜻으로 찾는다. 오탈자에도 전문 용어에도 결과가 비지 않고, 검색은 반드시 논문으로 끝난다."},
- {"g":"COVERAGE","name":"구글이 멈추는 곳에서 한 걸음 더","hl":"전 항목","unit":"+ 구독 원문",
-  "m":"저자관계 362만 행 · 학술지 95% · 연도 100%",
-  "d":"구글 스칼라 고급검색의 모든 항목을 그대로 제공한다. 구글은 초록과 링크에서 멈추고, 우리는 구독 학술지 원문을 연다."},
- {"g":"FIELD","name":"그 계열의 말로 찾는다","hl":"60.0","unit":"%",
-  "m":"이과 지표 60.0% · 문과 이론 26.2% (R2 61만 편 실측)",
-  "d":"같은 14축 지문도 이과는 지표와 데이터로, 문과는 이론으로 채워진다. 그 차이를 검색에 그대로 쓴다."}];
+ {"g":"GROUP 01","name":"교내 확정","tag":"LINKED","hl":"356,232","unit":"줄","pct":6.7,
+  "m":"전체의 6.7%","d":"성균관대 구성원으로 판별돼 사번이 붙은 저자행. 이 행만 성과 집계에 들어간다."},
+ {"g":"GROUP 02","name":"외부 저자","tag":"EXTERNAL","hl":"2,618,171","unit":"줄","pct":49.6,
+  "m":"전체의 49.6%","d":"교외 소속으로 확인된 공저자. 사번은 없지만 이름·소속·ORCID 를 보존해 협력망 분석에 쓴다."},
+ {"g":"GROUP 03","name":"미분류","tag":"PENDING","hl":"2,305,898","unit":"줄","pct":43.7,
+  "m":"전체의 43.7%","d":"교내·교외 판정을 아직 내리지 못한 저자행. 소속 문자열이 없거나 판별 신호가 부족하다."}];
 document.getElementById('cards-53fi').innerHTML = S.map(c=>`
  <article class="card-53fi">
    <div class="cn-53fi">${c.g}</div>
    <h3>${c.name}</h3>
    <div class="cv-53fi">${c.hl}<em>${c.unit}</em></div>
-   <div class="cp-53fi">${c.m}</div>
+   <div class="cb-53fi"><i style="width:${c.pct}%"></i></div>
+   <div class="cp-53fi">${c.m} · <b>${c.tag}</b></div>
    <p>${c.d}</p>
  </article>`).join('');
 

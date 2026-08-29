@@ -20,12 +20,14 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 .r1{top:203px} .r3{top:719px}
 
 /* ─── 5 컬럼 ─── */
-.cols{position:absolute;left:82px;right:82px;top:203px;display:flex;gap:22px}
+/* 카피가 짧아 카드가 낮아졌다. 원본 리듬(203~655)에 맞춰 높이를 주고
+   근거 목록은 카드 아래쪽에 붙인다. */
+.cols{position:absolute;left:82px;right:82px;top:203px;min-height:452px;display:flex;gap:22px}
 .col{flex:1;position:relative;min-width:0;display:flex;flex-direction:column;background:#fff;border-radius:14px;overflow:hidden;
  box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 30px -22px rgba(30,92,240,.35)}
 .ch{background:linear-gradient(100deg,#4b8cff,#1e5cf0);color:#fff;text-align:center;
  padding:15px 16px;font-size:20px;font-weight:800;letter-spacing:-.6px}
-.bd{flex:1;padding:22px 24px 24px}
+.bd{flex:1;padding:22px 24px 24px;display:flex;flex-direction:column}
 
 .col .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;
  transform:skewX(-9deg);display:inline-block;color:#c7d0e6}
@@ -112,98 +114,73 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 /* 두 줄로 접히므로 행간을 준다(한 줄일 때와 높이만 달라진다). */
 .res-gx39{border-radius:999px;background:linear-gradient(100deg,#4b8cff,#1e5cf0);color:#fff;
  text-align:center;padding:11px 16px;font-size:16px;font-weight:800;letter-spacing:-.4px;line-height:1.45}
+
+/* ── 6.1 카피용 ── 카드 안에서 큰 숫자 · 캡션 · 한 줄 주장 ── */
+.big{font:800 34px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.6px;color:#1e4be8;margin-top:2px}
+.big em{font-style:normal;font-size:14px;font-weight:700;color:#98a1b2;margin-left:6px;letter-spacing:0}
+.cap{margin-top:7px;font:600 11.5px/1.5 ui-monospace,Menlo,monospace;color:#98a1b2;letter-spacing:.01em}
+.say{margin-top:14px;font-size:15px;font-weight:700;line-height:1.55;letter-spacing:-.4px;color:#111827}
+.say b{color:#1e4be8}
+.col .bd ul{margin-top:auto;padding-top:13px;border-top:1px solid #eef1f7}
+/* 기준일 — 화면에 없으면 나중에 어느 시점 값인지 못 찾는다 */
+.h1s .asof{margin-left:12px;font:700 11px/1 ui-monospace,Menlo,monospace;
+ letter-spacing:.06em;color:#98a1b2;vertical-align:1px}
 </style></head><body>
 <div class="slide"><div id="stage">
 
- <h1>MATCHING STATUS</h1>
- <div class="h1s">저자행 5,280,301줄이 어디로 갈렸고, 그중 엔진이 실제로 판정한 것은 얼마인가</div>
+ <h1>SEARCH QUALITY</h1>
+ <div class="h1s">글자가 안 맞아도, 구글이 멈춰도, 계열이 달라도 검색은 논문으로 끝난다<span class="asof">실측 2026-07-26</span></div>
 
  <div class="cols">
 
+  <!-- biblo-service-design.html 6.1 의 세 대목을 카피로 정리해 넣었다.
+       카드 껍데기(.col/.ch/.bd)와 글자 크기는 이 장(10번) 것을 그대로 쓴다. -->
   <div class="col">
-   <div class="ch">전체 현황</div>
+   <div class="ch">빈손으로 끝나지 않는다</div>
    <div class="bd">
-   <ul>
-    <li>저자행 <b>5,280,301</b>줄 · 논문 <b>140,850</b>편</li>
-    <li>확정 인물 <b>11,930</b>명 · 교직원 원장 <b>364,319</b></li>
-    <li>이름 보유 <b>4,765,793</b> · 소속 보유 <b>4,121,282</b></li>
-    <li>저자 파싱이 끝난 논문만 집계 대상</li>
-   </ul>
-   <div class="box">
-    <div class="cp">저자 연결 완료 논문</div>
-    <div class="cv">138,635<em>/ 140,850</em></div>
-    <div class="cb"><i style="width:98.4%"></i></div>
-   </div>
-   </div>
-  </div>
-
-  <!-- 18번(bk21-match-light26.html) 가운데 컨텐츠(배경/목적)를 그대로 옮겼다.
-        담는 껍데기(.col/.ch/.bd)와 글자 크기는 이 장(10번) 것을 그대로 쓴다. -->
-  <div class="col">
-   <div class="ch">배경</div>
-   <div class="bd">
-    <div class="blk-gx39">
-     <div class="bt-gx39">저자행은 많은데 사람에 닿지 않는다</div>
-     <ul>
-      <li>저자행 <b>5,280,301</b>줄 중 교내로 확정된 것은 <b>356,232</b>줄, 전체의 <b>6.7%</b></li>
-      <li>미분류가 <b>2,305,898</b>줄(43.7%)로 남아 있다</li>
-      <li>소속 문자열이 없거나 판별 신호가 부족한 행이 대부분</li>
-     </ul>
-    </div>
-    <div class="blk-gx39">
-     <div class="bt-gx39">확정분도 대부분 엔진이 만든 것이 아니다</div>
-     <ul>
-      <li>확정 356,232줄 중 <b>356,017</b>줄은 제출 원장에서 직접 이어붙인 행</li>
-      <li>판별 엔진이 실제로 판정한 것은 <b>8,302</b>줄</li>
-      <li>원장 연결분은 <b>제출 명부가 정확하다는 전제</b> 위에 서 있다</li>
-     </ul>
-    </div>
-   </div>
-  </div>
-
-  <div class="col">
-   <div class="ch">목적</div>
-   <div class="bd">
+    <div class="big">12,546<em>건</em></div>
+    <div class="cap">0건이던 「저자 식별 및 중복 제거」</div>
+    <p class="say">글자가 안 맞아도 <b>뜻으로</b> 찾는다.<br>오탈자에도, 전문 용어에도 결과가 비지 않는다.</p>
     <ul>
-     <li>미분류 저자행을 줄여 <b>성과 집계 대상</b>을 넓힌다</li>
-     <li>원장 의존을 낮추고 <b>엔진 판정 비율</b>을 올린다</li>
+     <li>지문 <b>84.3만 편</b>을 2축 벡터로 임베딩 · KNN <b>1.6ms</b></li>
+     <li>정책 사전 <b>132개</b>로 노이즈 제거 — 「삼중음성유방암」 <b>1건 → 1,293건</b></li>
+     <li>다 든 논문이 없으면 일부만 든 논문을 많이 든 순으로 편다</li>
     </ul>
-    <div class="rows-gx39">
-     <div class="rw-gx39"><span class="tg-gx39">단기</span><span class="tx-gx39">식별자 보유 행부터 회수한다. AUID <b>858,249</b> · ORCID <b>85,577</b>이 이미 저자행에 붙어 있다.</span></div>
-     <div class="rw-gx39"><span class="tg-gx39">중기</span><span class="tx-gx39">소속 문자열이 있는 <b>4,121,282</b>줄에 이름+소속 규칙과 LLM 판별을 확대 적용한다.</span></div>
-     <div class="rw-gx39"><span class="tg-gx39">장기</span><span class="tx-gx39">확정이 지문·공저망을 갱신하고 그 지문이 다음 판정을 돕는 <b>선순환</b>을 굳힌다.</span></div>
-    </div>
-    <div class="arw-gx39">▼</div>
-    <div class="res-gx39">엔진 판정분 8,302줄 → 원장 의존 없는 확정으로</div>
    </div>
   </div>
 
   <div class="col">
-   <div class="ch">판별 근거 상위 신호</div>
+   <div class="ch">구글이 멈추는 곳에서 한 걸음 더</div>
    <div class="bd">
-   <svg class="chart" width="100%" height="210" viewBox="0 0 300 168">
-    <rect x="176" y="8" width="118" height="132" fill="#eaf1ff"/>
-    <line x1="24" y1="140" x2="294" y2="140" stroke="#eef1f7"/><line x1="24" y1="107" x2="294" y2="107" stroke="#eef1f7"/><line x1="24" y1="74" x2="294" y2="74" stroke="#eef1f7"/><line x1="24" y1="41" x2="294" y2="41" stroke="#eef1f7"/><line x1="24" y1="8" x2="294" y2="8" stroke="#eef1f7"/>
-    <text x="18" y="144" font-size="8" fill="#98a1b2" text-anchor="end">0</text><text x="18" y="111" font-size="8" fill="#98a1b2" text-anchor="end">800</text><text x="18" y="78" font-size="8" fill="#98a1b2" text-anchor="end">1600</text><text x="18" y="45" font-size="8" fill="#98a1b2" text-anchor="end">2400</text><text x="18" y="12" font-size="8" fill="#98a1b2" text-anchor="end">3200</text>
-    <polyline points="42,26 90,49 138,133 186,140 234,143 282,145" fill="none"
-      stroke="#1e5cf0" stroke-width="2.4" stroke-linejoin="round"/>
-    <circle cx="42" cy="26" r="3.4" fill="#fff" stroke="#1e5cf0" stroke-width="2.2"/><circle cx="90" cy="49" r="3.4" fill="#fff" stroke="#1e5cf0" stroke-width="2.2"/><circle cx="138" cy="133" r="3.4" fill="#fff" stroke="#1e5cf0" stroke-width="2.2"/><circle cx="186" cy="140" r="3.4" fill="#fff" stroke="#1e5cf0" stroke-width="2.2"/><circle cx="234" cy="143" r="3.4" fill="#fff" stroke="#1e5cf0" stroke-width="2.2"/><circle cx="282" cy="145" r="3.4" fill="#fff" stroke="#1e5cf0" stroke-width="2.2"/>
-    <text x="42" y="17" font-size="8.5" font-weight="800" fill="#1e5cf0" text-anchor="middle">2,892</text><text x="90" y="40" font-size="8.5" font-weight="800" fill="#1e5cf0" text-anchor="middle">2,391</text><text x="138" y="124" font-size="8.5" font-weight="800" fill="#1e5cf0" text-anchor="middle">898</text><text x="186" y="131" font-size="8.5" font-weight="800" fill="#1e5cf0" text-anchor="middle">560</text><text x="234" y="134" font-size="8.5" font-weight="800" fill="#1e5cf0" text-anchor="middle">534</text><text x="282" y="136" font-size="8.5" font-weight="800" fill="#1e5cf0" text-anchor="middle">312</text>
-    <text x="42" y="158" font-size="7.6" fill="#98a1b2" text-anchor="middle">AUID</text><text x="90" y="158" font-size="7.6" fill="#98a1b2" text-anchor="middle">이름+소속</text><text x="138" y="158" font-size="7.6" fill="#98a1b2" text-anchor="middle">LLM</text><text x="186" y="158" font-size="7.6" fill="#98a1b2" text-anchor="middle">U접두</text><text x="234" y="158" font-size="7.6" fill="#98a1b2" text-anchor="middle">ORCID</text><text x="282" y="158" font-size="7.6" fill="#98a1b2" text-anchor="middle">이메일</text>
-   </svg>
-   <ul>
-    <li>고유 식별자(<b>AUID·ORCID</b>)가 가장 강한 신호</li>
-    <li>이름+소속 일치가 <b>2,391</b>줄로 뒤를 잇는다</li>
-    <li>LLM 판별은 <b>898</b>줄 · 지문 교차검증 통과분만</li>
-    <li>사람 검토(HITL)는 <b>207</b>줄로 최소</li>
-   </ul>
+    <div class="big">전 항목<em>+ 구독 원문</em></div>
+    <div class="cap">구글 스칼라 고급검색 전 항목 대응</div>
+    <p class="say">구글은 <b>초록과 링크</b>에서 멈춘다.<br>우리는 <b>구독 학술지 원문</b>을 연다.</p>
+    <ul>
+     <li>모두 포함 · 정확 문구 · OR · NOT — 전부 된다</li>
+     <li>저자관계 <b>362만 행</b> · 학술지 <b>95%</b> 채움 · 연도 <b>100%</b></li>
+     <li>정제·검증 데이터라 무관한 결과가 안 섞인다</li>
+    </ul>
+   </div>
+  </div>
+
+  <div class="col">
+   <div class="ch">그 계열의 말로 찾는다</div>
+   <div class="bd">
+    <div class="big">60.0<em>%</em></div>
+    <div class="cap">이과 지표 비중 · 문과는 이론 26.2%</div>
+    <p class="say">같은 지문도 <b>이과는 지표로, 문과는 이론으로</b> 채워진다.<br>그 차이를 검색에 그대로 쓴다.</p>
+    <ul>
+     <li>이과·의학보건 — 지표 <b>60.0%</b> · 데이터셋 63.9% · 이론 8.9%</li>
+     <li>문과·인문예술 — 이론 <b>26.2%</b>(계열 최고) · 지표 8.0%</li>
+     <li>이과는 지표 검색, 문과는 이론 검색으로 좁힌다 (R2 61만 편 실측)</li>
+    </ul>
    </div>
   </div>
 
  </div>
 
 
- <div class="concl">확정 356,232줄 가운데 엔진이 실제로 판정한 것은 8,302줄이다</div>
+ <div class="concl">검색이 빈손으로 끝나지 않는다</div>
 </div></div>
 
 <script>
