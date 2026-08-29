@@ -1,0 +1,109 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BIBLO — 무엇이 막고 있는가</title>
+<style>
+:root{--ink:#e6eefb;--ink2:#8ea6cf;--ink3:#54688f;--hi:#38bdf8;--warm:#22d3ee;--weak:#f59e0b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:14px/1.6 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo",system-ui,sans-serif;
+ background:radial-gradient(1000px 700px at 55% 46%,#0b1226 0%,#060a16 58%,#03050c 100%);
+ color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+html,body{overflow:hidden}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+.wrap{padding:24px 15px 46px}
+
+.wrap{width:1600px;height:900px;padding:52px 82px 40px}
+.kick{font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--hi)}
+h1{font-size:44px;font-weight:800;letter-spacing:-1.5px;line-height:1.2;margin-top:14px}
+h1 b{color:var(--hi);font-weight:800}
+.h1s{margin-top:14px;font-size:16px;font-weight:600;letter-spacing:-.3px;color:var(--ink2);max-width:96ch}
+.h1s b{color:var(--ink);font-weight:700}
+.asof{margin-left:12px;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:var(--ink3)}
+.cols{display:grid;gap:18px;margin-top:34px}
+.c3{grid-template-columns:repeat(3,1fr)}
+.c4{grid-template-columns:repeat(4,1fr)}
+.bx{background:linear-gradient(180deg,rgba(22,32,60,.72),rgba(10,16,34,.72));
+ border:1px solid rgba(96,165,250,.16);border-radius:16px;padding:20px 20px 18px;
+ display:flex;flex-direction:column}
+.bx .t{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:var(--ink3)}
+.bx h3{margin-top:11px;font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:var(--ink)}
+.bx .v{margin-top:13px;font:800 34px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.6px;color:var(--hi)}
+.bx .v em{font-style:normal;font-size:14px;font-weight:700;color:var(--ink3);margin-left:6px;letter-spacing:0}
+.bx .cap{margin-top:8px;font:600 11.5px/1.5 ui-monospace,Menlo,monospace;color:var(--ink3)}
+.bx p{margin-top:13px;font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;color:var(--ink2)}
+.bx p b{color:var(--ink);font-weight:700}
+.bx ul{list-style:none;margin-top:auto;padding-top:13px;border-top:1px solid rgba(140,170,230,.12)}
+.bx li{position:relative;padding-left:14px;font-size:13.5px;line-height:1.6;letter-spacing:-.3px;
+ color:var(--ink2);margin-top:6px}
+.bx li:before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:var(--hi)}
+.bx li b{color:var(--ink);font-weight:700}
+.key{margin-top:20px;border-radius:16px;padding:20px 26px;text-align:center;
+ background:linear-gradient(100deg,rgba(56,189,248,.16),rgba(37,99,235,.16));
+ border:1px solid rgba(96,165,250,.28)}
+.key h2{font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:var(--hi)}
+.key p{margin-top:11px;font-size:19px;font-weight:600;line-height:1.6;letter-spacing:-.4px;color:var(--ink)}
+.key p b{color:#fff;font-weight:800}
+.src{margin-top:14px;font:600 11px/1.6 ui-monospace,Menlo,monospace;color:var(--ink3);text-align:right}
+/* 덱 안에서는 배경을 칠하지 않는다(같은 배경 레이어를 공유) */
+.emb-bg0, .emb-bg0 body, .emb-bg0 .slide{background:transparent !important}
+
+</style></head><body>
+<div class="slide"><div id="stage"><div class="wrap">
+<div class="kick">BIBLO · THE BOTTLENECK</div>
+ <h1>남은 몫을 막는 것은 알고리즘이 아니라 <b>입력 데이터</b>다<span class="asof">DB 실측 2026-08-29</span></h1>
+ <div class="h1s">자동 판별을 단번에 끝내는 것은 <b>고유 식별자</b>입니다.
+  재직 연구자 <b>34,764명</b> 중 그 식별자를 가진 사람이 얼마나 되는지 직접 셌습니다.</div>
+
+ <div class="cols c4">
+  <div class="bx"><div class="t">EMAIL</div><h3>이메일</h3>
+   <div class="v">97.7<em>%</em></div><div class="cap">33,954명 · 보조 신호</div>
+   <p>거의 다 있지만 <b>단독 확정 근거로는 약하다</b>.</p></div>
+
+  <div class="bx"><div class="t">SCOPUS AUID</div><h3>Scopus 저자 ID</h3>
+   <div class="v">27.2<em>%</em></div><div class="cap">9,447명 · 강한 신호</div>
+   <p>이 중 대학이 <b>RIMS 에 등록한 것은 21.8%</b>(7,589명), 나머지는 비블로가 회수했다.</p></div>
+
+  <div class="bx"><div class="t">ORCID</div><h3>ORCID</h3>
+   <div class="v">3.8<em>%</em></div><div class="cap">1,319명 · 가장 강한 신호</div>
+   <p>정확 일치 하나로 확정할 수 있는데 <b>스무 명 중 한 명</b>도 안 된다.</p></div>
+
+  <div class="bx"><div class="t">WOS RID</div><h3>WoS Researcher ID</h3>
+   <div class="v">2.5<em>%</em></div><div class="cap">869명 · 강한 신호</div>
+   <p>해외 논문 귀속에 쓰이지만 <b>거의 비어 있다</b>.</p></div>
+ </div>
+
+ <div class="cols c3" style="margin-top:18px">
+  <div class="bx"><div class="t">LIMIT 01</div><h3>분야 프로필이 빈 연구자</h3>
+   <p>저널·분야 이력이 없으면 동명이인을 <b>분야로 가를 수 없다</b>. 공저 관계에 더 기댄다.</p></div>
+  <div class="bx"><div class="t">LIMIT 02</div><h3>외부 DB 가 주지 않는 값</h3>
+   <p>OpenAlex·KCI 는 <b>이메일을 주지 않는다</b>. 논문별 인용 백분위가 없어
+    개인·학과 <b>PP(top 10%)</b> 는 현재 산출할 수 없다.</p></div>
+  <div class="bx"><div class="t">PRINCIPLE</div><h3>그래서 지키는 순서</h3>
+   <p><b>자동화율보다 오매칭 방지</b>가 먼저다. 외부 ID 하나만으로 사람을 최종 판정하지 않는다.</p></div>
+ </div>
+
+ <div class="key"><h2>WHAT TO DO</h2>
+  <p>자동화 상한을 올리는 가장 빠른 길은 모델이 아니라 <b>ORCID·Scopus ID 등록률</b>이다.
+   식별자가 붙는 만큼 사람이 볼 건수가 줄어든다.</p></div>
+
+ <div class="src">식별자 보유 수는 신 RIMS dev 복원본 dev.researcher_external_id 실측 2026-08-29
+  (연구자 34,764명 = is_deleted 제외). 한계 항목은 BIBLO_연구성과관리_솔루션_소개.md §14.</div>
+</div></div></div>
+<script>
+/* 1600x900 고정 무대 — 작업가이드 5장 규격.
+   resize 하나만 걸면 iframe 슬라이드에서 배율이 틀어진 채 굳는다. 다섯 개를 다 건다. */
+function fitStage(){
+  const st=document.getElementById('stage'); if(!st) return;
+  st.style.height='900px';
+  const k=Math.min(innerWidth/1600, innerHeight/900);
+  st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;
+}
+fitStage();
+addEventListener('resize',fitStage);
+addEventListener('load',fitStage);
+addEventListener('pageshow',fitStage);
+if(window.ResizeObserver) new ResizeObserver(fitStage).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitStage);
+</script>
+<script>if(window.self!==window.top) document.documentElement.classList.add('emb-bg0');</script>
+</body></html>
