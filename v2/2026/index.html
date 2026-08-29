@@ -51,17 +51,17 @@ h1 em{font-style:normal;background:linear-gradient(100deg,#7fd4ff,#a9b6ff 60%,#e
 .hero h1{font-size:clamp(30px,3.4vw,48px);letter-spacing:-1.6px}
 /* ── 중간 간지 (12장) — 우측 정렬 대형 챕터 ── */
 .hero.slide-2q6r4.divx{flex-direction:row;align-items:center;justify-content:space-between;gap:4vw}
-.divx .glass{flex:0 1 620px;min-width:0}
-.divx-in{flex:0 1 auto}
-.divx-in{text-align:right;max-width:min(680px,42vw)}
+.divx .glass{flex:0 1 620px;min-width:0;order:2}
+.divx-in{flex:0 1 auto;order:1}
+.divx-in{text-align:left;max-width:min(680px,42vw)}
 .divx-in .k{font:700 11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.34em;color:var(--ink3)}
 .divx-in h2{margin-top:20px;font-size:clamp(38px,4.4vw,72px);font-weight:800;
  letter-spacing:-3px;line-height:1.06;color:var(--ink)}
 .divx-in h2 em{font-style:normal;margin-right:.16em;
  background:linear-gradient(100deg,#7fd4ff,#a9b6ff 60%,#e5c7ff);
  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.divx-in .ln{display:block;height:1px;margin:34px 0 0 auto;width:min(420px,60%);
- background:linear-gradient(90deg,transparent,rgba(160,205,255,.5))}
+.divx-in .ln{display:block;height:1px;margin:34px auto 0 0;width:min(420px,60%);
+ background:linear-gradient(90deg,rgba(160,205,255,.5),transparent)}
 .divx-in p{margin-top:26px;font-size:clamp(15px,1.15vw,19px);font-weight:500;line-height:1.75;
  letter-spacing:-.3px;color:var(--ink2)}
 .hero .glass{width:min(620px,100%)}
