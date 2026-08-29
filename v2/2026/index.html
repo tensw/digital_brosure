@@ -142,7 +142,10 @@ body{overflow:hidden}
 .cvbg-8j3v{position:absolute;inset:0;background: radial-gradient(1200px 800px at 74% 46%, rgba(74,52,180,.30) 0%, rgba(20,14,60,.10) 46%, rgba(0,0,0,0) 72%), radial-gradient(760px 620px at 26% 62%, rgba(28,64,170,.22) 0%, rgba(0,0,0,0) 68%), #000}
 /* 표지 슬라이드는 좌우 여백 없이 화면을 꽉 쓴다 */
 .cv-8j3v{padding:0;overflow:hidden;justify-content:stretch}
-.cv-8j3v > *{transform:none}
+/* 무대(#stage-8j3v)는 left/top 50% 로 두고 fitStage() 가 translate(-50%,-50%) 로 당겨 가운데를 맞춘다.
+   그 보정이 덱의 등장 트랜지션(transform .72s)에 걸리면 첫 로딩에 우하단에서 좌상단으로 미끄러진다.
+   transform 은 트랜지션 대상에서 빼고 페이드인만 남긴다. */
+.cv-8j3v > *{transform:none;transition-property:opacity}
 /* 덱이 붙인 페이지 카운터(.cap-2q6r4, 우하단 고정)와 커버 푸터가 같은 자리를 쓴다.
    푸터는 무대 좌표(1600x900)라 배율이 작아질수록 화면상 여백이 같이 줄어,
    1280x720 에서 16px 겹쳤다. 카운터 폭(59px)+여백을 최소 배율에서도 확보하도록 밀어 둔다. */
