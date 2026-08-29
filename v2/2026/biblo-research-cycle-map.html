@@ -1,0 +1,261 @@
+<meta charset="utf-8">
+<title>연구 중심 비블로 순환 구조</title>
+<style>
+:root{--ink:#e9eefb;--ink2:#93a6cc;--ink3:#5d7099}
+*{box-sizing:border-box;margin:0;padding:0}
+/* ── 무대 규격 (작업가이드 5장) ── */
+html,body{overflow:hidden}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+.emb-bg0, .emb-bg0 body, .emb-bg0 .slide{background:transparent !important}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:radial-gradient(1300px 900px at 50% 40%,#0b1226 0%,#060a16 58%,#03050c 100%);
+ color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+/* 작업가이드 5장: 1600x900, 좌우 82px. 원본은 세로 1618px 문서였다.
+   순환도가 정사각(760x700)이라 세로를 많이 먹는다. 상세패널과 집계 스트립을
+   한 줄에 나란히 놓아 두 블록 높이를 한 몫으로 줄였다.
+   본문 하단의 인용 상자(.key)는 리드 문장과 같은 내용이라 뺐다. */
+.wrap{width:1600px;height:900px;padding:38px 82px 16px;display:flex;flex-direction:column}
+.key{display:none}
+.row2{display:grid;grid-template-columns:560px 1fr;gap:16px;align-items:stretch;margin-top:8px;flex:none}
+.foot{margin-top:auto}
+.top{text-align:center;padding-bottom:4px;flex:none}
+.top /* 폰트 규격 — 한글 제목 3.15em(44px), 서브 16px/600 */
+h1{font-size:44px;font-weight:800;letter-spacing:-1.5px}
+.top .sub{font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.34em;color:#7dd3fc;margin-top:11px}
+.top .rule{width:74px;height:2px;background:linear-gradient(90deg,#38bdf8,#a78bfa);margin:15px auto 0;border-radius:2px}
+.top .lead{color:var(--ink2);font-size:16px;font-weight:600;margin-top:15px;max-width:112ch;margin-inline:auto;line-height:1.55}
+.top .lead b{color:var(--ink)}
+
+.grid{display:grid;grid-template-columns:330px 1fr 330px;gap:18px;align-items:stretch;
+ grid-template-rows:100%;margin-top:4px;flex:1;min-height:0}
+.grid > div{min-height:0}
+.side{border:1px solid rgba(129,140,248,.2);border-radius:14px;background:rgba(9,15,32,.66);padding:14px 15px;overflow:hidden}
+.side h3{font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;text-align:center;padding-bottom:11px}
+.side .ss{font-size:10.5px;color:var(--ink3);text-align:center;margin-top:-6px;margin-bottom:12px}
+.side .it{padding:11px 0;border-top:1px solid rgba(129,140,248,.12)}
+.side .it:first-of-type{border-top:0}
+.side .it .k{font-size:12px;font-weight:800;letter-spacing:-.2px}
+.side .it .v{font-size:10.5px;color:var(--ink2);line-height:1.65;margin-top:4px}
+.leg{margin-top:15px;padding-top:13px;border-top:1px solid rgba(129,140,248,.16)}
+.leg .r{display:flex;align-items:center;gap:9px;font-size:10.5px;color:var(--ink3);padding:4px 0}
+.leg .r i{width:26px;height:0;border-top:2px solid;display:block;flex:none}
+svg/* 정사각 순환도라 width:100% 로 두면 세로가 넘쳐 아래 블록과 겹친다.
+   칸 높이에 맞추고 가로는 비율로 따라오게 한다. */
+.grid > div:nth-child(2){min-height:0;display:flex;justify-content:center;align-items:center}
+.scene{display:block;height:100%;width:auto;max-width:100%;overflow:visible}
+.ct{font:800 19px/1 -apple-system,system-ui,sans-serif;fill:#fff}
+.cs{font:600 11px/1 -apple-system,system-ui,sans-serif;fill:rgba(255,255,255,.8)}
+.cf{font:800 13px/1 ui-monospace,Menlo,monospace;fill:#fde68a}
+.at{font:800 12.5px/1 -apple-system,system-ui,sans-serif}
+.as{font:600 10px/1 -apple-system,system-ui,sans-serif;fill:var(--ink3)}
+.nt{font:800 12.5px/1 -apple-system,system-ui,sans-serif;fill:var(--ink)}
+.ns{font:600 9.5px/1 -apple-system,system-ui,sans-serif;fill:var(--ink3)}
+.nn{font:800 12px/1 ui-monospace,Menlo,monospace}
+.cap{font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;fill:var(--ink3)}
+.node{cursor:pointer}
+.node circle.o{transition:.16s}
+.node:hover circle.o{fill-opacity:.30}
+.node.on circle.o{fill-opacity:.34}
+
+.bot{margin-top:20px;border:1px solid rgba(129,140,248,.2);border-radius:16px;
+ background:rgba(9,15,32,.6);padding:12px 16px}
+.bot h3{font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;color:var(--ink3);
+ text-align:center;margin-bottom:16px}
+.bg{display:grid;grid-template-columns:repeat(5,1fr);gap:0}
+.bg .c{padding:0 16px;border-left:1px solid rgba(129,140,248,.13);text-align:center}
+.bg .c:first-child{border-left:0}
+.bg .c .k{font-size:12.5px;font-weight:800;letter-spacing:-.2px}
+.bg .c .v{font-size:10.5px;color:var(--ink2);line-height:1.65;margin-top:6px}
+.bg .c .n{font:700 11px ui-monospace,Menlo,monospace;color:#7dd3fc;margin-top:8px}
+.panel{margin-top:18px;border:1px solid rgba(129,140,248,.22);border-radius:16px;
+ background:rgba(11,18,38,.72);padding:14px 18px;min-height:96px}
+.pn{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:10px}
+.pn h4{font-size:17px;font-weight:800;letter-spacing:-.3px}
+.pn .tg{font:700 10px ui-monospace,Menlo,monospace;padding:4px 10px;border-radius:999px;letter-spacing:.1em}
+.pd{color:var(--ink2);font-size:12.5px;line-height:1.85;max-width:100ch}
+.pd b{color:var(--ink)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}
+.chips span{font:600 11px -apple-system,system-ui,sans-serif;padding:5px 10px;border-radius:7px;
+ background:rgba(129,140,248,.12);border:1px solid rgba(129,140,248,.2);color:#c7d2fe}
+.key{margin-top:20px;border-left:3px solid #fbbf24;padding:15px 20px;border-radius:0 12px 12px 0;
+ background:linear-gradient(90deg,rgba(251,191,36,.1),transparent);
+ color:var(--ink);font-size:13px;line-height:1.9}
+.foot{margin-top:20px;border-top:1px solid rgba(129,140,248,.14);padding-top:15px;color:var(--ink3);
+ font-size:11.5px;line-height:1.9}
+.foot b{color:var(--ink2)}
+
+</style>
+<div class="slide"><div id="stage">
+
+<div class="wrap">
+ <div class="top">
+  <h1>연구 중심 비블로 전체 순환 구조</h1>
+  <div class="sub">코퍼스가 값을 만들고 · 매핑이 사람에 붙이고 · 집계가 KPI가 된다</div>
+  <div class="rule"></div>
+  <p class="lead">두 축은 역할이 다르다. <b>1억 학술 코퍼스</b>가 연구력의 실제 값을 공급하고,
+   <b>저자 매핑 엔진</b>이 그 값을 어느 연구자에게 귀속할지 확정한다.
+   둘이 결합되면 개인 연구력이 되고, 학과·사업단·학교 단위로 접으면 KPI가 된다.
+   그 KPI가 지원과 홍보를 이끌고, 거기서 나온 새 성과가 다시 코퍼스로 돌아온다.</p>
+ </div>
+
+ <div class="grid">
+  <div class="side" id="sideL"></div>
+  <div><svg class="scene" id="sc" viewBox="0 0 760 700" role="img" aria-label="연구 중심 비블로 순환 구조"></svg></div>
+  <div class="side" id="sideR"></div>
+ </div>
+
+ <div class="row2">
+  <div class="panel" id="pnl"></div>
+  <div class="bot" id="bot"></div>
+ </div>
+ <div class="key" id="key"></div>
+
+ <div class="foot">
+  <b>읽는 법.</b> 가운데 육각형이 두 축이 만나는 지점이다. 왼쪽 코퍼스가 <b>어떤 성과인지</b>를 주고,
+  오른쪽 매핑이 <b>누구의 것인지</b>를 준다. 둘이 곱으로 결합해 개인 연구력이 된다.<br>
+  <b>곱으로 결합한다.</b> <code>S = Σ(g × w)</code> 에서 g 와 w 는 절반씩 더해지는 것이 아니라 곱해진다.
+  성과점수를 정하는 두 개의 동등한 축이라는 뜻이며, <b>한쪽이 0이면 그 논문의 점수도 0</b>이다.<br>
+  <b>출처.</b> docs/비블로_연구서비스_전체순환구조.md · 수치는 BIBLO_솔루션_기능데이터_구분.md 실측값.
+ </div>
+</div>
+
+<script>
+const D={"built":"2026-08-26","core":{"t":"개인 연구력","s":"누구 × 어떤 성과","f":"S = Σ(g × w)"},"axes":[{"k":"corpus","t":"1억 학술 코퍼스","s":"연구력의 실제 값을 만든다","col":"#38bdf8","side":"L","note":"질 · 영향력 · 규모 · 세계 비교 기준"},{"k":"match","t":"저자 매핑 엔진","s":"그 값을 사람에게 붙인다","col":"#a78bfa","side":"R","note":"구조 분해 · 동명이인 판별 · 연구자 지문 · 행정 연동"}],"cycle":[{"n":"1","t":"코퍼스 구축·갱신","s":"OA·글로벌 논문 + 질의확장","col":"#38bdf8","d":"검색을 위해 만든 데이터가 연구력 값의 원천이 된다."},{"n":"2","t":"검색·누락 회수","s":"연구 검색으로 빠진 논문을 찾는다","col":"#22d3ee","d":"우리 학교 논문인데 아직 안 잡힌 것을 코퍼스에서 되찾는다."},{"n":"3","t":"저자 매핑","s":"개인 논문 자동 인입","col":"#a78bfa","d":"이 논문이 교내 누구의 것인지, 동명이인이 아닌지, 어떤 역할인지 확정한다."},{"n":"4","t":"KPI 집계","s":"학과·사업단·학교 단위로 접는다","col":"#fbbf24","d":"개인연구력을 집계축으로 접으면 KPI. 새로 모으는 데이터가 없다."},{"n":"5","t":"지원·홍보","s":"지원 대상과 우수성과 발견","col":"#f472b6","d":"어느 연구자를 지원할지, 어느 논문을 홍보할지 앞 단계 데이터로 판단한다."},{"n":"6","t":"새 성과 발생","s":"코퍼스와 프로파일에 자동 반영","col":"#4ade80","d":"그 결과 나온 새 논문이 다시 코퍼스로 돌아와 순환이 닫힌다."}],"left":{"t":"코퍼스가 공급하는 값","s":"연구력의 실제 값","col":"#38bdf8","items":[["학술지","ISSN · JCR 백분위 · SCI·KCI 등재 · IF"],["인용","Scopus · WoS · KCI 피인용 · FWCI · CNCI"],["서지","DOI · 게재연도 · 문헌유형 · 저자 수"],["구조","저자 국가 · 국제공저 · 연구 분야 · OA"],["세계 기준선","세계평균 · 상위 10% · 대학 간 비교"]]},"right":{"t":"저자 매핑이 확정하는 것","s":"값을 붙일 사람","col":"#a78bfa","items":[["사람","이 논문이 교내 누구의 논문인가"],["식별","동명이인이 아닌가"],["기간","어느 기간의 실적인가"],["역할","제1 · 교신 · 공동 중 무엇인가"],["소속","어느 학과·사업단에 귀속되는가"]]},"combine":[["g","학술지 백분위와 등재가 결정하는 질"],["w","저자 수와 역할이 결정하는 기여도"],["C · FWCI","논문의 실제 영향력"],["연도·유형·DOI","기간 판정 · 포함 여부 · 중복 제거"]],"bottom":{"t":"집계와 활용","items":[["개인 연구력 프로파일","연구자 한 사람의 질·영향력·주도성","11,930명"],["학과·사업단 집계","개인을 집계축으로 접는다","34개 연구단"],["학교 KPI","대외 대응 지표","S 9,905"],["지원 대상 발견","어느 연구자를 지원할지","신호등 판정"],["논문·연구자 홍보","우수 논문 선별 → 영상","31건 운영"]]},"promo":["학술지 등급","FWCI와 피인용","상위 10% 여부","연구자 주도성","학교 전략 분야","개인·학과 대표성과"],"key":"저자 지문은 연구력 값을 사람에게 붙이는 축이고, 연구력의 실제 값인 질·영향력·규모와 세계 비교 기준은 검색엔진을 위해 구축한 1억 학술 코퍼스에서 나온다. 두 축이 결합되어 개인연구력이 되고, 이를 학과·사업단·학교 단위로 접으면 KPI가 된다."};
+const NS='http://www.w3.org/2000/svg';
+const sc=document.getElementById('sc'), pnl=document.getElementById('pnl');
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||sc).appendChild(e);return e;}
+function txt(g,x,y,s,cls,col,anc){const t=el('text',{x,y,class:cls},g);if(col)t.setAttribute('fill',col);
+ t.setAttribute('text-anchor',anc||'middle');t.textContent=s;return t;}
+const CX=380, CY=330, RO=228, NR=52, HEX=96;
+let SEL=-1;
+
+const defs=el('defs',{},sc);
+const cg=el('radialGradient',{id:'cg'},defs);
+[['0','#fde68a'],['.5','#f59e0b'],['1','#b45309']].forEach(([o,c])=>el('stop',{offset:o,'stop-color':c},cg));
+const glow=el('filter',{id:'gl',x:'-60%',y:'-60%',width:'220%',height:'220%'},defs);
+glow.innerHTML='<feGaussianBlur stdDeviation="9" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>';
+
+/* ── 궤도(순환) ── */
+[RO+52, RO+34].forEach((r,i)=>
+ el('ellipse',{cx:CX,cy:CY,rx:r,ry:r,fill:'none',stroke:'#5d7099','stroke-opacity':i?.2:.13,
+   'stroke-width':1,'stroke-dasharray':i?'4 7':'2 9'},sc));
+/* 순환 방향 화살촉 */
+for(let i=0;i<6;i++){
+ const a=-Math.PI/2+Math.PI*2*(i+0.5)/6, r=RO+43;
+ const x=CX+Math.cos(a)*r, y=CY+Math.sin(a)*r;
+ const t=a+Math.PI/2;
+ el('polygon',{points:`${x+Math.cos(t)*9},${y+Math.sin(t)*9} ${x-Math.cos(t)*5-Math.sin(t)*5},${y-Math.sin(t)*5+Math.cos(t)*5} ${x-Math.cos(t)*5+Math.sin(t)*5},${y-Math.sin(t)*5-Math.cos(t)*5}`,
+   fill:'#7dd3fc','fill-opacity':.5},sc);
+}
+txt(sc,CX,CY-RO-70,'선순환 · 새 성과가 다시 코퍼스로','cap');
+
+/* ── 중앙 육각형 ── */
+(function(){
+ const pts=[];
+ for(let i=0;i<6;i++){const a=-Math.PI/2+Math.PI*2*i/6; pts.push([CX+Math.cos(a)*HEX, CY+Math.sin(a)*HEX]);}
+ el('polygon',{points:pts.map(p=>p.join(',')).join(' '),fill:'url(#cg)','fill-opacity':.9,
+   stroke:'#fbbf24','stroke-opacity':.9,'stroke-width':2,filter:'url(#gl)'},sc);
+ txt(sc,CX,CY-14,D.core.t,'ct');
+ txt(sc,CX,CY+5,D.core.s,'cs');
+ txt(sc,CX,CY+30,D.core.f,'cf');
+})();
+
+/* ── 두 축 (좌·우에서 중앙으로) ── */
+D.axes.forEach(ax=>{
+ const L=ax.side==='L', x=L?CX-RO-6:CX+RO+6;
+ const g=el('g',{},sc);
+ el('circle',{cx:x,cy:CY,r:NR+8,fill:ax.col,'fill-opacity':.10},g);
+ el('circle',{cx:x,cy:CY,r:NR,fill:'#0a1022','fill-opacity':.92,stroke:ax.col,
+   'stroke-opacity':.85,'stroke-width':2},g);
+ txt(g,x,CY-6,ax.t.length>8?ax.t.slice(0,6):ax.t,'at',ax.col);
+ txt(g,x,CY+9,ax.t.length>8?ax.t.slice(6):'','at',ax.col);
+ txt(g,x,CY+26,ax.s.length>12?ax.s.slice(0,12):ax.s,'ns');
+ /* 굵은 화살표 → 중앙 */
+ const x0=L?x+NR+4:x-NR-4, x1=L?CX-HEX-10:CX+HEX+10, d=L?1:-1;
+ el('path',{d:`M${x0},${CY-7} H${x1-d*13} L${x1-d*13},${CY-13} L${x1},${CY} L${x1-d*13},${CY+13} L${x1-d*13},${CY+7} H${x0} Z`,
+   fill:ax.col,'fill-opacity':.5},g);
+ txt(g,(x0+x1)/2,CY-16,ax.side==='L'?'어떤 성과':'누구의 것','ns');
+});
+
+/* ── 순환 6 노드 ── */
+const NP=[];
+D.cycle.forEach((n,i)=>{
+ const a=-Math.PI/2+Math.PI*2*i/6;
+ const x=CX+Math.cos(a)*RO, y=CY+Math.sin(a)*RO;
+ NP.push({x,y});
+ if(Math.abs(Math.cos(a))>0.97) return;              // 좌우 축 자리는 두 축이 차지
+ const g=el('g',{class:'node'},sc); g.dataset.i=i;
+ el('circle',{cx:x,cy:y,r:NR+7,class:'o',fill:n.col,'fill-opacity':.12},g);
+ el('circle',{cx:x,cy:y,r:NR,fill:'#0a1022','fill-opacity':.92,stroke:n.col,
+   'stroke-opacity':.75,'stroke-width':1.6},g);
+ txt(g,x,y-19,n.n,'nn',n.col);
+ // 가운뎃점·공백에서 끊고, 없으면 한 줄로 둔다
+ const w = n.t.length>6 && /[·\s]/.test(n.t) ? n.t.split(/[·\s]/).filter(Boolean) : [n.t];
+ const ww = w.length>2 ? [w[0], w.slice(1).join('·')] : w;
+ ww.forEach((s,j)=>txt(g,x,y+(ww.length>1?-1+j*15:5),s,'nt'));
+ // 부제는 원 바깥(중앙 반대쪽)에 둔다
+ const ox=Math.cos(a)*(NR+15), oy=Math.sin(a)*(NR+15);
+ const anc = Math.abs(ox)<14 ? 'middle' : (ox>0?'start':'end');
+ txt(g,x+ox,y+oy+(Math.abs(ox)<14?(oy>0?9:-3):4),n.s,'ns',null,anc);
+ /* 중앙으로 가는 가는 화살표 */
+ const ux=(CX-x), uy=(CY-y), L2=Math.hypot(ux,uy);
+ const sx=x+ux/L2*(NR+4), sy=y+uy/L2*(NR+4);
+ const ex=x+ux/L2*(L2-HEX-8), ey=y+uy/L2*(L2-HEX-8);
+ el('line',{x1:sx,y1:sy,x2:ex,y2:ey,stroke:n.col,'stroke-opacity':.3,'stroke-width':1.2,
+   'stroke-dasharray':'4 4'},sc);
+});
+
+/* ── 좌·우·하단 패널 ── */
+function side(id,S,extra){
+ document.getElementById(id).innerHTML=
+  `<h3 style="color:${S.col}">${S.t}</h3><div class="ss">${S.s}</div>`+
+  S.items.map(([k,v])=>`<div class="it"><div class="k" style="color:${S.col}">${k}</div>
+    <div class="v">${v}</div></div>`).join('')+(extra||'');
+}
+side('sideL', D.left,
+ `<div class="leg"><div class="r"><i style="border-color:#fbbf24"></i>두 축이 중앙으로</div>
+  <div class="r"><i style="border-color:#7dd3fc;border-top-style:dashed"></i>순환 단계 → 중앙</div>
+  <div class="r"><i style="border-color:#5d7099;border-top-style:dotted"></i>선순환 궤도</div></div>`);
+side('sideR', D.right,
+ `<div class="leg"><div class="r" style="color:#93a6cc"><b style="font:700 10.5px ui-monospace">결합 S = Σ(g × w)</b></div>`+
+  D.combine.map(([k,v])=>`<div class="r"><b style="color:#fbbf24;min-width:52px">${k}</b> ${v}</div>`).join('')+
+  `</div>`);
+document.getElementById('bot').innerHTML=
+ `<h3>${D.bottom.t}</h3><div class="bg">`+
+ D.bottom.items.map(([k,v,n])=>`<div class="c"><div class="k">${k}</div>
+   <div class="v">${v}</div><div class="n">${n}</div></div>`).join('')+`</div>`;
+document.getElementById('key').innerHTML=D.key;
+
+function show(i){
+ SEL=i;
+ document.querySelectorAll('.node').forEach(x=>x.classList.toggle('on',+x.dataset.i===i));
+ const n=D.cycle[i];
+ const nx=D.cycle[(i+1)%6];
+ pnl.innerHTML=`<div class="pn"><span style="font:700 11px ui-monospace;color:${n.col}">${n.n} / 6</span>
+   <h4>${n.t}</h4><span class="tg" style="border:1px solid ${n.col}55;color:${n.col}">${n.s}</span></div>
+   <div class="pd">${n.d}<br>다음 단계는 <b>${nx.t}</b>. ${i===5?'여기서 순환이 닫힌다.':''}</div>
+   ${i===4?`<div class="chips">${D.promo.map(p=>`<span>${p}</span>`).join('')}</div>`:''}`;
+}
+sc.addEventListener('click',e=>{const n=e.target.closest('.node'); if(n) show(+n.dataset.i);});
+show(0);
+</script>
+</div></div>
+
+<script>
+/* 1600x900 고정 무대 — 작업가이드 5장 규격.
+   resize 하나만 걸면 iframe 슬라이드에서 배율이 틀어진 채 굳는다. 다섯 개를 다 건다. */
+function fitStage(){
+  const st=document.getElementById('stage'); if(!st) return;
+  st.style.height='900px';
+  const k=Math.min(innerWidth/1600, innerHeight/900);
+  st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;
+}
+fitStage();
+addEventListener('resize',fitStage);
+addEventListener('load',fitStage);
+addEventListener('pageshow',fitStage);
+if(window.ResizeObserver) new ResizeObserver(fitStage).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitStage);
+</script>
+<script>if(window.self!==window.top) document.documentElement.classList.add('emb-bg0');</script>

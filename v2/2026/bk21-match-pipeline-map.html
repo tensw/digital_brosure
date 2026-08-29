@@ -1,0 +1,296 @@
+<meta charset="utf-8">
+<title>BIBLO 매칭 파이프라인</title>
+<style>
+:root{--ink:#e9eefb;--ink2:#93a6cc;--ink3:#5d7099;--in:#38bdf8;--out:#a78bfa;--core:#818cf8}
+*{box-sizing:border-box;margin:0;padding:0}
+/* ── 무대 규격 (작업가이드 5장) ── */
+html,body{overflow:hidden}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+.emb-bg0, .emb-bg0 body, .emb-bg0 .slide{background:transparent !important}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:radial-gradient(1100px 720px at 50% 45%,#0b1226 0%,#060a16 58%,#03050c 100%);
+ color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+/* 작업가이드 5장: 1600x900, 좌우 82px. 원본 세로 1291px 문서 */
+.wrap{width:1600px;height:900px;padding:38px 82px 16px;display:flex;flex-direction:column}
+.foot{margin-top:auto}
+.body2{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:stretch;
+ flex:1;min-height:0;margin-top:14px}
+/* 다이어그램은 가로가 정해지면 높이가 따라온다. 남는 세로를 위아래로 나눈다. */
+.body2 > div:first-child{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.kicker{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
+/* 폰트 규격 — 한글 제목 3.15em(44px), 서브 16px/600 */
+h1{font-size:44px;font-weight:800;letter-spacing:-1.5px;margin-top:13px;line-height:1.16}
+h1 span{background:linear-gradient(90deg,var(--in),var(--out));-webkit-background-clip:text;
+ background-clip:text;-webkit-text-fill-color:transparent}
+.lead{color:var(--ink2);font-size:16px;font-weight:600;margin-top:12px;max-width:104ch;line-height:1.55}
+.lead b{color:var(--ink)}
+.hd{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.spacer{flex:1}
+.meta{font:600 11px/1.95 ui-monospace,Menlo,monospace;color:var(--ink3);text-align:right;letter-spacing:.05em}
+.meta b{color:var(--ink2)}
+svg.scene{display:block;width:100%;height:auto;overflow:visible}
+.lbl{font:800 13px/1 -apple-system,system-ui,sans-serif;fill:var(--ink)}
+.sub{font:400 10.5px/1 -apple-system,system-ui,sans-serif;fill:var(--ink3)}
+.cnt{font:700 11.5px/1 ui-monospace,Menlo,monospace;fill:var(--in)}
+.cnt.o{fill:var(--out)}
+.cap{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;fill:var(--ink3)}
+.strand{fill:none;stroke-width:1;stroke-opacity:.30}
+.card{fill:rgba(20,30,58,.55);stroke:rgba(167,139,250,.34);stroke-width:1}
+.chip{fill:rgba(14,24,48,.7);stroke:rgba(56,189,248,.30);stroke-width:1}
+.core-f{stroke:rgba(129,140,248,.75);stroke-width:1.1;fill:rgba(99,102,241,.07)}
+.stage{cursor:pointer}
+.stage rect{transition:.16s}
+.stage:hover rect{stroke:#c7d2fe;stroke-opacity:1}
+.stage.on rect{stroke:#c7d2fe;stroke-opacity:1;fill:rgba(129,140,248,.18)}
+.sn{font:700 11.5px/1 -apple-system,system-ui,sans-serif;fill:var(--ink)}
+.sc{font:700 10.5px/1 ui-monospace,Menlo,monospace;fill:var(--ink3)}
+.panel{margin-top:0;overflow:hidden;border:1px solid rgba(129,140,248,.22);border-radius:20px;
+ background:linear-gradient(180deg,rgba(20,30,60,.6),rgba(9,15,32,.6));padding:22px 26px;min-height:130px}
+.pn{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.pn .ix{font:700 11px/1 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.2em}
+.pn h3{font-size:18px;font-weight:800;letter-spacing:-.4px}
+.pn .tg{font:700 10.5px/1 ui-monospace,Menlo,monospace;padding:5px 11px;border-radius:999px;
+ border:1px solid rgba(129,140,248,.35);color:#c7d2fe;letter-spacing:.08em}
+.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:11px}
+.pi{border:1px solid rgba(129,140,248,.16);border-radius:12px;padding:11px 13px;background:rgba(11,20,42,.5)}
+.pi .k{font-size:10.5px;color:var(--ink3);font-weight:600}
+.pi .v{font:800 19px/1.2 ui-monospace,Menlo,monospace;margin-top:4px;letter-spacing:-.4px}
+.pd{color:var(--ink2);font-size:12.5px;line-height:1.85;margin-top:13px;max-width:94ch}
+.pd b{color:var(--ink)}
+.pd code{font:600 11px ui-monospace,Menlo,monospace;background:rgba(129,140,248,.14);padding:2px 6px;
+ border-radius:5px;color:#c7d2fe}
+.foot{margin-top:24px;border-top:1px solid rgba(129,140,248,.14);padding-top:17px;color:var(--ink3);
+ font-size:11.5px;line-height:1.9}
+.foot b{color:var(--ink2)}
+
+</style>
+<div class="slide"><div id="stage">
+
+<div class="wrap">
+ <div class="hd">
+  <div>
+   <div class="kicker">BIBLO · MATCHING PIPELINE</div>
+   <h1>파일 한 장이<br><span>귀속된 실적</span>이 되기까지.</h1>
+   <div class="lead">업로드된 논문에는 저자 이름만 있습니다. 그 이름이 <b>우리 연구자 중 누구인지</b> 확정해야
+    실적이 됩니다. 왼쪽 원장들이 신호를 모아 가운데 엔진으로 수렴하고, 확정된 결과가 오른쪽으로 갈라져 나갑니다.
+    엔진 단계를 누르면 실측 규모가 열립니다.</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="meta" id="meta"></div>
+ </div>
+
+ <div class="body2">
+ <div><svg class="scene" id="scene" viewBox="0 0 1400 700" role="img" aria-label="매칭 파이프라인 흐름도"></svg>
+ </div>
+ <div class="panel" id="panel"></div>
+</div>
+
+ <div class="foot">
+  실측 <b>2026-08-25</b> · 신 RIMS <code>dev</code> 복원본 기준.
+  <b>엔진이 붙인 것과 원천에 이미 있던 것을 구분합니다.</b> 사번이 붙은 저자행 356,232건 중
+  매칭 단계가 기록된 것은 <b>8,302건</b>이고 나머지는 원천에서 이미 사번을 갖고 들어온 건입니다.
+  엔진의 몫을 원천의 몫과 합쳐 실적으로 말하지 않습니다.
+ </div>
+</div>
+
+<script>
+const NS='http://www.w3.org/2000/svg', S=document.getElementById('scene');
+const el=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+let sd=20260825; const rnd=()=>((sd=sd*1103515245+12345&0x7fffffff)/0x7fffffff);
+
+const SRC=[
+ {t:'논문 원장',   s:'제목·저널·연도·식별자', v:'140,693'},
+ {t:'저자 원장',   s:'논문 × 저자 · 역할',    v:'5,280,301'},
+ {t:'학적 · 인사', s:'재학기간 · 학과 · 직위', v:'144,392'},
+ {t:'분야 온톨로지',s:'분야 · 키워드 · 저널',  v:'1,430,015'},
+ {t:'공저 관계망', s:'누가 누구와',           v:'932,329'},
+ {t:'BK 로스터',   s:'34연구단 · 참여자',     v:'5,366'},
+];
+const OUT=[
+ {t:'확정 귀속',   s:'저자 → 사번',        v:'356,232'},
+ {t:'성과지표',    s:'환산점수 · FWCI · 인용', v:'642,139'},
+ {t:'협업 관계망', s:'교내 · 교외 · 국제',   v:'932,329'},
+ {t:'협력 추천',   s:'분야별 잠재 파트너',   v:'733,660'},
+];
+const STAGE=[
+ {id:'l1', n:'L1', t:'식별자 정확 매칭', tg:'RULE',
+  items:[{k:'Scopus AUID',v:'39,292'},{k:'이메일',v:'34,095'},{k:'ORCID',v:'1,345'},{k:'WoS RID',v:'1,006'}],
+  d:'가장 확실한 신호부터 씁니다. Scopus ID·ORCID·이메일이 일치하면 그 자리에서 동일인으로 확정합니다. 오차가 없는 앵커를 먼저 만들어야 다음 단계가 그 위에 설 수 있습니다.'},
+ {id:'l2', n:'L2', t:'이름 · 소속 다중신호', tg:'SCORE',
+  items:[{k:'L2 매칭 기록',v:'2,391'},{k:'이름(영문) 보유',v:'96.8%'},{k:'학과 보유',v:'92.0%'},{k:'접두 매칭',v:'854'}],
+  d:'식별자가 없으면 이름·소속·분야·저널·활동연도를 점수로 합칩니다. 이름은 96.8%, 학과는 92.0%가 채워져 있어 1차 후보를 넓게 걷어 올립니다. 다만 이 둘만으로는 동명이인을 가르지 못합니다.'},
+ {id:'l3', n:'L3', t:'공저 관계 검증', tg:'GRAPH',
+  items:[{k:'관계망 엣지',v:'932,329'},{k:'관계망 보유자',v:'10,770'},{k:'교내 엣지',v:'177,947'},{k:'확률 매칭',v:'13'}],
+  d:'같은 논문을 함께 쓴 사람은 서로를 증명합니다. 확정된 공저자와 겹치는지를 봐서 동명이인을 가릅니다. <b>실측상 동명이인을 유일하게 가르는 신호</b>였습니다.'},
+ {id:'l4', n:'L4', t:'AI 판별 · 자동규칙', tg:'LLM',
+  items:[{k:'LLM 판별',v:'898'},{k:'사람 확인',v:'207'},{k:'논문 병합',v:'154'},{k:'엔진 확정 계',v:'8,302'}],
+  d:'남은 애매한 건만 LLM이 봅니다. 사전 판정이 확정한 건은 LLM이 뒤집지 못하게 잠그고, 판정이 갈리는 건만 개별 호출합니다. 그래도 남으면 사람이 확인합니다(HITL 207건).'},
+];
+
+function draw(){
+  S.innerHTML='';
+  const defs=el('defs');
+  defs.innerHTML=`<filter id="g" x="-160%" y="-160%" width="420%" height="420%">
+    <feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/>
+    <feMergeNode in="SourceGraphic"/></feMerge></filter>
+   <linearGradient id="lin" x1="0" x2="1"><stop offset="0" stop-color="#38bdf8" stop-opacity="0"/>
+    <stop offset="55%" stop-color="#38bdf8" stop-opacity=".9"/><stop offset="100%" stop-color="#818cf8" stop-opacity="1"/></linearGradient>
+   <linearGradient id="lout" x1="0" x2="1"><stop offset="0" stop-color="#818cf8" stop-opacity="1"/>
+    <stop offset="45%" stop-color="#a78bfa" stop-opacity=".9"/><stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/></linearGradient>
+   <radialGradient id="cg"><stop offset="0" stop-color="#e0e7ff" stop-opacity="1"/>
+    <stop offset="40%" stop-color="#818cf8" stop-opacity=".5"/><stop offset="100%" stop-color="#4338ca" stop-opacity="0"/></radialGradient>`;
+  S.appendChild(defs);
+
+  const CX=700, CY=350, EDGE=0.8660254*150;
+  // 좌 소스 칩
+  SRC.forEach((s,i)=>{
+    const y=110+i*84, x=150;
+    const g=el('g');
+    g.appendChild(el('rect',{x:x-8,y:y-24,width:214,height:48,rx:12,class:'chip'}));
+    const a=el('text',{x:x+10,y:y-4,class:'lbl'}); a.textContent=s.t;
+    const b=el('text',{x:x+10,y:y+12,class:'sub'}); b.textContent=s.s;
+    const c=el('text',{x:x+198,y:y+12,class:'cnt','text-anchor':'end'}); c.textContent=s.v;
+    g.append(a,b,c); S.appendChild(g);
+    // 수렴 가닥
+    for(let k=0;k<9;k++){
+      const off=(k-4)*3.2, y0=y+off;
+      const d=`M${x+206},${y0} C${x+330},${y0} ${CX-EDGE-80},${CY+off*2.1} ${CX-EDGE},${CY+off*0.9}`;
+      const p=el('path',{d,class:'strand',stroke:'url(#lin)','stroke-opacity':(0.14+rnd()*0.3).toFixed(2)});
+      S.appendChild(p);
+    }
+  });
+  // 우 산출 카드
+  OUT.forEach((o,i)=>{
+    const y=140+i*130, x=1080;
+    for(let k=0;k<9;k++){
+      const off=(k-4)*3.2;
+      const d=`M${CX+EDGE},${CY+off*0.9} C${CX+EDGE+80},${CY+off*2.1} ${x-120},${y+off} ${x-8},${y+off}`;
+      S.appendChild(el('path',{d,class:'strand',stroke:'url(#lout)','stroke-opacity':(0.14+rnd()*0.3).toFixed(2)}));
+    }
+    const g=el('g');
+    g.appendChild(el('rect',{x:x,y:y-38,width:272,height:76,rx:16,class:'card'}));
+    const a=el('text',{x:x+20,y:y-12,class:'lbl'}); a.textContent=o.t;
+    const b=el('text',{x:x+20,y:y+7,class:'sub'}); b.textContent=o.s;
+    const c=el('text',{x:x+20,y:y+27,class:'cnt o'}); c.textContent=o.v;
+    g.append(a,b,c); S.appendChild(g);
+  });
+
+  // 캡션
+  const cap=(x,y,t,anc)=>{const e=el('text',{x,y,class:'cap','text-anchor':anc||'start'});e.textContent=t;S.appendChild(e);};
+  cap(142,62,'DATA SOURCES'); cap(CX,190,'MATCHING ENGINE','middle'); cap(1080,62,'OUTPUT');
+
+  // 중앙 엔진 — 격자 큐브 안에 작은 큐브 (아이소메트릭, 코너 정면)
+  S.appendChild(el('ellipse',{cx:CX,cy:CY,rx:212,ry:218,fill:'url(#cg)','fill-opacity':.28}));
+  const K=0.8660254;
+  const BLUE='#38bdf8', PURP='#a78bfa';
+  // 시점: 표준 아이소메트릭(윗면이 완전한 마름모)은 위에서 내려다본 각이 된다.
+  //  SQ 를 낮춰 수평면을 눌러 윗면을 납작하게, VS 를 키워 세로 모서리를 길게 잡는다.
+  //  → 가운데 세로 모서리가 길고 양옆이 짧아 보이는 낮은 시점이 된다.
+  // 세로/가로 = (2·SQ+VS) / 1.732 가 1에 가깝도록 잡아 정육면체에 근접시킨다.
+  // OY = VS/2 - SQ 로 두면 박스의 기하 중심이 정확히 CY(가닥이 지나는 축)에 온다.
+  const SQ=0.28, VS=1.26, OY=VS/2-SQ;
+  const iso=(s)=>(x,y,z)=>[CX+(x-y)*K*s, CY+(OY+(x+y)*SQ-z*VS)*s];
+  const side=m=>m[0]<CX?BLUE:PURP;                 // 중심 기준 좌=파랑 우=보라
+
+  // 세 면을 서로 다른 투명도로 채운다. 윗면이 가장 옅고 오른쪽면이 가장 짙어
+  // 같은 큐브라도 면이 다른 각도로 놓여 있다는 게 읽힌다
+  function faces(s,o){
+    const P=iso(s);
+    const poly=(pts,fill,op)=>S.appendChild(el('polygon',{
+      points:pts.map(q=>q.map(v=>v.toFixed(1)).join(',')).join(' '),
+      fill:fill,'fill-opacity':op,stroke:'none'}));
+    poly([P(0,0,1),P(1,0,1),P(1,1,1),P(0,1,1)], '#818cf8', o.top);   // 윗면
+    poly([P(0,1,0),P(1,1,0),P(1,1,1),P(0,1,1)], BLUE,     o.left);   // 왼쪽면
+    poly([P(1,0,0),P(1,1,0),P(1,1,1),P(1,0,1)], PURP,     o.right);  // 오른쪽면
+  }
+
+  function grid(s,N,w,op,dot){
+    const P=iso(s);
+    const seg=[];
+    for(let i=0;i<=N;i++){ const f=i/N;
+      seg.push([P(f,0,1),P(f,1,1)], [P(0,f,1),P(1,f,1)]);   // 윗면
+      seg.push([P(1,f,0),P(1,f,1)], [P(1,0,f),P(1,1,f)]);   // 오른쪽면
+      seg.push([P(f,1,0),P(f,1,1)], [P(0,1,f),P(1,1,f)]);   // 왼쪽면
+    }
+    seg.forEach(([a,b])=>{
+      const mid=[(a[0]+b[0])/2,(a[1]+b[1])/2];
+      S.appendChild(el('line',{x1:a[0].toFixed(1),y1:a[1].toFixed(1),x2:b[0].toFixed(1),y2:b[1].toFixed(1),
+        stroke:side(mid),'stroke-opacity':op,'stroke-width':w}));
+    });
+    if(dot){                                        // 격자 교차점에 입자
+      for(let i=0;i<=N;i++)for(let j=0;j<=N;j++){
+        if(rnd()>dot) continue;
+        const f=i/N,g2=j/N;
+        [P(f,g2,1),P(1,f,g2),P(f,1,g2)].forEach(q=>{
+          S.appendChild(el('circle',{cx:q[0].toFixed(1),cy:q[1].toFixed(1),
+            r:(rnd()*1.3+.5).toFixed(1),fill:side(q),'fill-opacity':(.35+rnd()*.6).toFixed(2)}));
+        });
+      }
+    }
+  }
+  function outline(s,w,op){
+    const P=iso(s);
+    const hexv=[P(0,0,1),P(1,0,1),P(1,0,0),P(1,1,0),P(0,1,0),P(0,1,1)];  // 위→우상→우하→아래→좌하→좌상
+    S.appendChild(el('polygon',{points:hexv.map(q=>q.map(v=>v.toFixed(1)).join(',')).join(' '),
+      fill:'none',stroke:'#c7d2fe','stroke-opacity':op,'stroke-width':w}));
+    // 중심에서 뻗는 3개의 안쪽 모서리
+    [[P(0,0,0),P(0,0,1)],[P(0,0,0),P(1,0,0)],[P(0,0,0),P(0,1,0)]].forEach(([a,b])=>
+      S.appendChild(el('line',{x1:a[0].toFixed(1),y1:a[1].toFixed(1),x2:b[0].toFixed(1),y2:b[1].toFixed(1),
+        stroke:'#c7d2fe','stroke-opacity':op*0.7,'stroke-width':w*0.8})));
+  }
+
+  const S_OUT=150, S_IN=S_OUT*0.52;
+  faces(S_OUT,{top:.055, left:.10, right:.155});    // 바깥 큐브 면
+  grid(S_OUT,14,0.6,.30,0.30);                      // 바깥 큐브 격자
+  outline(S_OUT,1.2,.62);
+  faces(S_IN,{top:.10,  left:.17, right:.24});      // 안쪽 큐브 면 (더 짙게 = 안쪽)
+  grid(S_IN,7,0.85,.55,0.55);                       // 안쪽 큐브 격자
+  outline(S_IN,1.4,.92);
+  S.appendChild(el('circle',{cx:CX,cy:CY,r:12,fill:'#f5f3ff',filter:'url(#g)'}));  // 박스 기하 중심
+
+  // 엔진 단계 4칸
+  STAGE.forEach((st,i)=>{
+    const y=CY+188+i*46;
+    const g=el('g',{class:'stage',id:'st-'+st.id});
+    g.appendChild(el('rect',{x:CX-152,y:y-16,width:304,height:34,rx:10,
+      fill:'rgba(15,23,50,.72)',stroke:'rgba(129,140,248,.34)','stroke-width':1}));
+    const a=el('text',{x:CX-136,y:y+6,class:'sc'}); a.textContent=st.n;
+    const b=el('text',{x:CX-100,y:y+6,class:'sn'}); b.textContent=st.t;
+    const c=el('text',{x:CX+136,y:y+6,class:'sc','text-anchor':'end'}); c.textContent=st.tg;
+    g.append(a,b,c); S.appendChild(g);
+    g.addEventListener('click',()=>sel(st.id));
+  });
+}
+
+function sel(id){
+  STAGE.forEach(s=>document.getElementById('st-'+s.id).classList.toggle('on',s.id===id));
+  const s=STAGE.find(x=>x.id===id);
+  document.getElementById('panel').innerHTML=`
+   <div class="pn"><span class="ix">${s.n}</span><h3>${s.t}</h3><span class="tg">${s.tg}</span></div>
+   <div class="pg">${s.items.map(i=>`<div class="pi"><div class="k">${i.k}</div><div class="v">${i.v}</div></div>`).join('')}</div>
+   <div class="pd">${s.d}</div>`;
+}
+document.getElementById('meta').innerHTML=
+ `실측 <b>2026-08-25</b><br>원장 <b>6</b>종 → 엔진 <b>4</b>단계 → 산출 <b>4</b>종<br>사번 확정 저자행 <b>356,232</b>`;
+draw(); sel('l1');
+</script>
+</div></div>
+
+<script>
+/* 1600x900 고정 무대 — 작업가이드 5장 규격.
+   resize 하나만 걸면 iframe 슬라이드에서 배율이 틀어진 채 굳는다. 다섯 개를 다 건다. */
+function fitStage(){
+  const st=document.getElementById('stage'); if(!st) return;
+  st.style.height='900px';
+  const k=Math.min(innerWidth/1600, innerHeight/900);
+  st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;
+}
+fitStage();
+addEventListener('resize',fitStage);
+addEventListener('load',fitStage);
+addEventListener('pageshow',fitStage);
+if(window.ResizeObserver) new ResizeObserver(fitStage).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitStage);
+</script>
+<script>if(window.self!==window.top) document.documentElement.classList.add('emb-bg0');</script>

@@ -1,0 +1,430 @@
+<meta charset="utf-8">
+<title>BK21 경영자 KPI</title>
+<style>
+:root{--ink:#e9eefb;--ink2:#93a6cc;--ink3:#5d7099;--in:#38bdf8;--out:#a78bfa;--core:#818cf8}
+*{box-sizing:border-box;margin:0;padding:0}
+/* ── 무대 규격 (작업가이드 5장) ── */
+html,body{overflow:hidden}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+.emb-bg0, .emb-bg0 body, .emb-bg0 .slide{background:transparent !important}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:radial-gradient(1100px 720px at 50% 45%,#0b1226 0%,#060a16 58%,#03050c 100%);
+ color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+/* 작업가이드 5장: 1600x900, 좌우 82px. 원본 세로 1359px 문서 */
+.wrap{width:1600px;height:900px;padding:38px 82px 16px;display:flex;flex-direction:column}
+.foot{margin-top:auto}
+.body2{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:stretch;
+ flex:1;min-height:0;margin-top:14px}
+/* 다이어그램은 가로가 정해지면 높이가 따라온다. 남는 세로를 위아래로 나눈다. */
+.body2 > div:first-child{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.kicker{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
+/* 폰트 규격 — 한글 제목 3.15em(44px), 서브 16px/600 */
+h1{font-size:44px;font-weight:800;letter-spacing:-1.5px;margin-top:13px;line-height:1.16}
+h1 span{background:linear-gradient(90deg,var(--in),var(--out));-webkit-background-clip:text;
+ background-clip:text;-webkit-text-fill-color:transparent}
+.lead{color:var(--ink2);font-size:16px;font-weight:600;margin-top:12px;max-width:104ch;line-height:1.55}
+.lead b{color:var(--ink)}
+.hd{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.spacer{flex:1}
+.meta{font:600 11px/1.95 ui-monospace,Menlo,monospace;color:var(--ink3);text-align:right;letter-spacing:.05em}
+.meta b{color:var(--ink2)}
+svg.scene{display:block;width:100%;height:auto;overflow:visible}
+.lbl{font:800 13px/1 -apple-system,system-ui,sans-serif;fill:var(--ink)}
+.sub{font:400 10.5px/1 -apple-system,system-ui,sans-serif;fill:var(--ink3)}
+.cnt{font:700 11.5px/1 ui-monospace,Menlo,monospace;fill:var(--in)}
+.cnt.o{fill:var(--out)}
+.cap{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;fill:var(--ink3)}
+.mini{font:400 9px/1 -apple-system,system-ui,sans-serif;fill:#7d8fb3}
+.strand{fill:none;stroke-width:1;stroke-opacity:.30}
+.pulse{visibility:hidden}
+.pulse.lit{visibility:visible}
+
+.card{fill:rgba(20,30,58,.55);stroke:rgba(167,139,250,.34);stroke-width:1}
+.chip{fill:rgba(14,24,48,.7);stroke:rgba(56,189,248,.30);stroke-width:1}
+.core-f{stroke:rgba(129,140,248,.75);stroke-width:1.1;fill:rgba(99,102,241,.07)}
+.stage{cursor:pointer}
+.stage rect{transition:.16s}
+.stage:hover rect{stroke:#c7d2fe;stroke-opacity:1}
+.stage.on rect{stroke:#c7d2fe;stroke-opacity:1;fill:rgba(129,140,248,.18)}
+.sn{font:700 11.5px/1 -apple-system,system-ui,sans-serif;fill:var(--ink)}
+.sc{font:700 10.5px/1 ui-monospace,Menlo,monospace;fill:var(--ink3)}
+.panel{margin-top:0;overflow:hidden;border:1px solid rgba(129,140,248,.22);border-radius:20px;
+ background:linear-gradient(180deg,rgba(20,30,60,.6),rgba(9,15,32,.6));padding:22px 26px;min-height:130px}
+.pn{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.pn .ix{font:700 11px/1 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.2em}
+.pn h3{font-size:18px;font-weight:800;letter-spacing:-.4px}
+.pn .tg{font:700 10.5px/1 ui-monospace,Menlo,monospace;padding:5px 11px;border-radius:999px;
+ border:1px solid rgba(129,140,248,.35);color:#c7d2fe;letter-spacing:.08em}
+.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:11px}
+.pi{border:1px solid rgba(129,140,248,.16);border-radius:12px;padding:11px 13px;background:rgba(11,20,42,.5)}
+.pi .k{font-size:10.5px;color:var(--ink3);font-weight:600}
+.pi .v{font:800 19px/1.2 ui-monospace,Menlo,monospace;margin-top:4px;letter-spacing:-.4px}
+.pd{color:var(--ink2);font-size:12.5px;line-height:1.85;margin-top:13px;max-width:94ch}
+.pd b{color:var(--ink)}
+.pd code{font:600 11px ui-monospace,Menlo,monospace;background:rgba(129,140,248,.14);padding:2px 6px;
+ border-radius:5px;color:#c7d2fe}
+.foot{margin-top:24px;border-top:1px solid rgba(129,140,248,.14);padding-top:17px;color:var(--ink3);
+ font-size:11.5px;line-height:1.9}
+.foot b{color:var(--ink2)}
+
+</style>
+<div class="slide"><div id="stage">
+
+<div class="wrap">
+ <div class="hd">
+  <div>
+   <div class="kicker">BK21 · EXECUTIVE KPI</div>
+   <h1>원장 여섯 벌이<br><span>경영 지표 여섯 개</span>가 되기까지.</h1>
+   <div class="lead">명부와 논문만으로는 판단할 수 없습니다. <b>누가 얼마나 기여했는지</b>를 값으로 바꿔야
+    지표가 됩니다. 왼쪽 원장들이 가운데 엔진으로 모이고, 산출된 지표가 오른쪽으로 갈라져 나갑니다.
+    학회·초록·단행본 <b>2,066편은 별도로 세고 성과점수에 넣지 않습니다.</b>
+    엔진 단계를 누르면 산식이 열립니다.</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="meta" id="meta"></div>
+ </div>
+
+ <div class="body2">
+ <div><svg class="scene" id="scene" viewBox="0 0 1400 700" role="img" aria-label="매칭 파이프라인 흐름도"></svg>
+ </div>
+ <div class="panel" id="panel"></div>
+</div>
+
+ <div class="foot">
+  실측 2026-08-26 · 신 RIMS <code>dev</code> 복원본 기준.
+  <b>성과점수 대상은 정규 실적 13,356편입니다.</b> 학술지와 리뷰만 세고,
+  학회 1,353편 · 학회초록 등 실적비대상 647편 · 단행본 64편은 따로 셉니다
+  (<a href="#" style="color:#93a6cc">게재처 정규화 기준</a> 참조).
+  KCI 등재 논문은 Scopus·WoS 유형 정보가 없어도 학술지로 봅니다.<br>
+  <b>저널 등급은 게재처 중앙 백분위로 보강합니다.</b> 논문 실측 8,056편 · 저널 보강 3,996편 · 값 없음 1,304편.<br>
+  <b>절대 편수는 하한값으로 읽습니다.</b> 회수 커버리지 76.4%, JCR 백분위 보유 논문은 일부입니다.
+  FWCI는 OpenAlex 값이라 InCites·SciVal과 수치가 다릅니다.
+  계열 간 절대 비교는 하지 않고 신호등은 계열 안에서만 매깁니다.
+ </div>
+</div>
+
+<script>
+const NS='http://www.w3.org/2000/svg', S=document.getElementById('scene');
+const el=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+let sd=20260825; const rnd=()=>((sd=sd*1103515245+12345&0x7fffffff)/0x7fffffff);
+
+// 선 안에서 밝은 빛이 이동하는 효과 — 같은 경로 위에 짧은 대시를 얹어 흘려보낸다
+// 한 주기(dash+gap)를 416 으로 고정해 세 층이 어긋나지 않게 한다.
+// 긴 대시일수록 흐리고 굵게, 짧은 대시일수록 진하고 가늘게 → 앞뒤가 사라지는 혜성 꼬리
+// shift = (최장 대시 - 이 층 대시) / 2  → 짧은 층이 긴 층의 정가운데 오도록
+// 대시 패턴은 매 프레임 재계산이라 비싸다. 경로를 따라 '점'을 옮기는 쪽이 훨씬 가볍고 부드럽다.
+// 점은 방사형 그라데이션이라 앞뒤가 저절로 흐려진다(대시 좌우 페이드와 같은 효과).
+function pulse(d, gradId, dur, delay, w, inward){
+  const g=el('g',{class:'pulse'});
+  const r=(w||1.7)*2.6;
+  g.appendChild(el('circle',{cx:0,cy:0,r:r.toFixed(2),fill:`url(#${gradId})`}));
+  g.appendChild(el('circle',{cx:0,cy:0,r:(r*0.24).toFixed(2),fill:'#ffffff','fill-opacity':.9}));
+  // 이동
+  g.appendChild(el('animateMotion',{dur:dur+'s',repeatCount:'indefinite',path:d,
+    begin:(-delay).toFixed(2)+'s',calcMode:'linear'}));
+  // 바깥은 흐리고 엔진 쪽은 진하게 (진행에 맞춘 밝기)
+  const vals = inward ? '0.10;0.34;1' : '1;0.34;0.10';
+  g.appendChild(el('animate',{attributeName:'opacity',values:vals,keyTimes:'0;0.55;1',
+    dur:dur+'s',repeatCount:'indefinite',begin:(-delay).toFixed(2)+'s'}));
+  // 50% ↔ 30% 로 오르내리는 숨쉬기
+  const bdur=(1.65+(dur%1)*0.9).toFixed(2);
+  g.appendChild(el('animate',{attributeName:'fill-opacity',values:'0.5;0.3;0.5',
+    keyTimes:'0;0.5;1',calcMode:'spline',keySplines:'.42 0 .58 1;.42 0 .58 1',
+    dur:bdur+'s',repeatCount:'indefinite',begin:(-delay*0.7).toFixed(2)+'s'}));
+  S.appendChild(g);
+  return g;
+}
+
+
+const RAMP=['#7dd3fc','#38bdf8','#0ea5e9','#6366f1','#475569'];
+const SRC=[
+ {t:'BK21 참여자 명부',s:'34개 연구단 명부', v:'5,366',
+  seg:[['교수',455],['신진',158],['대학원생',4753]]},
+ {t:'정규 실적 논문',   s:'학술지·리뷰 · 2020~2025', v:'13,356',
+  seg:[['4점',3916],['3점',3629],['2점',5038],['1점',770],['등급없음',3]]},
+ {t:'저널 백분위 출처', s:'실측 · 저널 중앙값 보강', v:'13,356',
+  seg:[['논문 실측',8056],['저널 보강',3996],['값 없음',1304]]},
+ {t:'별도 집계',      s:'성과점수에 넣지 않음',     v:'2,066',
+  seg:[['학회',1353],['실적비대상',647],['단행본',64],['보류',2]]},
+ {t:'피인용 원장',    s:'코퍼스 전체 지표행',       v:'642,139',
+  seg:[['WOS',105097],['SCOPUS',104008],['KCI',26790],['저널·정규화',406244]]},
+ {t:'FWCI',         s:'정규 실적 값 분포',        v:'12,444',
+  seg:[['0.5 미만',4040],['0.5~1.0',2933],['1.0~2.0',2868],['2.0 이상',2603]]},
+];
+
+
+const GYC=['#f0a35e','#4fc3f7','#b39ddb'];              // 인문사회 · 이공 · 의약생명
+const SIGC=['#4ade80','#fbbf24','#f87171','#7c8db5'];   // 정상 · 주의 · 위험 · 확인필요
+const OUT=[
+ {t:'성과점수 S',   s:'Σ(g×w) · 항목 A',        v:'9,905',
+  c:{k:'seg',d:[1576, 6082, 2247],col:GYC}},
+ {t:'학생 주저자',  s:'항목 B · 사업단 사활',     v:'867',
+  c:{k:'seg',d:[85, 594, 188],col:GYC}},
+ {t:'누적 피인용',  s:'SCOPUS · WOS · KCI 합산', v:'348,617',
+  c:{k:'seg',d:[26771, 222732, 99114],col:GYC}},
+ {t:'FWCI 중앙값', s:'세계평균 = 1.00',         v:'0.84',
+  c:{k:'fwci',med:0.84,mean:1.54,max:2.0}},
+ {t:'연구단 신호등',s:'정상 · 주의 · 위험 · 확인필요', v:'6 · 5 · 5 · 12',
+  c:{k:'seg',d:[6,5,5,12],col:SIGC}},
+ {t:'데이터 품질',  s:'회수 커버리지',           v:'76.4%',
+  c:{k:'gauge',now:76.4,was:24.1}},
+];
+const STAGE=[
+ {id:'w', n:'W', t:'역할가중 산출', tg:'RULE',
+  items:[{k:'주도저자 가중',v:'2/(n+1)'},{k:'공동참여 가중',v:'1/(n+1)'},{k:'100인 이상 비주도',v:'0'},{k:'주도 저자행',v:'48,778'}],
+  d:'편수가 아니라 기여를 셉니다. 저자가 n명인 논문에서 단독·제1·교신·제1겸교신은 <b>2/(n+1)</b>, 공동참여는 <b>1/(n+1)</b>을 받습니다. 저자 100인 이상 논문에서 주도저자가 아니면 0입니다. 대형 공동연구 한 편이 단독 저서를 이기지 못하게 막는 장치입니다.'},
+ {id:'g', n:'G', t:'저널등급 판정', tg:'GRADE',
+  items:[{k:'4점 · JCR 10%',v:'3,916'},{k:'3점 · JCR 25%',v:'3,629'},{k:'2점 · SCI',v:'5,038'},{k:'1점 · KCI',v:'770'}],
+  d:'같은 한 편이라도 실린 곳에 따라 값이 다릅니다. 백분위가 없으면 SCI·KCI 등재 여부만으로 2점 또는 1점을 줍니다. 백분위가 없는 논문은 <b>같은 게재처의 다른 논문 중앙값</b>을 물려받습니다. 이 보강으로 3,996편의 등급이 올라갔고 성과점수가 <b>+10.8%</b> 회복됐습니다. 아직 값이 없는 1,304편은 하한값입니다.'},
+ {id:'s', n:'S', t:'성과점수 합산', tg:'SCORE',
+  items:[{k:'항목 A · 교수',v:'9,905'},{k:'항목 B · 학생',v:'713.7'},{k:'대표논문',v:'9,070'},{k:'학생 주저자',v:'867'}],
+  d:'등급 g와 가중 w를 곱해 더합니다. <b>S = Σ(g×w)</b>. 교수 대표논문(항목 A)과 대학원생 주저자 실적(항목 B)을 <b>합치지 않고 따로</b> 관리합니다. 재선정 심사에서 두 축을 다르게 보기 때문입니다. 학회·초록을 빼서 항목 A −11.0% · 항목 B −23.0%, 저널 등급 보강으로 각각 +10.8% · +15.1%. 두 보정이 거의 상쇄되지만 근거가 달라졌습니다.'},
+ {id:'q', n:'Q', t:'품질게이트 · 신호등', tg:'GATE',
+  items:[{k:'정상',v:'6개'},{k:'주의',v:'5개'},{k:'위험',v:'5개'},{k:'확인필요',v:'12개'}],
+  d:'계열 안에서만 백분위를 매깁니다. 50% 이상 정상, 25~50% 주의, 25% 미만 위험. <b>확인필요 12개는 성과가 나쁜 것이 아니라 판단할 데이터가 모자란 상태</b>입니다. 회수 커버리지 76.4%를 먼저 채워야 신호등을 매길 수 있습니다. 학회·초록을 빼도 <b>판정이 바뀐 연구단은 없습니다</b>. 계열 내 백분위라 모든 연구단이 비슷한 비율로 빠지기 때문입니다.'},
+];
+
+function draw(){
+  S.innerHTML='';
+  const defs=el('defs');
+  defs.innerHTML=`<filter id="g" x="-160%" y="-160%" width="420%" height="420%">
+    <feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/>
+    <feMergeNode in="SourceGraphic"/></feMerge></filter>
+   <linearGradient id="lin" x1="0" x2="1"><stop offset="0" stop-color="#38bdf8" stop-opacity="0"/>
+    <stop offset="55%" stop-color="#38bdf8" stop-opacity=".9"/><stop offset="100%" stop-color="#818cf8" stop-opacity="1"/></linearGradient>
+   <linearGradient id="lout" x1="0" x2="1"><stop offset="0" stop-color="#818cf8" stop-opacity="1"/>
+    <stop offset="45%" stop-color="#a78bfa" stop-opacity=".9"/><stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/></linearGradient>
+   <radialGradient id="pulL">
+     <stop offset="0"   stop-color="#ffffff" stop-opacity="1"/>
+     <stop offset=".32" stop-color="#dbeeff" stop-opacity=".55"/>
+     <stop offset=".62" stop-color="#bfe4ff" stop-opacity=".16"/>
+     <stop offset="1"   stop-color="#bfe4ff" stop-opacity="0"/></radialGradient>
+   <radialGradient id="pulR">
+     <stop offset="0"   stop-color="#ffffff" stop-opacity="1"/>
+     <stop offset=".32" stop-color="#efe0ff" stop-opacity=".55"/>
+     <stop offset=".62" stop-color="#e9d5ff" stop-opacity=".16"/>
+     <stop offset="1"   stop-color="#e9d5ff" stop-opacity="0"/></radialGradient>
+   <radialGradient id="cg"><stop offset="0" stop-color="#e0e7ff" stop-opacity="1"/>
+    <stop offset="40%" stop-color="#818cf8" stop-opacity=".5"/><stop offset="100%" stop-color="#4338ca" stop-opacity="0"/></radialGradient>`;
+  S.appendChild(defs);
+
+  const CX=700, CY=350, EDGE=0.8660254*150;
+  // 좌 소스 칩
+  const CHW=232, CIX=10, CIW=CHW-8-CIX-14;     // 칩 폭 · 내부 좌여백 · 내용 폭
+  SRC.forEach((s,i)=>{
+    const y=92+i*84, x=150;
+    const g=el('g');
+    g.appendChild(el('rect',{x:x-8,y:y-36,width:CHW,height:72,rx:12,class:'chip'}));
+    const a=el('text',{x:x+CIX,y:y-19,class:'lbl'}); a.textContent=s.t;
+    const c=el('text',{x:x+CIX+CIW,y:y-19,class:'cnt','text-anchor':'end'}); c.textContent=s.v;
+    const b=el('text',{x:x+CIX,y:y-5,class:'sub'}); b.textContent=s.s;
+    g.append(a,b,c);
+    // 구분 스택바 — 이 원장이 무엇으로 나뉘는지
+    const tot=s.seg.reduce((p,q)=>p+q[1],0); let cx=x+CIX;
+    s.seg.forEach((q,j)=>{
+      const w=CIW*q[1]/tot;
+      g.appendChild(el('rect',{x:cx.toFixed(1),y:y+3,width:Math.max(1.5,w-1.5).toFixed(1),height:10,rx:2.5,
+        fill:RAMP[j%RAMP.length],'fill-opacity':.78}));
+      cx+=w;});
+    // 범례 — 폭에 맞춰 두 줄로 흘린다
+    const tw=s2=>{let w=0; for(const ch of s2) w+=/[가-힣·]/.test(ch)?9.4:5.2; return w;};
+    let lx=x+CIX, ly=y+24;
+    s.seg.forEach((q,j)=>{
+      const lab=q[0]+' '+q[1].toLocaleString('ko-KR'), w=tw(lab)+19;
+      if(lx+w>x+CIX+CIW && ly===y+24){ lx=x+CIX; ly=y+35; }      // 둘째 줄로
+      if(ly>y+35 || lx+w>x+CIX+CIW+4) return;                     // 두 줄 넘으면 생략
+      g.appendChild(el('circle',{cx:lx+3.4,cy:ly-3.2,r:3,
+        fill:RAMP[j%RAMP.length],'fill-opacity':.9}));
+      const e=el('text',{x:lx+10,y:ly,class:'mini'}); e.textContent=lab;
+      g.appendChild(e); lx+=w;});
+    S.appendChild(g);
+    for(let k=0;k<9;k++){
+      const off=(k-4)*3.2, y0=y+off;
+      const d2=`M${x+CHW-8},${y0} C${x+340},${y0} ${CX-EDGE-80},${CY+off*2.1} ${CX-EDGE},${CY+off*0.9}`;
+      S.appendChild(el('path',{d:d2,class:'strand',stroke:'url(#lin)','stroke-opacity':(0.14+rnd()*0.3).toFixed(2)}));
+      if(k===2||k===4||k===6) pulse(d2, 'pulL', 3.1+i*0.14, (i*0.42 + (k-2)*0.62), 1.9, true);
+    }
+  });
+  // 우 산출 카드
+  const CW2=272, BX=20, BW=CW2-40;      // 카드 폭 · 도표 좌여백 · 도표 폭
+  function miniChart(g,c,x,y){          // (x,y) = 도표 좌상단
+    if(c.k==='seg'){
+      const tot=c.d.reduce((a,b)=>a+b,0); let cx=x;
+      c.d.forEach((v,j)=>{
+        const w=BW*v/tot;
+        g.appendChild(el('rect',{x:cx.toFixed(1),y,width:Math.max(1.5,w-1.5).toFixed(1),height:11,rx:2.5,
+          fill:c.col[j],'fill-opacity':.72}));
+        cx+=w;});
+    }else if(c.k==='fwci'){
+      const sc=v=>BW*Math.min(1,v/c.max);
+      g.appendChild(el('rect',{x,y,width:BW,height:11,rx:2.5,fill:'#e9eefb','fill-opacity':.07}));
+      g.appendChild(el('rect',{x,y,width:sc(c.med).toFixed(1),height:11,rx:2.5,
+        fill:'#a78bfa','fill-opacity':.75}));
+      const mx=x+sc(c.mean);                              // 평균 위치 표시
+      g.appendChild(el('line',{x1:mx.toFixed(1),y1:y+1,x2:mx.toFixed(1),y2:y+10,
+        stroke:'#a78bfa','stroke-opacity':.85,'stroke-width':1.6}));
+      const wx=x+sc(1.0);                                 // 세계평균 1.00
+      g.appendChild(el('line',{x1:wx.toFixed(1),y1:y-3,x2:wx.toFixed(1),y2:y+14,
+        stroke:'#fff','stroke-opacity':.55,'stroke-width':1,'stroke-dasharray':'3 3'}));
+      const lb=el('text',{x:x+BW,y:y+22,class:'sub','text-anchor':'end'});
+      lb.textContent='평균 1.54 · 세계평균 1.00'; lb.setAttribute('fill','#4a5b7d'); g.appendChild(lb);
+    }else if(c.k==='gauge'){
+      g.appendChild(el('rect',{x,y,width:BW,height:11,rx:2.5,fill:'#e9eefb','fill-opacity':.07}));
+      g.appendChild(el('rect',{x,y,width:(BW*c.now/100).toFixed(1),height:11,rx:2.5,
+        fill:'#a78bfa','fill-opacity':.75}));
+      const tx=x+BW*c.was/100;                            // 보정 전 눈금
+      g.appendChild(el('line',{x1:tx.toFixed(1),y1:y-3,x2:tx.toFixed(1),y2:y+14,
+        stroke:'#fff','stroke-opacity':.55,'stroke-width':1,'stroke-dasharray':'3 3'}));
+      const lb=el('text',{x,y:y+22,class:'sub'});
+      lb.textContent='보정 전 24.1% → 보정 후 76.4%'; lb.setAttribute('fill','#4a5b7d'); g.appendChild(lb);
+    }
+  }
+  OUT.forEach((o,i)=>{
+    const y=112+i*98, x=1080;
+    for(let k=0;k<9;k++){
+      const off=(k-4)*3.2;
+      const d=`M${CX+EDGE},${CY+off*0.9} C${CX+EDGE+80},${CY+off*2.1} ${x-120},${y+off} ${x-8},${y+off}`;
+      S.appendChild(el('path',{d,class:'strand',stroke:'url(#lout)','stroke-opacity':(0.14+rnd()*0.3).toFixed(2)}));
+      if(k===2||k===4||k===6) pulse(d, 'pulR', 3.4+i*0.16, (i*0.5 + (k-2)*0.68), 1.9, false);
+    }
+    const g=el('g');
+    g.appendChild(el('rect',{x:x,y:y-44,width:CW2,height:88,rx:16,class:'card'}));
+    const a=el('text',{x:x+BX,y:y-24,class:'lbl'}); a.textContent=o.t;
+    const b=el('text',{x:x+BX,y:y-9,class:'sub'}); b.textContent=o.s;
+    const c=el('text',{x:x+BX,y:y+11,class:'cnt o'}); c.textContent=o.v;
+    g.append(a,b,c);
+    miniChart(g,o.c,x+BX,y+16);
+    S.appendChild(g);
+  });
+  // 캡션
+  const cap=(x,y,t,anc)=>{const e=el('text',{x,y,class:'cap','text-anchor':anc||'start'});e.textContent=t;S.appendChild(e);};
+  cap(142,44,'INPUT LEDGERS'); cap(CX,190,'KPI ENGINE','middle'); cap(1080,62,'KPI');
+  // 계열 범례 — 상위 3장의 스택바 색을 한 번만 설명한다
+  ['인문사회','이공','의약생명'].forEach((nm,j)=>{
+    const lx=1136+j*76;
+    S.appendChild(el('rect',{x:lx,y:56,width:8,height:8,rx:2,fill:GYC[j],'fill-opacity':.85}));
+    const e=el('text',{x:lx+12,y:63,class:'sub'}); e.textContent=nm;
+    e.setAttribute('fill','#7d8fb3'); S.appendChild(e);});
+
+  // 중앙 엔진 — 격자 큐브 안에 작은 큐브 (아이소메트릭, 코너 정면)
+  S.appendChild(el('ellipse',{cx:CX,cy:CY,rx:212,ry:218,fill:'url(#cg)','fill-opacity':.28}));
+  const K=0.8660254;
+  const BLUE='#38bdf8', PURP='#a78bfa';
+  // 시점: 표준 아이소메트릭(윗면이 완전한 마름모)은 위에서 내려다본 각이 된다.
+  //  SQ 를 낮춰 수평면을 눌러 윗면을 납작하게, VS 를 키워 세로 모서리를 길게 잡는다.
+  //  → 가운데 세로 모서리가 길고 양옆이 짧아 보이는 낮은 시점이 된다.
+  // 세로/가로 = (2·SQ+VS) / 1.732 가 1에 가깝도록 잡아 정육면체에 근접시킨다.
+  // OY = VS/2 - SQ 로 두면 박스의 기하 중심이 정확히 CY(가닥이 지나는 축)에 온다.
+  const SQ=0.28, VS=1.26, OY=VS/2-SQ;
+  const iso=(s)=>(x,y,z)=>[CX+(x-y)*K*s, CY+(OY+(x+y)*SQ-z*VS)*s];
+  const side=m=>m[0]<CX?BLUE:PURP;                 // 중심 기준 좌=파랑 우=보라
+
+  // 세 면을 서로 다른 투명도로 채운다. 윗면이 가장 옅고 오른쪽면이 가장 짙어
+  // 같은 큐브라도 면이 다른 각도로 놓여 있다는 게 읽힌다
+  function faces(s,o){
+    const P=iso(s);
+    const poly=(pts,fill,op)=>S.appendChild(el('polygon',{
+      points:pts.map(q=>q.map(v=>v.toFixed(1)).join(',')).join(' '),
+      fill:fill,'fill-opacity':op,stroke:'none'}));
+    poly([P(0,0,1),P(1,0,1),P(1,1,1),P(0,1,1)], '#818cf8', o.top);   // 윗면
+    poly([P(0,1,0),P(1,1,0),P(1,1,1),P(0,1,1)], BLUE,     o.left);   // 왼쪽면
+    poly([P(1,0,0),P(1,1,0),P(1,1,1),P(1,0,1)], PURP,     o.right);  // 오른쪽면
+  }
+
+  function grid(s,N,w,op,dot){
+    const P=iso(s);
+    const seg=[];
+    for(let i=0;i<=N;i++){ const f=i/N;
+      seg.push([P(f,0,1),P(f,1,1)], [P(0,f,1),P(1,f,1)]);   // 윗면
+      seg.push([P(1,f,0),P(1,f,1)], [P(1,0,f),P(1,1,f)]);   // 오른쪽면
+      seg.push([P(f,1,0),P(f,1,1)], [P(0,1,f),P(1,1,f)]);   // 왼쪽면
+    }
+    seg.forEach(([a,b])=>{
+      const mid=[(a[0]+b[0])/2,(a[1]+b[1])/2];
+      S.appendChild(el('line',{x1:a[0].toFixed(1),y1:a[1].toFixed(1),x2:b[0].toFixed(1),y2:b[1].toFixed(1),
+        stroke:side(mid),'stroke-opacity':op,'stroke-width':w}));
+    });
+    if(dot){                                        // 격자 교차점에 입자
+      for(let i=0;i<=N;i++)for(let j=0;j<=N;j++){
+        if(rnd()>dot) continue;
+        const f=i/N,g2=j/N;
+        [P(f,g2,1),P(1,f,g2),P(f,1,g2)].forEach(q=>{
+          S.appendChild(el('circle',{cx:q[0].toFixed(1),cy:q[1].toFixed(1),
+            r:(rnd()*1.3+.5).toFixed(1),fill:side(q),'fill-opacity':(.35+rnd()*.6).toFixed(2)}));
+        });
+      }
+    }
+  }
+  function outline(s,w,op){
+    const P=iso(s);
+    const hexv=[P(0,0,1),P(1,0,1),P(1,0,0),P(1,1,0),P(0,1,0),P(0,1,1)];  // 위→우상→우하→아래→좌하→좌상
+    S.appendChild(el('polygon',{points:hexv.map(q=>q.map(v=>v.toFixed(1)).join(',')).join(' '),
+      fill:'none',stroke:'#c7d2fe','stroke-opacity':op,'stroke-width':w}));
+    // 중심에서 뻗는 3개의 안쪽 모서리
+    [[P(0,0,0),P(0,0,1)],[P(0,0,0),P(1,0,0)],[P(0,0,0),P(0,1,0)]].forEach(([a,b])=>
+      S.appendChild(el('line',{x1:a[0].toFixed(1),y1:a[1].toFixed(1),x2:b[0].toFixed(1),y2:b[1].toFixed(1),
+        stroke:'#c7d2fe','stroke-opacity':op*0.7,'stroke-width':w*0.8})));
+  }
+
+  const S_OUT=150, S_IN=S_OUT*0.52;
+  faces(S_OUT,{top:.055, left:.10, right:.155});    // 바깥 큐브 면
+  grid(S_OUT,14,0.6,.30,0.30);                      // 바깥 큐브 격자
+  outline(S_OUT,1.2,.62);
+  faces(S_IN,{top:.10,  left:.17, right:.24});      // 안쪽 큐브 면 (더 짙게 = 안쪽)
+  grid(S_IN,7,0.85,.55,0.55);                       // 안쪽 큐브 격자
+  outline(S_IN,1.4,.92);
+  S.appendChild(el('circle',{cx:CX,cy:CY,r:12,fill:'#f5f3ff',filter:'url(#g)'}));  // 박스 기하 중심
+
+  // 엔진 단계 4칸
+  STAGE.forEach((st,i)=>{
+    const y=CY+188+i*46;
+    const g=el('g',{class:'stage',id:'st-'+st.id});
+    g.appendChild(el('rect',{x:CX-152,y:y-16,width:304,height:34,rx:10,
+      fill:'rgba(15,23,50,.72)',stroke:'rgba(129,140,248,.34)','stroke-width':1}));
+    const a=el('text',{x:CX-136,y:y+6,class:'sc'}); a.textContent=st.n;
+    const b=el('text',{x:CX-100,y:y+6,class:'sn'}); b.textContent=st.t;
+    const c=el('text',{x:CX+136,y:y+6,class:'sc','text-anchor':'end'}); c.textContent=st.tg;
+    g.append(a,b,c); S.appendChild(g);
+    g.addEventListener('click',()=>sel(st.id));
+  });
+}
+
+function sel(id){
+  STAGE.forEach(s=>document.getElementById('st-'+s.id).classList.toggle('on',s.id===id));
+  const s=STAGE.find(x=>x.id===id);
+  document.getElementById('panel').innerHTML=`
+   <div class="pn"><span class="ix">${s.n}</span><h3>${s.t}</h3><span class="tg">${s.tg}</span></div>
+   <div class="pg">${s.items.map(i=>`<div class="pi"><div class="k">${i.k}</div><div class="v">${i.v}</div></div>`).join('')}</div>
+   <div class="pd">${s.d}</div>`;
+}
+document.getElementById('meta').innerHTML=
+ `실측 <b>2026-08-26</b><br>원장 <b>6</b>종 → 엔진 <b>4</b>단계 → 지표 <b>6</b>종<br>정규 실적 <b>13,356</b>편 · 참여자 <b>5,366</b>`;
+draw(); sel('w');
+// 초기 렌더·레이아웃이 끝난 뒤에 펄스를 켠다. 로딩 순간의 끊김이 눈에 띄지 않게.
+(function litPulses(){
+  const on=()=>document.querySelectorAll('.pulse').forEach(e=>e.classList.add('lit'));
+  const go=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(on,180)));
+  if(document.readyState==='complete') go();
+  else window.addEventListener('load', go, {once:true});
+})();
+</script>
+</div></div>
+
+<script>
+/* 1600x900 고정 무대 — 작업가이드 5장 규격.
+   resize 하나만 걸면 iframe 슬라이드에서 배율이 틀어진 채 굳는다. 다섯 개를 다 건다. */
+function fitStage(){
+  const st=document.getElementById('stage'); if(!st) return;
+  st.style.height='900px';
+  const k=Math.min(innerWidth/1600, innerHeight/900);
+  st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;
+}
+fitStage();
+addEventListener('resize',fitStage);
+addEventListener('load',fitStage);
+addEventListener('pageshow',fitStage);
+if(window.ResizeObserver) new ResizeObserver(fitStage).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitStage);
+</script>
+<script>if(window.self!==window.top) document.documentElement.classList.add('emb-bg0');</script>

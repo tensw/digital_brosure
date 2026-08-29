@@ -1,0 +1,263 @@
+<meta charset="utf-8">
+<title>BK21 저자 매칭 현황</title>
+<style>
+:root{--ink:#e9eefb;--ink2:#93a6cc;--ink3:#5d7099}
+*{box-sizing:border-box;margin:0;padding:0}
+/* ── 무대 규격 (작업가이드 5장) ── */
+html,body{overflow:hidden}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+.emb-bg0, .emb-bg0 body, .emb-bg0 .slide{background:transparent !important}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:radial-gradient(1200px 800px at 50% 20%,#0b1226 0%,#060a16 58%,#03050c 100%);
+ color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+/* 작업가이드 5장: 1600x900, 좌우 82px. 원본 세로 1630px 문서 */
+.wrap{width:1600px;height:900px;padding:38px 82px 16px;display:flex;flex-direction:column}
+.foot{margin-top:auto}
+.body2{display:grid;grid-template-columns:1fr 620px;gap:20px;align-items:stretch;
+ flex:1;min-height:0;margin-top:14px}
+/* 다이어그램은 가로가 정해지면 높이가 따라온다. 남는 세로를 위아래로 나눈다. */
+.body2 > div:first-child{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.kicker{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
+/* 폰트 규격 — 한글 제목 3.15em(44px), 서브 16px/600 */
+h1{font-size:44px;font-weight:800;letter-spacing:-1.5px;margin-top:13px;line-height:1.16}
+h1 span{background:linear-gradient(90deg,#4ade80,#a78bfa 60%,#7c8db5);-webkit-background-clip:text;
+ background-clip:text;-webkit-text-fill-color:transparent}
+.lead{color:var(--ink2);font-size:16px;font-weight:600;margin-top:12px;max-width:104ch;line-height:1.55}
+.lead b{color:var(--ink)}
+.hd{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.spacer{flex:1}
+.meta{font:600 11px/1.95 ui-monospace,Menlo,monospace;color:var(--ink3);text-align:right;letter-spacing:.05em}
+.meta b{color:var(--ink2)}
+svg.scene{display:block;width:100%;height:auto;overflow:visible}
+.bdg{font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em}
+.ct{font:800 14.5px/1 -apple-system,system-ui,sans-serif;fill:var(--ink)}
+.cv{font:800 27px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.2px}
+.cp{font:700 11px/1 ui-monospace,Menlo,monospace;fill:var(--ink3)}
+.cn{font:400 10.5px/1.5 -apple-system,system-ui,sans-serif;fill:var(--ink2)}
+.mk{font:600 9.5px/1 ui-monospace,Menlo,monospace;fill:var(--ink3);letter-spacing:.14em}
+.gl{font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em}
+.grp{cursor:pointer}
+.grp .bd{transition:.16s}
+.grp:hover .bd{fill-opacity:.26}
+.grp.on .bd{fill-opacity:.30}
+.grp.on .bx{stroke-opacity:1;stroke-width:1.6}
+.panel{margin-top:0;overflow:hidden;border:1px solid rgba(129,140,248,.22);border-radius:20px;
+ background:linear-gradient(180deg,rgba(20,30,60,.6),rgba(9,15,32,.6));padding:18px 22px;min-height:150px}
+.pn{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:9px}
+.pn .ix{font:700 11px/1 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.2em}
+.pn h3{font-size:19px;font-weight:800;letter-spacing:-.4px}
+.pn .tg{font:700 10.5px/1 ui-monospace,Menlo,monospace;padding:5px 11px;border-radius:999px;letter-spacing:.14em}
+/* 통계칸 6개를 3열 2행으로 접는다. 1열이면 패널이 무대를 넘는다. */
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pi{border:1px solid rgba(129,140,248,.16);border-radius:12px;padding:9px 10px;background:rgba(11,20,42,.5)}
+.pi .k{font-size:10.5px;color:var(--ink3);font-weight:600}
+.pi .v{font:800 19px/1.2 ui-monospace,Menlo,monospace;margin-top:4px;letter-spacing:-.4px}
+.pd{color:var(--ink2);font-size:12.5px;line-height:1.45;margin-top:9px;max-width:96ch}
+.pd b{color:var(--ink)}
+/* 패널을 620 으로 줄여 다이어그램의 세 상태 카드가 읽히게 했다. 표는 그만큼 조인다. */
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:11px}
+th{text-align:right;font:700 10px/1 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.13em;
+ padding:0 9px 8px;border-bottom:1px solid rgba(129,140,248,.18)}
+th:first-child,th:last-child{text-align:left}
+td{padding:6px 9px;border-bottom:1px solid rgba(129,140,248,.07);text-align:right;
+ font:600 11px ui-monospace,Menlo,monospace;color:var(--ink2)}
+td:first-child{text-align:left;font:700 12.5px -apple-system,system-ui,sans-serif;color:var(--ink)}
+td:last-child{text-align:left;font:400 12px -apple-system,system-ui,sans-serif;color:var(--ink3)}
+.foot{margin-top:24px;border-top:1px solid rgba(129,140,248,.14);padding-top:17px;color:var(--ink3);
+ font-size:11.5px;line-height:1.9}
+.foot b{color:var(--ink2)}
+
+</style>
+<div class="slide"><div id="stage">
+
+<div class="wrap">
+ <div class="hd">
+  <div>
+   <div class="kicker">BK21 · AUTHOR MATCHING STATUS</div>
+   <h1>저자행 528만 줄이<br><span>세 갈래로 갈린다</span></h1>
+   <p class="lead">논문 한 편에는 저자가 여럿 있고, 그 저자를 성균관대 사람과 이어붙이는 것이 매칭이다.
+    현재 <b>5,280,301줄</b>의 저자행이 교내 확정 · 외부 저자 · 미분류로 나뉘어 있다.
+    바닥의 점 하나가 저자행의 <b>1%</b>다. 묶음을 누르면 내역이 펼쳐진다.</p>
+  </div>
+  <div class="spacer"></div>
+  <div class="meta">
+   기준 <b>2026-08-25</b><br>
+   논문 <b>140,850</b> · 확정 인물 <b>11,930</b><br>
+   저자행 <b>5,280,301</b>
+  </div>
+ </div>
+
+ <div class="body2">
+ <div><svg class="scene" id="sc" viewBox="0 0 1400 716" role="img" aria-label="BK21 저자 매칭 현황"></svg>
+ </div>
+ <div class="panel" id="pnl"></div>
+</div>
+
+ <div class="foot">
+  <b>대상 범위.</b> 저자 정보가 끝까지 파싱된 논문 140,850편의 저자행이다.
+  BIBLO 전체 논문 원장은 이보다 크며, 저자 파싱이 끝나지 않은 논문은 이 화면에 포함되지 않는다.<br>
+  <b>확정의 의미.</b> 교내 확정 356,232줄 중 356,017줄은 제출 원장에서 직접 이어붙인 것으로,
+  판별 엔진을 거치지 않았다. 엔진이 실제로 판정한 것은 8,302줄이다.
+  원장 연결분은 제출 명부가 정확하다는 전제 위에 서 있다.
+ </div>
+</div>
+
+<script>
+const D={"built":"2026-08-25","rows":5280301,"groups":[{"k":"in","t":"교내 확정","badge":"LINKED","v":356232,"c":"#4ade80","rgb":"74,222,128","note":"성균관대 구성원으로 판별돼 사번이 붙은 저자행. 이 행만 성과 집계에 들어간다.","sid":355878},{"k":"ex","t":"외부 저자","badge":"EXTERNAL","v":2618171,"c":"#a78bfa","rgb":"167,139,250","note":"교외 소속으로 확인된 공저자. 사번은 없지만 이름·소속·ORCID 를 보존해 협력망 분석에 쓴다.","sid":352},{"k":"un","t":"미분류","badge":"PENDING","v":2305898,"c":"#7c8db5","rgb":"124,141,181","note":"교내·교외 판정을 아직 내리지 못한 저자행. 소속 문자열이 없거나 판별 신호가 부족하다.","sid":8089}],"layers":[{"l":"원장 연결","v":356017,"d":"BK21·RIMS 제출 원장에서 직접 이어붙인 행. 판별 엔진을 타지 않았다."},{"l":"L1 · 식별자","v":3785,"d":"Scopus AUID · ORCID · 이메일 같은 고유 식별자 일치"},{"l":"L2 · 이름+소속","v":2391,"d":"전체 이름과 성균관대 소속 문자열이 함께 일치"},{"l":"L4 · LLM 판별","v":898,"d":"분야·저널·공저자 지문을 LLM 이 교차검증"},{"l":"U 접두 규칙","v":854,"d":"학번·사번 접두 규칙으로 자동 연결"},{"l":"HITL · 사람검토","v":207,"d":"담당자가 직접 확인해 확정"},{"l":"논문 병합","v":154,"d":"DOI 중복 통합 과정에서 승계"},{"l":"L3 · 확률","v":13,"d":"확률 모형 판정"}],"sig":[["SCOPUS_AUID",2892],["FULLNAME_SKKU",2391],["L4_LLM_MATCHED",898],["U_PREFIX_AUTO",560],["ORCID",534],["EMAIL",312],["U_PREFIX_MANUAL",294]],"ids":{"tot":4915982,"nm":4765793,"aff":4121282,"auid":858249,"orcid":85577},"papers":{"tot":140850,"linked":138635},"people":11930,"staff":364319}, G=D.groups;
+const NS='http://www.w3.org/2000/svg';
+const sc=document.getElementById('sc'), pnl=document.getElementById('pnl');
+const N=n=>n.toLocaleString('ko-KR');
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||sc).appendChild(e);return e;}
+function txt(g,x,y,s,cls,col,anc){const t=el('text',{x,y,class:cls},g);if(col)t.setAttribute('fill',col);
+ if(anc)t.setAttribute('text-anchor',anc);t.textContent=s;return t;}
+
+/* ── 결정적 난수 ── */
+let _s=20260825; const rnd=()=>{_s=(_s*1664525+1013904223)&0x7fffffff; return _s/0x7fffffff;};
+
+/* ── 원근 바닥 격자 ── */
+const HZ=336, FL=700, CX=700;
+(function(){
+ const gd=el('g',{},sc);
+ for(let i=0;i<=26;i++){                       // 세로선: 소실점 수렴
+  const u=(i/26-0.5), xb=CX+u*2560, xt=CX+u*300;
+  el('line',{x1:xt,y1:HZ,x2:xb,y2:FL,stroke:'#5b7099','stroke-opacity':.20,'stroke-width':.85},gd);}
+ for(let i=0;i<=13;i++){                       // 가로선: 간격 점증
+  const t=i/13, y=HZ+(FL-HZ)*Math.pow(t,1.9), w=300+2260*Math.pow(t,1.9);
+  el('line',{x1:CX-w/2,y1:y,x2:CX+w/2,y2:y,stroke:'#5b7099','stroke-opacity':.16+.16*t,'stroke-width':.85},gd);}
+ el('rect',{x:0,y:HZ-2,width:1400,height:48,fill:'url(#hzf)'},gd);
+ const df=el('defs',{},gd), lg=el('linearGradient',{id:'hzf',x1:'0',y1:'0',x2:'0',y2:'1'},df);
+ el('stop',{offset:'0','stop-color':'#060a16','stop-opacity':'.85'},lg);
+ el('stop',{offset:'1','stop-color':'#060a16','stop-opacity':'0'},lg);
+})();
+
+/* ── 노드 구름 (점 1개 = 1%) ── */
+const TOT=D.rows;
+const CX3=[214,700,1150], CY3=[540,494,552], AREA=33.4, ARY=11.3;
+const CL=G.map((g,i)=>{const n=Math.max(1,Math.round(g.v/D.rows*100)), s=Math.sqrt(n);
+ return {x:CX3[i],y:CY3[i],rx:AREA*s,ry:ARY*s,n};});
+const NODES=[];
+G.forEach((g,i)=>{
+ const c=CL[i], n=c.n, pts=[];
+ let guard=0;
+ while(pts.length<n && guard++<9000){
+  const a=rnd()*Math.PI*2, r=Math.sqrt(rnd());
+  const x=c.x+Math.cos(a)*r*c.rx, y=c.y+Math.sin(a)*r*c.ry;
+  const min=Math.sqrt(Math.PI*c.rx*c.ry/n)*0.80;
+  if(pts.every(p=>Math.hypot(p.x-x,p.y-y)>min)) pts.push({x,y});
+ }
+ const gg=el('g',{},sc);
+ pts.forEach(p=>{
+  const d=(p.y-(c.y-c.ry))/(2*c.ry);                 // 앞쪽=밝게
+  el('circle',{cx:p.x,cy:p.y,r:2.0+d*2.4,fill:g.c,'fill-opacity':(0.22+d*0.62).toFixed(3)},gg);
+ });
+ /* 군집 내부 연결선 */
+ for(let a=0;a<pts.length;a++)for(let b=a+1;b<pts.length;b++){
+  const dd=Math.hypot(pts[a].x-pts[b].x,pts[a].y-pts[b].y);
+  if(dd<56) el('line',{x1:pts[a].x,y1:pts[a].y,x2:pts[b].x,y2:pts[b].y,
+    stroke:g.c,'stroke-opacity':(0.22*(1-dd/56)).toFixed(3),'stroke-width':.8},gg);}
+ NODES.push(pts);
+ txt(sc,c.x,c.y+c.ry+28,`${n}개 점 · ${(g.v/TOT*100).toFixed(1)}%`,'mk',null,'middle');
+});
+
+/* ── 떠 있는 카드 ── */
+const CW=356, CH=182, CY0=46;
+const CPOS=[[36,CY0],[522,CY0],[1008,CY0]];
+G.forEach((g,i)=>{
+ const [px,py]=CPOS[i], c=CL[i];
+ /* 지시선: 카드 하단 → 군집 중심 */
+ el('path',{d:`M${px+CW/2},${py+CH} C${px+CW/2},${py+CH+64} ${c.x},${c.y-c.ry-76} ${c.x},${c.y-c.ry-8}`,
+   fill:'none',stroke:g.c,'stroke-opacity':.30,'stroke-width':1,'stroke-dasharray':'4 4'},sc);
+ el('circle',{cx:c.x,cy:c.y-c.ry-8,r:2.6,fill:g.c,'fill-opacity':.8},sc);
+ /* 바닥 광원 */
+ el('ellipse',{cx:c.x,cy:c.y,rx:c.rx*1.16,ry:c.ry*1.12,fill:g.c,'fill-opacity':.045},sc);
+
+ const gg=el('g',{class:'grp'+(i===0?' on':'')},sc); gg.dataset.i=i;
+ const r=15, R=`M${px+r},${py}H${px+CW-r}Q${px+CW},${py} ${px+CW},${py+r}V${py+CH-r}Q${px+CW},${py+CH} ${px+CW-r},${py+CH}H${px+r}Q${px},${py+CH} ${px},${py+CH-r}V${py+r}Q${px},${py} ${px+r},${py}Z`;
+ el('path',{d:R,class:'bd',fill:g.c,'fill-opacity':.085},gg);
+ el('path',{d:R,class:'bx',fill:'none',stroke:g.c,'stroke-opacity':.5,'stroke-width':1.1},gg);
+ el('line',{x1:px+r,y1:py+.6,x2:px+CW-r,y2:py+.6,stroke:'#fff','stroke-opacity':.24,'stroke-width':1},gg);
+ /* STATUS 배지 */
+ const bw=34+(9+g.badge.length)*7.9;
+ el('rect',{x:px+18,y:py+16,width:bw,height:20,rx:10,fill:g.c,'fill-opacity':.16,
+   stroke:g.c,'stroke-opacity':.5,'stroke-width':.9},gg);
+ el('circle',{cx:px+30,cy:py+26,r:3.2,fill:g.c},gg);
+ txt(gg,px+40,py+30,'STATUS · '+g.badge,'bdg',g.c);
+ txt(gg,px+CW-18,py+30,`${(g.v/TOT*100).toFixed(1)}%`,'cp',null,'end');
+ txt(gg,px+18,py+62,g.t,'ct');
+ txt(gg,px+18,py+96,N(g.v),'cv',g.c);
+ txt(gg,px+18,py+118,'저자행','cp');
+ /* 비율 바 */
+ el('rect',{x:px+18,y:py+130,width:CW-36,height:7,rx:3.5,fill:'#fff','fill-opacity':.06},gg);
+ el('rect',{x:px+18,y:py+130,width:(CW-36)*(g.v/TOT),height:7,rx:3.5,fill:g.c,'fill-opacity':.66},gg);
+ /* 설명 2줄 */
+ const w=g.note.split(' '); let ln=[], cur='';
+ w.forEach(t=>{ if((cur+t).length>32){ln.push(cur.trim());cur=t+' ';} else cur+=t+' '; });
+ ln.push(cur.trim()); ln.slice(0,2).forEach((s,j)=>txt(gg,px+18,py+154+j*15,s,'cn'));
+});
+
+/* ── 좌우 축 라벨 ── */
+txt(sc,CX,HZ-16,'AUTHORSHIP FLOOR · 5,280,301 ROWS · 1 DOT = 1%','gl','#5d7099','middle');
+
+/* ── 패널 ── */
+function card(k,v,c){return `<div class="pi"><div class="k">${k}</div><div class="v"${c?` style="color:${c}"`:''}>${v}</div></div>`;}
+function show(i){
+ document.querySelectorAll('.grp').forEach(b=>b.classList.toggle('on',+b.dataset.i===i));
+ const g=G[i], I=D.ids, P=D.papers;
+ let body;
+ if(g.k==='in'){
+  const eng=D.layers.slice(1).reduce((a,b)=>a+b.v,0);
+  body=`<div class="pg">${card('저자행',N(g.v),g.c)}${card('사번 보유',N(g.sid))}
+   ${card('확정 인물',N(D.people)+'명')}${card('연결 논문',N(P.linked)+'편')}
+   ${card('원장 연결',N(D.layers[0].v))}${card('엔진 판정',N(eng),g.c)}</div>
+   <div class="pd">저자행 <b>${N(g.v)}줄</b>이 성균관대 구성원 <b>${N(D.people)}명</b>에 붙어 있다.
+   이 중 <b>${N(D.layers[0].v)}줄</b>은 제출 원장을 그대로 이어붙인 것이고,
+   판별 엔진이 실제로 판정한 것은 <b>${N(eng)}줄</b>이다.
+   엔진 판정분은 아래 레이어별로 근거가 남아 있고, 원장 연결분은 명부의 정확성에 의존한다.</div>
+   <table><thead><tr><th>판별 레이어</th><th>저자행</th><th>비중</th><th>근거</th></tr></thead><tbody>
+   ${D.layers.map(l=>`<tr><td>${l.l}</td><td>${N(l.v)}</td>
+     <td>${(l.v/g.v*100).toFixed(2)}%</td><td>${l.d}</td></tr>`).join('')}</tbody></table>`;
+ }else if(g.k==='ex'){
+  body=`<div class="pg">${card('저자행',N(g.v),g.c)}${card('전체 대비',(g.v/D.rows*100).toFixed(1)+'%')}
+   ${card('이름 보유',(I.nm/I.tot*100).toFixed(1)+'%')}${card('소속 보유',(I.aff/I.tot*100).toFixed(1)+'%')}
+   ${card('Scopus AUID',(I.auid/I.tot*100).toFixed(1)+'%')}${card('ORCID',(I.orcid/I.tot*100).toFixed(1)+'%')}</div>
+   <div class="pd">${g.note}<br>
+   공저자 앵커는 해시로만 저장돼 있었으나, 저자행에 원문 이름·소속·ORCID·AUID 가 함께 남아 있어
+   <b>이름으로 부를 수 있는 외부 연구자</b>가 된다. 국제 협력망 확장은 여기서 출발한다.
+   다만 ORCID 보유가 <b>${(I.orcid/I.tot*100).toFixed(1)}%</b>에 그쳐, 동명이인 분리는 이름만으로 안 되고
+   소속·분야 신호를 함께 써야 한다.</div>`;
+ }else{
+  body=`<div class="pg">${card('저자행',N(g.v),g.c)}${card('전체 대비',(g.v/D.rows*100).toFixed(1)+'%')}
+   ${card('사번은 붙음',N(g.sid))}${card('이름 보유',(I.nm/I.tot*100).toFixed(1)+'%')}
+   ${card('소속 없음',(100-I.aff/I.tot*100).toFixed(1)+'%')}${card('식별자 없음',(100-(I.auid+I.orcid)/I.tot*100).toFixed(1)+'%')}</div>
+   <div class="pd">${g.note}<br>
+   판정을 막는 것은 <b>소속 문자열의 부재</b>다. 이름은 <b>${(I.nm/I.tot*100).toFixed(1)}%</b>가 있지만
+   소속은 <b>${(I.aff/I.tot*100).toFixed(1)}%</b>뿐이고, 고유 식별자는 그보다 훨씬 적다.
+   이름만으로는 교내·교외를 가를 수 없어 판정을 보류한 상태다.
+   <b>${N(g.sid)}줄</b>은 사번이 붙었는데도 교내·교외 구분이 기록되지 않아, 이 값은 보정 대상이다.</div>`;
+ }
+ pnl.innerHTML=`<div class="pn"><span class="ix">0${i+1}</span><h3>${g.t}</h3>
+  <span class="tg" style="border:1px solid ${g.c}55;color:${g.c}">${g.badge}</span></div>${body}`;
+}
+sc.addEventListener('click',e=>{const b=e.target.closest('.grp'); if(b) show(+b.dataset.i);});
+show(0);
+</script>
+</div></div>
+
+<script>
+/* 1600x900 고정 무대 — 작업가이드 5장 규격.
+   resize 하나만 걸면 iframe 슬라이드에서 배율이 틀어진 채 굳는다. 다섯 개를 다 건다. */
+function fitStage(){
+  const st=document.getElementById('stage'); if(!st) return;
+  st.style.height='900px';
+  const k=Math.min(innerWidth/1600, innerHeight/900);
+  st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;
+}
+fitStage();
+addEventListener('resize',fitStage);
+addEventListener('load',fitStage);
+addEventListener('pageshow',fitStage);
+if(window.ResizeObserver) new ResizeObserver(fitStage).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitStage);
+</script>
+<script>if(window.self!==window.top) document.documentElement.classList.add('emb-bg0');</script>

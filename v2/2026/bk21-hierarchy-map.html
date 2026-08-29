@@ -1,0 +1,288 @@
+<meta charset="utf-8">
+<title>BK21 계층 구조도</title>
+<style>
+:root{--ink:#e9eefb;--ink2:#93a6cc;--ink3:#5d7099;--hs:#f0a35e;--eg:#4fc3f7;--md:#b39ddb;--rt:#c7d2fe}
+*{box-sizing:border-box;margin:0;padding:0}
+/* ── 무대 규격 (작업가이드 5장) ── */
+html,body{overflow:hidden}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+.emb-bg0, .emb-bg0 body, .emb-bg0 .slide{background:transparent !important}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:radial-gradient(1150px 760px at 50% 32%,#0b1226 0%,#060a16 58%,#03050c 100%);
+ color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+/* 작업가이드 5장: 1600x900, 좌우 82px. 원본 세로 1503px 문서 */
+.wrap{width:1600px;height:900px;padding:38px 82px 16px;display:flex;flex-direction:column}
+.foot{margin-top:auto}
+.body2{display:grid;grid-template-columns:1fr 560px;gap:20px;align-items:stretch;
+ flex:1;min-height:0;margin-top:14px}
+/* 다이어그램은 가로가 정해지면 높이가 따라온다. 남는 세로를 위아래로 나눈다. */
+.body2 > div:first-child{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.kicker{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
+/* 폰트 규격 — 한글 제목 3.15em(44px), 서브 16px/600 */
+h1{font-size:44px;font-weight:800;letter-spacing:-1.5px;margin-top:13px;line-height:1.16}
+h1 span{background:linear-gradient(90deg,var(--hs),var(--eg) 55%,var(--md));-webkit-background-clip:text;
+ background-clip:text;-webkit-text-fill-color:transparent}
+.lead{color:var(--ink2);font-size:16px;font-weight:600;margin-top:12px;max-width:104ch;line-height:1.55}
+.lead b{color:var(--ink)}
+.hd{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.meta{font:600 11px/1.95 ui-monospace,Menlo,monospace;color:var(--ink3);text-align:right;letter-spacing:.05em}
+.meta b{color:var(--ink2)}
+.spacer{flex:1}
+svg.scene{display:block;width:100%;height:auto;overflow:visible}
+.bn{font:800 13px/1 -apple-system,system-ui,sans-serif;fill:var(--ink)}
+.bn.sm{font-size:11px}
+.bs{font:600 10px/1 -apple-system,system-ui,sans-serif;fill:var(--ink3)}
+.bv{font:800 17px/1 ui-monospace,Menlo,monospace;letter-spacing:-.5px}
+.bv.sm{font-size:13px}
+.bu{font:600 9.5px/1 ui-monospace,Menlo,monospace;fill:var(--ink3);letter-spacing:.1em}
+.tier{font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.26em;fill:var(--ink3)}
+.wire{fill:none;stroke-width:1.1;stroke-opacity:.34}
+.blk{cursor:pointer}
+.blk .fr{transition:.16s}
+.blk:hover .fr{fill-opacity:.28}
+.blk.on .fr{fill-opacity:.34}
+.blk.on .ed{stroke-opacity:1;stroke-width:1.6}
+.panel{margin-top:0;overflow:hidden;border:1px solid rgba(129,140,248,.22);border-radius:20px;
+ background:linear-gradient(180deg,rgba(20,30,60,.6),rgba(9,15,32,.6));padding:22px 26px;min-height:150px}
+.pn{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.pn .ix{font:700 11px/1 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.2em}
+.pn h3{font-size:19px;font-weight:800;letter-spacing:-.4px}
+.pn .tg{font:700 10.5px/1 ui-monospace,Menlo,monospace;padding:5px 11px;border-radius:999px;letter-spacing:.08em}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.pi{border:1px solid rgba(129,140,248,.16);border-radius:12px;padding:11px 13px;background:rgba(11,20,42,.5)}
+.pi .k{font-size:10.5px;color:var(--ink3);font-weight:600}
+.pi .v{font:800 19px/1.2 ui-monospace,Menlo,monospace;margin-top:4px;letter-spacing:-.4px}
+.pd{color:var(--ink2);font-size:12.5px;line-height:1.85;margin-top:14px;max-width:96ch}
+.pd b{color:var(--ink)}
+table{width:100%;border-collapse:collapse;margin-top:15px;font-size:12px}
+th{text-align:right;font:700 10px/1 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.13em;
+ padding:0 9px 8px;border-bottom:1px solid rgba(129,140,248,.18)}
+th:first-child{text-align:left}
+td{padding:8px 9px;border-bottom:1px solid rgba(129,140,248,.07);text-align:right;
+ font:600 12px ui-monospace,Menlo,monospace;color:var(--ink2)}
+td:first-child{text-align:left;font:700 12.5px -apple-system,system-ui,sans-serif;color:var(--ink)}
+tr:hover td{background:rgba(129,140,248,.06)}
+.foot{margin-top:24px;border-top:1px solid rgba(129,140,248,.14);padding-top:17px;color:var(--ink3);
+ font-size:11.5px;line-height:1.9}
+.foot b{color:var(--ink2)}
+
+</style>
+<div class="slide"><div id="stage">
+
+<div class="wrap">
+ <div class="hd">
+  <div>
+   <div class="kicker">BK21 · HIERARCHY</div>
+   <h1>사업단에서 논문까지<br><span>다섯 겹의 계층</span></h1>
+   <p class="lead">BK21 성과는 <b>사업단 → 계열 → 학과 → 사람 → 논문</b> 순으로 쌓인다.
+    각 층의 수치는 실측값이고, 아래 층은 위 층에 속한 것만 센다.
+    블록을 누르면 그 아래 내역이 펼쳐진다.</p>
+  </div>
+  <div class="spacer"></div>
+  <div class="meta">
+   기준 <b>2026-08-25</b><br>
+   연구단 <b>34</b> · 참여자 <b>5,366</b><br>
+   논문 <b>19,721</b>
+  </div>
+ </div>
+
+ <div class="body2">
+ <div><svg class="scene" id="sc" viewBox="0 0 1400 762" role="img" aria-label="BK21 계층 구조도"></svg>
+
+ </div>
+ <div class="panel" id="pnl"></div>
+</div>
+
+ <div class="foot">
+  <b>층별 정의.</b> 연구단은 BK21 교육연구단 단위(학과와 1:1이 아닌 융합전공 포함).
+  참여자는 참여교수·신진연구인력·대학원생의 합.
+  논문은 참여자에게 귀속된 실적으로, 공저 논문은 소속 연구단마다 각각 집계되어 계열 합이 전체와 다르다.<br>
+  <b>수치 출처.</b> 참여자·연구단 명부는 BK21 제출 원장, 논문은 canonical <b>paper</b> · <b>paper_person</b>.
+  집계 시점 2026-08-25.
+ </div>
+</div>
+
+<script>
+const D={"built":"2026-08-25","sum":{"dept":34,"prof":455,"jr":158,"stu":4753,"facLinked":519,"stuLinked":2260,"orphan":801,"PN":19878,"PC":347610,"SN":10683,"SC":159167,"need":700,"papers":19721},"gy":{"이공":{"n":15,"prof":241,"jr":110,"stu":2940,"P":11956,"S":8225,"depts":[{"d":"전자전기컴퓨터공학과","prof":48,"jr":0,"stu":572,"p":5707},{"d":"신소재공학과","prof":24,"jr":20,"stu":338,"p":2828},{"d":"물리학과","prof":21,"jr":5,"stu":214,"p":2657},{"d":"기계공학과","prof":25,"jr":33,"stu":425,"p":2316},{"d":"나노과학기술학과","prof":19,"jr":35,"stu":493,"p":1693},{"d":"글로벌스마트시티융합전공","prof":11,"jr":4,"stu":210,"p":1172},{"d":"화학과","prof":16,"jr":2,"stu":117,"p":990},{"d":"생명과학과","prof":17,"jr":1,"stu":145,"p":899},{"d":"에너지과학과","prof":17,"jr":3,"stu":147,"p":669},{"d":"수학과","prof":26,"jr":5,"stu":145,"p":562},{"d":"지능형팹테크융합전공","prof":10,"jr":1,"stu":30,"p":503},{"d":"산업공학과","prof":7,"jr":1,"stu":104,"p":185},{"d":"화학공학과","prof":0,"jr":0,"stu":0,"p":0},{"d":"소프트웨어학과","prof":0,"jr":0,"stu":0,"p":0},{"d":"융합생명공학과","prof":0,"jr":0,"stu":0,"p":0}]},"의약생명":{"n":6,"prof":89,"jr":26,"stu":806,"P":5716,"S":1812,"depts":[{"d":"의학과","prof":35,"jr":7,"stu":211,"p":3550},{"d":"약학과","prof":19,"jr":4,"stu":245,"p":2283},{"d":"바이오의약융합전공","prof":21,"jr":8,"stu":245,"p":1134},{"d":"스포츠과학과","prof":14,"jr":7,"stu":105,"p":561},{"d":"지능형정밀헬스케어융합전공","prof":0,"jr":0,"stu":0,"p":0},{"d":"식품생명공학과","prof":0,"jr":0,"stu":0,"p":0}]},"인문사회":{"n":13,"prof":125,"jr":22,"stu":1007,"P":2206,"S":646,"depts":[{"d":"인간AI인터랙션융합전공","prof":10,"jr":1,"stu":99,"p":658},{"d":"경제학과","prof":19,"jr":3,"stu":128,"p":466},{"d":"사회복지학과","prof":7,"jr":3,"stu":79,"p":312},{"d":"행정학과","prof":15,"jr":2,"stu":0,"p":271},{"d":"경영학과","prof":13,"jr":1,"stu":67,"p":269},{"d":"심리학과","prof":5,"jr":1,"stu":42,"p":190},{"d":"유학동양한국철학과","prof":9,"jr":2,"stu":78,"p":186},{"d":"핀테크융합전공","prof":10,"jr":0,"stu":162,"p":117},{"d":"국어국문학과","prof":13,"jr":3,"stu":144,"p":113},{"d":"사학과","prof":10,"jr":3,"stu":111,"p":103},{"d":"미래인문학소셜앙트레프레너십융합전공","prof":7,"jr":1,"stu":48,"p":86},{"d":"한문학과","prof":7,"jr":2,"stu":49,"p":81},{"d":"소셜이노베이션융합전공","prof":0,"jr":0,"stu":0,"p":0}]}}};
+const GY=[
+ {k:'인문사회',c:'#f0a35e',rgb:'240,163,94'},
+ {k:'이공',    c:'#4fc3f7',rgb:'79,195,247'},
+ {k:'의약생명',c:'#b39ddb',rgb:'179,157,219'}];
+const RT={c:'#c7d2fe',rgb:'199,210,254'};
+const NS='http://www.w3.org/2000/svg';
+const sc=document.getElementById('sc'), pnl=document.getElementById('pnl');
+const N=n=>n.toLocaleString('ko-KR');
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||sc).appendChild(e);return e;}
+
+/* ── 기하 ── */
+const M=46, W=1400, CW=(W-M*2-2*26)/3;                 // 계열 컬럼 폭
+const colX=i=>M+i*(CW+26);
+const T={root:{y:58,h:60},gy:{y:190,h:74},dp:{y:330,h:88},pp:{y:486,h:74},pa:{y:606,h:74}};
+const DX=11, DY=-9;                                     // 압출 깊이
+
+function block(g,x,y,w,h,col,op){
+ const r=9, R=`M${x+r},${y}H${x+w-r}Q${x+w},${y} ${x+w},${y+r}V${y+h-r}Q${x+w},${y+h} ${x+w-r},${y+h}H${x+r}Q${x},${y+h} ${x},${y+h-r}V${y+r}Q${x},${y} ${x+r},${y}Z`;
+ el('polygon',{points:`${x+r},${y} ${x+r+DX},${y+DY} ${x+w-r+DX},${y+DY} ${x+w-r},${y}`,
+   fill:col.c,'fill-opacity':.30,stroke:col.c,'stroke-opacity':.42,'stroke-width':.9},g);
+ el('polygon',{points:`${x+w},${y+r} ${x+w+DX},${y+r+DY} ${x+w+DX},${y+h-r+DY} ${x+w},${y+h-r}`,
+   fill:col.c,'fill-opacity':.13,stroke:col.c,'stroke-opacity':.30,'stroke-width':.9},g);
+ el('path',{d:R,class:'fr',fill:col.c,'fill-opacity':op==null?.15:op},g);
+ el('path',{d:R,class:'ed',fill:'none',stroke:col.c,'stroke-opacity':.66,'stroke-width':1.15},g);
+ el('line',{x1:x+r,y1:y+.6,x2:x+w-r,y2:y+.6,stroke:'#fff','stroke-opacity':.30,'stroke-width':1},g);
+}
+function wire(x1,y1,x2,y2,col){
+ const my=(y1+y2)/2, s=x2>x1?1:-1, r=Math.min(15,Math.abs(x2-x1)/2,Math.abs(my-y1));
+ const d=Math.abs(x2-x1)<1?`M${x1},${y1}V${y2}`
+  :`M${x1},${y1}V${my-r}Q${x1},${my} ${x1+s*r},${my}H${x2-s*r}Q${x2},${my} ${x2},${my+r}V${y2}`;
+ el('path',{d,class:'wire',stroke:col.c},sc);
+ el('circle',{cx:x2,cy:y2,r:2.1,fill:col.c,'fill-opacity':.75},sc);
+}
+function txt(g,x,y,s,cls,col){const t=el('text',{x,y,class:cls},g);if(col)t.setAttribute('fill',col);t.textContent=s;return t;}
+
+/* ── 티어 라벨 ── */
+[['① 사업단',T.root],['② 계열',T.gy],['③ 학과 · 연구단',T.dp],['④ 사람',T.pp],['⑤ 논문',T.pa]]
+ .forEach(([s,t])=>txt(sc,M-30,t.y+t.h/2+3,s.split(' ')[0],'tier').setAttribute('text-anchor','middle'));
+
+/* ── ① 사업단 ── */
+const rw=300, rx=(W-rw)/2, S=D.sum;
+const groot=el('g',{class:'blk on'},sc); groot.dataset.k='root';
+block(groot,rx,T.root.y,rw,T.root.h,RT,.19);
+txt(groot,rx+20,T.root.y+26,'BK21 교육연구단','bn');
+txt(groot,rx+20,T.root.y+47,N(S.dept)+'개','bv',RT.c);
+txt(groot,rx+20+String(S.dept).length*12+16,T.root.y+47,'성균관대학교','bs');
+txt(groot,rx+rw-20,T.root.y+26,'ROOT','bu').setAttribute('text-anchor','end');
+txt(groot,rx+rw-20,T.root.y+47,'참여자 '+N(S.prof+S.jr+S.stu),'bu').setAttribute('text-anchor','end');
+
+/* ── ② 계열 · ③ 학과 · ④ 사람 · ⑤ 논문 ── */
+const REST=[];
+GY.forEach((g,i)=>{
+ const v=D.gy[g.k], x=colX(i);
+ wire(W/2,T.root.y+T.root.h+ -DY*0, x+CW/2, T.gy.y, g);
+
+ const gg=el('g',{class:'blk'},sc); gg.dataset.k='gy:'+g.k;
+ block(gg,x,T.gy.y,CW,T.gy.h,g,.16);
+ txt(gg,x+18,T.gy.y+27,g.k,'bn');
+ txt(gg,x+18,T.gy.y+52,N(v.n)+'개 연구단','bv',g.c);
+ txt(gg,x+CW-18,T.gy.y+52,'논문 '+N(v.P+v.S),'bu').setAttribute('text-anchor','end');
+
+ /* 학과: 상위 3 + 나머지 묶음 */
+ const top=v.depts.slice(0,3), rest=v.depts.slice(3);
+ const cells=top.map(d=>({d,rest:false})); if(rest.length) cells.push({rest:true,list:rest});
+ const n=cells.length, gap=12, bw=(CW-gap*(n-1))/n;
+ cells.forEach((c,j)=>{
+  const bx=x+j*(bw+gap), key=c.rest?('rest:'+g.k):('dp:'+g.k+':'+j);
+  wire(x+CW/2,T.gy.y+T.gy.h,bx+bw/2,T.dp.y,g);
+  const gb=el('g',{class:'blk'},sc); gb.dataset.k=key;
+  block(gb,bx,T.dp.y,bw,T.dp.h,g,.11);
+  if(c.rest){
+   const rp=c.list.reduce((a,b)=>a+b.p,0);
+   txt(gb,bx+12,T.dp.y+25,'그 외','bn sm');
+   txt(gb,bx+12,T.dp.y+48,N(c.list.length)+'개','bv sm',g.c);
+   txt(gb,bx+12,T.dp.y+70,'논문 '+N(rp),'bs');
+   REST.push({g,list:c.list});
+  }else{
+   const cap=Math.max(4,Math.floor((bw-24)/10.6));
+   const nm=c.d.d.length>cap?c.d.d.slice(0,cap-1)+'…':c.d.d;
+   txt(gb,bx+12,T.dp.y+25,nm,'bn sm');
+   txt(gb,bx+12,T.dp.y+48,N(c.d.p),'bv sm',g.c);
+   txt(gb,bx+12,T.dp.y+70,'교수 '+c.d.prof+' · 학생 '+N(c.d.stu),'bs');
+   const ttl=el('title',{},gb); ttl.textContent=c.d.d;
+  }
+  wire(bx+bw/2,T.dp.y+T.dp.h,x+CW/2,T.pp.y,g);
+ });
+
+ const ppl=v.prof+v.jr+v.stu;
+ const gp=el('g',{class:'blk'},sc); gp.dataset.k='pp:'+g.k;
+ block(gp,x,T.pp.y,CW,T.pp.h,g,.13);
+ txt(gp,x+18,T.pp.y+26,'참여자','bn');
+ txt(gp,x+18,T.pp.y+52,N(ppl)+'명','bv',g.c);
+ txt(gp,x+CW-18,T.pp.y+30,'교수 '+N(v.prof)+' · 신진 '+N(v.jr),'bu').setAttribute('text-anchor','end');
+ txt(gp,x+CW-18,T.pp.y+52,'대학원생 '+N(v.stu),'bu').setAttribute('text-anchor','end');
+
+ wire(x+CW/2,T.pp.y+T.pp.h,x+CW/2,T.pa.y,g);
+
+ const ga=el('g',{class:'blk'},sc); ga.dataset.k='pa:'+g.k;
+ block(ga,x,T.pa.y,CW,T.pa.h,g,.13);
+ txt(ga,x+18,T.pa.y+26,'논문','bn');
+ txt(ga,x+18,T.pa.y+52,N(v.P+v.S)+'편','bv',g.c);
+ txt(ga,x+CW-18,T.pa.y+30,'교수 주도 '+N(v.P),'bu').setAttribute('text-anchor','end');
+ txt(ga,x+CW-18,T.pa.y+52,'학생 주저자 '+N(v.S),'bu').setAttribute('text-anchor','end');
+});
+
+/* ── 패널 ── */
+function card(k,v,c){return `<div class="pi"><div class="k">${k}</div><div class="v"${c?` style="color:${c}"`:''}>${v}</div></div>`;}
+function tbl(rows,cols){
+ return `<table><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${
+  rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+}
+function show(k){
+ document.querySelectorAll('.blk').forEach(b=>b.classList.toggle('on',b.dataset.k===k));
+ const S=D.sum, p=k.split(':'), g=GY.find(x=>x.k===p[1]), v=g?D.gy[g.k]:null;
+ let ix,h3,tg,body,c=g?g.c:RT.c;
+ if(k==='root'){
+  ix='① 사업단'; h3='BK21 교육연구단 '+N(S.dept)+'개'; tg='ROOT';
+  body=`<div class="pg">${card('연구단',N(S.dept)+'개',c)}${card('참여교수',N(S.prof)+'명')}
+   ${card('신진연구인력',N(S.jr)+'명')}${card('대학원생',N(S.stu)+'명')}
+   ${card('논문(고유)',N(S.papers)+'편')}${card('누적 피인용',N(S.PC+S.SC)+'회')}</div>
+   <div class="pd">계열별 합계는 <b>${N(S.PN+S.SN)}편</b>으로 고유 논문 <b>${N(S.papers)}편</b>보다 많다.
+   한 논문에 서로 다른 연구단 소속 저자가 함께 참여하면 각 연구단에 모두 잡히기 때문.
+   총계를 볼 때는 고유 편수를, 연구단을 평가할 때는 귀속 편수를 쓴다.</div>
+   ${tbl(GY.map(x=>{const y=D.gy[x.k];return [x.k,N(y.n),N(y.prof),N(y.jr),N(y.stu),N(y.P+y.S)];}),
+     ['계열','연구단','교수','신진','대학원생','논문'])}`;
+ }else if(p[0]==='gy'||p[0]==='pp'||p[0]==='pa'){
+  const t={gy:'② 계열',pp:'④ 사람',pa:'⑤ 논문'}[p[0]];
+  ix=t; h3=g.k; tg=v.n+'개 연구단';
+  body=`<div class="pg">${card('연구단',N(v.n)+'개',c)}${card('참여교수',N(v.prof)+'명')}
+   ${card('신진연구인력',N(v.jr)+'명')}${card('대학원생',N(v.stu)+'명')}
+   ${card('교수 주도 논문',N(v.P)+'편')}${card('학생 주저자 논문',N(v.S)+'편')}</div>
+   <div class="pd">참여자 1인당 논문 <b>${((v.P+v.S)/(v.prof+v.jr+v.stu)).toFixed(2)}편</b>,
+   교수 1인당 <b>${(v.P/v.prof).toFixed(1)}편</b>.
+   학생 주저자 비중은 전체의 <b>${((v.S/(v.P+v.S))*100).toFixed(1)}%</b>.</div>
+   ${tbl(v.depts.map(d=>[d.d,N(d.prof),N(d.jr),N(d.stu),N(d.p),(d.p/Math.max(1,d.prof)).toFixed(1)]),
+     ['학과 · 연구단','교수','신진','대학원생','논문','교수1인당'])}`;
+ }else if(p[0]==='dp'){
+  const d=v.depts[+p[2]];
+  ix='③ 학과 · 연구단'; h3=d.d; tg=g.k;
+  body=`<div class="pg">${card('참여교수',N(d.prof)+'명',c)}${card('신진연구인력',N(d.jr)+'명')}
+   ${card('대학원생',N(d.stu)+'명')}${card('논문',N(d.p)+'편')}
+   ${card('교수 1인당',(d.p/Math.max(1,d.prof)).toFixed(1)+'편')}
+   ${card('계열 내 비중',((d.p/(v.P+v.S))*100).toFixed(1)+'%')}</div>
+   <div class="pd">${g.k} 계열 ${v.n}개 연구단 중 논문 수 <b>${v.depts.indexOf(d)+1}위</b>.
+   학생 1인당 논문 <b>${(d.p/Math.max(1,d.stu)).toFixed(2)}편</b>.</div>`;
+ }else{ /* rest */
+  const R=REST.find(r=>r.g.k===p[1]);
+  ix='③ 학과 · 연구단'; h3=g.k+' 그 외 '+R.list.length+'개'; tg='상위 3개 제외';
+  const rp=R.list.reduce((a,b)=>a+b.p,0), rprof=R.list.reduce((a,b)=>a+b.prof,0),
+        rstu=R.list.reduce((a,b)=>a+b.stu,0);
+  body=`<div class="pg">${card('연구단',N(R.list.length)+'개',c)}${card('참여교수',N(rprof)+'명')}
+   ${card('대학원생',N(rstu)+'명')}${card('논문',N(rp)+'편')}
+   ${card('계열 내 비중',((rp/(v.P+v.S))*100).toFixed(1)+'%')}</div>
+   ${tbl(R.list.map(d=>[d.d,N(d.prof),N(d.jr),N(d.stu),N(d.p),(d.p/Math.max(1,d.prof)).toFixed(1)]),
+     ['학과 · 연구단','교수','신진','대학원생','논문','교수1인당'])}`;
+ }
+ pnl.innerHTML=`<div class="pn"><span class="ix">${ix}</span><h3>${h3}</h3>
+  <span class="tg" style="border:1px solid ${c}55;color:${c}">${tg}</span></div>${body}`;
+}
+sc.addEventListener('click',e=>{const b=e.target.closest('.blk'); if(b) show(b.dataset.k);});
+show('root');
+</script>
+</div></div>
+
+<script>
+/* 1600x900 고정 무대 — 작업가이드 5장 규격.
+   resize 하나만 걸면 iframe 슬라이드에서 배율이 틀어진 채 굳는다. 다섯 개를 다 건다. */
+function fitStage(){
+  const st=document.getElementById('stage'); if(!st) return;
+  st.style.height='900px';
+  const k=Math.min(innerWidth/1600, innerHeight/900);
+  st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;
+}
+fitStage();
+addEventListener('resize',fitStage);
+addEventListener('load',fitStage);
+addEventListener('pageshow',fitStage);
+if(window.ResizeObserver) new ResizeObserver(fitStage).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitStage);
+</script>
+<script>if(window.self!==window.top) document.documentElement.classList.add('emb-bg0');</script>
