@@ -1,0 +1,363 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BIBLO — 검색</title>
+<style>
+.wrap-7q2v8{--ink:#eef3ff;--ink2:#9aabd2;--ink3:#63769c;
+ --m:#ff3fd0;--bl:#2b6bff;--cy:#38d6f8;
+ position:relative;width:100vw;height:100vh;min-height:560px;overflow:hidden;
+ font:14px/1.6 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo",system-ui,sans-serif;
+ color:var(--ink);-webkit-font-smoothing:antialiased;
+ background:radial-gradient(1200px 760px at 50% 50%,#0a0713 0%,#06040d 55%,#020105 100%)}
+.wrap-7q2v8 *{box-sizing:border-box;margin:0;padding:0}
+.halo-7q2v8{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+
+/* ── 워드마크 ── */
+.mark-7q2v8{position:absolute;left:50%;top:12vh;transform:translateX(-50%);z-index:4;
+ display:flex;align-items:center;gap:11px;opacity:.9}
+.mark-7q2v8 b{font:700 12.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.34em;color:#cfd9f5}
+.mark-7q2v8 s{text-decoration:none;font:600 10.5px/1 ui-monospace,Menlo,monospace;
+ letter-spacing:.15em;color:var(--ink3)}
+
+/* ── 알약 검색바 ── */
+@keyframes bl-7q2v8{0%,50%{opacity:1}51%,100%{opacity:.15}}
+
+/* ── 예시 질의 ── */
+.cap-7q2v8{position:absolute;left:50%;bottom:4vh;z-index:4;width:1600px;padding:0 82px;
+ transform-origin:50% 100%;transform:translateX(-50%)}
+.grid-7q2v8{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+/* 3장 LAYER 1·2 규격 승계 */
+.bx-7q2v8{position:relative;border:1px solid rgba(96,165,250,.18);border-radius:18px;padding:18px 20px;
+ background:linear-gradient(180deg,rgba(22,30,58,.62),rgba(10,15,32,.62));backdrop-filter:blur(6px);
+ text-align:left;display:flex;flex-direction:column}
+.bx-7q2v8 .n-7q2v8{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;color:#7c88b8;
+ margin-bottom:9px}
+.bx-7q2v8 h3{font-size:15px;font-weight:800;letter-spacing:-.4px;color:#6fc8ff;line-height:1.35}
+.bx-7q2v8 .s-x{margin-top:5px;font:700 10.5px/1 ui-monospace,Menlo,monospace;color:#7c88b8;letter-spacing:.06em}
+.bx-7q2v8 ul{margin-top:9px;list-style:none;display:flex;flex-direction:column;gap:5px}
+.bx-7q2v8 li{position:relative;padding-left:14px;font-size:14.5px;font-weight:500;line-height:1.5;
+ letter-spacing:-.3px;color:rgba(255,255,255,.9);word-break:keep-all}
+.bx-7q2v8 li:before{content:"";position:absolute;left:0;top:9px;width:4px;height:4px;border-radius:50%;
+ background:rgba(140,200,255,.62)}
+.bx-7q2v8 .m-x{margin-top:auto;padding-top:12px;font:700 12px/1.5 ui-monospace,Menlo,monospace;color:#9fd4ff}
+.cert-7q2v8{position:absolute;right:14px;top:14px;display:flex;align-items:center;gap:6px;
+ padding:5px 8px 5px 5px;cursor:pointer;border:1px solid rgba(120,150,220,.32);border-radius:9px;
+ background:rgba(12,20,42,.7);font:inherit;transition:.16s}
+.cert-7q2v8:hover{border-color:rgba(150,190,255,.6);background:rgba(16,26,54,.9)}
+.cert-7q2v8 img{width:18px;height:25px;object-fit:cover;object-position:top;border-radius:2px;
+ border:1px solid rgba(255,255,255,.16);display:block;flex:none}
+.cert-7q2v8 s{text-decoration:none;font:700 9.5px/1 ui-monospace,Menlo,monospace;color:#9fc7ff;
+ letter-spacing:.02em;white-space:nowrap}
+.ttl-7q2v8{position:absolute;left:0;right:0;top:15.5%;z-index:4;text-align:center;
+ font-size:44px;font-weight:800;letter-spacing:.5px;color:#fff;line-height:1.2}
+.lead-7q2v8{position:absolute;left:0;right:0;top:25.5%;z-index:4;text-align:center;
+ font-size:19px;font-weight:600;letter-spacing:-.4px;color:#c4d3ee;line-height:1.6}
+.lead-7q2v8 b{color:#fff;font-weight:800}
+.lead-7q2v8 em{display:block;margin-top:6px;font-style:normal;font-size:15px;color:#7f92b8}
+.modal-7q2v8{position:fixed;inset:0;z-index:60;display:none;place-items:center;
+  background:rgba(2,4,12,.86);backdrop-filter:blur(6px);padding:4vh 16px}
+.modal-7q2v8.on{display:grid}
+.mbox-7q2v8{position:relative;max-height:92vh}
+.mbox-7q2v8 img{display:block;max-height:92vh;max-width:min(760px,92vw);width:auto;height:auto;
+  border-radius:10px;box-shadow:0 30px 90px rgba(0,0,0,.7)}
+.mclose-7q2v8{position:absolute;right:-14px;top:-14px;width:36px;height:36px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.28);background:#0b1226;color:#dbe6ff;cursor:pointer;
+  font:700 18px/1 ui-monospace,Menlo,monospace}
+.mclose-7q2v8:hover{border-color:#9fc7ff;color:#fff}
+.sug-7q2v8{position:absolute;left:50%;transform:translateX(-50%);z-index:4;
+ display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:min(92vw,980px);padding:0 8px}
+.s-7q2v8{border-radius:999px;padding:8px 14px;white-space:nowrap;cursor:pointer;
+ font-weight:600;font-size:clamp(11px,1.05vw,13.5px);color:#b9c6e8;
+ background:rgba(255,255,255,.045);border:1px solid rgba(160,180,255,.18);
+ transition:background .18s,border-color .18s,color .18s}
+.s-7q2v8:hover{background:rgba(120,150,255,.14);border-color:rgba(170,190,255,.42);color:#eaf0ff}
+.s-7q2v8 u{text-decoration:none;color:var(--ink3);margin-left:7px;font-weight:600}
+@media(max-width:460px){.s-7q2v8 u{display:none}}
+/* 좁은 화면 — 칩을 접지 말고 한 줄 가로 스크롤로 */
+@media(max-width:620px){
+ .sug-7q2v8{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  padding:0 14px;left:0;right:0;transform:none;width:100%;max-width:100%!important}
+ .sug-7q2v8::-webkit-scrollbar{display:none}
+ .s-7q2v8{flex:none}
+}
+
+/* ── 하단 캡션 ── */
+/* 아주 좁은 화면 — 마이크를 빼서 문구 자리를 확보 */
+@media(max-width:430px){
+}
+@media (prefers-reduced-motion: reduce){
+}
+
+/* ══ 검색박스 — biblo-search-2.html 에서 그대로 가져왔다 ══════════════
+   테두리·글로우가 원뿔 그라데이션을 각도(--ang)로 돌리는 구조라
+   @property 선언과 색 변수 네 개가 함께 와야 한다. */
+@property --ang-3w8n1{syntax:'<angle>';initial-value:0deg;inherits:false}
+.wrap-7q2v8{--c1:#ff4d3d;--c2:#2b6bff;--c3:#12b76a;--c4:#ffb400}
+.box-3w8n1{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3}
+.glow-3w8n1{position:absolute;inset:-6%;border-radius:999px;z-index:-1;
+ background:conic-gradient(from var(--ang-3w8n1),
+  var(--c1) 0deg,var(--c2) 92deg,var(--c3) 184deg,var(--c4) 272deg,var(--c1) 360deg);
+ filter:blur(46px);opacity:.62;animation:sp-3w8n1 14s linear infinite}
+.glow2-3w8n1{position:absolute;inset:1%;border-radius:999px;z-index:-1;
+ background:conic-gradient(from var(--ang-3w8n1),
+  var(--c1) 0deg,var(--c2) 92deg,var(--c3) 184deg,var(--c4) 272deg,var(--c1) 360deg);
+ filter:blur(14px);opacity:.85;animation:sp-3w8n1 14s linear infinite}
+.pill-3w8n1{position:relative;display:flex;align-items:center;
+ gap:clamp(12px,1.4vw,22px);border-radius:999px;background:#000;
+ padding:0 clamp(14px,1.5vw,24px) 0 clamp(22px,2.4vw,38px)}
+.pill-3w8n1::before{content:"";position:absolute;inset:0;border-radius:999px;padding:2px;
+ background:conic-gradient(from var(--ang-3w8n1),
+  var(--c1) 0deg,var(--c2) 92deg,var(--c3) 184deg,var(--c4) 272deg,var(--c1) 360deg);
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+ -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;
+ animation:sp-3w8n1 14s linear infinite}
+.ph-3w8n1{flex:1;min-width:0;font-weight:400;letter-spacing:-.4px;color:#c8cdd8;
+ white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .3s}
+.ic-3w8n1{flex:none;color:#f0f2f7;opacity:.92;cursor:pointer;transition:opacity .18s,transform .18s}
+.ic-3w8n1:hover{opacity:1;transform:scale(1.08)}
+@keyframes sp-3w8n1{to{--ang-3w8n1:360deg}}
+@media (prefers-reduced-motion: reduce){
+ .glow-3w8n1,.glow2-3w8n1,.pill-3w8n1::before{animation:none}
+}
+</style></head><body style="margin:0;background:#020105">
+<div class="wrap-7q2v8" id="wrap-7q2v8">
+ <canvas class="halo-7q2v8" id="halo-7q2v8"></canvas>
+
+ <div class="mark-7q2v8">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="#9fc7ff">
+   <circle cx="4" cy="12" r="1.6"/><circle cx="9.5" cy="7" r="1.8"/><circle cx="9.5" cy="17" r="1.8"/>
+   <circle cx="15" cy="12" r="2.1"/><circle cx="20" cy="8" r="1.5"/><circle cx="20" cy="16" r="1.5"/></svg>
+  <b>BIBLO SOLUTION</b><s>· AI검색엔진</s>
+ </div>
+
+ <h1 class="ttl-7q2v8">Ⅰ. AI 검색엔진</h1>
+
+ <div class="lead-7q2v8">정확한 키워드에서 시작해 <b>내용의 맥락까지</b> 이어지는 검색.
+  <em>사람이 서가를 거니는 순서 그대로.</em></div>
+
+ <!-- 검색박스는 biblo_rims_front/docs/biblo-search-2.html 것을 그대로 가져왔다.
+      클래스·id 접미사(-3w8n1)도 원본 그대로. 이 파일의 -7q2v8 과 겹치지 않는다. -->
+ <div class="box-3w8n1" id="box-3w8n1">
+  <span class="glow-3w8n1"></span><span class="glow2-3w8n1"></span>
+  <div class="pill-3w8n1" id="pill-3w8n1">
+   <span class="ph-3w8n1" id="ph-3w8n1">무엇이든 물어보세요…</span>
+   <svg class="ic-3w8n1 mic-3w8n1" id="mic-3w8n1" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="9.3" y="3" width="5.4" height="10.6" rx="2.7"/>
+    <path d="M5.6 11.6a6.4 6.4 0 0 0 12.8 0M12 18v3"/></svg>
+   <svg class="ic-3w8n1" id="doc-3w8n1" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.6 7.4h3l1.3-2h6.2l1.3 2h3a1.6 1.6 0 0 1 1.6 1.6v8.4a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 17.4V9a1.6 1.6 0 0 1 1.6-1.6z"/>
+    <circle cx="12" cy="13.1" r="3.3"/></svg>
+  </div>
+ </div>
+
+ <div class="sug-7q2v8" id="sug-7q2v8"></div>
+ <div class="cap-7q2v8" id="cap-7q2v8">
+  <div class="grid-7q2v8" id="grid-7q2v8"></div>
+ </div>
+
+ <div class="modal-7q2v8" id="modal-7q2v8" role="dialog" aria-modal="true" aria-label="AI 검색엔진 시험성적서">
+  <div class="mbox-7q2v8">
+   <button class="mclose-7q2v8" id="mclose-7q2v8" type="button" aria-label="닫기">×</button>
+   <img src="cert-search-engine.jpg" alt="비블로 AI 검색엔진 시험성적서">
+  </div>
+ </div>
+</div>
+<script>
+(function(){
+const T='7q2v8', $=id=>document.getElementById(id+'-'+T);
+const wrap=$('wrap'), halo=$('halo'), sug=$('sug'), cap=$('cap');
+/* 알약은 biblo-search-2 것으로 바뀌었다(접미사 -3w8n1).
+   원래 있던 plus·go·wave 는 그 박스에 없으므로 참조하지 않는다. */
+const pill=document.getElementById('pill-3w8n1'), ph=document.getElementById('ph-3w8n1');
+const ICONS=[document.getElementById('mic-3w8n1'), document.getElementById('doc-3w8n1')];
+const ctx=halo.getContext('2d');
+
+/* ── 예시 질의 · BIBLO 가 실제로 답하는 것들 ── */
+const Q=[
+ ['통합검색',      '정확한 키워드'],
+ ['소장자료검색',  '키워드 맥락으로 확장'],
+ ['시맨틱검색',    '내용의 결로 닿는'],
+ ['사서처럼',      '되물어 좁혀 준다']
+];
+const HINT=[
+ '키워드와 자연어 질문을 한 창에서. 1초 안에 결과.',
+ '제목을 몰라도 내용의 결로 찾아냅니다',
+ '무엇을 찾는지 흐릿하면 사서처럼 되물어 좁혀 줍니다',
+ '책·논문·연구자를 한 번에 가로질러 찾습니다',
+ '키워드가 하나도 안 겹쳐도 뜻이 닿으면 찾아냅니다'
+];
+const HINT_S=['키워드와 자연어를 한 창에서','내용의 결로 찾아냅니다','사서처럼 되물어 좁혀 줍니다',
+              '책·논문·연구자를 한 번에','뜻이 닿으면 찾아냅니다'];
+const hints=()=>(innerWidth<760?HINT_S:HINT);
+sug.innerHTML=Q.map(([a,b])=>`<div class="s-${T}">${a}<u>${b}</u></div>`).join('');
+
+
+/* ── 하단 01~05 박스 ── */
+const BOX=[
+ {n:'01',t:'키워드와 자연어를<br>한 창에서',s:'통합검색',
+  li:['정확한 제목·저자·ISBN 은 그대로','문장으로 물어도 같은 창에서 받는다'],m:'1건 · 0.1초'},
+ {n:'02',t:'제목을 몰라도<br>내용의 결로',s:'시맨틱검색',
+  li:['제목·키워드가 하나도 안 겹쳐도 닿는다','책지문 벡터가 이웃을 찾는다'],m:'의미 벡터 76.0만'},
+ {n:'03',t:'사서처럼<br>되물어 좁힌다',s:'AI 사서기능',
+  li:['없으면 “이런 책은 어때요?” 로 추천','모호하면 세 문항으로 좁힌다'],m:'0건 화면이 없다'},
+ {n:'04',t:'매주 쌓이는<br>12축 책지문',s:'데이터 토대',
+  li:['책 한 권을 12개 검색 칸으로 나눠 담는다','도입 도서관이 늘수록 품질이 오른다'],m:'책지문 89.5만 · 색인어 24.6개'},
+ {n:'05',t:'인증받은<br>AI 검색엔진',s:'공인 시험성적서',
+  li:['KOLAS 공인 · 한국녹색기후기술원','기능 정확성 · 평균 반환 시간 2개 항목'],m:'KS X ISO/IEC 25023:2016',cert:1}
+];
+document.getElementById('grid-7q2v8').innerHTML=BOX.map(b=>`
+ <div class="bx-7q2v8">
+  <div class="n-7q2v8">${b.n}</div><h3>${b.t}</h3><div class="s-x">${b.s}</div>
+  <ul>${b.li.map(x=>`<li>${x}</li>`).join('')}</ul>
+  <div class="m-x">${b.m}</div>
+  ${b.cert?`<button class="cert-7q2v8" id="cert-7q2v8" type="button" title="시험성적서 크게 보기">
+    <img src="cert-search-engine.jpg" alt="비블로 검색엔진 시험성적서"><s>시험성적서</s></button>`:''}
+ </div>`).join('');
+
+/* ── 시험성적서 레이어 팝업 ── */
+(function(){
+ const md=$('modal'), bt=$('cert'), cl=$('mclose');
+ if(!md||!bt)return;
+ const open=()=>md.classList.add('on');
+ const close=()=>md.classList.remove('on');
+ bt.addEventListener('click',open);
+ cl&&cl.addEventListener('click',close);
+ md.addEventListener('click',e=>{if(e.target===md)close();});
+ addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+})();
+
+/* ── 알약 크기·위치 ── */
+let W=0,H=0,DPR=1,PW=0,PH=0,CX=0,CY=0;
+function layout(){
+ W=wrap.clientWidth; H=wrap.clientHeight; DPR=Math.min(devicePixelRatio||1,2);
+ const NAR=W<760;
+ PW=Math.min(NAR?W*0.90:W*0.70, 1040);
+ PH=Math.max(NAR?58:74, Math.min(PW*(NAR?0.185:0.135), 132));
+ ph.style.fontSize=Math.round(Math.max(13, Math.min(PH*0.30, 32)))+'px';
+ pill.style.width=Math.round(PW)+'px';
+ pill.style.height=Math.round(PH)+'px';
+ const ic=Math.round(Math.max(20,PH*0.32));
+ ICONS.forEach(e=>{if(e){e.setAttribute('width',ic);e.setAttribute('height',ic);}});
+ // 칩 줄은 캡션 위에 반드시 남게 배치한다
+ const capH=cap.getBoundingClientRect().height||34;
+ const sugH=sug.getBoundingClientRect().height||40;
+ const floor=H/2+PH/2+14;                       // 알약을 절대 침범하지 않는 하한
+ const want=H/2+PH/2+Math.max(30,H*0.065);
+ const limit=H-(H*0.052+capH)-sugH-14;
+ sug.style.top=Math.round(Math.max(floor, Math.min(want, limit)))+'px';
+ sug.style.maxWidth=Math.round(Math.min(W*0.92, 980))+'px';
+ CX=W/2; CY=H/2;
+ /* 하단 박스는 3장과 같은 규칙(1600x900 기준)으로 확대·축소한다 */
+ const kk=Math.min(innerWidth/1600, innerHeight/900);   // 3장과 동일한 기준
+ cap.style.transform='translateX(-50%) scale('+kk.toFixed(4)+')';
+ halo.width=Math.round(W*DPR); halo.height=Math.round(H*DPR);
+ bake();
+}
+/* ── 하프톤 halo ── 알약 윤곽까지의 거리로 점 크기·밝기·색을 정한다 */
+let BASE=null;
+function sd(x,y){                      // 알약(완전 라운드) 표면까지의 거리
+ const R=PH/2, ex=Math.max(Math.abs(x-CX)-(PW/2-R),0), ey=Math.abs(y-CY);
+ return Math.hypot(ex,ey)-R;
+}
+function bake(){
+ BASE=document.createElement('canvas');
+ BASE.width=halo.width; BASE.height=halo.height;
+ const c=BASE.getContext('2d'); c.setTransform(DPR,0,0,DPR,0,0);
+ const step=Math.max(9, Math.round(PH*0.095));
+ const FADE=PH*0.50, SPAN=PW*1.15;         // 알약에서 약 1 알약높이까지만 퍼진다
+ const REACH=PH*1.35;
+ const x0=CX-PW/2-REACH, x1=CX+PW/2+REACH, y0=CY-PH/2-REACH, y1=CY+PH/2+REACH;
+ for(let y=y0; y<=y1; y+=step){
+  if(y<-step||y>H+step) continue;
+  for(let x=x0; x<=x1; x+=step){
+   if(x<-step||x>W+step) continue;
+   const d=sd(x,y);
+   if(d<PH*0.10) continue;                       // 알약 안쪽·경계는 비운다
+   const f=Math.exp(-d/FADE);
+   if(f<0.10) continue;
+   const t=Math.min(1,Math.max(0,(x-(CX-SPAN/2))/SPAN));
+   const r=Math.round(255+(43-255)*t), g=Math.round(63+(107-63)*t), b=Math.round(208+(255-208)*t);
+   const s=step*0.40*(0.30+0.70*f);
+   c.fillStyle=`rgba(${r},${g},${b},${(f*0.95).toFixed(3)})`;
+   c.beginPath();                                 // 다이아몬드
+   c.moveTo(x,y-s); c.lineTo(x+s*0.60,y); c.lineTo(x,y+s); c.lineTo(x-s*0.60,y);
+   c.closePath(); c.fill();
+  }
+ }
+ // 알약 주변 부드러운 글로우
+ c.globalCompositeOperation='lighter';
+ const g2=c.createLinearGradient(CX-PW/2,0,CX+PW/2,0);
+ g2.addColorStop(0,'rgba(255,63,208,.34)'); g2.addColorStop(.55,'rgba(150,120,255,.24)');
+ g2.addColorStop(1,'rgba(43,107,255,.34)');
+ c.filter=`blur(${Math.round(PH*0.30)}px)`;
+ c.fillStyle=g2; c.beginPath();
+ const R=PH/2;
+ c.roundRect(CX-PW/2-R*0.5, CY-PH/2-R*0.5, PW+R, PH+R, (PH+R)/2); c.fill();
+ c.filter='none'; c.globalCompositeOperation='source-over';
+}
+/* ── 숨쉬기 + 좌우 스윕 (베이크한 층 위에 아주 가벼운 합성만) ── */
+const RM=matchMedia('(prefers-reduced-motion: reduce)');
+let STILL=RM.matches, t0=0, run=true;
+function draw(ts){
+ if(!run) return;
+ if(!t0) t0=ts; const T2=(ts-t0)/1000;
+ ctx.setTransform(1,0,0,1,0,0);
+ ctx.clearRect(0,0,halo.width,halo.height);
+ ctx.globalAlpha=STILL?1:(0.88+0.12*Math.sin(T2*0.9));
+ ctx.drawImage(BASE,0,0);
+ ctx.globalAlpha=1;
+ if(!STILL){
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  /* 기존 흐름광 — 은은한 푸른 빛 */
+  ctx.globalCompositeOperation='lighter';
+  const p=((T2*0.16)%1.6)-0.3, sx=CX+(p-0.5)*PW*1.7;
+  const g=ctx.createRadialGradient(sx,CY,0,sx,CY,PW*0.30);
+  g.addColorStop(0,'rgba(190,210,255,.08)'); g.addColorStop(1,'rgba(190,210,255,0)');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+
+  /* 흰 블러 띠 — source-atop 이라 점묘 그라디언트가 있는 자리에만 얹힌다.
+     검은 배경에는 번지지 않는다. */
+  ctx.globalCompositeOperation='source-atop';
+  ctx.filter='blur(30px)';
+  const wx=CX+Math.sin(T2*0.38)*PW*0.46, wy=CY+Math.sin(T2*0.23)*PH*0.30;
+  const wg=ctx.createRadialGradient(wx,wy,0,wx,wy,PW*0.52);
+  wg.addColorStop(0,   'rgba(255,255,255,.62)');
+  wg.addColorStop(0.40,'rgba(255,255,255,.30)');
+  wg.addColorStop(0.75,'rgba(255,255,255,.10)');
+  wg.addColorStop(1,   'rgba(255,255,255,0)');
+  ctx.fillStyle=wg; ctx.fillRect(0,0,W,H);
+  ctx.filter='none';
+
+  ctx.globalCompositeOperation='source-over';
+  requestAnimationFrame(draw);
+ }
+}
+/* ── 플레이스홀더 순환 ── */
+let hi=0;
+function cycle(){
+ const L2=hints(); hi=(hi+1)%L2.length;
+ ph.style.transition='opacity .32s'; ph.style.opacity='0';
+ setTimeout(()=>{ph.textContent=L2[hi]; ph.style.opacity='1';},320);
+}
+let cyc=setInterval(cycle, 3400);
+sug.addEventListener('click',e=>{const s=e.target.closest('.s-'+T); if(!s)return;
+ clearInterval(cyc); ph.textContent=s.childNodes[0].textContent.trim()+' 결과 보기';
+ cyc=setInterval(cycle,3400);});
+
+let rt=0;
+addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{layout();
+ if(STILL){ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,halo.width,halo.height);ctx.drawImage(BASE,0,0);}
+},140);});
+document.addEventListener('visibilitychange',()=>{run=!document.hidden;
+ if(run&&!STILL){t0=0;requestAnimationFrame(draw);}});
+RM.addEventListener?.('change',e=>{STILL=e.matches;
+ if(STILL){ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,halo.width,halo.height);ctx.drawImage(BASE,0,0);
+   clearInterval(cyc);} else {t0=0;requestAnimationFrame(draw);cyc=setInterval(cycle,3400);}});
+
+layout();
+if(STILL){ctx.setTransform(1,0,0,1,0,0);ctx.drawImage(BASE,0,0); clearInterval(cyc);}
+else requestAnimationFrame(draw);
+})();
+</script></body></html>
