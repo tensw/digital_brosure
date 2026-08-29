@@ -9,7 +9,6 @@
  color:var(--ink);-webkit-font-smoothing:antialiased;
  background:radial-gradient(1200px 760px at 50% 50%,#0a0713 0%,#06040d 55%,#020105 100%)}
 .wrap-7q2v8 *{box-sizing:border-box;margin:0;padding:0}
-.halo-7q2v8{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
 
 /* ── 워드마크 ── */
 .mark-7q2v8{position:absolute;left:50%;top:12vh;transform:translateX(-50%);z-index:4;
@@ -121,7 +120,6 @@
 }
 </style></head><body style="margin:0;background:#020105">
 <div class="wrap-7q2v8" id="wrap-7q2v8">
- <canvas class="halo-7q2v8" id="halo-7q2v8"></canvas>
 
  <div class="mark-7q2v8">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="#9fc7ff">
@@ -167,12 +165,11 @@
 <script>
 (function(){
 const T='7q2v8', $=id=>document.getElementById(id+'-'+T);
-const wrap=$('wrap'), halo=$('halo'), sug=$('sug'), cap=$('cap');
+const wrap=$('wrap'), sug=$('sug'), cap=$('cap');
 /* 알약은 biblo-search-2 것으로 바뀌었다(접미사 -3w8n1).
    원래 있던 plus·go·wave 는 그 박스에 없으므로 참조하지 않는다. */
 const pill=document.getElementById('pill-3w8n1'), ph=document.getElementById('ph-3w8n1');
 const ICONS=[document.getElementById('mic-3w8n1'), document.getElementById('doc-3w8n1')];
-const ctx=halo.getContext('2d');
 
 /* ── 예시 질의 · BIBLO 가 실제로 답하는 것들 ── */
 const Q=[
@@ -252,88 +249,10 @@ function layout(){
  /* 하단 박스는 3장과 같은 규칙(1600x900 기준)으로 확대·축소한다 */
  const kk=Math.min(innerWidth/1600, innerHeight/900);   // 3장과 동일한 기준
  cap.style.transform='translateX(-50%) scale('+kk.toFixed(4)+')';
- halo.width=Math.round(W*DPR); halo.height=Math.round(H*DPR);
- bake();
 }
-/* ── 하프톤 halo ── 알약 윤곽까지의 거리로 점 크기·밝기·색을 정한다 */
-let BASE=null;
-function sd(x,y){                      // 알약(완전 라운드) 표면까지의 거리
- const R=PH/2, ex=Math.max(Math.abs(x-CX)-(PW/2-R),0), ey=Math.abs(y-CY);
- return Math.hypot(ex,ey)-R;
-}
-function bake(){
- BASE=document.createElement('canvas');
- BASE.width=halo.width; BASE.height=halo.height;
- const c=BASE.getContext('2d'); c.setTransform(DPR,0,0,DPR,0,0);
- const step=Math.max(9, Math.round(PH*0.095));
- const FADE=PH*0.50, SPAN=PW*1.15;         // 알약에서 약 1 알약높이까지만 퍼진다
- const REACH=PH*1.35;
- const x0=CX-PW/2-REACH, x1=CX+PW/2+REACH, y0=CY-PH/2-REACH, y1=CY+PH/2+REACH;
- for(let y=y0; y<=y1; y+=step){
-  if(y<-step||y>H+step) continue;
-  for(let x=x0; x<=x1; x+=step){
-   if(x<-step||x>W+step) continue;
-   const d=sd(x,y);
-   if(d<PH*0.10) continue;                       // 알약 안쪽·경계는 비운다
-   const f=Math.exp(-d/FADE);
-   if(f<0.10) continue;
-   const t=Math.min(1,Math.max(0,(x-(CX-SPAN/2))/SPAN));
-   const r=Math.round(255+(43-255)*t), g=Math.round(63+(107-63)*t), b=Math.round(208+(255-208)*t);
-   const s=step*0.40*(0.30+0.70*f);
-   c.fillStyle=`rgba(${r},${g},${b},${(f*0.95).toFixed(3)})`;
-   c.beginPath();                                 // 다이아몬드
-   c.moveTo(x,y-s); c.lineTo(x+s*0.60,y); c.lineTo(x,y+s); c.lineTo(x-s*0.60,y);
-   c.closePath(); c.fill();
-  }
- }
- // 알약 주변 부드러운 글로우
- c.globalCompositeOperation='lighter';
- const g2=c.createLinearGradient(CX-PW/2,0,CX+PW/2,0);
- g2.addColorStop(0,'rgba(255,63,208,.34)'); g2.addColorStop(.55,'rgba(150,120,255,.24)');
- g2.addColorStop(1,'rgba(43,107,255,.34)');
- c.filter=`blur(${Math.round(PH*0.30)}px)`;
- c.fillStyle=g2; c.beginPath();
- const R=PH/2;
- c.roundRect(CX-PW/2-R*0.5, CY-PH/2-R*0.5, PW+R, PH+R, (PH+R)/2); c.fill();
- c.filter='none'; c.globalCompositeOperation='source-over';
-}
-/* ── 숨쉬기 + 좌우 스윕 (베이크한 층 위에 아주 가벼운 합성만) ── */
+/* 점묘 halo 는 걷어냈다. 새 검색박스가 자기 글로우를 갖고 있어
+   두 겹이 겹쳐 보였다. 애니메이션 루프도 함께 지웠다. */
 const RM=matchMedia('(prefers-reduced-motion: reduce)');
-let STILL=RM.matches, t0=0, run=true;
-function draw(ts){
- if(!run) return;
- if(!t0) t0=ts; const T2=(ts-t0)/1000;
- ctx.setTransform(1,0,0,1,0,0);
- ctx.clearRect(0,0,halo.width,halo.height);
- ctx.globalAlpha=STILL?1:(0.88+0.12*Math.sin(T2*0.9));
- ctx.drawImage(BASE,0,0);
- ctx.globalAlpha=1;
- if(!STILL){
-  ctx.setTransform(DPR,0,0,DPR,0,0);
-  /* 기존 흐름광 — 은은한 푸른 빛 */
-  ctx.globalCompositeOperation='lighter';
-  const p=((T2*0.16)%1.6)-0.3, sx=CX+(p-0.5)*PW*1.7;
-  const g=ctx.createRadialGradient(sx,CY,0,sx,CY,PW*0.30);
-  g.addColorStop(0,'rgba(190,210,255,.08)'); g.addColorStop(1,'rgba(190,210,255,0)');
-  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-
-  /* 흰 블러 띠 — source-atop 이라 점묘 그라디언트가 있는 자리에만 얹힌다.
-     검은 배경에는 번지지 않는다. */
-  ctx.globalCompositeOperation='source-atop';
-  ctx.filter='blur(30px)';
-  const wx=CX+Math.sin(T2*0.38)*PW*0.46, wy=CY+Math.sin(T2*0.23)*PH*0.30;
-  const wg=ctx.createRadialGradient(wx,wy,0,wx,wy,PW*0.52);
-  wg.addColorStop(0,   'rgba(255,255,255,.62)');
-  wg.addColorStop(0.40,'rgba(255,255,255,.30)');
-  wg.addColorStop(0.75,'rgba(255,255,255,.10)');
-  wg.addColorStop(1,   'rgba(255,255,255,0)');
-  ctx.fillStyle=wg; ctx.fillRect(0,0,W,H);
-  ctx.filter='none';
-
-  ctx.globalCompositeOperation='source-over';
-  requestAnimationFrame(draw);
- }
-}
 /* ── 플레이스홀더 순환 ── */
 let hi=0;
 function cycle(){
@@ -348,16 +267,11 @@ sug.addEventListener('click',e=>{const s=e.target.closest('.s-'+T); if(!s)return
 
 let rt=0;
 addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{layout();
- if(STILL){ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,halo.width,halo.height);ctx.drawImage(BASE,0,0);}
 },140);});
-document.addEventListener('visibilitychange',()=>{run=!document.hidden;
- if(run&&!STILL){t0=0;requestAnimationFrame(draw);}});
-RM.addEventListener?.('change',e=>{STILL=e.matches;
- if(STILL){ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,halo.width,halo.height);ctx.drawImage(BASE,0,0);
-   clearInterval(cyc);} else {t0=0;requestAnimationFrame(draw);cyc=setInterval(cycle,3400);}});
+RM.addEventListener?.('change',e=>{
+ if(e.matches) clearInterval(cyc); else cyc=setInterval(cycle,3400);});
 
 layout();
-if(STILL){ctx.setTransform(1,0,0,1,0,0);ctx.drawImage(BASE,0,0); clearInterval(cyc);}
-else requestAnimationFrame(draw);
+if(RM.matches) clearInterval(cyc);
 })();
 </script></body></html>
