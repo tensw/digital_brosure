@@ -38,14 +38,6 @@
 .bx-7q2v8 li:before{content:"";position:absolute;left:0;top:9px;width:4px;height:4px;border-radius:50%;
  background:rgba(140,200,255,.62)}
 .bx-7q2v8 .m-x{margin-top:auto;padding-top:12px;font:700 12px/1.5 ui-monospace,Menlo,monospace;color:#9fd4ff}
-.cert-7q2v8{position:absolute;right:14px;top:14px;display:flex;align-items:center;gap:6px;
- padding:5px 8px 5px 5px;cursor:pointer;border:1px solid rgba(120,150,220,.32);border-radius:9px;
- background:rgba(12,20,42,.7);font:inherit;transition:.16s}
-.cert-7q2v8:hover{border-color:rgba(150,190,255,.6);background:rgba(16,26,54,.9)}
-.cert-7q2v8 img{width:18px;height:25px;object-fit:cover;object-position:top;border-radius:2px;
- border:1px solid rgba(255,255,255,.16);display:block;flex:none}
-.cert-7q2v8 s{text-decoration:none;font:700 9.5px/1 ui-monospace,Menlo,monospace;color:#9fc7ff;
- letter-spacing:.02em;white-space:nowrap}
 .ttl-7q2v8{position:absolute;left:0;right:0;top:15.5%;z-index:4;text-align:center;
  /* 44px 에서 30% 줄였다 */
  font-size:30.8px;font-weight:800;letter-spacing:-.4px;color:#fff;line-height:1.2}
@@ -53,16 +45,6 @@
  font-size:19px;font-weight:600;letter-spacing:-.4px;color:#c4d3ee;line-height:1.6}
 .lead-7q2v8 b{color:#fff;font-weight:800}
 .lead-7q2v8 em{display:block;margin-top:6px;font-style:normal;font-size:15px;color:#7f92b8}
-.modal-7q2v8{position:fixed;inset:0;z-index:60;display:none;place-items:center;
-  background:rgba(2,4,12,.86);backdrop-filter:blur(6px);padding:4vh 16px}
-.modal-7q2v8.on{display:grid}
-.mbox-7q2v8{position:relative;max-height:92vh}
-.mbox-7q2v8 img{display:block;max-height:92vh;max-width:min(760px,92vw);width:auto;height:auto;
-  border-radius:10px;box-shadow:0 30px 90px rgba(0,0,0,.7)}
-.mclose-7q2v8{position:absolute;right:-14px;top:-14px;width:36px;height:36px;border-radius:50%;
-  border:1px solid rgba(255,255,255,.28);background:#0b1226;color:#dbe6ff;cursor:pointer;
-  font:700 18px/1 ui-monospace,Menlo,monospace}
-.mclose-7q2v8:hover{border-color:#9fc7ff;color:#fff}
 .sug-7q2v8{position:absolute;left:50%;transform:translateX(-50%);z-index:4;
  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:min(92vw,980px);padding:0 8px}
 .s-7q2v8{border-radius:999px;padding:8px 14px;white-space:nowrap;cursor:pointer;
@@ -156,12 +138,6 @@
   <div class="grid-7q2v8" id="grid-7q2v8"></div>
  </div>
 
- <div class="modal-7q2v8" id="modal-7q2v8" role="dialog" aria-modal="true" aria-label="AI 검색엔진 시험성적서">
-  <div class="mbox-7q2v8">
-   <button class="mclose-7q2v8" id="mclose-7q2v8" type="button" aria-label="닫기">×</button>
-   <img src="cert-search-engine.jpg" alt="비블로 AI 검색엔진 시험성적서">
-  </div>
- </div>
 </div>
 <script>
 (function(){
@@ -197,7 +173,7 @@ const BOX=[
  {n:'01',t:'구독 없이<br>찾아준다',s:'무료·오픈액세스',
   li:['Scopus·WoS 구독이 없어도 된다','KCI 254만 + OpenAlex 1.1억'],m:'합계 약 1.1억 편'},
  {n:'02',t:'지어내지 않고<br>찾아준다',s:'LLM 과 경쟁하지 않는다',
-  li:['생성형 AI 는 없는 논문도 만든다','우리는 근거를 발견한다 · DOI 확인'],m:'환각 없음 · 전건 검증',cert:1},
+  li:['생성형 AI 는 없는 논문도 만든다','우리는 근거를 발견한다 · DOI 확인'],m:'환각 없음 · 전건 검증'},
  {n:'03',t:'색인을<br>우리가 소유',s:'구독이 아니라 자산',
   li:['우리 DB 안에서 끝난다','외부 의존과 지연이 없다'],m:'응답 0.2~0.9초'},
  {n:'04',t:'글자가 아니라<br>뜻으로',s:'0건 화면이 없다',
@@ -210,21 +186,7 @@ document.getElementById('grid-7q2v8').innerHTML=BOX.map(b=>`
   <div class="n-7q2v8">${b.n}</div><h3>${b.t}</h3><div class="s-x">${b.s}</div>
   <ul>${b.li.map(x=>`<li>${x}</li>`).join('')}</ul>
   <div class="m-x">${b.m}</div>
-  ${b.cert?`<button class="cert-7q2v8" id="cert-7q2v8" type="button" title="시험성적서 크게 보기">
-    <img src="cert-search-engine.jpg" alt="비블로 검색엔진 시험성적서"><s>시험성적서</s></button>`:''}
  </div>`).join('');
-
-/* ── 시험성적서 레이어 팝업 ── */
-(function(){
- const md=$('modal'), bt=$('cert'), cl=$('mclose');
- if(!md||!bt)return;
- const open=()=>md.classList.add('on');
- const close=()=>md.classList.remove('on');
- bt.addEventListener('click',open);
- cl&&cl.addEventListener('click',close);
- md.addEventListener('click',e=>{if(e.target===md)close();});
- addEventListener('keydown',e=>{if(e.key==='Escape')close();});
-})();
 
 /* ── 알약 크기·위치 ── */
 let W=0,H=0,DPR=1,PW=0,PH=0,CX=0,CY=0;
