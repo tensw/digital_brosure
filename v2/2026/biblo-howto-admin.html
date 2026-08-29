@@ -1,0 +1,178 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BIBLO 성과 관리 이용 방법 — 운영자</title>
+<style>
+:root{--ink-w9:#1b2340;--ink2-w9:#5a6480;--ink3-w9:#96a0bb;--line-w9:#e6e9f2;--vio-w9:#5b5bf3}
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:#4f63f6;color:#fff;-webkit-font-smoothing:antialiased}
+.slide-w9{position:relative;width:100vw;height:100vh;min-height:560px;overflow:hidden;
+ background:linear-gradient(135deg,#4f63f6 0%,#5b5bf3 52%,#6b50ee 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+
+/* ── 헤더 ── */
+.hd-w9{position:absolute;left:0;right:0;top:52px;text-align:center}
+/* 폰트 규격 — 한글 제목 3.15em(44px), 서브 16px/600 */
+.hd-w9 h1{font-size:44px;font-weight:300;letter-spacing:-1.2px;color:rgba(255,255,255,.88)}
+.hd-w9 h1 b{font-weight:800;color:#fff}
+.hd-w9 p{margin-top:13px;font-size:16px;font-weight:600;color:rgba(255,255,255,.68)}
+
+/* ── 좌측 4단계 ── */
+.rail-w9{position:absolute;left:139px;top:214px;height:496px;width:2px;background:rgba(255,255,255,.28)}
+.st-w9{position:absolute;left:120px;width:430px}
+.st-w9 .bg-w9{position:absolute;left:0;top:0;width:40px;height:40px;border-radius:50%;
+ border:1.5px solid rgba(255,255,255,.55);display:grid;place-items:center;
+ font:700 13px/1 ui-monospace,Menlo,monospace;color:rgba(255,255,255,.9);
+ background:linear-gradient(135deg,#5460f5,#6153f1)}
+.st-w9 .tx-w9{margin-left:64px}
+.st-w9 h2{font-size:17px;font-weight:800;letter-spacing:-.4px;color:#fff}
+.st-w9 p{margin-top:11px;font-size:12.5px;line-height:1.9;color:rgba(255,255,255,.74);width:306px}
+.st-w9.on-w9{width:452px}
+.st-w9.on-w9 .bg-w9{background:#fff;border-color:#fff;color:var(--vio-w9);box-shadow:0 6px 18px rgba(20,20,80,.28)}
+.st-w9.on-w9 .tx-w9{margin-left:60px;background:#fff;border-radius:17px;padding:24px 28px 26px;
+ box-shadow:0 20px 44px rgba(24,22,86,.30);position:relative}
+.st-w9.on-w9 .tx-w9::before{content:"";position:absolute;left:-9px;top:26px;width:18px;height:18px;
+ background:#fff;transform:rotate(45deg);border-radius:3px}
+.st-w9.on-w9 h2{color:var(--ink-w9);font-size:18px;position:relative}
+.st-w9.on-w9 p{color:var(--ink2-w9);width:326px;position:relative}
+.st-w9.on-w9 p b{color:var(--vio-w9);font-weight:800}
+
+/* ── 장식 ── */
+.sq-w9{position:absolute;border-radius:9px}
+.sq-w9.tr-w9::after{content:"";position:absolute;left:50%;top:50%;width:210px;height:26px;
+ transform:translate(-6px,-50%) rotate(38deg);transform-origin:0 50%;border-radius:13px;
+ background:linear-gradient(90deg,rgba(52,211,153,.42),rgba(52,211,153,0));z-index:-1;filter:blur(7px)}
+.ring-w9{position:absolute;border:2px solid rgba(255,255,255,.72);border-radius:7px}
+.arc-w9{position:absolute;border-radius:999px 0 0 999px;overflow:hidden;
+ background:repeating-linear-gradient(90deg,rgba(255,255,255,.30) 0 3px,rgba(255,255,255,0) 3px 11px)}
+.dots-w9{position:absolute;display:grid;grid-template-columns:repeat(6,1fr);gap:15px}
+.dots-w9 i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.40);display:block}
+
+/* ── 대시보드 카드 ── */
+.cd-w9{position:absolute;background:#fff;border-radius:15px;overflow:hidden;color:var(--ink-w9)}
+.back-w9{left:906px;top:436px;width:614px;height:330px;box-shadow:0 26px 56px rgba(18,16,70,.26);opacity:.97}
+.front-w9{left:704px;top:296px;width:536px;height:344px;box-shadow:0 34px 74px rgba(18,16,70,.36)}
+.hdr-w9{display:flex;align-items:center;gap:9px;padding:15px 20px;border-bottom:1px solid var(--line-w9)}
+.back-w9 .hdr-w9{padding-left:358px;border-bottom:0}
+.back-w9 .bd-w9{padding:4px 20px 0 358px}
+.hdr-w9 h3{font-size:13.5px;font-weight:800;letter-spacing:-.3px}
+.hdr-w9 em{font:700 9px/1 ui-monospace,Menlo,monospace;font-style:normal;letter-spacing:.12em;
+ color:var(--vio-w9);background:#eef0fe;border-radius:999px;padding:5px 9px}
+.hdr-w9 span{margin-left:auto;font:600 9.5px/1 ui-monospace,Menlo,monospace;color:var(--ink3-w9)}
+.bd-w9{padding:15px 20px 0}
+.tiles-w9{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.tiles-w9 div{border:1px solid var(--line-w9);border-radius:11px;padding:11px 12px}
+.tiles-w9 u{display:block;text-decoration:none;font-size:9.5px;color:var(--ink3-w9);font-weight:700}
+.tiles-w9 b{display:block;margin-top:6px;font:800 19px/1 ui-monospace,Menlo,monospace;letter-spacing:-.6px}
+.tiles-w9 s{display:block;text-decoration:none;margin-top:5px;font:600 8.5px/1 ui-monospace,Menlo,monospace;color:var(--ink3-w9)}
+table{width:100%;border-collapse:collapse;margin-top:14px}
+th{font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:var(--ink3-w9);
+ text-align:right;padding:0 9px 8px;border-bottom:1px solid var(--line-w9)}
+th:first-child,th:last-child{text-align:left}
+td{font:600 10.5px/1 ui-monospace,Menlo,monospace;color:var(--ink2-w9);text-align:right;
+ padding:9px;border-bottom:1px solid #f1f3fa}
+td:first-child{text-align:left;font-weight:800;color:var(--ink-w9)}
+td:first-child i{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:7px;vertical-align:middle;position:relative;top:-1px}
+td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-serif;color:var(--ink3-w9)}
+.qrow-w9{display:flex;align-items:baseline;flex-wrap:wrap;gap:8px;padding:10px 0 11px;border-bottom:1px solid #f1f3fa}
+.qrow-w9 b{display:block;font-size:11px;font-weight:800}
+.qrow-w9 s{display:block;text-decoration:none;margin-top:3px;font:600 8.5px/1 ui-monospace,Menlo,monospace;color:var(--ink3-w9)}
+.qrow-w9 em{margin-left:auto;font:800 15px/1 ui-monospace,Menlo,monospace;font-style:normal;letter-spacing:-.4px;color:var(--vio-w9)}
+.qrow-w9 .tr2-w9{flex-basis:100%;height:7px;border-radius:4px;background:#eef0f6;overflow:hidden;margin-top:2px}
+.qrow-w9 .tr2-w9 i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#7d5cf0,#5b5bf3)}
+
+.ft-w9{position:absolute;left:120px;bottom:40px;font:600 10px/1.7 ui-monospace,Menlo,monospace;
+ color:rgba(255,255,255,.55)}
+</style></head><body>
+<div class="slide-w9"><div id="stage">
+
+ <div class="hd-w9">
+  <h1><b>성과 관리</b> 이용 방법</h1>
+  <p>명부와 논문을 넣으면 연구단 지표와 데이터 품질이 함께 만들어집니다.</p>
+ </div>
+
+ <!-- 장식 -->
+ <div class="dots-w9" style="left:614px;top:330px"><i></i><i></i><i></i><i></i><i></i><i></i>
+  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+  <i></i><i></i><i></i><i></i><i></i><i></i></div>
+ <div class="sq-w9 tr-w9" style="left:790px;top:236px;width:46px;height:46px;
+   background:linear-gradient(135deg,#4ade80,#22c7a9)"></div>
+ <div class="sq-w9" style="left:606px;top:712px;width:54px;height:54px;
+   background:linear-gradient(135deg,#f9a8d4,#f472b6)"></div>
+ <div class="ring-w9" style="left:1372px;top:330px;width:34px;height:34px"></div>
+ <div class="arc-w9" style="left:1452px;top:452px;width:148px;height:296px"></div>
+
+ <div class="rail-w9"></div>
+
+ <div class="st-w9" style="top:206px"><div class="bg-w9">1</div><div class="tx-w9">
+  <h2>명부와 논문을 올립니다</h2>
+  <p>사업단 로스터와 논문 파일을 넣으면 저자 파싱, DOI 중복 통합, 게재처 정규화까지
+   그 자리에서 이어집니다.</p></div></div>
+
+ <div class="st-w9" style="top:352px"><div class="bg-w9">2</div><div class="tx-w9">
+  <h2>매칭 현황을 점검합니다</h2>
+  <p>저자행 5,280,301줄이 교내 확정·외부 저자·미분류로 갈립니다.
+   신호가 갈린 것만 확인 큐로 올라옵니다.</p></div></div>
+
+ <div class="st-w9" style="top:498px"><div class="bg-w9">3</div><div class="tx-w9">
+  <h2>연구단 지표가 만들어집니다</h2>
+  <p>34개 연구단 × 연도 × 지표로 접힙니다. 성과점수는 저널등급과 역할가중을 곱해
+   합산합니다.</p></div></div>
+
+ <div class="st-w9 on-w9" style="top:648px"><div class="bg-w9">4</div><div class="tx-w9">
+  <h2>품질을 지표 옆에 함께 봅니다</h2>
+  <p>성과가 낮은 것인지 데이터가 모자란 것인지 갈라 봅니다. 검토필요·회수 커버리지가 기준에
+   못 미치면 <b>위험이 아니라 확인필요</b>로 먼저 분리합니다.</p></div></div>
+
+ <!-- 뒤 카드: 데이터 품질 -->
+ <div class="cd-w9 back-w9">
+  <div class="hdr-w9"><h3>데이터 품질</h3><span>기준 2026-08-27</span></div>
+  <div class="bd-w9">
+   <div class="qrow-w9"><div><b>회수 커버리지</b><s>보정 전 24.1%</s></div><em>76.4%</em>
+    <div class="tr2-w9"><i style="width:76.4%"></i></div></div>
+   <div class="qrow-w9"><div><b>참여자</b><s>교수 · 신진 · 대학원생</s></div><em>5,366명</em>
+    <div class="tr2-w9"><i style="width:100%"></i></div></div>
+   <div class="qrow-w9"><div><b>정규 실적 논문</b><s>학회 · 초록 제외</s></div><em>13,356편</em>
+    <div class="tr2-w9"><i style="width:86.6%"></i></div></div>
+   <div class="qrow-w9" style="border:0"><div><b>검토필요</b><s>재학기간 반영 후</s></div><em>231명</em>
+    <div class="tr2-w9"><i style="width:12%;background:#f0a35e"></i></div></div>
+  </div>
+ </div>
+
+ <!-- 앞 카드: 경영자 성과보드 -->
+ <div class="cd-w9 front-w9">
+  <div class="hdr-w9"><h3>연구단 성과보드</h3><em>34개 연구단</em><span>2020~2025</span></div>
+  <div class="bd-w9">
+   <div class="tiles-w9">
+    <div><u>항목 A 성과점수</u><b style="color:#5b5bf3">9,905</b><s>교수 대표논문 질</s></div>
+    <div><u>항목 B 성과점수</u><b style="color:#5b5bf3">713.7</b><s>학생 주저자 실적</s></div>
+    <div><u>FWCI 중앙값</u><b>0.84</b><s>1.0 = 세계평균</s></div>
+   </div>
+   <table>
+    <tr><th>신호등 판정</th><th>연구단</th><th>다음 조치</th></tr>
+    <tr><td><i style="background:#4ade80"></i>정상</td><td>6</td><td>추세 관찰</td></tr>
+    <tr><td><i style="background:#fbbf24"></i>주의</td><td>5</td><td>회수 우선순위 점검</td></tr>
+    <tr><td><i style="background:#f87171"></i>위험</td><td>5</td><td>30일 내 조치계획</td></tr>
+    <tr><td><i style="background:#94a3b8"></i>확인필요</td><td>12</td><td>품질 개선 후 재판정</td></tr>
+   </table>
+  </div>
+ </div>
+
+ <div class="ft-w9">기준 2026-08-27 · 수치는 BK21 34개 연구단 실측 · 신호등은 계열 내 백분위 판정 · 우측 화면은 구성 예시</div>
+
+</div></div>
+<script>
+const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+/* resize 하나만 걸면 iframe 슬라이드에서 배율이 틀어진 채 굳는다. 다섯 개를 다 건다. */
+fit();
+addEventListener('resize',fit);
+addEventListener('load',fit);
+addEventListener('pageshow',fit);
+if(window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+</script></body></html>

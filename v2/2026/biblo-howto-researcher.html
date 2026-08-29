@@ -1,0 +1,208 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BIBLO 이용 방법 — 연구자</title>
+<style>
+:root{--ink-p4:#1b2340;--ink2-p4:#5a6480;--ink3-p4:#96a0bb;--line-p4:#e6e9f2;
+ --vio-p4:#5b5bf3;--vio2-p4:#4f63f6;--lime-p4:#a5e034}
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:#4f63f6;color:#fff;-webkit-font-smoothing:antialiased}
+.slide-p4{position:relative;width:100vw;height:100vh;min-height:560px;overflow:hidden;
+ background:linear-gradient(135deg,#4f63f6 0%,#5b5bf3 52%,#6b50ee 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+
+/* ── 헤더 ── */
+.hd-p4{position:absolute;left:0;right:0;top:52px;text-align:center}
+/* 폰트 규격 — 한글 제목 3.15em(44px), 서브 16px/600 */
+.hd-p4 h1{font-size:44px;font-weight:300;letter-spacing:-1.2px;color:rgba(255,255,255,.88)}
+.hd-p4 h1 b{font-weight:800;color:#fff}
+.hd-p4 p{margin-top:13px;font-size:16px;font-weight:600;color:rgba(255,255,255,.68)}
+
+/* ── 좌측 4단계 ── */
+.rail-p4{position:absolute;left:139px;top:214px;bottom:104px;width:2px;background:rgba(255,255,255,.28)}
+.st-p4{position:absolute;left:120px;width:420px}
+.st-p4 .bg-p4{position:absolute;left:0;top:0;width:40px;height:40px;border-radius:50%;
+ border:1.5px solid rgba(255,255,255,.55);display:grid;place-items:center;
+ font:700 13px/1 ui-monospace,Menlo,monospace;color:rgba(255,255,255,.9);
+ background:linear-gradient(135deg,#5460f5,#6153f1)}
+.st-p4 .tx-p4{margin-left:64px}
+.st-p4 h2{font-size:17px;font-weight:800;letter-spacing:-.4px;color:#fff}
+.st-p4 p{margin-top:11px;font-size:12.5px;line-height:1.9;color:rgba(255,255,255,.74);width:300px}
+/* 활성 단계 */
+.st-p4.on-p4{left:120px;width:452px}
+.st-p4.on-p4 .bg-p4{background:#fff;border-color:#fff;color:var(--vio-p4);box-shadow:0 6px 18px rgba(20,20,80,.28)}
+.st-p4.on-p4 .tx-p4{margin-left:60px;background:#fff;border-radius:17px;padding:24px 28px 26px;
+ box-shadow:0 20px 44px rgba(24,22,86,.30);position:relative}
+.st-p4.on-p4 .tx-p4::before{content:"";position:absolute;left:-9px;top:26px;width:18px;height:18px;
+ background:#fff;transform:rotate(45deg);border-radius:3px}
+.st-p4.on-p4 h2{color:var(--ink-p4);font-size:18px;position:relative}
+.st-p4.on-p4 p{color:var(--ink2-p4);width:326px;position:relative}
+.st-p4.on-p4 p b{color:var(--vio-p4);font-weight:800}
+
+/* ── 우측 장식 ── */
+.orb-p4{position:absolute;border-radius:50%}
+.dots-p4{position:absolute;display:grid;grid-template-columns:repeat(8,1fr);gap:14px}
+.dots-p4 i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.42);display:block}
+
+/* ── 노트북 목업 ── */
+.lap-p4{position:absolute;left:640px;top:322px;width:648px;height:370px;background:#fff;
+ border-radius:12px 12px 4px 4px;box-shadow:0 34px 70px rgba(18,16,70,.34);overflow:hidden;display:flex}
+.lapbase-p4{position:absolute;left:592px;top:692px;width:744px;height:13px;border-radius:0 0 9px 9px;
+ background:linear-gradient(180deg,#f2f4fb,#cfd5ea);box-shadow:0 16px 26px rgba(18,16,70,.28)}
+.sb-p4{width:142px;flex:none;background:#f5f6fd;border-right:1px solid var(--line-p4);padding:14px 12px}
+.sb-p4 .me-p4{background:linear-gradient(135deg,#5b5bf3,#7d5cf0);border-radius:11px;padding:12px 10px;text-align:center}
+.sb-p4 .me-p4 u{display:block;width:34px;height:34px;border-radius:50%;margin:0 auto 8px;
+ background:rgba(255,255,255,.24);text-decoration:none}
+.sb-p4 .me-p4 s{display:block;text-decoration:none;font:700 10px/1.4 ui-monospace,Menlo,monospace;color:rgba(255,255,255,.86)}
+.sb-p4 nav{margin-top:12px}
+.sb-p4 nav a{display:block;font-size:10.5px;color:var(--ink2-p4);padding:7px 8px;border-radius:7px;text-decoration:none}
+.sb-p4 nav a.on-p4{background:#e9ebfb;color:var(--vio-p4);font-weight:800}
+.bd-p4{flex:1;padding:16px 18px;color:var(--ink-p4);min-width:0}
+.bd-p4 .tp-p4{display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--line-p4);padding-bottom:12px}
+.bd-p4 .tp-p4 h3{font-size:13.5px;font-weight:800;letter-spacing:-.3px}
+.bd-p4 .tp-p4 em{font:700 9px/1 ui-monospace,Menlo,monospace;font-style:normal;letter-spacing:.12em;
+ color:var(--vio-p4);background:#eef0fe;border-radius:999px;padding:5px 9px}
+.bd-p4 .tp-p4 span{margin-left:auto;font:600 9.5px/1 ui-monospace,Menlo,monospace;color:var(--ink3-p4)}
+.tiles-p4{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:12px}
+.tiles-p4 div{border:1px solid var(--line-p4);border-radius:10px;padding:10px 11px}
+.tiles-p4 u{display:block;text-decoration:none;font-size:9.5px;color:var(--ink3-p4);font-weight:700}
+.tiles-p4 b{display:block;margin-top:5px;font:800 15.5px/1 ui-monospace,Menlo,monospace;letter-spacing:-.5px}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th{font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:var(--ink3-p4);
+ text-align:right;padding:0 8px 7px;border-bottom:1px solid var(--line-p4)}
+th:first-child,th:last-child{text-align:left}
+td{font:600 10.5px/1 ui-monospace,Menlo,monospace;color:var(--ink2-p4);text-align:right;
+ padding:8px;border-bottom:1px solid #f1f3fa}
+td:first-child{text-align:left;font-weight:800;color:var(--ink-p4)}
+td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-serif;color:var(--ink3-p4)}
+
+.dist-p4{margin-top:13px}
+.lb-p4{display:flex;align-items:center;gap:8px}
+.lb-p4 span{font-size:10.5px;font-weight:800;color:var(--ink-p4)}
+.lb-p4 em{margin-left:auto;font:600 8.5px/1 ui-monospace,Menlo,monospace;font-style:normal;color:var(--ink3-p4)}
+.brs-p4{display:flex;gap:3px;margin-top:8px;height:11px}
+.brs-p4 i{display:block;border-radius:3px}
+.lg-p4{display:flex;gap:14px;margin-top:9px}
+.lg-p4 span{display:flex;align-items:center;gap:5px;font:600 8.5px/1 ui-monospace,Menlo,monospace;color:var(--ink3-p4)}
+.lg-p4 s{width:7px;height:7px;border-radius:2px;text-decoration:none;display:inline-block}
+
+/* ── 폰 목업 ── */
+.ph-p4{position:absolute;left:1288px;top:388px;width:214px;height:380px;background:#fff;border-radius:26px;
+ box-shadow:0 30px 60px rgba(18,16,70,.34);padding:12px 11px;overflow:hidden}
+.ph-p4 .nb-p4{height:5px;width:64px;border-radius:3px;background:#e3e6f2;margin:2px auto 11px}
+.ph-p4 h4{font-size:11.5px;font-weight:800;color:var(--ink-p4);padding:0 4px}
+.ph-p4 .sub-p4{font:600 8.5px/1 ui-monospace,Menlo,monospace;color:var(--ink3-p4);padding:6px 4px 0}
+.ph-p4 ul{margin-top:12px;list-style:none}
+.ph-p4 li{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line-p4);border-radius:11px;
+ padding:10px 10px;margin-bottom:8px}
+.ph-p4 li i{width:19px;height:19px;flex:none;border-radius:50%;background:#eef0fe;color:var(--vio-p4);
+ display:grid;place-items:center;font:800 9px/1 ui-monospace,Menlo,monospace}
+.ph-p4 li b{font-size:10.5px;font-weight:800;color:var(--ink-p4);letter-spacing:-.2px}
+.ph-p4 li s{display:block;text-decoration:none;margin-top:3px;font-size:9px;line-height:1.5;color:var(--ink3-p4)}
+
+.ft-p4{position:absolute;left:120px;bottom:40px;font:600 10px/1.7 ui-monospace,Menlo,monospace;
+ color:rgba(255,255,255,.55)}
+</style></head><body>
+<div class="slide-p4"><div id="stage">
+
+ <div class="hd-p4">
+  <h1><b>비블로</b> 이용 방법</h1>
+  <p>연구자는 논문을 다시 입력하지 않습니다. 이미 모인 것을 확인하고 승인하면 됩니다.</p>
+ </div>
+
+ <!-- 장식 -->
+ <div class="orb-p4" style="left:900px;top:196px;width:600px;height:600px;background:rgba(255,255,255,.09)"></div>
+ <div class="orb-p4" style="left:1512px;top:520px;width:120px;height:120px;background:#34d399;opacity:.85"></div>
+ <div class="orb-p4" style="left:614px;top:660px;width:44px;height:44px;background:#f472b6"></div>
+ <div class="orb-p4" style="left:1420px;top:214px;width:26px;height:26px;border:2px solid rgba(255,255,255,.7)"></div>
+ <div class="dots-p4" style="left:840px;top:266px"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+ <div class="rail-p4"></div>
+
+ <div class="st-p4" style="top:206px"><div class="bg-p4">1</div><div class="tx-p4">
+  <h2>내 논문이 이미 모여 있습니다</h2>
+  <p>Scopus·WoS·KCI·OpenAlex 에서 모은 논문 원장 140,693편에서 내 이름 후보를 미리 찾아 둡니다.
+   따로 올릴 것이 없습니다.</p></div></div>
+
+ <div class="st-p4" style="top:358px"><div class="bg-p4">2</div><div class="tx-p4">
+  <h2>애매한 것만 확인하면 됩니다</h2>
+  <p>이름·분야·저널·공저자·학과 다섯 신호로 엔진이 먼저 판정합니다.
+   신호가 갈리는 후보만 확인 목록으로 올라옵니다.</p></div></div>
+
+ <div class="st-p4 on-p4" style="top:504px"><div class="bg-p4">3</div><div class="tx-p4">
+  <h2>내 연구력이 카드로 정리됩니다</h2>
+  <p>규모·질·영향력·주도성·협력·지속성 여섯 축과 대표논문이 한 화면에 놓입니다.
+   저널등급 <b>g</b>와 역할가중 <b>w</b>로 계산한 성과점수, 분야보정 지표 FWCI 를 근거와 함께 봅니다.</p></div></div>
+
+ <div class="st-p4" style="top:706px"><div class="bg-p4">4</div><div class="tx-p4">
+  <h2>다음 협업 후보까지 이어집니다</h2>
+  <p>공저 관계망 932,329 엣지와 연구자 지문으로, 분야는 맞는데 아직 함께 쓰지 않은
+   교내·교외 연구자를 찾아 줍니다.</p></div></div>
+
+ <!-- 노트북 -->
+ <div class="lap-p4">
+  <div class="sb-p4">
+   <div class="me-p4"><u></u><s>내 연구 프로필</s></div>
+   <nav><a>홈</a><a>내 논문</a><a class="on-p4">확인 대기</a><a>연구력 카드</a><a>협업 후보</a><a>보고서</a></nav>
+  </div>
+  <div class="bd-p4">
+   <div class="tp-p4"><h3>저자 매칭 현황</h3><em>LIVE</em><span>기준 2026-08-27</span></div>
+   <div class="tiles-p4">
+    <div><u>논문 원장</u><b style="color:#5b5bf3">140,693</b></div>
+    <div><u>저자행</u><b>5,280,301</b></div>
+    <div><u>확정 인물</u><b>11,930</b></div>
+    <div><u>공저 관계</u><b>932,329</b></div>
+   </div>
+   <table>
+    <tr><th>판별 레이어</th><th>저자행</th><th>근거</th></tr>
+    <tr><td>원장 연결</td><td>356,017</td><td>제출 명부에서 직접 연결</td></tr>
+    <tr><td>L1 식별자</td><td>3,785</td><td>Scopus AUID · ORCID · 이메일 일치</td></tr>
+    <tr><td>L2 이름+소속</td><td>2,391</td><td>전체 이름과 소속 문자열 일치</td></tr>
+    
+   </table>
+   <div class="dist-p4">
+    <div class="lb-p4"><span>저자행 528만 줄이 갈리는 곳</span><em>기준 2026-08-25</em></div>
+    <div class="brs-p4">
+     <i style="width:6.7%;background:#4ade80"></i><i style="width:49.6%;background:#8b7cf6"></i><i style="width:43.7%;background:#aab4d4"></i>
+    </div>
+    <div class="lg-p4">
+     <span><s style="background:#4ade80"></s>교내 확정 356,232</span>
+     <span><s style="background:#8b7cf6"></s>외부 저자 2,618,171</span>
+     <span><s style="background:#aab4d4"></s>미분류 2,305,898</span>
+    </div>
+   </div>
+  </div>
+ </div>
+ <div class="lapbase-p4"></div>
+
+ <!-- 폰 -->
+ <div class="ph-p4">
+  <div class="nb-p4"></div>
+  <h4>확인 대기</h4>
+  <div class="sub-p4">신호가 갈린 후보만 올라옵니다</div>
+  <ul>
+   <li><i>1</i><div><b>자동 수집</b><s>원장에서 내 이름 후보를 찾음</s></div></li>
+   <li><i>2</i><div><b>후보 확인</b><s>같은 사람인지 근거를 보고 승인</s></div></li>
+   <li><i>3</i><div><b>연구력 카드</b><s>여섯 축과 대표논문 정리</s></div></li>
+   <li><i>4</i><div><b>협업 후보</b><s>아직 함께 쓰지 않은 연구자 추천</s></div></li>
+  </ul>
+ </div>
+
+ <div class="ft-p4">기준 2026-08-27 · 수치는 BIBLO 원장 실측 · 우측 화면은 구성 예시이며 개인 수치는 담지 않았다</div>
+
+</div></div>
+<script>
+const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+/* resize 하나만 걸면 iframe 슬라이드에서 배율이 틀어진 채 굳는다. 다섯 개를 다 건다. */
+fit();
+addEventListener('resize',fit);
+addEventListener('load',fit);
+addEventListener('pageshow',fit);
+if(window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+</script></body></html>

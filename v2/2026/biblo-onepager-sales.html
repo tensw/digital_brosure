@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BIBLO — 대학과 도서관의 데이터를 연결하는 AI 플랫폼</title>
+<style>
+:root{--ink:#e9eefb;--ink2:#93a6cc;--ink3:#5d7099;--bg:#070b16;--lw:900px}
+*{box-sizing:border-box;margin:0;padding:0}
+/* ── 무대 규격 (작업가이드 5장) ── */
+html,body{overflow:hidden}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+.emb-bg0, .emb-bg0 body, .emb-bg0 .slide{background:transparent !important}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:radial-gradient(1100px 720px at 50% 45%,#0b1226 0%,#060a16 58%,#03050c 100%);
+ color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+/* 작업가이드 5장: 1600x900, 좌우 82px. 원본은 세로 1458px 원페이저였다.
+   세로로 쌓인 «데이터가 기반이 된다» 와 «필요한 솔루션부터» 두 절을
+   한 줄에 나란히 놓아 두 몫을 한 몫으로 줄였다. */
+.wrap{width:1600px;height:900px;padding:38px 82px 16px;display:flex;flex-direction:column}
+/* 왼쪽 순환 카드가 세로를 결정한다. 칸을 넓혀 설명 줄 수를 줄인다.
+   오른쪽 표는 min-width 를 풀어야 좁은 칸에서 잘리지 않는다. */
+.row2{display:grid;grid-template-columns:1.24fr .76fr;gap:20px;align-items:start;flex:1;min-height:0}
+.row2 > section{margin-top:0;min-width:0}
+.foot{margin-top:auto}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;text-align:left}
+
+/* ── 헤더 ── */
+.kicker{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
+/* 폰트 규격 — 한글 제목 3.15em(44px), 서브 16px/600 */
+h1{font-size:44px;font-weight:800;letter-spacing:-1.5px;margin-top:10px;line-height:1.16}
+h1 span{background:linear-gradient(90deg,#f97316,#38bdf8 34%,#a78bfa 58%,#f472b6 78%,#4ade80);
+ -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lead{color:var(--ink2);font-size:16px;font-weight:600;margin-top:9px;max-width:96ch;line-height:1.5}
+.lead b{color:var(--ink)}
+.lead + .lead{margin-top:9px}
+/* max-width 를 풀면 왼쪽 블록이 한 줄을 다 먹어 meta 가 아래로 접힌다. 줄바꿈을 막는다. */
+.hd{display:flex;gap:24px;flex-wrap:nowrap;align-items:flex-start;flex:none}
+.hd > div:first-child{min-width:0}
+.spacer{flex:1}
+.meta{font:600 11px/1.95 ui-monospace,Menlo,monospace;color:var(--ink3);text-align:right;letter-spacing:.05em}
+.meta b{color:var(--ink2)}
+
+/* ── 구분 브래킷 ── */
+.brk{display:grid;grid-template-columns:var(--lw) 1fr;gap:0;margin-top:16px;align-items:end}
+.brk .b{position:relative;padding-bottom:11px}
+.brk .b:after{content:"";position:absolute;left:0;right:16px;bottom:0;height:9px;
+ border:1px solid rgba(129,140,248,.26);border-bottom:0;border-radius:3px 3px 0 0}
+.brk .b span{font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;color:var(--ink3)}
+
+/* ── 무대: 좌 솔루션 컬럼 · 우 상세 ── */
+.stage{display:grid;grid-template-columns:var(--lw) 1fr;gap:0;margin-top:8px;align-items:start}
+.left{display:flex;gap:7px}
+.pcol{flex:1;min-width:0;cursor:pointer;position:relative;
+ clip-path:polygon(0 0,100% 0,100% calc(100% - 22px),50% 100%,0 calc(100% - 22px));
+ padding:15px 13px 32px;transition:.16s;background:var(--c1)}
+.pcol:hover{filter:brightness(1.12)}
+.pcol.on{outline:2px solid var(--cc);outline-offset:-2px}
+.pcol .n{font:800 22px/1 ui-monospace,Menlo,monospace;color:#0b1020;opacity:.55}
+.pcol .t{font-size:14.5px;font-weight:800;letter-spacing:-.4px;margin-top:6px;color:#0b1020;line-height:1.28;word-break:keep-all}
+.pcol .s{font-size:10.5px;color:rgba(11,16,32,.72);font-weight:600;margin-top:3px;line-height:1.4;word-break:keep-all}
+.pcol .doing{font-size:10.5px;color:rgba(11,16,32,.86);line-height:1.5;margin-top:8px;
+ padding-top:8px;border-top:1px solid rgba(11,16,32,.2);word-break:keep-all}
+.pcol .out{font:700 10px ui-monospace,Menlo,monospace;color:rgba(11,16,32,.9);margin-top:7px;line-height:1.45}
+
+/* ── 상세 ── */
+.right{padding-left:26px;position:relative;min-width:0}
+.right:before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:rgba(129,140,248,.2)}
+.rhd{display:flex;align-items:baseline;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.rhd h2{font-size:19px;font-weight:800;letter-spacing:-.4px}
+.rhd .c{font:700 10.5px ui-monospace,Menlo,monospace;padding:4px 10px;border-radius:999px;letter-spacing:.1em}
+.rdesc{color:var(--ink2);font-size:12.5px;line-height:1.55;max-width:none;margin-bottom:9px}
+.rdesc b{color:var(--ink)}
+.casc{display:flex;flex-wrap:wrap;gap:6px}
+.blk{transform:skewX(-11deg);padding:7px 13px;border-radius:4px;min-width:0;
+ background:var(--bl);border:1px solid var(--bd);transition:.14s}
+.blk:hover{background:var(--bh);border-color:var(--cc)}
+.blk > *{transform:skewX(11deg)}
+.blk .bt{font-size:12px;font-weight:700;letter-spacing:-.2px;white-space:nowrap}
+.eff{margin-top:9px;padding:8px 13px;border-radius:10px;
+ background:var(--bl);border:1px solid var(--bd)}
+.eff .el{font:700 9.5px ui-monospace,Menlo,monospace;letter-spacing:.22em;color:var(--cc);margin-bottom:6px}
+.eff .et{font-size:12.5px;line-height:1.6;color:var(--ink)}
+
+/* ── 순환 ── */
+.cycle{margin-top:14px}
+.cyc{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:9px}
+.cnode{border:1px solid rgba(129,140,248,.2);border-radius:12px;padding:7px 11px;
+ background:rgba(11,18,38,.6);position:relative}
+.cnode .src{font:700 9.5px ui-monospace,Menlo,monospace;letter-spacing:.16em;color:var(--ink3)}
+.cnode .arw{color:var(--ink3);font-size:13px;margin:2px 0 2px;letter-spacing:.1em}
+.cnode .dst{font-size:13px;font-weight:800;letter-spacing:-.3px}
+.cnode .why{font-size:11px;color:var(--ink2);line-height:1.42;margin-top:4px}
+.cnode i{position:absolute;left:0;top:14px;bottom:14px;width:2px;border-radius:2px}
+
+/* ── 도입 표 ── */
+.start{margin-top:14px}
+.tw{overflow:hidden;margin-top:10px;border:1px solid rgba(129,140,248,.2);border-radius:13px}
+table{border-collapse:collapse;width:100%;font-size:12px;min-width:0}
+th{background:rgba(129,140,248,.08);color:var(--ink2);font-weight:700;text-align:left;
+ padding:7px 14px;border-bottom:1px solid rgba(129,140,248,.18);white-space:nowrap;
+ font:700 10.5px ui-monospace,Menlo,monospace;letter-spacing:.12em}
+td{padding:7px 14px;border-bottom:1px solid rgba(129,140,248,.1);color:var(--ink2);
+ vertical-align:top;line-height:1.55}
+tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:rgba(129,140,248,.05)}
+td b{color:var(--ink);font-weight:700}
+td .sw{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:7px;vertical-align:1px}
+
+.close{margin-top:8px;color:var(--ink2);font-size:11.5px;line-height:1.45;max-width:none}
+.close b{color:var(--ink)}
+.foot{margin-top:auto;border-top:1px solid rgba(129,140,248,.14);padding-top:16px;color:var(--ink3);
+ font-size:11.5px;line-height:1.9}
+.foot b{color:var(--ink2)}
+.foot code{font:600 11px ui-monospace,Menlo,monospace;color:var(--ink2)}
+
+
+
+
+
+</style>
+</head>
+<body>
+<div class="slide"><div id="stage">
+<div class="wrap">
+
+ <header class="hd">
+  <div>
+   <div class="kicker">BIBLO · AI PLATFORM</div>
+   <h1>대학과 도서관의 데이터를 <span>연결하는 AI 플랫폼</span></h1>
+   <p class="lead">대학과 도서관에는 책·논문·연구자·대출·소장·사업 데이터가 이미 쌓여 있습니다.
+    하지만 시스템마다 데이터가 흩어져 있어 필요한 자료를 찾거나, 논문을 실제 연구자에게 연결하거나,
+    학교의 성과를 한눈에 파악하기 어렵습니다.</p>
+   <p class="lead"><b>BIBLO는 기관이 보유한 데이터를 하나의 공통 데이터 기반으로 연결합니다.</b>
+    연결된 데이터는 검색, 연구성과 관리, 홍보영상 제작, 사서 업무, AI 질의, KPI 관리에 반복해서 활용됩니다.</p>
+  </div>
+  <div class="spacer"></div>
+  <div class="meta">작성 <b>2026-08-27</b><br>개정 <b>2026-08-28</b><br>대상 <b>대학·도서관 구매 의사결정자</b></div>
+ </header>
+
+ <div class="brk">
+  <div class="b"><span>6가지 AI 솔루션</span></div>
+  <div class="b" style="padding-left:26px"><span>솔루션 상세</span></div>
+ </div>
+
+ <div class="stage">
+  <div class="left" id="left"></div>
+  <div class="right" id="right"></div>
+ </div>
+
+ <div class="row2">
+<section class="cycle">
+  <div class="brk" style="grid-template-columns:1fr;margin-top:0">
+   <div class="b"><span>하나의 데이터가 다음 솔루션의 기반이 됩니다</span></div>
+  </div>
+  <div class="cyc" id="cyc"></div>
+  <p class="close">검색을 위해 구축한 논문 DB는 저자 매칭의 기반이 되고, 확정된 개인 연구성과는 학교 KPI가 됩니다.
+   논문 원문은 홍보영상으로 이어지고, LAS 기록은 사서의 장서 판단에 활용됩니다.
+   AI 에이전트는 이 모든 데이터를 한곳에서 볼 수 있게 합니다.</p>
+ </section>
+
+ <section class="start">
+  <div class="brk" style="grid-template-columns:1fr;margin-top:0">
+   <div class="b"><span>필요한 솔루션부터 시작할 수 있습니다</span></div>
+  </div>
+  <div class="tw"><table>
+   <thead><tr><th>도입 부서</th><th>시작 솔루션</th><th>확장 방향</th></tr></thead>
+   <tbody id="tb"></tbody>
+  </table></div>
+  <p class="close">각 솔루션은 <b>독립적으로 도입</b>할 수 있습니다. 함께 사용할수록 같은 데이터를 다시 수집하거나
+   정리하는 일을 줄이고, 기관에 축적되는 데이터의 활용 범위를 넓힐 수 있습니다.</p>
+ </section>
+
+ </div>
+<p class="foot"><b>상세 기능과 데이터 근거</b> · <code>BIBLO_전기능_전체지도.md</code></p>
+</div>
+
+<script>
+const hex = (h,a) => {
+ const n = parseInt(h.slice(1),16);
+ return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;
+};
+
+const SOL = [
+ {n:'1', col:'#38bdf8', t:'AI 검색엔진', sub:'책·논문·연구자를 찾는다',
+  doing:'책 DB·12축 책지문, 논문 DB·의미검색 벡터, 글로벌 연구자 데이터를 구축하고 서로 연결',
+  out:'검색 코퍼스 · 벡터',
+  desc:'책·논문·글로벌 연구자 데이터를 구축하고 서로 연결합니다. <b>정확한 제목이나 검색어를 몰라도</b> 일상적인 문장으로 필요한 책, 논문, 연구자를 찾을 수 있습니다.',
+  items:['책 DB와 12축 책지문 구축','논문 DB와 의미검색용 벡터 구축','글로벌 연구자 데이터 구축·연결','키워드 검색과 의미검색을 결합한 통합검색'],
+  eff:'이용자는 필요한 자료를 더 쉽게 발견하고, 도서관은 외부 검색서비스로 빠져나가던 검색과 이용 데이터를 기관의 자산으로 축적합니다.'},
+ {n:'2', col:'#a78bfa', t:'연구성과관리', sub:'논문을 실제 연구자에게 연결',
+  doing:'논문에서 제목·저자·소속·학술지를 추출하고, 저자 매칭 엔진이 교내 연구자와 연결',
+  out:'저자매핑 · 지문 · 공저망',
+  desc:'논문에서 제목·저자·소속·학술지 등 필요한 정보를 추출하고, 저자 매칭에 필요한 논문 DB를 구축합니다. <b>저자 매칭 엔진이 논문 속 저자를 실제 교내 연구자와 연결</b>해 학교·학과·연구자별 연구력을 관리합니다.',
+  items:['논문 원문·서지정보 추출과 표준화','저자 매칭용 논문 DB 구축','동명이인을 구분하는 저자 매칭 엔진','연구자 지문·공저자 관계망 구축','학교·학과·연구자별 연구성과와 연구력 관리'],
+  eff:'담당자가 논문과 연구자를 일일이 대조하는 업무를 줄이고, 누구의 연구성과인지 근거와 함께 확인할 수 있습니다.'},
+ {n:'3', col:'#f97316', t:'연구성과 홍보영상', sub:'논문을 영상·쇼츠로',
+  doing:'논문 원문에서 배경·핵심 결과·그림·표·주요 메시지를 추출해 영상 자동 제작',
+  out:'영상 · 쇼츠',
+  desc:'논문 원문에서 연구 배경, 핵심 결과, 그림과 표, 주요 메시지를 추출해 <b>영상과 쇼츠를 자동으로 제작</b>합니다.',
+  items:['논문 원문 구조분해와 핵심 내용 추출','홍보용 논문 DB 구축','영상 구성안과 내레이션 자동 생성','연구성과 소개 영상·쇼츠 자동 제작'],
+  eff:'전문적인 논문을 일반인도 이해하기 쉬운 콘텐츠로 바꿔 대학의 우수 연구성과를 빠르고 지속적으로 알릴 수 있습니다.'},
+ {n:'4', col:'#4ade80', t:'사서 에이전트', sub:'LAS를 교체하지 않고 더한다',
+  doing:'LAS에 축적된 대출·소장·서지 데이터에 AI를 더해 장서·수서·편목 판단을 지원',
+  out:'장서·수서·편목 판단',
+  desc:'기존 교내 LAS를 교체하지 않고, <b>LAS에 축적된 대출·소장·서지 데이터에 AI 기능을 더합니다.</b> 장서분석관리 에이전트를 중심으로 사서의 판단과 반복 업무를 지원합니다.',
+  items:['장서 구성·회전율·사장자료 분석','유지·제적·복본 구매 후보 제안','수서와 자료 구매 판단 지원','MARC 의미필드 보강과 편목 검수','청구기호와 소장자료 관리 지원'],
+  eff:'사서는 단순 통계가 아니라 근거가 연결된 분석 결과를 보고 어떤 책을 사고, 남기고, 정리할지 판단할 수 있습니다.'},
+ {n:'5', col:'#f472b6', t:'AI 에이전트', sub:'기관 데이터를 보는 하나의 창',
+  doing:'기관이 보유한 모든 데이터에 AI·MCP를 연결해 질문만으로 조회하고 근거 확인',
+  out:'통합 조회 인터페이스',
+  desc:'기관이 보유한 모든 데이터에 AI·MCP 기능을 연결합니다. 사용자는 여러 시스템과 표를 직접 찾아다니지 않고, <b>질문만으로 필요한 데이터를 조회하고 근거를 확인</b>할 수 있습니다.',
+  items:['책·논문·연구자·장서·성과 데이터 통합 조회','자연어 질문을 데이터 조회로 연결','답변의 근거와 출처 표시','근거가 없거나 권한이 없는 정보는 답변하지 않음','부서와 사용자 권한에 맞춘 데이터 접근'],
+  eff:'AI 에이전트가 기관 데이터의 통합 창이 되어, 필요한 정보를 찾고 확인하는 시간을 줄입니다.'},
+ {n:'6', col:'#fbbf24', t:'AI 성과관리', sub:'개인 성과를 학교 KPI로',
+  doing:'확정한 개인 연구성과와 행정 데이터를 학과·사업단·학교 KPI로 연결',
+  out:'학과·사업단·학교 KPI',
+  desc:'연구성과관리에서 확정한 개인 연구성과와 학교의 여러 행정 데이터를 <b>학과·사업단·학교 단위 KPI로 연결</b>합니다. BK21과 앵커 사업의 현황, 목표, 위험 신호를 한곳에서 관리합니다.',
+  items:['BK21·앵커 사업 참여자와 실적 관리','학교의 여러 데이터를 공통 KPI로 연결','학과·사업단·학교 단위 성과 현황','연도별 변화와 비교 분석','데이터 품질과 미확인 항목 표시'],
+  eff:'별도의 성과자료를 다시 만들지 않고, 이미 축적된 데이터를 이용해 사업 현황과 개선이 필요한 지점을 확인할 수 있습니다.'}
+];
+
+const CYC = [
+ {col:'#38bdf8', src:'책·논문·글로벌 연구자 데이터', dst:'1. AI 검색엔진',
+  why:'원천 데이터를 구축하고 서로 연결해 검색 코퍼스와 벡터를 만듭니다.'},
+ {col:'#a78bfa', src:'1. AI 검색엔진', dst:'2. 연구성과관리',
+  why:'검색을 위해 구축한 논문 DB가 저자 매칭의 기반이 됩니다.'},
+ {col:'#f97316', src:'1. AI 검색엔진', dst:'3. 연구성과 홍보영상',
+  why:'논문 원문이 영상과 쇼츠 제작의 재료가 됩니다.'},
+ {col:'#fbbf24', src:'2. 연구성과관리', dst:'6. AI 성과관리',
+  why:'확정된 개인 연구성과가 학과·사업단·학교 KPI가 됩니다.'},
+ {col:'#4ade80', src:'교내 LAS', dst:'4. 사서 에이전트',
+  why:'LAS에 쌓인 대출·소장 기록이 사서의 장서 판단에 활용됩니다.'},
+ {col:'#f472b6', src:'1~6의 모든 데이터', dst:'5. AI 에이전트 · MCP 창',
+  why:'모든 솔루션의 데이터를 한곳에서 조회하는 창이 됩니다.'}
+];
+
+const TB = [
+ {col:'#38bdf8', d:'도서관',           s:'AI 검색엔진 · 사서 에이전트', e:'책·논문 검색에서 장서·수서·편목으로 확장'},
+ {col:'#a78bfa', d:'연구처',           s:'연구성과관리',                e:'개인 연구력에서 학과·학교 성과관리로 확장'},
+ {col:'#f97316', d:'홍보처',           s:'연구성과 홍보영상',           e:'우수 논문 선별과 정기 콘텐츠 제작으로 확장'},
+ {col:'#f472b6', d:'전산·기획 부서',    s:'AI 에이전트',                e:'기관 전체 데이터의 통합 조회 창으로 확장'},
+ {col:'#fbbf24', d:'BK21·앵커 사업단',  s:'AI 성과관리',                e:'참여자·실적 관리에서 학교 공통 KPI로 확장'}
+];
+
+let cur = 0;
+
+function cols(){
+ document.getElementById('left').innerHTML = SOL.map((p,i)=>`
+  <button class="pcol${i===cur?' on':''}" data-i="${i}"
+   style="--c1:linear-gradient(180deg,${p.col},${hex(p.col,.62)});--cc:${p.col}">
+   <div class="n">${p.n}</div>
+   <div class="t">${p.t}</div>
+   <div class="s">${p.sub}</div>
+   <div class="doing">${p.doing}</div>
+   <div class="out">${p.out}</div>
+  </button>`).join('');
+}
+function detail(){
+ const p = SOL[cur];
+ document.getElementById('right').innerHTML = `
+  <div class="rhd" style="--cc:${p.col}">
+   <h2>${p.n}. ${p.t}</h2>
+   <span class="c" style="background:${hex(p.col,.16)};border:1px solid ${hex(p.col,.4)};color:${p.col}">${p.sub}</span>
+  </div>
+  <p class="rdesc">${p.desc}</p>
+  <div class="casc" style="--bl:${hex(p.col,.10)};--bd:${hex(p.col,.28)};--bh:${hex(p.col,.20)};--cc:${p.col}">
+   ${p.items.map(t=>`<div class="blk"><div class="bt">${t}</div></div>`).join('')}
+  </div>
+  <div class="eff" style="--bl:${hex(p.col,.08)};--bd:${hex(p.col,.24)};--cc:${p.col}">
+   <div class="el">도입 효과</div>
+   <div class="et">${p.eff}</div>
+  </div>`;
+}
+function cycle(){
+ document.getElementById('cyc').innerHTML = CYC.map(c=>`
+  <div class="cnode">
+   <i style="background:${c.col}"></i>
+   <div class="src">${c.src}</div>
+   <div class="arw">▼</div>
+   <div class="dst" style="color:${c.col}">${c.dst}</div>
+   <div class="why">${c.why}</div>
+  </div>`).join('');
+}
+function table(){
+ document.getElementById('tb').innerHTML = TB.map(r=>`
+  <tr><td><b><span class="sw" style="background:${r.col}"></span>${r.d}</b></td>
+   <td><b>${r.s}</b></td><td>${r.e}</td></tr>`).join('');
+}
+
+document.getElementById('left').addEventListener('click', e=>{
+ const b = e.target.closest('button[data-i]'); if(!b) return;
+ cur = +b.dataset.i; cols(); detail();
+});
+addEventListener('keydown', e=>{
+ if(e.key==='ArrowRight'){ cur=(cur+1)%SOL.length; cols(); detail(); }
+ if(e.key==='ArrowLeft'){ cur=(cur-1+SOL.length)%SOL.length; cols(); detail(); }
+});
+
+cols(); detail(); cycle(); table();
+</script>
+</div></div>
+
+<script>
+/* 1600x900 고정 무대 — 작업가이드 5장 규격.
+   resize 하나만 걸면 iframe 슬라이드에서 배율이 틀어진 채 굳는다. 다섯 개를 다 건다. */
+function fitStage(){
+  const st=document.getElementById('stage'); if(!st) return;
+  st.style.height='900px';
+  const k=Math.min(innerWidth/1600, innerHeight/900);
+  st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;
+}
+fitStage();
+addEventListener('resize',fitStage);
+addEventListener('load',fitStage);
+addEventListener('pageshow',fitStage);
+if(window.ResizeObserver) new ResizeObserver(fitStage).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitStage);
+</script>
+<script>if(window.self!==window.top) document.documentElement.classList.add('emb-bg0');</script>
+</body></html>
