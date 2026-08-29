@@ -1,6 +1,6 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>연구자 개인성과 — BIBLO</title>
+<title>입체적 성과 분석 — BIBLO</title>
 <style>
 :root{--ink:#e9eefb;--ink2:#93a6cc;--ink3:#5d7099;--in:#38bdf8;--out:#a78bfa;--core:#818cf8;
  --g4:#f472b6;--g3:#a78bfa;--g2:#38bdf8;--g1:#2dd4bf;--g0:#64748b;--warn:#fbbf24;--bad:#fb7185;--ok:#34d399}
@@ -16,7 +16,7 @@ html,body{overflow:hidden}
 /* 덱 무대 규격: 1600x900 안에 헤더·보드·각주가 모두 들어간다.
    원본은 세로 1271px 짜리 스크롤 문서였다(보드 912 + 헤더 246 + 각주).
    헤더를 무대 안으로 넣어야 타이틀·서브설명이 보드와 같은 비율로 커지고 줄어든다. */
-.wrap{width:1600px;height:900px;padding:44px 82px 26px;display:flex;flex-direction:column}
+.wrap{position:relative;width:1600px;height:900px;padding:44px 82px 26px;display:flex;flex-direction:column}
 .kicker{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
 /* 작업가이드 폰트 규격: 한글 제목 3.15em(44px), 서브 16px/600 */
 h1{font-size:44px;font-weight:800;letter-spacing:-1.5px;margin-top:12px;line-height:1.16}
@@ -26,7 +26,7 @@ h1 span{background:linear-gradient(90deg,var(--in),var(--out));-webkit-backgroun
 .lead b{color:var(--ink)}
 .hd{display:flex;gap:24px;align-items:flex-end;flex:none}
 .spacer{flex:1}
-.picks{display:flex;gap:9px 18px;align-items:center;flex:none;padding-bottom:3px}
+.picks{position:absolute;right:82px;top:44px;display:flex;gap:9px 18px;align-items:center;flex:none}
 .pick{display:flex;gap:9px;align-items:center}
 .pick label{flex:none}
 .pick select{min-width:236px}
@@ -199,10 +199,9 @@ p.pd b{color:#dce4fb}
  <div class="hd">
   <div>
    <div class="kicker">BIBLO · RESEARCHER PERFORMANCE</div>
-   <h1>연구자 <span>개인성과</span></h1>
-   <p class="lead">논문 수를 세는 화면이 아니다. <b>어떤 연구를 얼마나 지속했고</b>, 그 연구에서
-    <b>어떤 역할을 했으며</b>, 논문 자체가 <b>어느 정도 영향을 만들었는지</b>를 근거 논문과 함께 본다.
-    좌측은 연구자 정체성과 대표 성과, 우측은 11개 관점별 상세와 그 판단을 뒷받침한 실제 논문.</p>
+   <h1>단순한 ‘논문 카운팅’을 넘어선 <span>입체적 성과 분석</span></h1>
+   <p class="lead">단순 실적 나열이 아닌, <b>연구자의 헌신과 학문적 기여도</b>를 정확하게 짚어내는
+    <b>차세대 성과 대시보드</b>입니다.</p>
   </div>
   <div class="spacer"></div>
   <div class="picks">
