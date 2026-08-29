@@ -445,6 +445,9 @@ window.SLIDES_2q6r4=[
  {kind:'frame',src:'bk21-status-11b.html', bg:'own', name:'매칭 현황 요약 11b'},
  {kind:'frame',src:'bk21-status-09b.html', bg:'own', name:'검색 → 주제 확장 → 논문'},
  {kind:'frame',src:'biblo-paper-search.html', bg:'own', name:'논문 확장검색'},
+ {kind:'node', id:'sl-hero-2q6r4-b', bg:'wave', name:'데이터로 움직이는 AI도서관 2'},
+ {kind:'node', id:'sl-five-2q6r4-b', bg:'wave', name:'다섯 갈래로 나뉜 하나의 데이터 2'},
+ {kind:'node', id:'sl-stats-2q6r4-b', bg:'wave', name:'실측 규모 2'},
  {kind:'frame',src:'bk21-match-status6.html', bg:'own', name:'매칭 현황 요약'},
  {kind:'frame',src:'bk21-status-08.html', bg:'own', name:'매칭 현황 요약 08'},
  {kind:'frame',src:'bk21-status-09.html', bg:'own', name:'매칭 현황 요약 09'},
@@ -544,6 +547,37 @@ window.BGS_2q6r4={
 
  <section class="slide-2q6r4" id="sl-stats-2q6r4">
   <div class="glass"><div class="stats" id="stats"></div></div>
+  <div class="foot">
+  <b>실측 기준.</b> 신 RIMS <code>dev</code> 복원본 · 운영 사이트 · 「데이터로 움직이는 도서관」 보고서 · 수서편찬 설계 백서.
+  회수 커버리지가 100%가 아니므로 절대 편수는 하한값으로 읽습니다.<br>
+  <b>BIBLO</b> · TenSoftWorks
+  </div>
+ </section>
+
+ <!-- 24·25·26 장 사본 (12·13·14 자리) -->
+<div class="hero slide-2q6r4" id="sl-hero-2q6r4-b">
+  <div class="glass"><div class="pad">
+   <span class="pill">RESEARCH &amp; LIBRARY PLATFORM</span>
+   <h1>데이터로 움직이는<br><em>AI도서관</em></h1>
+   <div class="dots"></div>
+   <p class="body">대학의 연구 실적은 도서관에 <b>이미 쌓인 기록</b>에서 나옵니다.
+    누가 어떤 책을 빌렸고 어떤 논문을 누가 썼는지 같은 것들.
+    비블로는 그 기록을 읽어 살 책을 고르고, 논문마다 저자를 찾아 붙이고,
+    그 결과를 실적 수치로 정리합니다. <b>평소 운영 기록이 그대로 실적이 됩니다.</b></p>
+  </div></div>
+  <div class="scroll"><i></i>SCROLL</div>
+ </div>
+<section class="slide-2q6r4" id="sl-five-2q6r4-b">
+  <div class="sh">
+   <div class="k">WHAT WE BUILT</div>
+   <h2>다섯 갈래로 나뉜 하나의 데이터</h2>
+   <p>각 제품은 자기 일을 하려고 데이터를 쌓습니다. 그 데이터가 다음 제품의 재료가 되고,
+      마지막에는 연구 성과 지표가 됩니다. 성과를 재려고 따로 조사할 일이 없습니다.</p>
+  </div>
+  <div class="grid" id="cards-b"></div>
+ </section>
+<section class="slide-2q6r4" id="sl-stats-2q6r4-b">
+  <div class="glass"><div class="stats" id="stats-b"></div></div>
   <div class="foot">
   <b>실측 기준.</b> 신 RIMS <code>dev</code> 복원본 · 운영 사이트 · 「데이터로 움직이는 도서관」 보고서 · 수서편찬 설계 백서.
   회수 커버리지가 100%가 아니므로 절대 편수는 하한값으로 읽습니다.<br>
@@ -709,17 +743,17 @@ const P=[
   li:['등록 블록에서만 인용','문장마다 근거 블록','운영 참모 도구 22종'],
   m:'Frame 12종 · 지식 블록'},
 ];
-document.getElementById('cards').innerHTML=P.map(p=>`
+document.querySelectorAll('#cards,#cards-b').forEach(el=>el.innerHTML=P.map(p=>`
  <div class="glass card"><div class="pad">
   <div class="n">${p.n}</div><h3>${p.t}</h3><div class="s">${p.s}</div>
   <div class="dots"></div>
   <ul>${p.li.map(x=>`<li>${x}</li>`).join('')}</ul>
   <div class="m">${p.m}</div>
- </div></div>`).join('');
+ </div></div>`).join(''));
 const ST=[['148만','책 서지'],['1.1억','학술 서지 색인'],['528만','저자행'],
           ['11,930','판별된 연구자'],['34','BK21 연구단']];
-document.getElementById('stats').innerHTML=ST.map(([v,k])=>
- `<div class="c"><div class="v">${v}</div><div class="k">${k}</div></div>`).join('');
+document.querySelectorAll('#stats,#stats-b').forEach(el=>el.innerHTML=ST.map(([v,k])=>
+ `<div class="c"><div class="v">${v}</div><div class="k">${k}</div></div>`).join(''));
 
 /* ══ 슬라이드 덱 제어 ══════════════════════════════════════
    SLIDES_2q6r4 순서대로 덱을 다시 조립하고, 활성 슬라이드가 속한
