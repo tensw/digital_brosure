@@ -486,6 +486,14 @@ body{overflow:hidden}
 #sl-five-2q6r4-b .was-b{margin:11px 0 2px;padding:9px 11px}
 #sl-five-2q6r4-b .card ul{margin-top:9px}
 #sl-five-2q6r4-b .card .m{margin-top:11px}
+
+/* ══ 12·13·15 좌우 무대 간격을 2번(biblo-solution-6) 규격으로 ══════════
+   2번은 1600x900 고정 무대 안에서 좌우 82px 이고, 무대가 통째로 배율을 탄다.
+   이 세 장은 노드 슬라이드라 배율을 타지 않으므로 같은 비율(82/1600 = 5.125vw)로 준다.
+   16:9 에서는 2번이 실제로 그리는 여백과 px 까지 같아진다.
+   14번(BK21_판별_신호망)은 이미 82px 라 손대지 않았다. */
+#sl-hero-2q6r4-b, #sl-five-2q6r4-b, #sl-stats-2q6r4-b{
+ padding-left:5.125vw; padding-right:5.125vw}
 </style>
 
 <div class="bgstack-2q6r4" id="bgstack-2q6r4"></div>
