@@ -470,9 +470,11 @@ body{overflow:hidden}
 /* 카드 박스 — 7장 01 박스 승계 */
 #sl-five-2q6r4-b .grid{grid-template-columns:repeat(4,1fr);gap:18px}
 #sl-five-2q6r4-b .card .pad{padding:18px 20px}
-#sl-five-2q6r4-b .card .n{font:700 10.5px/1 ui-monospace,Menlo,monospace;
+/* 번호와 제목만 7장 규격의 2배로 키운다(10.5 → 21px · 15 → 30px).
+   나머지 요소는 7장 규격 그대로 둔다. */
+#sl-five-2q6r4-b .card .n{font:700 21px/1 ui-monospace,Menlo,monospace;
  letter-spacing:.2em;margin-bottom:9px}
-#sl-five-2q6r4-b .card h3{font-size:15px;font-weight:800;line-height:1.35;
+#sl-five-2q6r4-b .card h3{font-size:30px;font-weight:800;line-height:1.35;
  letter-spacing:-.4px;margin-top:0}
 #sl-five-2q6r4-b .card .s{font:700 10.5px/1 ui-monospace,Menlo,monospace;
  letter-spacing:.06em;margin-top:5px}
