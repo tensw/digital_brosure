@@ -1,0 +1,261 @@
+<meta charset="utf-8">
+<title>BIBLO 판별 신호망</title>
+<style>
+:root{--ink:#e6eefb;--ink2:#8ea6cf;--ink3:#54688f;--hi:#38bdf8;--warm:#22d3ee;--weak:#f59e0b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:14px/1.6 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo",system-ui,sans-serif;
+ background:radial-gradient(1000px 700px at 55% 46%,#0b1226 0%,#060a16 58%,#03050c 100%);
+ color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1420px;margin:0 auto;padding:40px 30px 66px}
+.kicker{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
+h1{font-size:36px;font-weight:800;letter-spacing:-1.1px;margin-top:13px;line-height:1.16}
+h1 span{color:var(--hi)}
+.lead{color:var(--ink2);font-size:13.5px;margin-top:12px;max-width:60ch;line-height:1.8}
+.lead b{color:var(--ink)}
+.hd{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.spacer{flex:1}
+.meta{font:600 11px/1.95 ui-monospace,Menlo,monospace;color:var(--ink3);text-align:right;letter-spacing:.05em}
+.meta b{color:var(--ink2)}
+svg.scene{display:block;width:100%;height:auto;overflow:visible;margin-top:8px}
+.sig{cursor:pointer}
+.sig circle.ic{transition:.16s}
+.sig:hover circle.ic{stroke:#bae6fd;stroke-width:2}
+.sig.on circle.ic{stroke:#bae6fd;stroke-width:2.4}
+.sig.on .sn{fill:#fff}
+.sn{font:800 12.5px/1 -apple-system,system-ui,sans-serif;fill:var(--ink)}
+.ss{font:400 10.5px/1 -apple-system,system-ui,sans-serif;fill:var(--ink3)}
+.sp{font:700 11px/1 ui-monospace,Menlo,monospace}
+.cap{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;fill:var(--ink3)}
+.wire{fill:none;stroke-width:1.2;stroke-opacity:.62;transition:.16s}
+.wire.on{stroke-opacity:1;stroke-width:2}
+.edge{stroke:#38bdf8;stroke-opacity:.20;stroke-width:.7}
+.pf{fill:none;stroke:rgba(56,189,248,.45);stroke-width:1}
+.pt{font:800 15px/1 -apple-system,system-ui,sans-serif;fill:var(--ink)}
+.ps{font:600 10.5px/1 ui-monospace,Menlo,monospace;fill:var(--ink3);letter-spacing:.14em}
+.pv{font:800 26px/1 ui-monospace,Menlo,monospace;fill:#bae6fd;letter-spacing:-1px}
+.panel{margin-top:22px;border:1px solid rgba(56,189,248,.20);border-radius:20px;
+ background:linear-gradient(180deg,rgba(12,32,58,.6),rgba(5,14,30,.6));padding:22px 26px;min-height:126px}
+.pn{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.pn h3{font-size:18px;font-weight:800;letter-spacing:-.4px}
+.pn .tg{font:700 10.5px/1 ui-monospace,Menlo,monospace;padding:5px 11px;border-radius:999px;letter-spacing:.08em}
+.tg.s{border:1px solid rgba(34,211,238,.4);color:#67e8f9}
+.tg.w{border:1px solid rgba(245,158,11,.45);color:#fbbf24}
+.bar{height:7px;border-radius:99px;background:rgba(56,189,248,.13);overflow:hidden;margin:10px 0 4px}
+.bar i{display:block;height:100%;border-radius:99px}
+.pd{color:var(--ink2);font-size:12.5px;line-height:1.85;margin-top:10px;max-width:94ch}
+.pd b{color:var(--ink)}
+.pd code{font:600 11px ui-monospace,Menlo,monospace;background:rgba(56,189,248,.14);padding:2px 6px;
+ border-radius:5px;color:#7dd3fc}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:14px}
+.rules[hidden]{display:none}
+.rtog{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:11px;margin-top:22px;
+ padding:11px 20px;border-radius:999px;font:700 11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;
+ color:#cfe6ff;background:rgba(120,180,255,.10);border:1px solid rgba(160,205,255,.24);
+ transition:background .18s,border-color .18s}
+.rtog:hover{background:rgba(120,180,255,.19);border-color:rgba(160,205,255,.42)}
+.rtog:focus-visible{outline:2px solid var(--hi);outline-offset:3px}
+.rtog i{width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;
+ transform:rotate(45deg);position:relative;top:-2px;transition:transform .22s,top .22s}
+.rtog[aria-expanded="true"] i{transform:rotate(-135deg);top:2px}
+.rl{border:1px solid rgba(56,189,248,.18);border-radius:15px;padding:14px 16px;background:rgba(8,22,44,.55)}
+.rl .h{font:700 10.5px/1 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.16em;margin-bottom:8px}
+.rl .t{font-size:13px;font-weight:800}
+.rl .d{color:var(--ink2);font-size:11.5px;line-height:1.7;margin-top:6px}
+.rl .d b{color:var(--ink)}
+.foot{margin-top:22px;border-top:1px solid rgba(56,189,248,.14);padding-top:17px;color:var(--ink3);
+ font-size:11.5px;line-height:1.9}
+.foot b{color:var(--ink2)}
+@media(max-width:820px){.wrap{padding:24px 15px 46px}h1{font-size:27px}}
+</style>
+
+<div class="wrap">
+ <div class="hd">
+  <div>
+   <div class="kicker">BIBLO · IDENTITY SIGNALS</div>
+   <h1>같은 이름 중에서<br><span>이 사람</span>을 고르는 신호들.</h1>
+   <div class="lead">논문에 적힌 <b>"Kim, J."</b>가 우리 연구자 수백 명 중 누구인지 가리려면 이름만으로는 안 됩니다.
+    왼쪽 일곱 신호가 각자 근거를 대고, 가운데에서 합쳐져 한 사람으로 수렴합니다.
+    <b>막대는 그 신호를 실제로 가진 연구자 비율</b>입니다. 신호를 누르면 상세가 열립니다.</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="meta" id="meta"></div>
+ </div>
+
+ <svg class="scene" id="scene" viewBox="0 0 1400 720" role="img" aria-label="연구자 판별 신호망"></svg>
+ <div class="panel" id="panel"></div>
+
+ <button class="rtog" id="rtog" type="button" aria-expanded="false" aria-controls="rules">
+  <span>판별 규칙 4가지 보기</span><i></i></button>
+ <div class="rules" id="rules" hidden>
+  <div class="rl"><div class="h">RULE 01</div><div class="t">강한 신호가 먼저</div>
+   <div class="d">Scopus ID·ORCID·이메일이 일치하면 그 자리에서 확정합니다. 오차 없는 앵커를 먼저 만들고 그 위에 나머지를 얹습니다.</div></div>
+  <div class="rl"><div class="h">RULE 02</div><div class="t">이름이 다르면 끝</div>
+   <div class="d">영문 이름을 한글로 되돌려 비교합니다. <b>변환 결과가 다르면 다른 사람</b>으로 확정하고 뒤의 신호를 보지 않습니다.</div></div>
+  <div class="rl"><div class="h">RULE 03</div><div class="t">공저자가 가른다</div>
+   <div class="d">동명이인 다섯 명이 분야·저널로도 안 갈릴 때, <b>확정 공저자와 겹치는지</b>가 유일하게 가른 신호였습니다.</div></div>
+  <div class="rl"><div class="h">RULE 04</div><div class="t">코드가 정하면 AI는 못 뒤집는다</div>
+   <div class="d">신호 조합으로 확정된 건은 잠급니다. LLM은 <b>판정이 갈리는 건만</b> 봅니다.</div></div>
+ </div>
+
+ <div class="foot">
+  실측 <b>2026-08-25</b> · 재직 연구자 <b>34,764명</b> 기준 보유율. 신 RIMS <code>dev</code> 복원본에서 집계.
+  <b>강한 신호와 변별 신호는 다릅니다.</b> 이름·학과·식별자는 90%대로 거의 다 있지만,
+  동명이인을 실제로 가르는 분야·저널·공저는 <b>3분의 1</b>에 그칩니다.
+  후보를 걷어 올리는 데는 문제가 없고, 걷어 올린 뒤 고르는 데서 막힙니다.
+ </div>
+</div>
+
+<script>
+/* 판별 규칙 표 — 기본 접힘, 누르면 펼침 */
+(function(){
+ const b=document.getElementById('rtog'), r=document.getElementById('rules');
+ if(!b||!r) return;
+ b.addEventListener('click',()=>{
+  const open=b.getAttribute('aria-expanded')==='true';
+  b.setAttribute('aria-expanded',String(!open));
+  r.hidden=open;
+  b.querySelector('span').textContent = open ? '판별 규칙 4가지 보기' : '판별 규칙 접기';
+ });
+})();
+const NS='http://www.w3.org/2000/svg', S=document.getElementById('scene');
+const el=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+let sd=20260825; const rnd=()=>((sd=sd*1103515245+12345&0x7fffffff)/0x7fffffff);
+const TOT=34764;
+
+const SIG=[
+ {id:'id', t:'외부 식별자', s:'Scopus · ORCID · 이메일', n:34143, kind:'강', ic:'M12 2 4 6v6c0 5 3.4 9 8 10 4.6-1 8-5 8-10V6z',
+  d:'가장 확실한 신호입니다. Scopus AUID <b>39,292</b>, 이메일 <b>34,095</b>, ORCID <b>1,345</b>, WoS RID <b>1,006</b>건이 붙어 있습니다. 일치하면 그 자리에서 동일인 확정입니다. 다만 ORCID는 1,345건뿐이라 실제로 무게를 지는 건 Scopus ID와 이메일입니다.'},
+ {id:'name', t:'이름 · 표기변이', s:'영문명 · 한글 변환', n:33658, kind:'강', ic:'M4 20v-1a7 7 0 0 1 14 0v1M11 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
+  d:'같은 사람이 <code>Kim, S.</code> <code>Kim, Sunho</code> <code>Kim, Sun-Ho</code>로 제각각 적힙니다. 영문 이름을 한글로 되돌려 비교해, 변환 결과가 같으면 같은 이름으로 봅니다. <b>다르면 그 자리에서 다른 사람으로 확정</b>하고 뒤의 신호를 보지 않습니다.'},
+ {id:'dept', t:'학과 · 소속', s:'재직 조직 · 직위', n:31990, kind:'강', ic:'M3 21h18M5 21V7l7-4 7 4v14M9 21v-5h6v5',
+  d:'소속 학과입니다. 약어가 섞여 있어(<code>elect</code> → electrical/electronic, <code>engn</code> → engineering) 확장 사전으로 맞춥니다. 분야가 안 맞는데 학과까지 다르면 다른 사람으로 봅니다.'},
+ {id:'jnl', t:'저널 프로필', s:'주로 싣는 학술지', n:11437, kind:'약', ic:'M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z M8 7h8M8 11h8',
+  d:'그 사람이 주로 싣는 학술지 목록입니다. 논문 저널이 겹치면 같은 사람일 가능성이 큽니다. <b>보유율 32.9%</b>로, 확정 실적이 쌓인 연구자에게만 있습니다.'},
+ {id:'net', t:'공저 관계망', s:'함께 쓴 사람', n:10770, kind:'약', ic:'M12 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM5 21a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM19 21a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM12 5v6M12 11 6 17M12 11l6 6',
+  d:'같은 논문을 쓴 사람은 서로를 증명합니다. 엣지 <b>932,329</b>건을 보유하고 <b>10,770명</b>이 관계망을 갖습니다. 실측에서 <b>동명이인 다섯 명을 유일하게 가른 신호</b>였습니다. 분야·저널로 안 갈릴 때 이것만 남습니다.'},
+ {id:'fld', t:'분야 프로필', s:'WoS · Scopus 분류', n:9042, kind:'약', ic:'M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17l9 5 9-5',
+  d:'논문 분류에서 역산한 연구 분야입니다. WoS 247개·Scopus 206개 체계를 씁니다. <b>보유율 26.0%</b>로 가장 낮습니다. 분야가 안 맞으면 다른 사람으로 보는 규칙이 있는데, 정작 그 분야 정보가 4명 중 1명에게만 있습니다.'},
+ {id:'kw', t:'키워드 프로필', s:'논문 키워드 빈도', n:8871, kind:'약', ic:'M20.6 13.4 12 22l-9-9V3h10l7.6 7.6a2 2 0 0 1 0 2.8zM7.5 7.5h.01',
+  d:'논문 키워드를 빈도로 쌓은 층입니다. <b>1,196,149</b>건이지만 <code>performance</code> <code>model</code> 같은 범용어가 상위를 차지해 변별력이 약합니다. 범용어를 걸러야 쓸 수 있습니다.'},
+];
+
+function draw(){
+  S.innerHTML='';
+  const d=el('defs');
+  d.innerHTML=`<filter id="g" x="-200%" y="-200%" width="500%" height="500%">
+    <feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/>
+    <feMergeNode in="SourceGraphic"/></feMerge></filter>
+   <radialGradient id="cg"><stop offset="0" stop-color="#e0f2fe" stop-opacity="1"/>
+    <stop offset="38%" stop-color="#38bdf8" stop-opacity=".45"/><stop offset="100%" stop-color="#0369a1" stop-opacity="0"/></radialGradient>
+   <linearGradient id="w1" x1="0" x2="1"><stop offset="0" stop-color="#22d3ee" stop-opacity=".2"/>
+    <stop offset="100%" stop-color="#38bdf8" stop-opacity="1"/></linearGradient>
+   <linearGradient id="w2" x1="0" x2="1"><stop offset="0" stop-color="#f59e0b" stop-opacity=".18"/>
+    <stop offset="100%" stop-color="#38bdf8" stop-opacity=".85"/></linearGradient>`;
+  S.appendChild(d);
+
+  // 축을 5번째 신호(공저 관계망) 높이에 맞춘다 — 좌측 라인이 여기 한 점으로 겹친다
+  const CY=392;
+  const CORE=700, R=156, X0=CORE-R;
+  const PXC=1250, RING2=74, TIPX=PXC-RING2;   // 확정연구자 바깥에서 두 번째 링 위가 수렴점
+  // 구면 위에 노드를 고르게 뿌린다(피보나치 격자). z 가 깊이 — 앞(+1)은 밝고 크게, 뒤(-1)는 흐리고 작게
+  const N=118, GA=Math.PI*(3-Math.sqrt(5));
+  const sph=[];
+  for(let i=0;i<N;i++){
+    const y=1-(i/(N-1))*2, rr=Math.sqrt(Math.max(0,1-y*y)), th=i*GA;
+    sph.push({x:Math.cos(th)*rr, y:y, z:Math.sin(th)*rr});
+  }
+  // 살짝 기울여 정면에서 본 격자가 규칙적으로 보이지 않게
+  const TIL=0.42, ct=Math.cos(TIL), st=Math.sin(TIL);
+  sph.forEach(q=>{const y2=q.y*ct-q.z*st, z2=q.y*st+q.z*ct; q.y=y2; q.z=z2;});
+  sph.forEach(q=>{q.px=CORE+q.x*R; q.py=CY+q.y*R; q.d=(q.z+1)/2;});   // d: 0 뒤 → 1 앞
+
+  S.appendChild(el('ellipse',{cx:CORE,cy:CY,rx:R*1.16,ry:R*1.16,fill:'url(#cg)','fill-opacity':.28}));
+
+  // 엣지: 구면상 거리로 이어 그물을 만들고, 두 끝점 깊이 평균으로 농도를 준다
+  const LINK=0.42;
+  for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){
+    const a=sph[i], b=sph[j];
+    const dd=Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z);
+    if(dd>=LINK) continue;
+    const dep=(a.d+b.d)/2;
+    S.appendChild(el('line',{x1:a.px.toFixed(1),y1:a.py.toFixed(1),x2:b.px.toFixed(1),y2:b.py.toFixed(1),
+      class:'edge','stroke-opacity':(0.05+dep*0.34).toFixed(2),'stroke-width':(0.45+dep*0.75).toFixed(2)}));
+  }
+
+  // 오른쪽 면에서 수렴점으로 흘러나가는 선. 노드는 그리지 않고 선만 남긴다
+  const TIP=[TIPX,CY];
+  sph.filter(q=>q.x>0.30 && q.d>0.30).forEach(q=>{
+    S.appendChild(el('path',{d:`M${q.px.toFixed(1)},${q.py.toFixed(1)} C${(q.px+110).toFixed(1)},${q.py.toFixed(1)} ${TIPX-235},${CY} ${TIPX},${CY}`,
+      fill:'none',stroke:'#7dd3fc','stroke-opacity':(0.10+q.d*0.32).toFixed(2),'stroke-width':(0.5+q.d*0.6).toFixed(2)}));
+  });
+
+  // 노드: 뒤쪽은 작고 흐리게, 앞쪽은 크고 밝게 (구 느낌)
+  sph.forEach(q=>{
+    S.appendChild(el('circle',{cx:q.px.toFixed(1),cy:q.py.toFixed(1),
+      r:(1.5+q.d*2.2).toFixed(2),
+      fill:q.d>0.62?'#dbeafe':'#7dd3fc','fill-opacity':(0.20+q.d*0.78).toFixed(2)}));
+  });
+
+  var CORE_GLOW=el('circle',{cx:CORE,cy:CY,r:12,fill:'#e0f2fe',filter:'url(#g)'});
+  S.appendChild(el('circle',{cx:TIPX,cy:CY,r:5.5,fill:'#ffffff',filter:'url(#g)'}));
+
+  // 신호 7개
+  SIG.forEach((s,i)=>{
+    const y=76+i*88, x=96;
+    const pct=s.n/TOT*100;
+    const g=el('g',{class:'sig',id:'sg-'+s.id});
+    const col=s.kind==='강'?'#22d3ee':'#f59e0b';
+    g.appendChild(el('circle',{cx:x,cy:y,r:20,fill:'rgba(8,28,54,.85)',stroke:col,'stroke-opacity':.6,
+      'stroke-width':1.4,class:'ic'}));
+    g.appendChild(el('path',{d:s.ic,transform:`translate(${x-12},${y-12}) scale(1)`,fill:'none',
+      stroke:col,'stroke-width':1.5,'stroke-linecap':'round','stroke-linejoin':'round'}));
+    const a=el('text',{x:x+34,y:y-6,class:'sn'}); a.textContent=s.t;
+    const b=el('text',{x:x+34,y:y+9,class:'ss'}); b.textContent=s.s;
+    const c=el('text',{x:x+34,y:y+26,class:'sp',fill:col}); c.textContent=pct.toFixed(1)+'%  '+s.n.toLocaleString()+'명';
+    g.append(a,b,c);
+    // 보유율 막대
+    g.appendChild(el('rect',{x:x+34,y:y+31,width:150,height:4,rx:2,fill:'rgba(56,189,248,.13)'}));
+    g.appendChild(el('rect',{x:x+34,y:y+31,width:(150*pct/100).toFixed(1),height:4,rx:2,fill:col,'fill-opacity':.85}));
+    S.appendChild(g);
+    // 연결선
+    const path=`M${x+205},${y} C${x+340},${y} ${CORE-235},${CY} ${CORE},${CY}`;
+    const w=el('path',{d:path,class:'wire',id:'wr-'+s.id,stroke:s.kind==='강'?'url(#w1)':'url(#w2)'});
+    S.insertBefore(w,S.firstChild.nextSibling);
+
+    g.addEventListener('click',()=>sel(s.id));
+  });
+
+  if(CORE_GLOW) S.appendChild(CORE_GLOW);
+
+  // 우: 확정 프로필
+  [92,74,56].forEach((r,i)=>S.appendChild(el('circle',{cx:PXC,cy:CY,r,class:'pf','stroke-opacity':(0.18+i*0.14).toFixed(2)})));
+  S.appendChild(el('circle',{cx:PXC,cy:CY,r:44,fill:'rgba(56,189,248,.10)',stroke:'rgba(186,230,253,.6)','stroke-width':1.4}));
+  S.appendChild(el('path',{d:`M${PXC-16},${CY+16} a16 16 0 0 1 32 0 M${PXC},${CY-6} a11 11 0 1 0 0-22 11 11 0 0 0 0 22`,
+    fill:'none',stroke:'#bae6fd','stroke-width':1.6,'stroke-linecap':'round'}));
+  const t1=el('text',{x:PXC,y:CY+128,'text-anchor':'middle',class:'pt'}); t1.textContent='확정 연구자';
+  const t2=el('text',{x:PXC,y:CY+108,'text-anchor':'middle',class:'pv'}); t2.textContent='34,764';
+  const t3=el('text',{x:PXC,y:CY+146,'text-anchor':'middle',class:'ps'}); t3.textContent='ONE PERSON · ONE ID';
+  S.append(t2,t1,t3);
+
+  const cap=(x,y,t,anc)=>{const e=el('text',{x,y,class:'cap','text-anchor':anc||'start'});e.textContent=t;S.appendChild(e);};
+  cap(76,34,'IDENTITY SIGNALS'); cap(CORE,CY-R-40,'DISCRIMINATION ENGINE','middle'); cap(PXC,CY-118,'RESOLVED','middle');
+}
+
+function sel(id){
+  SIG.forEach(s=>{
+    document.getElementById('sg-'+s.id).classList.toggle('on',s.id===id);
+    document.getElementById('wr-'+s.id).classList.toggle('on',s.id===id);
+  });
+  const s=SIG.find(x=>x.id===id), pct=s.n/TOT*100;
+  const col=s.kind==='강'?'#22d3ee':'#f59e0b';
+  document.getElementById('panel').innerHTML=`
+   <div class="pn"><h3>${s.t}</h3>
+    <span class="tg ${s.kind==='강'?'s':'w'}">${s.kind==='강'?'강한 신호':'변별 신호'}</span>
+    <span style="font:700 12px ui-monospace,Menlo,monospace;color:${col}">${pct.toFixed(1)}% · ${s.n.toLocaleString()}명 / ${TOT.toLocaleString()}명</span></div>
+   <div class="bar"><i style="width:${pct}%;background:${col}"></i></div>
+   <div class="pd">${s.d}</div>`;
+}
+document.getElementById('meta').innerHTML=
+ `실측 <b>2026-08-25</b><br>신호 <b>7</b>종 · 재직 연구자 <b>34,764</b>명<br>강한 신호 <b>3</b> · 변별 신호 <b>4</b>`;
+draw(); sel('net');
+</script>
