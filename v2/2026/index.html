@@ -514,7 +514,10 @@ body{overflow:hidden}
 /* 18장 — 논문 한 편에서 나온 결과물 3종. biblo.ai 브로슈어 3·4번 카드에서 가져왔다.
    칸 비율을 각 매체의 가로비와 같게 두면 세 칸의 높이가 저절로 맞는다
    (논문 스프레드 1486x2022 두 쪽 = 1.47, 롱폼 16:9 = 1.778, 쇼츠 9:16 = 0.5625). */
-.sh18{flex:none;margin-bottom:20px}
+.sh18{flex:none;margin-bottom:18px}
+/* 서브 문구는 작업가이드 규격 16px/600 */
+.sh18 p{margin-top:12px;font-size:16px;font-weight:600;line-height:1.55;
+ letter-spacing:-.3px;color:var(--ink2);max-width:104ch}
 .sh18 .k{font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
 .sh18 h2{margin-top:12px;font-size:44.1px;font-weight:800;line-height:1.16;letter-spacing:-1.4px;color:var(--ink)}
 .sh18 h2 b{background-image:linear-gradient(90deg,#38bdf8,#a78bfa 45%,#f472b6 72%,#fbbf24);
@@ -536,6 +539,19 @@ body{overflow:hidden}
 .play18:after{content:"";position:absolute;left:23px;top:18px;border-style:solid;
  border-width:11px 0 11px 17px;border-color:transparent transparent transparent #eaf2ff}
 .med18.on18 .play18{opacity:0}
+/* 하단 — 논문 한 편이 영상이 되는 다섯 단계. 위의 원문·롱폼·쇼츠와 이어 읽는다.
+   DB 규모 숫자는 이 화면의 샘플과 직접 이어지지 않아 뺐다. */
+.flow18{margin-top:26px;display:grid;grid-template-columns:repeat(5,1fr);
+ border-radius:18px;overflow:hidden;flex:none}
+.fc18{position:relative;padding:20px 22px 19px;border-left:1px solid rgba(160,205,255,.12)}
+.fc18:first-child{border-left:0}
+/* 칸 사이 화살표 — 다음 단계로 넘어간다는 표시 */
+.fc18+.fc18:before{content:"";position:absolute;left:-5px;top:50%;margin-top:-4px;
+ border-style:solid;border-width:4px 0 4px 6px;border-color:transparent transparent transparent rgba(160,205,255,.5)}
+.fc18 i{display:block;font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:var(--ink3);font-style:normal}
+.fc18 b{display:block;margin-top:11px;font-size:16px;font-weight:800;letter-spacing:-.4px;color:var(--ink)}
+.fc18 s{display:block;margin-top:7px;text-decoration:none;font-size:13px;font-weight:500;
+ line-height:1.5;letter-spacing:-.3px;color:var(--ink2)}
 .cap18{margin-top:11px;display:flex;align-items:baseline;gap:9px;
  font-size:14.5px;font-weight:700;letter-spacing:-.3px;color:var(--ink)}
 .cap18 span{font:600 11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.04em;color:var(--ink3)}
@@ -783,7 +799,9 @@ window.BGS_2q6r4={
   <div class="stg-2q6r4">
   <div class="sh18">
    <div class="k">RESEARCH PROMOTION</div>
-   <h2>논문 한 편에서 나온 <b>롱폼 영상과 쇼츠</b></h2>
+   <h2>논문을 <b>이해한 영상</b>은 다릅니다</h2>
+   <p>복잡한 전문용어와 연구 결과, 그림과 표까지 분석해 논문의 핵심과 가치를
+      누구나 이해할 수 있는 이야기로 전달합니다.</p>
   </div>
   <div class="trio18">
    <div class="t18 paper18">
@@ -808,10 +826,14 @@ window.BGS_2q6r4={
     <div class="cap18">쇼츠 <span>60초 이내</span></div>
    </div>
   </div>
-  <div class="glass" style="margin-top:26px"><div class="stats" id="stats"></div></div>
+  <div class="glass flow18">
+   <div class="fc18"><i>01</i><b>논문 구조분해</b><s>섹션·핵심문장 분석</s></div>
+   <div class="fc18"><i>02</i><b>그림·표 해석</b><s>연구 결과와 근거 추출</s></div>
+   <div class="fc18"><i>03</i><b>홍보 시나리오</b><s>전문 내용을 쉬운 이야기로</s></div>
+   <div class="fc18"><i>04</i><b>롱폼 영상</b><s>연구의 전체 맥락 전달</s></div>
+   <div class="fc18"><i>05</i><b>60초 쇼츠</b><s>핵심 성과를 빠르게 확산</s></div>
+  </div>
   <div class="foot">
-  <b>실측 기준.</b> 신 RIMS <code>dev</code> 복원본 · 운영 사이트 · 「데이터로 움직이는 도서관」 보고서 · 수서편찬 설계 백서.
-  회수 커버리지가 100%가 아니므로 절대 편수는 하한값으로 읽습니다.<br>
   <b>BIBLO</b> · TenSoftWorks
   </div>
   </div>
@@ -1094,10 +1116,6 @@ document.getElementById('cards-c').innerHTML=PC.map(p=>`
   <ul>${p.li.map(x=>`<li>${x}</li>`).join('')}</ul>
   <div class="m">${p.m}</div>
  </div></div>`).join('');
-const ST=[['148만','책 서지'],['1.1억','학술 서지 색인'],['528만','저자행'],
-          ['11,930','판별된 연구자'],['34','BK21 연구단']];
-document.querySelectorAll('#stats').forEach(el=>el.innerHTML=ST.map(([v,k])=>
- `<div class="c"><div class="v">${v}</div><div class="k">${k}</div></div>`).join(''));
 
 /* ══ 슬라이드 덱 제어 ══════════════════════════════════════
    SLIDES_2q6r4 순서대로 덱을 다시 조립하고, 활성 슬라이드가 속한
