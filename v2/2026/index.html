@@ -469,7 +469,7 @@ window.SLIDES_2q6r4=[
  {kind:'frame',src:'bk21-status-09b.html', bg:'own', name:'검색 → 주제 확장 → 논문'},
  {kind:'frame',src:'biblo-paper-search.html', bg:'own', name:'논문 확장검색'},
  {kind:'node', id:'sl-hero-2q6r4-b', bg:'wave', name:'데이터로 움직이는 AI도서관 2'},
- {kind:'node', id:'sl-five-2q6r4-b', bg:'wave', name:'다섯 갈래로 나뉜 하나의 데이터 2'},
+ {kind:'node', id:'sl-five-2q6r4-b', bg:'wave', name:'연구성과관리가 답하는 다섯 가지 질문'},
  {kind:'node', id:'sl-stats-2q6r4-b', bg:'wave', name:'실측 규모 2'},
  {kind:'frame',src:'bk21-match-status6.html', bg:'own', name:'매칭 현황 요약'},
  {kind:'frame',src:'bk21-status-08.html', bg:'own', name:'매칭 현황 요약 08'},
@@ -598,10 +598,10 @@ window.BGS_2q6r4={
  </div>
 <section class="slide-2q6r4" id="sl-five-2q6r4-b">
   <div class="sh">
-   <div class="k">WHAT WE BUILT</div>
-   <h2>다섯 갈래로 나뉜 하나의 데이터</h2>
-   <p>각 제품은 자기 일을 하려고 데이터를 쌓습니다. 그 데이터가 다음 제품의 재료가 되고,
-      마지막에는 연구 성과 지표가 됩니다. 성과를 재려고 따로 조사할 일이 없습니다.</p>
+   <div class="k">RESEARCH INTELLIGENCE</div>
+   <h2>연구성과관리가 답하는 다섯 가지 질문</h2>
+   <p>기존 RIMS 가 「우리 기관이 얼마나 냈는가」를 묻는다면, 비블로는 그 기록 안에서 다음을 묻습니다.
+      성과관리의 첫 병목은 점수 산식이 아니라 <b>논문을 정확한 사람에게 귀속하는 것</b>입니다.</p>
   </div>
   <div class="grid" id="cards-b"></div>
  </section>
@@ -772,7 +772,32 @@ const P=[
   li:['등록 블록에서만 인용','문장마다 근거 블록','운영 참모 도구 22종'],
   m:'Frame 12종 · 지식 블록'},
 ];
-document.querySelectorAll('#cards,#cards-b').forEach(el=>el.innerHTML=P.map(p=>`
+/* 13장(연구성과관리 여는 장) 전용 — 소개문서 §0 다섯 가지 질문 */
+const PB=[
+ {n:'01',t:'이 논문의 저자는<br>우리 대학의 누구인가',s:'교내 저자 판정',
+  li:['학교·부속병원·학과 소속 대조','사번과 재직·재학 기간 확인','교내 저자와 교외 공저자 구분'],
+  m:'저자행 528만 행에서 판별'},
+ {n:'02',t:'같은 이름의<br>여러 사람 중 누구인가',s:'동명이인 분리',
+  li:['성씨 빈도 보정 · 김·이·박은 이름만으론 부족','이름 하드 게이트 · 이름 안 맞으면 총점 상한','공저 관계와 연구 분야로 가른다'],
+  m:'확정 인물 11,930명'},
+ {n:'03',t:'흩어진 논문이<br>한 사람의 실적인가',s:'동일인 통합',
+  li:['Scopus ID · ORCID · WoS ID 누적','이름 변형과 소속 이력을 한 지문에','ID 하나만으로 최종 판정하지 않는다'],
+  m:'연구자 지문 53,770건'},
+ {n:'04',t:'어떤 분야를 지속했고<br>누구와 협력했는가',s:'연구 맥락 축적',
+  li:['14개 대분야 온톨로지로 분야 비교','주요 저널과 활동 연도 누적','공저 관계와 협력 강도 기록'],
+  m:'공저 관계 932,329엣지'},
+ {n:'05',t:'축적한 성과를<br>다음 연구로 어떻게 잇는가',s:'재사용',
+  li:['교내외 협력 탐색과 연구지원','홍보 대상 논문 선별','학과·사업단·학교 KPI 기초값'],
+  m:'확정 결과가 다음 매칭의 근거'},
+];
+document.getElementById('cards-b').innerHTML=PB.map(p=>`
+ <div class="glass card"><div class="pad">
+  <div class="n">${p.n}</div><h3>${p.t}</h3><div class="s">${p.s}</div>
+  <div class="dots"></div>
+  <ul>${p.li.map(x=>`<li>${x}</li>`).join('')}</ul>
+  <div class="m">${p.m}</div>
+ </div></div>`).join('');
+document.querySelectorAll('#cards').forEach(el=>el.innerHTML=P.map(p=>`
  <div class="glass card"><div class="pad">
   <div class="n">${p.n}</div><h3>${p.t}</h3><div class="s">${p.s}</div>
   <div class="dots"></div>
