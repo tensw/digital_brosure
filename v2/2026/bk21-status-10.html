@@ -63,8 +63,8 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
  text-align:right;width:150px}
 
 /* ─── 하단 ─── */
-.concl{position:absolute;left:0;right:0;top:747px;text-align:center;
- font-size:26px;font-weight:800;line-height:1.6;letter-spacing:-.4px;color:#111827}
+.concl{position:absolute;left:0;right:0;top:820px;text-align:center;
+ font-size:22px;font-weight:800;line-height:1.4;letter-spacing:-.4px;color:#111827}
 
 /* ── 08장 카드 형식 (수치·진행바·비율) ── */
 .col .cv{font:800 28px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;margin-top:13px;color:#111827}
@@ -157,13 +157,13 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 .mid .key-n82q h2{font:700 11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em}
 .mid .key-n82q p{font-size:14.5px;font-weight:500;line-height:1.6;letter-spacing:-.3px;margin-top:12px}
 /* 이 장에만 쓰는 것 — 구글 대비 박스와 근거 목록 */
-.vs-n82q{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:16px}
+.vs-n82q{margin-top:16px}
 .vs-n82q .b{border-radius:11px;padding:13px 14px}
 .vs-n82q .g{background:#f2f4f8;border:1px solid #e2e7f0}
 .vs-n82q .u{background:#eef3ff;border:1px solid #cfe0ff}
 .vs-n82q .h{display:block;font:800 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em}
 .vs-n82q .g .h{color:#7b8798} .vs-n82q .u .h{color:#1e4be8}
-.vs-n82q .n{margin-top:9px;font:800 24px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.2px}
+.vs-n82q .g .n{margin-top:9px;font:800 24px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.2px}
 .vs-n82q .g .n{color:#64748b} .vs-n82q .u .n{color:#1e4be8}
 .vs-n82q .n i{font-style:normal;font-size:11px;font-weight:700;color:#98a1b2;margin-left:6px;letter-spacing:0}
 .vs-n82q p{margin-top:10px;font-size:12.5px;line-height:1.65;letter-spacing:-.3px;color:#5b6474}
@@ -178,6 +178,16 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
 /* 기준일 — 화면에 없으면 나중에 어느 시점 값인지 못 찾는다 */
 .h1s .asof{margin-left:12px;font:700 11px/1 ui-monospace,Menlo,monospace;
  letter-spacing:.06em;color:#98a1b2;vertical-align:1px}
+
+/* BIBLO 쪽 세 갈래 — 갈래마다 박스와 건수를 따로 둔다 */
+.us-n82q{margin-top:10px}
+.us-n82q>.h{display:block;font:800 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#1e4be8}
+.tri-n82q{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.tri-n82q .b{padding:11px 10px;text-align:center}
+.tri-n82q .t{display:block;font-size:11.5px;font-weight:700;letter-spacing:-.3px;color:#5b6474;
+ line-height:1.3;min-height:2.6em;display:flex;align-items:center;justify-content:center}
+.tri-n82q .n{margin-top:5px;font:800 19px/1 ui-monospace,Menlo,monospace;letter-spacing:-1px;color:#1e4be8}
+.tri-n82q .n i{font-style:normal;font-size:10.5px;font-weight:700;color:#98a1b2;margin-left:3px;letter-spacing:0}
 </style></head><body>
 <div class="slide"><div id="stage">
 
@@ -213,10 +223,16 @@ h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-s
     <div class="vs-n82q">
      <div class="b g"><span class="h">GOOGLE SCHOLAR</span>
       <div class="n">29,500<i>개 · 0.21초</i></div>
-      <p>⚠ 예술지원 매칭펀드<br>⚠ 서울시 장기전세주택 Matching</p></div>
-     <div class="b u"><span class="h">BIBLO</span>
-      <div class="n">3<i>갈래로 분해</i></div>
-      <p>저자 식별 <b>4,221</b> · 저자 귀속 <b>2,891</b><br>동음이의어 해결 <b>4,207</b></p></div>
+      <p>⚠ 예술지원 매칭펀드 · ⚠ 서울시 장기전세주택 Matching</p></div>
+     <!-- BIBLO 쪽을 한 박스에 "3 갈래" 로 적으면 결과가 3건인 것처럼 읽힌다.
+          갈래마다 박스를 따로 두고 각자의 건수를 보인다. -->
+     <div class="us-n82q"><span class="h">BIBLO · 연구 주제로 갈라 준다</span>
+      <div class="tri-n82q">
+       <div class="b u"><span class="t">저자 식별</span><div class="n">4,221<i>건</i></div></div>
+       <div class="b u"><span class="t">저자 귀속</span><div class="n">2,891<i>건</i></div></div>
+       <div class="b u"><span class="t">동음이의어 해결</span><div class="n">4,207<i>건</i></div></div>
+      </div>
+     </div>
     </div>
     <div class="src-n82q">같은 질의 「논문저자 매칭」 실측</div>
     <ul class="ev-n82q">
