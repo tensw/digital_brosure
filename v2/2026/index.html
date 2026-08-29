@@ -444,6 +444,14 @@ body{overflow:hidden}
  background:linear-gradient(90deg,#5ec8ff,#7dd3fc 45%,#a9b6ff);
  box-shadow:0 0 14px rgba(94,200,255,.75);
  transition:width .25s cubic-bezier(.25,.8,.3,1)}
+
+/* 13번 전략 도입 효과 — 카드 4장, 각 카드에 "기존 RIMS" 한 줄을 함께 둔다 */
+#cards-b{grid-template-columns:repeat(4,1fr)!important}
+.was-b{margin:14px 0 4px;padding:11px 13px;border-radius:10px;
+ background:rgba(120,150,220,.10);border:1px solid rgba(150,180,255,.18);
+ font-size:12.5px;line-height:1.65;color:var(--ink3)}
+.was-b span{display:block;margin-bottom:5px;font:700 9.5px/1 ui-monospace,Menlo,monospace;
+ letter-spacing:.14em;color:#8fa6cf}
 </style>
 
 <div class="bgstack-2q6r4" id="bgstack-2q6r4"></div>
@@ -606,10 +614,9 @@ window.BGS_2q6r4={
  </div>
 <section class="slide-2q6r4" id="sl-five-2q6r4-b">
   <div class="sh">
-   <div class="k">RESEARCH INTELLIGENCE</div>
-   <h2>연구성과관리가 답하는 다섯 가지 질문</h2>
-   <p>기존 RIMS 가 「우리 기관이 얼마나 냈는가」를 묻는다면, 비블로는 그 기록 안에서 다음을 묻습니다.
-      성과관리의 첫 병목은 점수 산식이 아니라 <b>논문을 정확한 사람에게 귀속하는 것</b>입니다.</p>
+   <div class="k">STRATEGIC IMPACT</div>
+   <h2>도서관이 대학 전체의 연구 경쟁력을 견인하는 <b>‘디지털 두뇌’</b>로 탈바꿈합니다</h2>
+   <p>비블로 도입이 만드는 네 가지 변화입니다. 항목마다 <b>기존 RIMS 가 멈추는 자리</b>를 함께 적었습니다.</p>
   </div>
   <div class="grid" id="cards-b"></div>
  </section>
@@ -782,26 +789,35 @@ const P=[
 ];
 /* 13장(연구성과관리 여는 장) 전용 — 소개문서 §0 다섯 가지 질문 */
 const PB=[
- {n:'01',t:'이 논문의 저자는<br>우리 대학의 누구인가',s:'교내 저자 판정',
-  li:['학교·부속병원·학과 소속 대조','사번과 재직·재학 기간 확인','교내 저자와 교외 공저자 구분'],
-  m:'저자행 528만 행에서 판별'},
- {n:'02',t:'같은 이름의<br>여러 사람 중 누구인가',s:'동명이인 분리',
-  li:['성씨 빈도 보정 · 김·이·박은 이름만으론 부족','이름 하드 게이트 · 이름 안 맞으면 총점 상한','공저 관계와 연구 분야로 가른다'],
-  m:'확정 인물 11,930명'},
- {n:'03',t:'흩어진 논문이<br>한 사람의 실적인가',s:'동일인 통합',
-  li:['Scopus ID · ORCID · WoS ID 누적','이름 변형과 소속 이력을 한 지문에','ID 하나만으로 최종 판정하지 않는다'],
-  m:'연구자 지문 53,770건'},
- {n:'04',t:'어떤 분야를 지속했고<br>누구와 협력했는가',s:'연구 맥락 축적',
-  li:['14개 대분야 온톨로지로 분야 비교','주요 저널과 활동 연도 누적','공저 관계와 협력 강도 기록'],
-  m:'공저 관계 932,329엣지'},
- {n:'05',t:'축적한 성과를<br>다음 연구로 어떻게 잇는가',s:'재사용',
-  li:['교내외 협력 탐색과 연구지원','홍보 대상 논문 선별','학과·사업단·학교 KPI 기초값'],
-  m:'확정 결과가 다음 매칭의 근거'},
+ {n:'01',t:'자료 보관소에서<br>AI 연구 지식 허브로',s:'도서관의 위상 변화',
+  old:'산학협력단·본부가 통계를 내기 위한 행정 지원 시스템. 도서관의 역할이 드러나지 않는다.',
+  li:['교내에서 생산되는 지식을 엮어 <b>지식 생태계</b>를 보여준다',
+      '도서관이 교내 지식 자산을 총괄한다',
+      '융합 연구를 이끄는 <b>혁신 주체</b>가 된다'],
+  m:'보관소 → 허브'},
+ {n:'02',t:'학과의 장벽을 넘어<br>융합 파트너를 찾는다',s:'융합 연구 촉진',
+  old:'학과·교수별 실적을 평면으로 나열할 뿐, 두 학과 교수가 어떤 공통 주제를 가졌는지 알 수 없다.',
+  li:['지식 그래프가 <b>개념과 맥락</b>으로 연결한다',
+      '의대·공대 같은 <b>교내 융합 연구</b> 후보를 찾는다',
+      '대형 산학 과제 수주의 밑그림이 된다'],
+  m:'공저 관계 932,329 엣지'},
+ {n:'03',t:'평가용 시스템이 아니라<br>연구 비서로',s:'교수진 체감 만족도',
+  old:'실적 등록을 요구하는 행정 숙제. 연구자의 피로와 반발이 따른다.',
+  li:['설명 가능한 AI 가 <b>기존 논문의 맥락</b>을 읽는다',
+      '최신 연구 흐름과 <b>협업 후보</b>를 먼저 권한다',
+      '연구자가 찾아오는 서비스가 된다'],
+  m:'연구자 지문 53,770 건'},
+ {n:'04',t:'내세울 수 있는<br>디지털 전환 성과',s:'대학 평가·혁신 선도',
+  old:'대부분의 대학이 이미 갖춘 레거시 시스템. 차별화된 혁신 사례로 내세우기 어렵다.',
+  li:['<b>문화체육관광부 장관상(우수상)</b> · 성균관대 학술정보관',
+      '제19회 도서관 혁신 공모전 · 국립중앙도서관 주최 · 2025-11-21',
+      '<b>대학도서관 최초</b> 적용 AI 검색'],
+  m:'외부 평가·정부 지원 사업의 근거'},
 ];
 document.getElementById('cards-b').innerHTML=PB.map(p=>`
  <div class="glass card"><div class="pad">
   <div class="n">${p.n}</div><h3>${p.t}</h3><div class="s">${p.s}</div>
-  <div class="dots"></div>
+  <div class="was-b"><span>기존 RIMS</span>${p.old}</div>
   <ul>${p.li.map(x=>`<li>${x}</li>`).join('')}</ul>
   <div class="m">${p.m}</div>
  </div></div>`).join('');
