@@ -20,14 +20,7 @@ h1 span{color:var(--hi)}
 .spacer{flex:1}
 .meta{font:600 11px/1.9 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink3);text-align:right;letter-spacing:.06em}
 .meta b{color:var(--ink2)}
-svg.scene{display:block;width:100%;height:485px;overflow:visible;margin-top:0}
-.feat{display:grid;grid-template-columns:1fr 1fr;gap:9px 20px;margin:10px auto 0;max-width:1180px}
-.ft{display:flex;align-items:flex-start;gap:11px;padding:10px 18px;border-radius:12px;
- border:1px solid rgba(56,189,248,.16);background:rgba(8,22,44,.5)}
-.ft::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--warm);margin-top:7px}
-.ft b{font:700 13.5px/1.45 "Pretendard","Apple SD Gothic Neo",system-ui,sans-serif;
- color:var(--ink);letter-spacing:-.2px}
-.ft b em{font-style:normal;display:block;font-weight:600;font-size:12.5px;color:var(--ink2);margin-top:3px}
+svg.scene{display:block;width:100%;height:718px;overflow:visible;margin-top:0}
 .sig{cursor:pointer}
 .sig circle.ic{transition:.16s}
 .sig:hover circle.ic{stroke:#bae6fd;stroke-width:2}
@@ -39,6 +32,8 @@ svg.scene{display:block;width:100%;height:485px;overflow:visible;margin-top:0}
 .cap{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;fill:var(--ink3)}
 .cap.eng{font:700 13px/1 ui-monospace,Menlo,monospace;letter-spacing:.04em;fill:var(--ink2)}
 .cap.engk{font:600 12px/1 "Pretendard","Apple SD Gothic Neo",system-ui,sans-serif;letter-spacing:-.2px;fill:var(--ink3)}
+.cap.fe{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.03em;fill:var(--ink2)}
+.cap.fk{font:600 10px/1 "Pretendard","Apple SD Gothic Neo",system-ui,sans-serif;letter-spacing:-.2px;fill:var(--ink3)}
 .wire{fill:none;stroke-width:1.2;stroke-opacity:.62;transition:.16s}
 .wire.on{stroke-opacity:1;stroke-width:2}
 .edge{stroke:#38bdf8;stroke-opacity:.20;stroke-width:.7}
@@ -104,12 +99,6 @@ svg.scene{display:block;width:100%;height:485px;overflow:visible;margin-top:0}
 
  <svg class="scene" id="scene" viewBox="0 0 1400 720" role="img" aria-label="연구자 판별 신호망"></svg>
 
- <div class="feat">
-  <div class="ft"><b>FRBR-based Entity Mapping<em>FRBR 기반의 개체 매핑</em></b></div>
-  <div class="ft"><b>Context-Aware Author Disambiguation<em>맥락 인지형 저자 식별</em></b></div>
-  <div class="ft"><b>Semantic Metadata Extraction (10 Types)<em>10종의 의미 메타데이터 추출</em></b></div>
-  <div class="ft"><b>Explainable Logic Reasoning<em>설명 가능한 논리 추론</em></b></div>
- </div>
 
 </div>
 </div></div>
@@ -239,6 +228,21 @@ function draw(){
   const cap=(x,y,t,anc,cls)=>{const e=el('text',{x,y,class:'cap'+(cls?' '+cls:''),'text-anchor':anc||'start'});e.textContent=t;S.appendChild(e);};
   cap(76,34,'IDENTITY SIGNALS'); cap(CORE,CY-R-58,'Biblo Knowledge Graph-based Author Matching Engine','middle','eng');
   cap(CORE,CY-R-36,'(지식 그래프 기반 저자 매칭 엔진)','middle','engk'); cap(PXC,CY-118,'RESOLVED','middle');
+
+  /* 엔진 특징 4가지 — 구체 아래, 레이아웃 자리를 차지하지 않게 도형 안에 */
+  const FEAT=[
+   ['FRBR-based Entity Mapping','FRBR 기반의 개체 매핑'],
+   ['Context-Aware Author Disambiguation','맥락 인지형 저자 식별'],
+   ['Semantic Metadata Extraction (10 Types)','10종의 의미 메타데이터 추출'],
+   ['Explainable Logic Reasoning','설명 가능한 논리 추론'],
+  ];
+  const FX=760, FDX=182, FY=628, FDY=54;
+  FEAT.forEach(([en,ko],i)=>{
+    const x=FX+(i%2?FDX:-FDX), y=FY+(i>1?FDY:0);
+    const dot=el('circle',{cx:x-6,cy:y-4,r:2.6,fill:'#22d3ee','fill-opacity':.9});
+    S.appendChild(dot);
+    cap(x+4,y,en,'start','fe'); cap(x+4,y+15,ko,'start','fk');
+  });
 }
 
 function sel(id){
