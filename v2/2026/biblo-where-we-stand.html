@@ -12,7 +12,12 @@ html,body{overflow:hidden}
 #stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
 .wrap{padding:24px 15px 46px}
 
-.wrap{width:1600px;height:900px;padding:52px 82px 40px}
+/* 무대를 세로로 채운다. block 으로 두면 내용이 위에 몰리고 아래가 통째로 빈다
+   (14번은 아래 여백 46px, 처음 만들 때 이 장은 269px 이었다).
+   박스를 늘리면 .bx ul 의 margin-top:auto 때문에 박스 안이 텅 빈다.
+   그래서 박스는 제 높이를 지키고, 남는 높이는 블록 사이 간격으로 나눈다. */
+.wrap{width:1600px;height:900px;padding:52px 82px 44px;
+ display:flex;flex-direction:column;justify-content:space-between}
 .kick{font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--hi)}
 h1{font-size:44px;font-weight:800;letter-spacing:-1.5px;line-height:1.2;margin-top:14px}
 h1 b{color:var(--hi);font-weight:800}
