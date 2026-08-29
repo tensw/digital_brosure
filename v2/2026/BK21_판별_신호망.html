@@ -52,8 +52,10 @@ svg.scene{display:block;width:100%;height:485px;overflow:visible;margin-top:0}
  background:linear-gradient(180deg,rgba(18,32,62,.94),rgba(6,12,28,.97));
  backdrop-filter:blur(14px);padding:24px 32px 28px;min-height:150px;
  max-height:58vh;overflow:auto;box-shadow:0 -20px 60px rgba(0,0,0,.6);
- transform:translate(-50%,102%);transition:transform .4s cubic-bezier(.22,.61,.36,1)}
-.sheet.show{transform:translate(-50%,0)}
+ opacity:0;transform:translate(-50%,102%);
+ transition:transform .42s cubic-bezier(.22,.61,.36,1),opacity .3s ease}
+.sheet.show{opacity:1;transform:translate(-50%,0)}
+.sheet.out{opacity:0;transform:translate(-50%,102%);pointer-events:none}
 .pclose{position:absolute;right:22px;top:20px;width:30px;height:30px;border-radius:50%;
  border:1px solid rgba(129,140,248,.3);background:transparent;color:var(--ink2);
  font:700 15px/1 ui-monospace,Menlo,monospace;cursor:pointer}
@@ -81,9 +83,6 @@ svg.scene{display:block;width:100%;height:485px;overflow:visible;margin-top:0}
 .rl .t{font-size:13px;font-weight:800}
 .rl .d{color:var(--ink2);font-size:11.5px;line-height:1.7;margin-top:6px}
 .rl .d b{color:var(--ink)}
-.foot{margin-top:14px;border-top:1px solid rgba(56,189,248,.14);padding-top:17px;color:var(--ink3);
- font-size:11.5px;line-height:1.9}
-.foot b{color:var(--ink2)}
 @media(max-width:820px){.wrap{padding:24px 15px 46px}h1{font-size:27px}}
 </style>
 
@@ -112,15 +111,9 @@ svg.scene{display:block;width:100%;height:485px;overflow:visible;margin-top:0}
   <div class="ft"><b>Explainable Logic Reasoning<em>설명 가능한 논리 추론</em></b></div>
  </div>
 
- <div class="foot">
-  실측 <b>2026-08-25</b> · 재직 연구자 <b>34,764명</b> 기준 보유율. 신 RIMS <code>dev</code> 복원본에서 집계.
-  <b>강한 신호와 변별 신호는 다릅니다.</b> 이름·학과·식별자는 90%대로 거의 다 있지만,
-  동명이인을 실제로 가르는 분야·저널·공저는 <b>3분의 1</b>에 그칩니다.
-  후보를 걷어 올리는 데는 문제가 없고, 걷어 올린 뒤 고르는 데서 막힙니다.
- </div>
 </div>
 </div></div>
-<div class="sheet" id="sheet"></div>
+<div id="sheets"></div>
 
 <script>
 const NS='http://www.w3.org/2000/svg', S=document.getElementById('scene');
@@ -264,13 +257,24 @@ function sel(id){
 }
 document.getElementById('meta').innerHTML=
  `실측 <b>2026-08-25</b><br>신호 <b>7</b>종 · 재직 연구자 <b>34,764</b>명<br>강한 신호 <b>3</b> · 변별 신호 <b>4</b>`;
-/* ── 하단 시트 (3장 규칙 그대로) ── */
-const SHEET=document.getElementById('sheet');
-function openSheet(html){
-  SHEET.innerHTML='<button class="pclose" type="button" onclick="closeSheet()">×</button>'+html;
-  SHEET.classList.add('show');
+/* ── 하단 시트 (3장 규칙) — 열 때마다 새 시트를 만들고 먼저 것은 내리며 흐려지게 ── */
+const SHEETS=document.getElementById('sheets');
+let curSheet=null;
+function dropSheet(el){
+  if(!el) return;
+  el.classList.remove('show'); el.classList.add('out');
+  setTimeout(()=>el.remove(), 460);
 }
-function closeSheet(){ SHEET.classList.remove('show'); }
+function openSheet(html){
+  dropSheet(curSheet);                       // 먼저 올라온 시트를 먼저 내린다
+  const n=document.createElement('div');
+  n.className='sheet';
+  n.innerHTML='<button class="pclose" type="button" onclick="closeSheet()">×</button>'+html;
+  SHEETS.appendChild(n);
+  curSheet=n;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>n.classList.add('show')));
+}
+function closeSheet(){ const o=curSheet; curSheet=null; dropSheet(o); }
 addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet();});
 document.getElementById('rtog').addEventListener('click',()=>openSheet(
  `<div class="pn"><h3>판별 규칙</h3><span class="tg s">RULE 01 – 04</span></div>
@@ -298,5 +302,6 @@ addEventListener('pageshow',fitStage);
 if(window.ResizeObserver) new ResizeObserver(fitStage).observe(document.documentElement);
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitStage);
 
-draw(); sel('net'); closeSheet();
+draw(); sel('net');
+SHEETS.innerHTML=''; curSheet=null;   // 첫 화면은 시트 없이 시작
 </script>
