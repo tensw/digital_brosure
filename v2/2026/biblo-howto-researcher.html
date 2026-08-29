@@ -115,6 +115,10 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
  color:var(--text);text-align:left;
  font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
 .wqx .wq{margin-top:0;border:0;border-radius:0;box-shadow:none}
+/* 표지 이미지는 원본에 높이 제한이 없어 한 장이 780px 까지 커진다(검색 시안 전체 높이 2931px).
+   슬라이드에서는 결과 목록으로 보이면 되므로 높이를 묶는다. 이러면 시안이 1100px 로 줄어
+   창 안에서 표지 두 줄이 잘리지 않고 들어온다. */
+.wqx .wq-shop img{height:150px;width:100%;object-fit:cover;border-radius:8px}
 .wqx /* 작업 화면 UI 시안 */
   .wq{border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-top:12px;background:var(--surface);box-shadow:0 10px 34px rgba(0,0,0,.07)}
 .wqx .wq-chrome{display:flex;align-items:center;gap:6px;padding:9px 14px;background:var(--surface-2);border-bottom:1px solid var(--border)}
@@ -251,7 +255,7 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
  <!-- 노트북 -->
 
  <!-- 폰 -->
- <div class="scr" style="left:600px;top:192px;width:830px;height:404px"><div class="wqx" style="width:1150px;transform:scale(0.7217)"><div class="wq th-blue" aria-label="수서 검색 장바구니 화면 UI 시안">
+ <div class="scr" style="left:600px;top:192px;width:830px;height:288px"><div class="wqx" style="width:1150px;transform:scale(0.7217)"><div class="wq th-blue" aria-label="수서 검색 장바구니 화면 UI 시안">
       <div class="wq-chrome"><span class="wq-dot"></span><span class="wq-dot"></span><span class="wq-dot"></span><span class="wq-url">biblo · 사서 콘솔 — /acq-search (시안)</span></div>
       <div class="wq-head">
         <span class="wq-logo">BIBLO</span>
