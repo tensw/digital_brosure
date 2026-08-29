@@ -72,10 +72,11 @@
  border:1px solid rgba(255,255,255,.16);display:block;flex:none}
 .cert-7q2v8 s{text-decoration:none;font:700 9.5px/1 ui-monospace,Menlo,monospace;color:#9fc7ff;
  letter-spacing:.02em;white-space:nowrap}
-.ttl-7q2v8{position:absolute;left:0;right:0;top:15.5%;z-index:4;text-align:center;
- font-size:44px;font-weight:800;letter-spacing:.5px;color:#fff;line-height:1.2}
-.lead-7q2v8{position:absolute;left:0;right:0;top:25.5%;z-index:4;text-align:center;
- font-size:19px;font-weight:600;letter-spacing:-.4px;color:#c4d3ee;line-height:1.6}
+/* 제목·리드 묶음 — 2장(#stage 1600x900) 과 같은 배율로 늘고 준다 */
+.hdr-7q2v8{position:absolute;left:50%;top:15.5%;z-index:4;width:1600px;text-align:center;
+ transform-origin:50% 0;transform:translateX(-50%)}
+.ttl-7q2v8{font-size:4em;font-weight:800;letter-spacing:.5px;color:#fff;line-height:1.2}
+.lead-7q2v8{margin-top:26px;font-size:19px;font-weight:600;letter-spacing:-.4px;color:#c4d3ee;line-height:1.6}
 .lead-7q2v8 b{color:#fff;font-weight:800}
 .lead-7q2v8 em{display:block;margin-top:6px;font-style:normal;font-size:15px;color:#7f92b8}
 .modal-7q2v8{position:fixed;inset:0;z-index:60;display:none;place-items:center;
@@ -126,10 +127,11 @@
   <b>BIBLO SOLUTION</b><s>· AI검색엔진</s>
  </div>
 
- <h1 class="ttl-7q2v8">Ⅰ. AI 검색엔진</h1>
-
- <div class="lead-7q2v8">정확한 키워드에서 시작해 <b>내용의 맥락까지</b> 이어지는 검색.
-  <em>사람이 서가를 거니는 순서 그대로.</em></div>
+ <div class="hdr-7q2v8" id="hdr-7q2v8">
+  <h1 class="ttl-7q2v8">Ⅰ. AI 검색엔진</h1>
+  <div class="lead-7q2v8">정확한 키워드에서 시작해 <b>내용의 맥락까지</b> 이어지는 검색.
+   <em>사람이 서가를 거니는 순서 그대로.</em></div>
+ </div>
 
  <div class="pill-7q2v8" id="pill-7q2v8">
   <svg class="plus-7q2v8" id="plus-7q2v8" viewBox="0 0 24 24" fill="none"
@@ -250,6 +252,8 @@ function layout(){
  /* 하단 박스는 3장과 같은 규칙(1600x900 기준)으로 확대·축소한다 */
  const kk=Math.min(innerWidth/1600, innerHeight/900);   // 3장과 동일한 기준
  cap.style.transform='translateX(-50%) scale('+kk.toFixed(4)+')';
+ const hdr=document.getElementById('hdr-7q2v8');
+ if(hdr) hdr.style.transform='translateX(-50%) scale('+kk.toFixed(4)+')';
  halo.width=Math.round(W*DPR); halo.height=Math.round(H*DPR);
  bake();
 }
