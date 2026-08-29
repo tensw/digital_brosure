@@ -51,13 +51,20 @@ svg.scene{display:block;width:100%;height:auto;max-height:470px;overflow:visible
 .hub-s{font:600 11px/1 ui-monospace,Menlo,monospace;fill:var(--ink3);letter-spacing:.16em}
 
 /* 상세 패널 */
-.panel{position:fixed;left:50%;bottom:0;z-index:30;width:min(1060px,86vw);
-  border:1px solid rgba(96,165,250,.28);border-bottom:0;border-radius:22px 22px 0 0;
-  background:linear-gradient(180deg,rgba(18,32,62,.94),rgba(6,12,28,.97));
-  backdrop-filter:blur(14px);padding:24px 32px 28px;min-height:150px;
-  max-height:58vh;overflow:auto;box-shadow:0 -20px 60px rgba(0,0,0,.6);
-  transform:translate(-50%,102%);transition:transform .4s cubic-bezier(.22,.61,.36,1)}
-.panel.show{transform:translate(-50%,0)}
+/* 상세 패널 — 도식(무대 800,505) 위에 겹쳐 뜬다.
+   무대(#stage) 안에 두어 화면 배율을 그대로 따라간다.
+   예전에는 position:fixed 바텀시트라 배율과 무관하게 화면 아래에 붙었다.
+   가운데로 옮기면서, 숨김 상태가 화면 밖이 아니라 제자리가 되므로
+   opacity 와 pointer-events 로 확실히 비활성화한다. */
+.panel{position:absolute;left:800px;top:505px;z-index:30;width:1060px;
+ border:1px solid rgba(96,165,250,.28);border-radius:22px;
+ background:linear-gradient(180deg,rgba(18,32,62,.94),rgba(6,12,28,.97));
+ backdrop-filter:blur(14px);padding:24px 32px 28px;min-height:150px;
+ max-height:430px;overflow:auto;box-shadow:0 26px 70px rgba(0,0,0,.62);
+ opacity:0;pointer-events:none;
+ transform:translate(-50%,-50%) scale(.965);
+ transition:transform .34s cubic-bezier(.22,.61,.36,1),opacity .26s ease}
+.panel.show{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
 .pclose{position:absolute;right:22px;top:20px;width:30px;height:30px;border-radius:50%;
   border:1px solid rgba(129,140,248,.3);background:transparent;color:var(--ink2);
   font:700 15px/1 ui-monospace,Menlo,monospace;cursor:pointer}
@@ -118,9 +125,10 @@ svg.scene{display:block;width:100%;height:auto;max-height:470px;overflow:visible
         저자 매칭은 <b>학과·사업단 성과지표</b>가 됩니다.</div></div>
   </div>
 
+
+  <div class="panel" id="panel"></div>
 </div>
 </div></div>
-<div class="panel" id="panel"></div>
 
 <script>
 /* ── 실측 데이터 ── */
