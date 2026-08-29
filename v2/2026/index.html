@@ -543,14 +543,14 @@ body{overflow:hidden}
    DB 규모 숫자는 이 화면의 샘플과 직접 이어지지 않아 뺐다. */
 .flow18{margin-top:26px;display:grid;grid-template-columns:repeat(5,1fr);
  border-radius:18px;overflow:hidden;flex:none}
-.fc18{position:relative;padding:20px 22px 19px;border-left:1px solid rgba(160,205,255,.12)}
-.fc18:first-child{border-left:0}
-/* 칸 사이 화살표 — 다음 단계로 넘어간다는 표시 */
-.fc18+.fc18:before{content:"";position:absolute;left:-5px;top:50%;margin-top:-4px;
- border-style:solid;border-width:4px 0 4px 6px;border-color:transparent transparent transparent rgba(160,205,255,.5)}
-.fc18 i{display:block;font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:var(--ink3);font-style:normal}
-.fc18 b{display:block;margin-top:11px;font-size:16px;font-weight:800;letter-spacing:-.4px;color:var(--ink)}
-.fc18 s{display:block;margin-top:7px;text-decoration:none;font-size:13px;font-weight:500;
+/* 번호는 뺐다. 좌에서 우로 놓인 순서가 이미 단계를 말한다.
+   칸 사이는 경계선 대신 꺾쇠 하나로 가른다 — 다음 단계로 넘어간다는 방향이 선다. */
+.fc18{position:relative;padding:25px 26px 24px;display:flex;flex-direction:column;justify-content:center}
+.fc18+.fc18:before{content:"";position:absolute;left:-7px;top:50%;width:12px;height:12px;
+ margin-top:-6px;transform:rotate(45deg);
+ border-top:2px solid rgba(170,205,255,.45);border-right:2px solid rgba(170,205,255,.45)}
+.fc18 b{display:block;font-size:19px;font-weight:800;letter-spacing:-.5px;line-height:1.25;color:var(--ink)}
+.fc18 s{display:block;margin-top:9px;text-decoration:none;font-size:13.5px;font-weight:500;
  line-height:1.5;letter-spacing:-.3px;color:var(--ink2)}
 .cap18{margin-top:11px;display:flex;align-items:baseline;gap:9px;
  font-size:14.5px;font-weight:700;letter-spacing:-.3px;color:var(--ink)}
@@ -827,11 +827,11 @@ window.BGS_2q6r4={
    </div>
   </div>
   <div class="glass flow18">
-   <div class="fc18"><i>01</i><b>논문 구조분해</b><s>섹션·핵심문장 분석</s></div>
-   <div class="fc18"><i>02</i><b>그림·표 해석</b><s>연구 결과와 근거 추출</s></div>
-   <div class="fc18"><i>03</i><b>홍보 시나리오</b><s>전문 내용을 쉬운 이야기로</s></div>
-   <div class="fc18"><i>04</i><b>롱폼 영상</b><s>연구의 전체 맥락 전달</s></div>
-   <div class="fc18"><i>05</i><b>60초 쇼츠</b><s>핵심 성과를 빠르게 확산</s></div>
+   <div class="fc18"><b>논문 구조분해</b><s>섹션·핵심문장 분석</s></div>
+   <div class="fc18"><b>그림·표 해석</b><s>연구 결과와 근거 추출</s></div>
+   <div class="fc18"><b>홍보 시나리오</b><s>전문 내용을 쉬운 이야기로</s></div>
+   <div class="fc18"><b>롱폼 영상</b><s>연구의 전체 맥락 전달</s></div>
+   <div class="fc18"><b>60초 쇼츠</b><s>핵심 성과를 빠르게 확산</s></div>
   </div>
   <div class="foot">
   <b>BIBLO</b> · TenSoftWorks
