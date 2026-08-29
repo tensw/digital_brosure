@@ -86,9 +86,9 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
  color:rgba(255,255,255,.55)}
 
 /* ── 우측 화면 샘플 ── report2026_biblo2.1.html #chapter-4 의 UI 시안을 옮겨 왔다.
-   원본 CSS 는 전부 #chapter-4 로 묶여 있어 스코프만 .wqx 로 바꿔 353개 규칙을 통째로 가져왔다.
-   (일부만 가져오면 .spc img 같은 크기 규칙이 빠져 표지가 원본 크기로 튄다)
-   시안이 문서 폭 기준이라 슬라이드 우측보다 세로가 길다. 창처럼 잘라 위쪽을 보여준다. */
+   원본 CSS 는 전부 #chapter-4 로 묶여 있어 스코프만 .wqx 로 바꿔 통째로 가져왔다.
+   @media 안의 좁은 화면용 규칙(28개)은 제외한다. 무대는 1600px 고정인데 그 규칙이
+   조건 없이 풀리면 결과 3열이 2열로, 우측 장바구니가 통째로 접힌다. */
 .scr{position:absolute;overflow:hidden;border-radius:14px;background:#fff;
  box-shadow:0 30px 66px rgba(18,16,70,.34)}
 .scr > .wqx{position:absolute;left:0;top:0;transform-origin:0 0}
@@ -188,15 +188,6 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
 .wqx .lib-table td{padding:10px;border-top:1px solid var(--line);color:var(--muted);vertical-align:top}
 .wqx .lib-table td b{color:var(--ink)}
 .wqx .lib-punch{margin-top:14px;padding:14px 16px;border-radius:12px;background:var(--ink);color:#fff;font-size:14.5px;font-weight:850;line-height:1.6}
-.wqx .lib-toc, .wqx .lib-grid3, .wqx .lib-grid4{grid-template-columns:1fr 1fr}
-.wqx .lib-callno{grid-template-columns:1fr}
-.wqx .lib-bridge{align-items:flex-start;flex-direction:column}
-.wqx .lib-bridge span{text-align:left}
-.wqx .lib-toc, .wqx .lib-grid2, .wqx .lib-grid3, .wqx .lib-grid4, .wqx .lib-dual, .wqx .lib-branches{grid-template-columns:1fr}
-.wqx .lib-branches::before, .wqx .lib-branch::before{display:none}
-.wqx .lib-lead{font-size:21px}
-.wqx .lib-fields{grid-template-columns:1fr 1fr}
-.wqx .lib-bar{grid-template-columns:76px 1fr 68px}
 .wqx /* ── 레이아웃: 좌측 목차 + 본문 ── */
   .layout{max-width:1280px;margin:0 auto;padding:0 22px;display:grid;grid-template-columns:250px minmax(0,1fr);gap:44px}
 .wqx .toc .brand{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--topic);font-weight:800;margin-bottom:4px}
@@ -232,7 +223,6 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
 .wqx .st.new{color:var(--exact);background:var(--exact-soft)}
 .wqx .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .wqx .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.wqx .grid2, .wqx .grid3{grid-template-columns:1fr}
 .wqx .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:17px 19px}
 .wqx .card h4{margin:0 0 7px;font-size:15.8px;font-weight:760;letter-spacing:-.01em;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .wqx .card h4 .cn{color:var(--faint);font-weight:800;font-variant-numeric:tabular-nums}
@@ -256,7 +246,6 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
 .wqx tr:last-child td{border-bottom:0}
 .wqx .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0 6px}
 .wqx .stats.s3{grid-template-columns:repeat(3,1fr)}
-.wqx .stats, .wqx .stats.s3{grid-template-columns:1fr 1fr}
 .wqx .stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 15px}
 .wqx .stat .n{font-size:21px;font-weight:800;letter-spacing:-.01em;color:var(--text);font-variant-numeric:tabular-nums}
 .wqx .stat .n small{font-size:12px;color:var(--faint);font-weight:600}
@@ -277,7 +266,6 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
 .wqx .brow .bv small{color:var(--faint);font-weight:600}
 .wqx .dnote{font-size:12.3px;color:var(--faint);margin-top:8px}
 .wqx .sigs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.wqx .sigs{grid-template-columns:1fr}
 .wqx .sig{border:1px solid var(--border);border-radius:11px;padding:11px 14px;font-size:12.8px;color:var(--muted);line-height:1.62}
 .wqx .sig .t{display:block;color:var(--text);font-weight:800;font-size:13.2px;margin-bottom:3px}
 .wqx .sig .tag{display:inline-block;font-size:10.5px;font-weight:800;border-radius:5px;padding:1.5px 7px;margin-bottom:6px}
@@ -326,8 +314,6 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
 .wqx .wq-pane.on{display:block}
 .wqx .wq-body{display:grid;grid-template-columns:1fr 232px;gap:12px;align-items:start}
 .wqx .wq-body.w2{grid-template-columns:1fr 262px}
-.wqx .wq-body, .wqx .wq-body.w2{grid-template-columns:1fr}
-.wqx .wq-2col{grid-template-columns:1fr!important}
 .wqx .wq-bar{display:flex;gap:8px;align-items:center;margin-bottom:9px;font-size:11.8px;color:var(--muted);flex-wrap:wrap}
 .wqx .wq-fil{border:1px solid var(--border);border-radius:7px;padding:3.5px 9px;background:var(--surface-2)}
 .wqx .wq-tbl{font-size:12.3px}
@@ -375,8 +361,6 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
 .wqx .wq-big{font-size:22px;font-weight:900;letter-spacing:.02em;color:var(--text);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
 .wqx .wq.th-pink{--ok:#bf4980;--ok-soft:rgba(191,73,128,.10)}
 .wqx .wq.th-blue{--ok:#2f6fdb;--ok-soft:rgba(47,111,219,.10)}
-.wqx .wq.th-pink{--ok:#e07aa8;--ok-soft:rgba(224,122,168,.15)}
-.wqx .wq.th-blue{--ok:#7aa5ff;--ok-soft:rgba(122,165,255,.15)}
 .wqx .wq-marc{font:11.6px/1.85 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text);white-space:pre-wrap;word-break:break-word}
 .wqx .wq-marc .add{display:block;background:var(--ok-soft);border-radius:6px;padding:1px 6px;margin:1px -6px}
 .wqx .wq-shelf{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 2px;align-items:flex-end}
@@ -401,7 +385,6 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
 .wqx .egf .nd.core small{color:var(--muted)}
 .wqx .egf .nd.ok2{border-color:var(--ok);background:var(--ok-soft)}
 .wqx .wq-shop{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.wqx .wq-shop{grid-template-columns:1fr 1fr}
 .wqx .spc{border:1px solid var(--border);border-radius:11px;padding:11px 11px 10px;background:var(--surface);text-align:center;display:flex;flex-direction:column;gap:4px;align-items:center}
 .wqx .spc img{width:74px;aspect-ratio:7/10;object-fit:cover;border-radius:6px;border:1px solid var(--border);box-shadow:0 4px 10px rgba(0,0,0,.12)}
 .wqx .spc .tt{font-size:12.2px;font-weight:800;color:var(--text);line-height:1.4;margin-top:3px}
@@ -481,7 +464,7 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
  <!-- 뒤 카드: 데이터 품질 -->
 
  <!-- 앞 카드: 경영자 성과보드 -->
- <div class="scr" style="left:600px;top:196px;width:920px;height:600px"><div class="wqx" style="width:1180px;transform:scale(0.7797)"><div class="wq" aria-label="편목 마크 부여 화면 UI 시안">
+ <div class="scr" style="left:640px;top:180px;width:805px;height:630px"><div class="wqx" style="width:1150px;transform:scale(0.7)"><div class="wq" aria-label="편목 마크 부여 화면 UI 시안">
       <div class="wq-chrome"><span class="wq-dot"></span><span class="wq-dot"></span><span class="wq-dot"></span><span class="wq-url">biblo · 사서 콘솔 — 편목 · 마크 부여</span></div>
       <div class="wq-head">
         <span class="wq-logo">BIBLO</span>
