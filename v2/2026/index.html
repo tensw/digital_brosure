@@ -453,39 +453,40 @@ body{overflow:hidden}
 .was-b span{display:block;margin-bottom:5px;font:700 9.5px/1 ui-monospace,Menlo,monospace;
  letter-spacing:.14em;color:#8fa6cf}
 
-/* ── 13장 폰트를 8장(bk21-status-10) 스케일로 승계 ── */
-#sl-five-2q6r4-b .sh{margin-bottom:34px}
-#sl-five-2q6r4-b .sh h2{font-size:44px;letter-spacing:-1.5px;line-height:1.2;margin-top:13px}
-#sl-five-2q6r4-b .sh p{font-size:16px;font-weight:600;letter-spacing:-.3px;line-height:1.7;
- max-width:none;margin-top:13px}
-#sl-five-2q6r4-b .grid{grid-template-columns:repeat(4,1fr);gap:18px}
-#sl-five-2q6r4-b .card .pad{padding:24px 24px 24px}
-#sl-five-2q6r4-b .card h3{font-size:20px;font-weight:800;letter-spacing:-.6px;line-height:1.3;margin-top:11px}
-#sl-five-2q6r4-b .card .s{font:600 11.5px/1.5 ui-monospace,Menlo,monospace;margin-top:8px}
-#sl-five-2q6r4-b .card li{font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
- padding-left:15px;word-break:keep-all}
-#sl-five-2q6r4-b .card ul{gap:8px;font-size:14.5px}
-#sl-five-2q6r4-b .card .m{font:700 11.5px/1.5 ui-monospace,Menlo,monospace;margin-top:16px;padding-top:14px}
-#sl-five-2q6r4-b .was-b{font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px}
+/* ══ 13장 타이포 ═══════════════════════════════════════════════════════
+   헤더(키커·제목·리드) : 14장 BK21_판별_신호망 규격 승계
+   카드 박스           : 7장 biblo-search-b 의 01~05 박스 규격 승계
+   7장에 없는 "기존 RIMS" 블록은 7장의 라벨·본문 규격을 따라 맞춘다. */
 
-/* ══ 13장 타이포 — 10번(bk21-status-09b) 규격을 그대로 승계 ══════════
-   제목·서브·카드 안 모든 글자를 10번 값으로 맞춘다. 10번에 없는 요소
-   ("기존 RIMS" 라벨)는 10번의 최소 라벨 규격(.card .st span)을 따른다. */
-#sl-five-2q6r4-b .sh p{font-size:16px;font-weight:600;line-height:1.6;letter-spacing:-.3px}
-#sl-five-2q6r4-b .card .n{font:400 27px/1 ui-monospace,Menlo,monospace;letter-spacing:-.5px}
-#sl-five-2q6r4-b .card h3{font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px}
-#sl-five-2q6r4-b .card .s{font:600 11.5px/1.4 ui-monospace,Menlo,monospace;letter-spacing:normal}
-#sl-five-2q6r4-b .card ul li{font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px}
-#sl-five-2q6r4-b .card .m{font:600 11.5px/1.4 ui-monospace,Menlo,monospace;letter-spacing:normal}
-#sl-five-2q6r4-b .was-b{font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px}
-#sl-five-2q6r4-b .was-b span{font:600 11.5px/1.4 ui-monospace,Menlo,monospace;letter-spacing:normal}
-/* 번호가 11 → 27px 로 커져 1280x720 에서 카드가 18px 넘쳤다.
-   승계한 글자 크기는 건드리지 않고 간격만 줄여 맞춘다. */
+/* 헤더 — 14장 승계 (키커 11px/600 · 제목 44.1px/1.16/+.5px · 리드 16px/1.7) */
 #sl-five-2q6r4-b .sh{margin-bottom:26px}
-#sl-five-2q6r4-b .card .pad{padding:18px 18px 16px}
-#sl-five-2q6r4-b .was-b{margin:11px 0 2px;padding:9px 11px}
-#sl-five-2q6r4-b .card ul{margin-top:9px}
-#sl-five-2q6r4-b .card .m{margin-top:11px}
+#sl-five-2q6r4-b .sh .k{font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+ letter-spacing:.28em}
+#sl-five-2q6r4-b .sh h2{font-size:44.1px;font-weight:800;line-height:1.16;
+ letter-spacing:.5px;margin-top:12px}
+#sl-five-2q6r4-b .sh p{font-size:16px;font-weight:600;line-height:1.7;letter-spacing:-.3px;
+ max-width:none;margin-top:11px}
+
+/* 카드 박스 — 7장 01 박스 승계 */
+#sl-five-2q6r4-b .grid{grid-template-columns:repeat(4,1fr);gap:18px}
+#sl-five-2q6r4-b .card .pad{padding:18px 20px}
+#sl-five-2q6r4-b .card .n{font:700 10.5px/1 ui-monospace,Menlo,monospace;
+ letter-spacing:.2em;margin-bottom:9px}
+#sl-five-2q6r4-b .card h3{font-size:15px;font-weight:800;line-height:1.35;
+ letter-spacing:-.4px;margin-top:0}
+#sl-five-2q6r4-b .card .s{font:700 10.5px/1 ui-monospace,Menlo,monospace;
+ letter-spacing:.06em;margin-top:5px}
+#sl-five-2q6r4-b .card ul{margin-top:9px;gap:5px;font-size:14.5px}
+#sl-five-2q6r4-b .card ul li{font-size:14.5px;font-weight:500;line-height:1.5;
+ letter-spacing:-.3px;padding-left:14px;word-break:keep-all}
+#sl-five-2q6r4-b .card ul li:before{top:9px;width:4px;height:4px}
+#sl-five-2q6r4-b .card .m{font:700 12px/1.5 ui-monospace,Menlo,monospace;
+ letter-spacing:normal;margin-top:11px;padding-top:12px}
+/* 기존 RIMS 블록 — 본문은 7장 목록, 라벨은 7장 부제 규격 */
+#sl-five-2q6r4-b .was-b{font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
+ margin:11px 0 2px;padding:9px 11px}
+#sl-five-2q6r4-b .was-b span{font:700 10.5px/1 ui-monospace,Menlo,monospace;
+ letter-spacing:.06em;margin-bottom:5px}
 
 /* ══ 12·13 무대를 2번(biblo-solution-6)과 동일 규격으로 ══════════════════
    2번·14번은 1600x900 고정 무대를 min(vw/1600, vh/900) 균일 배율로 맞춘다.
