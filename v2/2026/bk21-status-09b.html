@@ -1,0 +1,135 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>검색 → 주제 확장 → 논문</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;
+ overflow:visible;background:transparent}
+
+/* ─── 상단 ─── */
+h1{position:absolute;left:82px;top:91px;font-size:3.4em;font-weight:800;letter-spacing:.5px;color:#111827}
+.h1s{position:absolute;left:82px;top:163px;font-size:16px;font-weight:600;letter-spacing:-.3px;
+ color:#4b5563}
+
+/* ─── 하단 ─── */
+.concl{position:absolute;left:0;right:0;top:747px;text-align:center;
+ font-size:26px;font-weight:800;line-height:1.6;letter-spacing:-.4px;color:#111827}
+
+:root{--card:#fff;--ink:#111827;--ink2:#4b5563;--ink3:#98a1b2;--bl:#1e4be8;--bl2:#2b5ce6;--line:#e3e8f2}
+.tblwrap{position:absolute;left:82px;right:82px;top:203px}
+.tblwrap .tbl-53fi{margin-top:0}
+/* 판별 레이어 표 */
+.tbl-53fi{width:100%;border-collapse:collapse;margin-top:26px;background:var(--card);
+ border-radius:16px;overflow:hidden;box-shadow:0 10px 28px -20px rgba(17,24,39,.2)}
+.tbl-53fi th{text-align:left;font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;
+ color:var(--ink3);padding:15px 20px;border-bottom:1px solid var(--line)}
+.tbl-53fi td{padding:13px 20px;font-size:12.5px;border-bottom:1px solid #f0f3f9;vertical-align:middle}
+.tbl-53fi tr:last-child td{border-bottom:0}
+.lt-53fi{font-weight:800;white-space:nowrap;width:150px}
+.lb-53fi{width:210px}
+.lb-53fi i{display:block;height:7px;min-width:6px;border-radius:99px;background:linear-gradient(90deg,var(--bl),#7ea0ff)}
+.lv-53fi{font:800 13px/1 ui-monospace,Menlo,monospace;text-align:right;width:96px;letter-spacing:-.4px}
+.ld-53fi{color:var(--ink2)}
+
+/* ── 다섯 단계 (paper slide-20 벤치마크 · 도형은 bk21-refine-4steps 카드/배너에서) ── */
+h1{font-size:44px;letter-spacing:-1.5px;line-height:1.2}
+h1 .ac{color:#1e4be8}
+.h1s b{color:#111827;font-weight:700}
+.cards{position:absolute;left:82px;right:82px;top:203px;display:flex;gap:14px}
+.card{flex:1;min-width:0;height:356px;border-radius:14px;padding:22px 24px 24px;
+ display:flex;flex-direction:column;background:#fff;border:1px solid #e3e8f2;
+ box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 30px -22px rgba(30,92,240,.35)}
+.card.key{border:1px solid #b9ccff;box-shadow:0 1px 2px rgba(17,24,39,.04),0 16px 34px -20px rgba(30,75,232,.45)}
+.card .n{font:400 27px/1 ui-monospace,Menlo,monospace;letter-spacing:-.5px;color:#c7d0e6}
+.card.key .n{color:#1e4be8}
+.card h3{margin-top:11px;font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#111827}
+.card.key h3{color:#1e4be8}
+.card p{margin-top:13px;font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
+ color:#4b5563;word-break:keep-all}
+.card .cd{margin-top:auto;font:700 12px/1.5 ui-monospace,Menlo,monospace;color:#4b5563;
+ background:#f3f6fc;border-radius:8px;padding:9px 10px;word-break:keep-all}
+.card .st{margin-top:auto;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.card .st b{font:800 22px/1 ui-monospace,Menlo,monospace;letter-spacing:-1px;color:#1e4be8}
+.card .st span{font:600 11.5px/1.4 ui-monospace,Menlo,monospace;color:#98a1b2}
+.bn{position:absolute;left:82px;right:82px;top:589px;height:96px;border-radius:16px;background:#f3f6fc;
+ display:flex;align-items:center;gap:22px;padding:0 26px}
+.chips{display:flex;flex:none}
+.chips i{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:700 12px/1 ui-monospace,Menlo,monospace;color:#fff;background:#1e4be8;box-shadow:0 0 0 3px #f3f6fc}
+.chips i+i{margin-left:-12px}
+.bn .msg{font-size:16px;font-weight:500;letter-spacing:-.3px;color:#4b5563}
+.bn .msg b{color:#111827;font-weight:800}
+.bn .sp{flex:1}
+.pill{display:flex;align-items:center;gap:12px;height:52px;padding:0 24px 0 8px;border-radius:26px;
+ background:#111827;color:#fff;flex:none}
+.pill i{width:36px;height:36px;border-radius:50%;background:#fff;color:#111827;display:grid;place-items:center;
+ font-style:normal;font-size:15px}
+.pill span{font:700 15px/1 ui-monospace,Menlo,monospace;letter-spacing:-.2px}
+.concl{top:757px;font-size:23px}
+</style></head><body>
+<div class="slide"><div id="stage">
+
+ <h1>검색 → <span class="ac">주제 확장</span> → 논문</h1>
+ <div class="h1s">친 글자에 바로 매칭하지 않는다. 질문을 <b>여러 연구주제로 정규화·확장</b>하고, 각 주제를 학술어로 바꾼 뒤 <b>데이터로 검증한 제안</b>만 띄운다 — “논문저자 매칭” 한 질의가 지나는 길</div>
+
+ <div class="cards">
+  <div class="card">
+   <span class="n">01</span>
+   <h3>한글 분절</h3>
+   <p>붙여 쓴 한글을 코퍼스 단어사전으로 최대매칭 분해한다. 흔한 실단어를 먼저 잡는다.</p>
+   <div class="cd">논문저자매칭 → 논문 · 저자 · 매칭</div>
+  </div>
+  <div class="card">
+   <span class="n">02</span>
+   <h3>정확문장 엄격검색</h3>
+   <p>의미어를 다 포함하는 논문만 본다. 0건이면 많이 든 순으로 완화해 빈 화면을 만들지 않는다.</p>
+   <div class="st"><b>3,545 → 1</b><span>OR 노이즈 → AND 정직</span></div>
+  </div>
+  <div class="card key">
+   <span class="n">03</span>
+   <h3>연구주제 분해<br>학술어 변환</h3>
+   <p>일상어를 국내 학술어와 국제 학술어로 바꾼다. “매칭”은 국내 논문에서 “식별”이다.</p>
+   <div class="st"><b>4,221</b><span>건 · 저자 식별</span></div>
+  </div>
+  <div class="card">
+   <span class="n">04</span>
+   <h3>품질게이트</h3>
+   <p>LLM 제안을 그대로 믿지 않는다. 빈약·앵커·우위·분해 네 조건을 다 통과할 때만 제안한다.</p>
+   <div class="st"><b>4조건</b><span>어중간하면 침묵</span></div>
+  </div>
+  <div class="card">
+   <span class="n">05</span>
+   <h3>비강제 제안</h3>
+   <p>자동으로 바꾸지 않는다. 한 줄 배너로 권하고, 각 주제를 내부 KCI에서 12건씩 편다.</p>
+   <div class="st"><b>0</b><span>외부 호출</span></div>
+  </div>
+ </div>
+
+ <div class="bn">
+  <span class="chips"><i>01</i><i>02</i><i>03</i><i>04</i><i>05</i></span>
+  <span class="msg">다섯 단계를 지나 정확문장 <b>1건</b>이 학술어 제안 <b>4,221건</b>으로 열린다</span>
+  <span class="sp"></span>
+  <span class="pill"><i>→</i><span>LLM 호출 0회</span></span>
+ </div>
+
+ <div class="concl">친 글자에 매칭하지 않는다. 질문을 연구주제로 펼친 다음 논문에 닿는다</div>
+</div></div>
+
+<script>
+
+
+const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();
+addEventListener('resize',fit);
+addEventListener('pageshow',fit);
+addEventListener('load',fit);
+if(window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+</script></body></html>
