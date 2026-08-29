@@ -548,6 +548,16 @@ ol.nlist li a:hover{background:rgba(255,255,255,.06)}
 /* 멘트 박스 — 위 간격을 늘리고, 아래를 위와 같게 (기존: 위 8px / 아래 30+24px) */
 .note{margin:20px auto 0}
 .panel{padding-bottom:20px}
+
+/* 확장 주제 제목을 조금 키운다 (13px → 15px) */
+.w.col>h2{font-size:15px;letter-spacing:-.3px}
+/* 영어 질의도 검색어로 읽히게 — 흐린 캡션이라 한글만 찾는 것처럼 보였다 */
+.w.col .cq{display:flex;align-items:center;gap:8px;margin:10px 0 10px;padding:0 0 10px;
+ border-bottom:1px solid var(--line2);
+ font-size:12.5px;font-weight:600;line-height:1.45;letter-spacing:.01em;color:#bcd2ff}
+.w.col .cq::before{content:"EN";flex:none;font:800 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;
+ color:#9ae6c4;background:rgba(90,200,160,.14);border:1px solid rgba(120,220,180,.32);
+ border-radius:6px;padding:4px 6px}
 </style></head><body>
 <div class="scene"><div class="slat"></div><div class="floor"></div><div class="dots"></div></div>
 <div class="hud tl"><b></b>BIBLO · Paper Intelligence</div>
