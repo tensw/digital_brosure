@@ -84,6 +84,117 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
 
 .ft-w9{position:absolute;left:120px;bottom:40px;font:600 10px/1.7 ui-monospace,Menlo,monospace;
  color:rgba(255,255,255,.55)}
+
+/* ── 우측 화면 샘플 ── report2026_biblo2.1 #chapter-4 의 UI 시안을 옮겨 왔다.
+   원본 CSS 는 #chapter-4 로 묶여 있어 스코프만 .wqx 로 바꿨다.
+   시안이 문서 폭 기준이라 슬라이드 우측보다 세로가 길다. 창처럼 잘라 위쪽을 보여준다. */
+.scr{position:absolute;overflow:hidden;border-radius:14px;background:#fff;
+ box-shadow:0 30px 66px rgba(18,16,70,.34)}
+.scr > .wqx{position:absolute;left:0;top:0;transform-origin:0 0}
+.wqx{--biblo:#1f4bd8;--border:#e4e7ee;--muted:#5c6577;--ok:#0f766e;--ok-soft:#e6f5f2;
+ --surface:#ffffff;--surface-2:#f7f8fa;--text:#19202e;--warn:#b45309;--warn-soft:#fdf3e6;
+ color:var(--text);text-align:left;
+ font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
+.wqx .wq{margin-top:0;border:0;border-radius:0;box-shadow:none}
+.wqx /* 작업 화면 UI 시안 */
+  .wq{border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-top:12px;background:var(--surface);box-shadow:0 10px 34px rgba(0,0,0,.07)}
+.wqx .wq-chrome{display:flex;align-items:center;gap:6px;padding:9px 14px;background:var(--surface-2);border-bottom:1px solid var(--border)}
+.wqx .wq-dot{width:9px;height:9px;border-radius:50%;background:var(--border);flex:none}
+.wqx .wq-url{flex:1;text-align:center;font-size:11.3px;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:3px 12px;max-width:330px;margin:0 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wqx .wq-head{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.wqx .wq-logo{font-weight:900;font-size:14px;color:var(--biblo);letter-spacing:.02em}
+.wqx .wq-crumb{font-size:12.3px;color:var(--muted)}
+.wqx .wq-user{margin-left:auto;font-size:11.8px;color:var(--muted)}
+.wqx .wq-stepper{display:flex;gap:7px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--border);font-size:12px;flex-wrap:wrap}
+.wqx .wq-step{display:flex;align-items:center;gap:5px;padding:3.5px 11px;border:1px solid var(--border);border-radius:999px;color:var(--muted);background:var(--surface)}
+.wqx .wq-step b{color:var(--text)}
+.wqx .wq-step.on{border-color:var(--ok);color:var(--ok);background:var(--ok-soft)}
+.wqx .wq-step.on b{color:var(--ok)}
+.wqx .wq-arrow{color:var(--muted);opacity:.55}
+.wqx .wq-tabs{display:flex;gap:2px;padding:10px 16px 0;border-bottom:1px solid var(--border)}
+.wqx .wq-tab{padding:8px 14px;font-size:12.8px;font-weight:700;color:var(--muted);border:1px solid transparent;border-bottom:none;border-radius:9px 9px 0 0;cursor:pointer;background:none;font-family:inherit}
+.wqx .wq-tab .cnt{display:inline-block;min-width:17px;text-align:center;font-size:10.5px;font-weight:800;border-radius:999px;padding:1px 5px;margin-left:5px;background:var(--surface-2);border:1px solid var(--border)}
+.wqx .wq-tab.on{color:var(--text);background:var(--surface);border-color:var(--border);position:relative;top:1px}
+.wqx .wq-tab.on .cnt{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.wqx .wq-pane{display:none;padding:12px 16px 14px}
+.wqx .wq-pane.on{display:block}
+.wqx .wq-body{display:grid;grid-template-columns:1fr 232px;gap:12px;align-items:start}
+.wqx .wq-body.w2{grid-template-columns:1fr 262px}
+.wqx .wq-body, .wqx .wq-body.w2{grid-template-columns:1fr}
+.wqx .wq-2col{grid-template-columns:1fr!important}
+.wqx .wq-bar{display:flex;gap:8px;align-items:center;margin-bottom:9px;font-size:11.8px;color:var(--muted);flex-wrap:wrap}
+.wqx .wq-fil{border:1px solid var(--border);border-radius:7px;padding:3.5px 9px;background:var(--surface-2)}
+.wqx .wq-tbl{font-size:12.3px}
+.wqx .wq-tbl td, .wqx .wq-tbl th{padding:8px 10px}
+.wqx .wq-tbl input{accent-color:var(--ok)}
+.wqx .wq-chip{display:inline-block;font-size:10.6px;font-weight:800;border-radius:5px;padding:1.5px 7px;white-space:nowrap}
+.wqx .wq-chip.g{color:var(--ok);background:var(--ok-soft)}
+.wqx .wq-chip.a{color:var(--warn);background:var(--warn-soft)}
+.wqx .wq-chip.n{color:var(--muted);background:var(--surface-2)}
+.wqx .wq-btn{border:1px solid var(--border);border-radius:8px;padding:4.5px 11px;font-size:11.8px;font-weight:700;color:var(--text);background:var(--surface-2);cursor:pointer;font-family:inherit;white-space:nowrap}
+.wqx .wq-btn.p{background:var(--ok);border-color:var(--ok);color:#fff}
+.wqx .wq-btn.s{color:var(--biblo);border-color:var(--biblo);background:none}
+.wqx .wq-btn.m{font-size:11px;padding:3px 9px}
+.wqx .wq-detail{border:1px solid var(--border);border-radius:11px;padding:12px 13px;background:var(--surface-2);font-size:12.2px;color:var(--muted)}
+.wqx .wq-detail h5{margin:0 0 3px;font-size:13px;color:var(--text);line-height:1.4}
+.wqx .wq-dhead{display:flex;gap:11px;align-items:flex-start;margin-bottom:9px}
+.wqx .wq-cover{width:70px;aspect-ratio:7/10;object-fit:cover;border-radius:7px;border:1px solid var(--border);box-shadow:0 5px 14px rgba(0,0,0,.16);flex:none;background:var(--surface)}
+.wqx .wq-cover.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:9.8px;color:var(--muted);text-align:center;padding:6px;line-height:1.35}
+.wqx .wq-cover.ph .ic{font-size:19px;opacity:.55}
+.wqx .wq-dwho{font-size:11.3px;color:var(--muted);margin-bottom:5px}
+.wqx .wq-kv{display:flex;justify-content:space-between;gap:8px;padding:4.5px 0;border-bottom:1px dashed var(--border)}
+.wqx .wq-kv b{color:var(--text)}
+.wqx .wq-kv:last-of-type{border-bottom:0}
+.wqx .wq-detail .acts{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.wqx .wq-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 16px;border-top:1px solid var(--border);background:var(--surface-2);font-size:12.2px;color:var(--muted);flex-wrap:wrap}
+.wqx .wq-search{display:flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:8px;padding:4px 10px;background:var(--surface-2);font-size:11.8px;color:var(--muted);min-width:150px}
+.wqx .wq-tbl tbody tr{transition:background .12s}
+.wqx .wq-tbl tbody tr:hover td{background:var(--surface-2)}
+.wqx .wq-tbl tr.sel td{background:var(--ok-soft)}
+.wqx .wq-tbl td .bt2{font-size:10.8px;color:var(--muted);display:block;margin-top:1.5px}
+.wqx .wq-tbl td b{font-weight:700}
+.wqx .wq-avatar{width:22px;height:22px;border-radius:50%;background:var(--ok-soft);color:var(--ok);font-size:10.5px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;margin-right:6px}
+.wqx .wq-note{font-size:11.2px;color:var(--muted);opacity:.8;margin:8px 2px 0}
+.wqx .wq-btn:hover{filter:brightness(.97)}
+.wqx .wq-btn.p:hover{filter:brightness(1.06)}
+.wqx .wq-btn[disabled]{opacity:.42;cursor:default}
+.wqx .wq-seg{display:flex;gap:6px;flex-wrap:wrap}
+.wqx .wq-seg .sgi{border:1px solid var(--border);border-radius:999px;padding:3.5px 11px;font-size:11.6px;color:var(--muted);background:var(--surface)}
+.wqx .wq-seg .sgi.on{border-color:var(--ok);color:var(--ok);background:var(--ok-soft);font-weight:700}
+.wqx .wq-mrow{border:1px solid var(--border);border-radius:10px;padding:9px 12px;margin-bottom:8px;background:var(--surface)}
+.wqx .wq-mrow .mh{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.wqx .wq-mrow .mnow{font-size:10.8px;color:var(--warn);font-weight:700}
+.wqx .wq-mrow .macts{margin-left:auto;display:flex;gap:5px}
+.wqx .wq-mrow .mtxt{font-size:12.2px;color:var(--text);line-height:1.62}
+.wqx .wq-big{font-size:22px;font-weight:900;letter-spacing:.02em;color:var(--text);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.wqx .wq.th-pink{--ok:#bf4980;--ok-soft:rgba(191,73,128,.10)}
+.wqx .wq.th-blue{--ok:#2f6fdb;--ok-soft:rgba(47,111,219,.10)}
+.wqx .wq.th-pink{--ok:#e07aa8;--ok-soft:rgba(224,122,168,.15)}
+.wqx .wq.th-blue{--ok:#7aa5ff;--ok-soft:rgba(122,165,255,.15)}
+.wqx .wq-marc{font:11.6px/1.85 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text);white-space:pre-wrap;word-break:break-word}
+.wqx .wq-marc .add{display:block;background:var(--ok-soft);border-radius:6px;padding:1px 6px;margin:1px -6px}
+.wqx .wq-shelf{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 2px;align-items:flex-end}
+.wqx .wq-mcard.hl{border-color:var(--ok);box-shadow:0 0 0 3px var(--ok-soft)}
+.wqx .wq-shop{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.wqx .wq-shop{grid-template-columns:1fr 1fr}
+.wqx .wq-marc b{font-weight:800}
+.wqx .wq-marc .nul{color:var(--warn);font-weight:800}
+.wqx .wq-mcard{border:1px solid var(--border);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.wqx .wq-mcard .mch{display:flex;align-items:center;gap:7px;margin-bottom:7px;font-size:12.2px;font-weight:800;color:var(--text);flex-wrap:wrap}
+.wqx .wq-mcard .mch .sub{font-weight:600;font-size:11px;color:var(--muted)}
+.wqx .wq-mcard .mch .macts{margin-left:auto;display:flex;gap:5px}
+.wqx .wq-lad{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:11.6px;margin:6px 0 2px}
+.wqx .wq-lad .nd{border:1px solid var(--border);border-radius:8px;padding:4px 9px;background:var(--surface);color:var(--muted)}
+.wqx .wq-lad .nd b{display:block;color:var(--text);font-size:12px}
+.wqx .wq-lad .nd small{opacity:.8}
+.wqx .wq-lad .nd.pick{border-color:var(--ok);background:var(--ok-soft)}
+.wqx .wq-lad .nd.pick b{color:var(--ok)}
+.wqx .wq-lad .ar{color:var(--muted);opacity:.6}
+.wqx .wq-alt{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.wqx .wq-alt .al{border:1px solid var(--border);border-radius:9px;padding:6px 10px;font-size:11.6px;color:var(--muted);background:var(--surface)}
+.wqx .wq-alt .al b{display:block;color:var(--text);font-family:ui-monospace,monospace}
+.wqx .wq-alt .al.on{border-color:var(--ok);background:var(--ok-soft)}
+.wqx .wq-alt .al.on b{color:var(--ok)}
 </style></head><body>
 <div class="slide-w9"><div id="stage">
 
@@ -123,38 +234,71 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
    <p>대출이 없다고 무작정 버리지 않습니다. 연계된 다른 도서관들의 기록까지 비교해 '진짜 제적해도 되는 책'만 골라줍니다. 또한, 책들의 개별 파손 상태와 교체 시기까지 한눈에 묶어서 관리할 수 있습니다.</p></div></div>
 
  <!-- 뒤 카드: 데이터 품질 -->
- <div class="cd-w9 back-w9">
-  <div class="hdr-w9"><h3>데이터 품질</h3><span>기준 2026-08-27</span></div>
-  <div class="bd-w9">
-   <div class="qrow-w9"><div><b>회수 커버리지</b><s>보정 전 24.1%</s></div><em>76.4%</em>
-    <div class="tr2-w9"><i style="width:76.4%"></i></div></div>
-   <div class="qrow-w9"><div><b>참여자</b><s>교수 · 신진 · 대학원생</s></div><em>5,366명</em>
-    <div class="tr2-w9"><i style="width:100%"></i></div></div>
-   <div class="qrow-w9"><div><b>정규 실적 논문</b><s>학회 · 초록 제외</s></div><em>13,356편</em>
-    <div class="tr2-w9"><i style="width:86.6%"></i></div></div>
-   <div class="qrow-w9" style="border:0"><div><b>검토필요</b><s>재학기간 반영 후</s></div><em>231명</em>
-    <div class="tr2-w9"><i style="width:12%;background:#f0a35e"></i></div></div>
-  </div>
- </div>
 
  <!-- 앞 카드: 경영자 성과보드 -->
- <div class="cd-w9 front-w9">
-  <div class="hdr-w9"><h3>연구단 성과보드</h3><em>34개 연구단</em><span>2020~2025</span></div>
-  <div class="bd-w9">
-   <div class="tiles-w9">
-    <div><u>항목 A 성과점수</u><b style="color:#5b5bf3">9,905</b><s>교수 대표논문 질</s></div>
-    <div><u>항목 B 성과점수</u><b style="color:#5b5bf3">713.7</b><s>학생 주저자 실적</s></div>
-    <div><u>FWCI 중앙값</u><b>0.84</b><s>1.0 = 세계평균</s></div>
-   </div>
-   <table>
-    <tr><th>신호등 판정</th><th>연구단</th><th>다음 조치</th></tr>
-    <tr><td><i style="background:#4ade80"></i>정상</td><td>6</td><td>추세 관찰</td></tr>
-    <tr><td><i style="background:#fbbf24"></i>주의</td><td>5</td><td>회수 우선순위 점검</td></tr>
-    <tr><td><i style="background:#f87171"></i>위험</td><td>5</td><td>30일 내 조치계획</td></tr>
-    <tr><td><i style="background:#94a3b8"></i>확인필요</td><td>12</td><td>품질 개선 후 재판정</td></tr>
-   </table>
-  </div>
- </div>
+ <div class="scr" style="left:600px;top:196px;width:920px;height:600px"><div class="wqx" style="width:1180px;transform:scale(0.7797)"><div class="wq" aria-label="편목 마크 부여 화면 UI 시안">
+      <div class="wq-chrome"><span class="wq-dot"></span><span class="wq-dot"></span><span class="wq-dot"></span><span class="wq-url">biblo · 사서 콘솔 — 편목 · 마크 부여</span></div>
+      <div class="wq-head">
+        <span class="wq-logo">BIBLO</span>
+        <span class="wq-crumb">사서 콘솔 › 수서편찬 › <b style="color:var(--text)">편목</b></span>
+        <span class="wq-search">🔍 제목 또는 ISBN 검색</span>
+        <span class="wq-user"><span class="wq-avatar">김</span>김사서 · 정리팀</span>
+      </div>
+      <div class="wq-pane on">
+        <div class="wq-bar" style="margin-bottom:11px">
+          <button class="wq-btn m" type="button">◂ 목록</button>
+          <span style="font-size:12.8px;color:var(--text)"><b>물고기는 존재하지 않는다</b> <span style="color:var(--muted);font-size:11.6px">룰루 밀러 · 2021 · 9791189327156 · 597.092 M648w8</span></span>
+          <span class="wq-chip g">지문 보유</span><span class="wq-chip a">의미필드 5종 공백</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" class="wq-2col">
+          <div class="wq-mcard">
+            <div class="mch">원본 마크 (도서관 보유) <span class="sub">15필드 — 서지는 정상</span></div>
+            <div class="wq-marc"><b>020</b> __ $a 9791189327156
+<b>090</b> __ $a 597.092 $b M648w8
+<b>100</b> 1_ $a Miller, Lulu, $d 1983-
+<b>245</b> 10 $a 물고기는 존재하지 않는다 : $b 상실, 사랑 그리고 숨어 있는 삶의 질서에 관한 이야기 / $d 룰루 밀러 지음 ; $e 정지인 옮김
+<b>246</b> 19 $a Why fish don't exist
+<b>260</b> __ $a [고양] : $b 곰, $c 2021
+<b>300</b> __ $a 299 p. : $b 삽화 ; $c 21cm
+<b>650</b> _7 $a 논픽션[Nonfiction]
+<b>700</b> 1_ $a 정지인, $e 옮김  <span style="opacity:.6">… 외 6필드</span></div>
+            <div style="margin-top:8px;border-left:3px solid var(--warn);background:var(--warn-soft);border-radius:0 8px 8px 0;padding:7px 10px;font-size:11.6px;color:var(--text)"><b style="color:var(--warn)">이 마크에 없는 것</b> — 505 목차 <span class="nul">∅</span> · 520 요약 <span class="nul">∅</span> · 521 이용대상 <span class="nul">∅</span> · 653 키워드 <span class="nul">∅</span> · 655 장르 <span class="nul">∅</span> — "무엇에 관한 책인지"가 없다.</div>
+          </div>
+          <div class="wq-mcard">
+            <div class="mch">비블로 생성 마크 <span class="wq-chip g">+5 의미필드 채움</span> <span class="macts"><button class="wq-btn m" type="button">저장</button><button class="wq-btn m" type="button">편집</button><button class="wq-btn m p" type="button">마크엔진(재생성)</button></span></div>
+            <div class="wq-marc"><b>020</b> ## $a 9791189327156
+<b>100</b> 1# $a Miller, Lulu, $d 1983-
+<b>245</b> 10 $a 물고기는 존재하지 않는다 : $b 상실, 사랑 그리고 숨어 있는 삶의 질서에 관한 이야기 / $d 룰루 밀러 지음 ; $e 정지인 옮김
+<b>260</b> ## $a 고양 : $b 곰, $c 2021
+<b>300</b> ## $a 299 p. : $b 삽화 ; $c 21cm
+<span class="add"><b>505</b> 0# $a 프롤로그 -- 별에 머리를 담근 소년 -- 어느 섬의 선지자 -- 신이 없는 막간극 -- 꼬리를 좇다 -- 유리단지에 담긴 기원 -- 박살 -- 파괴되지 않는 것 …</span>
+<span class="add"><b>520</b> ## $a 과학 전문기자 룰루 밀러가 19세기 생물학자 데이비드 스타 조던의 삶을 추적하며 질서와 혼돈, 과학적 집착, 사랑과 상실에 관한 이야기를 풀어내는 논픽션.</span>
+<span class="add"><b>521</b> ## $a 과학에 관심 있는 독자 · 인생의 질서와 혼돈을 탐구하고 싶은 독자</span>
+<span class="add"><b>653</b> ## $a 질서 $a 혼돈 $a 과학적 집착 $a 사랑 $a 상실 $a 신념 $a 진실</span>
+<span class="add"><b>655</b> #7 $a 논픽션 $a 과학 $a 회고록 $a 전기</span>
+<b>700</b> 1# $a 정지인, $e 옮김</div>
+            <div style="margin-top:7px;font-size:11.4px;color:var(--muted)">초록 = 원본에 없던 필드를 채운 것 — 출처: 12축 책지문(520·521·653·655)과 수집 목차(505), 전부 실제 데이터.</div>
+          </div>
+        </div>
+        <div class="wq-mcard" style="margin-top:10px">
+          <div class="mch">필드 비교 (있는 것만) <span class="sub">기준: KORMARC 통합서지용 KS X 6006-0 (2023 개정)</span></div>
+          <div class="tw"><table class="wq-tbl">
+            <thead><tr><th style="width:150px">태그</th><th>원본 마크</th><th>비블로 생성</th></tr></thead>
+            <tbody>
+              <tr><td><b>505</b><span class="bt2">내용 주기 (목차)</span></td><td><span style="color:var(--warn);font-weight:700">∅ 없음</span></td><td><b>목차 전체 수록</b> (수집 원문)</td></tr>
+              <tr><td><b>520</b><span class="bt2">요약 등 주기</span></td><td><span style="color:var(--warn);font-weight:700">∅ 없음</span></td><td><b>시놉시스 생성</b> (지문)</td></tr>
+              <tr><td><b>521</b><span class="bt2">이용대상자 주기</span></td><td><span style="color:var(--warn);font-weight:700">∅ 없음</span></td><td><b>이용대상 생성</b> (지문)</td></tr>
+              <tr><td><b>653</b><span class="bt2">비통제 색인어</span></td><td><span style="color:var(--warn);font-weight:700">∅ 없음</span></td><td><b>키워드 7개</b> (지문)</td></tr>
+              <tr><td><b>655</b><span class="bt2">색인어 - 장르/형식</span></td><td>650 "논픽션" 1개뿐</td><td><b>장르 4개</b> (지문)</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+      <div class="wq-foot">
+        <span>원본 서지는 그대로 두고, <b style="color:var(--text)">없던 의미필드 5종을 채운다</b> — 확정은 사서(HITL)</span>
+        <button class="wq-btn p" type="button">저장 → 마크 반영</button>
+      </div>
+    </div></div></div>
 
  <div class="ft-w9">기준 2026-08-27 · 수치는 BK21 34개 연구단 실측 · 신호등은 계열 내 백분위 판정 · 우측 화면은 구성 예시</div>
 
