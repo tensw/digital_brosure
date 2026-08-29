@@ -109,6 +109,25 @@ h1 .ac{color:#1e4be8}
 .mt .mu{font:600 11.5px/1 ui-monospace,Menlo,monospace;color:#98a1b2}
 .col.c .mt .mv{color:#1e4be8}
 .concl{top:757px;font-size:23px}
+
+/* ══ 가운데 비블로 카드 바깥 글로우 ══════════════════════════════
+   7번(biblo-search-b.html)의 검색창 글로우를 그대로 벤치마크했다.
+   원뿔 그라데이션을 각도(--ang)로 돌리는 구조라 @property 선언과
+   색 네 개가 함께 와야 한다. 두 겹(넓게 흐린 층 + 테두리에 붙는 층).
+   .col 은 overflow:hidden 이라 바깥으로 번지는 글로우가 잘린다.
+   가운데 카드만 visible 로 풀고, 그 때문에 각지는 헤더 위쪽에 라운드를 돌려준다. */
+@property --ang-9x{syntax:'<angle>';initial-value:0deg;inherits:false}
+.col.c{overflow:visible;--c1:#ff4d3d;--c2:#2b6bff;--c3:#12b76a;--c4:#ffb400}
+.col.c>.ch{border-radius:14px 14px 0 0}
+.col.c::before,.col.c::after{content:"";position:absolute;z-index:-1;pointer-events:none;
+ border-radius:20px;
+ background:conic-gradient(from var(--ang-9x),
+  var(--c1) 0deg,var(--c2) 92deg,var(--c3) 184deg,var(--c4) 272deg,var(--c1) 360deg);
+ animation:sp-9x 14s linear infinite}
+.col.c::before{inset:-24px;filter:blur(46px);opacity:.55}
+.col.c::after{inset:-3px;filter:blur(13px);opacity:.8}
+@keyframes sp-9x{to{--ang-9x:360deg}}
+@media (prefers-reduced-motion: reduce){.col.c::before,.col.c::after{animation:none}}
 </style></head><body>
 <div class="slide"><div id="stage">
 
