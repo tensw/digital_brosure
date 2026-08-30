@@ -14,7 +14,13 @@ body{min-height:100vh;font:15px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-sy
 .top .sp{flex:1}
 .top a{font:700 11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:var(--ink3);text-decoration:none}
 .top a:hover{color:var(--ink2)}
-.top a.go{color:#8fe6ff}
+.top a.go{display:inline-flex;align-items:center;gap:9px;height:42px;padding:0 22px;border-radius:999px;
+ font:800 14.5px/1 "Pretendard","Apple SD Gothic Neo",system-ui,sans-serif;letter-spacing:-.4px;
+ color:#08122c;background:linear-gradient(140deg,#7fd8f5,#9fb4ff);
+ box-shadow:0 14px 30px -12px rgba(90,170,255,.9);transition:filter .16s,transform .16s}
+.top a.go:hover{filter:brightness(1.07);color:#08122c}
+.top a.go:active{transform:translateY(1px)}
+.top a.go i{font-style:normal;font-size:16px;line-height:1}
 
 .sum{margin-top:24px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .sc{padding:15px 17px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
@@ -63,7 +69,7 @@ td.n{font:700 14px/1 ui-monospace,Menlo,monospace}
   <img src="/assets/fav/biblo-logo-light.png" alt="BIBLO">
   <h1>초대자 관리</h1>
   <span class="sp"></span>
-  <a class="go" href="/2026/">자료 보기 →</a>
+  <a class="go" href="/2026/">자료 보기 <i>→</i></a>
   <a href="/account/">비밀번호 변경</a>
   <a href="#" id="out">로그아웃</a>
  </div>
