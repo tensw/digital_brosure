@@ -91,6 +91,18 @@ function handleAuthApi(req, res, urlPath) {
   if (urlPath === '/api/auth/logout') {
     return json(res, 200, { ok: true }, { 'Set-Cookie': auth.cookieHeader('', 0) });
   }
+  if (urlPath === '/api/auth/admin') {
+    const s2 = auth.session(req);
+    if (!s2 || !s2.a) return json(res, 403, { ok: false, msg: '관리자만 쓸 수 있습니다.' });
+    return readBody(req, (b) => {
+      if (!b) return json(res, 400, { ok: false, msg: '요청을 읽지 못했습니다.' });
+      if (b.op === 'list')   return json(res, 200, { ok: true, allow: auth.allowList(), users: auth.listUsers() });
+      if (b.op === 'invite') return json(res, 200, { ok: true, allow: auth.setAllow({ add: b.emails || [] }) });
+      if (b.op === 'revoke') return json(res, 200, { ok: true, allow: auth.setAllow({ remove: b.emails || [] }) });
+      if (b.op === 'reset')  return json(res, 200, auth.resetPw(b.email));
+      json(res, 400, { ok: false, msg: '알 수 없는 명령' });
+    });
+  }
   if (urlPath === '/api/auth/password') {
     const s = auth.session(req);
     if (!s) return json(res, 401, { ok: false, msg: '로그인이 필요합니다.' });

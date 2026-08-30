@@ -107,4 +107,33 @@ function changePw(email, curPw, newPw) {
   return { ok: true };
 }
 
-module.exports = { load, session, login, changePw, cookieHeader, COOKIE, ADMIN, norm };
+
+/* ── 초대 목록 ──
+   목록이 비어 있으면 누구나 초기 비밀번호로 들어온다.
+   한 명이라도 넣으면 그때부터 목록에 있는 이메일만 새로 가입된다.
+   이메일은 공개 저장소에 남기지 않는다(서버의 .auth-store.json 에만 있다). */
+function allowList() { return load().allow.slice(); }
+function setAllow(opt) {
+  const d = load();
+  const set = new Set(d.allow);
+  (opt.add || []).forEach(e => { const n = norm(e); if (n) set.add(n); });
+  (opt.remove || []).forEach(e => set.delete(norm(e)));
+  d.allow = Array.from(set).sort();
+  save();
+  return d.allow.slice();
+}
+function listUsers() {
+  const d = load();
+  return Object.keys(d.users).sort().map(e => ({
+    email: e, admin: !!d.users[e].admin, mustChange: !!d.users[e].mustChange,
+    createdAt: d.users[e].createdAt, updatedAt: d.users[e].updatedAt }));
+}
+function resetPw(email) {
+  const d = load(), e = norm(email);
+  if (!d.users[e]) return { ok: false, msg: '계정이 없습니다.' };
+  setPw(e, INIT_PW, true);
+  return { ok: true };
+}
+
+module.exports = { load, session, login, changePw, cookieHeader, COOKIE, ADMIN, norm,
+                   allowList, setAllow, listUsers, resetPw };
