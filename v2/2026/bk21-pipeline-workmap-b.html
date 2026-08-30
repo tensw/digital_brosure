@@ -1,0 +1,224 @@
+<meta charset="utf-8">
+<title>BK21 매칭 파이프라인 작업맵</title>
+<style>
+:root{--ink:#e9eefb;--ink2:#93a6cc;--ink3:#5d7099;--ok:#4ade80;--part:#fbbf24;--weak:#f87171}
+*{box-sizing:border-box;margin:0;padding:0}
+/* ── 무대 규격 (작업가이드 5장) ── */
+html,body{overflow:hidden}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+.emb-bg0, .emb-bg0 body, .emb-bg0 .slide{background:transparent !important}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:radial-gradient(1100px 720px at 50% 45%,#0b1226 0%,#060a16 58%,#03050c 100%);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+/* 작업가이드 5장: 1600x900, 좌우 82px. 원본은 세로 1306px 문서였다.
+   세로로만 줄이면 다이어그램이 절반이 되므로 다이어그램(좌) · 상세패널(우) 2단으로 편다. */
+.wrap{width:1600px;height:900px;padding:38px 82px 16px;display:flex;flex-direction:column}
+.foot{margin-top:auto}
+.body2{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:stretch;
+ flex:1;min-height:0;margin-top:14px}
+/* 다이어그램은 가로가 정해지면 높이가 따라온다(viewBox 1400x638).
+   남는 세로를 위아래로 나눠 갖게 해 아래가 통째로 비지 않게 한다. */
+.body2 > div:first-child{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.kicker{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
+/* 폰트 규격 — 한글 제목 3.15em(44px), 서브 16px/600 */
+h1{font-size:44px;font-weight:800;letter-spacing:-1.5px;margin-top:10px;line-height:1.18}
+.lead{color:var(--ink2);font-size:16px;font-weight:600;margin-top:10px;max-width:104ch;line-height:1.55}
+.lead b{color:var(--ink)}
+.hd{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.spacer{flex:1}
+.meta{font:600 11px/1.95 ui-monospace,Menlo,monospace;color:var(--ink3);text-align:right;letter-spacing:.05em}
+.meta b{color:var(--ink2)}
+.lgd{display:flex;gap:20px;flex-wrap:wrap;margin-top:18px;padding:12px 16px;
+ border:1px solid rgba(129,140,248,.16);border-radius:12px;background:rgba(11,18,38,.6)}
+.lg{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink3)}
+.lg i{width:10px;height:10px;border-radius:3px;display:block}
+.lg b{color:var(--ink2);font-weight:700}
+svg.scene{display:block;width:100%;height:auto;overflow:visible;margin-top:0}
+.ln{font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;fill:var(--ink3)}
+.sn{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;fill:var(--ink3)}
+.st{font:800 13.5px/1 -apple-system,system-ui,sans-serif;fill:var(--ink)}
+.ci{font:600 10.5px/1 -apple-system,system-ui,sans-serif;fill:var(--ink2)}
+.cn{font:700 10.5px/1 ui-monospace,Menlo,monospace;fill:var(--ink3)}
+.pv{font:600 10.5px/1 -apple-system,system-ui,sans-serif;fill:var(--ink2)}
+.gv{font:800 17px/1 ui-monospace,Menlo,monospace;letter-spacing:-.6px}
+.gl{font:600 10px/1 -apple-system,system-ui,sans-serif;fill:var(--ink3)}
+.ov{font:800 15px/1 ui-monospace,Menlo,monospace;letter-spacing:-.5px}
+.ou{font:600 10px/1 -apple-system,system-ui,sans-serif;fill:var(--ink3)}
+.col{cursor:pointer}
+.col .hl{fill:#818cf8;fill-opacity:0;transition:.16s}
+.col:hover .hl{fill-opacity:.05}
+.col.on .hl{fill-opacity:.085}
+.panel{margin-top:0;border:1px solid rgba(129,140,248,.22);border-radius:18px;
+ background:rgba(11,18,38,.72);padding:20px 24px;min-height:132px}
+.pn{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:13px}
+.pn .ix{font:700 11px/1 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.2em}
+.pn h3{font-size:18px;font-weight:800;letter-spacing:-.4px}
+.pn .tg{font:700 10.5px/1 ui-monospace,Menlo,monospace;padding:5px 11px;border-radius:999px;letter-spacing:.12em}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.pi{border:1px solid rgba(129,140,248,.16);border-radius:11px;padding:10px 12px;background:rgba(16,24,48,.6)}
+.pi .k{font-size:10.5px;color:var(--ink3);font-weight:600}
+.pi .v{font:800 18px/1.2 ui-monospace,Menlo,monospace;margin-top:4px;letter-spacing:-.4px}
+.pd{color:var(--ink2);font-size:14.5px;font-weight:500;line-height:1.5;margin-top:12px}
+.pd b{color:var(--ink)}
+.steps{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.steps span{font:600 11px ui-monospace,Menlo,monospace;padding:5px 10px;border-radius:7px;
+ background:rgba(129,140,248,.12);color:#c7d2fe;border:1px solid rgba(129,140,248,.2)}
+.foot{margin-top:22px;border-top:1px solid rgba(129,140,248,.14);padding-top:16px;color:var(--ink3);
+ font-size:11.5px;line-height:1.9}
+.foot b{color:var(--ink2)}
+
+</style>
+<div class="slide"><div id="stage">
+
+<div class="wrap">
+ <div class="hd">
+  <div>
+   <div class="kicker">BK21 · PIPELINE WORKING MAP</div>
+   <h1>수집에서 성과 산출까지 일곱 단계</h1>
+   <p class="lead">원장과 서지 DB 가 성과 지표가 되기까지 거치는 단계와, 각 단계에서 데이터가 얼마나 새는지를 한 장에 편다.
+    <b>게이트</b> 줄의 숫자가 그 단계를 통과한 비율이다. 앞 단계에서 빠진 만큼 뒤 단계의 판정 불가로 그대로 이어진다.
+    단계를 누르면 처리 내용과 병목이 펼쳐진다.</p>
+  </div>
+  <div class="spacer"></div>
+  <div class="meta">
+   기준 <b>2026-08-25</b><br>
+   논문 <b>140,693</b> · 저자행 <b>5,280,301</b><br>
+   확정 인물 <b>11,930</b>
+  </div>
+ </div>
+
+ <div class="lgd" id="lgd"></div>
+ <div class="body2">
+ <div><svg class="scene" id="sc" viewBox="0 0 1400 638" role="img" aria-label="BK21 매칭 파이프라인 작업맵"></svg>
+ </div>
+ <div class="panel" id="pnl"></div>
+</div>
+
+ <div class="foot">
+  <b>읽는 법.</b> 게이트 비율은 각 단계가 요구하는 데이터를 실제로 갖춘 비율이며, 처리 성공률이 아니다.
+  <b>03 중복 통합</b>의 게이트는 반대 방향(낮을수록 좋음)으로, 외부 식별자를 하나도 갖지 못한 논문 비율이다.<br>
+  <b>병목.</b> 현재 가장 약한 고리는 <b>05 저자 판별</b>이다.
+  저자행의 43.7%가 교내·교외 미분류로 남아 있고, 확정분의 대부분은 판별 엔진이 아니라 제출 원장에 의존한다.
+  이 단계를 올리지 않으면 06·07 의 커버리지를 올려도 성과 집계의 하한은 그대로다.
+ </div>
+</div>
+
+<script>
+const D={"built":"2026-08-25","papers":140693,"stages":[{"n":"01","t":"수집","st":"part","inp":[["RIMS 원장",137934],["Scopus CSV",1578],["WoS CSV",1181]],"proc":["원장 적재","CSV 임포트","원문 보존"],"gate":{"l":"명부 제출 연구단","v":82.4,"d":"34개 중 28개","st":"part"},"out":[["paper",140693,"편"]],"why":"연구단이 제출한 원장이 주 원천이고, Scopus·WoS CSV 는 보강용이다. 명부를 내지 않은 6개 연구단은 이후 모든 단계에서 빈칸으로 남는다."},{"n":"02","t":"식별자 정규화","st":"part","inp":[["DOI",116880],["Scopus EID",106243],["WoS UT",106573],["KCI ID",26790],["PMID",759]],"proc":["DOI 표기 정리","EID·UT 분리 저장"],"gate":{"l":"DOI 보유","v":83.1,"d":"116,880 / 140,693","st":"part"},"out":[["고유 DOI",116477,"개"]],"why":"DOI 가 없는 23,813편은 제목·저널·연도로만 대조해야 해서 통합 정확도가 떨어진다. EID 칸에 WoS ID 를 넣는 오염은 규칙으로 차단한다."},{"n":"03","t":"중복 통합","st":"ok","inp":[["동일 DOI 다중 원천",91341]],"proc":["paper_uid 부여","원천 목록 병합","저자 있는 쪽 흡수"],"gate":{"l":"외부 식별자 미보유","v":0.0,"d":"27편","st":"ok"},"out":[["고유 paper",140693,"편"]],"why":"Scopus·WoS 양쪽에 있는 91,341편을 한 편으로 합친다. 피인용은 두 값 중 큰 쪽을 쓰고 KCI 는 더한다."},{"n":"04","t":"저자행 파싱","st":"ok","inp":[["원문 저자 문자열",140850]],"proc":["저자 분리·순서 보존","이름·소속·ID 추출"],"gate":{"l":"파싱 완료 논문","v":100.0,"d":"140,850편","st":"ok"},"out":[["저자행",5280301,"줄"]],"why":"공저자 앵커는 해시지만 원문 이름·소속이 함께 남아, 외부 연구자를 이름으로 부를 수 있다. 국제 협력망 확장의 출발점."},{"n":"05","t":"저자 판별","st":"weak","inp":[["저자행",5280301]],"proc":["L1 식별자","L2 이름+소속","L3 확률","L4 LLM 교차검증","HITL 사람검토"],"gate":{"l":"교내·교외 판정","v":56.3,"d":"미분류 2,305,898줄","st":"weak"},"out":[["확정 저자행",364319,"줄"],["확정 인물",11930,"명"]],"why":"가장 약한 고리. 확정 364,319줄 중 356,017줄은 제출 원장을 그대로 이은 것이고 엔진이 판정한 것은 8,302줄뿐이다. 미분류 43.7% 는 소속 문자열이 없어 판정을 보류한 상태."},{"n":"06","t":"지표 적재","st":"part","inp":[["Scopus API",103954],["WoS API",105094],["KCI",26790],["OpenAlex FWCI",102958]],"proc":["피인용 수집","FWCI·CNCI 수집","저널 IF 백분위"],"gate":{"l":"FWCI 커버리지","v":73.2,"d":"102,958 / 140,693","st":"part"},"out":[["지표행",642139,"줄"]],"why":"FWCI 는 OpenAlex 값이라 InCites·SciVal 과 수치가 다르다. 저널등급 판정에 쓰는 IF 백분위는 80,626편(57.3%)에만 있어 등급 미상이 남는다."},{"n":"07","t":"성과 산출","st":"part","inp":[["확정 저자행",364319],["지표행",642139],["BK 태그",2690]],"proc":["역할가중 w 산출","성과점수 S = Σ(g×w)","계열 내 백분위·신호등"],"gate":{"l":"신호등 판정 연구단","v":64.7,"d":"34개 중 22개","st":"part"},"out":[["연구단 지표",34,"개"]],"why":"확인필요 12개 연구단은 성과가 나쁜 것이 아니라 품질게이트를 통과하지 못해 백분위를 매기지 않은 것이다. 앞 단계의 커버리지가 그대로 여기서 판정 불가로 나타난다."}],"legend":[["ok","통과","게이트 기준을 충족"],["part","부분","일부 데이터가 비어 하한값으로 읽어야 함"],["weak","미흡","다음 단계의 정확도를 떨어뜨리는 병목"]]}, S=D.stages;
+const C={ok:'#4ade80',part:'#fbbf24',weak:'#f87171'};
+const NS='http://www.w3.org/2000/svg';
+const sc=document.getElementById('sc'), pnl=document.getElementById('pnl');
+const N=n=>n.toLocaleString('ko-KR');
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||sc).appendChild(e);return e;}
+function txt(g,x,y,s,cls,col,anc){const t=el('text',{x,y,class:cls},g);if(col)t.setAttribute('fill',col);
+ if(anc)t.setAttribute('text-anchor',anc);t.textContent=s;return t;}
+function box(g,x,y,w,h,col,op,r){r=r||9;
+ const R=`M${x+r},${y}H${x+w-r}Q${x+w},${y} ${x+w},${y+r}V${y+h-r}Q${x+w},${y+h} ${x+w-r},${y+h}H${x+r}Q${x},${y+h} ${x},${y+h-r}V${y+r}Q${x},${y} ${x+r},${y}Z`;
+ el('path',{d:R,fill:col,'fill-opacity':op,stroke:col,'stroke-opacity':.34,'stroke-width':1},g);}
+
+document.getElementById('lgd').innerHTML=D.legend.map(([k,t,d])=>
+ `<div class="lg"><i style="background:${C[k]}"></i><b>${t}</b> · ${d}</div>`).join('')+
+ `<div class="lg" style="margin-left:auto"><b>게이트</b> · 그 단계를 통과한 데이터 비율</div>`;
+
+/* ── 기하 ── */
+const GX=104, CW=167, GAP=16, X=i=>GX+i*(CW+GAP);
+const L={hdr:34, inp:{y:74,h:126}, prc:{y:214,h:116}, gat:{y:344,h:86}, out:{y:444,h:78}};
+[['① 입력',L.inp],['② 처리',L.prc],['③ 게이트',L.gat],['④ 산출',L.out]].forEach(([s,l])=>{
+ el('line',{x1:GX-14,y1:l.y-9,x2:1384,y2:l.y-9,stroke:'#5b7099','stroke-opacity':.13,'stroke-width':1},sc);
+ txt(sc,16,l.y+15,s.slice(0,1),'gv','#5d7099');
+ txt(sc,34,l.y+15,s.slice(2),'ln');
+});
+
+S.forEach((s,i)=>{
+ const x=X(i), col=C[s.st];
+ const g=el('g',{class:'col'+(i===4?' on':'')},sc); g.dataset.i=i;
+ el('rect',{x:x-7,y:20,width:CW+14,height:506,rx:13,class:'hl'},g);
+
+ /* 헤더 */
+ el('circle',{cx:x+6,cy:L.hdr-4,r:3.4,fill:col},g);
+ txt(g,x+16,L.hdr-1,s.n,'sn');
+ txt(g,x,L.hdr+22,s.t,'st');
+
+ /* 입력 */
+ box(g,x,L.inp.y,CW,L.inp.h,'#818cf8',.055);
+ s.inp.slice(0,5).forEach((it,j)=>{
+  const y=L.inp.y+20+j*22;
+  el('rect',{x:x+9,y:y-9,width:3,height:11,rx:1.5,fill:'#818cf8','fill-opacity':.55},g);
+  txt(g,x+18,y,it[0],'ci');
+  txt(g,x+CW-9,y,N(it[1]),'cn',null,'end');});
+
+ /* 처리 */
+ box(g,x,L.prc.y,CW,L.prc.h,'#818cf8',.09);
+ s.proc.slice(0,5).forEach((p,j)=>{
+  const y=L.prc.y+20+j*20;
+  txt(g,x+9,y,'·','pv','#818cf8');
+  txt(g,x+18,y,p,'pv');});
+
+ /* 게이트 */
+ box(g,x,L.gat.y,CW,L.gat.h,col,.10);
+ txt(g,x+10,L.gat.y+20,s.gate.l,'gl');
+ txt(g,x+10,L.gat.y+44,s.gate.v.toFixed(1)+'%','gv',col);
+ el('rect',{x:x+10,y:L.gat.y+54,width:CW-20,height:6,rx:3,fill:'#fff','fill-opacity':.07},g);
+ el('rect',{x:x+10,y:L.gat.y+54,width:Math.max(2,(CW-20)*s.gate.v/100),height:6,rx:3,
+   fill:col,'fill-opacity':.72},g);
+ txt(g,x+10,L.gat.y+74,s.gate.d,'gl');
+
+ /* 산출 */
+ box(g,x,L.out.y,CW,L.out.h,'#38bdf8',.075);
+ s.out.slice(0,2).forEach((o,j)=>{
+  const y=L.out.y+26+j*30;
+  txt(g,x+10,y,N(o[1]),'ov','#7dd3fc');
+  txt(g,x+12+String(N(o[1])).length*9.4,y,o[2],'ou');
+  txt(g,x+CW-10,y,o[0],'ou',null,'end');});
+
+ /* 단계 간 화살표 */
+ if(i<S.length-1){
+  const ax=x+CW, ay=L.prc.y+L.prc.h/2;
+  el('line',{x1:ax+2,y1:ay,x2:ax+GAP-5,y2:ay,stroke:'#818cf8','stroke-opacity':.45,'stroke-width':1.2},sc);
+  el('polygon',{points:`${ax+GAP-5},${ay} ${ax+GAP-10},${ay-3.4} ${ax+GAP-10},${ay+3.4}`,
+    fill:'#818cf8','fill-opacity':.6},sc);}
+});
+/* 병목 표시 */
+(function(){const i=S.findIndex(s=>s.st==='weak'); if(i<0)return; const x=X(i);
+ el('line',{x1:x+CW/2,y1:L.gat.y+L.gat.h+4,x2:x+CW/2,y2:554,stroke:C.weak,'stroke-opacity':.4,
+   'stroke-width':1,'stroke-dasharray':'3 3'},sc);
+ el('rect',{x:x-7,y:556,width:CW+14,height:26,rx:8,fill:C.weak,'fill-opacity':.12,
+   stroke:C.weak,'stroke-opacity':.45,'stroke-width':1},sc);
+ txt(sc,x+CW/2,573,'BOTTLENECK','sn',C.weak,'middle');})();
+
+/* ── 패널 ── */
+function show(i){
+ document.querySelectorAll('.col').forEach(b=>b.classList.toggle('on',+b.dataset.i===i));
+ const s=S[i], col=C[s.st], lab={ok:'통과',part:'부분',weak:'미흡'}[s.st];
+ pnl.innerHTML=`<div class="pn"><span class="ix">${s.n}</span><h3>${s.t}</h3>
+  <span class="tg" style="border:1px solid ${col}55;color:${col}">${lab} · ${s.gate.l} ${s.gate.v.toFixed(1)}%</span></div>
+  <div class="pg">
+   ${s.inp.map(it=>`<div class="pi"><div class="k">입력 · ${it[0]}</div><div class="v">${N(it[1])}</div></div>`).join('')}
+   ${s.out.map(o=>`<div class="pi"><div class="k">산출 · ${o[0]}</div>
+     <div class="v" style="color:#7dd3fc">${N(o[1])}<span style="font-size:12px;color:#5d7099"> ${o[2]}</span></div></div>`).join('')}
+  </div>
+  <div class="steps">${s.proc.map(p=>`<span>${p}</span>`).join('')}</div>
+  <div class="pd">${s.why}</div>`;
+}
+sc.addEventListener('click',e=>{const b=e.target.closest('.col'); if(b) show(+b.dataset.i);});
+show(4);
+</script>
+</div></div>
+
+<script>
+/* 1600x900 고정 무대 — 작업가이드 5장 규격.
+   resize 하나만 걸면 iframe 슬라이드에서 배율이 틀어진 채 굳는다. 다섯 개를 다 건다. */
+function fitStage(){
+  const st=document.getElementById('stage'); if(!st) return;
+  st.style.height='900px';
+  const k=Math.min(innerWidth/1600, innerHeight/900);
+  st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;
+}
+fitStage();
+addEventListener('resize',fitStage);
+addEventListener('load',fitStage);
+addEventListener('pageshow',fitStage);
+if(window.ResizeObserver) new ResizeObserver(fitStage).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitStage);
+</script>
+<script>if(window.self!==window.top) document.documentElement.classList.add('emb-bg0');</script>
