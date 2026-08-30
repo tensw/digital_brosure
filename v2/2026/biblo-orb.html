@@ -1,0 +1,99 @@
+<!doctype html><meta charset="utf-8"><title>BIBLO 플라스마 구</title>
+<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}#c{display:block;width:100vw;height:100vh}</style>
+<canvas id="c"></canvas>
+<script>
+const c=document.getElementById('c'), x=c.getContext('2d');
+let W,H,CX,CY,R,DPR;
+function fit(){DPR=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;
+ c.width=W*DPR;c.height=H*DPR;x.setTransform(DPR,0,0,DPR,0,0);CX=W/2;CY=H/2;R=Math.min(W,H)*0.235;}
+fit(); addEventListener('resize',fit);
+
+function blob(t,rad,amp,seed,seg){
+  const p=[];
+  for(let i=0;i<seg;i++){const a=i/seg*Math.PI*2;
+    const n=Math.sin(a*2+t*1.1+seed)*0.6+Math.sin(a*3-t*0.8+seed*2)*0.32+Math.sin(a*5+t*0.5)*0.14;
+    const r=rad*(1+n*amp); p.push([Math.cos(a)*r,Math.sin(a)*r]);}
+  x.beginPath();
+  for(let i=0;i<seg;i++){const a=p[i],b=p[(i+1)%seg];
+    const mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2;
+    i===0?x.moveTo(mx,my):x.quadraticCurveTo(a[0],a[1],mx,my);}
+  const a0=p[0],b0=p[1];
+  x.quadraticCurveTo(a0[0],a0[1],(a0[0]+b0[0])/2,(a0[1]+b0[1])/2); x.closePath();
+}
+/* 궤도 링 — shadowBlur 는 조각마다 걸면 프레임이 안 나온다.
+   굵고 흐린 획 → 가는 밝은 획 세 겹으로 번짐을 흉내낸다 */
+function ring(t,phase,w,alpha,col,rx,head){
+  const sp=Math.sin(t*0.8+phase), ry=R*rx*Math.abs(sp)*0.95+R*0.05;
+  const rot=t*0.42+phase, N=14, span=Math.PI*1.55, dep=0.3+0.7*Math.abs(sp);
+  const pass=[[3.0,0.16],[1.7,0.30],[0.7,1.0]];
+  x.save(); x.translate(CX,CY); x.rotate(rot); x.lineCap='round';
+  for(const [mw,ma] of pass){
+    x.strokeStyle = mw<1 ? 'rgba(255,255,255,.95)' : col;
+    for(let i=0;i<N;i++){
+      const u=i/N, fade=Math.sin(u*Math.PI);
+      x.globalAlpha=alpha*ma*fade*fade*dep;
+      x.lineWidth=w*mw*(0.4+0.6*fade);
+      x.beginPath();
+      x.ellipse(0,0,R*rx,ry,0,head+u*span,head+(i+1)/N*span);
+      x.stroke();
+    }
+  }
+  x.globalAlpha=1; x.restore();
+}
+
+let t0=performance.now();
+const FIX=new URLSearchParams(location.search).get('t');
+function frame(now){
+  const t = FIX!==null ? parseFloat(FIX) : (now-t0)/1000;
+  x.globalCompositeOperation='source-over'; x.globalAlpha=1; x.shadowBlur=0; x.filter='none';
+  x.fillStyle='#000'; x.fillRect(0,0,W,H);
+
+  /* 1. 바깥 글로우 — 넓고 진하게 */
+  x.globalCompositeOperation='lighter';
+  const pulse=1+Math.sin(t*1.2)*0.05;
+  let g=x.createRadialGradient(CX,CY,R*0.55,CX,CY,R*2.9*pulse);
+  g.addColorStop(0,'rgba(88,84,255,.72)');
+  g.addColorStop(.26,'rgba(66,62,232,.40)');
+  g.addColorStop(.58,'rgba(40,40,170,.16)');
+  g.addColorStop(1,'rgba(6,6,30,0)');
+  x.fillStyle=g; x.beginPath(); x.arc(CX,CY,R*2.9*pulse,0,7); x.fill();
+
+  /* 2. 안쪽 액체 — lighter 로 겹치면 흰색으로 날아가 source-over 로 그린다 */
+  x.globalCompositeOperation='source-over';
+  x.save(); x.translate(CX,CY);
+  x.beginPath(); x.arc(0,0,R*0.985,0,7); x.clip();
+  x.fillStyle='#140b3a'; x.fillRect(-R,-R,R*2,R*2);
+
+  let g2=x.createLinearGradient(-R*.8,-R,R*.8,R);
+  g2.addColorStop(0,'#ff86cf'); g2.addColorStop(.42,'#c05cf5');
+  g2.addColorStop(.78,'#7b52ff'); g2.addColorStop(1,'#3f6bff');
+  x.filter='blur('+(R*0.05).toFixed(1)+'px)'; x.fillStyle=g2; blob(t*0.85,R*0.88,0.26,0,9); x.fill();
+
+  let g3=x.createLinearGradient(R*.7,-R,-R*.7,R*.6);
+  g3.addColorStop(0,'rgba(120,232,255,.92)'); g3.addColorStop(.5,'rgba(160,110,255,.55)');
+  g3.addColorStop(1,'rgba(255,120,200,.35)');
+  x.filter='blur(9px)'; x.fillStyle=g3; blob(t*0.62+2.4,R*0.72,0.32,3.1,8); x.fill();
+
+  let g6=x.createLinearGradient(-R*.4,R*.7,R*.5,-R*.5);
+  g6.addColorStop(0,'rgba(255,110,190,.85)'); g6.addColorStop(1,'rgba(255,110,190,0)');
+  x.filter='blur(12px)'; x.fillStyle=g6; blob(t*0.5+5.0,R*0.6,0.34,1.7,7); x.fill();
+  x.filter='none'; x.restore();
+
+  /* 3. 구 가장자리 — 또렷한 윤곽 없이 은은한 번짐만 */
+  x.globalCompositeOperation='lighter';
+  let g4=x.createRadialGradient(CX,CY,R*0.55,CX,CY,R*1.18);
+  g4.addColorStop(0,'rgba(150,170,255,0)');
+  g4.addColorStop(.80,'rgba(150,170,255,.10)');
+  g4.addColorStop(.93,'rgba(190,205,255,.22)');
+  g4.addColorStop(1,'rgba(120,140,255,0)');
+  x.fillStyle=g4; x.beginPath(); x.arc(CX,CY,R*1.18,0,7); x.fill();
+
+  /* 4. 궤도 링 */
+  ring(t,0,   R*0.085,.95,'rgba(200,218,255,1)',1.10, t*1.9);
+  ring(t,2.0, R*0.060,.55,'rgba(150,175,255,1)',1.02, -t*1.5+2);
+  ring(t,4.1, R*0.045,.38,'rgba(130,225,255,1)',1.16, t*1.2+4);
+
+  if(FIX===null) requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
