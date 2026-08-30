@@ -8,6 +8,8 @@
 html{overflow:hidden}
 body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
  background:#4f63f6;color:#fff;-webkit-font-smoothing:antialiased}
+/* 덱 안에서는 배경을 덱 레이어(viol)에 맡긴다. 그래야 23~26 이 한 배경으로 이어진다 */
+.emb-bg0, .emb-bg0 body, .emb-bg0 .slide-p4{background:transparent !important}
 .slide-p4{position:relative;width:100vw;height:100vh;min-height:560px;overflow:hidden;
  background:linear-gradient(135deg,#4f63f6 0%,#5b5bf3 52%,#6b50ee 100%)}
 #stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
@@ -597,4 +599,6 @@ addEventListener('load',fit);
 addEventListener('pageshow',fit);
 if(window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
-</script></body></html>
+</script>
+<script>if(window.self!==window.top) document.documentElement.classList.add('emb-bg0');</script>
+</body></html>

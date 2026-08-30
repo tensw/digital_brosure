@@ -755,10 +755,10 @@ window.SLIDES_2q6r4=[
  {kind:'node', id:'sl-hero-2q6r4-d', bg:'wave',  name:'사서 에이전트'},
  {kind:'node', id:'sl-five-2q6r4-d', bg:'wave',  name:'사서 에이전트 2'},
  {kind:'frame',src:'biblo-book-cycle-map.html', bg:'own', name:'도서서비스 순환구조'},
- {kind:'frame',src:'biblo-howto-researcher.html', bg:'own', name:'이용 방법 · 연구자'},
- {kind:'frame',src:'biblo-howto-admin.html', bg:'own', name:'이용 방법 · 운영자'},
- {kind:'frame',src:'biblo-howto-researcher-b.html', bg:'own', name:'이용 방법 · 연구자 2'},
- {kind:'frame',src:'biblo-howto-admin-b.html', bg:'own', name:'이용 방법 · 운영자 2'},
+ {kind:'frame',src:'biblo-howto-researcher.html', bg:'viol', name:'이용 방법 · 연구자'},
+ {kind:'frame',src:'biblo-howto-admin.html', bg:'viol', name:'이용 방법 · 운영자'},
+ {kind:'frame',src:'biblo-howto-researcher-b.html', bg:'viol', name:'이용 방법 · 연구자 2'},
+ {kind:'frame',src:'biblo-howto-admin-b.html', bg:'viol', name:'이용 방법 · 운영자 2'},
  {kind:'frame',src:'bk21-status-12b.html', bg:'own', name:'매칭 현황 요약 12 사본'},
  {kind:'frame',src:'biblo-where-we-stand.html', bg:'own', name:'지금 어디까지 왔는가'},
  {kind:'frame',src:'biblo-bottleneck.html', bg:'own', name:'무엇이 막고 있는가'},
@@ -806,6 +806,14 @@ window.BGS_2q6r4={
  wave:{make(layer){
    const c=document.createElement('canvas'); c.id='bg'; layer.appendChild(c);
    const v=document.createElement('div'); v.className='veil-2q6r4'; layer.appendChild(v);
+ }},
+ /* 23~26 «이용 방법» 네 장이 함께 쓰는 보라 배경.
+    각 파일이 저마다 그리면 장을 넘길 때 배경이 새로 칠해진다.
+    한 레이어로 올려 20·21 처럼 이어지게 한다. */
+ viol:{make(layer){
+   const g=document.createElement("div");
+   g.style.cssText="position:absolute;inset:0;background:linear-gradient(135deg,#4f63f6 0%,#5b5bf3 52%,#6b50ee 100%)";
+   layer.appendChild(g);
  }},
  own:{none:true}
 };
