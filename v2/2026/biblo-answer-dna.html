@@ -42,7 +42,15 @@ html,body{overflow:hidden}
  text-align:right;letter-spacing:.05em}
 .meta-8p4q6 b{color:var(--ink2-8p4q6)}
 
-.pair-8p4q6{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:32px}
+/* 두 카드 사이에 VS 를 올려 대비를 분명히 한다 */
+.pair-8p4q6{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:32px;position:relative}
+.pair-8p4q6::after{content:"VS";position:absolute;left:50%;top:50%;
+ width:74px;height:74px;margin:-37px 0 0 -37px;z-index:6;
+ display:grid;place-items:center;border-radius:50%;
+ font:800 22px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:#fff;
+ background:linear-gradient(150deg,#1a2044,#0d1230);
+ border:1px solid rgba(160,180,255,.34);
+ box-shadow:0 18px 40px -12px rgba(4,8,26,.8),0 0 0 10px rgba(10,14,34,.55)}
 .pane-8p4q6{position:relative;border-radius:26px;overflow:hidden;padding:44px 40px 40px;
  min-height:540px;display:flex;flex-direction:column}
 /* 좌 — 밝은 카드 */
