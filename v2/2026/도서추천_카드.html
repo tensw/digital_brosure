@@ -349,7 +349,7 @@ function show(){
  $('#cby').textContent = [b.a, b.p, b.y].filter(Boolean).join(' · ') + (b.k ? '  ·  청구기호 '+b.k : '');
  $('#cur').textContent = String(bi+1).padStart(2,'0');
  $('#fill').style.width = ((bi+1)/n*100).toFixed(1)+'%';
- /* 알라딘 검색 대신 비블로 도서 상세로. b.i 는 ISBN13 이고
+ /* 외부 서점 검색 대신 비블로 도서 상세로. b.i 는 ISBN13 이고
     browse.html 이 ?isbn= 을 받아 openBookByIsbn() 으로 상세를 연다. */
  const url = 'https://biblomarketing.vercel.app/browse.html?isbn='+encodeURIComponent(b.i);
  $('#cmore').href = url; $('#goRead').href = url;
