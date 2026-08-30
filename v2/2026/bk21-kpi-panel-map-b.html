@@ -14,7 +14,7 @@ body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSyst
 /* 작업가이드 5장: 1600x900, 좌우 82px. 원본 세로 1359px 문서 */
 .wrap{width:1600px;height:900px;padding:38px 82px 16px;display:flex;flex-direction:column}
 .foot{margin-top:auto}
-.body2{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:stretch;
+.body2{display:grid;grid-template-columns:1fr 240px;gap:20px;align-items:stretch;
  flex:1;min-height:0;margin-top:14px}
 /* 다이어그램은 가로가 정해지면 높이가 따라온다. 남는 세로를 위아래로 나눈다. */
 .body2 > div:first-child{display:flex;flex-direction:column;justify-content:center;min-width:0}
@@ -91,17 +91,6 @@ svg.scene{display:block;width:100%;height:auto;overflow:visible}
  <div class="panel" id="panel"></div>
 </div>
 
- <div class="foot">
-  실측 2026-08-26 · 신 RIMS <code>dev</code> 복원본 기준.
-  <b>성과점수 대상은 정규 실적 13,356편입니다.</b> 학술지와 리뷰만 세고,
-  학회 1,353편 · 학회초록 등 실적비대상 647편 · 단행본 64편은 따로 셉니다
-  (<a href="#" style="color:#93a6cc">게재처 정규화 기준</a> 참조).
-  KCI 등재 논문은 Scopus·WoS 유형 정보가 없어도 학술지로 봅니다.<br>
-  <b>저널 등급은 게재처 중앙 백분위로 보강합니다.</b> 논문 실측 8,056편 · 저널 보강 3,996편 · 값 없음 1,304편.<br>
-  <b>절대 편수는 하한값으로 읽습니다.</b> 회수 커버리지 76.4%, JCR 백분위 보유 논문은 일부입니다.
-  FWCI는 OpenAlex 값이라 InCites·SciVal과 수치가 다릅니다.
-  계열 간 절대 비교는 하지 않고 신호등은 계열 안에서만 매깁니다.
- </div>
 </div>
 
 <script>
