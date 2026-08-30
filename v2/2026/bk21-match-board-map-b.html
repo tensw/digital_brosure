@@ -14,7 +14,7 @@ body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSyst
 /* 작업가이드 5장: 1600x900, 좌우 82px. 원본 세로 1630px 문서 */
 .wrap{width:1600px;height:900px;padding:38px 82px 16px;display:flex;flex-direction:column}
 .foot{margin-top:auto}
-.body2{display:grid;grid-template-columns:1fr 620px;gap:20px;align-items:stretch;
+.body2{display:grid;grid-template-columns:1fr 413px;gap:20px;align-items:stretch;
  flex:1;min-height:0;margin-top:14px}
 /* 다이어그램은 가로가 정해지면 높이가 따라온다. 남는 세로를 위아래로 나눈다. */
 .body2 > div:first-child{display:flex;flex-direction:column;justify-content:center;min-width:0}
@@ -94,13 +94,6 @@ td:last-child{text-align:left;font:400 12px -apple-system,system-ui,sans-serif;c
  <div class="panel" id="pnl"></div>
 </div>
 
- <div class="foot">
-  <b>대상 범위.</b> 저자 정보가 끝까지 파싱된 논문 140,850편의 저자행이다.
-  BIBLO 전체 논문 원장은 이보다 크며, 저자 파싱이 끝나지 않은 논문은 이 화면에 포함되지 않는다.<br>
-  <b>확정의 의미.</b> 교내 확정 356,232줄 중 356,017줄은 제출 원장에서 직접 이어붙인 것으로,
-  판별 엔진을 거치지 않았다. 엔진이 실제로 판정한 것은 8,302줄이다.
-  원장 연결분은 제출 명부가 정확하다는 전제 위에 서 있다.
- </div>
 </div>
 
 <script>
@@ -214,9 +207,9 @@ function show(i){
    이 중 <b>${N(D.layers[0].v)}줄</b>은 제출 원장을 그대로 이어붙인 것이고,
    판별 엔진이 실제로 판정한 것은 <b>${N(eng)}줄</b>이다.
    엔진 판정분은 아래 레이어별로 근거가 남아 있고, 원장 연결분은 명부의 정확성에 의존한다.</div>
-   <table><thead><tr><th>판별 레이어</th><th>저자행</th><th>비중</th><th>근거</th></tr></thead><tbody>
+   <table><thead><tr><th>판별 레이어</th><th>저자행</th><th>비중</th></tr></thead><tbody>
    ${D.layers.map(l=>`<tr><td>${l.l}</td><td>${N(l.v)}</td>
-     <td>${(l.v/g.v*100).toFixed(2)}%</td><td>${l.d}</td></tr>`).join('')}</tbody></table>`;
+     <td>${(l.v/g.v*100).toFixed(2)}%</td></tr>`).join('')}</tbody></table>`;
  }else if(g.k==='ex'){
   body=`<div class="pg">${card('저자행',N(g.v),g.c)}${card('전체 대비',(g.v/D.rows*100).toFixed(1)+'%')}
    ${card('이름 보유',(I.nm/I.tot*100).toFixed(1)+'%')}${card('소속 보유',(I.aff/I.tot*100).toFixed(1)+'%')}

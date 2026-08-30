@@ -14,7 +14,7 @@ body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSyst
 /* 작업가이드 5장: 1600x900, 좌우 82px. 원본 세로 1503px 문서 */
 .wrap{width:1600px;height:900px;padding:38px 82px 16px;display:flex;flex-direction:column}
 .foot{margin-top:auto}
-.body2{display:grid;grid-template-columns:1fr 560px;gap:20px;align-items:stretch;
+.body2{display:grid;grid-template-columns:1fr 373px;gap:20px;align-items:stretch;
  flex:1;min-height:0;margin-top:14px}
 /* 다이어그램은 가로가 정해지면 높이가 따라온다. 남는 세로를 위아래로 나눈다. */
 .body2 > div:first-child{display:flex;flex-direction:column;justify-content:center;min-width:0}
@@ -94,13 +94,6 @@ tr:hover td{background:rgba(129,140,248,.06)}
  <div class="panel" id="pnl"></div>
 </div>
 
- <div class="foot">
-  <b>층별 정의.</b> 연구단은 BK21 교육연구단 단위(학과와 1:1이 아닌 융합전공 포함).
-  참여자는 참여교수·신진연구인력·대학원생의 합.
-  논문은 참여자에게 귀속된 실적으로, 공저 논문은 소속 연구단마다 각각 집계되어 계열 합이 전체와 다르다.<br>
-  <b>수치 출처.</b> 참여자·연구단 명부는 BK21 제출 원장, 논문은 canonical <b>paper</b> · <b>paper_person</b>.
-  집계 시점 2026-08-25.
- </div>
 </div>
 
 <script>
