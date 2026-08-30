@@ -21,6 +21,7 @@ function load() {
   if (!db.secret) { db.secret = crypto.randomBytes(32).toString('hex'); save(); }
   if (!db.users) db.users = {};
   if (!db.allow) db.allow = [];
+  if (!db.admins || !db.admins.length) db.admins = [ADMIN];   // 최초 관리자
   return db;
 }
 function save() {
@@ -28,6 +29,7 @@ function save() {
 }
 
 const norm = (e) => String(e || '').trim().toLowerCase();
+const isAdmin = (e) => load().admins.indexOf(norm(e)) >= 0;
 const hash = (pw, salt) => crypto.scryptSync(String(pw), salt, 32).toString('hex');
 
 function verify(pw, u) {
@@ -40,7 +42,7 @@ function setPw(email, pw, mustChange) {
   const salt = crypto.randomBytes(16).toString('hex');
   d.users[e] = Object.assign({}, d.users[e], {
     salt, hash: hash(pw, salt), mustChange: !!mustChange,
-    admin: e === ADMIN, updatedAt: new Date().toISOString(),
+    admin: isAdmin(e), updatedAt: new Date().toISOString(),
     createdAt: (d.users[e] && d.users[e].createdAt) || new Date().toISOString(),
   });
   save();
@@ -93,6 +95,7 @@ function login(email, pw) {
     return { ok: false, msg: '이메일 또는 비밀번호가 맞지 않습니다.' };
   }
   const now = new Date().toISOString();
+  u.admin = isAdmin(e);                       // 관리자 지정은 로그인 때 반영된다
   u.loginCount = (u.loginCount || 0) + 1;
   u.firstLoginAt = u.firstLoginAt || now;
   u.lastLoginAt = now;
@@ -127,10 +130,24 @@ function setAllow(opt) {
   save();
   return d.allow.slice();
 }
+function adminList() { return load().admins.slice(); }
+function setAdmin(email, on) {
+  const d = load(), e = norm(email);
+  const set = new Set(d.admins);
+  if (on) { set.add(e); if (d.allow.length) setAllow({ add: [e] }); }
+  else {
+    if (set.size <= 1) return { ok: false, msg: '관리자를 모두 없앨 수는 없습니다.' };
+    set.delete(e);
+  }
+  d.admins = Array.from(set).sort();
+  if (d.users[e]) { d.users[e].admin = d.admins.indexOf(e) >= 0; }
+  save();
+  return { ok: true, admins: d.admins.slice() };
+}
 function listUsers() {
   const d = load();
   return Object.keys(d.users).sort().map(e => ({
-    email: e, admin: !!d.users[e].admin, mustChange: !!d.users[e].mustChange,
+    email: e, admin: isAdmin(e), mustChange: !!d.users[e].mustChange,
     createdAt: d.users[e].createdAt, updatedAt: d.users[e].updatedAt,
     loginCount: d.users[e].loginCount || 0,
     firstLoginAt: d.users[e].firstLoginAt || null,
@@ -144,4 +161,4 @@ function resetPw(email) {
 }
 
 module.exports = { load, session, login, changePw, cookieHeader, COOKIE, ADMIN, norm,
-                   allowList, setAllow, listUsers, resetPw };
+                   allowList, setAllow, listUsers, resetPw, adminList, setAdmin, isAdmin };

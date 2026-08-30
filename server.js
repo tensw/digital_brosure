@@ -96,7 +96,10 @@ function handleAuthApi(req, res, urlPath) {
     if (!s2 || !s2.a) return json(res, 403, { ok: false, msg: '관리자만 쓸 수 있습니다.' });
     return readBody(req, (b) => {
       if (!b) return json(res, 400, { ok: false, msg: '요청을 읽지 못했습니다.' });
-      if (b.op === 'list')   return json(res, 200, { ok: true, allow: auth.allowList(), users: auth.listUsers() });
+      if (b.op === 'list')   return json(res, 200, { ok: true, allow: auth.allowList(),
+                                                     users: auth.listUsers(), admins: auth.adminList() });
+      if (b.op === 'promote') return json(res, 200, auth.setAdmin(b.email, true));
+      if (b.op === 'demote')  return json(res, 200, auth.setAdmin(b.email, false));
       if (b.op === 'invite') return json(res, 200, { ok: true, allow: auth.setAllow({ add: b.emails || [] }) });
       if (b.op === 'revoke') return json(res, 200, { ok: true, allow: auth.setAllow({ remove: b.emails || [] }) });
       if (b.op === 'reset')  return json(res, 200, auth.resetPw(b.email));

@@ -104,14 +104,17 @@ async function draw(){
  const j=await api({op:'list'});
  if(!j.ok){ say(j.msg||'불러오지 못했습니다.',1); return; }
  const users={}; j.users.forEach(u=>users[u.email]=u);
+ const admins=j.admins||[];
  const rows=j.allow.map(e=>Object.assign({email:e,invited:true}, users[e]||{}));
  Object.keys(users).forEach(e=>{ if(j.allow.indexOf(e)<0) rows.push(Object.assign({invited:false},users[e])); });
+ admins.forEach(e=>{ if(!rows.some(r=>r.email===e)) rows.push({email:e,invited:false}); });
+ rows.forEach(r=>{ r.admin = admins.indexOf(r.email)>=0; });
  rows.sort((a,b)=>(b.loginCount||0)-(a.loginCount||0)||a.email.localeCompare(b.email));
 
  const joined=rows.filter(r=>r.loginCount>0).length;
  const total=rows.reduce((s,r)=>s+(r.loginCount||0),0);
  $('#sum').innerHTML=[['초대','INVITED',j.allow.length],['접속함','JOINED',joined],
-   ['미접속','PENDING',rows.filter(r=>!(r.loginCount>0)).length],['총 접속','TOTAL VISITS',total]]
+   ['미접속','PENDING',rows.filter(r=>!(r.loginCount>0)).length],['관리자','ADMINS',admins.length]]
   .map(([k,u,v])=>`<div class="sc"><u>${u} · ${k}</u><b>${v}</b></div>`).join('');
 
  $('#tb').innerHTML=rows.map(r=>{
@@ -121,6 +124,9 @@ async function draw(){
   else if(r.loginCount>0) tag='<span class="tag t-ok">사용 중</span>';
   const acts=[];
   if(r.loginCount>0) acts.push(`<button class="ghost" data-reset="${r.email}">비밀번호 초기화</button>`);
+  acts.push(r.admin
+    ? `<button class="ghost" data-demote="${r.email}">관리자 해제</button>`
+    : `<button class="ghost" data-promote="${r.email}">관리자 지정</button>`);
   if(r.invited && !r.admin) acts.push(`<button class="ghost" data-revoke="${r.email}">초대 취소</button>`);
   return `<tr><td class="em">${r.email}</td><td>${tag}</td>`
    +`<td class="n">${r.loginCount||0}<span class="dim" style="font-size:11px">회</span></td>`
@@ -148,6 +154,13 @@ document.addEventListener('click', async(e)=>{
  if(rv){ if(!confirm(rv.dataset.revoke+' 의 초대를 취소합니다.')) return;
   const j=await api({op:'revoke',emails:[rv.dataset.revoke]});
   say(j.ok?'초대를 취소했습니다.':(j.msg||'실패'), !j.ok); draw(); }
+ const pm=e.target.closest('[data-promote]'), dm=e.target.closest('[data-demote]');
+ if(pm){ if(!confirm(pm.dataset.promote+' 을(를) 관리자로 지정합니다.')) return;
+  const j=await api({op:'promote',email:pm.dataset.promote});
+  say(j.ok?'관리자로 지정했습니다.':(j.msg||'실패'), !j.ok); draw(); }
+ if(dm){ if(!confirm(dm.dataset.demote+' 의 관리자 권한을 해제합니다.')) return;
+  const j=await api({op:'demote',email:dm.dataset.demote});
+  say(j.ok?'관리자에서 해제했습니다.':(j.msg||'실패'), !j.ok); draw(); }
 });
 $('#out').addEventListener('click', async(e)=>{ e.preventDefault();
  await fetch('/api/auth/logout',{method:'POST'}); location.href='/2026/'; });
