@@ -14,7 +14,9 @@ body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSyst
 html,body{overflow:hidden}
 .slide{position:relative;width:100vw;height:100vh;overflow:hidden}
 #stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
-.emb-bg0, .emb-bg0 body, .emb-bg0 .slide{background:transparent !important}
+.emb-bg0, .emb-bg0 body, .emb-bg0 .slide, .emb-bg0 .root-8p4q6{background:transparent !important}
+/* 덱 안에서는 배경을 wave 레이어에 맡긴다 — 28·30 과 한 배경으로 이어지게 */
+.emb-bg0 .root-8p4q6::after{opacity:.5}
 .root-8p4q6::after{content:"";position:absolute;right:-6%;bottom:-14%;width:44%;height:46%;
  pointer-events:none;border-radius:50%;
  background:radial-gradient(circle at 50% 50%,rgba(226,214,255,.28) 0%,rgba(150,120,235,.13) 34%,
