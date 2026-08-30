@@ -63,6 +63,15 @@ canvas.fx-4k9m2{position:absolute;inset:0;width:100%;height:100%;z-index:1;point
  border:1.4px solid rgba(175,190,255,.5);
  box-shadow:0 14px 36px -12px rgba(70,80,220,.9),inset 0 1px 0 rgba(255,255,255,.4),
    0 0 44px rgba(120,140,255,.28)}
+.capi-4k9m2{position:absolute;left:50%;top:100%;transform:translate(-50%,11px);
+ padding:5px 10px;border-radius:9px;white-space:nowrap;text-decoration:none;text-align:center;
+ font:800 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;color:#eaf2ff;
+ background:linear-gradient(150deg,rgba(38,54,110,.95),rgba(20,30,68,.95));
+ border:1px solid rgba(140,180,250,.5);
+ box-shadow:0 10px 24px -10px rgba(0,0,0,.95),0 0 22px rgba(60,150,240,.26)}
+.capi-4k9m2 i{display:block;margin-top:4px;font-style:normal;font-size:7.6px;font-weight:600;
+ letter-spacing:.06em;color:#8fb3dc}
+
 .chip-4k9m2{position:absolute;z-index:6;border-radius:9px;padding:5px 10px;white-space:nowrap;
  background:rgba(10,16,36,.72);border:1px solid rgba(150,170,240,.34);
  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 8px 20px -10px rgba(0,0,0,.9);
@@ -81,82 +90,53 @@ canvas.fx-4k9m2{position:absolute;inset:0;width:100%;height:100%;z-index:1;point
 .api-4k9m2 s{display:block;text-decoration:none;font-size:8.5px;font-weight:600;letter-spacing:.05em;
  color:#7fa6d6;margin-top:4px}
 
-/* ── ④ 화면 — 실제 화면 3개 ── */
-.win-4k9m2{position:absolute;z-index:6;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;
- background:linear-gradient(180deg,rgba(16,23,52,.96),rgba(10,15,38,.96));
- border:1px solid rgba(140,170,240,.30);
- box-shadow:0 28px 64px -26px rgba(0,0,0,.96),inset 0 1px 0 rgba(255,255,255,.10)}
-.wtop-4k9m2{flex:none;height:30px;display:flex;align-items:center;gap:6px;padding:0 13px;
- background:rgba(255,255,255,.055);border-bottom:1px solid rgba(140,170,240,.20)}
-.wtop-4k9m2 i{width:6px;height:6px;border-radius:50%;background:rgba(160,190,255,.38)}
-.wtop-4k9m2 span{margin-left:6px;font:700 9.6px/1 ui-monospace,Menlo,monospace;
- letter-spacing:.06em;color:#a4b8e6}
-.wbody-4k9m2{flex:1;min-height:0;padding:14px 14px 13px;display:flex;flex-direction:column;gap:9px}
+/* ── ④ 화면 — 실제 제품 화면 3개 ── */
+.win-4k9m2{position:absolute;z-index:6;border-radius:22px;padding:7px;display:flex;
+ background:#0e1730;border:1px solid rgba(140,170,240,.34);
+ box-shadow:0 18px 34px -22px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.10)}
+.wscr-4k9m2{flex:1;min-width:0;border-radius:15px;overflow:hidden;background:#eef2f7;
+ display:flex;flex-direction:column}
+.whd-4k9m2{flex:none;padding:9px 12px;display:flex;align-items:center;gap:6px;
+ background:linear-gradient(180deg,#3f92e6,#2d7bd2);
+ font-size:11.5px;font-weight:800;color:#fff;letter-spacing:-.35px}
+.wbd-4k9m2{flex:1;min-height:0;padding:9px;display:flex;flex-direction:column;gap:6px}
+.card-4k9m2{background:#fff;border:1px solid #e3e8f0;border-radius:9px;padding:7px 9px}
+.card-4k9m2 u{display:block;text-decoration:none;font-size:8.8px;font-weight:600;
+ color:#8b93a7;letter-spacing:-.2px}
+.card-4k9m2 b{display:block;margin-top:3px;font-size:11.4px;font-weight:800;
+ color:#1f2937;letter-spacing:-.42px;line-height:1.3}
+.card-4k9m2 b s{text-decoration:none;font-weight:600;color:#8b93a7;font-size:9.6px;margin-left:3px}
+.pbar-4k9m2{margin-top:6px;height:6px;border-radius:3px;background:#e7edf6;overflow:hidden}
+.pbar-4k9m2 i{display:block;height:100%;border-radius:3px;background:#3f92e6}
+.chips-4k9m2{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.chips-4k9m2 span{padding:3px 7px;border-radius:999px;border:1px solid #cfe0f5;background:#f5faff;
+ font-size:8.8px;font-weight:700;color:#2d7bd2}
+.warn-4k9m2{background:#fef3f3;border-color:#f7d3d3}
+.warn-4k9m2 b{color:#dc2626}
 
 /* 대화 */
-.cq-4k9m2{align-self:flex-end;max-width:88%;padding:8px 11px;border-radius:12px 12px 4px 12px;
- background:rgba(120,140,255,.22);border:1px solid rgba(150,175,255,.30);
- font-size:11.5px;font-weight:600;line-height:1.45;color:#e6ecff;letter-spacing:-.3px}
-.ca-4k9m2{max-width:96%;padding:10px 12px;border-radius:12px 12px 12px 4px;
- background:rgba(56,214,248,.10);border:1px solid rgba(120,200,240,.26);
- font-size:11.5px;font-weight:500;line-height:1.55;color:#d7e5f6;letter-spacing:-.3px}
-.ca-4k9m2 b{color:#8fe6ff;font-weight:800}
-.csrc-4k9m2{font:700 8.6px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;color:#7f95c4}
-.cbtn-4k9m2{display:flex;gap:6px}
-.cbtn-4k9m2 span{padding:6px 10px;border-radius:8px;font-size:10px;font-weight:700;color:#cfe0ff;
- background:rgba(150,170,255,.14);border:1px solid rgba(160,185,255,.30);letter-spacing:-.2px}
-.cin-4k9m2{margin-top:auto;padding:9px 12px;border-radius:999px;
- background:rgba(8,13,32,.9);border:1px solid rgba(140,170,240,.26);
- font-size:10.5px;font-weight:600;color:#6f83b0}
+.q2-4k9m2{align-self:flex-end;max-width:90%;padding:7px 10px;border-radius:12px 12px 4px 12px;
+ background:#2d7bd2;color:#fff;font-size:10.4px;font-weight:600;line-height:1.45;letter-spacing:-.3px}
+.a2-4k9m2{max-width:96%;padding:8px 10px;border-radius:12px 12px 12px 4px;background:#fff;
+ border:1px solid #e3e8f0;font-size:10.4px;font-weight:500;line-height:1.52;color:#334155;letter-spacing:-.3px}
+.a2-4k9m2 b{color:#1d4ed8;font-weight:800}
+.src2-4k9m2{font-size:8.4px;font-weight:700;color:#8b93a7;letter-spacing:-.1px}
+.btn2-4k9m2{display:flex;gap:5px}
+.btn2-4k9m2 span{padding:5px 9px;border-radius:7px;border:1px solid #cfe0f5;background:#f5faff;
+ font-size:9.4px;font-weight:700;color:#2d7bd2}
+.in2-4k9m2{margin-top:auto;padding:8px 11px;border-radius:999px;background:#fff;border:1px solid #e3e8f0;
+ font-size:9.4px;font-weight:600;color:#a0a8b8}
 
-/* 신청 폼 */
-.frow-4k9m2{padding-bottom:7px;border-bottom:1px solid rgba(140,170,240,.14)}
-.frow-4k9m2 u{display:block;text-decoration:none;font:700 8.4px/1 ui-monospace,Menlo,monospace;
- letter-spacing:.12em;color:#7f95c4}
-.frow-4k9m2 b{display:block;margin-top:5px;font-size:11.8px;font-weight:700;
- letter-spacing:-.35px;color:#e3ebff}
-.fbadge-4k9m2{margin-top:2px;align-self:flex-start;padding:5px 9px;border-radius:7px;
- font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.04em;color:#8fe6ff;
- background:rgba(56,214,248,.12);border:1px solid rgba(120,200,240,.30)}
-.fbtn-4k9m2{margin-top:auto;padding:10px;border-radius:10px;text-align:center;
- font-size:11.5px;font-weight:800;letter-spacing:-.3px;color:#08122c;
- background:linear-gradient(140deg,#7fd8f5,#9fb4ff);
- box-shadow:0 12px 26px -12px rgba(90,170,255,.9)}
-
-/* 총장 KPI */
-.k3-4k9m2{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.kc-4k9m2{padding:8px 9px;border-radius:10px;
- background:rgba(255,255,255,.045);border:1px solid rgba(140,170,240,.20)}
-.kc-4k9m2 u{display:block;text-decoration:none;font:700 7.8px/1.3 ui-monospace,Menlo,monospace;
- letter-spacing:.04em;color:#7f95c4}
-.kc-4k9m2 b{display:block;margin-top:5px;font-size:17px;font-weight:800;letter-spacing:-.7px;color:#eaf1ff}
-.kc-4k9m2 b i{font-style:normal;font-size:10px;font-weight:700;margin-left:1px;color:#8ea6d8}
-.kch-4k9m2{flex:1;min-height:0;display:flex;flex-direction:column;gap:7px;
- padding:9px 10px 8px;border-radius:10px;
- background:rgba(255,255,255,.035);border:1px solid rgba(140,170,240,.18)}
-.kch-4k9m2 u{text-decoration:none;font:700 7.8px/1 ui-monospace,Menlo,monospace;
- letter-spacing:.04em;color:#7f95c4}
-.bars-4k9m2{flex:1;min-height:0;display:flex;flex-direction:column;gap:5px}
-.barea-4k9m2{position:relative;flex:1;min-height:0;display:flex;align-items:flex-end;gap:7px}
-.barea-4k9m2 .bw-4k9m2{flex:1;height:100%;display:flex;align-items:flex-end}
-.barea-4k9m2 .bv-4k9m2{width:100%;border-radius:4px 4px 2px 2px;
- background:linear-gradient(180deg,rgba(120,210,255,.85),rgba(90,120,255,.32))}
-.avg-4k9m2{position:absolute;left:0;right:0;height:0;z-index:3;
- border-top:1.4px dashed rgba(255,168,84,.9)}
-.avg-4k9m2 s{position:absolute;left:0;top:-11px;text-decoration:none;
- font:700 7.4px/1 ui-monospace,Menlo,monospace;color:#ffb066;letter-spacing:.02em}
-.blab-4k9m2{display:flex;gap:7px}
-.blab-4k9m2 em{flex:1;text-align:center;font-style:normal;
- font:700 7.4px/1 ui-monospace,Menlo,monospace;color:#8296c2}
-.klist-4k9m2{display:flex;flex-direction:column;gap:5px}
-.kl-4k9m2{display:flex;align-items:center;gap:7px;padding:6px 9px;border-radius:8px;
- font-size:10.5px;font-weight:700;letter-spacing:-.3px;color:#dbe5ff;
- background:rgba(255,255,255,.04);border:1px solid rgba(140,170,240,.16)}
-.kl-4k9m2:before{content:"";width:7px;height:7px;border-radius:50%;flex:none}
-.kl-4k9m2.ok-4k9m2:before{background:#4fd39a;box-shadow:0 0 10px rgba(79,211,154,.8)}
-.kl-4k9m2.wr-4k9m2:before{background:#ffa854;box-shadow:0 0 10px rgba(255,168,84,.8)}
-.kl-4k9m2 s{margin-left:auto;text-decoration:none;font:600 9px/1 ui-monospace,Menlo,monospace;
- color:#8296c2;letter-spacing:.02em}
+/* 총장 KPI — 차트 6종 */
+.kgrid-4k9m2{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;
+ grid-template-rows:repeat(3,1fr);gap:6px}
+.kcard-4k9m2{background:#fff;border:1px solid #e3e8f0;border-radius:9px;padding:6px 7px;
+ display:flex;flex-direction:column;min-height:0;min-width:0}
+.kcard-4k9m2 u{display:block;text-decoration:none;font-size:7.8px;font-weight:800;
+ color:#334155;letter-spacing:-.2px;line-height:1.25}
+.kcard-4k9m2 u i{font-style:normal;margin-left:3px;padding:1px 3px;border-radius:3px;
+ background:#fdecec;color:#dc2626;font-size:6.6px;font-weight:800;vertical-align:1px}
+.kcard-4k9m2 svg{flex:1;min-height:0;width:100%;margin-top:3px}
 
 /* ── ④ 화면 ── */
 .scr-4k9m2{z-index:6;overflow:hidden}
@@ -247,70 +227,64 @@ body.mob-4k9m2 .foot-4k9m2 .meta-4k9m2{text-align:left}
    stroke-linecap="round" stroke-linejoin="round">
    <circle cx="12" cy="5.6" r="2.5"/><circle cx="5.6" cy="17" r="2.5"/><circle cx="18.4" cy="17" r="2.5"/>
    <path d="M10.6 7.7L7 14.8M13.4 7.7l3.6 7.1M8.1 17h7.8"/></svg>
+  <s class="capi-4k9m2">API<i>/api/db · RPC</i></s>
  </div>
 
- <div class="gates-4k9m2" id="gates-4k9m2">
-  <div class="api-4k9m2" id="gate-4k9m2">API<s>/api/db · RPC</s></div>
- </div>
  <div class="screens-4k9m2" id="screens-4k9m2">
 
  <!-- ① 대화 — 장학금 문의 -->
- <div class="win-4k9m2" id="scr1-4k9m2">
-  <div class="wtop-4k9m2"><i></i><i></i><i></i><span>평택대학교 · 대화</span></div>
-  <div class="wbody-4k9m2">
-   <div class="cq-4k9m2">국가장학금 2차 신청 언제까지예요?</div>
-   <div class="ca-4k9m2"><b>8월 21일 18시</b>까지 신청할 수 있습니다.
-    학자금 지원구간 산정에 약 8주가 걸려, 가구원 동의와 서류를 먼저 제출해야 기한 안에 처리됩니다.</div>
-   <div class="csrc-4k9m2">근거 · 2026-2학기 국가장학금 안내</div>
-   <div class="cbtn-4k9m2"><span>신청 바로가기</span><span>서류 확인</span></div>
-   <div class="cin-4k9m2">무엇이든 물어보세요</div>
+ <div class="win-4k9m2" id="scr1-4k9m2"><div class="wscr-4k9m2">
+  <div class="whd-4k9m2">💬 장학금 문의</div>
+  <div class="wbd-4k9m2">
+   <div class="q2-4k9m2">국가장학금 2차 신청 언제까지예요?</div>
+   <div class="a2-4k9m2"><b>8월 21일 18시</b>까지 신청할 수 있습니다. 학자금 지원구간 산정에 약 8주가 걸려,
+    가구원 동의와 서류를 먼저 제출해야 기한 안에 처리됩니다.</div>
+   <div class="src2-4k9m2">근거 · 2026-2학기 국가장학금 안내</div>
+   <div class="btn2-4k9m2"><span>신청 바로가기</span><span>서류 확인</span></div>
+   <div class="a2-4k9m2">지원구간 산정 결과는 <b>마이페이지 · 장학</b>에서 확인합니다.</div>
+   <div class="in2-4k9m2">무엇이든 물어보세요</div>
   </div>
+ </div></div>
+
+ <!-- ② 학생 — 대학생활 전주기 -->
+ <div class="win-4k9m2" id="scr2-4k9m2"><div class="wscr-4k9m2">
+  <div class="whd-4k9m2">🎓 나의 대학생활 홈</div>
+  <div class="wbd-4k9m2">
+   <div class="card-4k9m2"><u>학적 · 이수학점</u><b>재학 · 3학년 2학기<s>이수 98 · 졸업까지 32학점</s></b>
+    <div class="pbar-4k9m2"><i style="width:75%"></i></div></div>
+   <div class="card-4k9m2"><u>GPA · 이번 학기 일정</u><b>GPA 3.42 → 목표 3.70<s>과제 2 · 시험 D-5 · 결석 1</s></b></div>
+   <div class="card-4k9m2"><u>누적 GPA · 강점/취약</u><b>누적 3.42<s>강점 전공 3.8 · 취약 교양 2.9</s></b>
+    <div class="pbar-4k9m2"><i style="width:82%"></i></div></div>
+   <div class="card-4k9m2"><u>역량 목표</u>
+    <div class="chips-4k9m2"><span>TOEIC 800</span><span>자격증 1</span><span>독서 12</span><span>봉사 20h</span></div></div>
+   <div class="card-4k9m2"><u>체크인 · 달성률</u><b>이번주 4/5 · 달성률 68%</b>
+    <div class="pbar-4k9m2"><i style="width:68%"></i></div></div>
+   <div class="card-4k9m2 warn-4k9m2"><u>이번 학기 위험 · 추천</u>
+    <b>⚠ 출결 위험(결석 4) · 추천: 지도교수 상담 예약</b></div>
+  </div>
+ </div></div>
+
+ <!-- ③ 경영 — KPI -->
+ <div class="win-4k9m2" id="scr3-4k9m2"><div class="wscr-4k9m2">
+  <div class="whd-4k9m2">📊 경영자 KPI</div>
+  <div class="wbd-4k9m2"><div class="kgrid-4k9m2">
+   <div class="kcard-4k9m2"><u>S4 · 위험 수준별 학생 규모<i>더미</i></u><svg viewBox="0 0 160 78" preserveAspectRatio="xMidYMid meet"><line x1="16" y1="8" x2="16" y2="58" stroke="#d7dee9"/><line x1="16" y1="58" x2="156" y2="58" stroke="#d7dee9"/><rect x="22" y="48.3" width="17" height="9.7" fill="#dc2626"/><rect x="22" y="31.6" width="17" height="16.7" fill="#f59e0b"/><rect x="22" y="9.4" width="17" height="22.1" fill="#fcd34d"/><text x="30.5" y="66" text-anchor="middle" font-size="5.4" fill="#64748b">2021</text><rect x="49" y="49.0" width="17" height="9.0" fill="#dc2626"/><rect x="49" y="33.1" width="17" height="15.9" fill="#f59e0b"/><rect x="49" y="12.1" width="17" height="21.1" fill="#fcd34d"/><text x="57.5" y="66" text-anchor="middle" font-size="5.4" fill="#64748b">2022</text><rect x="76" y="49.8" width="17" height="8.2" fill="#dc2626"/><rect x="76" y="35.0" width="17" height="14.9" fill="#f59e0b"/><rect x="76" y="15.3" width="17" height="19.6" fill="#fcd34d"/><text x="84.5" y="66" text-anchor="middle" font-size="5.4" fill="#64748b">2023</text><rect x="103" y="50.9" width="17" height="7.1" fill="#dc2626"/><rect x="103" y="37.3" width="17" height="13.6" fill="#f59e0b"/><rect x="103" y="19.3" width="17" height="18.0" fill="#fcd34d"/><text x="111.5" y="66" text-anchor="middle" font-size="5.4" fill="#64748b">2024</text><rect x="130" y="51.7" width="17" height="6.3" fill="#dc2626"/><rect x="130" y="39.4" width="17" height="12.3" fill="#f59e0b"/><rect x="130" y="23.0" width="17" height="16.4" fill="#fcd34d"/><text x="138.5" y="66" text-anchor="middle" font-size="5.4" fill="#64748b">2025</text><rect x="18" y="70" width="5" height="5" fill="#dc2626"/><text x="26" y="74.4" font-size="5.2" fill="#64748b">고위험</text><rect x="58" y="70" width="5" height="5" fill="#f59e0b"/><text x="66" y="74.4" font-size="5.2" fill="#64748b">중위험</text><rect x="98" y="70" width="5" height="5" fill="#fcd34d"/><text x="106" y="74.4" font-size="5.2" fill="#64748b">관찰</text></svg></div>
+   <div class="kcard-4k9m2"><u>S5 · 학사경고 코호트 유지·회복<i>더미</i></u><svg viewBox="0 0 160 78" preserveAspectRatio="xMidYMid meet"><line x1="16" y1="8" x2="16" y2="58" stroke="#d7dee9"/><line x1="16" y1="58" x2="156" y2="58" stroke="#d7dee9"/><rect x="20.0" y="12.7" width="5.6" height="45.3" fill="#dc2626"/><rect x="26.5" y="23.5" width="5.6" height="34.5" fill="#2563eb"/><rect x="33.0" y="39.3" width="5.6" height="18.7" fill="#059669"/><text x="29" y="66" text-anchor="middle" font-size="5.4" fill="#64748b">2021</text><rect x="47.0" y="16.2" width="5.6" height="41.8" fill="#dc2626"/><rect x="53.5" y="25.3" width="5.6" height="32.7" fill="#2563eb"/><rect x="60.0" y="39.7" width="5.6" height="18.3" fill="#059669"/><text x="56" y="66" text-anchor="middle" font-size="5.4" fill="#64748b">2022</text><rect x="74.0" y="19.8" width="5.6" height="38.2" fill="#dc2626"/><rect x="80.5" y="27.2" width="5.6" height="30.8" fill="#2563eb"/><rect x="87.0" y="39.3" width="5.6" height="18.7" fill="#059669"/><text x="83" y="66" text-anchor="middle" font-size="5.4" fill="#64748b">2023</text><rect x="101.0" y="24.7" width="5.6" height="33.3" fill="#dc2626"/><rect x="107.5" y="30.3" width="5.6" height="27.7" fill="#2563eb"/><rect x="114.0" y="40.0" width="5.6" height="18.0" fill="#059669"/><text x="110" y="66" text-anchor="middle" font-size="5.4" fill="#64748b">2024</text><rect x="128.0" y="28.7" width="5.6" height="29.3" fill="#dc2626"/><rect x="134.5" y="32.8" width="5.6" height="25.2" fill="#2563eb"/><rect x="141.0" y="40.5" width="5.6" height="17.5" fill="#059669"/><text x="137" y="66" text-anchor="middle" font-size="5.4" fill="#64748b">2025</text><rect x="18" y="70" width="5" height="5" fill="#dc2626"/><text x="26" y="74.4" font-size="5.2" fill="#64748b">경고</text><rect x="52" y="70" width="5" height="5" fill="#2563eb"/><text x="60" y="74.4" font-size="5.2" fill="#64748b">다음해 등록</text><rect x="110" y="70" width="5" height="5" fill="#059669"/><text x="118" y="74.4" font-size="5.2" fill="#64748b">해제</text></svg></div>
+   <div class="kcard-4k9m2"><u>S7 · 학사경고율 ↔ 등록유지율<i>더미</i></u><svg viewBox="0 0 160 78" preserveAspectRatio="xMidYMid meet"><line x1="18" y1="10" x2="18" y2="56" stroke="#d7dee9"/><line x1="142" y1="10" x2="142" y2="56" stroke="#d7dee9"/><line x1="18" y1="56" x2="142" y2="56" stroke="#d7dee9"/><polyline points="18,11.1 49,17.1 80,23.0 111,31.3 142,38.3" fill="none" stroke="#dc2626" stroke-width="1.6"/><polyline points="18,39.3 49,34.7 80,28.4 111,22.1 142,15.8" fill="none" stroke="#059669" stroke-width="1.6" stroke-dasharray="3 2"/><circle cx="18" cy="11.1" r="1.7" fill="#dc2626"/><circle cx="49" cy="17.1" r="1.7" fill="#dc2626"/><circle cx="80" cy="23.0" r="1.7" fill="#dc2626"/><circle cx="111" cy="31.3" r="1.7" fill="#dc2626"/><circle cx="142" cy="38.3" r="1.7" fill="#dc2626"/><circle cx="18" cy="39.3" r="1.7" fill="#059669"/><circle cx="49" cy="34.7" r="1.7" fill="#059669"/><circle cx="80" cy="28.4" r="1.7" fill="#059669"/><circle cx="111" cy="22.1" r="1.7" fill="#059669"/><circle cx="142" cy="15.8" r="1.7" fill="#059669"/><text x="18" y="64" text-anchor="middle" font-size="5.2" fill="#64748b">2021</text><text x="49" y="64" text-anchor="middle" font-size="5.2" fill="#64748b">2022</text><text x="80" y="64" text-anchor="middle" font-size="5.2" fill="#64748b">2023</text><text x="111" y="64" text-anchor="middle" font-size="5.2" fill="#64748b">2024</text><text x="142" y="64" text-anchor="middle" font-size="5.2" fill="#64748b">2025</text><text x="20" y="72" font-size="5.4" font-weight="800" fill="#dc2626">학사경고율(좌)</text><text x="140" y="72" text-anchor="end" font-size="5.4" font-weight="800" fill="#059669">등록유지율(우)</text></svg></div>
+   <div class="kcard-4k9m2"><u>S2 · 학과별 학생활동 건강도<i>더미</i></u><svg viewBox="0 0 160 78" preserveAspectRatio="xMidYMid meet"><text x="35.0" y="9" text-anchor="middle" font-size="5" font-weight="700" fill="#64748b">출석</text><text x="59.5" y="9" text-anchor="middle" font-size="5" font-weight="700" fill="#64748b">LMS</text><text x="84.0" y="9" text-anchor="middle" font-size="5" font-weight="700" fill="#64748b">과제</text><text x="108.5" y="9" text-anchor="middle" font-size="5" font-weight="700" fill="#64748b">100-경고</text><text x="133.0" y="9" text-anchor="middle" font-size="5" font-weight="700" fill="#64748b">유지</text><text x="21" y="21" text-anchor="end" font-size="5.4" font-weight="700" fill="#334155">조직A</text><rect x="23.0" y="12" width="23" height="13" rx="2" fill="rgb(71,164,215)"/><text x="34.5" y="20.6" text-anchor="middle" font-size="5" font-weight="800" fill="#fff">94</text><rect x="47.5" y="12" width="23" height="13" rx="2" fill="rgb(128,190,227)"/><text x="59.0" y="20.6" text-anchor="middle" font-size="5" font-weight="800" fill="#334155">91.2</text><rect x="72.0" y="12" width="23" height="13" rx="2" fill="rgb(116,185,224)"/><text x="83.5" y="20.6" text-anchor="middle" font-size="5" font-weight="800" fill="#334155">91.8</text><rect x="96.5" y="12" width="23" height="13" rx="2" fill="rgb(29,144,205)"/><text x="108.0" y="20.6" text-anchor="middle" font-size="5" font-weight="800" fill="#fff">96.1</text><rect x="121.0" y="12" width="23" height="13" rx="2" fill="rgb(75,166,215)"/><text x="132.5" y="20.6" text-anchor="middle" font-size="5" font-weight="800" fill="#fff">93.8</text><text x="21" y="36" text-anchor="end" font-size="5.4" font-weight="700" fill="#334155">조직B</text><rect x="23.0" y="27" width="23" height="13" rx="2" fill="rgb(108,181,223)"/><text x="34.5" y="35.6" text-anchor="middle" font-size="5" font-weight="800" fill="#fff">92.2</text><rect x="47.5" y="27" width="23" height="13" rx="2" fill="rgb(191,219,241)"/><text x="59.0" y="35.6" text-anchor="middle" font-size="5" font-weight="800" fill="#334155">88.1</text><rect x="72.0" y="27" width="23" height="13" rx="2" fill="rgb(177,213,238)"/><text x="83.5" y="35.6" text-anchor="middle" font-size="5" font-weight="800" fill="#334155">88.8</text><rect x="96.5" y="27" width="23" height="13" rx="2" fill="rgb(55,156,211)"/><text x="108.0" y="35.6" text-anchor="middle" font-size="5" font-weight="800" fill="#fff">94.8</text><rect x="121.0" y="27" width="23" height="13" rx="2" fill="rgb(122,187,226)"/><text x="132.5" y="35.6" text-anchor="middle" font-size="5" font-weight="800" fill="#334155">91.5</text><text x="21" y="51" text-anchor="end" font-size="5.4" font-weight="700" fill="#334155">조직C</text><rect x="23.0" y="42" width="23" height="13" rx="2" fill="rgb(88,171,218)"/><text x="34.5" y="50.6" text-anchor="middle" font-size="5" font-weight="800" fill="#fff">93.2</text><rect x="47.5" y="42" width="23" height="13" rx="2" fill="rgb(153,201,232)"/><text x="59.0" y="50.6" text-anchor="middle" font-size="5" font-weight="800" fill="#334155">90</text><rect x="72.0" y="42" width="23" height="13" rx="2" fill="rgb(146,199,231)"/><text x="83.5" y="50.6" text-anchor="middle" font-size="5" font-weight="800" fill="#334155">90.3</text><rect x="96.5" y="42" width="23" height="13" rx="2" fill="rgb(41,150,208)"/><text x="108.0" y="50.6" text-anchor="middle" font-size="5" font-weight="800" fill="#fff">95.5</text><rect x="121.0" y="42" width="23" height="13" rx="2" fill="rgb(96,175,220)"/><text x="132.5" y="50.6" text-anchor="middle" font-size="5" font-weight="800" fill="#fff">92.8</text><text x="21" y="66" text-anchor="end" font-size="5.4" font-weight="700" fill="#334155">조직D</text><rect x="23.0" y="57" width="23" height="13" rx="2" fill="rgb(67,162,214)"/><text x="34.5" y="65.6" text-anchor="middle" font-size="5" font-weight="800" fill="#fff">94.2</text><rect x="47.5" y="57" width="23" height="13" rx="2" fill="rgb(112,183,223)"/><text x="59.0" y="65.6" text-anchor="middle" font-size="5" font-weight="800" fill="#fff">92</text><rect x="72.0" y="57" width="23" height="13" rx="2" fill="rgb(112,183,223)"/><text x="83.5" y="65.6" text-anchor="middle" font-size="5" font-weight="800" fill="#fff">92</text><rect x="96.5" y="57" width="23" height="13" rx="2" fill="rgb(31,145,206)"/><text x="108.0" y="65.6" text-anchor="middle" font-size="5" font-weight="800" fill="#fff">96</text><rect x="121.0" y="57" width="23" height="13" rx="2" fill="rgb(71,164,215)"/><text x="132.5" y="65.6" text-anchor="middle" font-size="5" font-weight="800" fill="#fff">94</text><text x="23" y="76" font-size="5" fill="#94a3b8">진할수록 높음</text></svg></div>
+   <div class="kcard-4k9m2"><u>S3 · 학생활동 평균 + 레인지<i>더미</i></u><svg viewBox="0 0 160 72" preserveAspectRatio="xMidYMid meet"><line x1="18" y1="10" x2="18" y2="58" stroke="#d7dee9"/><line x1="18" y1="58" x2="156" y2="58" stroke="#d7dee9"/><line x1="36" y1="13.4" x2="36" y2="37.4" stroke="#0ea5e9" stroke-width="5" stroke-linecap="round" opacity="0.22"/><line x1="32" y1="13.4" x2="40" y2="13.4" stroke="#0ea5e9" stroke-width="1"/><line x1="32" y1="37.4" x2="40" y2="37.4" stroke="#0ea5e9" stroke-width="1"/><circle cx="36" cy="21.3" r="2.6" fill="#0ea5e9"/><text x="36" y="17.3" text-anchor="middle" font-size="5" font-weight="700" fill="#334155">93.4</text><text x="36" y="66" text-anchor="middle" font-size="5.4" fill="#64748b">조직A</text><line x1="68" y1="16.9" x2="68" y2="52.9" stroke="#0ea5e9" stroke-width="5" stroke-linecap="round" opacity="0.22"/><line x1="64" y1="16.9" x2="72" y2="16.9" stroke="#0ea5e9" stroke-width="1"/><line x1="64" y1="52.9" x2="72" y2="52.9" stroke="#0ea5e9" stroke-width="1"/><circle cx="68" cy="25.3" r="2.6" fill="#0ea5e9"/><text x="68" y="21.3" text-anchor="middle" font-size="5" font-weight="700" fill="#334155">91.1</text><text x="68" y="66" text-anchor="middle" font-size="5.4" fill="#64748b">조직B</text><line x1="100" y1="15.1" x2="100" y2="46.0" stroke="#0ea5e9" stroke-width="5" stroke-linecap="round" opacity="0.22"/><line x1="96" y1="15.1" x2="104" y2="15.1" stroke="#0ea5e9" stroke-width="1"/><line x1="96" y1="46.0" x2="104" y2="46.0" stroke="#0ea5e9" stroke-width="1"/><circle cx="100" cy="23.0" r="2.6" fill="#0ea5e9"/><text x="100" y="19.0" text-anchor="middle" font-size="5" font-weight="700" fill="#334155">92.4</text><text x="100" y="66" text-anchor="middle" font-size="5.4" fill="#64748b">조직C</text><line x1="132" y1="11.7" x2="132" y2="35.7" stroke="#0ea5e9" stroke-width="5" stroke-linecap="round" opacity="0.22"/><line x1="128" y1="11.7" x2="136" y2="11.7" stroke="#0ea5e9" stroke-width="1"/><line x1="128" y1="35.7" x2="136" y2="35.7" stroke="#0ea5e9" stroke-width="1"/><circle cx="132" cy="21.0" r="2.6" fill="#0ea5e9"/><text x="132" y="17.0" text-anchor="middle" font-size="5" font-weight="700" fill="#334155">93.6</text><text x="132" y="66" text-anchor="middle" font-size="5.4" fill="#64748b">조직D</text><text x="156" y="12" text-anchor="end" font-size="5" fill="#94a3b8">학생활동지수</text></svg></div>
+   <div class="kcard-4k9m2"><u>O3 · 전년 대비 종합점수 개선도<i>더미</i></u><svg viewBox="0 0 160 60" preserveAspectRatio="xMidYMid meet"><line x1="16" y1="40" x2="156" y2="40" stroke="#94a3b8"/><rect x="17" y="18.2" width="22" height="21.8" rx="1.5" fill="#059669"/><text x="28" y="16.2" text-anchor="middle" font-size="5.4" font-weight="800" fill="#059669">+2.9</text><text x="28" y="52" text-anchor="middle" font-size="5.4" fill="#64748b">조직A</text><rect x="50" y="16.0" width="22" height="24.0" rx="1.5" fill="#059669"/><text x="61" y="14.0" text-anchor="middle" font-size="5.4" font-weight="800" fill="#059669">+3.2</text><text x="61" y="52" text-anchor="middle" font-size="5.4" fill="#64748b">조직B</text><rect x="83" y="15.2" width="22" height="24.8" rx="1.5" fill="#059669"/><text x="94" y="13.2" text-anchor="middle" font-size="5.4" font-weight="800" fill="#059669">+3.3</text><text x="94" y="52" text-anchor="middle" font-size="5.4" fill="#64748b">조직C</text><rect x="116" y="18.2" width="22" height="21.8" rx="1.5" fill="#059669"/><text x="127" y="16.2" text-anchor="middle" font-size="5.4" font-weight="800" fill="#059669">+2.9</text><text x="127" y="52" text-anchor="middle" font-size="5.4" fill="#64748b">조직D</text></svg></div>
+  </div></div>
+ </div></div>
  </div>
 
- <!-- ② 신청 — 자료구입 -->
- <div class="win-4k9m2" id="scr2-4k9m2">
-  <div class="wtop-4k9m2"><i></i><i></i><i></i><span>자료구입 신청</span></div>
-  <div class="wbody-4k9m2">
-   <div class="frow-4k9m2"><u>서명</u><b>딥러닝 파이토치 교과서</b></div>
-   <div class="frow-4k9m2"><u>저자</u><b>서지영</b></div>
-   <div class="frow-4k9m2"><u>출판사</u><b>길벗 · 2022</b></div>
-   <div class="frow-4k9m2"><u>ISBN</u><b>979-11-6521-547-7</b></div>
-   <div class="frow-4k9m2"><u>신청 사유</u><b>전공 교재 · 대기 3명</b></div>
-   <div class="fbadge-4k9m2">교내 미소장 · 예산 잔액 확인됨</div>
-   <div class="fbtn-4k9m2">신청하기</div>
-  </div>
- </div>
-
- <!-- ③ 경영 — 총장 KPI -->
- <div class="win-4k9m2" id="scr3-4k9m2">
-  <div class="wtop-4k9m2"><i></i><i></i><i></i><span>평택대학교 · 총장 KPI</span></div>
-  <div class="wbody-4k9m2">
-   <div class="k3-4k9m2">
-    <div class="kc-4k9m2"><u>신입생 충원율</u><b>100.0<i>%</i></b></div>
-    <div class="kc-4k9m2"><u>재학생 충원율</u><b>98.2<i>%</i></b></div>
-    <div class="kc-4k9m2"><u>중도탈락률</u><b>3.4<i>%</i></b></div>
-   </div>
-   <div class="kch-4k9m2">
-    <u>단과대별 충원율 · 주황선 대학평균</u>
-    <div class="bars-4k9m2" id="bars-4k9m2"></div>
-   </div>
-   <div class="klist-4k9m2">
-    <div class="kl-4k9m2 ok-4k9m2">경영대학<s>등록 유지 안정</s></div>
-    <div class="kl-4k9m2 wr-4k9m2">예술대학<s>중도탈락 상승</s></div>
-    <div class="kl-4k9m2 ok-4k9m2">보건대학<s>취업률 상승</s></div>
-   </div>
-  </div>
- </div>
- </div>
-
-</div>
 <script>
 /* 다른 HTML 과 섞여도 안전하도록 클래스·ID 에 접미사 -4k9m2 를 붙였다.
    id 로 만들어지던 암묵 전역이 사라지므로 여기서 명시적으로 잡는다. */
 const $=id=>document.getElementById(id+'-4k9m2');
 const stage=$('stage'), fx=$('fx'), map=$('map'), core=$('core'),
       net=$('net'),
-      gate=$('gate'), scr1=$('scr1'), scr2=$('scr2'), scr3=$('scr3'), bars=$('bars');
+      scr1=$('scr1'), scr2=$('scr2'), scr3=$('scr3');
 const D={paper:140693, auth:5280301, skku:11930, jr:13872, res:34764,
          co:932329, kw:1196149, cm:642139, built:'2026-08-27'};
 const nf=n=>n.toLocaleString('ko-KR');
@@ -318,14 +292,13 @@ const nf=n=>n.toLocaleString('ko-KR');
 /* ── 레이아웃 앵커 (화면 비율) ────────────────────
    원본 이미지 구도: 좌 난류 → 중앙 맵 → API 2개 → 우 화면 2장 */
 const L={
- map :{cx:.335, cy:.500, w:.150, h:.400},
- core:{cx:.335, cy:.500, s:.066},
- gate:{cx:.450, cy:.500},
- scr1:{cx:.54875, cy:.500, w:.1350, h:.470},
- scr2:{cx:.70500, cy:.500, w:.1275, h:.470},
- scr3:{cx:.87875, cy:.500, w:.1700, h:.470},
- caps:[{id:'cap1',cx:.035,cy:.150},{id:'cap2',cx:.262,cy:.196},
-       {id:'cap3',cx:.430,cy:.712},{id:'cap4',cx:.486,cy:.158}]
+ map :{cx:.325, cy:.500, w:.150, h:.400},
+ core:{cx:.325, cy:.500, s:.066},
+ scr1:{cx:.5000, cy:.5333, w:.1250, h:.6222},
+ scr2:{cx:.6550, cy:.5333, w:.1350, h:.6222},
+ scr3:{cx:.8556, cy:.5333, w:.2163, h:.6222},
+ caps:[{id:'cap1',cx:.035,cy:.150},{id:'cap2',cx:.252,cy:.180},
+       {id:'cap3',cx:.252,cy:.792},{id:'cap4',cx:.437,cy:.128}]
 };
 /* 좌측 원천 영역에 흩어놓는 데이터 블록 — 무대 기준 절대좌표 */
 const CHIPS=[
@@ -338,9 +311,6 @@ const CHIPS=[
  {t:'VERIFIED',      u:'교내 확정 연구자 '+nf(D.skku),             x:.140, y:.792},
  {t:'SNAPSHOT',      u:'수집 시점 '+D.built,                       x:.066, y:.884}
 ];
-/* 단과대별 충원율 — 화면 예시 */
-const BARS=[['인문',94.8],['경영',99.6],['공과',102.3],['예술',88.5],['보건',97.2]];
-const BAVG=96.7;
 
 let W=0,H=0,DPR=1,MOB=false;
 /* 고정 무대에서는 좁은 화면 분기가 없다. 무대는 항상 1600x900. */
@@ -350,19 +320,19 @@ function place(){
  W=1600; H=900; DPR=Math.min(devicePixelRatio||1,2);
  MOB=NARROW(); document.body.classList.toggle('mob-4k9m2',MOB);
  if(MOB){                                  // 세로 스택 — 절대좌표를 걷어낸다
-  ['map','core','gate','scr1','scr2','scr3'].forEach(id=>{
+  ['map','core','scr1','scr2','scr3'].forEach(id=>{
    const e=$(id);
    e.style.cssText=e.style.cssText.replace(/(left|top|width|height|transform)\s*:[^;]*;?/g,'');});
   L.caps.forEach(c=>{const e=$(c.id);
    e.style.left=e.style.top=e.style.transform='';});
-  drawChips(); drawNet(); drawBars(); return;
+  drawChips(); drawNet(); return;
  }
  const set=(el,o,wKey)=>{const p=px(o);
    if(o.w){el.style.width=Math.round(p.w)+'px'; el.style.height=Math.round(p.h)+'px';
            el.style.left=Math.round(p.x-p.w/2)+'px'; el.style.top=Math.round(p.y-p.h/2)+'px';}
    else   {el.style.left=Math.round(p.x)+'px'; el.style.top=Math.round(p.y)+'px';
            el.style.transform='translate(-50%,-50%)';}};
- set(map,L.map); set(gate,L.gate);
+ set(map,L.map);
  set(scr1,L.scr1); set(scr2,L.scr2); set(scr3,L.scr3);
  const cs=Math.round(H*L.core.s);
  core.style.width=cs+'px'; core.style.height=cs+'px';
@@ -371,16 +341,7 @@ function place(){
  L.caps.forEach(c=>{const e=$(c.id);
    e.style.left=Math.round(W*c.cx)+'px'; e.style.top=Math.round(H*c.cy)+'px';
    e.style.transform='translate(0,-50%)';});
- drawChips(); drawNet(); drawBars();
-}
-/* 충원율 막대 — 대학평균선 포함 */
-function drawBars(){
- const lo=84, hi=106, h=v=>((v-lo)/(hi-lo)*100).toFixed(1);
- bars.innerHTML='<div class="barea-4k9m2">'
-  +`<span class="avg-4k9m2" style="bottom:${h(BAVG)}%"><s>대학평균 ${BAVG}</s></span>`
-  +BARS.map(([,v])=>`<span class="bw-4k9m2"><i class="bv-4k9m2" style="height:${h(v)}%"></i></span>`).join('')
-  +'</div><div class="blab-4k9m2">'
-  +BARS.map(([k])=>`<em>${k}</em>`).join('')+'</div>';
+ drawChips(); drawNet();
 }
 /* 칩 배치 — 패널 중심 기준 상대좌표 */
 function drawChips(){
@@ -469,12 +430,12 @@ function build(){
             hue:R()<0.34?'--raw2':'--raw', n:1+((R()*2)|0)});
  }
  /* ② 코어 → 관문 → 총장 KPI (시안) — 최초 형태의 수평 다발 */
- const g=px(L.gate), q=px(L.scr3);
+ const q=px(L.scr3);
  OUT=[];
  for(let i=0;i<22;i++){
   const j=(i/21-0.5);
   const p=[[cx+W*0.030, cy+j*H*0.030],
-           [g.x-W*0.020, cy+j*H*0.050],
+           [cx+W*0.090, cy+j*H*0.050],
            [q.x-q.w*0.90, q.y+j*H*0.100],
            [q.x-q.w*0.42, q.y+j*H*0.200]];
   OUT.push({p, w:0.7+R()*1.5, a:0.24+R()*0.5, sp:0.26+R()*0.4, ph:R()});
