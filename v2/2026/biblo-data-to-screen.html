@@ -79,6 +79,24 @@ canvas.fx-4k9m2{position:absolute;inset:0;width:100%;height:100%;z-index:1;point
 .api-4k9m2 s{display:block;text-decoration:none;font-size:8.5px;font-weight:600;letter-spacing:.05em;
  color:#7fa6d6;margin-top:4px}
 
+/* ── ④ 화면 — 목적에 따라 갈라지는 표면 ── */
+.srow-4k9m2{position:absolute;z-index:6;display:flex;align-items:center;gap:14px;
+ padding:0 18px;border-radius:16px;
+ background:linear-gradient(120deg,rgba(16,24,52,.82),rgba(12,18,42,.66));
+ border:1px solid rgba(140,170,240,.26);
+ box-shadow:0 18px 40px -18px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.12)}
+.srow-4k9m2 .sic-4k9m2{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;
+ background:linear-gradient(150deg,rgba(56,214,248,.30),rgba(129,140,248,.20));
+ border:1px solid rgba(150,220,255,.42);
+ box-shadow:0 0 22px rgba(56,190,248,.26),inset 0 1px 0 rgba(255,255,255,.34)}
+.srow-4k9m2 .stx-4k9m2{min-width:0}
+.srow-4k9m2 u{display:block;text-decoration:none;
+ font:700 8.8px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:#5fd0f0}
+.srow-4k9m2 b{display:block;margin-top:6px;font-size:15px;font-weight:800;
+ letter-spacing:-.4px;color:#e7eeff;white-space:nowrap}
+.srow-4k9m2 s{display:block;margin-top:4px;text-decoration:none;
+ font-size:11.5px;font-weight:500;line-height:1.4;color:var(--ink3);white-space:nowrap}
+
 /* ── ④ 화면 ── */
 .scr-4k9m2{z-index:6;overflow:hidden}
 .scr-4k9m2 .body-4k9m2{position:absolute;inset:0;padding:8% 8% 7%;display:flex;flex-direction:column;gap:6%}
@@ -160,7 +178,7 @@ body.mob-4k9m2 .foot-4k9m2 .meta-4k9m2{text-align:left}
  <div class="cap-4k9m2 raw-4k9m2"  id="cap1-4k9m2"><i></i><u>01 · 원천</u> <em>정제되지 않은 수집물</em></div>
  <div class="cap-4k9m2 map-4k9m2"  id="cap2-4k9m2"><i></i><u>02 · 구조화</u> <em>엔티티 · 관계 · 지표 · 지문</em></div>
  <div class="cap-4k9m2 gate-4k9m2" id="cap3-4k9m2"><i></i><u>03 · 관문</u> <em>서버 경유만 허용</em></div>
- <div class="cap-4k9m2 ui-4k9m2"   id="cap4-4k9m2"><i></i><u>04 · 화면</u> <em>사람이 판단하는 자리</em></div>
+ <div class="cap-4k9m2 ui-4k9m2"   id="cap4-4k9m2"><i></i><u>04 · 화면</u> <em>목적에 따라 갈라지는 표면</em></div>
 
  <div class="glass-4k9m2 map-4k9m2" id="map-4k9m2"><div class="inner-4k9m2"><svg class="net-4k9m2" id="net-4k9m2"></svg></div></div>
  <div class="core-4k9m2" id="core-4k9m2">
@@ -171,35 +189,16 @@ body.mob-4k9m2 .foot-4k9m2 .meta-4k9m2{text-align:left}
  </div>
 
  <div class="gates-4k9m2" id="gates-4k9m2">
-  <div class="api-4k9m2" id="api1-4k9m2">API<s>/api/db</s></div>
-  <div class="api-4k9m2" id="api2-4k9m2">API<s>RPC</s></div>
+  <div class="api-4k9m2" id="gate-4k9m2">API<s>/api/db · RPC</s></div>
  </div>
- <div class="screens-4k9m2" id="screens-4k9m2">
-
- <div class="glass-4k9m2 scr-4k9m2" id="scr1-4k9m2"><div class="body-4k9m2">
-   <div class="bar-4k9m2">🔍 논문 · 저자 · 성과 검색</div>
-   <div class="hero-4k9m2"><svg width="52%" viewBox="0 0 24 24" fill="none" stroke="#dff4ff"
-     stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-     <circle cx="12" cy="7.6" r="3.3"/><path d="M5.2 20.2a6.8 6.8 0 0 1 13.6 0"/>
-     <path d="M16.4 13.8v4.4M19 11.6v6.6"/></svg></div>
-   <div class="ttl-4k9m2">연구자 개인성과<s>11 VIEWS</s></div>
-   <div class="rows-4k9m2"><i class="k-4k9m2"></i><i></i><i></i><i class="k-4k9m2"></i><i></i></div>
- </div></div>
-
- <div class="glass-4k9m2 scr-4k9m2" id="scr2-4k9m2"><div class="body-4k9m2">
-   <div class="bar-4k9m2">📊 34개 연구단 성과보드</div>
-   <div class="hero-4k9m2"><svg width="52%" viewBox="0 0 24 24" fill="none" stroke="#dff4ff"
-     stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-     <path d="M4 20V13M10 20V7M16 20V10M22 20V4"/></svg></div>
-   <div class="ttl-4k9m2">경영자 성과보드<s>KPI · 신호등</s></div>
-   <div class="rows-4k9m2"><i></i><i class="k-4k9m2"></i><i></i><i></i><i class="k-4k9m2"></i></div>
- </div></div>
- </div>
+ <div class="screens-4k9m2" id="screens-4k9m2"></div>
 
  <div class="foot-4k9m2">
   <p class="lead-4k9m2">좌측은 <b>정제되지 않은 원천</b>이다. 출처마다 식별자도 표기도 달라 그대로는 셀 수 없다.
    가운데에서 논문·연구자·저널을 <b>같은 것끼리 묶고 관계를 잇고</b> 지표와 지문을 붙인다.
-   그 결과만 <b>서버 관문을 지나</b> 화면에 닿는다. 브라우저는 DB를 직접 보지 않는다.</p>
+   그 결과만 <b>서버 관문을 지나</b> 화면에 닿는다.
+   화면은 하나가 아니다. <b>같은 검색·전달 엔진</b>이 질문의 목적에 따라
+   대화·신청·예약·개인 화면·경영 지표로 달라진다.</p>
   <div class="meta-4k9m2" id="meta-4k9m2"></div>
  </div>
 </div>
@@ -209,7 +208,7 @@ body.mob-4k9m2 .foot-4k9m2 .meta-4k9m2{text-align:left}
 const $=id=>document.getElementById(id+'-4k9m2');
 const stage=$('stage'), fx=$('fx'), map=$('map'), core=$('core'),
       net=$('net'), meta=$('meta'),
-      api1=$('api1'), api2=$('api2'), scr1=$('scr1'), scr2=$('scr2');
+      gate=$('gate'), screens=$('screens');
 const D={paper:140693, auth:5280301, skku:11930, jr:13872, res:34764,
          co:932329, kw:1196149, cm:642139, built:'2026-08-27'};
 const nf=n=>n.toLocaleString('ko-KR');
@@ -219,12 +218,25 @@ const nf=n=>n.toLocaleString('ko-KR');
 const L={
  map :{cx:.462, cy:.500, w:.186, h:.500},
  core:{cx:.462, cy:.500, s:.072},
- api1:{cx:.583, cy:.478},
- scr1:{cx:.670, cy:.470, w:.092, h:.375},
- api2:{cx:.742, cy:.478},
- scr2:{cx:.842, cy:.462, w:.140, h:.445},
+ gate:{cx:.596, cy:.500},
+ surf:{cx:.840, w:.235, h:.104, y0:.246, dy:.126},
  caps:[{id:'cap1',cx:.150,cy:.235},{id:'cap2',cx:.462,cy:.198},
-       {id:'cap3',cx:.662,cy:.782},{id:'cap4',cx:.842,cy:.190}]
+       {id:'cap3',cx:.620,cy:.782},{id:'cap4',cx:.840,cy:.140}]
+};
+/* 같은 엔진이 질문의 목적에 따라 다른 표면으로 나온다 */
+const SURF=[
+ {k:'CONVERSATION', t:'학술논문 검색',      d:'질문의 뜻을 풀어 답과 근거를 보여준다', i:'chat'},
+ {k:'REQUEST',      t:'자료구입 신청',      d:'없는 자료를 신청서로 접수한다',        i:'form'},
+ {k:'RESERVATION',  t:'도서 예약',          d:'대출 중인 자료의 차례를 잡는다',      i:'cal'},
+ {k:'MY VIEW',      t:'연구자 개인성과',    d:'내 논문과 지표를 한 화면에서 본다',    i:'user'},
+ {k:'EXECUTIVE',    t:'경영자 KPI 보드',    d:'34개 연구단을 신호등으로 본다',        i:'bar'}
+];
+const SICO={
+ chat:'<path d="M20 12.4a7.6 7.6 0 0 1-11 6.8L4 20.5l1.4-4.7A7.6 7.6 0 1 1 20 12.4z"/>',
+ form:'<path d="M14 3.5H7.2A1.7 1.7 0 0 0 5.5 5.2v13.6a1.7 1.7 0 0 0 1.7 1.7h9.6a1.7 1.7 0 0 0 1.7-1.7V8z"/><path d="M14 3.5V8h4.5"/><path d="M9.4 13.6h5.2M12 11v5.2"/>',
+ cal :'<rect x="4" y="5.4" width="16" height="14.2" rx="2.2"/><path d="M4 9.8h16M8.6 3.6v3.4M15.4 3.6v3.4"/><path d="M12 12.6v2.6l1.9 1.2"/>',
+ user:'<circle cx="12" cy="7.6" r="3.3"/><path d="M5.2 20.2a6.8 6.8 0 0 1 13.6 0"/><path d="M16.4 13.8v4.4M19 11.6v6.6"/>',
+ bar :'<path d="M4 20V13M10 20V7M16 20V10M22 20V4"/>'
 };
 const CHIPS=[
  {t:'ENTITIES',     u:'논문 '+nf(D.paper)+' · 연구자 '+nf(D.res),  x:-.58,y:-.48},
@@ -243,7 +255,7 @@ function place(){
  W=1600; H=900; DPR=Math.min(devicePixelRatio||1,2);
  MOB=NARROW(); document.body.classList.toggle('mob-4k9m2',MOB);
  if(MOB){                                  // 세로 스택 — 절대좌표를 걷어낸다
-  ['map','core','api1','api2','scr1','scr2'].forEach(id=>{
+  ['map','core','gate'].forEach(id=>{
    const e=$(id);
    e.style.cssText=e.style.cssText.replace(/(left|top|width|height|transform)\s*:[^;]*;?/g,'');});
   L.caps.forEach(c=>{const e=$(c.id);
@@ -255,8 +267,7 @@ function place(){
            el.style.left=Math.round(p.x-p.w/2)+'px'; el.style.top=Math.round(p.y-p.h/2)+'px';}
    else   {el.style.left=Math.round(p.x)+'px'; el.style.top=Math.round(p.y)+'px';
            el.style.transform='translate(-50%,-50%)';}};
- set(map,L.map); set(scr1,L.scr1); set(scr2,L.scr2);
- set(api1,L.api1); set(api2,L.api2);
+ set(map,L.map); set(gate,L.gate); drawSurf();
  const cs=Math.round(H*L.core.s);
  core.style.width=cs+'px'; core.style.height=cs+'px';
  core.style.left=Math.round(W*L.core.cx)+'px'; core.style.top=Math.round(H*L.core.cy)+'px';
@@ -265,6 +276,25 @@ function place(){
    e.style.left=Math.round(W*c.cx)+'px'; e.style.top=Math.round(H*c.cy)+'px';
    e.style.transform='translate(-50%,-50%)';});
  drawChips(); drawNet(); setMeta();
+}
+/* 표면 5행 — 하나의 관문에서 목적별로 갈라진다 */
+function surfBox(i){
+ const w=W*L.surf.w, h=H*L.surf.h;
+ return {x:W*L.surf.cx-w/2, y:H*(L.surf.y0+i*L.surf.dy)-h/2, w, h};
+}
+function drawSurf(){
+ screens.innerHTML='';
+ SURF.forEach((o,i)=>{
+  const p=surfBox(i), d=document.createElement('div');
+  d.className='srow-4k9m2';
+  d.style.cssText=`left:${Math.round(p.x)}px;top:${Math.round(p.y)}px;`
+   +`width:${Math.round(p.w)}px;height:${Math.round(p.h)}px`;
+  d.innerHTML=`<span class="sic-4k9m2"><svg width="21" height="21" viewBox="0 0 24 24" fill="none"`
+   +` stroke="#dff4ff" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round">`
+   +`${SICO[o.i]}</svg></span>`
+   +`<span class="stx-4k9m2"><u>${o.k}</u><b>${o.t}</b><s>${o.d}</s></span>`;
+  screens.appendChild(d);
+ });
 }
 function setMeta(){
  meta.innerHTML=`실측 <b>${D.built}</b> · 논문 <b>${nf(D.paper)}</b> · 저자행 <b>${nf(D.auth)}</b>`
@@ -357,26 +387,30 @@ function build(){
   RAW.push({p, w:0.5+R()*2.3, a:0.14+R()*0.5, sp:0.16+R()*0.34, ph:R(),
             hue:R()<0.34?'--raw2':'--raw', n:1+((R()*2)|0)});
  }
- /* ② 코어 → API → 화면 (시안) */
- const a1=px(L.api1), a2=px(L.api2), s2=px(L.scr2);
+ /* ② 코어 → 관문 → 표면 5개 (시안) — 하나의 관문에서 목적별로 갈라진다 */
+ const g=px(L.gate);
  OUT=[];
- for(let i=0;i<22;i++){
-  const j=(i/21-0.5);
-  const p=[[cx+W*0.030, cy+j*H*0.030],
-           [a1.x-W*0.02, cy+j*H*0.05],
-           [a2.x+W*0.02, s2.y+j*H*0.10],
-           [s2.x-s2.w*0.42, s2.y+j*H*0.20]];
-  OUT.push({p, w:0.7+R()*1.5, a:0.24+R()*0.5, sp:0.26+R()*0.4, ph:R()});
+ for(let i=0;i<SURF.length;i++){
+  const q=surfBox(i), ty=q.y+q.h/2;
+  for(let k=0;k<7;k++){
+   const j=(k/6-0.5);
+   const p=[[cx+W*0.030, cy+j*H*0.026],
+            [g.x-W*0.020, cy+j*H*0.040],
+            [g.x+W*0.070, ty+j*H*0.055],
+            [q.x-8,       ty+j*H*0.030]];
+   OUT.push({p, w:0.6+R()*1.3, a:0.20+R()*0.46, sp:0.24+R()*0.38, ph:R()});
+  }
  }
- /* ③ 하단 광선 다발 — 크게 아래로 돌아 화면으로 */
+ /* ③ 하단 광선 다발 — 크게 아래로 돌아 맨 아래 표면으로 */
  BEAM=[];
+ const last=surfBox(SURF.length-1);
  const nBEAM=MOB?12:26;
  for(let i=0;i<nBEAM;i++){
   const j=i/(nBEAM-1);
   const p=[[cx+W*0.012, cy+H*0.055+j*H*0.02],
            [W*(0.50+j*0.06), H*(0.90+j*0.16)],
            [W*(0.74+j*0.05), H*(0.96+j*0.10)],
-           [s2.x-s2.w*0.40, s2.y+s2.h*0.30-j*H*0.02]];
+           [last.x-10, last.y+last.h*0.5-j*H*0.02]];
   BEAM.push({p, w:0.6+R()*1.9, a:0.10+R()*0.34, sp:0.14+R()*0.3, ph:R(),
              blur:R()<0.3?0:(0.6+R()*1.6)});
  }
