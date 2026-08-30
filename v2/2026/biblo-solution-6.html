@@ -59,6 +59,12 @@ h1{position:absolute;left:82px;top:91px;font-size:4em;font-weight:800;letter-spa
 /* ─── 하단 ─── */
 .concl{position:absolute;left:0;right:0;top:747px;text-align:center;
  font-size:30px;font-weight:800;line-height:1.6;letter-spacing:-.4px;color:#fff}
+
+/* 챕터로 바로 가는 클릭 영역 */
+.col[data-go],.merge[data-go]{cursor:pointer;transition:background .18s,transform .18s}
+.col[data-go]:hover,.merge[data-go]:hover{background:rgba(255,255,255,.07)}
+.col[data-go]:active,.merge[data-go]:active{transform:translateY(1px)}
+.col[data-go]:focus-visible,.merge[data-go]:focus-visible{outline:2px solid #8fd7ff;outline-offset:-3px}
 </style></head><body>
 <div class="slide"><div id="stage">
 
@@ -69,7 +75,7 @@ h1{position:absolute;left:82px;top:91px;font-size:4em;font-weight:800;letter-spa
  <div class="cols" id="cols"></div>
  <div class="rule r2"></div>
 
- <div class="merge">
+ <div class="merge" data-go="sl-hero-2q6r4-f" role="button" tabindex="0">
   <span class="n">6</span>
   <div class="tx">
    <h2>AI 성과관리 <span class="tg tg2">BK21</span><span class="tg">앵커</span></h2>
@@ -95,35 +101,48 @@ h1{position:absolute;left:82px;top:91px;font-size:4em;font-weight:800;letter-spa
 <script>
 /* ══ 근거 ══ docs/BIBLO_전기능_전체지도.md §0 「구조 — 코어 백본 + 6개 솔루션」 표 그대로 ══ */
 const S=[
- {n:'1', name:'AI 검색엔진', tag:'도서관AI',
+ {n:'1', go:'biblo-search.html', name:'AI 검색엔진', tag:'도서관AI',
   hl:'책·논문을 의미로 찾는다',
   d:'정확한 제목이나 검색어를 몰라도 일상적인 문장으로 필요한 책·논문·연구자를 찾을 수 있습니다.',
   m:'사용자 도서관 이용자<br>산출 검색 코퍼스·벡터'},
- {n:'2', name:'연구성과관리', tag:'',
+ {n:'2', go:'sl-hero-2q6r4-b', name:'연구성과관리', tag:'',
   hl:'이 논문 저자가 우리 학교 누구인가',
   d:'저자 매칭 엔진이 논문 속 저자를 실제 교내 연구자와 연결해 학교·학과·연구자별 연구력을 관리합니다.',
   m:'사용자 연구처<br>산출 저자매핑·지문·공저망·개인 연구력'},
- {n:'3', name:'AI영상솔루션', tag:'',
+ {n:'3', go:'sl-hero-2q6r4-c', name:'AI영상솔루션', tag:'',
   hl:'논문을 영상·쇼츠로',
   d:'논문 원문에서 연구 배경·핵심 결과·그림과 표·주요 메시지를 추출해 영상과 쇼츠를 자동으로 만듭니다.',
   m:'사용자 홍보처<br>산출 원문 구조분해→영상'},
- {n:'4', name:'사서 에이전트', tag:'도서관AI',
+ {n:'4', go:'sl-hero-2q6r4-d', name:'사서 에이전트', tag:'도서관AI',
   hl:'교내 LAS에 AI를 얹는다',
   d:'기존 교내 LAS 를 교체하지 않고, LAS 에 쌓인 대출·소장·서지 데이터에 AI 기능을 더합니다.',
   m:'사용자 사서·도서관<br>산출 장서·수서·편목 판단'},
- {n:'5', name:'AI 에이전트', tag:'',
+ {n:'5', go:'sl-hero-2q6r4-e', name:'AI 에이전트', tag:'',
   hl:'관내 모든 데이터를 보는 창',
   d:'기관이 보유한 모든 데이터에 AI·MCP 기능을 연결합니다. 질문만으로 필요한 데이터를 조회하고 근거를 확인합니다.',
   m:'사용자 전산·기획<br>역할 가로 인터페이스'}
 ];;
 document.getElementById('cols').innerHTML = S.map(c=>`
- <div class="col">
+ <div class="col" data-go="${c.go}" role="button" tabindex="0">
    <span class="n">${c.n}</span>
    <h2>${c.name}</h2>
    <div class="hl">${c.tag?`<span class="tg">${c.tag}</span>`:''}${c.hl}</div>
    <p>${c.d}</p>
    <div class="m">${c.m}</div>
  </div>`).join('');
+
+/* 카드를 누르면 부모 덱에 «이 챕터로» 를 알린다 (같은 오리진, iframe 안에서만 동작) */
+(function(){
+ const send=k=>{ if(k && window.parent!==window) parent.postMessage({type:'go2q6r4', id:k, src:k},'*'); };
+ document.addEventListener('click',e=>{
+   const el=e.target.closest('[data-go]'); if(el) send(el.dataset.go);
+ });
+ document.addEventListener('keydown',e=>{
+   if(e.key!=='Enter' && e.key!==' ') return;
+   const el=e.target.closest && e.target.closest('[data-go]');
+   if(el){ e.preventDefault(); send(el.dataset.go); }
+ });
+})();
 
 const SW=1600,SH=900;
 function fit(){const st=document.getElementById('stage');

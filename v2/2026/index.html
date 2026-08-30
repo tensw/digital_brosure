@@ -1514,6 +1514,19 @@ document.querySelectorAll('#cards-d,#cards-e').forEach(el=>el.innerHTML=PD.map(p
  }
  dots.forEach(d=>d.addEventListener('click',()=>go(+d.dataset.i2q6r4)));
 
+ /* ── iframe 슬라이드에서 «이 챕터로 가자» 요청을 받는다 ──
+    번호 대신 id·src 로 지목한다. 배열 순서는 자주 바뀌어 번호를 박아두면 곧 어긋난다. */
+ addEventListener('message',e=>{
+   const d=e.data;
+   if(!d||d.type!=='go2q6r4') return;
+   const i=S.findIndex(x=> (d.id && x.id===d.id) || (d.src && x.src===d.src));
+   if(i>=0) go(i);
+ });
+ window.go2q6r4=(key)=>{
+   const i=S.findIndex(x=>x.id===key||x.src===key);
+   if(i>=0) go(i);
+ };
+
  /* 휠·터치·키보드도 go() 로 보낸다. 네이티브 스크롤에 맡기면 로딩을 기다리지 못하고
     빈 화면이 지나간다. 트랙패드는 한 번 넘길 때 이벤트가 수십 개라 잠금을 둔다. */
  let wlock=0, ty=null;
