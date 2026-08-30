@@ -23,6 +23,11 @@ body{
  -webkit-font-smoothing:antialiased; overflow-x:hidden;
 }
 /* ── 배경: 웜톤 그라디언트 + 나무결 세로 스트라이프 + 도트 ── */
+/* 덱 안에서는 배경을 덱 레이어(viol)에 맡긴다 — 23~26 과 한 배경으로 이어지게.
+   다만 이 장은 어두운 대시보드라 밝은 보라 위에서는 카드 밖 요소(워드마크·사이드바·HUD)가
+   묻힌다. 배경 바로 위에 투명한 검정을 한 겹 깔아 대비를 되살린다. */
+.emb-bg0, .emb-bg0 body{background:transparent !important}
+.emb-bg0 .scene{background:rgba(8,12,34,.62)}
 .scene{position:fixed;inset:0;z-index:0;overflow:hidden}
 .scene::before{content:'';position:absolute;inset:0;
  background:
@@ -738,4 +743,5 @@ $('#q').addEventListener('input', e=>{ filter = e.target.value.trim(); bi = 0; d
 
 tabs(); renderAll(); today(); news(); tone();
 </script>
+<script>if(window.self!==window.top) document.documentElement.classList.add('emb-bg0');</script>
 </body></html>
