@@ -1,0 +1,280 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>국제 색인 vs 국내 KCI — BIBLO</title>
+<style>
+/* 클래스·ID·변수 전부 -8p4q6 접미사 · 전역 선택자 없음 (다른 HTML 과 섞여도 안전) */
+.root-8p4q6{--ink-8p4q6:#e9eefb;--ink2-8p4q6:#93a6cc;--ink3-8p4q6:#5d7099;
+ font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ color:var(--ink-8p4q6);
+ background:radial-gradient(1200px 900px at 50% 8%,#0b1226 0%,#060a16 58%,#03050c 100%);
+ -webkit-font-smoothing:antialiased;position:relative}
+.root-8p4q6 *{box-sizing:border-box;margin:0;padding:0}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
+/* ── 무대 규격 (작업가이드 5장) ── */
+html,body{overflow:hidden}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+.emb-bg0, .emb-bg0 body, .emb-bg0 .slide, .emb-bg0 .root-8p4q6{background:transparent !important}
+/* 덱 안에서는 배경을 wave 레이어에 맡긴다 — 28·30 과 한 배경으로 이어지게 */
+.emb-bg0 .root-8p4q6::after{opacity:.5}
+.root-8p4q6::after{content:"";position:absolute;right:-6%;bottom:-14%;width:44%;height:46%;
+ pointer-events:none;border-radius:50%;
+ background:radial-gradient(circle at 50% 50%,rgba(226,214,255,.28) 0%,rgba(150,120,235,.13) 34%,
+   rgba(60,50,160,0) 68%);filter:blur(6px)}
+/* 작업가이드 5장: 1600x900, 좌우 82px. 원본은 세로 919px 문서라 거의 그대로 들어간다.
+   두 비교 카드가 남는 높이를 나눠 갖는다. */
+.wrap-8p4q6{position:relative;z-index:2;width:1600px;height:900px;padding:38px 82px 16px;
+ display:flex;flex-direction:column}
+.pair-8p4q6{flex:1;min-height:0}
+.foot-8p4q6{margin-top:auto}
+
+.hd-8p4q6{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.spacer-8p4q6{flex:1}
+.kicker-8p4q6{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;
+ color:var(--ink3-8p4q6)}
+/* 폰트 규격 — 한글 제목 3.15em(44px), 서브 16px/600 */
+.h1-8p4q6{font-size:44px;font-weight:800;letter-spacing:-1.5px;margin-top:10px;line-height:1.16}
+.h1-8p4q6 span{background:linear-gradient(90deg,#38bdf8,#a78bfa 45%,#f472b6 72%,#fbbf24);
+ -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lead-8p4q6{color:var(--ink2-8p4q6);font-size:14.5px;font-weight:600;margin-top:10px;max-width:118ch;line-height:1.45}
+.lead-8p4q6 b{color:var(--ink-8p4q6)}
+.meta-8p4q6{font:600 11px/1.95 ui-monospace,Menlo,monospace;color:var(--ink3-8p4q6);
+ text-align:right;letter-spacing:.05em}
+.meta-8p4q6 b{color:var(--ink2-8p4q6)}
+
+/* 두 카드 사이에 VS 를 올려 대비를 분명히 한다 */
+.pair-8p4q6{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:22px;position:relative}
+.pair-8p4q6::after{content:"VS";position:absolute;left:50%;top:50%;
+ width:74px;height:74px;margin:-37px 0 0 -37px;z-index:6;
+ display:grid;place-items:center;border-radius:50%;
+ font:800 22px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:#fff;
+ background:linear-gradient(150deg,#1a2044,#0d1230);
+ border:1px solid rgba(160,180,255,.34);
+ box-shadow:0 18px 40px -12px rgba(4,8,26,.8),0 0 0 10px rgba(10,14,34,.55)}
+.pane-8p4q6{position:relative;border-radius:26px;overflow:hidden;padding:34px 40px 28px;
+ min-height:540px;display:flex;flex-direction:column}
+/* 좌 — 밝은 카드 */
+.lite-8p4q6{background:#f7f6fb;color:#141433}
+.lite-8p4q6::before{content:"";position:absolute;inset:-20% -10% -34% -24%;pointer-events:none;
+ background:
+  radial-gradient(58% 44% at 22% 84%, rgba(226,150,255,.72) 0%, rgba(226,150,255,0) 62%),
+  radial-gradient(62% 46% at 62% 66%, rgba(120,86,255,.78) 0%, rgba(120,86,255,0) 64%),
+  radial-gradient(70% 40% at 86% 46%, rgba(60,40,235,.62) 0%, rgba(60,40,235,0) 66%);
+ filter:blur(10px)}
+/* 우 — 어두운 카드 */
+.dark-8p4q6{background:linear-gradient(168deg,#1a2168 0%,#141a54 46%,#101542 100%);
+ color:#eef1ff;border:1px solid rgba(150,160,240,.22)}
+.dark-8p4q6::before{content:"";position:absolute;inset:0;pointer-events:none;
+ background:
+  radial-gradient(48% 30% at 74% 30%, rgba(150,175,255,.30) 0%, rgba(150,175,255,0) 70%),
+  radial-gradient(40% 26% at 86% 88%, rgba(215,150,255,.26) 0%, rgba(215,150,255,0) 72%)}
+.dark-8p4q6 .stars-8p4q6{position:absolute;inset:0;pointer-events:none;opacity:.7}
+
+.pk-8p4q6{position:relative;z-index:3;display:flex;align-items:center;gap:8px;
+ font:700 11.5px/1 inherit;letter-spacing:.02em}
+.lite-8p4q6 .pk-8p4q6{color:#5b4bd6}
+.dark-8p4q6 .pk-8p4q6{color:#b3a6ff}
+.pt-8p4q6{position:relative;z-index:3;margin-top:20px;font-size:30px;font-weight:800;
+ letter-spacing:-1.1px;line-height:1.18}
+.pd-8p4q6{position:relative;z-index:3;margin-top:10px;max-width:48ch;font-size:12.5px;line-height:1.5}
+.lite-8p4q6 .pd-8p4q6{color:#3b3b63}
+.dark-8p4q6 .pd-8p4q6{color:#b9c0e8}
+.pd-8p4q6 b{font-weight:800}
+.lite-8p4q6 .pd-8p4q6 b{color:#1a1a3c}
+.dark-8p4q6 .pd-8p4q6 b{color:#fff}
+
+/* 빈 원(근거 없음)은 밝은 카드에서 흰 테두리라 보이지 않는다. 카드별로 색을 나눈다 */
+.lite-8p4q6 .dot-8p4q6[style*="transparent"]{border-color:rgba(70,60,150,.5) !important;
+ background:rgba(255,255,255,.7) !important}
+/* 공통 질문 — 두 카드가 같은 질문을 받았음을 못박는다 */
+.q-8p4q6{position:relative;z-index:3;margin-bottom:9px;padding:6px 11px;border-radius:9px;
+ font-size:12.5px;font-weight:800;letter-spacing:-.3px;display:inline-block}
+.dark-8p4q6 .q-8p4q6{background:rgba(150,170,255,.14);color:#cfd9ff}
+.lite-8p4q6 .q-8p4q6{background:rgba(90,80,200,.10);color:#4a4a80}
+/* 세 비교축 — 같은 기준으로 나란히 견준다 */
+.ax-8p4q6{position:relative;z-index:3;flex:1;margin-top:9px;display:flex;flex-direction:column;gap:4px;justify-content:space-between}
+.axr-8p4q6{display:flex;gap:9px;align-items:flex-start;padding-top:4px;border-top:1px solid}
+.dark-8p4q6 .axr-8p4q6{border-color:rgba(150,170,255,.16)}
+.lite-8p4q6 .axr-8p4q6{border-color:rgba(90,80,200,.14)}
+.axr-8p4q6 i{flex:none;width:17px;height:17px;border-radius:5px;font-style:normal;
+ font:800 10px/17px ui-monospace,Menlo,monospace;text-align:center}
+.dark-8p4q6 .axr-8p4q6 i{background:rgba(150,170,255,.2);color:#c3cfff}
+.lite-8p4q6 .axr-8p4q6 i{background:rgba(90,80,200,.14);color:#5b4bd6}
+.axr-8p4q6 b{font-size:11px;font-weight:700;letter-spacing:.02em;opacity:.72;margin-right:8px}
+.axr-8p4q6 em{font-style:normal;font-size:13.5px;font-weight:800;letter-spacing:-.4px}
+.dark-8p4q6 .axr-8p4q6 em{color:#e6ecff}
+.lite-8p4q6 .axr-8p4q6 em{color:#1e1e42}
+.axr-8p4q6 s{display:block;margin-top:1px;text-decoration:none;font-size:10.8px;
+ font-weight:500;line-height:1.4;opacity:.72}
+/* 모를 때 */
+.unk-8p4q6{position:relative;z-index:3;margin-top:11px;font-size:12px;font-weight:700;letter-spacing:-.3px}
+.unk-8p4q6 span{display:inline-block;margin-right:8px;padding:2px 7px;border-radius:999px;
+ font:700 10px/1.6 ui-monospace,Menlo,monospace;letter-spacing:.1em}
+.dark-8p4q6 .unk-8p4q6{color:#cdd6ff}
+.dark-8p4q6 .unk-8p4q6 span{background:rgba(150,170,255,.18);color:#a9b8ff}
+.lite-8p4q6 .unk-8p4q6{color:#4a4a75}
+.lite-8p4q6 .unk-8p4q6 span{background:rgba(90,80,200,.13);color:#5b4bd6}
+/* 다음 행동 버튼 */
+.btns-8p4q6{position:relative;z-index:3;display:flex;gap:5px;margin-top:7px}
+.btns-8p4q6 span{font:700 10px/1 ui-monospace,Menlo,monospace;padding:5px 9px;border-radius:7px;
+ border-radius:7px}
+.dark-8p4q6 .btns-8p4q6 span{background:rgba(150,170,255,.16);
+ border:1px solid rgba(160,180,255,.28);color:#d6ddff}
+.lite-8p4q6 .btns-8p4q6 span{background:rgba(90,80,200,.10);
+ border:1px solid rgba(90,80,200,.24);color:#4a3fb0}
+/* 하단 정의 */
+.tag-8p4q6 span{display:block;margin-top:3px;font-size:11.5px;font-weight:500;opacity:.72;letter-spacing:-.2px}
+/* 처리 흐름 · 답변 예시 · 꼬리표 */
+.flow-8p4q6{position:relative;z-index:3;margin-top:9px;
+ font:700 10.4px/1.5 ui-monospace,Menlo,monospace;letter-spacing:-.2px;opacity:.7}
+.ex-8p4q6{position:relative;z-index:3;margin-top:8px;padding:9px 12px;border-radius:10px;
+ font-size:12px;font-weight:600;line-height:1.45;letter-spacing:-.3px}
+.lite-8p4q6 .ex-8p4q6{background:rgba(90,80,200,.09);color:#3b3b63}
+.dark-8p4q6 .ex-8p4q6{background:rgba(140,160,255,.13);color:#dbe2ff}
+.tag-8p4q6{position:relative;z-index:3;margin-top:4px;
+ font-size:13.5px;font-weight:800;letter-spacing:-.4px}
+.lite-8p4q6 .tag-8p4q6{color:#5b4bd6}
+.dark-8p4q6 .tag-8p4q6{color:#a9b8ff}
+/* 하단 결론 */
+.ftk-8p4q6{display:block;font-size:17px;font-weight:800;letter-spacing:-.5px;color:var(--ink-8p4q6)}
+.ftd-8p4q6{display:block;margin-top:7px;font-size:12px;font-weight:500;line-height:1.6}
+.ftp-8p4q6{display:block;margin-top:8px;font:700 11.5px/1.7 ui-monospace,Menlo,monospace}
+.ftp-8p4q6 i,.ftp-8p4q6 em{font-style:normal;margin-right:7px;padding:2px 8px;border-radius:999px}
+.ftp-8p4q6 i{background:rgba(150,160,200,.16);color:#9aa4c8}
+.ftp-8p4q6 em{margin-left:16px;background:rgba(90,110,255,.2);color:#b9c6ff}
+.pins-8p4q6{position:relative;z-index:3;flex:1;margin-top:26px}
+.pin-8p4q6{position:absolute;display:flex;flex-direction:column;align-items:center}
+.pin-8p4q6 .dot-8p4q6{width:var(--d-8p4q6,26px);height:var(--d-8p4q6,26px);border-radius:50%;flex:none}
+.pin-8p4q6 .stem-8p4q6{width:1px;flex:1}
+.pin-8p4q6 .tip-8p4q6{width:9px;height:9px;border-radius:50%;border:1px solid;flex:none}
+.pin-8p4q6 .val-8p4q6{position:absolute;white-space:nowrap;text-align:center;
+ font:800 13px/1.25 inherit;letter-spacing:-.3px}
+.pin-8p4q6 .cap-8p4q6{display:block;font:700 9.5px/1.5 ui-monospace,Menlo,monospace;
+ letter-spacing:.12em;font-weight:700}
+.lite-8p4q6 .stem-8p4q6{background:rgba(30,20,90,.32)}
+.lite-8p4q6 .tip-8p4q6{border-color:rgba(30,20,90,.4);background:#fff}
+.lite-8p4q6 .val-8p4q6{color:#191938} .lite-8p4q6 .cap-8p4q6{color:#6a6a97}
+.dark-8p4q6 .stem-8p4q6{background:rgba(210,220,255,.42)}
+.dark-8p4q6 .tip-8p4q6{border-color:rgba(210,220,255,.6);background:transparent}
+.dark-8p4q6 .val-8p4q6{color:#eef1ff} .dark-8p4q6 .cap-8p4q6{color:#9aa3d4}
+
+.foot-8p4q6{margin-top:18px;font:600 10.5px/1.85 ui-monospace,Menlo,monospace;
+ color:var(--ink3-8p4q6);letter-spacing:.03em}
+.foot-8p4q6 b{color:var(--ink2-8p4q6)}
+
+</style></head><body style="margin:0">
+<div class="slide"><div id="stage">
+
+<div class="root-8p4q6"><div class="wrap-8p4q6">
+
+ <div class="hd-8p4q6">
+  <div>
+   <div class="kicker-8p4q6">BIBLO · ANSWER DNA</div>
+   <h1 class="h1-8p4q6">우리는 챗봇을 만들지 않았습니다.<br>
+    <span>답을 찾는 사서를 만들었습니다.</span></h1>
+   <p class="lead-8p4q6">일반 챗봇은 기관 문서를 참고해 질문마다 <b>새로운 답변을 생성</b>합니다.
+    비블로는 사서가 책을 찾듯 질문의 뜻을 파악하고, 기관이 검수한 지식과 현재 데이터에서
+    <b>맞는 답을 찾아</b> 근거와 다음 행동까지 전달합니다.
+    화면은 비슷하지만 답이 만들어지는 방식은 전혀 다릅니다.</p>
+  </div>
+  <div class="spacer-8p4q6"></div>
+  <div class="meta-8p4q6">
+   SOURCE <b>기관 검수 지식</b><br>
+   CHECK <b>현재 데이터 확인</b><br>
+   ACTION <b>다음 행동 연결</b>
+  </div>
+ </div>
+
+ <div class="pair-8p4q6" id="pair-8p4q6"></div>
+ <div class="foot-8p4q6" id="foot-8p4q6"></div>
+
+</div></div>
+<script>
+(function(){
+const PAIR=document.getElementById('pair-8p4q6');
+const FT=document.getElementById('foot-8p4q6');
+
+/* ══ 실측 (biblo_dev · 2026-08-27) ══ */
+const SIDES=[
+ {cls:'dark-8p4q6', kick:'일반 챗봇 · GENERATED', ico:'bolt',
+  t:'문서를 참고해 답을 씁니다',
+  d:'질문과 비슷한 문서를 찾아 모델에 전달하고, <b>모델이 최종 답변을 새로 작성</b>합니다. 문서에 없는 현재 소장·대출·예약 상태는 확인하지 못한 채 일반적인 안내로 끝날 수 있습니다.',
+  flow:'질문 → 비슷한 문서 찾기 → 모델이 문장 생성 → 답변',
+  axes:[{k:'답의 출처', v:'모델이 새로 작성', d:'기관 문서는 답을 만들기 위한 참고자료다'},
+        {k:'현재 데이터', v:'확인하지 않음', d:'현재 소장·대출·예약 상태가 답변에 반영되지 않는다'},
+        {k:'다음 행동', v:'안내 링크에서 종료', d:'이용자가 다시 홈페이지에서 검색하고 판단해야 한다'}],
+  unk:'문서 내용을 바탕으로 추정할 수 있음',
+  ex:'“도서관 홈페이지에서 소장 여부와 대출 상태를 확인해 주세요.”',
+  btns:[],
+  tag:'생성 중심 챗봇', tagd:'모델이 답을 결정합니다'},
+ {cls:'lite-8p4q6', kick:'BIBLO · FOUND & VERIFIED', ico:'arc',
+  t:'검수된 답을 찾아 전달합니다',
+  d:'질문의 의도와 필요한 조건을 파악한 뒤 <b>기관이 검수한 지식</b>에서 답을 찾습니다. 소장·대출·예약처럼 현재 확인이 필요한 정보는 도서관 데이터에서 조회하고, 근거와 가능한 다음 행동을 함께 제공합니다.',
+  flow:'질문 → 의도·조건 파악 → 검수 지식 검색 → 현재 상태 확인 → 근거 있는 답 → 다음 행동',
+  axes:[{k:'답의 출처', v:'기관이 검수한 지식', d:'AI 가 정답을 정하지 않고 기관이 확정한 내용을 찾아 전달한다'},
+        {k:'현재 데이터', v:'소장·대출·예약 확인', d:'질문한 시점의 자료 상태와 이용자 조건을 확인한다'},
+        {k:'다음 행동', v:'위치·예약·담당자 연결', d:'확인한 결과에 맞춰 이용자가 할 수 있는 행동을 보여준다'}],
+  unk:'답변을 멈추고 담당자에게 연결',
+  ex:'“현재 소장과 대출 상태를 확인했습니다. 이용 가능한 자료의 위치와 예약 방법은 다음과 같습니다.”',
+  btns:['근거 보기','자료 위치','예약하기'],
+  tag:'검색 중심 비블로', tagd:'기관이 답을 결정하고 AI 가 찾아 전달합니다'}
+];
+const ICO={
+ bolt:'<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>',
+ arc :'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3.5 18a8.5 8.5 0 0117 0"/><path d="M7.5 18a4.5 4.5 0 019 0"/></svg>'};
+
+PAIR.innerHTML=SIDES.map(S=>`
+ <section class="pane-8p4q6 ${S.cls}">
+  ${S.cls.startsWith('dark')?'<canvas class="stars-8p4q6"></canvas>':''}
+  <div class="q-8p4q6">“이 책, 지금 빌릴 수 있어?”</div>
+  <div class="pk-8p4q6">${ICO[S.ico]}<span>${S.kick}</span></div>
+  <div class="pt-8p4q6">${S.t}</div>
+  <p class="pd-8p4q6">${S.d}</p>
+  <div class="flow-8p4q6">${S.flow}</div>
+  <div class="ax-8p4q6">
+   ${S.axes.map((a,i)=>`
+    <div class="axr-8p4q6"><i>${i+1}</i>
+     <div><b>${a.k}</b><em>${a.v}</em><s>${a.d}</s></div>
+    </div>`).join('')}
+  </div>
+  <div class="unk-8p4q6"><span>모를 때</span>${S.unk}</div>
+  <div class="ex-8p4q6">${S.ex}</div>
+  ${S.btns.length?`<div class="btns-8p4q6">${S.btns.map(x=>`<span>${x}</span>`).join('')}</div>`:''}
+  <div class="tag-8p4q6">${S.tag}<span>${S.tagd}</span></div>
+ </section>`).join('');
+
+/* 우측 카드 별 */
+PAIR.querySelectorAll('.stars-8p4q6').forEach(c=>{
+ /* getBoundingClientRect 는 무대 배율이 곱해진 값이다. 레이아웃 픽셀을 쓴다. */
+ const pe=c.parentElement, r={width:pe.offsetWidth,height:pe.offsetHeight};
+ const w=c.width=Math.ceil(r.width), h=c.height=Math.ceil(r.height);
+ c.style.width='100%';c.style.height='100%';
+ const x=c.getContext('2d');let sd=8407;
+ const rnd=()=>((sd=sd*1103515245+12345&0x7fffffff)/0x7fffffff);
+ for(let i=0;i<220;i++){const rr=rnd()*1.15+.25;
+  x.globalAlpha=.15+rnd()*.6;x.fillStyle='#dfe6ff';
+  x.beginPath();x.arc(rnd()*w,rnd()*h,rr,0,7);x.fill();}
+});
+FT.innerHTML=`<b class="ftk-8p4q6">화면은 비슷하지만, 답의 DNA 가 다릅니다</b><span class="ftd-8p4q6">비블로에서 생성형 AI 는 정답을 만드는 주체가 아니다. 기관의 지식과 데이터에서 찾아낸 답을 이용자가 이해하기 쉬운 말로 전달하는 역할을 한다.</span>`;
+})();
+</script>
+</div></div>
+
+<script>
+/* 1600x900 고정 무대 — 작업가이드 5장 규격.
+   resize 하나만 걸면 iframe 슬라이드에서 배율이 틀어진 채 굳는다. 다섯 개를 다 건다. */
+function fitStage(){
+  const st=document.getElementById('stage'); if(!st) return;
+  st.style.height='900px';
+  const k=Math.min(innerWidth/1600, innerHeight/900);
+  st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;
+}
+fitStage();
+addEventListener('resize',fitStage);
+addEventListener('load',fitStage);
+addEventListener('pageshow',fitStage);
+if(window.ResizeObserver) new ResizeObserver(fitStage).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitStage);
+</script>
+<script>if(window.self!==window.top) document.documentElement.classList.add('emb-bg0');</script>
+</body></html>
