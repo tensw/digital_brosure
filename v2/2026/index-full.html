@@ -779,7 +779,7 @@ window.SLIDES_2q6r4=[
  {kind:'node', id:'sl-cover-8j3v', bg:'cover', name:'표지'},
  {kind:'frame',src:'biblo-solution-6.html', bg:'own', name:'6개 솔루션'},
  {kind:'frame',src:'bk21-data-pool.html', bg:'own', name:'데이터 풀'},
- {kind:'frame',src:'biblo-search.html', bg:'own', name:'검색'},
+ {kind:'frame',src:'biblo-search.html', bg:'own', name:'검색', ch:'Ⅰ. AI 검색엔진'},
  {kind:'frame',src:'도서추천_카드.html', bg:'own', name:'도서 추천 카드'},
  {kind:'frame',src:'biblo-book-data.html', bg:'own', name:'책 데이터 보유 현황'},
  {kind:'frame',src:'biblo-search-b.html', bg:'own', name:'검색 · 무지개'},
@@ -1416,7 +1416,9 @@ document.querySelectorAll('#cards-d,#cards-e').forEach(el=>el.innerHTML=PD.map(p
  /* 2) 인디케이터 */
  /* 챕터 표지는 눈금에서도 구분되고, 올리면 챕터명이 뜬다 */
  const chOf=i=>{
-  const c=S[i]; if(c.kind!=='node') return null;
+  const c=S[i];
+  if(c.ch) return c.ch;                       // 프레임 챕터는 등록에 적어 둔다
+  if(c.kind!=='node') return null;
   const el=document.getElementById(c.id), h=el&&el.querySelector('.divx-in h2');
   return h?h.textContent.trim().replace(/^([^.]+\.)\s*/,'$1 '):null;
  };
