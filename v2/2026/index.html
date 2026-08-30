@@ -152,14 +152,19 @@ body{overflow:hidden}
  background:rgba(150,180,235,.22);
  transition:width .22s cubic-bezier(.2,.8,.2,1),background .22s ease,box-shadow .22s ease}
 .ns-2q6r4.pass-2q6r4 i{background:rgba(150,180,235,.42)}
+.ns-2q6r4.ch-2q6r4 i{background:rgba(190,215,255,.55)}
+.ns-2q6r4.ch-2q6r4.pass-2q6r4 i{background:rgba(200,225,255,.72)}
 .ns-2q6r4:focus-visible i{background:rgba(190,215,255,.85);width:14px}
 .ns-2q6r4[aria-current="true"] i{background:#7dd3fc;
  box-shadow:0 0 12px rgba(125,211,252,.85),0 0 26px rgba(125,211,252,.35)}
 .ns-2q6r4 b{position:absolute;left:0;top:50%;
  transform:translate(calc(var(--nw-2q6r4,3px) + 4px),-50%) scale(.92);
  transform-origin:left center;opacity:0;pointer-events:none;white-space:nowrap;
- font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#dbe8ff;
- text-shadow:0 2px 10px rgba(0,0,0,.9);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#e6efff;
+ padding:5px 9px;border-radius:7px;background:rgba(6,10,24,.86);
+ border:1px solid rgba(150,180,235,.24);
+ box-shadow:0 8px 22px -10px rgba(0,0,0,.95);
+ backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
  transition:opacity .18s ease,transform .22s cubic-bezier(.2,.8,.2,1)}
 .ns-2q6r4.near-2q6r4 b, .ns-2q6r4:focus-visible b{opacity:1;
  transform:translate(calc(var(--nw-2q6r4,3px) + 10px),-50%) scale(1)}
@@ -1345,10 +1350,19 @@ document.querySelectorAll('#cards-d,#cards-e').forEach(el=>el.innerHTML=PD.map(p
  built.forEach(el=>deck.appendChild(el));      // appendChild 는 이동이므로 순서가 재정렬된다
 
  /* 2) 인디케이터 */
+ /* 챕터 표지는 눈금에서도 구분되고, 올리면 챕터명이 뜬다 */
+ const chOf=i=>{
+  const c=S[i]; if(c.kind!=='node') return null;
+  const el=document.getElementById(c.id), h=el&&el.querySelector('.divx-in h2');
+  return h?h.textContent.trim().replace(/^([^.]+\.)\s*/,'$1 '):null;
+ };
+ const CH=S.map((_,i)=>chOf(i));
  nav.innerHTML=S.map((s,i)=>
-  `<button type="button" class="ns-2q6r4" data-i2q6r4="${i}"`
-  +` aria-label="${(i+1)+'장 '+(s.name||'')}"><i></i><b>${String(i+1).padStart(2,'0')}</b></button>`).join('');
+  `<button type="button" class="ns-2q6r4${CH[i]?' ch-2q6r4':''}" data-i2q6r4="${i}"`
+  +` aria-label="${(i+1)+'장 '+(CH[i]||s.name||'')}"><i></i>`
+  +`<b>${CH[i]||String(i+1).padStart(2,'0')}</b></button>`).join('');
  const dots=[...nav.querySelectorAll('button')];
+ const base=i=>CH[i]?7:3;
 
  /* 눈금 높이 — 장수가 많아도 화면을 넘지 않게 줄인다 */
  function navFit(){
@@ -1363,19 +1377,19 @@ document.querySelectorAll('#cards-d,#cards-e').forEach(el=>el.innerHTML=PD.map(p
  const RM=matchMedia('(prefers-reduced-motion: reduce)');
  let navT=0;
  function navRelax(){
-  dots.forEach(d=>{d.classList.remove('near-2q6r4');
-   const w=d.getAttribute('aria-current')==='true'?16:3;
+  dots.forEach((d,i)=>{d.classList.remove('near-2q6r4');
+   const w=d.getAttribute('aria-current')==='true'?16:base(i);
    d.firstElementChild.style.width=w+'px'; d.style.setProperty('--nw-2q6r4',w+'px');});
  }
  function navMag(y){
   if(RM.matches) return;
   let best=null, bd=1e9;
-  dots.forEach(d=>{
+  dots.forEach((d,i)=>{
    const r=d.getBoundingClientRect(), c=r.top+r.height/2, dist=Math.abs(y-c);
    const reach=(r.height+3)*3.2;                       // ±3칸 정도만 반응
-   const t=Math.max(0, 1-dist/reach), w=3+t*t*13;
+   const t=Math.max(0, 1-dist/reach), w=base(i)+t*t*13;
    const cur=d.getAttribute('aria-current')==='true';
-   const ww=Math.max(w, cur?16:3);
+   const ww=Math.max(w, cur?16:base(i));
    d.firstElementChild.style.width=ww.toFixed(1)+'px';
    d.style.setProperty('--nw-2q6r4', ww.toFixed(1)+'px');
    d.classList.remove('near-2q6r4');
@@ -1404,7 +1418,7 @@ document.querySelectorAll('#cards-d,#cards-e').forEach(el=>el.innerHTML=PD.map(p
   dots.forEach((d,k)=>{d.setAttribute('aria-current',k===i?'true':'false');
    d.classList.toggle('pass-2q6r4',k<i);
    if(!d.classList.contains('near-2q6r4')){
-     const w=k===i?16:3; d.firstElementChild.style.width=w+'px';
+     const w=k===i?16:base(k); d.firstElementChild.style.width=w+'px';
      d.style.setProperty('--nw-2q6r4',w+'px');}});
   cap.textContent=String(i+1).padStart(2,'0')+' / '+String(S.length).padStart(2,'0');
   paintBG(S[i].bg);
