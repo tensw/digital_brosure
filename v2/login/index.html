@@ -13,8 +13,8 @@ body{font:15px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSyst
 .brand{position:relative;overflow:hidden;padding:44px 52px;display:flex;flex-direction:column;
  background:radial-gradient(900px 700px at 24% 22%,#101a3e 0%,#080d1e 56%,#05070f 100%)}
 .brand canvas{position:absolute;inset:0;width:100%;height:100%}
-.bt{position:relative;z-index:2;font:800 20px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:#fff}
-.bs{position:relative;z-index:2;margin-top:10px;font-size:14px;font-weight:600;color:var(--ink2);letter-spacing:-.3px}
+.bt{position:relative;z-index:2;display:block;align-self:flex-start;height:31px;width:auto}
+.bs{position:relative;z-index:2;margin-top:13px;font-size:14px;font-weight:600;color:var(--ink2);letter-spacing:-.3px}
 .bfig{position:absolute;left:50%;top:50%;width:min(46vw,520px);aspect-ratio:1;transform:translate(-50%,-50%);
  border-radius:38%;pointer-events:none;
  background:conic-gradient(from 210deg,rgba(99,215,255,.55),rgba(143,157,255,.45) 34%,
@@ -59,7 +59,7 @@ button[disabled]{opacity:.5;cursor:default}
  <section class="brand">
   <div class="bfig"></div>
   <canvas id="cv"></canvas>
-  <div class="bt">BIBLO</div>
+  <img class="bt" src="/assets/fav/biblo-logo-light.png" alt="BIBLO" width="134" height="31">
   <div class="bs">대학과 도서관의 데이터를 연결하는 AI 플랫폼</div>
   <div class="bnote">2026 · DIGITAL BROCHURE</div>
  </section>
