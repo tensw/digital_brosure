@@ -2,6 +2,12 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const auth = require('./auth');
+/* ── AI 크롤러 차단 ──
+   로그인 게이트가 이미 대부분을 막지만, 학습 수집은 명시적으로 거절한다. */
+const AI_UA = /(GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|Claude-Web|anthropic-ai|CCBot|Google-Extended|PerplexityBot|Applebot-Extended|Bytespider|Amazonbot|meta-externalagent|cohere-ai|Diffbot|ImagesiftBot|Omgili|Timpibot|YouBot|Scrapy|python-requests|node-fetch)/i;
+const NOAI = 'noai, noimageai, noindex, nofollow, noarchive, nosnippet';
+
+
 
 const PORT = 3000;
 const ROOT = path.resolve(path.join(__dirname, 'v2'));
@@ -26,7 +32,7 @@ const MIME = {
   '.webp': 'image/webp',
 };
 
-function sendFile(res, filePath) {
+function sendFile(res, filePath, guard) {
   const ext = path.extname(filePath).toLowerCase();
   const contentType = MIME[ext] || 'application/octet-stream';
   fs.readFile(filePath, (err, data) => {
@@ -46,6 +52,13 @@ function sendFile(res, filePath) {
     // HTML 은 브라우저가 임의로 캐시하지 않게 한다 (배포 직후 옛 화면이 뜨던 문제)
     const headers = { 'Content-Type': contentType };
     if (ext === '.html') headers['Cache-Control'] = 'no-cache, must-revalidate';
+    if (guard) {
+      headers['X-Robots-Tag'] = NOAI;
+      if (ext === '.html') {
+        const out = Buffer.from(injectGuard(data.toString('utf8')), 'utf8');
+        res.writeHead(200, headers); res.end(out); return;
+      }
+    }
     res.writeHead(200, headers);
     res.end(data);
   });
@@ -118,6 +131,11 @@ function handleAuthApi(req, res, urlPath) {
   return json(res, 404, { ok: false, msg: '없는 경로' });
 }
 
+function injectGuard(html) {
+  const tag = '<script src="/2026/_guard.js"></script>';
+  const i = html.lastIndexOf('</body>');
+  return i < 0 ? html + tag : html.slice(0, i) + tag + html.slice(i);
+}
 function sendGate(res, name) {
   fs.readFile(path.join(ROOT, name, 'index.html'), (err, data) => {
     if (err) { res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
@@ -133,6 +151,11 @@ const server = http.createServer((req, res) => {
   let urlPath;
   try { urlPath = decodeURIComponent(rawPath); }
   catch (e) { res.writeHead(400, { 'Content-Type': 'text/plain' }); res.end('Bad Request'); return; }
+  if (AI_UA.test(req.headers['user-agent'] || '')) {
+    res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8', 'X-Robots-Tag': NOAI });
+    res.end('이 자료는 자동 수집을 허용하지 않습니다.');
+    return;
+  }
   if (urlPath.startsWith('/api/auth/')) return handleAuthApi(req, res, urlPath);
 
   // 잠긴 구간은 세션이 있어야 지나간다.
@@ -178,7 +201,7 @@ const server = http.createServer((req, res) => {
       `${filePath}.html`,
     ];
     const tryNext = (i) => {
-      if (i >= candidates.length) { sendFile(res, filePath); return; }
+      if (i >= candidates.length) { sendFile(res, filePath, isGated(urlPath)); return; }
       fs.stat(candidates[i], (err, st) => {
         if (!err && st.isFile()) {
           // 폴더의 index.html 을 줄 때는 주소 끝에 / 를 붙여 리다이렉트한다.
@@ -189,7 +212,7 @@ const server = http.createServer((req, res) => {
             res.end();
             return;
           }
-          sendFile(res, candidates[i]);
+          sendFile(res, candidates[i], isGated(urlPath));
         }
         else { tryNext(i + 1); }
       });
@@ -198,7 +221,7 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  sendFile(res, filePath);
+  sendFile(res, filePath, isGated(urlPath));
 });
 
 server.listen(PORT, () => {
