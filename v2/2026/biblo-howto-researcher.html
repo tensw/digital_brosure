@@ -108,6 +108,15 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
    원본 CSS 는 전부 #chapter-4 로 묶여 있어 스코프만 .wqx 로 바꿔 통째로 가져왔다.
    @media 안의 좁은 화면용 규칙(28개)은 제외한다. 무대는 1600px 고정인데 그 규칙이
    조건 없이 풀리면 결과 3열이 2열로, 우측 장바구니가 통째로 접힌다. */
+/* 큰 안내 알약 — 시안 창 경계를 넘어 슬라이드 요소로 떠 있다.
+   꼬리는 두지 않는다. 위치를 흩어 «여기저기서 들어온다» 를 보인다. */
+.pil-p4{position:absolute;z-index:9;display:flex;align-items:center;gap:11px;
+ border-radius:999px;padding:15px 28px;white-space:nowrap;
+ font-size:21px;font-weight:800;letter-spacing:-.6px;color:#fff;
+ background:#2c3245;box-shadow:0 22px 44px -14px rgba(10,14,34,.62)}
+.pil-p4.warn{background:#f0665f;box-shadow:0 22px 44px -14px rgba(240,102,95,.6)}
+.pil-p4 svg{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-width:1.9;
+ stroke-linecap:round;stroke-linejoin:round;opacity:.95}
 /* 표지 위 툴팁 — 이 책이 어느 신호로 큐에 들어왔는지 */
 .spc{position:relative}
 .wq-tip{position:absolute;left:7px;right:7px;top:92px;z-index:3;
@@ -528,11 +537,11 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
         </div>
         <div class="wq-body w2">
           <div class="wq-shop">
-            <div class="spc in"><img src="https://zghartrwhjfqydlbhigs.supabase.co/storage/v1/object/public/book-covers/9791189327156.jpg" alt="물고기는 존재하지 않는다 표지" loading="lazy"><span class="wq-tip">예약·대기 증가로 <b>AI 추천</b></span><span class="tt">물고기는 존재하지 않는다</span><span class="au">룰루 밀러 · 곰출판</span><span class="pr">17,000원</span><span class="wq-chip g">소장 중 · 복본 10</span><span class="btns"><button class="wq-btn m p" type="button">담김 ✓</button><a class="wq-btn m s" href="https://search.kyobobook.co.kr/search?keyword=9791189327156" target="_blank" rel="noopener">출판사 보기 ↗</a></span></div>
+            <div class="spc in"><img src="https://zghartrwhjfqydlbhigs.supabase.co/storage/v1/object/public/book-covers/9791189327156.jpg" alt="물고기는 존재하지 않는다 표지" loading="lazy"><span class="tt">물고기는 존재하지 않는다</span><span class="au">룰루 밀러 · 곰출판</span><span class="pr">17,000원</span><span class="wq-chip g">소장 중 · 복본 10</span><span class="btns"><button class="wq-btn m p" type="button">담김 ✓</button><a class="wq-btn m s" href="https://search.kyobobook.co.kr/search?keyword=9791189327156" target="_blank" rel="noopener">출판사 보기 ↗</a></span></div>
             <div class="spc in"><img src="https://zghartrwhjfqydlbhigs.supabase.co/storage/v1/object/public/book-covers/9791167740984.jpg" alt="도둑맞은 집중력 표지" loading="lazy"><span class="wq-tip">희망도서 신청으로 <b>들어왔어요</b></span><span class="tt">도둑맞은 집중력</span><span class="au">요한 하리 · 어크로스</span><span class="pr">18,800원</span><span class="wq-chip g">소장 중 · 복본 10</span><span class="btns"><button class="wq-btn m p" type="button">담김 ✓</button><a class="wq-btn m s" href="https://search.kyobobook.co.kr/search?keyword=9791167740984" target="_blank" rel="noopener">출판사 보기 ↗</a></span></div>
-            <div class="spc in"><img src="https://zghartrwhjfqydlbhigs.supabase.co/storage/v1/object/public/book-covers/9791130646381.jpg" alt="이처럼 사소한 것들 표지" loading="lazy"><span class="wq-tip">파본·훼손·분실 대체로 <b>AI 추천</b></span><span class="tt">이처럼 사소한 것들</span><span class="au">클레어 키건 · 다산책방</span><span class="pr">13,800원</span><span class="wq-chip g">소장 중 · 복본 7</span><span class="btns"><button class="wq-btn m p" type="button">담김 ✓</button><a class="wq-btn m s" href="https://search.kyobobook.co.kr/search?keyword=9791130646381" target="_blank" rel="noopener">출판사 보기 ↗</a></span></div>
+            <div class="spc in"><img src="https://zghartrwhjfqydlbhigs.supabase.co/storage/v1/object/public/book-covers/9791130646381.jpg" alt="이처럼 사소한 것들 표지" loading="lazy"><span class="tt">이처럼 사소한 것들</span><span class="au">클레어 키건 · 다산책방</span><span class="pr">13,800원</span><span class="wq-chip g">소장 중 · 복본 7</span><span class="btns"><button class="wq-btn m p" type="button">담김 ✓</button><a class="wq-btn m s" href="https://search.kyobobook.co.kr/search?keyword=9791130646381" target="_blank" rel="noopener">출판사 보기 ↗</a></span></div>
             <div class="spc"><img src="https://zghartrwhjfqydlbhigs.supabase.co/storage/v1/object/public/book-covers/9791167372864.jpg" alt="구의 증명 표지" loading="lazy"><span class="wq-tip">복본 부족·대출 집중으로 <b>AI 추천</b></span><span class="tt">구의 증명</span><span class="au">최진영 · 은행나무</span><span class="pr">12,000원</span><span class="wq-chip g">소장 중 · 복본 6</span><span class="btns"><button class="wq-btn m" type="button">담기</button><a class="wq-btn m s" href="https://search.kyobobook.co.kr/search?keyword=9791167372864" target="_blank" rel="noopener">출판사 보기 ↗</a></span></div>
-            <div class="spc"><img src="https://zghartrwhjfqydlbhigs.supabase.co/storage/v1/object/public/book-covers/9791141602451.jpg" alt="절창 표지" loading="lazy"><span class="wq-tip">우리관 미보유·연계관 보유로 <b>AI 추천</b></span><span class="tt">절창</span><span class="au">구병모 · 문학동네</span><span class="pr">18,000원</span><span class="wq-chip a">미보유 · 연계관 보유</span><span class="btns"><button class="wq-btn m" type="button">담기</button><a class="wq-btn m s" href="https://search.kyobobook.co.kr/search?keyword=9791141602451" target="_blank" rel="noopener">출판사 보기 ↗</a></span></div>
+            <div class="spc"><img src="https://zghartrwhjfqydlbhigs.supabase.co/storage/v1/object/public/book-covers/9791141602451.jpg" alt="절창 표지" loading="lazy"><span class="tt">절창</span><span class="au">구병모 · 문학동네</span><span class="pr">18,000원</span><span class="wq-chip a">미보유 · 연계관 보유</span><span class="btns"><button class="wq-btn m" type="button">담기</button><a class="wq-btn m s" href="https://search.kyobobook.co.kr/search?keyword=9791141602451" target="_blank" rel="noopener">출판사 보기 ↗</a></span></div>
             <div class="spc"><img src="https://zghartrwhjfqydlbhigs.supabase.co/storage/v1/object/public/book-covers/9788997381678.jpg" alt="소년과 두더지와 여우와 말 표지" loading="lazy"><span class="wq-tip">사서가 직접 <b>등록한 추천</b></span><span class="tt">소년과 두더지와 여우와 말</span><span class="au">찰리 맥커시 · 상상의힘</span><span class="pr">22,000원</span><span class="wq-chip a">미보유 · 연계관 보유</span><span class="btns"><button class="wq-btn m" type="button">담기</button><a class="wq-btn m s" href="https://search.kyobobook.co.kr/search?keyword=9788997381678" target="_blank" rel="noopener">출판사 보기 ↗</a></span></div>
           </div>
           <aside class="wq-detail">
@@ -554,6 +563,13 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
         <button class="wq-btn p" type="button">승인 요청 보내기 →</button>
       </div>
     </div></div></div>
+<!-- 신호 알약 — 시안 창 밖으로 걸쳐 «어디서 들어왔는지» 를 크게 짚는다 -->
+<div class="pil-p4" style="left:1397px;top:318px"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 19.5c.6-3.4 3.3-5 6.5-5s5.9 1.6 6.5 5"/></svg>희망도서 신청</div>
+<div class="pil-p4 warn" style="left:586px;top:430px"><svg viewBox="0 0 24 24"><path d="M12 4.5 21 19.5H3z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>파본·훼손·분실 대체</div>
+<div class="pil-p4" style="left:1387px;top:636px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.4V12l3 1.8"/></svg>예약·대기 증가</div>
+
+
+
 
 
 
