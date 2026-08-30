@@ -1,0 +1,121 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>로그인 — BIBLO</title>
+<style>
+:root{--ink:#e9eefb;--ink2:#93a6cc;--ink3:#5d7099;--line:rgba(140,170,240,.22)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font:15px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ color:var(--ink);background:#05070f;-webkit-font-smoothing:antialiased;overflow:hidden}
+.wrap{display:grid;grid-template-columns:1fr 1fr;height:100%}
+
+/* ── 좌: 브랜드 면 ── */
+.brand{position:relative;overflow:hidden;padding:44px 52px;display:flex;flex-direction:column;
+ background:radial-gradient(900px 700px at 24% 22%,#101a3e 0%,#080d1e 56%,#05070f 100%)}
+.brand canvas{position:absolute;inset:0;width:100%;height:100%}
+.bt{position:relative;z-index:2;font:800 20px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:#fff}
+.bs{position:relative;z-index:2;margin-top:10px;font-size:14px;font-weight:600;color:var(--ink2);letter-spacing:-.3px}
+.bfig{position:absolute;left:50%;top:50%;width:min(46vw,520px);aspect-ratio:1;transform:translate(-50%,-50%);
+ border-radius:38%;pointer-events:none;
+ background:conic-gradient(from 210deg,rgba(99,215,255,.55),rgba(143,157,255,.45) 34%,
+   rgba(213,155,255,.42) 62%,rgba(99,215,255,.55));filter:blur(38px);opacity:.62}
+.bnote{position:relative;z-index:2;margin-top:auto;font:600 11.5px/1.7 ui-monospace,Menlo,monospace;
+ letter-spacing:.06em;color:var(--ink3)}
+
+/* ── 우: 로그인 면 (반투명 블러 워시) ── */
+.panel{position:relative;display:flex;flex-direction:column;padding:44px 52px;
+ background:#070b18;overflow:hidden}
+.wash{position:absolute;left:-10%;top:-18%;width:120%;height:78%;pointer-events:none;
+ background:radial-gradient(52% 46% at 42% 30%,rgba(99,215,255,.20) 0%,rgba(99,215,255,0) 70%),
+  radial-gradient(46% 42% at 74% 20%,rgba(143,157,255,.18) 0%,rgba(143,157,255,0) 72%),
+  radial-gradient(40% 40% at 20% 8%,rgba(213,155,255,.14) 0%,rgba(213,155,255,0) 74%);
+ filter:blur(28px)}
+.top{position:relative;z-index:2;display:flex;justify-content:flex-end;
+ font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:var(--ink3)}
+.form{position:relative;z-index:2;margin:auto 0;width:min(360px,100%)}
+h1{font-size:31px;font-weight:800;letter-spacing:-1.1px}
+.sub{margin-top:9px;font-size:13.5px;color:var(--ink2);letter-spacing:-.3px}
+.f{margin-top:26px;display:flex;flex-direction:column;gap:9px}
+input{all:unset;box-sizing:border-box;width:100%;height:46px;padding:0 16px;border-radius:12px;
+ background:rgba(255,255,255,.045);border:1px solid var(--line);color:var(--ink);
+ font-size:14px;transition:border-color .18s,background .18s}
+input::placeholder{color:#6d7fa6}
+input:focus{border-color:rgba(120,200,255,.6);background:rgba(255,255,255,.07)}
+.row{margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.hint{font-size:12.5px;color:var(--ink3);letter-spacing:-.2px}
+button{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+ height:40px;padding:0 18px;border-radius:999px;
+ font-size:13.5px;font-weight:800;letter-spacing:-.3px;color:#08122c;
+ background:linear-gradient(140deg,#7fd8f5,#9fb4ff);
+ box-shadow:0 12px 26px -12px rgba(90,170,255,.85);transition:transform .16s,filter .16s}
+button:hover{filter:brightness(1.06)} button:active{transform:translateY(1px)}
+button[disabled]{opacity:.5;cursor:default}
+.msg{margin-top:14px;min-height:18px;font-size:12.5px;font-weight:700;color:#ff9d9d;letter-spacing:-.2px}
+.foot{position:relative;z-index:2;display:flex;justify-content:space-between;
+ font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:var(--ink3)}
+@media(max-width:900px){.wrap{grid-template-columns:1fr}.brand{display:none}}
+</style></head><body>
+<div class="wrap">
+ <section class="brand">
+  <div class="bfig"></div>
+  <canvas id="cv"></canvas>
+  <div class="bt">BIBLO</div>
+  <div class="bs">대학과 도서관의 데이터를 연결하는 AI 플랫폼</div>
+  <div class="bnote">2026 · DIGITAL BROCHURE</div>
+ </section>
+
+ <section class="panel">
+  <div class="wash"></div>
+  <div class="top">TENSOFTWORKS</div>
+  <div class="form">
+   <h1>로그인</h1>
+   <p class="sub">이 자료는 초대받은 분만 볼 수 있습니다.</p>
+   <form class="f" id="f" autocomplete="on">
+    <input id="e" type="email" placeholder="이메일" autocomplete="username" required>
+    <input id="p" type="password" placeholder="비밀번호" autocomplete="current-password" required>
+    <div class="row">
+     <span class="hint">첫 로그인은 비밀번호 <b>1234</b></span>
+     <button id="go" type="submit">들어가기 →</button>
+    </div>
+   </form>
+   <div class="msg" id="m"></div>
+  </div>
+  <div class="foot"><span>© 2026 TENSOFTWORKS</span><span>BIBLO.AI</span></div>
+ </section>
+</div>
+
+<script>
+/* 좌측 입자 — 덱 표지와 같은 결 */
+(function(){
+ const c=document.getElementById('cv'); if(!c) return;
+ const x=c.getContext('2d'); let W=0,H=0,P=[],raf=0;
+ const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ function size(){const r=c.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);
+  W=r.width;H=r.height;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);
+  P=Array.from({length:Math.round(W*H/9000)},()=>({x:Math.random()*W,y:Math.random()*H,
+   r:.6+Math.random()*1.5,a:.12+Math.random()*.4,v:.05+Math.random()*.16}));}
+ function draw(){x.clearRect(0,0,W,H);
+  for(const p of P){x.beginPath();x.arc(p.x,p.y,p.r,0,6.283);
+   x.fillStyle='rgba(150,200,255,'+p.a.toFixed(2)+')';x.fill();
+   if(!RM){p.y-=p.v; if(p.y<-4){p.y=H+4;p.x=Math.random()*W;}}}
+  raf=RM?0:requestAnimationFrame(draw);}
+ size(); draw(); addEventListener('resize',()=>{cancelAnimationFrame(raf);size();draw();});
+})();
+
+const qs=new URLSearchParams(location.search);
+const next=qs.get('next')||'/2026/';
+const f=document.getElementById('f'), m=document.getElementById('m'), go=document.getElementById('go');
+f.addEventListener('submit', async (ev)=>{
+ ev.preventDefault(); m.textContent=''; go.disabled=true;
+ try{
+  const r=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},
+   body:JSON.stringify({email:document.getElementById('e').value,password:document.getElementById('p').value})});
+  const j=await r.json();
+  if(!j.ok){ m.textContent=j.msg||'로그인하지 못했습니다.'; go.disabled=false; return; }
+  location.href = j.mustChange
+    ? '/account/?first=1&next='+encodeURIComponent(next)
+    : next;
+ }catch(e){ m.textContent='서버에 연결하지 못했습니다.'; go.disabled=false; }
+});
+</script>
+</body></html>

@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const auth = require('./auth');
 
 const PORT = 3000;
 const ROOT = path.resolve(path.join(__dirname, 'v2'));
@@ -50,11 +51,81 @@ function sendFile(res, filePath) {
   });
 }
 
+/* ── 로그인 게이트 ────────────────────────────────────────────
+   /2026 아래 전부를 막는다. 파일을 직접 부르는 주소도 함께 막히도록
+   경로 단위로 판단한다(클라이언트 스크립트로 가리는 방식은 소용없다). */
+const GATED = ['/2026'];
+const isGated = (p) => GATED.some(g => p === g || p.startsWith(g + '/'));
+
+function readBody(req, cb) {
+  let n = 0; const chunks = [];
+  req.on('data', d => { n += d.length; if (n > 8192) { req.destroy(); return; } chunks.push(d); });
+  req.on('end', () => { try { cb(JSON.parse(Buffer.concat(chunks).toString('utf8') || '{}')); }
+                        catch (e) { cb(null); } });
+}
+function json(res, code, obj, extra) {
+  const h = Object.assign({ 'Content-Type': 'application/json; charset=utf-8',
+                            'Cache-Control': 'no-store' }, extra || {});
+  res.writeHead(code, h); res.end(JSON.stringify(obj));
+}
+
+function handleAuthApi(req, res, urlPath) {
+  if (urlPath === '/api/auth/me') {
+    const s = auth.session(req);
+    const d = auth.load();
+    const u = s ? d.users[s.e] : null;
+    return json(res, 200, { ok: !!s, email: s ? s.e : null,
+      admin: !!(s && s.a), mustChange: !!(u && u.mustChange) });
+  }
+  if (req.method !== 'POST') return json(res, 405, { ok: false, msg: 'POST 만 허용' });
+
+  if (urlPath === '/api/auth/login') {
+    return readBody(req, (b) => {
+      if (!b) return json(res, 400, { ok: false, msg: '요청을 읽지 못했습니다.' });
+      const r = auth.login(b.email, b.password);
+      if (!r.ok) return json(res, 401, { ok: false, msg: r.msg });
+      json(res, 200, { ok: true, mustChange: r.mustChange, admin: r.admin },
+           { 'Set-Cookie': auth.cookieHeader(r.token, r.maxAge) });
+    });
+  }
+  if (urlPath === '/api/auth/logout') {
+    return json(res, 200, { ok: true }, { 'Set-Cookie': auth.cookieHeader('', 0) });
+  }
+  if (urlPath === '/api/auth/password') {
+    const s = auth.session(req);
+    if (!s) return json(res, 401, { ok: false, msg: '로그인이 필요합니다.' });
+    return readBody(req, (b) => {
+      if (!b) return json(res, 400, { ok: false, msg: '요청을 읽지 못했습니다.' });
+      const r = auth.changePw(s.e, b.current, b.next);
+      json(res, r.ok ? 200 : 400, r);
+    });
+  }
+  return json(res, 404, { ok: false, msg: '없는 경로' });
+}
+
 const server = http.createServer((req, res) => {
   const rawPath = req.url === '/' ? DEFAULT_DOC : req.url.split('?')[0];
   let urlPath;
   try { urlPath = decodeURIComponent(rawPath); }
   catch (e) { res.writeHead(400, { 'Content-Type': 'text/plain' }); res.end('Bad Request'); return; }
+  if (urlPath.startsWith('/api/auth/')) return handleAuthApi(req, res, urlPath);
+
+  // 잠긴 구간은 세션이 있어야 지나간다
+  if (isGated(urlPath)) {
+    const s = auth.session(req);
+    if (!s) {
+      res.writeHead(302, { Location: '/login/?next=' + encodeURIComponent(req.url),
+                           'Cache-Control': 'no-store' });
+      res.end(); return;
+    }
+    const u = auth.load().users[s.e];
+    if (u && u.mustChange && !urlPath.startsWith('/account')) {
+      res.writeHead(302, { Location: '/account/?first=1&next=' + encodeURIComponent(req.url),
+                           'Cache-Control': 'no-store' });
+      res.end(); return;
+    }
+  }
+
   const filePath = path.join(ROOT, urlPath);
 
   // Defense-in-depth: never serve outside the web root (path traversal guard).

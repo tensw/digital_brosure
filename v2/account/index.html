@@ -1,0 +1,114 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>비밀번호 변경 — BIBLO</title>
+<style>
+:root{--ink:#e9eefb;--ink2:#93a6cc;--ink3:#5d7099;--line:rgba(140,170,240,.22)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font:15px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ color:var(--ink);background:#05070f;-webkit-font-smoothing:antialiased;overflow:hidden}
+.wrap{display:grid;grid-template-columns:1fr 1fr;height:100%}
+.brand{position:relative;overflow:hidden;padding:44px 52px;display:flex;flex-direction:column;
+ background:radial-gradient(900px 700px at 24% 22%,#101a3e 0%,#080d1e 56%,#05070f 100%)}
+.bfig{position:absolute;left:50%;top:50%;width:min(46vw,520px);aspect-ratio:1;transform:translate(-50%,-50%);
+ border-radius:38%;pointer-events:none;
+ background:conic-gradient(from 210deg,rgba(99,215,255,.55),rgba(143,157,255,.45) 34%,
+   rgba(213,155,255,.42) 62%,rgba(99,215,255,.55));filter:blur(38px);opacity:.62}
+.bt{position:relative;z-index:2;font:800 20px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:#fff}
+.bs{position:relative;z-index:2;margin-top:10px;font-size:14px;font-weight:600;color:var(--ink2);letter-spacing:-.3px}
+.bnote{position:relative;z-index:2;margin-top:auto;font:600 11.5px/1.7 ui-monospace,Menlo,monospace;
+ letter-spacing:.06em;color:var(--ink3)}
+.panel{position:relative;display:flex;flex-direction:column;padding:44px 52px;background:#070b18;overflow:hidden}
+.wash{position:absolute;left:-10%;top:-18%;width:120%;height:78%;pointer-events:none;
+ background:radial-gradient(52% 46% at 42% 30%,rgba(99,215,255,.20) 0%,rgba(99,215,255,0) 70%),
+  radial-gradient(46% 42% at 74% 20%,rgba(143,157,255,.18) 0%,rgba(143,157,255,0) 72%);filter:blur(28px)}
+.top{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;
+ font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:var(--ink3)}
+.top a{color:var(--ink3);text-decoration:none}
+.top a:hover{color:var(--ink2)}
+.form{position:relative;z-index:2;margin:auto 0;width:min(380px,100%)}
+h1{font-size:29px;font-weight:800;letter-spacing:-1px}
+.sub{margin-top:9px;font-size:13.5px;color:var(--ink2);letter-spacing:-.3px}
+.who{margin-top:16px;padding:11px 14px;border-radius:11px;background:rgba(255,255,255,.04);
+ border:1px solid var(--line);font:700 12.5px/1 ui-monospace,Menlo,monospace;color:#cfe0ff}
+.f{margin-top:16px;display:flex;flex-direction:column;gap:9px}
+input{all:unset;box-sizing:border-box;width:100%;height:46px;padding:0 16px;border-radius:12px;
+ background:rgba(255,255,255,.045);border:1px solid var(--line);color:var(--ink);font-size:14px;
+ transition:border-color .18s,background .18s}
+input::placeholder{color:#6d7fa6}
+input:focus{border-color:rgba(120,200,255,.6);background:rgba(255,255,255,.07)}
+.row{margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.hint{font-size:12.5px;color:var(--ink3);letter-spacing:-.2px}
+button{all:unset;cursor:pointer;display:inline-flex;align-items:center;height:40px;padding:0 18px;
+ border-radius:999px;font-size:13.5px;font-weight:800;letter-spacing:-.3px;color:#08122c;
+ background:linear-gradient(140deg,#7fd8f5,#9fb4ff);
+ box-shadow:0 12px 26px -12px rgba(90,170,255,.85);transition:transform .16s,filter .16s}
+button:hover{filter:brightness(1.06)} button:active{transform:translateY(1px)}
+button[disabled]{opacity:.5;cursor:default}
+.msg{margin-top:14px;min-height:18px;font-size:12.5px;font-weight:700;letter-spacing:-.2px;color:#ff9d9d}
+.msg.ok{color:#7ee6b0}
+.foot{position:relative;z-index:2;display:flex;justify-content:space-between;
+ font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:var(--ink3)}
+@media(max-width:900px){.wrap{grid-template-columns:1fr}.brand{display:none}}
+</style></head><body>
+<div class="wrap">
+ <section class="brand">
+  <div class="bfig"></div>
+  <div class="bt">BIBLO</div>
+  <div class="bs">대학과 도서관의 데이터를 연결하는 AI 플랫폼</div>
+  <div class="bnote">2026 · DIGITAL BROCHURE</div>
+ </section>
+ <section class="panel">
+  <div class="wash"></div>
+  <div class="top"><span>TENSOFTWORKS</span><a href="#" id="out">로그아웃</a></div>
+  <div class="form">
+   <h1 id="h">비밀번호 변경</h1>
+   <p class="sub" id="s">새 비밀번호로 바꾸면 자료로 들어갑니다.</p>
+   <div class="who" id="who">—</div>
+   <form class="f" id="f">
+    <input id="c" type="password" placeholder="현재 비밀번호" autocomplete="current-password" required>
+    <input id="n" type="password" placeholder="새 비밀번호 (8자 이상)" autocomplete="new-password" required>
+    <input id="n2" type="password" placeholder="새 비밀번호 확인" autocomplete="new-password" required>
+    <div class="row">
+     <span class="hint" id="hint">초기 비밀번호는 다시 쓸 수 없습니다</span>
+     <button id="go" type="submit">변경하고 이동 →</button>
+    </div>
+   </form>
+   <div class="msg" id="m"></div>
+  </div>
+  <div class="foot"><span>© 2026 TENSOFTWORKS</span><span>BIBLO.AI</span></div>
+ </section>
+</div>
+<script>
+const qs=new URLSearchParams(location.search);
+const next=qs.get('next')||'/2026/';
+const first=qs.get('first')==='1';
+const m=document.getElementById('m'), go=document.getElementById('go');
+if(!first){ document.getElementById('s').textContent='비밀번호를 바꿉니다.';
+  go.textContent='변경 →'; }
+(async()=>{
+ const r=await fetch('/api/auth/me'); const j=await r.json();
+ if(!j.ok){ location.href='/login/?next='+encodeURIComponent(next); return; }
+ document.getElementById('who').textContent=j.email;
+ if(j.mustChange){ document.getElementById('h').textContent='첫 로그인입니다';
+   document.getElementById('s').textContent='초기 비밀번호를 바꾼 뒤 자료로 들어갑니다.'; }
+})();
+document.getElementById('out').addEventListener('click', async(e)=>{
+ e.preventDefault(); await fetch('/api/auth/logout',{method:'POST'}); location.href='/login/';
+});
+document.getElementById('f').addEventListener('submit', async(ev)=>{
+ ev.preventDefault(); m.className='msg'; m.textContent=''; 
+ const n=document.getElementById('n').value, n2=document.getElementById('n2').value;
+ if(n!==n2){ m.textContent='새 비밀번호가 서로 다릅니다.'; return; }
+ go.disabled=true;
+ try{
+  const r=await fetch('/api/auth/password',{method:'POST',headers:{'Content-Type':'application/json'},
+   body:JSON.stringify({current:document.getElementById('c').value,next:n})});
+  const j=await r.json();
+  if(!j.ok){ m.textContent=j.msg||'변경하지 못했습니다.'; go.disabled=false; return; }
+  m.className='msg ok'; m.textContent='변경했습니다. 이동합니다.';
+  setTimeout(()=>location.href=next, 700);
+ }catch(e){ m.textContent='서버에 연결하지 못했습니다.'; go.disabled=false; }
+});
+</script>
+</body></html>
