@@ -116,8 +116,8 @@ f.addEventListener('submit', async (ev)=>{
   const onLoginPath = location.pathname.indexOf('/login')===0;
   if(j.mustChange){ location.href = onLoginPath
     ? '/account/?first=1&next='+encodeURIComponent(next) : here; }   // 그 자리에서 변경 화면
-  else { location.href = next; }
-  if(!onLoginPath && !j.mustChange) location.reload();
+  else { location.href = j.admin ? '/admin/' : next; }   // 관리자는 초대자 관리부터
+  if(!onLoginPath && !j.mustChange && !j.admin) location.reload();
  }catch(e){ m.textContent='서버에 연결하지 못했습니다.'; go.disabled=false; }
 });
 </script>

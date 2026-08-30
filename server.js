@@ -54,7 +54,7 @@ function sendFile(res, filePath) {
 /* ── 로그인 게이트 ────────────────────────────────────────────
    /2026 아래 전부를 막는다. 파일을 직접 부르는 주소도 함께 막히도록
    경로 단위로 판단한다(클라이언트 스크립트로 가리는 방식은 소용없다). */
-const GATED = ['/2026'];
+const GATED = ['/2026', '/admin'];
 const isGated = (p) => GATED.some(g => p === g || p.startsWith(g + '/'));
 
 function readBody(req, cb) {
@@ -142,6 +142,13 @@ const server = http.createServer((req, res) => {
       if (!isDoc) { res.writeHead(401, { 'Content-Type': 'text/plain; charset=utf-8',
         'Cache-Control': 'no-store' }); res.end('로그인이 필요합니다.'); return; }
       return sendGate(res, 'login');
+    }
+    if (urlPath.indexOf('/admin') === 0 && !s.a) {
+      res.writeHead(403, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
+      res.end('<meta charset="utf-8"><body style="margin:0;display:grid;place-items:center;height:100vh;'
+        + 'background:#05070f;color:#93a6cc;font:15px/1.7 -apple-system,system-ui,sans-serif">'
+        + '<div>관리자만 볼 수 있습니다. <a href="/2026/" style="color:#7fa9e0">자료로 가기</a></div>');
+      return;
     }
     const u = auth.load().users[s.e];
     if (u && u.mustChange) {

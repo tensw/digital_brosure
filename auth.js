@@ -92,6 +92,11 @@ function login(email, pw) {
   } else if (!verify(pw, u)) {
     return { ok: false, msg: '이메일 또는 비밀번호가 맞지 않습니다.' };
   }
+  const now = new Date().toISOString();
+  u.loginCount = (u.loginCount || 0) + 1;
+  u.firstLoginAt = u.firstLoginAt || now;
+  u.lastLoginAt = now;
+  d.users[e] = u; save();
   const tok = sign({ e, a: !!u.admin, x: Date.now() + TTL });
   return { ok: true, token: tok, maxAge: TTL, mustChange: !!u.mustChange, admin: !!u.admin };
 }
@@ -126,7 +131,10 @@ function listUsers() {
   const d = load();
   return Object.keys(d.users).sort().map(e => ({
     email: e, admin: !!d.users[e].admin, mustChange: !!d.users[e].mustChange,
-    createdAt: d.users[e].createdAt, updatedAt: d.users[e].updatedAt }));
+    createdAt: d.users[e].createdAt, updatedAt: d.users[e].updatedAt,
+    loginCount: d.users[e].loginCount || 0,
+    firstLoginAt: d.users[e].firstLoginAt || null,
+    lastLoginAt: d.users[e].lastLoginAt || null }));
 }
 function resetPw(email) {
   const d = load(), e = norm(email);
