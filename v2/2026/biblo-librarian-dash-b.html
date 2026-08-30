@@ -27,25 +27,28 @@ body{
    다만 이 장은 어두운 대시보드라 밝은 보라 위에서는 카드 밖 요소(워드마크·사이드바·HUD)가
    묻힌다. 배경 바로 위에 투명한 검정을 한 겹 깔아 대비를 되살린다. */
 .emb-bg0, .emb-bg0 body{background:transparent !important}
-.emb-bg0 .scene{background:transparent}
-/* 덱 안에서는 불투명 바닥(--bg0) 대신 반투명 검정을 깔아 보라 배경이 비치게 하고,
-   그 검정이 가운데에서 원으로 퍼지며 진해진다. */
+/* 덱 안에서는 불투명 바닥(--bg0) 대신 반투명 검정을 깔아 보라 배경(viol)이 비치게 한다 */
 .emb-bg0 .scene::before{
  background:
   radial-gradient(120% 90% at 78% 8%, rgba(60,80,170,.34) 0%, transparent 55%),
   radial-gradient(100% 80% at 20% 95%, rgba(30,40,100,.5) 0%, transparent 58%),
-  rgba(8,12,34,.62);
+  rgba(8,12,34,.62)}
+/* 어두운 것은 ::before 만이 아니다 — 좌측 결(.slat)·바닥(.floor)·도트(.dots) 도 함께 어둡다.
+   그래서 마스크를 .scene 에 걸어 네 겹을 한 덩어리로 퍼뜨린다. */
+.emb-bg0 .scene{background:transparent;
  -webkit-mask-image:radial-gradient(circle,#000 50%,rgba(0,0,0,.55) 66%,transparent 80%);
  mask-image:radial-gradient(circle,#000 50%,rgba(0,0,0,.55) 66%,transparent 80%);
  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
  -webkit-mask-position:50% 50%;mask-position:50% 50%;
- -webkit-mask-size:0% 0%;mask-size:0% 0%;
- animation:scenespread-27 2.1s cubic-bezier(.22,.68,.3,1) .15s forwards}
+ -webkit-mask-size:0% 0%;mask-size:0% 0%}
+/* 덱이 iframe 을 미리 켜두고 load 를 기다린 뒤 스크롤하므로,
+   로드 시점에 시작하면 화면에 닿기 전에 끝나 있다. 실제로 보일 때 시작한다. */
+.emb-bg0.go-27 .scene{animation:scenespread-27 2.1s cubic-bezier(.22,.68,.3,1) forwards}
 @keyframes scenespread-27{
  from{-webkit-mask-size:0% 0%;mask-size:0% 0%}
  to  {-webkit-mask-size:320% 320%;mask-size:320% 320%}}
 @media (prefers-reduced-motion:reduce){
- .emb-bg0 .scene::before{-webkit-mask-image:none;mask-image:none;animation:none}}
+ .emb-bg0 .scene{-webkit-mask-image:none;mask-image:none;animation:none}}
 .scene{position:fixed;inset:0;z-index:0;overflow:hidden}
 .scene::before{content:'';position:absolute;inset:0;
  background:
@@ -763,5 +766,17 @@ $('#q').addEventListener('input', e=>{ filter = e.target.value.trim(); bi = 0; d
 
 tabs(); renderAll(); today(); news(); tone();
 </script>
-<script>if(window.self!==window.top) document.documentElement.classList.add('emb-bg0');</script>
+<script>
+if(window.self!==window.top) document.documentElement.classList.add('emb-bg0');
+/* 배경 확산은 «이 장이 실제로 보일 때» 시작한다 */
+(function(){
+ var go=function(){document.documentElement.classList.add('go-27');};
+ var fe=null; try{ fe=window.frameElement; }catch(e){}
+ if(!fe || !('IntersectionObserver' in window)){ go(); return; }
+ var io=new IntersectionObserver(function(es){
+   for(var i=0;i<es.length;i++) if(es[i].isIntersecting && es[i].intersectionRatio>0.5){ io.disconnect(); go(); return; }
+ },{threshold:[0.5]});
+ io.observe(fe);
+})();
+</script>
 </body></html>
