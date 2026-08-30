@@ -29,14 +29,25 @@ canvas.fx-4k9m2{position:absolute;inset:0;width:100%;height:100%;z-index:1;point
  letter-spacing:.16em;color:var(--ink3);margin-top:5px}
 
 /* ── 구간 캡션 ── */
-.cap-4k9m2{position:absolute;z-index:7;display:block;text-align:left;white-space:normal}
-.cap-4k9m2 u{display:block;text-decoration:none;font:700 10.5px/1 ui-monospace,Menlo,monospace;
- letter-spacing:.2em;color:#7c88b8;margin-bottom:9px}
-.cap-4k9m2 b{display:block;font-size:15px;font-weight:800;letter-spacing:-.4px;line-height:1.35}
-.cap-4k9m2 em{display:block;margin-top:5px;font-style:normal;
- font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:#7c88b8}
-.cap-4k9m2.raw-4k9m2 b{color:#c96fd4} .cap-4k9m2.map-4k9m2 b{color:#93a0f0}
-.cap-4k9m2.gate-4k9m2 b{color:#5fb6e8} .cap-4k9m2.ui-4k9m2 b{color:#5ce0f0}
+/* ── 상단 흐름 박스 3단 ── */
+.flow-4k9m2{position:absolute;z-index:8;display:grid;
+ grid-template-columns:1fr 34px 1fr 34px 1fr;align-items:center}
+.fbox-4k9m2{display:flex;align-items:center;gap:14px;height:86px;padding:0 18px;border-radius:16px;
+ background:linear-gradient(120deg,rgba(16,24,52,.86),rgba(12,18,42,.70));
+ border:1px solid rgba(140,170,240,.26);
+ box-shadow:0 18px 40px -18px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.12)}
+.fbox-4k9m2 .fic-4k9m2{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;
+ background:linear-gradient(150deg,rgba(56,214,248,.30),rgba(129,140,248,.20));
+ border:1px solid rgba(150,220,255,.42);
+ box-shadow:0 0 22px rgba(56,190,248,.26),inset 0 1px 0 rgba(255,255,255,.34)}
+.fbox-4k9m2 u{display:block;text-decoration:none;
+ font:700 8.8px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:#5fd0f0}
+.fbox-4k9m2 b{display:block;margin-top:6px;font-size:15px;font-weight:800;
+ letter-spacing:-.4px;color:#e7eeff;white-space:nowrap}
+.fbox-4k9m2 s{display:block;margin-top:4px;text-decoration:none;
+ font-size:11.5px;font-weight:500;line-height:1.4;color:var(--ink3);white-space:nowrap}
+.fchev-4k9m2{justify-self:center;width:13px;height:13px;transform:rotate(45deg);
+ border-top:2px solid rgba(150,200,255,.45);border-right:2px solid rgba(150,200,255,.45)}
 
 /* ── 유리 공통 ── */
 .glass-4k9m2{position:absolute;border-radius:22px;
@@ -72,12 +83,12 @@ canvas.fx-4k9m2{position:absolute;inset:0;width:100%;height:100%;z-index:1;point
 .capi-4k9m2 i{display:block;margin-top:4px;font-style:normal;font-size:7.6px;font-weight:600;
  letter-spacing:.06em;color:#8fb3dc}
 
-.chip-4k9m2{position:absolute;z-index:6;border-radius:9px;padding:5px 10px;white-space:nowrap;
- background:rgba(10,16,36,.72);border:1px solid rgba(150,170,240,.34);
- box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 8px 20px -10px rgba(0,0,0,.9);
- font-weight:700;font-size:clamp(7.6px,.928px,10px);line-height:1;
- font-family:ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#d3ddfb}
-.chip-4k9m2 u{display:block;text-decoration:none;font-size:clamp(7px,.832px,9px);letter-spacing:.04em;
+.chip-4k9m2{position:absolute;z-index:6;border-radius:10px;padding:8px 12px;white-space:nowrap;
+ background:rgba(10,16,36,.74);border:1px solid rgba(150,170,240,.34);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 10px 24px -12px rgba(0,0,0,.9);
+ font-size:12px;font-weight:800;letter-spacing:-.35px;line-height:1;color:#e2e9fb}
+.chip-4k9m2 u{display:block;text-decoration:none;margin-top:6px;
+ font:600 8.6px/1 ui-monospace,Menlo,monospace;letter-spacing:.05em;color:#8b9ac6}
  color:var(--ink3);margin-top:4px;font-weight:600}
 
 /* ── ③ API 게이트 ── */
@@ -92,12 +103,14 @@ canvas.fx-4k9m2{position:absolute;inset:0;width:100%;height:100%;z-index:1;point
 
 /* ── ④ 화면 — 실제 제품 화면 3개 ── */
 .win-4k9m2{position:absolute;z-index:6;border-radius:22px;padding:7px;display:flex;
- background:#0e1730;border:1px solid rgba(140,170,240,.34);
- box-shadow:0 18px 34px -22px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.10)}
-.wscr-4k9m2{flex:1;min-width:0;border-radius:15px;overflow:hidden;background:#eef2f7;
- display:flex;flex-direction:column}
+ background:transparent;border:1px solid rgba(150,175,245,.34);
+ box-shadow:0 18px 34px -24px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.12)}
+.wscr-4k9m2{flex:1;min-width:0;border-radius:15px;overflow:hidden;display:flex;flex-direction:column;
+ background:linear-gradient(157deg,rgba(140,160,220,.15),rgba(80,96,166,.07) 46%,rgba(54,66,128,.12));
+ backdrop-filter:blur(14px) saturate(145%);-webkit-backdrop-filter:blur(14px) saturate(145%)}
 .whd-4k9m2{flex:none;padding:9px 12px;display:flex;align-items:center;gap:6px;
- background:linear-gradient(180deg,#3f92e6,#2d7bd2);
+ background:linear-gradient(180deg,rgba(63,146,230,.92),rgba(45,123,210,.86));
+ border-bottom:1px solid rgba(255,255,255,.18);
  font-size:11.5px;font-weight:800;color:#fff;letter-spacing:-.35px}
 .wbd-4k9m2{flex:1;min-height:0;padding:9px;display:flex;flex-direction:column;gap:6px}
 .card-4k9m2{background:#fff;border:1px solid #e3e8f0;border-radius:9px;padding:7px 9px}
@@ -216,10 +229,7 @@ body.mob-4k9m2 .foot-4k9m2 .meta-4k9m2{text-align:left}
   <div><b>BIBLO</b><s>데이터가 화면이 되기까지</s></div>
  </div>
 
- <div class="cap-4k9m2 raw-4k9m2"  id="cap1-4k9m2"><u>01</u><b>출처마다 흩어진<br>수집 데이터</b><em>원천</em></div>
- <div class="cap-4k9m2 map-4k9m2"  id="cap2-4k9m2"><u>02</u><b>같은 것끼리 묶고<br>관계를 잇는다</b><em>구조화</em></div>
- <div class="cap-4k9m2 gate-4k9m2" id="cap3-4k9m2"><u>03</u><b>서버 관문만<br>지나간다</b><em>관문</em></div>
- <div class="cap-4k9m2 ui-4k9m2"   id="cap4-4k9m2"><u>04</u><b>같은 엔진이 만드는<br>세 화면</b><em>화면 · 수치는 예시</em></div>
+ <div class="flow-4k9m2" id="flow-4k9m2"></div>
 
  <div class="glass-4k9m2 map-4k9m2" id="map-4k9m2"><div class="inner-4k9m2"><svg class="net-4k9m2" id="net-4k9m2"></svg></div></div>
  <div class="core-4k9m2" id="core-4k9m2">
@@ -284,7 +294,7 @@ body.mob-4k9m2 .foot-4k9m2 .meta-4k9m2{text-align:left}
 const $=id=>document.getElementById(id+'-4k9m2');
 const stage=$('stage'), fx=$('fx'), map=$('map'), core=$('core'),
       net=$('net'),
-      scr1=$('scr1'), scr2=$('scr2'), scr3=$('scr3');
+      scr1=$('scr1'), scr2=$('scr2'), scr3=$('scr3'), flow=$('flow');
 const D={paper:140693, auth:5280301, skku:11930, jr:13872, res:34764,
          co:932329, kw:1196149, cm:642139, built:'2026-08-27'};
 const nf=n=>n.toLocaleString('ko-KR');
@@ -292,24 +302,40 @@ const nf=n=>n.toLocaleString('ko-KR');
 /* ── 레이아웃 앵커 (화면 비율) ────────────────────
    원본 이미지 구도: 좌 난류 → 중앙 맵 → API 2개 → 우 화면 2장 */
 const L={
- map :{cx:.325, cy:.500, w:.150, h:.400},
- core:{cx:.325, cy:.500, s:.066},
- scr1:{cx:.5000, cy:.5333, w:.1250, h:.6222},
- scr2:{cx:.6550, cy:.5333, w:.1350, h:.6222},
- scr3:{cx:.8556, cy:.5333, w:.2163, h:.6222},
- caps:[{id:'cap1',cx:.035,cy:.150},{id:'cap2',cx:.252,cy:.180},
-       {id:'cap3',cx:.252,cy:.792},{id:'cap4',cx:.437,cy:.128}]
+ flow:{x:.03438, y:.1078, w:.93125, h:.0956},
+ map :{cx:.2188, cy:.5722, w:.3625, h:.6333},
+ core:{cx:.2188, cy:.5722, s:.066},
+ scr1:{cx:.5000, cy:.5556, w:.1250, h:.6222},
+ scr2:{cx:.6550, cy:.5556, w:.1350, h:.6222},
+ scr3:{cx:.8556, cy:.5556, w:.2163, h:.6222},
+ caps:[]
 };
+/* 상단 흐름 3단 */
+const FLOW=[
+ {k:'DATA · SOURCE', t:'데이터 수집 · 구조화',
+  d:'부서마다 흩어진 기록을 같은 것끼리 묶고 관계를 잇는다', i:'db'},
+ {k:'BIBLO ENGINE', t:'비블로 AI 엔진',
+  d:'질문의 뜻을 풀어 검수된 지식에서 답을 찾는다', i:'cpu'},
+ {k:'AGENT SCREEN', t:'에이전트 화면 케이스',
+  d:'목적에 따라 대화 · 학생 · 경영 화면으로 나온다', i:'scr'}
+];
+const FICO={
+ db :'<path d="M4 6.4c0-1.5 3.6-2.7 8-2.7s8 1.2 8 2.7-3.6 2.7-8 2.7-8-1.2-8-2.7z"/><path d="M4 6.4v11.2c0 1.5 3.6 2.7 8 2.7s8-1.2 8-2.7V6.4"/><path d="M4 12c0 1.5 3.6 2.7 8 2.7s8-1.2 8-2.7"/>',
+ cpu:'<rect x="7.4" y="7.4" width="9.2" height="9.2" rx="2"/><path d="M10 3.6v3.8M14 3.6v3.8M10 16.6v3.8M14 16.6v3.8M3.6 10h3.8M3.6 14h3.8M16.6 10h3.8M16.6 14h3.8"/>',
+ scr:'<rect x="3.4" y="4.6" width="17.2" height="12" rx="2"/><path d="M8.6 20.4h6.8M12 16.6v3.8"/>'
+};
+/* 좌측 — 학교 부서별 원천 데이터 (타이틀 박스 아래로 흩어놓는다) */
 /* 좌측 원천 영역에 흩어놓는 데이터 블록 — 무대 기준 절대좌표 */
 const CHIPS=[
- {t:'ENTITIES',      u:'논문 '+nf(D.paper)+' · 연구자 '+nf(D.res), x:.120, y:.222},
- {t:'RELATIONSHIPS', u:'저자행 '+nf(D.auth),                       x:.062, y:.300},
- {t:'VENUES',        u:'저널 '+nf(D.jr),                           x:.156, y:.392},
- {t:'CO-AUTHORSHIP', u:'공저관계 '+nf(D.co),                       x:.070, y:.492},
- {t:'MEMORY',        u:'지문 키워드 '+nf(D.kw),                    x:.150, y:.598},
- {t:'INSIGHTS',      u:'지표 '+nf(D.cm)+'건',                      x:.064, y:.690},
- {t:'VERIFIED',      u:'교내 확정 연구자 '+nf(D.skku),             x:.140, y:.792},
- {t:'SNAPSHOT',      u:'수집 시점 '+D.built,                       x:.066, y:.884}
+ {t:'총무과',       u:'자산 · 비품 대장', x:-.42, y:-.84},
+ {t:'도서관',       u:'소장 · 대출 기록', x: .40, y:-.66},
+ {t:'학사팀',       u:'수강 · 성적',      x:-.64, y:-.44},
+ {t:'연구실적관리', u:'논문 · 과제 실적', x: .44, y:-.16},
+ {t:'입학처',       u:'지원 · 등록',      x:-.66, y: .06},
+ {t:'학생지원팀',   u:'상담 · 장학',      x: .30, y: .34},
+ {t:'산학협력단',   u:'과제 · 계약',      x:-.50, y: .54},
+ {t:'취업지원팀',   u:'취업 · 자격',      x: .52, y: .74},
+ {t:'전산팀',       u:'로그 · 계정',      x:-.28, y: .88}
 ];
 
 let W=0,H=0,DPR=1,MOB=false;
@@ -320,12 +346,10 @@ function place(){
  W=1600; H=900; DPR=Math.min(devicePixelRatio||1,2);
  MOB=NARROW(); document.body.classList.toggle('mob-4k9m2',MOB);
  if(MOB){                                  // 세로 스택 — 절대좌표를 걷어낸다
-  ['map','core','scr1','scr2','scr3'].forEach(id=>{
+  ['map','core','scr1','scr2','scr3','flow'].forEach(id=>{
    const e=$(id);
    e.style.cssText=e.style.cssText.replace(/(left|top|width|height|transform)\s*:[^;]*;?/g,'');});
-  L.caps.forEach(c=>{const e=$(c.id);
-   e.style.left=e.style.top=e.style.transform='';});
-  drawChips(); drawNet(); return;
+  drawFlow(); drawChips(); drawNet(); return;
  }
  const set=(el,o,wKey)=>{const p=px(o);
    if(o.w){el.style.width=Math.round(p.w)+'px'; el.style.height=Math.round(p.h)+'px';
@@ -338,10 +362,18 @@ function place(){
  core.style.width=cs+'px'; core.style.height=cs+'px';
  core.style.left=Math.round(W*L.core.cx)+'px'; core.style.top=Math.round(H*L.core.cy)+'px';
  core.querySelector('svg').setAttribute('width', Math.round(cs*.56));
- L.caps.forEach(c=>{const e=$(c.id);
-   e.style.left=Math.round(W*c.cx)+'px'; e.style.top=Math.round(H*c.cy)+'px';
-   e.style.transform='translate(0,-50%)';});
- drawChips(); drawNet();
+ flow.style.cssText=`left:${Math.round(W*L.flow.x)}px;top:${Math.round(H*L.flow.y)}px;`
+  +`width:${Math.round(W*L.flow.w)}px;height:${Math.round(H*L.flow.h)}px`;
+ drawFlow(); drawChips(); drawNet();
+}
+/* 상단 흐름 3단 */
+function drawFlow(){
+ flow.innerHTML=FLOW.map((o,i)=>
+  `${i?'<span class="fchev-4k9m2"></span>':''}`
+  +`<div class="fbox-4k9m2"><span class="fic-4k9m2">`
+  +`<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#dff4ff"`
+  +` stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round">${FICO[o.i]}</svg></span>`
+  +`<span><u>${o.k}</u><b>${o.t}</b><s>${o.d}</s></span></div>`).join('');
 }
 /* 칩 배치 — 패널 중심 기준 상대좌표 */
 function drawChips(){
@@ -356,11 +388,12 @@ function drawChips(){
   return;
  }
  if(box)box.remove();
+ const p=px(L.map);
  CHIPS.forEach(c=>{
   const d=document.createElement('div'); d.className='chip-4k9m2';
   d.innerHTML=`${c.t}<u>${c.u}</u>`;
-  d.style.left=Math.round(W*c.x)+'px';
-  d.style.top =Math.round(H*c.y)+'px';
+  d.style.left=Math.round(p.x+p.w/2*c.x)+'px';
+  d.style.top =Math.round(p.y+p.h/2*c.y)+'px';
   d.style.transform='translate(-50%,-50%)';
   stage.appendChild(d);});
 }
