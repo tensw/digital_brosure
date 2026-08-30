@@ -25,7 +25,7 @@
 
 .sec-7m3v9{margin-top:44px}
 .sh-7m3v9{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
-.sh-7m3v9 .n-7m3v9{font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;
+.sh-7m3v9 .n-7m3v9{font:800 18px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;
  color:var(--ink3-7m3v9)}
 .sh-7m3v9 h2{font-size:21px;font-weight:800;letter-spacing:-.5px}
 .sp-7m3v9{color:var(--ink2-7m3v9);font-size:13px;line-height:1.85;max-width:82ch}
@@ -166,7 +166,7 @@ $('grid-7m3v9').innerHTML=SOL.map(s=>`
  </article>`).join('');
 
 /* ── 흐름도 ── 마크다운의 ASCII 도식을 그대로 옮긴다 */
-const W=1180,H=330,NS='http://www.w3.org/2000/svg';
+const W=1180,H=390,NS='http://www.w3.org/2000/svg';   // 마지막 줄 노드가 y330+h44=374 까지 그려진다. 330 이면 그만큼 박스 밖으로 나간다
 const E=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);
  if(p)p.appendChild(e);return e;};
 const svg=E('svg',{viewBox:`0 0 ${W} ${H}`});
