@@ -81,14 +81,16 @@ button[disabled]{opacity:.5;cursor:default}
 </div>
 <script>
 const qs=new URLSearchParams(location.search);
-const next=qs.get('next')||'/2026/';
-const first=qs.get('first')==='1';
+const here=location.pathname+location.search+location.hash;
+const next=qs.get('next')||(location.pathname.indexOf('/account')===0?'/2026/':here);
+const first=qs.get('first')==='1'||location.pathname.indexOf('/account')!==0;
 const m=document.getElementById('m'), go=document.getElementById('go');
 if(!first){ document.getElementById('s').textContent='비밀번호를 바꿉니다.';
   go.textContent='변경 →'; }
 (async()=>{
  const r=await fetch('/api/auth/me'); const j=await r.json();
- if(!j.ok){ location.href='/login/?next='+encodeURIComponent(next); return; }
+ if(!j.ok){ location.href=(location.pathname.indexOf('/account')===0)
+   ? '/login/?next='+encodeURIComponent(next) : location.href; return; }
  document.getElementById('who').textContent=j.email;
  if(j.mustChange){ document.getElementById('h').textContent='첫 로그인입니다';
    document.getElementById('s').textContent='초기 비밀번호를 바꾼 뒤 자료로 들어갑니다.'; }

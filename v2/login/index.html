@@ -103,7 +103,8 @@ button[disabled]{opacity:.5;cursor:default}
 })();
 
 const qs=new URLSearchParams(location.search);
-const next=qs.get('next')||'/2026/';
+const here=location.pathname+location.search+location.hash;
+const next=qs.get('next')||(location.pathname.indexOf('/login')===0?'/2026/':here);
 const f=document.getElementById('f'), m=document.getElementById('m'), go=document.getElementById('go');
 f.addEventListener('submit', async (ev)=>{
  ev.preventDefault(); m.textContent=''; go.disabled=true;
@@ -112,9 +113,11 @@ f.addEventListener('submit', async (ev)=>{
    body:JSON.stringify({email:document.getElementById('e').value,password:document.getElementById('p').value})});
   const j=await r.json();
   if(!j.ok){ m.textContent=j.msg||'로그인하지 못했습니다.'; go.disabled=false; return; }
-  location.href = j.mustChange
-    ? '/account/?first=1&next='+encodeURIComponent(next)
-    : next;
+  const onLoginPath = location.pathname.indexOf('/login')===0;
+  if(j.mustChange){ location.href = onLoginPath
+    ? '/account/?first=1&next='+encodeURIComponent(next) : here; }   // 그 자리에서 변경 화면
+  else { location.href = next; }
+  if(!onLoginPath && !j.mustChange) location.reload();
  }catch(e){ m.textContent='서버에 연결하지 못했습니다.'; go.disabled=false; }
 });
 </script>

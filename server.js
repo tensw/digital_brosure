@@ -103,6 +103,16 @@ function handleAuthApi(req, res, urlPath) {
   return json(res, 404, { ok: false, msg: '없는 경로' });
 }
 
+function sendGate(res, name) {
+  fs.readFile(path.join(ROOT, name, 'index.html'), (err, data) => {
+    if (err) { res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+               res.end('로그인 화면을 불러오지 못했습니다.'); return; }
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8',
+                         'Cache-Control': 'no-store' });
+    res.end(data);
+  });
+}
+
 const server = http.createServer((req, res) => {
   const rawPath = req.url === '/' ? DEFAULT_DOC : req.url.split('?')[0];
   let urlPath;
@@ -110,19 +120,22 @@ const server = http.createServer((req, res) => {
   catch (e) { res.writeHead(400, { 'Content-Type': 'text/plain' }); res.end('Bad Request'); return; }
   if (urlPath.startsWith('/api/auth/')) return handleAuthApi(req, res, urlPath);
 
-  // 잠긴 구간은 세션이 있어야 지나간다
+  // 잠긴 구간은 세션이 있어야 지나간다.
+  // 주소를 바꾸지 않는다 — biblo.ai/2026 그 자리에서 로그인 화면을 그대로 낸다.
   if (isGated(urlPath)) {
     const s = auth.session(req);
+    const ext = path.extname(urlPath).toLowerCase();
+    const isDoc = !ext || ext === '.html';
     if (!s) {
-      res.writeHead(302, { Location: '/login/?next=' + encodeURIComponent(req.url),
-                           'Cache-Control': 'no-store' });
-      res.end(); return;
+      if (!isDoc) { res.writeHead(401, { 'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'no-store' }); res.end('로그인이 필요합니다.'); return; }
+      return sendGate(res, 'login');
     }
     const u = auth.load().users[s.e];
-    if (u && u.mustChange && !urlPath.startsWith('/account')) {
-      res.writeHead(302, { Location: '/account/?first=1&next=' + encodeURIComponent(req.url),
-                           'Cache-Control': 'no-store' });
-      res.end(); return;
+    if (u && u.mustChange) {
+      if (!isDoc) { res.writeHead(401, { 'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'no-store' }); res.end('비밀번호 변경이 필요합니다.'); return; }
+      return sendGate(res, 'account');
     }
   }
 
