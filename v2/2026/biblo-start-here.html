@@ -53,6 +53,14 @@ html,body{overflow:hidden}
  font-size:12.5px;font-weight:800;letter-spacing:-.35px;color:#8fe6ff;line-height:1.35}
 .card-sh7 p{margin-top:13px;font-size:13px;font-weight:500;line-height:1.62;
  letter-spacing:-.3px;color:var(--ink2-sh7)}
+.dt-sh7{margin-top:18px;padding-top:15px;border-top:1px solid rgba(140,170,240,.16)}
+.dt-sh7 u{display:block;text-decoration:none;margin-bottom:10px;
+ font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:#7f8fc4}
+.dt-sh7 i{display:block;position:relative;padding-left:13px;font-style:normal;
+ font-size:12.4px;font-weight:700;line-height:1.5;letter-spacing:-.35px;color:#dde5ff}
+.dt-sh7 i+i{margin-top:6px}
+.dt-sh7 i:before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;
+ border-radius:50%;background:rgba(120,200,255,.7)}
 .card-sh7 s{display:block;margin-top:auto;padding-top:16px;text-decoration:none;
  font-size:13px;font-weight:800;letter-spacing:-.4px;color:#cfe0ff}
 
@@ -112,15 +120,19 @@ html,body{overflow:hidden}
 const CARDS_sh7=[
  {k:'LIBRARY', st:'도서관에서 시작', sol:'AI 검색엔진 · 사서 에이전트',
   d:'책과 논문을 더 잘 찾게 하고, 희망도서 · 수서 · 편목 · 청구기호 · 장서관리까지 기존 LAS 데이터와 연결합니다.',
+  dt:['소장 · 대출 기록','서지 · MARC','희망도서 신청','수서 예산 이력'],
   s:'검색에서 도서관 운영까지'},
  {k:'RESEARCH', st:'연구처에서 시작', sol:'연구성과관리',
   d:'논문을 실제 교내 연구자에게 연결하고, 개인 · 학과 · 사업단별 연구성과와 그 근거가 되는 논문을 확인합니다.',
+  dt:['논문 원장','저자와 소속','학과 · 사업단 명부','인용과 저널 등급'],
   s:'논문에서 연구자 성과까지'},
  {k:'PROMOTION', st:'홍보처에서 시작', sol:'연구성과 홍보영상',
   d:'우수 논문을 찾아 전문 내용을 분석하고, 연구 홍보에 적합한 롱폼 영상과 쇼츠로 제작합니다.',
+  dt:['논문 서지와 공개 정보','우수성과 선별 기준','연구자 프로필','기관 브랜드 자산'],
   s:'연구성과에서 확산 콘텐츠까지'},
  {k:'MANAGEMENT', st:'기획 · 전산 · 사업단에서 시작', sol:'AI 에이전트 · AI 성과관리',
   d:'기관이 검수한 지식과 현재 데이터를 질문에 맞게 전달하고, BK21 · 앵커 사업의 참여자 · 실적 · KPI를 연결합니다.',
+  dt:['사업 참여자 명부','실적 원장','지표 정의','기관 검수 지식'],
   s:'기관 데이터에서 실행과 KPI까지'}
 ];
 const STEPS_sh7=[
@@ -133,7 +145,9 @@ const STEPS_sh7=[
 ];
 document.getElementById('cards-sh7').innerHTML=CARDS_sh7.map(o=>
  `<section class="card-sh7"><u>${o.k}</u><div class="st-sh7">${o.st}</div>`
- +`<div class="sol-sh7">${o.sol}</div><p>${o.d}</p><s>${o.s}</s></section>`).join('');
+ +`<div class="sol-sh7">${o.sol}</div><p>${o.d}</p>`
+ +`<div class="dt-sh7"><u>먼저 연결하는 데이터</u>${o.dt.map(x=>`<i>${x}</i>`).join('')}</div>`
+ +`<s>${o.s}</s></section>`).join('');
 document.getElementById('steps-sh7').innerHTML=STEPS_sh7.map(o=>
  `<div class="step-sh7"><u>${o.n}</u><b>${o.t}</b><p>${o.d}</p></div>`).join('');
 </script>
