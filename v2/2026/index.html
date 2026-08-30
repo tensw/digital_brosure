@@ -140,14 +140,31 @@ body{overflow:hidden}
 .slide-2q6r4 .card ul{font-size:12.5px}
 .slide-2q6r4 .card h3{font-size:19px}
 /* 우측 슬라이드 인디케이터 */
-.nav-2q6r4{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:6;
- display:flex;flex-direction:column;gap:13px}
-.nav-2q6r4 button{all:unset;cursor:pointer;width:9px;height:9px;border-radius:50%;
- background:rgba(150,180,235,.28);transition:background .25s,transform .25s;
- box-shadow:0 0 0 1px rgba(150,180,235,.22)}
-.nav-2q6r4 button:hover{background:rgba(150,180,235,.55)}
-.nav-2q6r4 button[aria-current="true"]{background:#7dd3fc;transform:scale(1.45);
- box-shadow:0 0 12px rgba(125,211,252,.75)}
+/* ── 좌측 눈금 나브 — 3px 선을 장수만큼 나눈다 ────────────────
+   평소엔 선. 커서가 가까우면 그 부근만 길어지고 번호가 뜬다.
+   ±3칸 정도만 반응시킨다(전체가 출렁이면 읽기 어렵다). */
+.nav-2q6r4{position:fixed;left:18px;top:50%;transform:translateY(-50%);z-index:7;
+ display:flex;flex-direction:column;gap:var(--ng-2q6r4,3px);
+ padding:16px 26px 16px 10px}
+.ns-2q6r4{all:unset;cursor:pointer;position:relative;display:block;
+ width:22px;height:var(--nh-2q6r4,8px)}
+.ns-2q6r4 i{position:absolute;left:0;top:0;height:100%;width:3px;border-radius:2px;
+ background:rgba(150,180,235,.22);
+ transition:width .22s cubic-bezier(.2,.8,.2,1),background .22s ease,box-shadow .22s ease}
+.ns-2q6r4.pass-2q6r4 i{background:rgba(150,180,235,.42)}
+.ns-2q6r4:focus-visible i{background:rgba(190,215,255,.85);width:14px}
+.ns-2q6r4[aria-current="true"] i{background:#7dd3fc;
+ box-shadow:0 0 12px rgba(125,211,252,.85),0 0 26px rgba(125,211,252,.35)}
+.ns-2q6r4 b{position:absolute;left:0;top:50%;
+ transform:translate(calc(var(--nw-2q6r4,3px) + 4px),-50%) scale(.92);
+ transform-origin:left center;opacity:0;pointer-events:none;white-space:nowrap;
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#dbe8ff;
+ text-shadow:0 2px 10px rgba(0,0,0,.9);
+ transition:opacity .18s ease,transform .22s cubic-bezier(.2,.8,.2,1)}
+.ns-2q6r4.near-2q6r4 b, .ns-2q6r4:focus-visible b{opacity:1;
+ transform:translate(calc(var(--nw-2q6r4,3px) + 10px),-50%) scale(1)}
+@media(prefers-reduced-motion:reduce){
+ .ns-2q6r4 i,.ns-2q6r4 b{transition:none}}
 .cap-2q6r4{position:fixed;right:26px;bottom:26px;z-index:6;
  font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;color:var(--ink3)}
 @media(max-width:1240px){.slide-2q6r4 .grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
@@ -1329,8 +1346,46 @@ document.querySelectorAll('#cards-d,#cards-e').forEach(el=>el.innerHTML=PD.map(p
 
  /* 2) 인디케이터 */
  nav.innerHTML=S.map((s,i)=>
-  `<button type="button" data-i2q6r4="${i}" aria-label="${(s.name||'')+' 슬라이드'}"></button>`).join('');
+  `<button type="button" class="ns-2q6r4" data-i2q6r4="${i}"`
+  +` aria-label="${(i+1)+'장 '+(s.name||'')}"><i></i><b>${String(i+1).padStart(2,'0')}</b></button>`).join('');
  const dots=[...nav.querySelectorAll('button')];
+
+ /* 눈금 높이 — 장수가 많아도 화면을 넘지 않게 줄인다 */
+ function navFit(){
+  const gap=3, avail=Math.max(240, innerHeight*0.74)-32;
+  const h=Math.max(4, Math.min(9, (avail-gap*(S.length-1))/S.length));
+  nav.style.setProperty('--nh-2q6r4', h.toFixed(2)+'px');
+  nav.style.setProperty('--ng-2q6r4', gap+'px');
+ }
+ navFit(); addEventListener('resize',navFit);
+
+ /* 커서 거리에 따라 그 부근만 길어진다 (±3칸) */
+ const RM=matchMedia('(prefers-reduced-motion: reduce)');
+ let navT=0;
+ function navRelax(){
+  dots.forEach(d=>{d.classList.remove('near-2q6r4');
+   const w=d.getAttribute('aria-current')==='true'?16:3;
+   d.firstElementChild.style.width=w+'px'; d.style.setProperty('--nw-2q6r4',w+'px');});
+ }
+ function navMag(y){
+  if(RM.matches) return;
+  let best=null, bd=1e9;
+  dots.forEach(d=>{
+   const r=d.getBoundingClientRect(), c=r.top+r.height/2, dist=Math.abs(y-c);
+   const reach=(r.height+3)*3.2;                       // ±3칸 정도만 반응
+   const t=Math.max(0, 1-dist/reach), w=3+t*t*13;
+   const cur=d.getAttribute('aria-current')==='true';
+   const ww=Math.max(w, cur?16:3);
+   d.firstElementChild.style.width=ww.toFixed(1)+'px';
+   d.style.setProperty('--nw-2q6r4', ww.toFixed(1)+'px');
+   d.classList.remove('near-2q6r4');
+   if(dist<bd){bd=dist;best=d;}
+  });
+  if(best&&bd<60) best.classList.add('near-2q6r4');
+ }
+ nav.addEventListener('pointermove',e=>{clearTimeout(navT); navMag(e.clientY);});
+ nav.addEventListener('pointerleave',()=>{navT=setTimeout(navRelax,60);});
+ navRelax();
 
  /* 3) 배경 전환 — 배경 키 단위. 같은 키가 이어지면 아무것도 하지 않는다 */
  const LAYERS=window.LAYERS_2q6r4||{};
@@ -1346,7 +1401,11 @@ document.querySelectorAll('#cards-d,#cards-e').forEach(el=>el.innerHTML=PD.map(p
  function mark(i){
   if(i===cur) return; cur=i;
   built.forEach((el,k)=>el.classList.toggle('on-2q6r4',k===i));
-  dots.forEach((d,k)=>d.setAttribute('aria-current',k===i?'true':'false'));
+  dots.forEach((d,k)=>{d.setAttribute('aria-current',k===i?'true':'false');
+   d.classList.toggle('pass-2q6r4',k<i);
+   if(!d.classList.contains('near-2q6r4')){
+     const w=k===i?16:3; d.firstElementChild.style.width=w+'px';
+     d.style.setProperty('--nw-2q6r4',w+'px');}});
   cap.textContent=String(i+1).padStart(2,'0')+' / '+String(S.length).padStart(2,'0');
   paintBG(S[i].bg);
   if(typeof remember==='function') remember(i);
