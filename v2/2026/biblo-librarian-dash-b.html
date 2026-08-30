@@ -27,7 +27,25 @@ body{
    다만 이 장은 어두운 대시보드라 밝은 보라 위에서는 카드 밖 요소(워드마크·사이드바·HUD)가
    묻힌다. 배경 바로 위에 투명한 검정을 한 겹 깔아 대비를 되살린다. */
 .emb-bg0, .emb-bg0 body{background:transparent !important}
-.emb-bg0 .scene{background:rgba(8,12,34,.62)}
+.emb-bg0 .scene{background:transparent}
+/* 덱 안에서는 불투명 바닥(--bg0) 대신 반투명 검정을 깔아 보라 배경이 비치게 하고,
+   그 검정이 가운데에서 원으로 퍼지며 진해진다. */
+.emb-bg0 .scene::before{
+ background:
+  radial-gradient(120% 90% at 78% 8%, rgba(60,80,170,.34) 0%, transparent 55%),
+  radial-gradient(100% 80% at 20% 95%, rgba(30,40,100,.5) 0%, transparent 58%),
+  rgba(8,12,34,.62);
+ -webkit-mask-image:radial-gradient(circle,#000 50%,rgba(0,0,0,.55) 66%,transparent 80%);
+ mask-image:radial-gradient(circle,#000 50%,rgba(0,0,0,.55) 66%,transparent 80%);
+ -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+ -webkit-mask-position:50% 50%;mask-position:50% 50%;
+ -webkit-mask-size:0% 0%;mask-size:0% 0%;
+ animation:scenespread-27 2.1s cubic-bezier(.22,.68,.3,1) .15s forwards}
+@keyframes scenespread-27{
+ from{-webkit-mask-size:0% 0%;mask-size:0% 0%}
+ to  {-webkit-mask-size:320% 320%;mask-size:320% 320%}}
+@media (prefers-reduced-motion:reduce){
+ .emb-bg0 .scene::before{-webkit-mask-image:none;mask-image:none;animation:none}}
 .scene{position:fixed;inset:0;z-index:0;overflow:hidden}
 .scene::before{content:'';position:absolute;inset:0;
  background:
@@ -493,21 +511,7 @@ body{font-family:'Noto Sans KR','Outfit',-apple-system,BlinkMacSystemFont,'Apple
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 
-/* 반투명 검정 판이 가운데에서 원으로 퍼지며 진해진다 */
-.panel{background:transparent;border-color:transparent}
-.panel::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
- border-radius:inherit;background:var(--glass);box-shadow:inset 0 0 0 1px var(--line);
- -webkit-mask-image:radial-gradient(circle,#000 52%,rgba(0,0,0,.55) 66%,transparent 78%);
- mask-image:radial-gradient(circle,#000 52%,rgba(0,0,0,.55) 66%,transparent 78%);
- -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
- -webkit-mask-position:50% 50%;mask-position:50% 50%;
- -webkit-mask-size:0% 0%;mask-size:0% 0%;
- animation:panelspread-27 1.9s cubic-bezier(.22,.68,.3,1) .2s forwards}
-@keyframes panelspread-27{
- from{-webkit-mask-size:0% 0%;mask-size:0% 0%}
- to  {-webkit-mask-size:300% 300%;mask-size:300% 300%}}
-@media (prefers-reduced-motion:reduce){
- .panel::before{-webkit-mask-image:none;mask-image:none;animation:none}}
+
 </style>
 </head>
 <body>
