@@ -1,0 +1,480 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BIBLO — 데이터가 화면이 되기까지</title>
+<style>
+:root{--ink:#eef3ff;--ink2:#9db0d6;--ink3:#66799f;
+ --raw:#e05bd8;--raw2:#a855f7;--mid:#818cf8;--out:#38d6f8;--out2:#22d3ee}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+.emb-bg0, .emb-bg0 body, .emb-bg0 .slide{background:transparent !important}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:#04060f;color:var(--ink);-webkit-font-smoothing:antialiased;overflow:hidden}
+.gates-4k9m2,.screens-4k9m2{display:contents}
+body.mob-4k9m2 .gates-4k9m2,body.mob-4k9m2 .screens-4k9m2{display:grid}
+body.mob-4k9m2 .gates-4k9m2{display:flex}
+.stage-4k9m2{position:relative;width:1600px;height:900px;overflow:hidden;
+ background:
+  radial-gradient(1000px 700px at 22% 48%, rgba(150,40,170,.20) 0%, rgba(0,0,0,0) 62%),
+  radial-gradient(900px 620px at 72% 56%, rgba(30,90,190,.20) 0%, rgba(0,0,0,0) 66%),
+  radial-gradient(1200px 800px at 50% 46%, #0a0f22 0%, #06091a 58%, #03050d 100%)}
+canvas.fx-4k9m2{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+
+/* ── 워드마크 ── */
+.mark-4k9m2{position:absolute;left:54.4px;top:39.6px;z-index:8;display:flex;align-items:center;gap:13px}
+.mark-4k9m2 .dots-4k9m2{width:26px;height:26px}
+.mark-4k9m2 b{font:700 13px/1 ui-monospace,Menlo,monospace;letter-spacing:.30em;color:#cfdcff}
+.mark-4k9m2 s{display:block;text-decoration:none;font:600 10.5px/1.7 ui-monospace,Menlo,monospace;
+ letter-spacing:.16em;color:var(--ink3);margin-top:5px}
+
+/* ── 구간 캡션 ── */
+.cap-4k9m2{position:absolute;z-index:7;font:700 10px/1 ui-monospace,Menlo,monospace;
+ letter-spacing:.24em;color:var(--ink3);display:flex;align-items:center;gap:8px;white-space:nowrap}
+.cap-4k9m2 i{width:6px;height:6px;border-radius:50%;background:currentColor;font-style:normal}
+.cap-4k9m2 u{text-decoration:none}
+.cap-4k9m2.raw-4k9m2{color:#c96fd4} .cap-4k9m2.map-4k9m2{color:#93a0f0} .cap-4k9m2.gate-4k9m2{color:#5fb6e8} .cap-4k9m2.ui-4k9m2{color:#5ce0f0}
+.cap-4k9m2 em{font-style:normal;color:var(--ink3);letter-spacing:.06em;font-weight:600}
+
+/* ── 유리 공통 ── */
+.glass-4k9m2{position:absolute;border-radius:22px;
+ background:linear-gradient(157deg,rgba(140,160,220,.15),rgba(80,96,166,.07) 46%,rgba(54,66,128,.12));
+ backdrop-filter:blur(14px) saturate(145%);-webkit-backdrop-filter:blur(14px) saturate(145%);
+ box-shadow:0 30px 70px -24px rgba(2,6,20,.92),
+  inset 0 1.2px 0 rgba(255,255,255,.26), inset 0 -1.2px 0 rgba(255,255,255,.08),
+  inset 1.2px 0 0 rgba(255,255,255,.13), inset -1.2px 0 0 rgba(255,255,255,.13),
+  inset 0 0 40px rgba(150,180,255,.05)}
+.glass-4k9m2::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.6px;
+ background:conic-gradient(from 205deg,rgba(220,230,255,.62),rgba(140,165,235,.10) 54%,
+   rgba(215,200,255,.5) 108%,rgba(130,150,225,.08) 162deg,rgba(226,234,255,.58) 212deg,
+   rgba(150,110,240,.3) 268deg,rgba(200,215,255,.5) 316deg,rgba(220,230,255,.62) 360deg);
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+ -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+
+/* ── ② 컨텍스트 맵 패널 ── */
+.map-4k9m2{z-index:5;padding:0}
+.map-4k9m2 .inner-4k9m2{position:absolute;inset:0;border-radius:inherit;overflow:hidden}
+.map-4k9m2 svg.net-4k9m2{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.core-4k9m2{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;
+ border-radius:26%;display:grid;place-items:center;
+ background:linear-gradient(150deg,rgba(129,140,248,.42),rgba(56,189,248,.22));
+ border:1.4px solid rgba(175,190,255,.5);
+ box-shadow:0 14px 36px -12px rgba(70,80,220,.9),inset 0 1px 0 rgba(255,255,255,.4),
+   0 0 44px rgba(120,140,255,.28)}
+.chip-4k9m2{position:absolute;z-index:6;border-radius:9px;padding:5px 10px;white-space:nowrap;
+ background:rgba(10,16,36,.72);border:1px solid rgba(150,170,240,.34);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 8px 20px -10px rgba(0,0,0,.9);
+ font-weight:700;font-size:clamp(7.6px,.928px,10px);line-height:1;
+ font-family:ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#d3ddfb}
+.chip-4k9m2 u{display:block;text-decoration:none;font-size:clamp(7px,.832px,9px);letter-spacing:.04em;
+ color:var(--ink3);margin-top:4px;font-weight:600}
+
+/* ── ③ API 게이트 ── */
+.api-4k9m2{position:absolute;z-index:7;border-radius:11px;padding:9px 15px;
+ font:800 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;color:#eaf2ff;
+ background:linear-gradient(150deg,rgba(38,54,110,.92),rgba(20,30,68,.92));
+ border:1px solid rgba(140,180,250,.46);
+ box-shadow:0 10px 26px -10px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.28),
+   0 0 26px rgba(60,150,240,.24)}
+.api-4k9m2 s{display:block;text-decoration:none;font-size:8.5px;font-weight:600;letter-spacing:.05em;
+ color:#7fa6d6;margin-top:4px}
+
+/* ── ④ 화면 ── */
+.scr-4k9m2{z-index:6;overflow:hidden}
+.scr-4k9m2 .body-4k9m2{position:absolute;inset:0;padding:8% 8% 7%;display:flex;flex-direction:column;gap:6%}
+.scr-4k9m2 .bar-4k9m2{border-radius:999px;padding:5.5% 7%;display:flex;align-items:center;gap:7px;
+ background:rgba(12,20,46,.6);border:1px solid rgba(140,170,240,.3);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
+ font-weight:600;font-size:clamp(8px,.992px,11px);color:#a9bde8;white-space:nowrap;overflow:hidden}
+.scr-4k9m2 .hero-4k9m2{flex:none;margin:0 auto;width:34%;aspect-ratio:1;border-radius:24%;display:grid;place-items:center;
+ background:linear-gradient(150deg,rgba(56,214,248,.34),rgba(129,140,248,.22));
+ border:1px solid rgba(150,220,255,.45);
+ box-shadow:0 0 34px rgba(56,190,248,.38),inset 0 1px 0 rgba(255,255,255,.4)}
+.scr-4k9m2 .rows-4k9m2{flex:1;display:flex;flex-direction:column;gap:8%;min-height:0}
+.scr-4k9m2 .rows-4k9m2 i{display:block;height:6.5%;min-height:4px;border-radius:3px;
+ background:linear-gradient(90deg,rgba(150,190,255,.34),rgba(150,190,255,.06))}
+.scr-4k9m2 .rows-4k9m2 i.k-4k9m2{background:linear-gradient(90deg,rgba(56,214,248,.55),rgba(56,214,248,.06))}
+.scr-4k9m2 .ttl-4k9m2{font-weight:700;font-size:clamp(8px,.1056px,12px);color:#dce7ff;letter-spacing:-.2px}
+.scr-4k9m2 .ttl-4k9m2 s{display:block;text-decoration:none;font:600 8.5px/1.5 ui-monospace,Menlo,monospace;
+ color:var(--ink3);letter-spacing:.08em;margin-top:3px}
+
+/* ── 하단 설명 ── */
+.foot-4k9m2{position:absolute;left:54.4px;right:54.4px;bottom:28.8px;z-index:8;
+ display:flex;gap:26px;flex-wrap:wrap;align-items:flex-end;justify-content:space-between}
+.foot-4k9m2 .lead-4k9m2{font-size:12.5px;line-height:1.8;color:var(--ink2);max-width:62ch}
+.foot-4k9m2 .lead-4k9m2 b{color:#dfe8ff}
+.foot-4k9m2 .meta-4k9m2{font:600 10.5px/1.85 ui-monospace,Menlo,monospace;letter-spacing:.05em;
+ color:var(--ink3);text-align:right;margin-bottom:14px}
+.foot-4k9m2 .meta-4k9m2 b{color:#8fa2c9}
+
+
+/* ══ 좁은 화면 — 가로 흐름도가 성립하지 않으므로 세로 스택으로 전환 ══ */
+body.mob-4k9m2{overflow:auto}
+body.mob-4k9m2 .stage-4k9m2{height:auto;min-height:900px;overflow:visible;padding:0 0 40px;
+ display:flex;flex-direction:column}
+/* 섹션 순서 — 캡션이 자기 구역 바로 앞에 오게 */
+body.mob-4k9m2 .mark-4k9m2{order:1}
+body.mob-4k9m2 #cap1-4k9m2{order:2}
+body.mob-4k9m2 #cap2-4k9m2{order:3}
+body.mob-4k9m2 .map-4k9m2{order:4}
+body.mob-4k9m2 .core-4k9m2{order:5}
+body.mob-4k9m2 .chips-4k9m2{order:6}
+body.mob-4k9m2 #cap3-4k9m2{order:7}
+body.mob-4k9m2 .gates-4k9m2{order:8}
+body.mob-4k9m2 #cap4-4k9m2{order:9}
+body.mob-4k9m2 .screens-4k9m2{order:10}
+body.mob-4k9m2 .foot-4k9m2{order:11}
+body.mob-4k9m2 canvas.fx-4k9m2{order:0}
+body.mob-4k9m2 canvas.fx-4k9m2{position:fixed;height:900px;opacity:.5}
+body.mob-4k9m2 .mark-4k9m2{position:static;padding:26px 20px 0}
+body.mob-4k9m2 .cap-4k9m2{position:static;transform:none;margin:22px 20px 9px}
+body.mob-4k9m2 #cap1-4k9m2{margin-top:16px;margin-bottom:150px}   /* 원천 = 배경 캔버스 구역 */
+body.mob-4k9m2 .glass-4k9m2,body.mob-4k9m2 .core-4k9m2,body.mob-4k9m2 .api-4k9m2,body.mob-4k9m2 .chip-4k9m2{
+ position:static;transform:none;left:auto;top:auto;width:auto;height:auto}
+body.mob-4k9m2 .map-4k9m2{margin:0 20px;min-height:190px;padding:18px;flex:none}
+body.mob-4k9m2 .map-4k9m2 .inner-4k9m2{position:relative;inset:auto;height:170px}
+body.mob-4k9m2 .core-4k9m2{width:64px;height:64px;margin:16px auto 0;flex:none}
+body.mob-4k9m2 .chips-4k9m2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 20px 0}
+body.mob-4k9m2 .chip-4k9m2{white-space:normal}
+body.mob-4k9m2 .gates-4k9m2{display:flex;gap:10px;margin:0 20px;justify-content:center;flex:none}
+body.mob-4k9m2 .api-4k9m2{flex:1;text-align:center}
+body.mob-4k9m2 .screens-4k9m2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 20px;flex:none}
+body.mob-4k9m2 .scr-4k9m2{height:300px;position:relative}
+body.mob-4k9m2 .foot-4k9m2{position:static;margin:30px 20px 0;flex-direction:column;align-items:flex-start;gap:16px}
+body.mob-4k9m2 .foot-4k9m2 .meta-4k9m2{text-align:left}
+
+/* ══ 모션 최소화 요청 존중 ══ */
+
+</style></head><body>
+<div class="slide"><div id="stage">
+<div class="stage-4k9m2" id="stage-4k9m2">
+ <canvas class="fx-4k9m2" id="fx-4k9m2"></canvas>
+
+ <div class="mark-4k9m2">
+  <svg class="dots-4k9m2" viewBox="0 0 24 24" fill="#9fc7ff">
+   <circle cx="4" cy="12" r="1.7"/><circle cx="9.5" cy="7" r="1.9"/><circle cx="9.5" cy="17" r="1.9"/>
+   <circle cx="15" cy="12" r="2.2"/><circle cx="20" cy="8" r="1.6"/><circle cx="20" cy="16" r="1.6"/></svg>
+  <div><b>BIBLO</b><s>데이터가 화면이 되기까지</s></div>
+ </div>
+
+ <div class="cap-4k9m2 raw-4k9m2"  id="cap1-4k9m2"><i></i><u>01 · 원천</u> <em>정제되지 않은 수집물</em></div>
+ <div class="cap-4k9m2 map-4k9m2"  id="cap2-4k9m2"><i></i><u>02 · 구조화</u> <em>엔티티 · 관계 · 지표 · 지문</em></div>
+ <div class="cap-4k9m2 gate-4k9m2" id="cap3-4k9m2"><i></i><u>03 · 관문</u> <em>서버 경유만 허용</em></div>
+ <div class="cap-4k9m2 ui-4k9m2"   id="cap4-4k9m2"><i></i><u>04 · 화면</u> <em>사람이 판단하는 자리</em></div>
+
+ <div class="glass-4k9m2 map-4k9m2" id="map-4k9m2"><div class="inner-4k9m2"><svg class="net-4k9m2" id="net-4k9m2"></svg></div></div>
+ <div class="core-4k9m2" id="core-4k9m2">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#eaf2ff" stroke-width="1.7"
+   stroke-linecap="round" stroke-linejoin="round">
+   <circle cx="12" cy="5.6" r="2.5"/><circle cx="5.6" cy="17" r="2.5"/><circle cx="18.4" cy="17" r="2.5"/>
+   <path d="M10.6 7.7L7 14.8M13.4 7.7l3.6 7.1M8.1 17h7.8"/></svg>
+ </div>
+
+ <div class="gates-4k9m2" id="gates-4k9m2">
+  <div class="api-4k9m2" id="api1-4k9m2">API<s>/api/db</s></div>
+  <div class="api-4k9m2" id="api2-4k9m2">API<s>RPC</s></div>
+ </div>
+ <div class="screens-4k9m2" id="screens-4k9m2">
+
+ <div class="glass-4k9m2 scr-4k9m2" id="scr1-4k9m2"><div class="body-4k9m2">
+   <div class="bar-4k9m2">🔍 논문 · 저자 · 성과 검색</div>
+   <div class="hero-4k9m2"><svg width="52%" viewBox="0 0 24 24" fill="none" stroke="#dff4ff"
+     stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+     <circle cx="12" cy="7.6" r="3.3"/><path d="M5.2 20.2a6.8 6.8 0 0 1 13.6 0"/>
+     <path d="M16.4 13.8v4.4M19 11.6v6.6"/></svg></div>
+   <div class="ttl-4k9m2">연구자 개인성과<s>11 VIEWS</s></div>
+   <div class="rows-4k9m2"><i class="k-4k9m2"></i><i></i><i></i><i class="k-4k9m2"></i><i></i></div>
+ </div></div>
+
+ <div class="glass-4k9m2 scr-4k9m2" id="scr2-4k9m2"><div class="body-4k9m2">
+   <div class="bar-4k9m2">📊 34개 연구단 성과보드</div>
+   <div class="hero-4k9m2"><svg width="52%" viewBox="0 0 24 24" fill="none" stroke="#dff4ff"
+     stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+     <path d="M4 20V13M10 20V7M16 20V10M22 20V4"/></svg></div>
+   <div class="ttl-4k9m2">경영자 성과보드<s>KPI · 신호등</s></div>
+   <div class="rows-4k9m2"><i></i><i class="k-4k9m2"></i><i></i><i></i><i class="k-4k9m2"></i></div>
+ </div></div>
+ </div>
+
+ <div class="foot-4k9m2">
+  <p class="lead-4k9m2">좌측은 <b>정제되지 않은 원천</b>이다. 출처마다 식별자도 표기도 달라 그대로는 셀 수 없다.
+   가운데에서 논문·연구자·저널을 <b>같은 것끼리 묶고 관계를 잇고</b> 지표와 지문을 붙인다.
+   그 결과만 <b>서버 관문을 지나</b> 화면에 닿는다. 브라우저는 DB를 직접 보지 않는다.</p>
+  <div class="meta-4k9m2" id="meta-4k9m2"></div>
+ </div>
+</div>
+<script>
+/* 다른 HTML 과 섞여도 안전하도록 클래스·ID 에 접미사 -4k9m2 를 붙였다.
+   id 로 만들어지던 암묵 전역이 사라지므로 여기서 명시적으로 잡는다. */
+const $=id=>document.getElementById(id+'-4k9m2');
+const stage=$('stage'), fx=$('fx'), map=$('map'), core=$('core'),
+      net=$('net'), meta=$('meta'),
+      api1=$('api1'), api2=$('api2'), scr1=$('scr1'), scr2=$('scr2');
+const D={paper:140693, auth:5280301, skku:11930, jr:13872, res:34764,
+         co:932329, kw:1196149, cm:642139, built:'2026-08-27'};
+const nf=n=>n.toLocaleString('ko-KR');
+
+/* ── 레이아웃 앵커 (화면 비율) ────────────────────
+   원본 이미지 구도: 좌 난류 → 중앙 맵 → API 2개 → 우 화면 2장 */
+const L={
+ map :{cx:.462, cy:.500, w:.186, h:.500},
+ core:{cx:.462, cy:.500, s:.072},
+ api1:{cx:.583, cy:.478},
+ scr1:{cx:.670, cy:.470, w:.092, h:.375},
+ api2:{cx:.742, cy:.478},
+ scr2:{cx:.842, cy:.462, w:.140, h:.445},
+ caps:[{id:'cap1',cx:.150,cy:.235},{id:'cap2',cx:.462,cy:.198},
+       {id:'cap3',cx:.662,cy:.782},{id:'cap4',cx:.842,cy:.190}]
+};
+const CHIPS=[
+ {t:'ENTITIES',     u:'논문 '+nf(D.paper)+' · 연구자 '+nf(D.res),  x:-.58,y:-.48},
+ {t:'RELATIONSHIPS',u:'저자행 '+nf(D.auth),                        x: .40,y:-.82},
+ {t:'INSIGHTS',     u:'지표 '+nf(D.cm)+'건',                       x:-.66,y: .32},
+ {t:'MEMORY',       u:'지문 키워드 '+nf(D.kw),                     x: .36,y: .60},
+ {t:'VENUES',       u:'저널 '+nf(D.jr),                            x:-.22,y: .78}
+];
+
+
+let W=0,H=0,DPR=1,MOB=false;
+/* 고정 무대에서는 좁은 화면 분기가 없다. 무대는 항상 1600x900. */
+const NARROW=()=>false;
+const px=(o)=>({x:W*o.cx, y:H*o.cy, w:W*(o.w||0), h:H*(o.h||0)});
+function place(){
+ W=1600; H=900; DPR=Math.min(devicePixelRatio||1,2);
+ MOB=NARROW(); document.body.classList.toggle('mob-4k9m2',MOB);
+ if(MOB){                                  // 세로 스택 — 절대좌표를 걷어낸다
+  ['map','core','api1','api2','scr1','scr2'].forEach(id=>{
+   const e=$(id);
+   e.style.cssText=e.style.cssText.replace(/(left|top|width|height|transform)\s*:[^;]*;?/g,'');});
+  L.caps.forEach(c=>{const e=$(c.id);
+   e.style.left=e.style.top=e.style.transform='';});
+  drawChips(); drawNet(); setMeta(); return;
+ }
+ const set=(el,o,wKey)=>{const p=px(o);
+   if(o.w){el.style.width=Math.round(p.w)+'px'; el.style.height=Math.round(p.h)+'px';
+           el.style.left=Math.round(p.x-p.w/2)+'px'; el.style.top=Math.round(p.y-p.h/2)+'px';}
+   else   {el.style.left=Math.round(p.x)+'px'; el.style.top=Math.round(p.y)+'px';
+           el.style.transform='translate(-50%,-50%)';}};
+ set(map,L.map); set(scr1,L.scr1); set(scr2,L.scr2);
+ set(api1,L.api1); set(api2,L.api2);
+ const cs=Math.round(H*L.core.s);
+ core.style.width=cs+'px'; core.style.height=cs+'px';
+ core.style.left=Math.round(W*L.core.cx)+'px'; core.style.top=Math.round(H*L.core.cy)+'px';
+ core.querySelector('svg').setAttribute('width', Math.round(cs*.56));
+ L.caps.forEach(c=>{const e=$(c.id);
+   e.style.left=Math.round(W*c.cx)+'px'; e.style.top=Math.round(H*c.cy)+'px';
+   e.style.transform='translate(-50%,-50%)';});
+ drawChips(); drawNet(); setMeta();
+}
+function setMeta(){
+ meta.innerHTML=`실측 <b>${D.built}</b> · 논문 <b>${nf(D.paper)}</b> · 저자행 <b>${nf(D.auth)}</b>`
+  +`<br>교내 확정 연구자 <b>${nf(D.skku)}</b> · 공저관계 <b>${nf(D.co)}</b> · 저널 <b>${nf(D.jr)}</b>`;
+}
+/* 칩 배치 — 패널 중심 기준 상대좌표 */
+function drawChips(){
+ document.querySelectorAll('.chip-4k9m2').forEach(e=>e.remove());
+ let box=document.getElementById('chips-4k9m2');
+ if(MOB){
+  if(!box){box=document.createElement('div');box.id='chips-4k9m2';box.className='chips-4k9m2';
+    map.insertAdjacentElement('afterend',box);}
+  box.innerHTML='';
+  CHIPS.forEach(c=>{const d=document.createElement('div');d.className='chip-4k9m2';
+   d.innerHTML=`${c.t}<u>${c.u}</u>`;box.appendChild(d);});
+  return;
+ }
+ if(box)box.remove();
+ const p=px(L.map);
+ CHIPS.forEach(c=>{
+  const d=document.createElement('div'); d.className='chip-4k9m2';
+  d.innerHTML=`${c.t}<u>${c.u}</u>`;
+  d.style.left=Math.round(p.x+p.w/2*c.x)+'px';
+  d.style.top =Math.round(p.y+p.h/2*c.y)+'px';
+  d.style.transform='translate(-50%,-50%)';
+  stage.appendChild(d);});
+}
+/* 패널 내부 노드망 */
+function drawNet(){
+ const NS='http://www.w3.org/2000/svg';
+ net.innerHTML='';
+ const r=map.querySelector('.inner-4k9m2').getBoundingClientRect();
+ const p=MOB?{w:r.width,h:r.height}:px(L.map), w=p.w, h=p.h;
+ if(w<10||h<10)return;
+ let sd=77; const rnd=()=>((sd=(sd*1103515245+12345)&0x7fffffff)/0x7fffffff);
+ const N=16, pts=[];
+ for(let i=0;i<N;i++){
+  const a=rnd()*Math.PI*2, r=(.24+rnd()*.62);
+  const x=w/2+Math.cos(a)*r*w*.44, y=h/2+Math.sin(a)*r*h*.44;
+  if(Math.hypot(x-w/2,y-h/2)<w*.20) continue;
+  pts.push([x,y]);}
+ pts.forEach((a,i)=>pts.forEach((b,j)=>{ if(j<=i)return;
+  const d=Math.hypot(a[0]-b[0],a[1]-b[1]);
+  if(d<w*.46){const l=document.createElementNS(NS,'line');
+   l.setAttribute('x1',a[0]);l.setAttribute('y1',a[1]);l.setAttribute('x2',b[0]);l.setAttribute('y2',b[1]);
+   l.setAttribute('stroke','rgba(150,170,245,.22)');l.setAttribute('stroke-width','.8');
+   net.appendChild(l);}}));
+ pts.forEach(a=>{
+  const sq=document.createElementNS(NS,'rect'), s=w*.036;
+  sq.setAttribute('x',a[0]-s/2);sq.setAttribute('y',a[1]-s/2);
+  sq.setAttribute('width',s);sq.setAttribute('height',s);sq.setAttribute('rx',s*.28);
+  sq.setAttribute('fill','rgba(129,140,248,.30)');
+  sq.setAttribute('stroke','rgba(175,190,255,.5)');sq.setAttribute('stroke-width','.9');
+  net.appendChild(sq);
+  const l2=document.createElementNS(NS,'line');
+  l2.setAttribute('x1',a[0]);l2.setAttribute('y1',a[1]);l2.setAttribute('x2',w/2);l2.setAttribute('y2',h/2);
+  l2.setAttribute('stroke','rgba(140,165,240,.14)');l2.setAttribute('stroke-width','.7');
+  net.insertBefore(l2,net.firstChild);});
+}
+</script>
+<script>
+/* ══ 흐름 애니메이션 ══
+   좌측: 마젠타 난류(무질서) → 중앙 코어로 수렴
+   우측: 코어 → API 2개 → 화면. 색이 시안으로 바뀐다.
+   하단: 정리된 광선 다발이 크게 돌아 우측 화면으로 올라간다. */
+const ctx=fx.getContext('2d');   // fx 는 js.js 에서 잡은 캔버스
+let RAW=[], OUT=[], BEAM=[], t0=0, running=true;
+/* 사용자가 모션 최소화를 켜면 애니메이션을 돌리지 않고 정지 화면 한 장만 그린다 */
+const RM=matchMedia('(prefers-reduced-motion: reduce)');
+let STILL=RM.matches;
+
+const lerp=(a,b,t)=>a+(b-a)*t;
+function bez(p,t){const u=1-t;
+ return [u*u*u*p[0][0]+3*u*u*t*p[1][0]+3*u*t*t*p[2][0]+t*t*t*p[3][0],
+         u*u*u*p[0][1]+3*u*u*t*p[1][1]+3*u*t*t*p[2][1]+t*t*t*p[3][1]];}
+
+function build(){
+ const cx=W*L.core.cx, cy=H*L.core.cy;
+ let sd=20260827; const R=()=>((sd=(sd*1103515245+12345)&0x7fffffff)/0x7fffffff);
+
+ /* ① 좌측 난류 — 화면 밖에서 들어와 코어로 수렴, 굵기·밝기 제각각 */
+ RAW=[];
+ const nRAW=MOB?26:58;
+ for(let i=0;i<nRAW;i++){
+  const y0=H*(0.10+R()*0.80), sy=H*(0.16+R()*0.68);
+  const p=[[-W*0.06, y0],
+           [W*(0.10+R()*0.14), y0+(R()-0.5)*H*0.55],
+           [W*(0.26+R()*0.12), sy+(R()-0.5)*H*0.34],
+           [cx-W*0.030, cy+(R()-0.5)*H*0.055]];
+  RAW.push({p, w:0.5+R()*2.3, a:0.14+R()*0.5, sp:0.16+R()*0.34, ph:R(),
+            hue:R()<0.34?'--raw2':'--raw', n:1+((R()*2)|0)});
+ }
+ /* ② 코어 → API → 화면 (시안) */
+ const a1=px(L.api1), a2=px(L.api2), s2=px(L.scr2);
+ OUT=[];
+ for(let i=0;i<22;i++){
+  const j=(i/21-0.5);
+  const p=[[cx+W*0.030, cy+j*H*0.030],
+           [a1.x-W*0.02, cy+j*H*0.05],
+           [a2.x+W*0.02, s2.y+j*H*0.10],
+           [s2.x-s2.w*0.42, s2.y+j*H*0.20]];
+  OUT.push({p, w:0.7+R()*1.5, a:0.24+R()*0.5, sp:0.26+R()*0.4, ph:R()});
+ }
+ /* ③ 하단 광선 다발 — 크게 아래로 돌아 화면으로 */
+ BEAM=[];
+ const nBEAM=MOB?12:26;
+ for(let i=0;i<nBEAM;i++){
+  const j=i/(nBEAM-1);
+  const p=[[cx+W*0.012, cy+H*0.055+j*H*0.02],
+           [W*(0.50+j*0.06), H*(0.90+j*0.16)],
+           [W*(0.74+j*0.05), H*(0.96+j*0.10)],
+           [s2.x-s2.w*0.40, s2.y+s2.h*0.30-j*H*0.02]];
+  BEAM.push({p, w:0.6+R()*1.9, a:0.10+R()*0.34, sp:0.14+R()*0.3, ph:R(),
+             blur:R()<0.3?0:(0.6+R()*1.6)});
+ }
+}
+function stroke(f,col,alpha,wid,t,seg){
+ const N=26; ctx.beginPath();
+ for(let k=0;k<=N;k++){const u=t+(k/N)*seg; if(u>1)break;
+  const q=bez(f.p,u); k?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);}
+ ctx.strokeStyle=col; ctx.globalAlpha=alpha; ctx.lineWidth=wid; ctx.stroke();
+}
+const CSS=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+let C_RAW,C_RAW2,C_OUT,C_MID;
+function readColors(){C_RAW=CSS('--raw');C_RAW2=CSS('--raw2');C_OUT=CSS('--out');C_MID=CSS('--mid');}
+
+/* 정적 바탕(흐린 다발)은 오프스크린에 한 번만 그린다.
+   ctx.filter 를 프레임마다 바꾸면 레이어가 매번 새로 만들어져 수백 ms 가 든다. */
+let BASE=null;
+function bakeBase(){
+ BASE=document.createElement('canvas');
+ BASE.width=Math.round(W*DPR); BASE.height=Math.round(H*DPR);
+ const c=BASE.getContext('2d');
+ c.setTransform(DPR,0,0,DPR,0,0); c.lineCap='round'; c.lineJoin='round';
+ const S2=(f,col,al,wd)=>{const N=26; c.beginPath();
+  for(let k=0;k<=N;k++){const q=bez(f.p,k/N); k?c.lineTo(q[0],q[1]):c.moveTo(q[0],q[1]);}
+  c.strokeStyle=col; c.globalAlpha=al; c.lineWidth=wd; c.stroke();};
+ c.filter='blur(1.1px)';  RAW.forEach(f=>S2(f,C_RAW2,f.a*0.22,f.w*1.5));
+ c.filter='blur(0.6px)';  OUT.forEach(f=>S2(f,C_MID ,f.a*0.30,f.w*1.6));
+ BEAM.filter(f=>f.blur).forEach(f=>{c.filter=`blur(${f.blur.toFixed(1)}px)`;
+   S2(f,C_OUT,f.a*0.30,f.w*1.4);});
+ c.filter='none'; BEAM.filter(f=>!f.blur).forEach(f=>S2(f,C_OUT,f.a*0.30,f.w*1.4));
+ c.globalAlpha=1;
+}
+function frame(ts){
+ if(!running)return;
+ if(STILL){drawStill();return;}
+ if(!t0)t0=ts; const T=(ts-t0)/1000;
+ ctx.setTransform(1,0,0,1,0,0);
+ ctx.clearRect(0,0,fx.width,fx.height);
+ if(BASE) ctx.drawImage(BASE,0,0);
+ ctx.setTransform(DPR,0,0,DPR,0,0);
+ ctx.lineCap='round'; ctx.lineJoin='round';   // filter 는 건드리지 않는다
+
+ RAW.forEach(f=>{for(let k=0;k<f.n;k++){
+  const u=((T*f.sp+f.ph+k/f.n)%1);
+  stroke(f,k%2?C_RAW2:C_RAW,f.a,f.w,Math.max(0,u-0.16),0.16);}});
+ OUT.forEach(f=>{const u=((T*f.sp+f.ph)%1);
+  stroke(f,C_OUT,f.a,f.w,Math.max(0,u-0.2),0.20);});
+ BEAM.forEach(f=>{const u=((T*f.sp+f.ph)%1);
+  stroke(f,C_OUT,f.a*1.5,f.w,Math.max(0,u-0.22),0.22);});
+ ctx.globalAlpha=1;
+
+ const cx=W*L.core.cx, cy=H*L.core.cy, r=H*L.core.s*(0.62+0.05*Math.sin(T*1.7));
+ const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r*2.6);
+ g.addColorStop(0,'rgba(140,160,255,.30)');g.addColorStop(1,'rgba(140,160,255,0)');
+ ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,r*2.6,0,7); ctx.fill();
+
+ requestAnimationFrame(frame);
+}
+/* 정지 화면 — 바탕 + 각 선의 밝은 구간 1개를 고정 위치에 */
+function drawStill(){
+ ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,fx.width,fx.height);
+ if(BASE) ctx.drawImage(BASE,0,0);
+ ctx.setTransform(DPR,0,0,DPR,0,0); ctx.lineCap='round'; ctx.lineJoin='round';
+ RAW.forEach(f=>stroke(f,C_RAW,f.a,f.w,Math.max(0,f.ph-0.16),0.16));
+ OUT.forEach(f=>stroke(f,C_OUT,f.a,f.w,Math.max(0,f.ph-0.2),0.20));
+ BEAM.forEach(f=>stroke(f,C_OUT,f.a*1.5,f.w,Math.max(0,f.ph-0.22),0.22));
+ ctx.globalAlpha=1;
+ const cx=W*L.core.cx, cy=H*L.core.cy, r=H*L.core.s*0.64;
+ const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r*2.6);
+ g.addColorStop(0,'rgba(140,160,255,.30)');g.addColorStop(1,'rgba(140,160,255,0)');
+ ctx.fillStyle=g; ctx.beginPath(); ctx.arc(cx,cy,r*2.6,0,7); ctx.fill();
+}
+function resize(){
+ place();
+ fx.width=Math.round(W*DPR); fx.height=Math.round(H*DPR);
+ readColors(); build(); bakeBase();
+ if(STILL) drawStill();
+}
+let rt=0;
+addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(resize,140);});
+resize();
+if(!STILL) requestAnimationFrame(frame);
+RM.addEventListener?.('change',e=>{STILL=e.matches;
+ if(STILL){drawStill();} else {t0=0;requestAnimationFrame(frame);}});
+document.addEventListener('visibilitychange',()=>{
+ running=!document.hidden; if(running){t0=0;requestAnimationFrame(frame);}});
+</script>
+</div></div>
+<script>
+/* 1600x900 고정 무대 — 작업가이드 5장 규격. resize 하나만 걸면 iframe 에서 배율이 굳는다. */
+function fitStage(){const st=document.getElementById('stage'); if(!st) return;
+ st.style.height='900px';
+ const k=Math.min(innerWidth/1600, innerHeight/900);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fitStage();
+addEventListener('resize',fitStage);addEventListener('load',fitStage);addEventListener('pageshow',fitStage);
+if(window.ResizeObserver) new ResizeObserver(fitStage).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitStage);
+</script>
+<script>if(window.self!==window.top) document.documentElement.classList.add('emb-bg0');</script>
+</body></html>
