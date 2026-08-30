@@ -1,0 +1,232 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BIBLO — 대학과 도서관의 데이터를 연결하는 AI 플랫폼</title>
+<style>
+/* 클래스·ID·변수 전부 -7m3v9 접미사 · 전역 선택자 없음 */
+.root-7m3v9{--ink-7m3v9:#e9eefb;--ink2-7m3v9:#93a6cc;--ink3-7m3v9:#5d7099;
+ --line-7m3v9:rgba(129,140,248,.16);
+ font:14px/1.6 -apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo",system-ui,sans-serif;
+ color:var(--ink-7m3v9);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+ background:radial-gradient(1200px 900px at 50% 8%,#0b1226 0%,#060a16 58%,#03050c 100%)}
+.root-7m3v9 *{box-sizing:border-box;margin:0;padding:0}
+.wrap-7m3v9{max-width:1460px;margin:0 auto;padding:38px 26px 64px}
+
+.hd-7m3v9{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.spacer-7m3v9{flex:1}
+.kicker-7m3v9{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--ink3-7m3v9)}
+.h1-7m3v9{font-size:34px;font-weight:800;letter-spacing:-1px;margin-top:12px;line-height:1.18}
+.h1-7m3v9 span{background:linear-gradient(90deg,#38bdf8,#a78bfa 45%,#f472b6 72%,#fbbf24);
+ -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lead-7m3v9{color:var(--ink2-7m3v9);font-size:13px;margin-top:11px;max-width:74ch;line-height:1.8}
+.lead-7m3v9 b{color:var(--ink-7m3v9)}
+.meta-7m3v9{font:600 11px/1.95 ui-monospace,Menlo,monospace;color:var(--ink3-7m3v9);
+ text-align:right;letter-spacing:.05em}
+.meta-7m3v9 b{color:var(--ink2-7m3v9)}
+
+.sec-7m3v9{margin-top:44px}
+.sh-7m3v9{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
+.sh-7m3v9 .n-7m3v9{font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;
+ color:var(--ink3-7m3v9)}
+.sh-7m3v9 h2{font-size:21px;font-weight:800;letter-spacing:-.5px}
+.sp-7m3v9{color:var(--ink2-7m3v9);font-size:13px;line-height:1.85;max-width:82ch}
+.sp-7m3v9 b{color:var(--ink-7m3v9)}
+
+/* ── 솔루션 카드 6 ── */
+.grid-7m3v9{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card-7m3v9{position:relative;border-radius:20px;overflow:hidden;padding:22px 22px 20px;
+ background:linear-gradient(168deg,rgba(140,158,220,.13),rgba(70,84,140,.06) 58%,rgba(50,60,110,.04));
+ border:1px solid var(--line-7m3v9);display:flex;flex-direction:column;gap:11px;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+.card-7m3v9::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;
+ background:linear-gradient(90deg,var(--c-7m3v9,#38bdf8),transparent 78%)}
+.cn-7m3v9{font:800 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;color:var(--c-7m3v9,#38bdf8)}
+.card-7m3v9 h3{font-size:17px;font-weight:800;letter-spacing:-.4px}
+.cs-7m3v9{font-size:12.5px;line-height:1.75;color:var(--ink2-7m3v9)}
+.card-7m3v9 ul{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:2px}
+.card-7m3v9 li{font-size:12px;line-height:1.55;color:#b8c4e6;padding-left:13px;position:relative}
+.card-7m3v9 li::before{content:"";position:absolute;left:0;top:7px;width:5px;height:5px;
+ border-radius:50%;background:var(--c-7m3v9,#38bdf8);opacity:.75}
+.eff-7m3v9{margin-top:auto;padding-top:12px;border-top:1px solid var(--line-7m3v9);
+ font-size:12px;line-height:1.7;color:#cbd5f5}
+.eff-7m3v9 b{display:block;font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;
+ color:var(--ink3-7m3v9);margin-bottom:6px}
+
+/* ── 흐름도 ── */
+.flow-7m3v9{border-radius:20px;border:1px solid var(--line-7m3v9);padding:26px 22px 18px;
+ background:rgba(10,16,36,.42)}
+.flow-7m3v9 svg{display:block;width:100%;height:auto;overflow:visible}
+
+/* ── 도입 표 ── */
+.tbl-7m3v9{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl-7m3v9 th,.tbl-7m3v9 td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line-7m3v9);
+ vertical-align:top}
+.tbl-7m3v9 th{font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;
+ color:var(--ink3-7m3v9);border-bottom-color:rgba(129,140,248,.3)}
+.tbl-7m3v9 td:first-child{color:var(--ink-7m3v9);font-weight:700;white-space:nowrap}
+.tbl-7m3v9 td:nth-child(2){color:#9fd8ff;font-weight:700;white-space:nowrap}
+.tbl-7m3v9 td:last-child{color:var(--ink2-7m3v9)}
+.tbl-7m3v9 tr:last-child td{border-bottom:none}
+
+.foot-7m3v9{margin-top:34px;border-top:1px solid var(--line-7m3v9);padding-top:16px;
+ color:var(--ink3-7m3v9);font-size:11.5px;line-height:1.95}
+.foot-7m3v9 b{color:var(--ink2-7m3v9)}
+@media(max-width:1120px){.grid-7m3v9{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){.grid-7m3v9{grid-template-columns:1fr}.h1-7m3v9{font-size:25px}}
+</style></head><body style="margin:0">
+<div class="root-7m3v9"><div class="wrap-7m3v9">
+
+ <div class="hd-7m3v9">
+  <div>
+   <div class="kicker-7m3v9">BIBLO · ONE PAGER</div>
+   <h1 class="h1-7m3v9">대학과 도서관의 데이터를<br><span>연결하는 AI 플랫폼</span></h1>
+   <p class="lead-7m3v9">대학과 도서관에는 책·논문·연구자·대출·소장·사업 데이터가 이미 쌓여 있습니다.
+    시스템마다 흩어져 있어 필요한 자료를 찾거나, 논문을 실제 연구자에게 연결하거나,
+    학교의 성과를 한눈에 보기 어려울 뿐입니다.
+    <b>BIBLO 는 기관이 보유한 데이터를 하나의 공통 기반으로 연결합니다.</b>
+    연결된 데이터는 검색·연구성과 관리·홍보영상·사서 업무·AI 질의·KPI 관리에 반복해서 쓰입니다.</p>
+  </div>
+  <div class="spacer-7m3v9"></div>
+  <div class="meta-7m3v9">
+   작성 <b>2026-08-27</b> · 개정 <b>2026-08-28</b><br>
+   대상 <b>대학·도서관 구매 의사결정자</b><br>
+   솔루션 <b>6</b>종 · 독립 도입 가능
+  </div>
+ </div>
+
+ <div class="sec-7m3v9">
+  <div class="sh-7m3v9"><span class="n-7m3v9">01</span><h2>6가지 AI 솔루션</h2></div>
+  <div class="grid-7m3v9" id="grid-7m3v9"></div>
+ </div>
+
+ <div class="sec-7m3v9">
+  <div class="sh-7m3v9"><span class="n-7m3v9">02</span><h2>하나의 데이터가 다음 솔루션의 기반이 됩니다</h2></div>
+  <p class="sp-7m3v9" style="margin-bottom:18px">검색을 위해 구축한 논문 DB 는 저자 매칭의 기반이 되고,
+   확정된 개인 연구성과는 학교 KPI 가 됩니다. 논문 원문은 홍보영상으로 이어지고,
+   LAS 기록은 사서의 장서 판단에 쓰입니다. AI 에이전트는 이 모든 데이터를 한곳에서 보게 합니다.</p>
+  <div class="flow-7m3v9" id="flow-7m3v9"></div>
+ </div>
+
+ <div class="sec-7m3v9">
+  <div class="sh-7m3v9"><span class="n-7m3v9">03</span><h2>필요한 솔루션부터 시작할 수 있습니다</h2></div>
+  <table class="tbl-7m3v9" id="tbl-7m3v9"></table>
+  <p class="sp-7m3v9" style="margin-top:16px">각 솔루션은 독립적으로 도입할 수 있습니다.
+   함께 쓸수록 같은 데이터를 다시 모으거나 정리하는 일이 줄고,
+   기관에 쌓이는 데이터의 활용 범위가 넓어집니다.</p>
+ </div>
+
+ <div class="foot-7m3v9" id="foot-7m3v9"></div>
+
+</div></div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const SOL=[
+ {n:'01',c:'#38bdf8',t:'AI 검색엔진',
+  s:'책·논문·글로벌 연구자 데이터를 구축하고 서로 연결합니다. 정확한 제목이나 검색어를 몰라도 일상적인 문장으로 필요한 책·논문·연구자를 찾을 수 있습니다.',
+  li:['책 DB 와 12축 책지문 구축','논문 DB 와 의미검색용 벡터 구축',
+      '글로벌 연구자 데이터 구축·연결','키워드 검색과 의미검색을 결합한 통합검색'],
+  e:'이용자는 필요한 자료를 더 쉽게 발견하고, 도서관은 외부 검색서비스로 빠져나가던 검색과 이용 데이터를 기관의 자산으로 축적합니다.'},
+ {n:'02',c:'#818cf8',t:'연구성과관리 솔루션',
+  s:'논문에서 제목·저자·소속·학술지를 추출하고, 저자 매칭 엔진이 논문 속 저자를 실제 교내 연구자와 연결해 학교·학과·연구자별 연구력을 관리합니다.',
+  li:['논문 원문·서지정보 추출과 표준화','저자 매칭용 논문 DB 구축',
+      '동명이인을 구분하는 저자 매칭 엔진','연구자 지문·공저자 관계망 구축',
+      '학교·학과·연구자별 연구성과와 연구력 관리'],
+  e:'담당자가 논문과 연구자를 일일이 대조하는 업무를 줄이고, 누구의 연구성과인지 근거와 함께 확인할 수 있습니다.'},
+ {n:'03',c:'#f472b6',t:'연구성과 홍보영상 솔루션',
+  s:'논문 원문에서 연구 배경·핵심 결과·그림과 표·주요 메시지를 추출해 영상과 쇼츠를 자동으로 만듭니다.',
+  li:['논문 원문 구조분해와 핵심 내용 추출','홍보용 논문 DB 구축',
+      '영상 구성안과 내레이션 자동 생성','연구성과 소개 영상·쇼츠 자동 제작'],
+  e:'전문적인 논문을 일반인도 이해하기 쉬운 콘텐츠로 바꿔 대학의 우수 연구성과를 빠르고 지속적으로 알릴 수 있습니다.'},
+ {n:'04',c:'#34d399',t:'사서 에이전트',
+  s:'기존 교내 LAS 를 교체하지 않고, LAS 에 쌓인 대출·소장·서지 데이터에 AI 기능을 더합니다. 장서분석관리 에이전트를 중심으로 사서의 판단과 반복 업무를 지원합니다.',
+  li:['장서 구성·회전율·사장자료 분석','유지·제적·복본 구매 후보 제안',
+      '수서와 자료 구매 판단 지원','MARC 의미필드 보강과 편목 검수',
+      '청구기호와 소장자료 관리 지원'],
+  e:'사서는 단순 통계가 아니라 근거가 연결된 분석 결과를 보고 어떤 책을 사고, 남기고, 정리할지 판단할 수 있습니다.'},
+ {n:'05',c:'#fbbf24',t:'AI 에이전트',
+  s:'기관이 보유한 모든 데이터에 AI·MCP 기능을 연결합니다. 여러 시스템과 표를 직접 찾아다니지 않고 질문만으로 필요한 데이터를 조회하고 근거를 확인합니다.',
+  li:['책·논문·연구자·장서·성과 데이터 통합 조회','자연어 질문을 데이터 조회로 연결',
+      '답변의 근거와 출처 표시','근거가 없거나 권한이 없는 정보는 답하지 않음',
+      '부서와 사용자 권한에 맞춘 데이터 접근'],
+  e:'AI 에이전트가 기관 데이터의 통합 창이 되어, 필요한 정보를 찾고 확인하는 시간을 줄입니다.'},
+ {n:'06',c:'#2dd4bf',t:'AI 성과관리 솔루션',
+  s:'연구성과관리에서 확정한 개인 연구성과와 학교의 여러 행정 데이터를 학과·사업단·학교 단위 KPI 로 연결합니다. BK21 과 앵커 사업의 현황·목표·위험 신호를 한곳에서 관리합니다.',
+  li:['BK21·앵커 사업 참여자와 실적 관리','학교의 여러 데이터를 공통 KPI 로 연결',
+      '학과·사업단·학교 단위 성과 현황','연도별 변화와 비교 분석',
+      '데이터 품질과 미확인 항목 표시'],
+  e:'별도의 성과자료를 다시 만들지 않고, 이미 쌓인 데이터로 사업 현황과 개선이 필요한 지점을 확인할 수 있습니다.'}
+];
+$('grid-7m3v9').innerHTML=SOL.map(s=>`
+ <article class="card-7m3v9" style="--c-7m3v9:${s.c}">
+  <div class="cn-7m3v9">${s.n}</div>
+  <h3>${s.t}</h3>
+  <p class="cs-7m3v9">${s.s}</p>
+  <ul>${s.li.map(x=>`<li>${x}</li>`).join('')}</ul>
+  <div class="eff-7m3v9"><b>도입 효과</b>${s.e}</div>
+ </article>`).join('');
+
+/* ── 흐름도 ── 마크다운의 ASCII 도식을 그대로 옮긴다 */
+const W=1180,H=330,NS='http://www.w3.org/2000/svg';
+const E=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);
+ if(p)p.appendChild(e);return e;};
+const svg=E('svg',{viewBox:`0 0 ${W} ${H}`});
+E('defs',{},svg).innerHTML=`<marker id="ar-7m3v9" viewBox="0 0 10 8" refX="9" refY="4"
+ markerWidth="8" markerHeight="7" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#7c8db5"/></marker>`;
+const NODE=[
+ {id:'src', x:56,  y:22,  w:212,h:44, t:'책·논문·글로벌 연구자 데이터', c:'#5d7099', dim:1},
+ {id:'s1',  x:56,  y:104, w:212,h:44, t:'1. AI 검색엔진',        c:'#38bdf8'},
+ {id:'s2',  x:56,  y:180, w:212,h:44, t:'2. 연구성과관리',        c:'#818cf8'},
+ {id:'s6',  x:56,  y:256, w:212,h:44, t:'6. AI 성과관리',         c:'#2dd4bf'},
+ {id:'s3',  x:430, y:104, w:212,h:44, t:'3. 연구성과 홍보영상',    c:'#f472b6'},
+ {id:'las', x:56,  y:330, w:212,h:44, t:'교내 LAS',              c:'#5d7099', dim:1},
+ {id:'s4',  x:430, y:330, w:212,h:44, t:'4. 사서 에이전트',        c:'#34d399'},
+ {id:'s5',  x:820, y:180, w:250,h:44, t:'5. AI 에이전트 · MCP 창', c:'#fbbf24'}
+];
+const M={}; NODE.forEach(n=>M[n.id]=n);
+function box(n){
+ const g=E('g',{},svg);
+ E('rect',{x:n.x,y:n.y,width:n.w,height:n.h,rx:11,
+   fill:n.dim?'rgba(93,112,153,.10)':'rgba(12,20,44,.72)',
+   stroke:n.c,'stroke-opacity':n.dim?.32:.6,'stroke-width':1.2},g);
+ const t=E('text',{x:n.x+n.w/2,y:n.y+n.h/2+4.5,'text-anchor':'middle',
+   fill:n.dim?'#93a6cc':'#e9eefb','font-size':12.5,'font-weight':n.dim?600:700},g);
+ t.textContent=n.t;
+}
+function arrow(d){E('path',{d,fill:'none',stroke:'#7c8db5','stroke-width':1.3,
+ 'marker-end':'url(#ar-7m3v9)','stroke-opacity':.8},svg);}
+/* 세로 줄기 */
+[['src','s1'],['s1','s2'],['s2','s6']].forEach(([a,b])=>{
+ const A=M[a],B=M[b];
+ arrow(`M${A.x+A.w/2},${A.y+A.h} L${B.x+B.w/2},${B.y-4}`);});
+/* 1 → 3 (가지) */
+arrow(`M${M.s1.x+M.s1.w},${M.s1.y+M.s1.h/2} L${M.s3.x-4},${M.s3.y+M.s3.h/2}`);
+/* LAS → 4 */
+arrow(`M${M.las.x+M.las.w},${M.las.y+M.las.h/2} L${M.s4.x-4},${M.s4.y+M.s4.h/2}`);
+/* 전부 → 5 */
+['s3','s2','s4'].forEach(k=>{
+ const A=M[k],B=M.s5, mx=(A.x+A.w+B.x)/2;
+ arrow(`M${A.x+A.w},${A.y+A.h/2} C${mx},${A.y+A.h/2} ${mx},${B.y+B.h/2} ${B.x-4},${B.y+B.h/2}`);});
+NODE.forEach(box);
+const cap=E('text',{x:820,y:150,fill:'#5d7099','font-size':10.5,'font-weight':700,
+ 'letter-spacing':'.14em','font-family':'ui-monospace,Menlo,monospace'},svg);
+cap.textContent='1~6 의 모든 데이터';
+$('flow-7m3v9').appendChild(svg);
+
+/* ── 도입 표 ── */
+const ROWS=[
+ ['도서관','AI 검색엔진 · 사서 에이전트','책·논문 검색에서 장서·수서·편목으로 확장'],
+ ['연구처','연구성과관리','개인 연구력에서 학과·학교 성과관리로 확장'],
+ ['홍보처','연구성과 홍보영상','우수 논문 선별과 정기 콘텐츠 제작으로 확장'],
+ ['전산·기획 부서','AI 에이전트','기관 전체 데이터의 통합 조회 창으로 확장'],
+ ['BK21·앵커 사업단','AI 성과관리','참여자·실적 관리에서 학교 공통 KPI 로 확장']
+];
+$('tbl-7m3v9').innerHTML=
+ '<thead><tr><th>도입 부서</th><th>시작 솔루션</th><th>확장 방향</th></tr></thead><tbody>'
+ +ROWS.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')
+ +'</tbody>';
+
+$('foot-7m3v9').innerHTML=`<b>원문.</b> <code>BIBLO_영업_원페이저.md</code> (작성 2026-08-27 · 개정 2026-08-28).
+ 상세 기능과 데이터 근거는 <code>BIBLO_전기능_전체지도.md</code> 를 따른다.<br>
+ <b>BIBLO</b> · TenSoftWorks`;
+})();
+</script></body></html>
