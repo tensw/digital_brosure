@@ -91,6 +91,27 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
    원본 CSS 는 전부 #chapter-4 로 묶여 있어 스코프만 .wqx 로 바꿔 통째로 가져왔다.
    @media 안의 좁은 화면용 규칙(28개)은 제외한다. 무대는 1600px 고정인데 그 규칙이
    조건 없이 풀리면 결과 3열이 2열로, 우측 장바구니가 통째로 접힌다. */
+/* 진행 상태 줄 — 이 화면이 어느 단계인지 */
+.wq-sigrow{display:flex;flex-wrap:nowrap;align-items:center;gap:5px;
+ padding:8px 16px;border-bottom:1px solid var(--line)}
+.wq-siglb{font-size:10.8px;font-weight:800;color:var(--text);margin-right:3px;white-space:nowrap}
+.wq-sig{font-size:10.4px;font-weight:700;color:#4f63f6;background:#eef1ff;
+ border:1px solid #dbe1ff;border-radius:999px;padding:3px 7px;white-space:nowrap}
+/* 신호 알약 */
+.pil-w9{position:absolute;z-index:9;display:flex;align-items:center;gap:10px;
+ border-radius:999px;padding:12px 22px;white-space:nowrap;
+ font-size:17px;font-weight:800;letter-spacing:-.5px;color:#fff;
+ background:#2c3245;box-shadow:0 22px 44px -14px rgba(10,14,34,.62)}
+.pil-w9.key{font-size:20px;background:linear-gradient(96deg,#4f63f6,#6b50ee);
+ box-shadow:0 24px 48px -14px rgba(79,99,246,.62)}
+.pil-w9 svg{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.9;
+ stroke-linecap:round;stroke-linejoin:round;opacity:.95}
+.tipw{position:absolute;width:0;height:0;
+ border-left:9px solid transparent;border-right:9px solid transparent}
+.pil-w9.dr .tipw{top:100%;border-top:var(--len,24px) solid #2c3245}
+.pil-w9.ur .tipw{bottom:100%;border-bottom:var(--len,24px) solid #2c3245}
+.pil-w9.key.dr .tipw{border-top-color:#5a5bf3}
+.pil-w9.key.ur .tipw{border-bottom-color:#5a5bf3}
 .scr{position:absolute;overflow:hidden;border-radius:14px;background:#fff;
  box-shadow:0 30px 66px rgba(18,16,70,.34)}
 .scr > .wqx{position:absolute;left:0;top:0;transform-origin:0 0}
@@ -451,22 +472,25 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
    <h2>필요한 책을 AI가 먼저 찾아 담아둡니다</h2>
    <p>당장 복본을 더 사야 할 만큼 대출이 폭주하는 책, 다른 대학엔 다 있는데 우리 도서관에만 없는 책을 AI가 골라 장바구니에 담아줍니다. 사서는 클릭 한 번으로 발주를 시작할 수 있습니다.</p></div></div>
 
- <div class="st-w9" style="top:359px"><div class="bg-w9">2</div><div class="tx-w9">
+ <div class="st-w9" style="top:340px"><div class="bg-w9">2</div><div class="tx-w9">
    <h2>마크 업체가 못 채운 빈칸을 채웁니다</h2>
    <p>목차, 요약, 주제어, 장르 등 일일이 쓰기 번거로웠던 5가지 필수 빈칸을 AI가 책 내용을 읽고 알아서 적어줍니다. 사서는 완성된 고품질 데이터를 확인하고 '저장'만 누르면 됩니다.</p></div></div>
 
- <div class="st-w9" style="top:512px"><div class="bg-w9">3</div><div class="tx-w9">
+ <div class="st-w9" style="top:480px"><div class="bg-w9">3</div><div class="tx-w9">
    <h2>우리 도서관 서가에 딱 맞는 청구기호를 달아줍니다</h2>
    <p>단순한 표준 분류표가 아니라, 우리 도서관 서가에 꽂혀있는 이웃 책들을 분석해 가장 자연스러운 청구기호를 추천합니다. '승인' 버튼을 누르면 즉시 라벨 출력으로 이어집니다.</p></div></div>
 
- <div class="st-w9 on-w9" style="top:665px"><div class="bg-w9">4</div><div class="tx-w9">
-   <h2>진짜 버릴 책과 남길 책을 숫자로 가려냅니다</h2>
-   <p>대출이 없다고 무작정 버리지 않습니다. 연계된 다른 도서관들의 기록까지 비교해 '진짜 제적해도 되는 책'만 골라줍니다. 또한, 책들의 개별 파손 상태와 교체 시기까지 한눈에 묶어서 관리할 수 있습니다.</p></div></div>
+ <div class="st-w9 on-w9" style="top:600px"><div class="bg-w9">4</div><div class="tx-w9">
+   <h2>대출 건수 하나가 아니라, 장서의 생애를 보고 판단합니다</h2>
+   <p>최근 대출이 없다는 이유만으로 제적 후보가 되지 않습니다.
+    연도별 이용 흐름과 판·복본 구성, 자료 상태, 장서 정책을 함께 확인해 꾸준히 이용되는 책과
+    일시적인 유행 도서, 장기간 이용되지 않은 자료를 구분합니다.
+    AI 가 근거와 후보를 제시하고, 유지·이관·제적 여부는 사서가 최종 결정합니다.</p></div></div>
 
  <!-- 뒤 카드: 데이터 품질 -->
 
  <!-- 앞 카드: 경영자 성과보드 -->
- <div class="scr" style="left:600px;top:172px;width:930px;height:515px"><div class="wqx" style="width:1150px;transform:scale(0.8087)"><div class="wq" aria-label="남길 책·지킬 책 화면 UI 시안">
+ <div class="scr" style="left:600px;top:206px;width:930px;height:547px"><div class="wqx" style="width:1150px;transform:scale(0.8087)"><div class="wq" aria-label="남길 책·지킬 책 화면 UI 시안">
       <div class="wq-chrome"><span class="wq-dot"></span><span class="wq-dot"></span><span class="wq-dot"></span><span class="wq-url">biblo · 사서 콘솔 — /worklist/keep (시안)</span></div>
       <div class="wq-head">
         <span class="wq-logo">BIBLO</span>
@@ -479,7 +503,15 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
         <span class="wq-step on">① 판정 <b>스테디 5 · 유행 소멸 2</b></span><span class="wq-arrow">→</span>
         <span class="wq-step">② 조치 <b>최신판·복본·보존</b></span>
       </div>
-      <div class="wq-pane on">
+      <div class="wq-sigrow">
+ <span class="wq-siglb">진행 상태</span>
+ <span class="wq-sig">이용 흐름 분석 완료</span>
+ <span class="wq-sig">스테디·유행·장기 미이용 구분</span>
+ <span class="wq-sig">판·복본 상태 확인</span>
+ <span class="wq-sig">유지·관찰·제적 후보 생성</span>
+ <span class="wq-sig">사서 판정 대기</span>
+</div>
+<div class="wq-pane on">
         <div class="wq-bar">
           <span class="wq-fil">판정: 전체 ▾</span><span class="wq-fil">정렬: 누적 대출 ▾</span>
           <span style="margin-left:auto">마킹 기간(1년·2년)이 끝나면 재검토 알림 — <b style="color:var(--text)">대출이 적어도 필요한 책은 수동 마킹</b></span>
@@ -520,78 +552,15 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
         <button class="wq-btn p" type="button">판정 확정 → 정책 반영</button>
       </div>
     </div></div></div>
- <div class="scr" style="left:720px;top:545px;width:800px;height:292px"><div class="wqx" style="width:1150px;transform:scale(0.6957)"><div class="wq" aria-label="작품 관리 화면 UI 시안">
-      <div class="wq-chrome"><span class="wq-dot"></span><span class="wq-dot"></span><span class="wq-dot"></span><span class="wq-url">biblo · 사서 콘솔 — /works (시안)</span></div>
-      <div class="wq-head">
-        <span class="wq-logo">BIBLO</span>
-        <span class="wq-crumb">사서 콘솔 › 책관리 › <b style="color:var(--text)">데미안</b></span>
-        <span class="wq-search">🔍 작품·서명·저자·ISBN 검색</span>
-        <span class="wq-user"><span class="wq-avatar">김</span>김사서 · 수서팀</span>
-      </div>
-      <div class="wq-stepper">
-        <span class="wq-step on">작품 <b>1</b></span><span class="wq-arrow">→</span>
-        <span class="wq-step on">판 <b>52</b></span><span class="wq-arrow">→</span>
-        <span class="wq-step on">권 <b>73</b></span>
-      </div>
-      <div class="wq-pane on">
-        <div class="wq-bar" style="margin-bottom:11px">
-          <img class="wq-cover" style="width:44px" src="https://zghartrwhjfqydlbhigs.supabase.co/storage/v1/object/public/book-covers/9788937460449.jpg" alt="데미안 표지" loading="lazy">
-          <span style="font-size:13px;color:var(--text)"><b>데미안</b> — Hesse, Hermann <span style="color:var(--muted);font-size:11.6px">작품 #1116954 · 판 52종 · 권 73 · 누적 대출 3,143회</span></span>
-          <span class="wq-chip g">스테디 — 2024년에도 134회</span>
-        </div>
+<!-- 신호 알약 — 이 화면의 원칙 -->
+<div class="pil-w9 dr" style="left:578px;top:430px;--len:24px"><span class="tipw" style="left:130px"></span><svg viewBox="0 0 24 24"><path d="M4 18c3.5 0 4.5-9 8-9s4.5 9 8 9"/><path d="M4 20.5h16"/></svg>연도별 대출 곡선 분석</div>
+<div class="pil-w9 dr" style="left:1330px;top:396px;--len:24px"><span class="tipw" style="left:110px"></span><svg viewBox="0 0 24 24"><path d="M12 20.5V13"/><path d="M8.5 4.5h7l-1 5.5 3 3H6.5l3-3z"/></svg>스테디셀러 유지 마킹</div>
+<div class="pil-w9 ur" style="left:578px;top:560px;--len:26px"><span class="tipw" style="left:130px"></span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M6.6 17.4 17.4 6.6"/></svg>대출 0회 자동 제적 금지</div>
+<div class="pil-w9 ur" style="left:1318px;top:500px;--len:26px"><span class="tipw" style="left:110px"></span><svg viewBox="0 0 24 24"><path d="M4 8.5 12 5l8 3.5-8 3.5z"/><path d="M4 13.5 12 17l8-3.5"/></svg>작품·판·권 3단계 확인</div>
+<div class="pil-w9 ur" style="left:1330px;top:620px;--len:26px"><span class="tipw" style="left:110px"></span><svg viewBox="0 0 24 24"><path d="M12 4.5 21 19.5H3z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>권별 파손·분실 상태</div>
+<div class="pil-w9 ur key" style="left:855px;top:772px;--len:19px"><span class="tipw" style="left:210px"></span><svg viewBox="0 0 24 24"><path d="m12 4.6 2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L4.8 9.9l5-.7z"/></svg>대출이 없다는 이유만으로 제적하지 않습니다</div>
 
-        <div class="wq-mcard">
-          <div class="mch">판(ISBN)별 현황 <span class="sub">대출 상위 6 / 52종 — 사용자에겐 전부 "데미안", 사서에겐 각각의 판</span></div>
-          <div class="tw"><table class="wq-tbl">
-            <thead><tr><th>판</th><th style="width:120px">ISBN</th><th style="width:46px">권</th><th style="width:120px">누적 대출</th><th style="width:88px">최근 대출</th><th style="width:70px"></th></tr></thead>
-            <tbody>
-              <tr class="sel"><td><b>민음사</b> 2000 <span class="bt2">세계문학전집 44</span></td><td style="font-family:ui-monospace,monospace;font-size:11px">9788937460449</td><td><b>6</b></td><td><b>762회</b> <span class="tk" style="display:inline-block;width:52px;height:7px;vertical-align:1px"><span class="f" style="display:block;width:100%"></span></span></td><td>2025-07-23</td><td><button class="wq-btn m" type="button">권 보기 ▾</button></td></tr>
-              <tr><td><b>민음사</b> 1997</td><td style="font-family:ui-monospace,monospace;font-size:11px">9788937423307</td><td>6</td><td>544회 <span class="tk" style="display:inline-block;width:52px;height:7px;vertical-align:1px"><span class="f" style="display:block;width:71%"></span></span></td><td>2024-11-06</td><td><button class="wq-btn m" type="button">권 보기</button></td></tr>
-              <tr><td><b>문학동네</b> 2013</td><td style="font-family:ui-monospace,monospace;font-size:11px">9788954620512</td><td>3</td><td>137회 <span class="tk" style="display:inline-block;width:52px;height:7px;vertical-align:1px"><span class="f" style="display:block;width:18%"></span></span></td><td>2024-11-30</td><td><button class="wq-btn m" type="button">권 보기</button></td></tr>
-              <tr><td><b>북하우스</b> 2013</td><td style="font-family:ui-monospace,monospace;font-size:11px">9788956056449</td><td>2</td><td>134회 <span class="tk" style="display:inline-block;width:52px;height:7px;vertical-align:1px"><span class="f" style="display:block;width:18%"></span></span></td><td>2025-05-23</td><td><button class="wq-btn m" type="button">권 보기</button></td></tr>
-              <tr><td><b>사계절</b> 2013</td><td style="font-family:ui-monospace,monospace;font-size:11px">9788958286677</td><td>2</td><td>128회 <span class="tk" style="display:inline-block;width:52px;height:7px;vertical-align:1px"><span class="f" style="display:block;width:17%"></span></span></td><td>2025-03-05</td><td><button class="wq-btn m" type="button">권 보기</button></td></tr>
-              <tr><td><b>브라운힐</b> 2011</td><td style="font-family:ui-monospace,monospace;font-size:11px">9788990324474</td><td>3</td><td>125회 <span class="tk" style="display:inline-block;width:52px;height:7px;vertical-align:1px"><span class="f" style="display:block;width:16%"></span></span></td><td>2024-10-16</td><td><button class="wq-btn m" type="button">권 보기</button></td></tr>
-            </tbody>
-          </table></div>
-        </div>
-
-        <div class="wq-body w2" style="margin-top:10px">
-          <div class="wq-mcard">
-            <div class="mch">권(복본) 전주기 — 민음사 2000 (9788937460449) <span class="sub">6권 · 등록번호 단위 · 대출은 실측</span></div>
-            <div class="tw"><table class="wq-tbl">
-              <thead><tr><th style="width:76px">등록번호</th><th>청구기호</th><th style="width:80px">첫 대출<span class="bt2">(구입 근사)</span></th><th style="width:66px">누적</th><th style="width:80px">최근</th><th style="width:74px">상태</th><th style="width:86px"></th></tr></thead>
-              <tbody>
-                <tr class="sel"><td>1206552</td><td style="font-family:ui-monospace,monospace;font-size:11px">808.8 ㅅ242ㅁ v.44</td><td>2005-03</td><td><b>223회</b> 🔥</td><td>2025-05</td><td><span class="wq-chip a">점검 필요</span></td><td><button class="wq-btn m" type="button">수리 접수</button></td></tr>
-                <tr><td>1206551</td><td style="font-family:ui-monospace,monospace;font-size:11px">808.8 ㅅ242ㅁ v.44</td><td>2005-03</td><td>165회</td><td>2025-05</td><td><span class="wq-chip g">양호</span></td><td><button class="wq-btn m" type="button">상세</button></td></tr>
-                <tr><td>2223890</td><td style="font-family:ui-monospace,monospace;font-size:11px">808.8 ㅅ242ㅁ v.44</td><td>2019-03</td><td>56회</td><td>2025-04</td><td><span class="wq-chip g">양호</span></td><td><button class="wq-btn m" type="button">상세</button></td></tr>
-                <tr><td>1900888</td><td style="font-family:ui-monospace,monospace;font-size:11px">833.912 H587d8</td><td>2012-06</td><td>109회</td><td>2025-06</td><td><span class="wq-chip g">양호</span></td><td><button class="wq-btn m" type="button">상세</button></td></tr>
-                <tr><td>1934334</td><td style="font-family:ui-monospace,monospace;font-size:11px">833.912 H587d8</td><td>2013-12</td><td>108회</td><td>2025-07</td><td><span class="wq-chip g">양호</span></td><td><button class="wq-btn m" type="button">상세</button></td></tr>
-                <tr><td>1992201</td><td style="font-family:ui-monospace,monospace;font-size:11px">833.912 H587d8</td><td>2015-04</td><td>101회</td><td>2025-07</td><td><span class="wq-chip g">양호</span></td><td><button class="wq-btn m" type="button">상세</button></td></tr>
-              </tbody>
-            </table></div>
-            <div style="margin-top:7px;font-size:11.4px;color:var(--muted)">실측 발견 — 같은 ISBN이 <b style="color:var(--text)">두 청구기호</b>(세계문학전집 808.8 / 단행 833.912)로 배가돼 있다. 2019-03 첫 대출 권 = 수요로 <b style="color:var(--text)">추가 구입된 복본</b>. 사서 화면이라야 보이는 것들.</div>
-          </div>
-          <aside class="wq-detail">
-            <h5 style="margin-bottom:8px">권 상태 요약 <span class="wq-chip n" style="vertical-align:1px">이 판</span></h5>
-            <div class="wq-kv"><span>권 · 총 대출</span><b>6권 · 762회</b></div>
-            <div class="wq-kv"><span>권당 대출</span><b>127회</b></div>
-            <div class="wq-kv"><span>자주 나가는 권</span><b>#1206552 — 223회</b></div>
-            <div class="wq-kv"><span>상태 분포</span><b>양호 5 · 점검 1</b></div>
-            <div class="sb" style="margin-top:6px"><span class="l">양호</span><span class="tk"><span class="f" style="display:block;width:83%"></span></span><span class="v">5권</span></div>
-            <div class="sb"><span class="l">점검 필요</span><span class="tk"><span class="f w" style="display:block;width:17%"></span></span><span class="v">1권</span></div>
-            <div class="wq-kv" style="margin-top:6px"><span>타관 이용률 대비</span><b>연계 수집 후 (설계)</b></div>
-            <div class="acts">
-              <button class="wq-btn p" type="button">복본 추가 → 수서 큐</button>
-              <button class="wq-btn" type="button">상태 일괄 점검</button>
-            </div>
-          </aside>
-        </div>
-      </div>
-      <div class="wq-foot">
-        <span>대출·회전·판·권 데이터는 <b style="color:var(--text)">이미 실측 자동</b> — 구입일·상태값은 <b style="color:var(--text)">LAS 연동으로 자동 수신</b>(설계)</span>
-        <button class="wq-btn p" type="button">작품 리포트 내보내기</button>
-      </div>
-    </div></div></div>
+ 
 
  <div class="ft-w9">기준 2026-08-27 · 수치는 BK21 34개 연구단 실측 · 신호등은 계열 내 백분위 판정 · 우측 화면은 구성 예시</div>
 
