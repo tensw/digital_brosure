@@ -29,12 +29,14 @@ canvas.fx-4k9m2{position:absolute;inset:0;width:100%;height:100%;z-index:1;point
  letter-spacing:.16em;color:var(--ink3);margin-top:5px}
 
 /* ── 구간 캡션 ── */
-.cap-4k9m2{position:absolute;z-index:7;font:700 10px/1 ui-monospace,Menlo,monospace;
- letter-spacing:.24em;color:var(--ink3);display:flex;align-items:center;gap:8px;white-space:nowrap}
-.cap-4k9m2 i{width:6px;height:6px;border-radius:50%;background:currentColor;font-style:normal}
-.cap-4k9m2 u{text-decoration:none}
-.cap-4k9m2.raw-4k9m2{color:#c96fd4} .cap-4k9m2.map-4k9m2{color:#93a0f0} .cap-4k9m2.gate-4k9m2{color:#5fb6e8} .cap-4k9m2.ui-4k9m2{color:#5ce0f0}
-.cap-4k9m2 em{font-style:normal;color:var(--ink3);letter-spacing:.06em;font-weight:600}
+.cap-4k9m2{position:absolute;z-index:7;display:block;text-align:left;white-space:normal}
+.cap-4k9m2 u{display:block;text-decoration:none;font:700 10.5px/1 ui-monospace,Menlo,monospace;
+ letter-spacing:.2em;color:#7c88b8;margin-bottom:9px}
+.cap-4k9m2 b{display:block;font-size:15px;font-weight:800;letter-spacing:-.4px;line-height:1.35}
+.cap-4k9m2 em{display:block;margin-top:5px;font-style:normal;
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:#7c88b8}
+.cap-4k9m2.raw-4k9m2 b{color:#c96fd4} .cap-4k9m2.map-4k9m2 b{color:#93a0f0}
+.cap-4k9m2.gate-4k9m2 b{color:#5fb6e8} .cap-4k9m2.ui-4k9m2 b{color:#5ce0f0}
 
 /* ── 유리 공통 ── */
 .glass-4k9m2{position:absolute;border-radius:22px;
@@ -78,6 +80,83 @@ canvas.fx-4k9m2{position:absolute;inset:0;width:100%;height:100%;z-index:1;point
    0 0 26px rgba(60,150,240,.24)}
 .api-4k9m2 s{display:block;text-decoration:none;font-size:8.5px;font-weight:600;letter-spacing:.05em;
  color:#7fa6d6;margin-top:4px}
+
+/* ── ④ 화면 — 실제 화면 3개 ── */
+.win-4k9m2{position:absolute;z-index:6;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;
+ background:linear-gradient(180deg,rgba(16,23,52,.96),rgba(10,15,38,.96));
+ border:1px solid rgba(140,170,240,.30);
+ box-shadow:0 28px 64px -26px rgba(0,0,0,.96),inset 0 1px 0 rgba(255,255,255,.10)}
+.wtop-4k9m2{flex:none;height:30px;display:flex;align-items:center;gap:6px;padding:0 13px;
+ background:rgba(255,255,255,.055);border-bottom:1px solid rgba(140,170,240,.20)}
+.wtop-4k9m2 i{width:6px;height:6px;border-radius:50%;background:rgba(160,190,255,.38)}
+.wtop-4k9m2 span{margin-left:6px;font:700 9.6px/1 ui-monospace,Menlo,monospace;
+ letter-spacing:.06em;color:#a4b8e6}
+.wbody-4k9m2{flex:1;min-height:0;padding:14px 14px 13px;display:flex;flex-direction:column;gap:9px}
+
+/* 대화 */
+.cq-4k9m2{align-self:flex-end;max-width:88%;padding:8px 11px;border-radius:12px 12px 4px 12px;
+ background:rgba(120,140,255,.22);border:1px solid rgba(150,175,255,.30);
+ font-size:11.5px;font-weight:600;line-height:1.45;color:#e6ecff;letter-spacing:-.3px}
+.ca-4k9m2{max-width:96%;padding:10px 12px;border-radius:12px 12px 12px 4px;
+ background:rgba(56,214,248,.10);border:1px solid rgba(120,200,240,.26);
+ font-size:11.5px;font-weight:500;line-height:1.55;color:#d7e5f6;letter-spacing:-.3px}
+.ca-4k9m2 b{color:#8fe6ff;font-weight:800}
+.csrc-4k9m2{font:700 8.6px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;color:#7f95c4}
+.cbtn-4k9m2{display:flex;gap:6px}
+.cbtn-4k9m2 span{padding:6px 10px;border-radius:8px;font-size:10px;font-weight:700;color:#cfe0ff;
+ background:rgba(150,170,255,.14);border:1px solid rgba(160,185,255,.30);letter-spacing:-.2px}
+.cin-4k9m2{margin-top:auto;padding:9px 12px;border-radius:999px;
+ background:rgba(8,13,32,.9);border:1px solid rgba(140,170,240,.26);
+ font-size:10.5px;font-weight:600;color:#6f83b0}
+
+/* 신청 폼 */
+.frow-4k9m2{padding-bottom:7px;border-bottom:1px solid rgba(140,170,240,.14)}
+.frow-4k9m2 u{display:block;text-decoration:none;font:700 8.4px/1 ui-monospace,Menlo,monospace;
+ letter-spacing:.12em;color:#7f95c4}
+.frow-4k9m2 b{display:block;margin-top:5px;font-size:11.8px;font-weight:700;
+ letter-spacing:-.35px;color:#e3ebff}
+.fbadge-4k9m2{margin-top:2px;align-self:flex-start;padding:5px 9px;border-radius:7px;
+ font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.04em;color:#8fe6ff;
+ background:rgba(56,214,248,.12);border:1px solid rgba(120,200,240,.30)}
+.fbtn-4k9m2{margin-top:auto;padding:10px;border-radius:10px;text-align:center;
+ font-size:11.5px;font-weight:800;letter-spacing:-.3px;color:#08122c;
+ background:linear-gradient(140deg,#7fd8f5,#9fb4ff);
+ box-shadow:0 12px 26px -12px rgba(90,170,255,.9)}
+
+/* 총장 KPI */
+.k3-4k9m2{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.kc-4k9m2{padding:8px 9px;border-radius:10px;
+ background:rgba(255,255,255,.045);border:1px solid rgba(140,170,240,.20)}
+.kc-4k9m2 u{display:block;text-decoration:none;font:700 7.8px/1.3 ui-monospace,Menlo,monospace;
+ letter-spacing:.04em;color:#7f95c4}
+.kc-4k9m2 b{display:block;margin-top:5px;font-size:17px;font-weight:800;letter-spacing:-.7px;color:#eaf1ff}
+.kc-4k9m2 b i{font-style:normal;font-size:10px;font-weight:700;margin-left:1px;color:#8ea6d8}
+.kch-4k9m2{flex:1;min-height:0;display:flex;flex-direction:column;gap:7px;
+ padding:9px 10px 8px;border-radius:10px;
+ background:rgba(255,255,255,.035);border:1px solid rgba(140,170,240,.18)}
+.kch-4k9m2 u{text-decoration:none;font:700 7.8px/1 ui-monospace,Menlo,monospace;
+ letter-spacing:.04em;color:#7f95c4}
+.bars-4k9m2{flex:1;min-height:0;display:flex;flex-direction:column;gap:5px}
+.barea-4k9m2{position:relative;flex:1;min-height:0;display:flex;align-items:flex-end;gap:7px}
+.barea-4k9m2 .bw-4k9m2{flex:1;height:100%;display:flex;align-items:flex-end}
+.barea-4k9m2 .bv-4k9m2{width:100%;border-radius:4px 4px 2px 2px;
+ background:linear-gradient(180deg,rgba(120,210,255,.85),rgba(90,120,255,.32))}
+.avg-4k9m2{position:absolute;left:0;right:0;height:0;z-index:3;
+ border-top:1.4px dashed rgba(255,168,84,.9)}
+.avg-4k9m2 s{position:absolute;left:0;top:-11px;text-decoration:none;
+ font:700 7.4px/1 ui-monospace,Menlo,monospace;color:#ffb066;letter-spacing:.02em}
+.blab-4k9m2{display:flex;gap:7px}
+.blab-4k9m2 em{flex:1;text-align:center;font-style:normal;
+ font:700 7.4px/1 ui-monospace,Menlo,monospace;color:#8296c2}
+.klist-4k9m2{display:flex;flex-direction:column;gap:5px}
+.kl-4k9m2{display:flex;align-items:center;gap:7px;padding:6px 9px;border-radius:8px;
+ font-size:10.5px;font-weight:700;letter-spacing:-.3px;color:#dbe5ff;
+ background:rgba(255,255,255,.04);border:1px solid rgba(140,170,240,.16)}
+.kl-4k9m2:before{content:"";width:7px;height:7px;border-radius:50%;flex:none}
+.kl-4k9m2.ok-4k9m2:before{background:#4fd39a;box-shadow:0 0 10px rgba(79,211,154,.8)}
+.kl-4k9m2.wr-4k9m2:before{background:#ffa854;box-shadow:0 0 10px rgba(255,168,84,.8)}
+.kl-4k9m2 s{margin-left:auto;text-decoration:none;font:600 9px/1 ui-monospace,Menlo,monospace;
+ color:#8296c2;letter-spacing:.02em}
 
 /* ── ④ 화면 ── */
 .scr-4k9m2{z-index:6;overflow:hidden}
@@ -157,10 +236,10 @@ body.mob-4k9m2 .foot-4k9m2 .meta-4k9m2{text-align:left}
   <div><b>BIBLO</b><s>데이터가 화면이 되기까지</s></div>
  </div>
 
- <div class="cap-4k9m2 raw-4k9m2"  id="cap1-4k9m2"><i></i><u>01 · 원천</u> <em>정제되지 않은 수집물</em></div>
- <div class="cap-4k9m2 map-4k9m2"  id="cap2-4k9m2"><i></i><u>02 · 구조화</u> <em>엔티티 · 관계 · 지표 · 지문</em></div>
- <div class="cap-4k9m2 gate-4k9m2" id="cap3-4k9m2"><i></i><u>03 · 관문</u> <em>서버 경유만 허용</em></div>
- <div class="cap-4k9m2 ui-4k9m2"   id="cap4-4k9m2"><i></i><u>04 · 화면</u> <em>사람이 판단하는 자리</em></div>
+ <div class="cap-4k9m2 raw-4k9m2"  id="cap1-4k9m2"><u>01</u><b>출처마다 흩어진<br>수집 데이터</b><em>원천</em></div>
+ <div class="cap-4k9m2 map-4k9m2"  id="cap2-4k9m2"><u>02</u><b>같은 것끼리 묶고<br>관계를 잇는다</b><em>구조화</em></div>
+ <div class="cap-4k9m2 gate-4k9m2" id="cap3-4k9m2"><u>03</u><b>서버 관문만<br>지나간다</b><em>관문</em></div>
+ <div class="cap-4k9m2 ui-4k9m2"   id="cap4-4k9m2"><u>04</u><b>같은 엔진이 만드는<br>세 화면</b><em>화면 · 수치는 예시</em></div>
 
  <div class="glass-4k9m2 map-4k9m2" id="map-4k9m2"><div class="inner-4k9m2"><svg class="net-4k9m2" id="net-4k9m2"></svg></div></div>
  <div class="core-4k9m2" id="core-4k9m2">
@@ -171,45 +250,67 @@ body.mob-4k9m2 .foot-4k9m2 .meta-4k9m2{text-align:left}
  </div>
 
  <div class="gates-4k9m2" id="gates-4k9m2">
-  <div class="api-4k9m2" id="api1-4k9m2">API<s>/api/db</s></div>
-  <div class="api-4k9m2" id="api2-4k9m2">API<s>RPC</s></div>
+  <div class="api-4k9m2" id="gate-4k9m2">API<s>/api/db · RPC</s></div>
  </div>
  <div class="screens-4k9m2" id="screens-4k9m2">
 
- <div class="glass-4k9m2 scr-4k9m2" id="scr1-4k9m2"><div class="body-4k9m2">
-   <div class="bar-4k9m2">🔍 논문 · 저자 · 성과 검색</div>
-   <div class="hero-4k9m2"><svg width="52%" viewBox="0 0 24 24" fill="none" stroke="#dff4ff"
-     stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-     <circle cx="12" cy="7.6" r="3.3"/><path d="M5.2 20.2a6.8 6.8 0 0 1 13.6 0"/>
-     <path d="M16.4 13.8v4.4M19 11.6v6.6"/></svg></div>
-   <div class="ttl-4k9m2">연구자 개인성과<s>11 VIEWS</s></div>
-   <div class="rows-4k9m2"><i class="k-4k9m2"></i><i></i><i></i><i class="k-4k9m2"></i><i></i></div>
- </div></div>
-
- <div class="glass-4k9m2 scr-4k9m2" id="scr2-4k9m2"><div class="body-4k9m2">
-   <div class="bar-4k9m2">📊 34개 연구단 성과보드</div>
-   <div class="hero-4k9m2"><svg width="52%" viewBox="0 0 24 24" fill="none" stroke="#dff4ff"
-     stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-     <path d="M4 20V13M10 20V7M16 20V10M22 20V4"/></svg></div>
-   <div class="ttl-4k9m2">경영자 성과보드<s>KPI · 신호등</s></div>
-   <div class="rows-4k9m2"><i></i><i class="k-4k9m2"></i><i></i><i></i><i class="k-4k9m2"></i></div>
- </div></div>
+ <!-- ① 대화 — 장학금 문의 -->
+ <div class="win-4k9m2" id="scr1-4k9m2">
+  <div class="wtop-4k9m2"><i></i><i></i><i></i><span>평택대학교 · 대화</span></div>
+  <div class="wbody-4k9m2">
+   <div class="cq-4k9m2">국가장학금 2차 신청 언제까지예요?</div>
+   <div class="ca-4k9m2"><b>8월 21일 18시</b>까지 신청할 수 있습니다.
+    학자금 지원구간 산정에 약 8주가 걸려, 가구원 동의와 서류를 먼저 제출해야 기한 안에 처리됩니다.</div>
+   <div class="csrc-4k9m2">근거 · 2026-2학기 국가장학금 안내</div>
+   <div class="cbtn-4k9m2"><span>신청 바로가기</span><span>서류 확인</span></div>
+   <div class="cin-4k9m2">무엇이든 물어보세요</div>
+  </div>
  </div>
 
- <div class="foot-4k9m2">
-  <p class="lead-4k9m2">좌측은 <b>정제되지 않은 원천</b>이다. 출처마다 식별자도 표기도 달라 그대로는 셀 수 없다.
-   가운데에서 논문·연구자·저널을 <b>같은 것끼리 묶고 관계를 잇고</b> 지표와 지문을 붙인다.
-   그 결과만 <b>서버 관문을 지나</b> 화면에 닿는다. 브라우저는 DB를 직접 보지 않는다.</p>
-  <div class="meta-4k9m2" id="meta-4k9m2"></div>
+ <!-- ② 신청 — 자료구입 -->
+ <div class="win-4k9m2" id="scr2-4k9m2">
+  <div class="wtop-4k9m2"><i></i><i></i><i></i><span>자료구입 신청</span></div>
+  <div class="wbody-4k9m2">
+   <div class="frow-4k9m2"><u>서명</u><b>딥러닝 파이토치 교과서</b></div>
+   <div class="frow-4k9m2"><u>저자</u><b>서지영</b></div>
+   <div class="frow-4k9m2"><u>출판사</u><b>길벗 · 2022</b></div>
+   <div class="frow-4k9m2"><u>ISBN</u><b>979-11-6521-547-7</b></div>
+   <div class="frow-4k9m2"><u>신청 사유</u><b>전공 교재 · 대기 3명</b></div>
+   <div class="fbadge-4k9m2">교내 미소장 · 예산 잔액 확인됨</div>
+   <div class="fbtn-4k9m2">신청하기</div>
+  </div>
  </div>
+
+ <!-- ③ 경영 — 총장 KPI -->
+ <div class="win-4k9m2" id="scr3-4k9m2">
+  <div class="wtop-4k9m2"><i></i><i></i><i></i><span>평택대학교 · 총장 KPI</span></div>
+  <div class="wbody-4k9m2">
+   <div class="k3-4k9m2">
+    <div class="kc-4k9m2"><u>신입생 충원율</u><b>100.0<i>%</i></b></div>
+    <div class="kc-4k9m2"><u>재학생 충원율</u><b>98.2<i>%</i></b></div>
+    <div class="kc-4k9m2"><u>중도탈락률</u><b>3.4<i>%</i></b></div>
+   </div>
+   <div class="kch-4k9m2">
+    <u>단과대별 충원율 · 주황선 대학평균</u>
+    <div class="bars-4k9m2" id="bars-4k9m2"></div>
+   </div>
+   <div class="klist-4k9m2">
+    <div class="kl-4k9m2 ok-4k9m2">경영대학<s>등록 유지 안정</s></div>
+    <div class="kl-4k9m2 wr-4k9m2">예술대학<s>중도탈락 상승</s></div>
+    <div class="kl-4k9m2 ok-4k9m2">보건대학<s>취업률 상승</s></div>
+   </div>
+  </div>
+ </div>
+ </div>
+
 </div>
 <script>
 /* 다른 HTML 과 섞여도 안전하도록 클래스·ID 에 접미사 -4k9m2 를 붙였다.
    id 로 만들어지던 암묵 전역이 사라지므로 여기서 명시적으로 잡는다. */
 const $=id=>document.getElementById(id+'-4k9m2');
 const stage=$('stage'), fx=$('fx'), map=$('map'), core=$('core'),
-      net=$('net'), meta=$('meta'),
-      api1=$('api1'), api2=$('api2'), scr1=$('scr1'), scr2=$('scr2');
+      net=$('net'),
+      gate=$('gate'), scr1=$('scr1'), scr2=$('scr2'), scr3=$('scr3'), bars=$('bars');
 const D={paper:140693, auth:5280301, skku:11930, jr:13872, res:34764,
          co:932329, kw:1196149, cm:642139, built:'2026-08-27'};
 const nf=n=>n.toLocaleString('ko-KR');
@@ -217,23 +318,29 @@ const nf=n=>n.toLocaleString('ko-KR');
 /* ── 레이아웃 앵커 (화면 비율) ────────────────────
    원본 이미지 구도: 좌 난류 → 중앙 맵 → API 2개 → 우 화면 2장 */
 const L={
- map :{cx:.462, cy:.500, w:.186, h:.500},
- core:{cx:.462, cy:.500, s:.072},
- api1:{cx:.583, cy:.478},
- scr1:{cx:.670, cy:.470, w:.092, h:.375},
- api2:{cx:.742, cy:.478},
- scr2:{cx:.842, cy:.462, w:.140, h:.445},
- caps:[{id:'cap1',cx:.150,cy:.235},{id:'cap2',cx:.462,cy:.198},
-       {id:'cap3',cx:.662,cy:.782},{id:'cap4',cx:.842,cy:.190}]
+ map :{cx:.335, cy:.500, w:.150, h:.400},
+ core:{cx:.335, cy:.500, s:.066},
+ gate:{cx:.450, cy:.500},
+ scr1:{cx:.5569, cy:.500, w:.1413, h:.470},
+ scr2:{cx:.7056, cy:.500, w:.1338, h:.470},
+ scr3:{cx:.8731, cy:.500, w:.1788, h:.470},
+ caps:[{id:'cap1',cx:.035,cy:.150},{id:'cap2',cx:.262,cy:.196},
+       {id:'cap3',cx:.430,cy:.712},{id:'cap4',cx:.486,cy:.158}]
 };
+/* 좌측 원천 영역에 흩어놓는 데이터 블록 — 무대 기준 절대좌표 */
 const CHIPS=[
- {t:'ENTITIES',     u:'논문 '+nf(D.paper)+' · 연구자 '+nf(D.res),  x:-.58,y:-.48},
- {t:'RELATIONSHIPS',u:'저자행 '+nf(D.auth),                        x: .40,y:-.82},
- {t:'INSIGHTS',     u:'지표 '+nf(D.cm)+'건',                       x:-.66,y: .32},
- {t:'MEMORY',       u:'지문 키워드 '+nf(D.kw),                     x: .36,y: .60},
- {t:'VENUES',       u:'저널 '+nf(D.jr),                            x:-.22,y: .78}
+ {t:'ENTITIES',      u:'논문 '+nf(D.paper)+' · 연구자 '+nf(D.res), x:.120, y:.222},
+ {t:'RELATIONSHIPS', u:'저자행 '+nf(D.auth),                       x:.062, y:.300},
+ {t:'VENUES',        u:'저널 '+nf(D.jr),                           x:.156, y:.392},
+ {t:'CO-AUTHORSHIP', u:'공저관계 '+nf(D.co),                       x:.070, y:.492},
+ {t:'MEMORY',        u:'지문 키워드 '+nf(D.kw),                    x:.150, y:.598},
+ {t:'INSIGHTS',      u:'지표 '+nf(D.cm)+'건',                      x:.064, y:.690},
+ {t:'VERIFIED',      u:'교내 확정 연구자 '+nf(D.skku),             x:.140, y:.792},
+ {t:'SNAPSHOT',      u:'수집 시점 '+D.built,                       x:.066, y:.884}
 ];
-
+/* 단과대별 충원율 — 화면 예시 */
+const BARS=[['인문',94.8],['경영',99.6],['공과',102.3],['예술',88.5],['보건',97.2]];
+const BAVG=96.7;
 
 let W=0,H=0,DPR=1,MOB=false;
 /* 고정 무대에서는 좁은 화면 분기가 없다. 무대는 항상 1600x900. */
@@ -243,32 +350,37 @@ function place(){
  W=1600; H=900; DPR=Math.min(devicePixelRatio||1,2);
  MOB=NARROW(); document.body.classList.toggle('mob-4k9m2',MOB);
  if(MOB){                                  // 세로 스택 — 절대좌표를 걷어낸다
-  ['map','core','api1','api2','scr1','scr2'].forEach(id=>{
+  ['map','core','gate','scr1','scr2','scr3'].forEach(id=>{
    const e=$(id);
    e.style.cssText=e.style.cssText.replace(/(left|top|width|height|transform)\s*:[^;]*;?/g,'');});
   L.caps.forEach(c=>{const e=$(c.id);
    e.style.left=e.style.top=e.style.transform='';});
-  drawChips(); drawNet(); setMeta(); return;
+  drawChips(); drawNet(); drawBars(); return;
  }
  const set=(el,o,wKey)=>{const p=px(o);
    if(o.w){el.style.width=Math.round(p.w)+'px'; el.style.height=Math.round(p.h)+'px';
            el.style.left=Math.round(p.x-p.w/2)+'px'; el.style.top=Math.round(p.y-p.h/2)+'px';}
    else   {el.style.left=Math.round(p.x)+'px'; el.style.top=Math.round(p.y)+'px';
            el.style.transform='translate(-50%,-50%)';}};
- set(map,L.map); set(scr1,L.scr1); set(scr2,L.scr2);
- set(api1,L.api1); set(api2,L.api2);
+ set(map,L.map); set(gate,L.gate);
+ set(scr1,L.scr1); set(scr2,L.scr2); set(scr3,L.scr3);
  const cs=Math.round(H*L.core.s);
  core.style.width=cs+'px'; core.style.height=cs+'px';
  core.style.left=Math.round(W*L.core.cx)+'px'; core.style.top=Math.round(H*L.core.cy)+'px';
  core.querySelector('svg').setAttribute('width', Math.round(cs*.56));
  L.caps.forEach(c=>{const e=$(c.id);
    e.style.left=Math.round(W*c.cx)+'px'; e.style.top=Math.round(H*c.cy)+'px';
-   e.style.transform='translate(-50%,-50%)';});
- drawChips(); drawNet(); setMeta();
+   e.style.transform='translate(0,-50%)';});
+ drawChips(); drawNet(); drawBars();
 }
-function setMeta(){
- meta.innerHTML=`실측 <b>${D.built}</b> · 논문 <b>${nf(D.paper)}</b> · 저자행 <b>${nf(D.auth)}</b>`
-  +`<br>교내 확정 연구자 <b>${nf(D.skku)}</b> · 공저관계 <b>${nf(D.co)}</b> · 저널 <b>${nf(D.jr)}</b>`;
+/* 충원율 막대 — 대학평균선 포함 */
+function drawBars(){
+ const lo=84, hi=106, h=v=>((v-lo)/(hi-lo)*100).toFixed(1);
+ bars.innerHTML='<div class="barea-4k9m2">'
+  +`<span class="avg-4k9m2" style="bottom:${h(BAVG)}%"><s>대학평균 ${BAVG}</s></span>`
+  +BARS.map(([,v])=>`<span class="bw-4k9m2"><i class="bv-4k9m2" style="height:${h(v)}%"></i></span>`).join('')
+  +'</div><div class="blab-4k9m2">'
+  +BARS.map(([k])=>`<em>${k}</em>`).join('')+'</div>';
 }
 /* 칩 배치 — 패널 중심 기준 상대좌표 */
 function drawChips(){
@@ -283,12 +395,11 @@ function drawChips(){
   return;
  }
  if(box)box.remove();
- const p=px(L.map);
  CHIPS.forEach(c=>{
   const d=document.createElement('div'); d.className='chip-4k9m2';
   d.innerHTML=`${c.t}<u>${c.u}</u>`;
-  d.style.left=Math.round(p.x+p.w/2*c.x)+'px';
-  d.style.top =Math.round(p.y+p.h/2*c.y)+'px';
+  d.style.left=Math.round(W*c.x)+'px';
+  d.style.top =Math.round(H*c.y)+'px';
   d.style.transform='translate(-50%,-50%)';
   stage.appendChild(d);});
 }
@@ -357,26 +468,29 @@ function build(){
   RAW.push({p, w:0.5+R()*2.3, a:0.14+R()*0.5, sp:0.16+R()*0.34, ph:R(),
             hue:R()<0.34?'--raw2':'--raw', n:1+((R()*2)|0)});
  }
- /* ② 코어 → API → 화면 (시안) */
- const a1=px(L.api1), a2=px(L.api2), s2=px(L.scr2);
+ /* ② 코어 → 관문 → 화면 3개 (시안) */
+ const g=px(L.gate), S3=[px(L.scr1),px(L.scr2),px(L.scr3)];
  OUT=[];
- for(let i=0;i<22;i++){
-  const j=(i/21-0.5);
-  const p=[[cx+W*0.030, cy+j*H*0.030],
-           [a1.x-W*0.02, cy+j*H*0.05],
-           [a2.x+W*0.02, s2.y+j*H*0.10],
-           [s2.x-s2.w*0.42, s2.y+j*H*0.20]];
-  OUT.push({p, w:0.7+R()*1.5, a:0.24+R()*0.5, sp:0.26+R()*0.4, ph:R()});
- }
- /* ③ 하단 광선 다발 — 크게 아래로 돌아 화면으로 */
+ S3.forEach((q,idx)=>{
+  for(let k=0;k<8;k++){
+   const j=(k/7-0.5);
+   const p=[[cx+W*0.028, cy+j*H*0.026],
+            [g.x-W*0.018, cy+j*H*0.040],
+            [g.x+W*0.050, cy+j*H*0.090],
+            [q.x-q.w/2-6, cy+j*H*(0.30+idx*0.06)]];
+   OUT.push({p, w:0.6+R()*1.3, a:0.20+R()*0.44, sp:0.24+R()*0.38, ph:R()});
+  }
+ });
+ /* ③ 하단 광선 다발 — 크게 아래로 돌아 우측 화면으로 */
  BEAM=[];
+ const last=S3[2];
  const nBEAM=MOB?12:26;
  for(let i=0;i<nBEAM;i++){
   const j=i/(nBEAM-1);
-  const p=[[cx+W*0.012, cy+H*0.055+j*H*0.02],
-           [W*(0.50+j*0.06), H*(0.90+j*0.16)],
-           [W*(0.74+j*0.05), H*(0.96+j*0.10)],
-           [s2.x-s2.w*0.40, s2.y+s2.h*0.30-j*H*0.02]];
+  const p=[[cx+W*0.010, cy+H*0.050+j*H*0.02],
+           [W*(0.44+j*0.06), H*(0.92+j*0.16)],
+           [W*(0.70+j*0.05), H*(0.98+j*0.10)],
+           [last.x-last.w/2-8, last.y+last.h*0.30-j*H*0.02]];
   BEAM.push({p, w:0.6+R()*1.9, a:0.10+R()*0.34, sp:0.14+R()*0.3, ph:R(),
              blur:R()<0.3?0:(0.6+R()*1.6)});
  }
