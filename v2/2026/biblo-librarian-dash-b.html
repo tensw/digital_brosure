@@ -768,15 +768,24 @@ tabs(); renderAll(); today(); news(); tone();
 </script>
 <script>
 if(window.self!==window.top) document.documentElement.classList.add('emb-bg0');
-/* 배경 확산은 «이 장이 실제로 보일 때» 시작한다 */
+/* 배경 확산은 «이 장이 보일 때마다» 처음부터 다시 퍼진다.
+   한 번 켜두면(forwards) 다음에 돌아왔을 때 이미 검정이라 효과가 없다. */
 (function(){
- var go=function(){document.documentElement.classList.add('go-27');};
+ var root=document.documentElement, ON='go-27';
+ var start=function(){
+   var sc=document.querySelector('.scene');
+   root.classList.remove(ON);
+   if(sc) void sc.offsetWidth;          // 리플로우로 애니메이션을 되감는다
+   root.classList.add(ON);
+ };
  var fe=null; try{ fe=window.frameElement; }catch(e){}
- if(!fe || !('IntersectionObserver' in window)){ go(); return; }
- var io=new IntersectionObserver(function(es){
-   for(var i=0;i<es.length;i++) if(es[i].isIntersecting && es[i].intersectionRatio>0.5){ io.disconnect(); go(); return; }
- },{threshold:[0.5]});
- io.observe(fe);
+ if(!fe || !('IntersectionObserver' in window)){ start(); return; }
+ var shown=false;
+ new IntersectionObserver(function(es){
+   var r=es[es.length-1].intersectionRatio;
+   if(!shown && r>0.5){ shown=true; start(); }
+   else if(shown && r<0.05){ shown=false; root.classList.remove(ON); }  // 화면 밖에서 되돌린다
+ },{threshold:[0,0.05,0.5,1]}).observe(fe);
 })();
 </script>
 </body></html>
