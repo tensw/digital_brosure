@@ -89,6 +89,21 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
    원본 CSS 는 전부 #chapter-4 로 묶여 있어 스코프만 .wqx 로 바꿔 통째로 가져왔다.
    @media 안의 좁은 화면용 규칙(28개)은 제외한다. 무대는 1600px 고정인데 그 규칙이
    조건 없이 풀리면 결과 3열이 2열로, 우측 장바구니가 통째로 접힌다. */
+/* 신호 알약 — 시안 창 밖으로 걸쳐 이 화면의 원칙을 짚는다. 꼭지 길이는 개별 지정 */
+.pil-w9{position:absolute;z-index:9;display:flex;align-items:center;gap:11px;
+ border-radius:999px;padding:13px 24px;white-space:nowrap;
+ font-size:18px;font-weight:800;letter-spacing:-.5px;color:#fff;
+ background:#2c3245;box-shadow:0 22px 44px -14px rgba(10,14,34,.62)}
+.pil-w9.key{font-size:21px;background:linear-gradient(96deg,#4f63f6,#6b50ee);
+ box-shadow:0 24px 48px -14px rgba(79,99,246,.62)}
+.pil-w9 svg{width:21px;height:21px;flex:none;stroke:currentColor;fill:none;stroke-width:1.9;
+ stroke-linecap:round;stroke-linejoin:round;opacity:.95}
+.tipw{position:absolute;width:0;height:0;
+ border-left:9px solid transparent;border-right:9px solid transparent}
+.pil-w9.dr .tipw{top:100%;border-top:var(--len,24px) solid #2c3245}
+.pil-w9.ur .tipw{bottom:100%;border-bottom:var(--len,24px) solid #2c3245}
+.pil-w9.key.dr .tipw{border-top-color:#5a5bf3}
+.pil-w9.key.ur .tipw{border-bottom-color:#5a5bf3}
 .scr{position:absolute;overflow:hidden;border-radius:14px;background:#fff;
  box-shadow:0 30px 66px rgba(18,16,70,.34)}
 .scr > .wqx{position:absolute;left:0;top:0;transform-origin:0 0}
@@ -450,21 +465,23 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
    <p>당장 복본을 더 사야 할 만큼 대출이 폭주하는 책, 다른 대학엔 다 있는데 우리 도서관에만 없는 책을 AI가 골라 장바구니에 담아줍니다. 사서는 클릭 한 번으로 발주를 시작할 수 있습니다.</p></div></div>
 
  <div class="st-w9 on-w9" style="top:342px"><div class="bg-w9">2</div><div class="tx-w9">
-   <h2>마크 업체가 못 채운 빈칸을 채웁니다</h2>
-   <p>목차, 요약, 주제어, 장르 등 일일이 쓰기 번거로웠던 5가지 필수 빈칸을 AI가 책 내용을 읽고 알아서 적어줍니다. 사서는 완성된 고품질 데이터를 확인하고 '저장'만 누르면 됩니다.</p></div></div>
+   <h2>납품 MARC는 그대로, 비어 있는 의미만 보강합니다</h2>
+   <p>도서 납품 시 받은 MARC 와 도서관이 보유한 기존 MARC 를 대체하거나 덮어쓰지 않습니다.
+    책의 목차와 내용 데이터를 근거로 비어 있는 목차·요약·이용대상·키워드·장르 정보를 제안합니다.
+    사서는 원본과 보강안을 나란히 비교하고, 필요한 부분만 수정·승인해 반영합니다.</p></div></div>
 
- <div class="st-w9" style="top:559px"><div class="bg-w9">3</div><div class="tx-w9">
+ <div class="st-w9" style="top:588px"><div class="bg-w9">3</div><div class="tx-w9">
    <h2>우리 도서관 서가에 딱 맞는 청구기호를 달아줍니다</h2>
    <p>단순한 표준 분류표가 아니라, 우리 도서관 서가에 꽂혀있는 이웃 책들을 분석해 가장 자연스러운 청구기호를 추천합니다. '승인' 버튼을 누르면 즉시 라벨 출력으로 이어집니다.</p></div></div>
 
- <div class="st-w9" style="top:695px"><div class="bg-w9">4</div><div class="tx-w9">
+ <div class="st-w9" style="top:708px"><div class="bg-w9">4</div><div class="tx-w9">
    <h2>진짜 버릴 책과 남길 책을 숫자로 가려냅니다</h2>
    <p>대출이 없다고 무작정 버리지 않습니다. 연계된 다른 도서관들의 기록까지 비교해 '진짜 제적해도 되는 책'만 골라줍니다. 또한, 책들의 개별 파손 상태와 교체 시기까지 한눈에 묶어서 관리할 수 있습니다.</p></div></div>
 
  <!-- 뒤 카드: 데이터 품질 -->
 
  <!-- 앞 카드: 경영자 성과보드 -->
- <div class="scr" style="left:640px;top:180px;width:805px;height:630px"><div class="wqx" style="width:1150px;transform:scale(0.7)"><div class="wq" aria-label="편목 마크 부여 화면 UI 시안">
+ <div class="scr" style="left:739px;top:180px;width:706px;height:630px"><div class="wqx" style="width:1150px;transform:scale(0.614)"><div class="wq" aria-label="편목 마크 부여 화면 UI 시안">
       <div class="wq-chrome"><span class="wq-dot"></span><span class="wq-dot"></span><span class="wq-dot"></span><span class="wq-url">biblo · 사서 콘솔 — 편목 · 마크 부여</span></div>
       <div class="wq-head">
         <span class="wq-logo">BIBLO</span>
@@ -476,7 +493,7 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
         <div class="wq-bar" style="margin-bottom:11px">
           <button class="wq-btn m" type="button">◂ 목록</button>
           <span style="font-size:12.8px;color:var(--text)"><b>물고기는 존재하지 않는다</b> <span style="color:var(--muted);font-size:11.6px">룰루 밀러 · 2021 · 9791189327156 · 597.092 M648w8</span></span>
-          <span class="wq-chip g">지문 보유</span><span class="wq-chip a">의미필드 5종 공백</span>
+          <span class="wq-chip g">원본 MARC 보유</span><span class="wq-chip a">의미필드 5종 공백</span><span class="wq-chip g">책 내용 근거 확인</span><span class="wq-chip g">보강안 생성 완료</span><span class="wq-chip a">사서 검수 대기</span>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" class="wq-2col">
           <div class="wq-mcard">
@@ -493,7 +510,7 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
             <div style="margin-top:8px;border-left:3px solid var(--warn);background:var(--warn-soft);border-radius:0 8px 8px 0;padding:7px 10px;font-size:11.6px;color:var(--text)"><b style="color:var(--warn)">이 마크에 없는 것</b> — 505 목차 <span class="nul">∅</span> · 520 요약 <span class="nul">∅</span> · 521 이용대상 <span class="nul">∅</span> · 653 키워드 <span class="nul">∅</span> · 655 장르 <span class="nul">∅</span> — "무엇에 관한 책인지"가 없다.</div>
           </div>
           <div class="wq-mcard">
-            <div class="mch">비블로 생성 마크 <span class="wq-chip g">+5 의미필드 채움</span> <span class="macts"><button class="wq-btn m" type="button">저장</button><button class="wq-btn m" type="button">편집</button><button class="wq-btn m p" type="button">마크엔진(재생성)</button></span></div>
+            <div class="mch">비블로 생성 마크 <span class="wq-chip g">+5 의미필드 채움</span> <span class="macts"><button class="wq-btn m" type="button">검수 완료</button><button class="wq-btn m" type="button">보강안 수정</button><button class="wq-btn m p" type="button">보강안 다시 만들기</button></span></div>
             <div class="wq-marc"><b>020</b> ## $a 9791189327156
 <b>100</b> 1# $a Miller, Lulu, $d 1983-
 <b>245</b> 10 $a 물고기는 존재하지 않는다 : $b 상실, 사랑 그리고 숨어 있는 삶의 질서에 관한 이야기 / $d 룰루 밀러 지음 ; $e 정지인 옮김
@@ -527,6 +544,13 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
         <button class="wq-btn p" type="button">저장 → 마크 반영</button>
       </div>
     </div></div></div>
+<!-- 신호 알약 — 이 화면의 원칙. 꼭지가 해당 요소를 가리킨다 -->
+<div class="pil-w9 dr" style="left:575px;top:210px;--len:10px"><span class="tipw" style="left:150px"></span><svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="9" rx="2"/><path d="M8.2 10.5V8a3.8 3.8 0 0 1 7.6 0v2.5"/></svg>원본 MARC 는 그대로 보존</div>
+<div class="pil-w9 dr" style="left:1023px;top:196px;--len:31px"><span class="tipw" style="left:151px"></span><svg viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></svg>원본에 없는 5개 의미필드만 제안</div>
+<div class="pil-w9 ur" style="left:599px;top:462px;--len:37px"><span class="tipw" style="left:156px"></span><svg viewBox="0 0 24 24"><path d="M12 4.2 19 7v5c0 4-3 6.5-7 7.8C8 18.5 5 16 5 12V7z"/><path d="M9.4 12.2l1.9 1.9 3.4-3.6"/></svg>통제주제명 650 은 건드리지 않음</div>
+<div class="pil-w9 ur" style="left:1120px;top:600px;--len:34px"><span class="tipw" style="left:150px"></span><svg viewBox="0 0 24 24"><path d="M4.8 12.4 9.6 17l9.6-9.8"/></svg>사서 승인 전에는 반영하지 않음</div>
+<div class="pil-w9 ur key" style="left:855px;top:828px;--len:18px"><span class="tipw" style="left:215px"></span><svg viewBox="0 0 24 24"><path d="m12 4.6 2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L4.8 9.9l5-.7z"/></svg>원본은 지키고, 비어 있는 의미만 채웁니다</div>
+
 
  <div class="ft-w9">기준 2026-08-27 · 수치는 BK21 34개 연구단 실측 · 신호등은 계열 내 백분위 판정 · 우측 화면은 구성 예시</div>
 
