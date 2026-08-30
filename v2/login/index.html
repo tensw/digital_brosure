@@ -13,11 +13,11 @@ body{font:15px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSyst
 .brand{position:relative;overflow:hidden;padding:44px 52px;display:flex;flex-direction:column;
  background:radial-gradient(900px 700px at 24% 22%,#101a3e 0%,#080d1e 56%,#05070f 100%)}
 .brand canvas{position:absolute;inset:0;width:100%;height:100%}
-.bmark{position:absolute;z-index:1;left:50%;top:50%;width:264%;height:auto;
- transform-origin:0 50%;transform:rotate(-34deg);pointer-events:none;
+.bmark{position:absolute;z-index:1;left:50%;top:52%;width:min(78%,420px);height:auto;
+ transform-origin:50% 50%;transform:translate(-50%,-50%) rotate(-34deg);pointer-events:none;
  filter:drop-shadow(0 26px 64px rgba(0,0,0,.55))}
 .bs{position:relative;z-index:2;margin-top:13px;font-size:14px;font-weight:600;color:var(--ink2);letter-spacing:-.3px}
-.bfig{position:absolute;left:50%;top:50%;width:min(46vw,520px);aspect-ratio:1;transform:translate(-50%,-50%);
+.bfig{position:absolute;left:50%;top:52%;width:min(34vw,400px);aspect-ratio:1;transform:translate(-50%,-50%);
  border-radius:38%;pointer-events:none;
  background:conic-gradient(from 210deg,rgba(99,215,255,.55),rgba(143,157,255,.45) 34%,
    rgba(213,155,255,.42) 62%,rgba(99,215,255,.55));filter:blur(38px);opacity:.62}
@@ -25,8 +25,16 @@ body{font:15px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSyst
  letter-spacing:.06em;color:var(--ink3)}
 
 /* ── 우: 로그인 면 (반투명 블러 워시) ── */
-.panel{position:relative;display:flex;flex-direction:column;padding:44px 52px;
- background:#070b18;overflow:hidden}
+/* 좌측 브랜드 면이 뒤로 비치도록 반투명 + 백드롭 블러 */
+.wrap{position:relative}
+.wrap::before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+ background:radial-gradient(900px 700px at 24% 22%,#101a3e 0%,#080d1e 56%,#05070f 100%)}
+.brand,.panel{position:relative;z-index:1}
+.panel{display:flex;flex-direction:column;padding:44px 52px;overflow:hidden;
+ background:rgba(10,16,34,.42);
+ backdrop-filter:blur(26px) saturate(1.25);-webkit-backdrop-filter:blur(26px) saturate(1.25);
+ border-left:1px solid rgba(150,180,240,.16);
+ box-shadow:-30px 0 60px -30px rgba(0,0,0,.6)}
 .wash{position:absolute;left:-10%;top:-18%;width:120%;height:78%;pointer-events:none;
  background:radial-gradient(52% 46% at 42% 30%,rgba(99,215,255,.20) 0%,rgba(99,215,255,0) 70%),
   radial-gradient(46% 42% at 74% 20%,rgba(143,157,255,.18) 0%,rgba(143,157,255,0) 72%),
@@ -39,7 +47,7 @@ h1{font-size:31px;font-weight:800;letter-spacing:-1.1px}
 .sub{margin-top:9px;font-size:13.5px;color:var(--ink2);letter-spacing:-.3px}
 .f{margin-top:26px;display:flex;flex-direction:column;gap:9px}
 input{all:unset;box-sizing:border-box;width:100%;height:46px;padding:0 16px;border-radius:12px;
- background:rgba(255,255,255,.045);border:1px solid var(--line);color:var(--ink);
+ background:rgba(255,255,255,.07);border:1px solid rgba(160,190,245,.28);color:var(--ink);
  font-size:14px;transition:border-color .18s,background .18s}
 input::placeholder{color:#6d7fa6}
 input:focus{border-color:rgba(120,200,255,.6);background:rgba(255,255,255,.07)}
