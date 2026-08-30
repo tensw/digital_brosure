@@ -115,11 +115,13 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
  font-size:21px;font-weight:800;letter-spacing:-.6px;color:#fff;
  background:#2c3245;box-shadow:0 22px 44px -14px rgba(10,14,34,.62)}
 /* 대각선 꼭지 — 알약 모서리에서 뽑아 그 책을 가리킨다 */
-.tipx{position:absolute;width:22px;height:22px;background:#2c3245;
- transform:rotate(45deg);border-radius:4px}
-.pil-p4.warn .tipx{background:#f0665f}
-.pil-p4.dr .tipx{bottom:-8px}
-.pil-p4.ur .tipx{top:-8px}
+/* 꼭지 — 길이를 개별로 줘 책 표지까지 닿게 한다 */
+.tipx{position:absolute;width:0;height:0;
+ border-left:9px solid transparent;border-right:9px solid transparent}
+.pil-p4.dr .tipx{top:100%;border-top:var(--len,24px) solid #2c3245}
+.pil-p4.ur .tipx{bottom:100%;border-bottom:var(--len,24px) solid #2c3245}
+.pil-p4.warn.dr .tipx{border-top-color:#f0665f}
+.pil-p4.warn.ur .tipx{border-bottom-color:#f0665f}
 .pil-p4.warn{background:#f0665f;box-shadow:0 22px 44px -14px rgba(240,102,95,.6)}
 .pil-p4{font-size:18px;padding:13px 24px}
 .pil-p4 svg{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-width:1.9;
@@ -562,13 +564,14 @@ td:last-child{text-align:left;font:400 10px/1.4 -apple-system,system-ui,sans-ser
         <button class="wq-btn p" type="button">승인 요청 보내기 →</button>
       </div>
     </div></div></div>
-<!-- 신호 알약 — 여섯 권 각각 «왜 이 책이 왔는지». 대각선 꼭지가 그 책을 가리킨다 -->
-<div class="pil-p4 dr" style="left:642px;top:340px"><span class="tipx" style="left:112px"></span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.4V12l3 1.8"/></svg>예약·대기 증가로 AI 추천</div>
-<div class="pil-p4 dr" style="left:843px;top:286px"><span class="tipx" style="left:130px"></span><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 19.5c.6-3.4 3.3-5 6.5-5s5.9 1.6 6.5 5"/></svg>희망도서 신청으로 들어왔어요</div>
-<div class="pil-p4 dr warn" style="left:1061px;top:340px"><span class="tipx" style="left:130px"></span><svg viewBox="0 0 24 24"><path d="M12 4.5 21 19.5H3z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>파본·훼손·분실 대체로 AI 추천</div>
-<div class="pil-p4 ur" style="left:580px;top:690px"><span class="tipx" style="right:40px"></span><svg viewBox="0 0 24 24"><path d="M4 8.5 12 5l8 3.5-8 3.5z"/><path d="M4 13.5 12 17l8-3.5"/></svg>복본 부족·대출 집중으로 AI 추천</div>
-<div class="pil-p4 ur" style="left:821px;top:812px"><span class="tipx" style="left:150px"></span><svg viewBox="0 0 24 24"><path d="M10 13.5a4 4 0 0 0 5.7 0l2.5-2.5a4 4 0 0 0-5.7-5.7l-1.2 1.2"/><path d="M14 10.5a4 4 0 0 0-5.7 0l-2.5 2.5a4 4 0 0 0 5.7 5.7l1.2-1.2"/></svg>우리관 미보유·연계관 보유로 AI 추천</div>
-<div class="pil-p4 ur" style="left:1290px;top:690px"><span class="tipx" style="left:30px"></span><svg viewBox="0 0 24 24"><path d="m12 4.6 2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L4.8 9.9l5-.7z"/></svg>사서가 직접 등록한 추천</div>
+<!-- 신호 알약 — 여섯 권 각각 «왜 이 책이 왔는지». 꼭지가 그 책 표지에 닿는다 -->
+<div class="pil-p4 dr" style="left:559px;top:330px;--len:29px"><span class="tipx" style="left:198px"></span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.4V12l3 1.8"/></svg>예약·대기 증가로 AI 추천</div>
+<div class="pil-p4 dr" style="left:843px;top:268px;--len:91px"><span class="tipx" style="left:132px"></span><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 19.5c.6-3.4 3.3-5 6.5-5s5.9 1.6 6.5 5"/></svg>희망도서 신청으로 들어왔어요</div>
+<div class="pil-p4 dr warn" style="left:1161px;top:330px;--len:29px"><span class="tipx" style="left:32px"></span><svg viewBox="0 0 24 24"><path d="M12 4.5 21 19.5H3z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>파본·훼손·분실 대체로 AI 추천</div>
+<div class="pil-p4 ur" style="left:725px;top:766px;--len:75px"><span class="tipx" style="left:32px"></span><svg viewBox="0 0 24 24"><path d="M4 8.5 12 5l8 3.5-8 3.5z"/><path d="M4 13.5 12 17l8-3.5"/></svg>복본 부족·대출 집중으로 AI 추천</div>
+<div class="pil-p4 ur" style="left:860px;top:812px;--len:121px"><span class="tipx" style="left:115px"></span><svg viewBox="0 0 24 24"><path d="M10 13.5a4 4 0 0 0 5.7 0l2.5-2.5a4 4 0 0 0-5.7-5.7l-1.2 1.2"/><path d="M14 10.5a4 4 0 0 0-5.7 0l-2.5 2.5a4 4 0 0 0 5.7 5.7l1.2-1.2"/></svg>우리관 미보유·연계관 보유로 AI 추천</div>
+<div class="pil-p4 ur" style="left:1150px;top:766px;--len:75px"><span class="tipx" style="left:43px"></span><svg viewBox="0 0 24 24"><path d="m12 4.6 2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L4.8 9.9l5-.7z"/></svg>사서가 직접 등록한 추천</div>
+
 
 
 
