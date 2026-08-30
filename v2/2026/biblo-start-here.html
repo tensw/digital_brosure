@@ -1,0 +1,156 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>필요한 솔루션부터 연결하면 됩니다 — BIBLO</title>
+<style>
+/* 클래스·변수 전부 -sh7 접미사 · 전역 선택자 없음 */
+.root-sh7{--ink-sh7:#e9eefb;--ink2-sh7:#93a6cc;--ink3-sh7:#5d7099;
+ font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ color:var(--ink-sh7);
+ background:radial-gradient(1200px 900px at 50% 6%,#0b1226 0%,#060a16 58%,#03050c 100%);
+ -webkit-font-smoothing:antialiased;position:relative;overflow:hidden}
+.root-sh7 *{box-sizing:border-box;margin:0;padding:0}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
+html,body{overflow:hidden}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+.root-sh7::after{content:"";position:absolute;right:-8%;bottom:-18%;width:46%;height:50%;
+ pointer-events:none;border-radius:50%;
+ background:radial-gradient(circle at 50% 50%,rgba(120,190,255,.20) 0%,rgba(110,120,235,.10) 36%,
+   rgba(60,50,160,0) 70%);filter:blur(8px)}
+
+.wrap-sh7{position:relative;z-index:2;width:1600px;height:900px;padding:38px 82px 16px;
+ display:flex;flex-direction:column}
+
+/* ── 상단 ── */
+.hd-sh7{flex:none;display:grid;grid-template-columns:1fr 330px;gap:40px;align-items:start}
+.kick-sh7{font:700 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+ letter-spacing:.24em;color:#7f8fc4}
+.hd-sh7 h1{margin-top:15px;font-size:41px;font-weight:800;line-height:1.24;letter-spacing:-1.5px}
+.hd-sh7 h1 b{background:linear-gradient(96deg,#63d7ff 0%,#8f9dff 44%,#d59bff 100%);
+ -webkit-background-clip:text;background-clip:text;color:transparent}
+.lead-sh7{margin-top:13px;max-width:78ch;font-size:14px;font-weight:500;line-height:1.62;
+ color:var(--ink2-sh7);letter-spacing:-.3px}
+.lead-sh7 b{color:#dbe4ff;font-weight:800}
+.info-sh7{padding-top:6px;display:flex;flex-direction:column;gap:9px}
+.irow-sh7{display:flex;align-items:baseline;gap:13px;padding-bottom:9px;
+ border-bottom:1px solid rgba(140,170,240,.16)}
+.irow-sh7:last-child{border-bottom:0;padding-bottom:0}
+.irow-sh7 u{flex:none;width:70px;text-decoration:none;
+ font:700 9.6px/1.5 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#7f8fc4}
+.irow-sh7 em{font-style:normal;font-size:13px;font-weight:700;letter-spacing:-.35px;color:#dde5ff}
+
+/* ── 가운데 4카드 ── */
+.cards-sh7{margin-top:34px;flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card-sh7{display:flex;flex-direction:column;padding:24px 21px 22px;border-radius:17px;
+ background:linear-gradient(160deg,rgba(16,23,52,.82),rgba(10,15,36,.62));
+ border:1px solid rgba(140,170,240,.22);
+ box-shadow:0 18px 40px -22px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.09)}
+.card-sh7 u{display:block;text-decoration:none;
+ font:700 9.4px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;color:#5fd0f0}
+.card-sh7 .st-sh7{margin-top:14px;font-size:18px;font-weight:800;letter-spacing:-.6px;
+ line-height:1.25;color:var(--ink-sh7)}
+.card-sh7 .sol-sh7{margin-top:7px;padding-bottom:11px;border-bottom:1px solid rgba(140,170,240,.18);
+ font-size:12.5px;font-weight:800;letter-spacing:-.35px;color:#8fe6ff;line-height:1.35}
+.card-sh7 p{margin-top:13px;font-size:13px;font-weight:500;line-height:1.62;
+ letter-spacing:-.3px;color:var(--ink2-sh7)}
+.card-sh7 s{display:block;margin-top:auto;padding-top:16px;text-decoration:none;
+ font-size:13px;font-weight:800;letter-spacing:-.4px;color:#cfe0ff}
+
+/* ── 하단 3단계 ── */
+.steps-sh7{margin-top:26px;flex:none;display:grid;grid-template-columns:repeat(3,1fr);
+ border-radius:16px;overflow:hidden;
+ background:linear-gradient(120deg,rgba(18,26,58,.78),rgba(11,17,40,.62));
+ border:1px solid rgba(140,170,240,.22)}
+.step-sh7{position:relative;padding:22px 24px 21px}
+.step-sh7+.step-sh7{border-left:1px solid rgba(140,170,240,.18)}
+.step-sh7 u{display:block;text-decoration:none;
+ font:700 9.4px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;color:#7f8fc4}
+.step-sh7 b{display:block;margin-top:9px;font-size:15px;font-weight:800;
+ letter-spacing:-.5px;line-height:1.3;color:var(--ink-sh7)}
+.step-sh7 p{margin-top:9px;font-size:12.6px;font-weight:500;line-height:1.55;
+ letter-spacing:-.3px;color:var(--ink2-sh7)}
+
+/* ── 최하단 ── */
+.foot-sh7{margin-top:24px;flex:none;padding-top:18px;display:flex;align-items:center;gap:20px;
+ border-top:1px solid rgba(120,140,200,.20)}
+.badge-sh7{flex:none;padding:8px 15px;border-radius:999px;
+ font:800 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color:#08122c;
+ background:linear-gradient(140deg,#7fd8f5,#9fb4ff);
+ box-shadow:0 12px 26px -12px rgba(90,170,255,.85)}
+.foot-sh7 p{font-size:15.5px;font-weight:800;letter-spacing:-.5px;line-height:1.5;color:#c8d6ff}
+</style></head>
+<body><div class="slide"><div id="stage">
+<div class="root-sh7"><div class="wrap-sh7">
+
+ <div class="hd-sh7">
+  <div>
+   <div class="kick-sh7">BIBLO · START WHERE YOU ARE</div>
+   <h1>전부 바꿀 필요는 없습니다<br><b>필요한 솔루션부터 연결하면 됩니다</b></h1>
+   <p class="lead-sh7">비블로의 여섯 솔루션은 각각 <b>독립적으로 도입</b>할 수 있습니다.
+    기존 시스템을 유지한 채 가장 시급한 업무부터 시작하고, 그 과정에서 쌓인 데이터를
+    검색 · 연구성과 · 홍보 · 사서 업무 · AI 에이전트 · 성과관리로 확장합니다.</p>
+  </div>
+  <div class="info-sh7">
+   <div class="irow-sh7"><u>도입 대상</u><em>대학 · 도서관 · 연구기관</em></div>
+   <div class="irow-sh7"><u>도입 방식</u><em>단독 도입 → 단계적 확장</em></div>
+   <div class="irow-sh7"><u>연결 범위</u><em>LAS · RIMS · 학사 · 행정 데이터</em></div>
+  </div>
+ </div>
+
+ <div class="cards-sh7" id="cards-sh7"></div>
+ <div class="steps-sh7" id="steps-sh7"></div>
+
+ <div class="foot-sh7">
+  <span class="badge-sh7">START HERE</span>
+  <p>첫 도입은 가장 시급한 업무 하나면 충분합니다.
+   비블로는 그 업무에서 쌓인 데이터를 다음 솔루션과 학교의 성과관리로 연결합니다.</p>
+ </div>
+
+</div></div>
+
+<script>
+const CARDS_sh7=[
+ {k:'LIBRARY', st:'도서관에서 시작', sol:'AI 검색엔진 · 사서 에이전트',
+  d:'책과 논문을 더 잘 찾게 하고, 희망도서 · 수서 · 편목 · 청구기호 · 장서관리까지 기존 LAS 데이터와 연결합니다.',
+  s:'검색에서 도서관 운영까지'},
+ {k:'RESEARCH', st:'연구처에서 시작', sol:'연구성과관리',
+  d:'논문을 실제 교내 연구자에게 연결하고, 개인 · 학과 · 사업단별 연구성과와 그 근거가 되는 논문을 확인합니다.',
+  s:'논문에서 연구자 성과까지'},
+ {k:'PROMOTION', st:'홍보처에서 시작', sol:'연구성과 홍보영상',
+  d:'우수 논문을 찾아 전문 내용을 분석하고, 연구 홍보에 적합한 롱폼 영상과 쇼츠로 제작합니다.',
+  s:'연구성과에서 확산 콘텐츠까지'},
+ {k:'MANAGEMENT', st:'기획 · 전산 · 사업단에서 시작', sol:'AI 에이전트 · AI 성과관리',
+  d:'기관이 검수한 지식과 현재 데이터를 질문에 맞게 전달하고, BK21 · 앵커 사업의 참여자 · 실적 · KPI를 연결합니다.',
+  s:'기관 데이터에서 실행과 KPI까지'}
+];
+const STEPS_sh7=[
+ {n:'STEP 01', t:'현재 데이터부터 확인합니다',
+  d:'도입 목적과 함께 보유 시스템, 데이터 종류, 기간, 식별자, 연결 가능 범위와 미확인 항목을 먼저 확인합니다.'},
+ {n:'STEP 02', t:'가장 시급한 업무 하나로 시작합니다',
+  d:'도서 검색, 연구자 매칭, 논문 홍보, 수서 업무, 기관 질의, 사업 KPI 가운데 효과가 분명한 업무를 먼저 선택합니다.'},
+ {n:'STEP 03', t:'검증된 데이터부터 확장합니다',
+  d:'첫 솔루션에서 정리된 데이터는 다시 수집하지 않습니다. 연구성과 · 홍보 · 에이전트 · 학교 KPI의 공통 기반으로 이어집니다.'}
+];
+document.getElementById('cards-sh7').innerHTML=CARDS_sh7.map(o=>
+ `<section class="card-sh7"><u>${o.k}</u><div class="st-sh7">${o.st}</div>`
+ +`<div class="sol-sh7">${o.sol}</div><p>${o.d}</p><s>${o.s}</s></section>`).join('');
+document.getElementById('steps-sh7').innerHTML=STEPS_sh7.map(o=>
+ `<div class="step-sh7"><u>${o.n}</u><b>${o.t}</b><p>${o.d}</p></div>`).join('');
+</script>
+
+<script>
+/* 1600x900 고정 무대 — 작업가이드 5장 규격. 다섯 개를 다 건다. */
+function fitStage(){
+  const st=document.getElementById('stage'); if(!st) return;
+  st.style.height='900px';
+  const k=Math.min(innerWidth/1600, innerHeight/900);
+  st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;
+}
+fitStage();
+addEventListener('resize',fitStage);
+addEventListener('load',fitStage);
+addEventListener('pageshow',fitStage);
+if(window.ResizeObserver) new ResizeObserver(fitStage).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitStage);
+</script>
+</body></html>
