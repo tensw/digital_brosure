@@ -77,7 +77,9 @@ td:last-child{text-align:left;font:400 12px -apple-system,system-ui,sans-serif;c
    <div class="kicker">BK21 · AUTHOR MATCHING STATUS</div>
    <h1>저자행 528만 줄이<br><span>세 갈래로 갈린다</span></h1>
    <p class="lead">논문 한 편에는 저자가 여럿 있고, 그 저자를 성균관대 사람과 이어붙이는 것이 매칭이다.
-    현재 <b>5,280,301줄</b>의 저자행이 교내 확정 · 외부 저자 · 미분류로 나뉘어 있다.
+    아래 <b>5,280,301줄</b>은 <b>공개 확보한 OpenAlex 논문 전수</b>를 훑은 것이라 모수의 대부분이 타 기관 연구자다.
+    미분류가 큰 것은 엔진이 가르지 못해서가 아니라 셈한 모수가 그렇기 때문이다.
+    학교 명부와 제출 실적이 인입되는 운영 환경에서는 확정 비중이 더 높다.
     바닥의 점 하나가 저자행의 <b>1%</b>다. 묶음을 누르면 내역이 펼쳐진다.</p>
   </div>
   <div class="spacer"></div>
@@ -230,7 +232,9 @@ function show(i){
   body=`<div class="pg">${card('저자행',N(g.v),g.c)}${card('전체 대비',(g.v/D.rows*100).toFixed(1)+'%')}
    ${card('사번은 붙음',N(g.sid))}${card('이름 보유',(I.nm/I.tot*100).toFixed(1)+'%')}
    ${card('소속 없음',(100-I.aff/I.tot*100).toFixed(1)+'%')}${card('식별자 없음',(100-(I.auid+I.orcid)/I.tot*100).toFixed(1)+'%')}</div>
-   <div class="pd">${g.note}<br>
+   <div class="pd">이 모수는 <b>공개 확보한 OpenAlex 논문 전수</b>다. 성균관대와 무관한 저자가 대부분이라 미분류가 크게 잡힌다.
+   학교 명부가 인입된 운영본에서는 이 비중이 훨씬 낮다.<br>
+   ${g.note}<br>
    판정을 막는 것은 <b>소속 문자열의 부재</b>다. 이름은 <b>${(I.nm/I.tot*100).toFixed(1)}%</b>가 있지만
    소속은 <b>${(I.aff/I.tot*100).toFixed(1)}%</b>뿐이고, 고유 식별자는 그보다 훨씬 적다.
    이름만으로는 교내·교외를 가를 수 없어 판정을 보류한 상태다.
