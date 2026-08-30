@@ -31,7 +31,8 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;tex
 h1{font-size:44px;font-weight:800;letter-spacing:-1.5px;margin-top:10px;line-height:1.16}
 h1 span{background:linear-gradient(90deg,#f97316,#38bdf8 34%,#a78bfa 58%,#f472b6 78%,#4ade80);
  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.lead{color:var(--ink2);font-size:16px;font-weight:600;margin-top:9px;max-width:96ch;line-height:1.5}
+.lead{color:var(--ink2);font-size:16px;font-weight:600;margin-top:9px;max-width:none;line-height:1.5;
+ word-break:keep-all;white-space:nowrap}
 .lead b{color:var(--ink)}
 .lead + .lead{margin-top:9px}
 /* max-width 를 풀면 왼쪽 블록이 한 줄을 다 먹어 meta 가 아래로 접힌다. 줄바꿈을 막는다. */
