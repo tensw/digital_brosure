@@ -209,7 +209,7 @@ const $=id=>document.getElementById(id+'-4k9m2');
 const stage=$('stage'), fx=$('fx'), map=$('map'), core=$('core'),
       net=$('net'), meta=$('meta'),
       gate=$('gate'), screens=$('screens');
-const D={paper:140693, auth:5280301, skku:11930, jr:13872, res:34764,
+const D={paper:140693, auth:5280301, people:11930, jr:13872, res:34764,
          co:932329, kw:1196149, cm:642139, built:'2026-08-27'};
 const nf=n=>n.toLocaleString('ko-KR');
 
@@ -298,7 +298,7 @@ function drawSurf(){
 }
 function setMeta(){
  meta.innerHTML=`실측 <b>${D.built}</b> · 논문 <b>${nf(D.paper)}</b> · 저자행 <b>${nf(D.auth)}</b>`
-  +`<br>교내 확정 연구자 <b>${nf(D.skku)}</b> · 공저관계 <b>${nf(D.co)}</b> · 저널 <b>${nf(D.jr)}</b>`;
+  +`<br>교내 확정 연구자 <b>${nf(D.people)}</b> · 공저관계 <b>${nf(D.co)}</b> · 저널 <b>${nf(D.jr)}</b>`;
 }
 /* 칩 배치 — 패널 중심 기준 상대좌표 */
 function drawChips(){

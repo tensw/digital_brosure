@@ -90,7 +90,7 @@ body{margin:0;font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,Bli
   <div class="hd-5m">
    <div class="kick-5m">BK21 · AUTHOR MATCHING STATUS</div>
    <h1>저자행 528만 줄이<br><b>세 갈래로 갈립니다</b></h1>
-   <p class="lead-5m">논문 한 편에는 저자가 여럿 있고, 그 저자를 성균관대 사람과 이어붙이는 것이 매칭이다.
+   <p class="lead-5m">논문 한 편에는 저자가 여럿 있고, 그 저자를 학교 구성원과 이어붙이는 것이 매칭이다.
     지금 <b>5,280,301줄</b>이 교내 확정 · 외부 저자 · 미분류로 나뉘어 있다.
     확정된 저자행만 성과 집계에 들어간다.</p>
    <div class="meta-5m">
@@ -109,14 +109,14 @@ body{margin:0;font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,Bli
 const D={rows:5280301,
  groups:[
   {k:'in',t:'교내 확정',badge:'LINKED',  v:356232, c:'var(--gIn-5m)',
-   note:'성균관대 구성원으로 판별돼 사번이 붙은 저자행. 이 행만 성과 집계에 들어간다.'},
+   note:'교내 구성원으로 판별돼 사번이 붙은 저자행. 이 행만 성과 집계에 들어간다.'},
   {k:'ex',t:'외부 저자',badge:'EXTERNAL',v:2618171,c:'var(--gEx-5m)',
    note:'교외 소속으로 확인된 공저자. 사번은 없지만 이름·소속·ORCID 를 보존해 협력망 분석에 쓴다.'},
   {k:'un',t:'미분류',  badge:'PENDING', v:2305898,c:'var(--gUn-5m)',
    note:'교내·교외 판정을 아직 내리지 못한 저자행. 소속 문자열이 없거나 판별 신호가 부족하다.'}],
  layers:[['원장 연결',356017],['L1 · 식별자',3785],['L2 · 이름+소속',2391],['L4 · LLM 판별',898],
          ['U 접두 규칙',854],['HITL · 사람검토',207],['논문 병합',154],['L3 · 확률',13]],
- sig:[['SCOPUS_AUID',2892],['FULLNAME_SKKU',2391],['L4_LLM_MATCHED',898],['U_PREFIX_AUTO',560],
+ sig:[['SCOPUS_AUID',2892],['FULLNAME_INTERNAL',2391],['L4_LLM_MATCHED',898],['U_PREFIX_AUTO',560],
       ['ORCID',534],['EMAIL',312],['U_PREFIX_MANUAL',294]],
  ids:{tot:4915982,nm:4765793,aff:4121282,auid:858249,orcid:85577},
  papers:{tot:140850,linked:138635}, staff:364319};
