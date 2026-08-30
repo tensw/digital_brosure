@@ -720,7 +720,74 @@ body{overflow:hidden}
 #sl-hero-2q6r4-d .divx-in{max-width:672px}
 #sl-hero-2q6r4-d .divx-in h2{font-size:70px}
 #sl-hero-2q6r4-d .divx-in p{font-size:18.4px}
-</style>
+
+/* ── 28·29장(20·21장 사본) 전용 — -d 규칙을 그대로 ── */
+
+#cards-e{grid-template-columns:repeat(4,1fr)!important}
+
+/* ══ 20·21장 — 16·17장(-c) 을 그대로 복제한 한 벌 ══ */
+#sl-five-2q6r4-e .sh{margin-bottom:26px}
+#sl-five-2q6r4-e .sh .k{font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+ letter-spacing:.28em}
+#sl-five-2q6r4-e .sh h2{font-size:44.1px;font-weight:800;line-height:1.16;
+ letter-spacing:.5px;margin-top:12px}
+#sl-five-2q6r4-e .sh p{font-size:16px;font-weight:600;line-height:1.7;letter-spacing:-.3px;
+ max-width:none;margin-top:11px}
+/* 제목 안 "디지털 두뇌" 강조 — 12장 "연결하는 AI 플랫폼" 과 같은 그라데이션 */
+#sl-five-2q6r4-e .sh h2 b{
+ background-image:linear-gradient(90deg,#38bdf8,#a78bfa 45%,#f472b6 72%,#fbbf24);
+ -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+/* 카드 박스 — 7장 01 박스 승계 */
+#sl-five-2q6r4-e .grid{grid-template-columns:repeat(4,1fr);gap:18px}
+#sl-five-2q6r4-e .card .pad{padding:22px 20px 18px}
+/* 번호와 제목은 16장(bk21-status-12)의 "1 / 저자행은 계속 늘고 있다" 규격을
+   그대로 가져온다. 16장은 밝은 배경이라 글자색만 이 장의 다크 팔레트로 바꾼다.
+     번호 #c7d0e6 (연한 회청 · 절제된 역할)  → var(--ink3)
+     제목 #111827 (가장 강한 글자)          → var(--ink)
+   16장 제목은 Pretendard 로 잡히는데 이 문서의 기본 스택은 -apple-system 이
+   앞에 있어, 이 블록에만 Pretendard 우선 스택을 명시한다. */
+#sl-five-2q6r4-e .card .n{font:800 40px/1 ui-monospace,Menlo,monospace;
+ letter-spacing:-2px;transform:skewX(-9deg);display:inline-block;
+ margin-bottom:0;color:var(--ink3)}
+#sl-five-2q6r4-e .card h3{
+ font-family:"Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;
+ margin-top:10px;color:var(--ink)}
+#sl-five-2q6r4-e .card .s{font:700 10.5px/1 ui-monospace,Menlo,monospace;
+ letter-spacing:.06em;margin-top:9px}
+#sl-five-2q6r4-e .card ul{margin-top:9px;gap:5px;font-size:14.5px}
+#sl-five-2q6r4-e .card ul li{font-size:14.5px;font-weight:500;line-height:1.5;
+ letter-spacing:-.3px;padding-left:14px;word-break:keep-all}
+#sl-five-2q6r4-e .card ul li:before{top:9px;width:4px;height:4px}
+#sl-five-2q6r4-e .card .m{font:700 12px/1.5 ui-monospace,Menlo,monospace;
+ letter-spacing:normal;margin-top:11px;padding-top:12px}
+/* 기존 RIMS 블록 — 본문은 7장 목록, 라벨은 7장 부제 규격 */
+#sl-five-2q6r4-e .was-b{font-size:14.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;
+ margin:11px 0 2px;padding:9px 11px}
+#sl-five-2q6r4-e .was-b span{font:700 10.5px/1 ui-monospace,Menlo,monospace;
+ letter-spacing:.06em;margin-bottom:5px}
+/* ══ 12·13 무대를 2번(biblo-solution-6)과 동일 규격으로 ══════════════════
+   2번·14번은 1600x900 고정 무대를 min(vw/1600, vh/900) 균일 배율로 맞춘다.
+   두 장은 노드라 배율을 타지 않아, 이전에는 좌우만 5.125vw 로 흉내 냈다.
+   그 방식은 16:9 에서만 맞고 21:9 에서 좌우가 418px 대 131px 로 벌어졌으며
+   상하 레터박스와 배율은 어느 비율에서도 맞지 않았다. 같은 고정 무대로 바꾼다.
+   14번(BK21_판별_신호망)은 이미 같은 규격이라 손대지 않았다. */
+#sl-hero-2q6r4-e, #sl-five-2q6r4-e{padding:0;overflow:hidden;justify-content:stretch}
+#sl-hero-2q6r4-e > .stg-2q6r4, #sl-five-2q6r4-e > .stg-2q6r4{
+ position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;
+ padding:74px 82px 92px;display:flex;flex-direction:column;justify-content:center;
+ /* 무대 중앙 정렬은 fitStage2 가 transform 으로 준다. 덱의 등장 트랜지션이
+    이 transform 에 걸리면 첫 진입에 무대가 미끄러지므로 페이드만 남긴다. */
+ transition-property:opacity}
+/* 12번은 유리카드와 챕터 표기가 좌우로 놓이는 가로 배치다 */
+#sl-hero-2q6r4-e > .stg-2q6r4{flex-direction:row;align-items:center;
+ justify-content:space-between;gap:64px}
+/* 무대 안은 언제나 1600px 폭이므로 뷰포트 단위(vw·clamp)를 쓰면 배율과 이중으로 걸린다.
+   12번이 쓰던 값을 1600 기준 px 로 환산해 고정한다(1vw = 16px). */
+#sl-hero-2q6r4-e h1{font-size:48px}
+#sl-hero-2q6r4-e .divx-in{max-width:672px}
+#sl-hero-2q6r4-e .divx-in h2{font-size:70px}
+#sl-hero-2q6r4-e .divx-in p{font-size:18.4px}</style>
 
 <div class="bgstack-2q6r4" id="bgstack-2q6r4"></div>
 <script>
@@ -760,6 +827,8 @@ window.SLIDES_2q6r4=[
  {kind:'frame',src:'biblo-howto-researcher-b.html', bg:'viol', name:'이용 방법 · 연구자 2'},
  {kind:'frame',src:'biblo-howto-admin-b.html', bg:'viol', name:'이용 방법 · 운영자 2'},
  {kind:'frame',src:'biblo-librarian-dash-b.html', bg:'viol', name:'사서 대시보드 2'},
+ {kind:'node', id:'sl-hero-2q6r4-e', bg:'wave',  name:'AI 에이전트'},
+ {kind:'node', id:'sl-five-2q6r4-e', bg:'wave',  name:'AI 에이전트 2'},
  {kind:'frame',src:'bk21-status-12b.html', bg:'own', name:'매칭 현황 요약 12 사본'},
  {kind:'frame',src:'biblo-where-we-stand.html', bg:'own', name:'지금 어디까지 왔는가'},
  {kind:'frame',src:'biblo-bottleneck.html', bg:'own', name:'무엇이 막고 있는가'},
@@ -1012,6 +1081,38 @@ window.BGS_2q6r4={
   <div class="grid" id="cards-d"></div>
   </div>
  </section>
+
+ <!-- 20·21장 사본 (28·29 자리) -->
+<div class="hero slide-2q6r4 divx" id="sl-hero-2q6r4-e">
+  <div class="stg-2q6r4">
+    <div class="glass"><div class="pad">
+   <span class="pill">RESEARCH &amp; LIBRARY PLATFORM</span>
+   <h1>대학과 도서관의 데이터를<br><em>연결하는 AI 플랫폼</em></h1>
+   <div class="dots"></div>
+   <p class="body">대학과 도서관에는 책·논문·연구자·대출·소장·사업 데이터가 이미 쌓여 있습니다.
+    시스템마다 흩어져 있어 필요한 자료를 찾거나, 논문을 실제 연구자에게 연결하거나,
+    학교의 성과를 한눈에 보기 어려울 뿐입니다.
+    <b>BIBLO 는 기관이 보유한 데이터를 하나의 공통 기반으로 연결합니다.</b>
+    연결된 데이터는 검색·연구성과 관리·홍보영상·사서 업무·AI 질의·KPI 관리에 반복해서 쓰입니다.</p>
+  </div></div>
+  <div class="divx-in">
+   <span class="k">CHAPTER</span>
+   <h2><em>Ⅴ.</em>AI 에이전트</h2>
+   <span class="ln"></span>
+  </div>
+  </div>
+ </div>
+<section class="slide-2q6r4" id="sl-five-2q6r4-e">
+  <div class="stg-2q6r4">
+  <div class="sh">
+   <div class="k">LIBRARIAN AGENT</div>
+   <h2>희망도서 신청부터 서가 비치까지 <b>단 하나의 AI 파이프라인</b></h2>
+   <p>수서 · 편목 · 분류 · 장서 네 영역을 하나로 잇습니다.
+      항목마다 <b>무엇이 자동으로 되는지</b>를 함께 적었습니다.</p>
+  </div>
+  <div class="grid" id="cards-e"></div>
+  </div>
+ </section>
 </div>
 <div class="ld-2q6r4" id="ld-2q6r4" aria-hidden="true"><i></i></div>
 <div class="nav-2q6r4" id="nav-2q6r4" aria-label="슬라이드 이동"></div>
@@ -1258,13 +1359,13 @@ document.getElementById('cards-c').innerHTML=PC.map(p=>`
   <ul>${p.li.map(x=>`<li>${x}</li>`).join('')}</ul>
   <div class="m">${p.m}</div>
  </div></div>`).join('');
-document.getElementById('cards-d').innerHTML=PD.map(p=>`
+document.querySelectorAll('#cards-d,#cards-e').forEach(el=>el.innerHTML=PD.map(p=>`
  <div class="glass card"><div class="pad">
   <div class="n">${p.n}</div><h3>${p.t}</h3><div class="s">${p.s}</div>
   <div class="was-b">${p.lead}</div>
   <ul>${p.li.map(x=>`<li>${x}</li>`).join('')}</ul>
   <div class="m">${p.m}</div>
- </div></div>`).join('');
+ </div></div>`).join(''));
 
 /* ══ 슬라이드 덱 제어 ══════════════════════════════════════
    SLIDES_2q6r4 순서대로 덱을 다시 조립하고, 활성 슬라이드가 속한
