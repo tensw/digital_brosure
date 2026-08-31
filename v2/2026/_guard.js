@@ -79,8 +79,11 @@
     blur_el = document.createElement('div'); blur_el.className = 'gd-blur-2q';
     blur_el.textContent = '다른 창으로 이동했습니다. 이 창을 다시 누르면 자료가 보입니다.';
     document.body.appendChild(blur_el);
-    addEventListener('blur', function () { blur_el.classList.add('on'); });
-    addEventListener('focus', function () { blur_el.classList.remove('on'); });
+    /* window blur 는 iframe 안을 눌러도 뜬다(슬라이드가 iframe 이라 버튼마다 걸렸다).
+       탭이 실제로 가려질 때만 반응하도록 visibilitychange 를 쓴다. */
+    document.addEventListener('visibilitychange', function () {
+      blur_el.classList.toggle('on', document.visibilityState === 'hidden');
+    });
 
   }
 
