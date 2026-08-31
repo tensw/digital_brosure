@@ -5,10 +5,6 @@
   var TOP = window.self === window.top;
   var css = document.createElement('style');
   css.textContent =
-    '.gd-wrap-2q,.gd-wm-2q{position:fixed;inset:0;pointer-events:none;z-index:2147483000}' +
-    '.gd-wm-2q{opacity:.035;overflow:hidden;font:600 11px/1 ui-monospace,Menlo,monospace;color:#fff}' +
-    '.gd-wm-2q i{position:absolute;white-space:nowrap;font-style:normal;' +
-      'transform:rotate(-28deg);transform-origin:0 0;letter-spacing:.06em}' +
     '.gd-pop-2q{position:fixed;inset:0;z-index:2147483600;display:none;place-items:center;' +
       'background:rgba(4,7,18,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}' +
     '.gd-pop-2q.on{display:grid}' +
@@ -74,13 +70,6 @@
     var d = new Date(), p = function (n) { return String(n).padStart(2, '0'); };
     var stamp = 'BIBLO ' + code + ' · ' + d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
 
-    var wm = document.createElement('div'); wm.className = 'gd-wm-2q';
-    var h = '';
-    for (var y = -200; y < innerHeight + 400; y += 150)
-      for (var x = -300; x < innerWidth + 400; x += 460)
-        h += '<i style="left:' + x + 'px;top:' + y + 'px">' + stamp + '</i>';
-    wm.innerHTML = h; document.body.appendChild(wm);
-
     pop_el = document.createElement('div'); pop_el.className = 'gd-pop-2q';
     pop_el.innerHTML = '<div class="gd-box-2q"><u>BIBLO · PROTECTED</u><b></b><p></p>' +
       '<s>' + stamp + '</s><button type="button">확인</button></div>';
@@ -93,13 +82,6 @@
     addEventListener('blur', function () { blur_el.classList.add('on'); });
     addEventListener('focus', function () { blur_el.classList.remove('on'); });
 
-    addEventListener('resize', function () {
-      var g = '';
-      for (var y = -200; y < innerHeight + 400; y += 150)
-        for (var x = -300; x < innerWidth + 400; x += 460)
-          g += '<i style="left:' + x + 'px;top:' + y + 'px">' + stamp + '</i>';
-      wm.innerHTML = g;
-    });
   }
 
   fetch('/api/auth/me').then(function (r) { return r.json(); })
