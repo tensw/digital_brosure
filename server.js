@@ -54,6 +54,8 @@ function sendFile(res, filePath, guard) {
     if (ext === '.html') headers['Cache-Control'] = 'no-cache, must-revalidate';
     if (guard) {
       headers['X-Robots-Tag'] = NOAI;
+      // 보호 스크립트와 문서는 캐시하지 않는다. 옛 파일이 남아 있으면 보호가 헐거워진다.
+      if (ext === '.html' || ext === '.js') headers['Cache-Control'] = 'no-store, must-revalidate';
       if (ext === '.html') {
         const out = Buffer.from(injectGuard(data.toString('utf8')), 'utf8');
         res.writeHead(200, headers); res.end(out); return;
