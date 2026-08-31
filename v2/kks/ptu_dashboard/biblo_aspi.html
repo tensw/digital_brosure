@@ -1,0 +1,341 @@
+<title>ASPI 앵커 사업단 지수</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF6EC; --ink:#243B53; --navy:#1F3A5F;
+    --p1:#2E74B5; --p1-soft:#DCEBF7;
+    --p2:#E8743B; --p2-soft:#FCE5D6;
+    --p3:#7B5EA7; --p3-soft:#E8E1F2;
+    --p4:#2F8C5C; --p4-soft:#D8EFE0;
+    --butter:#FFE08A; --line:#E7DECF;
+    --shadow:0 8px 28px rgba(36,59,83,.10);
+    --shadow-lift:0 16px 40px rgba(36,59,83,.16);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:"Gowun Dodum",sans-serif; color:var(--ink);
+    background:
+      radial-gradient(circle at 12% 8%, #FFF6E0 0%, transparent 42%),
+      radial-gradient(circle at 88% 22%, #EAF3FB 0%, transparent 38%),
+      radial-gradient(circle at 70% 92%, #EDE6F7 0%, transparent 40%),
+      var(--cream);
+    line-height:1.85; font-size:16.5px; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:920px; margin:0 auto; padding:0 22px 100px;}
+  .hero{text-align:center; padding:70px 14px 34px;}
+  .hero .badge{display:inline-block; font-family:"Jua"; font-size:14px; background:var(--navy); color:#fff; padding:7px 20px; border-radius:999px; margin-bottom:24px; box-shadow:var(--shadow);}
+  .hero h1{font-family:"Black Han Sans"; font-weight:400; line-height:1.22; font-size:clamp(28px,5.4vw,46px); color:var(--navy); text-wrap:balance;}
+  .hero h1 .hl{color:var(--p2);}
+  .hero p.lead{font-size:clamp(15px,2.3vw,19px); margin:20px auto 0; max-width:700px; color:#54677d;}
+  .hero .who{margin-top:26px; font-family:"Jua"; font-size:14.5px; color:#7a8aa0; background:#fff; display:inline-block; padding:10px 22px; border-radius:14px; border:2px dashed var(--line);}
+  .eq{background:#fff; border:2px solid var(--navy); border-radius:20px; padding:26px 24px; margin:34px 0 0; text-align:center; box-shadow:var(--shadow-lift);}
+  .eq .formula{font-family:"Black Han Sans"; font-weight:400; font-size:clamp(19px,3.6vw,30px); color:var(--navy); letter-spacing:.01em;}
+  .eq .formula .a{color:var(--p1);} .eq .formula .b{color:var(--p2);} .eq .formula .c{color:var(--p4);}
+  .eq .lbl{display:block; font-family:"Jua"; font-size:13px; color:#7a8aa0; margin-top:10px;}
+  .partbanner{border-radius:20px; padding:22px 26px; margin:44px 0 6px; color:#fff; box-shadow:var(--shadow-lift);}
+  .partbanner.a{background:linear-gradient(135deg,#2E74B5,#255e95);}
+  .partbanner.b{background:linear-gradient(135deg,#E8743B,#cf5d27);}
+  .partbanner.c{background:linear-gradient(135deg,#7B5EA7,#5f4488);}
+  .partbanner.d{background:linear-gradient(135deg,#2F8C5C,#226b45);}
+  .partbanner .pk{font-family:"Jua"; font-size:13px; opacity:.9;}
+  .partbanner .ph{font-family:"Black Han Sans"; font-weight:400; font-size:clamp(21px,3.8vw,28px); line-height:1.28; margin:4px 0 6px; text-wrap:balance;}
+  .partbanner .pm{font-size:14px; opacity:.92;}
+  .chapter{background:#fff; border-radius:26px; padding:36px 34px; margin:22px 0; box-shadow:var(--shadow); border:1px solid #F2EADB; opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease;}
+  .chapter.show{opacity:1; transform:translateY(0);}
+  @media(prefers-reduced-motion: reduce){.chapter{opacity:1; transform:none; transition:none;}}
+  @media(max-width:560px){.chapter{padding:26px 20px;}}
+  .chead{display:flex; align-items:center; gap:14px; margin-bottom:10px;}
+  .chapter .num{font-family:"Black Han Sans"; font-weight:400; font-size:14px; color:#fff; background:var(--navy); min-width:44px; height:44px; padding:0 8px; border-radius:13px; display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow); flex-shrink:0;}
+  .part-a .num{background:var(--p1);} .part-b .num{background:var(--p2);}
+  .part-c .num{background:var(--p3);} .part-d .num{background:var(--p4);}
+  .chapter h2{font-family:"Jua"; font-weight:400; font-size:clamp(20px,3.4vw,25px); color:var(--navy); line-height:1.3;}
+  .chapter h3{font-family:"Jua"; font-weight:400; font-size:18px; margin:24px 0 10px;}
+  .part-a h3{color:var(--p1);} .part-b h3{color:var(--p2);}
+  .part-c h3{color:var(--p3);} .part-d h3{color:var(--p4);}
+  .chapter p{margin:12px 0;}
+  ul,ol{padding-left:22px; margin:10px 0;} li{margin:6px 0;}
+  .big-line{font-family:"Jua"; font-size:clamp(17px,2.7vw,20px); line-height:1.6; color:var(--navy); background:linear-gradient(transparent 62%, var(--butter) 62%); display:inline; padding:0 3px;}
+  strong{font-weight:400; font-family:"Jua"; color:var(--navy);}
+  .part-a strong{color:var(--p1);} .part-b strong{color:var(--p2);}
+  .part-c strong{color:var(--p3);} .part-d strong{color:var(--p4);}
+  .find{display:flex; gap:14px; align-items:flex-start; background:var(--cream); border-radius:18px; padding:18px 20px; margin:16px 0; border-left:6px solid var(--p1);}
+  .find.b{border-left-color:var(--p2);} .find.d{border-left-color:var(--p4);}
+  .find .fic{font-size:28px; flex-shrink:0;}
+  .find .ft{font-family:"Jua"; font-size:16.5px; color:var(--navy); margin-bottom:3px;}
+  .find .fd{font-size:14.5px; color:#4f6076; line-height:1.7;}
+  .mini-eq{background:#f6f6fa; border:1.5px solid #d6d6e0; border-radius:14px; padding:16px 20px; margin:14px 0; font-family:"Times New Roman",Georgia,serif; font-size:17.5px; color:var(--navy); text-align:center;}
+  .mini-eq .lbl{display:block; font-family:"Jua"; font-size:12.5px; color:#7a8aa0; margin-top:8px;}
+  .tablewrap{overflow-x:auto; margin:16px 0; border-radius:16px; box-shadow:var(--shadow); background:#fff;}
+  table{border-collapse:collapse; width:100%; font-size:13.5px; line-height:1.6; background:#fff;}
+  th{font-family:"Jua"; font-weight:400; background:var(--cream); color:var(--navy); text-align:left; padding:10px 13px; border-bottom:2px solid var(--line); white-space:nowrap;}
+  td{padding:9px 13px; border-bottom:1px solid #F2EADB; vertical-align:top; color:#3c4f66;}
+  tr:last-child td{border-bottom:none;}
+  td.num,th.num{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap;}
+  td.c{text-align:center;}
+  .small{font-size:13px; color:#7a8aa0; line-height:1.7;}
+  .result-block{background:linear-gradient(135deg,#FFF6E0,#FCEBDF); border-radius:20px; padding:22px; margin:18px 0; border:2px dashed var(--p2);}
+  .result-block .rt{font-family:"Jua"; font-size:16px; color:var(--navy); margin-bottom:6px;}
+  .result-block .rd{font-size:14.5px; color:#4f6076; line-height:1.75;}
+  a{color:var(--p1); word-break:break-all;}
+  code{font-family:"SF Mono",Consolas,monospace; font-size:12px; background:#F4F1E8; border:1px solid var(--line); border-radius:6px; padding:1px 6px; color:#7A4A1F; word-break:break-all;}
+  footer{margin-top:52px; text-align:center; font-size:13px; color:#9aa7b5;}
+</style>
+
+<div class="wrap">
+
+<section class="hero">
+  <span class="badge">지수 설계서 · 2026. 8. 31.</span>
+  <h1>앵커 사업단 성과지수 <span class="hl">ASPI</span></h1>
+  <p class="lead">"선정은 시작일 뿐이다." 매년 실적보고와 연차평가, 2년차 중간평가를 통과해야 지원이 유지되는 앵커 사업에서, 총장과 사업단이 <b>지금 우리 사업이 계획대로 가고 있는가</b>를 분기마다 숫자 하나로 확인하고 보완을 지시할 수 있게 하는 자체 관리지수의 설계다. 평택대 사업단 구조로 실장했다.</p>
+  <div class="who">Anchor Semiannual Performance Index · 작동 계산기: 「앵커_사업단_지수_계산기.xlsx」</div>
+  <div class="eq">
+    <div class="formula">ASPI = 0.4 × <span class="a">A</span><sub>달성</sub> + 0.3 × <span class="b">B</span><sub>성장</sub> + 0.3 × <span class="c">C</span><sub>운영</sub></div>
+    <span class="lbl">각 부문 0~120점 · 등급 전망: 90+ 매우우수권 / 80 우수권 / 70 보통권 / 60 미흡권 / 60 미만 사업중단 위험권</span>
+  </div>
+</section>
+
+<!-- PART 1 설계 원칙 -->
+<div class="part-a">
+<div class="partbanner a">
+  <div class="pk">PART 1</div>
+  <div class="ph">설계 원칙 — 공식 평가체계를 미러링한다</div>
+  <div class="pm">지수의 정당성은 "평가받는 그 기준으로 스스로를 먼저 잰다"는 데서 나온다</div>
+</div>
+
+<section class="chapter">
+  <div class="chead"><div class="num">1-1</div><h2>왜 이 구조인가 — 근거가 되는 공식 평가체계</h2></div>
+  <p><span class="big-line">ASPI의 모든 구성요소는 임의로 만든 것이 아니라, 실제 평가 문서에서 역산한 것이다.</span></p>
+  <div class="tablewrap"><table>
+    <tr><th>ASPI 설계 요소</th><th>근거가 된 공식 제도(원문 확보)</th></tr>
+    <tr><td><b>A 달성지수</b> (지표 달성률)</td><td>경기도 1차년도 연차평가의 <b>정량 30%</b> = 성과지표 달성도. 측정 항목은 경기도 중점성과지표 14종 정의서(기본계획 원문)의 구성요소 그대로</td></tr>
+    <tr><td><b>B 성장지수</b> (증가율/목표증가율)</td><td>중간평가(2027)가 명시 평가하는 <b>"핵심성과지표 성장률"</b> + 기본계획의 연차별 목표 증가율표('26년 지표별 1~5%)</td></tr>
+    <tr><td><b>C 운영건전성지수</b></td><td>연차평가 <b>정성 70%</b>(실적보고 80+차년도 계획 20)와 교육부 시도점검 정성 600점의 항목(예산 집행 적정성, 거버넌스, 성과관리 체계)을 대학 수준에서 측정 가능한 6개 프록시로 번역</td></tr>
+    <tr><td><b>등급컷 90/80/70/60</b></td><td>경기도 RISE 기본계획의 평가등급 기준(매우우수 90+ ~ 매우미흡 60미만)과 등급별 조치(인센티브/삭감/중단) 그대로</td></tr>
+    <tr><td><b>60% 경고 룰</b></td><td>선정 진입최저점·신규과제 컷·종합평가 차년도 선정불가가 전부 <b>'만점의 60%'</b> — 제도 전반의 일관된 최저선</td></tr>
+    <tr><td><b>분기 측정 주기</b></td><td>연차 사이클(2월 종료→4~5월 보고→6월 등급)에서 보완이 가능한 마지막 시점이 3분기라는 역산</td></tr>
+  </table></div>
+  <p class="small">원문: 경기도 RISE 기본계획(2025~2029)(변경) pp.66~69·성과지표 정의서, 경기도 공고 제2025-899호, 한국대학신문(2026 RISE 설명회·연차평가 결과), 교육부 앵커 연차점검 추진계획(2026.5.12) — 전부 레포 rise/references/에 사본.</p>
+</section>
+
+<section class="chapter">
+  <div class="chead"><div class="num">1-2</div><h2>가중치 40 : 30 : 30의 논리</h2></div>
+  <ul>
+    <li><strong>공식 배점은 정량 30 : 정성 70</strong>이지만, 정성 70%의 실체는 "정량 실적을 얼마나 잘 입증·서사화했고 차년도 계획이 얼마나 탄탄한가"다. 자체 지수에서는 이를 통제 가능한 변수로 재배분한다: 실적 그 자체(A, 40) + 실적의 궤적(B, 30) + 입증·운영 준비(C, 30).</li>
+    <li><strong>B를 독립 부문으로 둔 이유</strong>: 2027년 중간평가("2+3" 계속지원 결정)가 달성도가 아닌 <b>성장률</b>을 명시 평가한다. 1년차에 달성률이 높아도 성장이 정체되면 중간평가에서 위험해지는 구조를 지수에 미리 반영했다.</li>
+    <li><strong>cap 120</strong>: 초과달성을 보상하되(인센티브 제도 미러), 한 지표의 폭주가 다른 지표의 부진을 가리지 않도록 상한을 둔다.</li>
+    <li>가중치는 조정 가능한 정책 변수다 — 중간평가가 다가오는 2년차 하반기에는 B의 가중을 0.4로 올리는 운용을 권고한다.</li>
+  </ul>
+</section>
+</div>
+
+<!-- PART 2 공식 -->
+<div class="part-b">
+<div class="partbanner b">
+  <div class="pk">PART 2</div>
+  <div class="ph">공식과 데이터 정의</div>
+  <div class="pm">세 부문의 산식 · 입력 데이터 · 평택대 지표 매핑</div>
+</div>
+
+<section class="chapter">
+  <div class="chead"><div class="num">2-1</div><h2>A. 달성지수 — 목표 대비 어디까지 왔나</h2></div>
+  <div class="mini-eq">A = Σᵢ wᵢ · min( 실적ᵢ / 목표ᵢ × 100, 120 ) ÷ Σᵢ wᵢ<span class="lbl">i = 사업단이 수행하는 중점성과지표(평택대: 9종 + 자율지표) · wᵢ = 해당 과제 예산 비중 · 목표 = 계획서 제출값</span></div>
+  <p>데이터는 새로 만들 필요가 없다 — <strong>연차 실적보고서에 어차피 제출해야 하는 값</strong>이다. 평택대의 7개 단위과제는 경기도 중점성과지표와 다음과 같이 매핑된다(기본계획 연계표 기준):</p>
+  <div class="tablewrap"><table>
+    <tr><th>평택대 수행 과제</th><th>매핑 중점성과지표</th><th>측정 구성요소(정의서 원문)</th></tr>
+    <tr><td>1-01 G7 선도인재 / 2-01 특화 전문인재</td><td>② 인재양성 · ③ 취업역량</td><td>특화·융복합(캡스톤/PBL)·표준현장실습 이수학생 / 이수생 취업률</td></tr>
+    <tr><td>2-02 Value-UP 지원</td><td>④ R&amp;D 기술지원 · ⑤ 기업지원</td><td>기술개발과제·공동연구·기술이전 / 공용장비·기업협력(R&amp;BD·컨설팅)</td></tr>
+    <tr><td>2-03 산학연 네트워크</td><td>⑥ 얼라이언스</td><td>협의체 구성 다양성·활동성·지속성·확장성</td></tr>
+    <tr><td>2-04 창업클러스터</td><td>⑦ 창업 확산</td><td>창업 교육·문화 / 학생·교원 창업 / 창업지원·성과확산</td></tr>
+    <tr><td>3-03 재직자 역량강화</td><td>⑩ 재직자 실무역량</td><td>기업 맞춤형 과정 운영 / 교육 이수 비율</td></tr>
+    <tr><td>4-02 지역사회 공헌·현안해결</td><td>⑫ 지역사회 공헌</td><td>혁신성장 거버넌스 구축·운영 / 가치창출 실적</td></tr>
+    <tr><td>공통(전 과제)</td><td>① 지산학 친화 체제</td><td>교원업적평가 지산학 반영률 / 전임교원 참여 비율</td></tr>
+  </table></div>
+</section>
+
+<section class="chapter">
+  <div class="chead"><div class="num">2-2</div><h2>B. 성장지수 — 궤적이 목표 기울기를 따라가는가</h2></div>
+  <div class="mini-eq">B = Σᵢ wᵢ · min( 실제증가율ᵢ / 목표증가율ᵢ × 100, 120 ) ÷ Σᵢ wᵢ<span class="lbl">실제증가율 = (당해 실적 − 전년 실적) / 전년 실적 · 목표증가율 = 경기도 기본계획 연차별 목표('26년: 지표별 1~5%)</span></div>
+  <p>경기도는 지표마다 연차별 목표 증가율을 못박아 두었다 — 예: 인재양성 '26년 +2%, 취업역량 +3%, 기업지원 +5%, 재직자 +5%, 창업 +1%. <strong>기준값은 '25년(1차년도) 실적</strong>이므로, 1차년도 실적이 곧 향후 4년의 분모가 된다. B가 100을 밑돌면 "달성은 했지만 궤적이 꺾이고 있다"는 조기 신호다.</p>
+</section>
+
+<section class="chapter">
+  <div class="chead"><div class="num">2-3</div><h2>C. 운영건전성지수 — 정성 70%에 대한 통제 가능한 대비</h2></div>
+  <div class="mini-eq">C = Σⱼ vⱼ · min( 실적ⱼ / 계획ⱼ × 100, 100 )<span class="lbl">j = 6개 운영 항목 · vⱼ = 항목 가중치</span></div>
+  <div class="tablewrap"><table>
+    <tr><th>항목</th><th class="num">vⱼ</th><th>데이터 근거</th><th>왜 정성평가를 예측하는가</th></tr>
+    <tr><td>사업비 집행률</td><td class="num">0.25</td><td>e나라도움 집행액/교부액</td><td>과소집행은 감액의 단골 사유 — 시도점검에서도 '예산 집행 적정성' 배점 존재</td></tr>
+    <tr><td>과제 마일스톤 이행률</td><td class="num">0.25</td><td>계획서 분기 마일스톤 완료 수</td><td>정성 실적보고(80%)의 골격이 되는 서사</td></tr>
+    <tr><td>거버넌스 활동 이행률</td><td class="num">0.15</td><td>전략협의체·협의회 개최 실적(회의록)</td><td>'수평적 거버넌스 구축·운영'은 시도점검 정성 90점 항목</td></tr>
+    <tr><td>증빙·성과 DB 완비율</td><td class="num">0.15</td><td>지표별 증빙 등록 건/필요 건</td><td>평가 대응력 — 증빙 없는 실적은 실적이 아니다</td></tr>
+    <tr><td>보고 적시성</td><td class="num">0.10</td><td>기한 준수 건/총 보고 건</td><td>센터·위원회 신뢰 자본</td></tr>
+    <tr><td>차년도 계획 준비도</td><td class="num">0.10</td><td>차년도 계획서 필수요소 진척률</td><td>정성 배점의 20%가 '2차년도 사업계획서'</td></tr>
+  </table></div>
+</section>
+</div>
+
+<!-- PART 3 운영 정책 -->
+<div class="part-c">
+<div class="partbanner c">
+  <div class="pk">PART 3</div>
+  <div class="ph">운영 정책 — 지수를 어떻게 쓰는가</div>
+  <div class="pm">측정 주기 · 보완 트리거 · 의사결정 연결</div>
+</div>
+
+<section class="chapter">
+  <div class="chead"><div class="num">3-1</div><h2>연간 운영 사이클과 트리거</h2></div>
+  <div class="tablewrap"><table>
+    <tr><th>시점</th><th>측정</th><th>트리거와 대응 정책</th></tr>
+    <tr><td><b>3월</b> (1분기)</td><td>전년도 확정 실적으로 기준선 리셋</td><td>연간 목표·가중치(예산 비중) 확정, 계산기 갱신</td></tr>
+    <tr><td><b>6월</b> (2분기)</td><td>ASPI 1차 산출</td><td><b>ASPI &lt; 70 → 하반기 보완계획 의무화</b>(달성률 하위 2개 지표 집중 투자). 🔴 지표(달성률&lt;60%) 존재 시 과제책임자 소명</td></tr>
+    <tr><td><b>9월</b> (3분기)</td><td>ASPI 2차 산출 — <b>보완 가능한 마지막 시점</b></td><td>🔴 지표 잔존 시 목표 재협상·센터 사전 협의 검토. B&lt;80이면 중간평가 리스크 보고서 작성</td></tr>
+    <tr><td><b>12월</b> (4분기)</td><td>연말 가집계</td><td>실적보고서 초안 착수 — C부문(증빙 완비율·차년도 계획)을 100에 수렴시키는 데 집중</td></tr>
+    <tr><td><b>익년 4~5월</b></td><td>—</td><td>실적보고서·차년도 계획 제출(경기도 일정: 4.30~5.7 접수, 5월 말 화상 면담, 6월 등급 통보)</td></tr>
+  </table></div>
+  <div class="find">
+    <div class="fic">🎯</div>
+    <div><div class="ft">총장 보고 화면은 숫자 셋이면 된다</div>
+    <div class="fd">① ASPI 종합점수와 등급 전망 밴드 ② 🔴 경고 지표 개수(단일 지표 60% 룰) ③ B(성장지수) — 중간평가 조기경보. 이 셋이 "내년에도 지원을 유지할 수 있는가"라는 질문에 대한 분기별 답이다.</div></div>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="chead"><div class="num">3-2</div><h2>벤치마크 보조지표 (선택)</h2></div>
+  <p>경기앵커센터 1차년도 공개 성과로 <strong>대학당 평균치</strong>를 산출해 상대 위치를 가늠할 수 있다(68개교 기준, 참고용 개산): 인재양성 약 2,443명/교 · 특허 약 24건/교 · 기술이전 수입 약 2.6억/교 · 스타트업 약 7.5개사/교. 단, 대학 규모·유형(1유형 대형대와 2유형 컨소시엄)의 차이가 커서 <strong>동일 유형(2유형)·유사 예산(연 20억 내외) 그룹과의 비교</strong>만 의미가 있다 — 개별 대학 실적은 비공개이므로 이 부분은 센터 공유회·협의회 네트워크를 통한 정보 수집이 필요하다.</p>
+</section>
+
+<section class="chapter">
+  <div class="chead"><div class="num">3-3</div><h2>한계 고지 — 지수가 보장하지 않는 것</h2></div>
+  <ul>
+    <li><strong>정성 70%는 위원회 판단</strong>이다. C부문은 '준비도'를 재는 프록시일 뿐, 발표·질의 대응의 질까지 예측하지 못한다. ASPI 90이 '매우우수'를 보장하지 않는다.</li>
+    <li><strong>상대평가 요소</strong>: 34개 사업단 간 상대 비교가 등급에 개입할 수 있다(1차년도 매우우수 7곳이 특정 유형에 쏠린 사례). 타 사업단 동향은 지수 밖의 변수다.</li>
+    <li><strong>제도 변동</strong>: 앵커 개편처럼 평가 프레임 자체가 바뀔 수 있다(실제로 2년차부터 5대 프로젝트·24개 과제로 확대). 지표 정의가 바뀌면 지수 정의서도 갱신해야 한다 — 계산기의 목표·가중치 칸을 입력값으로 열어 둔 이유다.</li>
+    <li>대학별 연차평가 세부 편람이 비공개인 상태에서의 설계이므로, <strong>편람 입수 시 C부문 항목·가중치를 편람 기준으로 교체</strong>하는 것이 1순위 개선이다.</li>
+  </ul>
+</section>
+</div>
+
+<!-- PART 4 실장 -->
+<div class="part-d">
+<div class="partbanner d">
+  <div class="pk">PART 4</div>
+  <div class="ph">실장 — 계산기 사용법</div>
+  <div class="pm">「앵커_사업단_지수_계산기.xlsx」 4개 시트</div>
+</div>
+
+<section class="chapter">
+  <div class="chead"><div class="num">4-1</div><h2>계산기 구조</h2></div>
+  <div class="tablewrap"><table>
+    <tr><th>시트</th><th>역할</th><th>입력/자동</th></tr>
+    <tr><td><b>지수대시보드</b></td><td>ASPI 종합·부문 점수·등급 전망·대응 정책</td><td>전부 자동(수식)</td></tr>
+    <tr><td><b>정량지표</b></td><td>평택대 매핑 9개 중점지표+자율지표의 목표·실적·전년값·가중치 → 달성률·성장점수·경고 자동 산출</td><td>노란 칸 입력(분기 갱신)</td></tr>
+    <tr><td><b>운영건전성</b></td><td>집행률·마일스톤·거버넌스·증빙·보고·차년도계획 6항목</td><td>노란 칸 입력</td></tr>
+    <tr><td><b>공식설명</b></td><td>산식·가중치 근거·데이터 출처·측정 주기 문서화</td><td>참조용</td></tr>
+  </table></div>
+  <div class="result-block">
+    <div class="rt">⚠ 예시값 주의</div>
+    <div class="rd">계산기에 채워진 수치는 <b>구조 시연용 예시값</b>이다(평택대의 실제 지표 목표값은 사업계획서·협약서에 있으며 외부 비공개). 사업단이 보유한 계획서 제출값(연간 목표), e나라도움 집행 데이터, 분기 실적으로 교체하는 순간부터 실사용 지수가 된다. 지표 구성·매핑·목표증가율·등급컷은 전부 공식 문서 기준으로 이미 맞춰져 있다.</div>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="chead"><div class="num">4-2</div><h2>[계산기 원문] 시트 1 — 지수대시보드</h2></div>
+  <p class="small">이하 4-2~4-5는 「앵커_사업단_지수_계산기.xlsx」의 내용 전문이다. <b>수식</b> 열은 엑셀 셀에 실제로 들어 있는 수식 원문, <b>값</b>은 현재 예시 입력에서의 산출 결과다. 예시값은 의도적으로 '경고가 켜진 시나리오'로 채워져 있어 지수의 경보 동작을 보여준다 — 실사용 시 노란 표시 항목을 실제 값으로 교체한다.</p>
+  <div class="tablewrap"><table>
+    <tr><th>부문</th><th>의미</th><th>공식 평가체계와의 대응</th><th class="num">값(예시)</th><th>셀 수식(원문)</th></tr>
+    <tr><td><b>A. 달성지수</b></td><td>성과지표 연간목표 달성률(가중평균, cap 120)</td><td>연차평가 정량(달성도)·중점지표 14종</td><td class="num">70.0</td><td><code>=정량지표!G15</code></td></tr>
+    <tr><td><b>B. 성장지수</b></td><td>전년 대비 증가율 ÷ 경기도 목표 증가율(cap 120)</td><td>중간평가 '핵심성과지표 성장률'</td><td class="num">0.0</td><td><code>=정량지표!K15</code></td></tr>
+    <tr><td><b>C. 운영건전성지수</b></td><td>집행·마일스톤·거버넌스·증빙·보고·차년도계획 준비도</td><td>연차평가 정성 70%(실적보고 80+계획 20) 프록시</td><td class="num">71.6</td><td><code>=운영건전성!F11</code></td></tr>
+    <tr style="background:#EAF3FB;"><td><b>ASPI 종합</b></td><td colspan="2">0.4×A + 0.3×B + 0.3×C</td><td class="num"><b>49.5</b></td><td><code>=0.4*D6+0.3*D7+0.3*D8</code></td></tr>
+  </table></div>
+  <div class="tablewrap"><table>
+    <tr><th>등급 전망(경기도 기본계획 등급컷 미러)</th><th>판정</th><th>대응 정책(권고)</th></tr>
+    <tr><td class="c">ASPI ≥ 90</td><td class="c">매우우수권</td><td>중간평가 인센티브 가시권 — 우수사례화·확산 준비</td></tr>
+    <tr><td class="c">80 ≤ ASPI &lt; 90</td><td class="c">우수권</td><td>유지 관리 — 취약 지표(🟡) 선별 보강</td></tr>
+    <tr><td class="c">70 ≤ ASPI &lt; 80</td><td class="c">보통권</td><td>보완 계획 수립 — 달성률 하위 2개 지표 집중 투자</td></tr>
+    <tr><td class="c">60 ≤ ASPI &lt; 70</td><td class="c">미흡권 ⚠</td><td>예산 삭감 위험 — 사업단 비상 점검, 목표 재협상 검토</td></tr>
+    <tr><td class="c">ASPI &lt; 60</td><td class="c">매우미흡권 🚨</td><td>사업중단 검토 대상 — 총장 직권 구조조정·센터 컨설팅 요청</td></tr>
+  </table></div>
+  <p class="small">현재 등급 전망(예시값 기준): <b>매우미흡권 🚨</b> — 수식: <code>=IF(D9&gt;=90,"매우우수권",IF(D9&gt;=80,"우수권",IF(D9&gt;=70,"보통권",IF(D9&gt;=60,"미흡권 ⚠","매우미흡권 🚨"))))</code><br>
+  ⚠ 유의(시트 원문): ASPI는 자체 관리지표다. 실제 연차평가 정성 70%는 평가위원회 판단이므로 ASPI가 등급을 보장하지 않는다. 특히 단일 지표 60% 미만(정량지표 시트 🔴)은 종합점수와 무관하게 즉시 보완 대상.</p>
+</section>
+
+<section class="chapter">
+  <div class="chead"><div class="num">4-3</div><h2>[계산기 원문] 시트 2 — 정량지표 (① 정량 파트 입력)</h2></div>
+  <p class="small">근거: 경기도 RISE 기본계획 중점성과지표 정의서·연차별 목표 증가율. <b>노란 표시(■) 열이 입력값</b>(분기 누적 갱신), 나머지는 수식 자동 산출. 예시값: 전 지표 목표 100·실적 70·전년 90(하락 시나리오).</p>
+  <div class="tablewrap"><table>
+    <tr><th>지표(경기도 중점성과지표)</th><th>측정 구성요소(정의서 원문)</th><th>담당 단위과제</th><th class="num">■가중치 w</th><th class="num">■연간 목표</th><th class="num">■현재 실적</th><th class="num">달성률(%)</th><th class="num">■전년 실적</th><th class="num">■목표 증가율</th><th class="num">실제 증가율</th><th class="num">성장점수</th><th>경고</th></tr>
+    <tr><td>① 지산학협력 친화적 체제</td><td>교원업적평가 지산학 반영률 / RISE 전임교원 참여 비율</td><td class="c">공통(전 과제)</td><td class="num">0.10</td><td class="num">100</td><td class="num">70</td><td class="num">70.0</td><td class="num">90</td><td class="num">1.0%</td><td class="num">-22.2%</td><td class="num">0</td><td class="c">🟡 주의</td></tr>
+    <tr><td>② 인재 양성 실적</td><td>특화과정 이수 / 융복합(캡스톤·PBL) 이수 / 표준현장실습 이수</td><td class="c">1-01, 2-01</td><td class="num">0.10</td><td class="num">100</td><td class="num">70</td><td class="num">70.0</td><td class="num">90</td><td class="num">2.0%</td><td class="num">-22.2%</td><td class="num">0</td><td class="c">🟡 주의</td></tr>
+    <tr><td>③ 취업 역량강화 실적</td><td>취업 프로그램 운영 / 특화과정 이수생 취업률 / 현장실습 이수생 취업률</td><td class="c">1-01, 2-01</td><td class="num">0.10</td><td class="num">100</td><td class="num">70</td><td class="num">70.0</td><td class="num">90</td><td class="num">3.0%</td><td class="num">-22.2%</td><td class="num">0</td><td class="c">🟡 주의</td></tr>
+    <tr><td>④ R&amp;D 기술지원 실적</td><td>기술개발과제 / 공동연구 / 기술이전</td><td class="c">2-02</td><td class="num">0.10</td><td class="num">100</td><td class="num">70</td><td class="num">70.0</td><td class="num">90</td><td class="num">2.0%</td><td class="num">-22.2%</td><td class="num">0</td><td class="c">🟡 주의</td></tr>
+    <tr><td>⑤ 기업지원 성과 창출</td><td>공용장비·인프라 지원 / 기업협력 지원(R&amp;BD·컨설팅)</td><td class="c">2-02</td><td class="num">0.10</td><td class="num">100</td><td class="num">70</td><td class="num">70.0</td><td class="num">90</td><td class="num">5.0%</td><td class="num">-22.2%</td><td class="num">0</td><td class="c">🟡 주의</td></tr>
+    <tr><td>⑥ 얼라이언스 구축·활성화</td><td>협의체 구성 다양성 / 활동성·지속성 / 확장성</td><td class="c">2-03</td><td class="num">0.10</td><td class="num">100</td><td class="num">70</td><td class="num">70.0</td><td class="num">90</td><td class="num">5.0%</td><td class="num">-22.2%</td><td class="num">0</td><td class="c">🟡 주의</td></tr>
+    <tr><td>⑦ 창업 확산·활성화</td><td>창업 교육·문화 / 학생·교원 창업 / 창업지원·성과확산</td><td class="c">2-04</td><td class="num">0.10</td><td class="num">100</td><td class="num">70</td><td class="num">70.0</td><td class="num">90</td><td class="num">1.0%</td><td class="num">-22.2%</td><td class="num">0</td><td class="c">🟡 주의</td></tr>
+    <tr><td>⑩ 재직자 실무역량 강화</td><td>기업 맞춤형 과정 운영 / 교육 이수 비율</td><td class="c">3-03</td><td class="num">0.10</td><td class="num">100</td><td class="num">70</td><td class="num">70.0</td><td class="num">90</td><td class="num">5.0%</td><td class="num">-22.2%</td><td class="num">0</td><td class="c">🟡 주의</td></tr>
+    <tr><td>⑫ 지역사회 공헌·가치창출</td><td>혁신성장 거버넌스 구축·운영 / 가치창출 실적</td><td class="c">4-02</td><td class="num">0.10</td><td class="num">100</td><td class="num">70</td><td class="num">70.0</td><td class="num">90</td><td class="num">3.0%</td><td class="num">-22.2%</td><td class="num">0</td><td class="c">🟡 주의</td></tr>
+    <tr><td>(자율) 대학 자율성과지표</td><td>계획서 제출 자율지표(해당 시)</td><td class="c">자율과제</td><td class="num">0.10</td><td class="num">100</td><td class="num">70</td><td class="num">70.0</td><td class="num">90</td><td class="num">2.0%</td><td class="num">-22.2%</td><td class="num">0</td><td class="c">🟡 주의</td></tr>
+    <tr style="background:#EAF3FB;"><td><b>합계/가중평균</b></td><td></td><td></td><td class="num"><b>1.00</b></td><td></td><td></td><td class="num"><b>70.0</b></td><td></td><td></td><td></td><td class="num"><b>0.0</b></td><td></td></tr>
+  </table></div>
+  <p class="small"><b>셀 수식(원문, 5행 기준)</b> — 달성률: <code>=IFERROR(MIN(F5/E5*100,120),"")</code> · 실제 증가율: <code>=IFERROR((F5-H5)/H5,"")</code> · 성장점수: <code>=IFERROR(MAX(MIN(J5/I5*100,120),0),0)</code>(하한 0 — 역성장 시 0점) · 경고: <code>=IF(G5="","",IF(G5&lt;60,"🔴 위험(60%미만)",IF(G5&lt;80,"🟡 주의","🟢 정상")))</code> · 가중평균: <code>=SUMPRODUCT(D5:D14,G5:G14)/SUM(D5:D14)</code></p>
+</section>
+
+<section class="chapter">
+  <div class="chead"><div class="num">4-4</div><h2>[계산기 원문] 시트 3 — 운영건전성 (② 정성 대비 입력)</h2></div>
+  <p class="small">근거: 연차평가 정성 = 실적보고 80 + 차년도 계획 20, 교육부 시도점검 정성 항목. 정성평가 자체는 위원회 판단이므로 여기서는 '준비된 정도'를 측정한다. ■ = 입력 열.</p>
+  <div class="tablewrap"><table>
+    <tr><th>항목</th><th>측정 방법(데이터 근거)</th><th class="num">■가중치</th><th class="num">■계획값</th><th class="num">■실적값</th><th class="num">점수(%)</th><th>경고</th></tr>
+    <tr><td>사업비 집행률</td><td>e나라도움 집행액/연간 교부액 — 연차 실적보고의 기본 검증 항목. 과소집행은 감액 사유</td><td class="num">0.25</td><td class="num">100</td><td class="num">62</td><td class="num">62.0</td><td class="c">🟡 주의</td></tr>
+    <tr><td>과제 마일스톤 이행률</td><td>사업계획서상 분기 마일스톤 완료 수/계획 수 (7개 단위과제 합산)</td><td class="num">0.25</td><td class="num">28</td><td class="num">22</td><td class="num">78.6</td><td class="c">🟡 주의</td></tr>
+    <tr><td>거버넌스 활동 이행률</td><td>지산학연 전략협의체·협의회 개최 실적/연간 계획 (회의록 증빙 기준)</td><td class="num">0.15</td><td class="num">12</td><td class="num">9</td><td class="num">75.0</td><td class="c">🟡 주의</td></tr>
+    <tr><td>증빙·성과 DB 완비율</td><td>지표별 증빙자료(명단·협약서·정산서) 등록 건/필요 건 — 평가 대응력</td><td class="num">0.15</td><td class="num">100</td><td class="num">75</td><td class="num">75.0</td><td class="c">🟡 주의</td></tr>
+    <tr><td>보고 적시성</td><td>분기·수시 보고 기한 준수 건/총 보고 건</td><td class="num">0.10</td><td class="num">8</td><td class="num">8</td><td class="num">100.0</td><td class="c">🟢 정상</td></tr>
+    <tr><td>차년도 계획 준비도</td><td>2차년도 계획서 필수 요소(지표 목표·예산·개선사항) 작성 진척률(%) — 정성 20% 대응</td><td class="num">0.10</td><td class="num">100</td><td class="num">40</td><td class="num">40.0</td><td class="c">🔴 위험</td></tr>
+    <tr style="background:#EAF3FB;"><td><b>가중평균</b></td><td></td><td></td><td></td><td></td><td class="num"><b>71.6</b></td><td></td></tr>
+  </table></div>
+  <p class="small"><b>셀 수식(원문, 5행 기준)</b> — 점수: <code>=IFERROR(MIN(E5/D5*100,100),"")</code> · 경고: <code>=IF(F5="","",IF(F5&lt;60,"🔴 위험",IF(F5&lt;80,"🟡 주의","🟢 정상")))</code> · 가중평균: <code>=SUMPRODUCT(C5:C10,F5:F10)/SUM(C5:C10)</code></p>
+</section>
+
+<section class="chapter">
+  <div class="chead"><div class="num">4-5</div><h2>[계산기 원문] 시트 4 — 공식설명</h2></div>
+  <div class="tablewrap"><table>
+    <tr><th>항목</th><th>내용(시트 원문)</th></tr>
+    <tr><td><b>공식</b></td><td>ASPI = 0.4×A + 0.3×B + 0.3×C (각 부문 0~120점, cap 120은 초과달성 완충)</td></tr>
+    <tr><td><b>A. 달성지수</b></td><td>A = Σ wᵢ·min(실적ᵢ/목표ᵢ×100, 120) / Σ wᵢ. wᵢ = 지표 담당 과제의 예산 비중(사업단 입력). 목표 = 계획서 제출값</td></tr>
+    <tr><td><b>B. 성장지수</b></td><td>B = Σ wᵢ·max(min(실제증가율ᵢ/목표증가율ᵢ×100, 120), 0) / Σ wᵢ. 목표증가율 = 경기도 기본계획 연차별 증가율('26년 1~5%, 지표별 상이). 하한 0(역성장 시 0점, 음수 방지)</td></tr>
+    <tr><td><b>C. 운영건전성</b></td><td>C = Σ vⱼ·min(실적ⱼ/계획ⱼ×100, 100). 6개 항목(집행률 0.25, 마일스톤 0.25, 거버넌스 0.15, 증빙 0.15, 보고 0.10, 차년도계획 0.10)</td></tr>
+    <tr><td><b>가중 40/30/30 근거</b></td><td>경기도 1차년도 연차평가 = 정량 30% + 정성 70%(실적 80·계획 20). 정성은 결국 '정량 실적의 서사화+운영 증빙'이므로, 자체 지수에서는 통제 가능한 달성(40)·성장(30)·운영(30)으로 재배분. 중간평가(2027)가 '성장률'을 명시 평가하므로 B를 별도 부문화</td></tr>
+    <tr><td><b>등급컷 90/80/70/60</b></td><td>경기도 RISE 기본계획의 평가등급 기준(매우우수 90+/우수 80/보통 70/미흡 60/매우미흡 60미만)을 그대로 미러링</td></tr>
+    <tr><td><b>60% 룰</b></td><td>선정 진입최저점·2026 신규과제 컷·종합평가 차년도 선정불가 기준이 모두 '만점의 60%' — 단일 지표 60% 미만은 즉시 경고(🔴)</td></tr>
+    <tr><td><b>데이터 출처</b></td><td>① 중점성과지표 14종 정의서·연차별 목표(경기도 RISE 기본계획 2025~2029 변경, gg.go.kr/cmmn/download.do?idx=875834) ② 연차평가 방식(한국대학신문 idxno=591035) ③ 등급별 조치(기본계획 pp.66~69) ④ 교육부 앵커 연차점검 계획(korea.kr newsId=156761103) — 원문 사본 rise/references/</td></tr>
+    <tr><td><b>측정 주기</b></td><td>분기 갱신 권장(3·6·9·12월). 6월(2분기)에 ASPI&lt;70이면 하반기 보완계획 의무화, 9월에 &lt;60 지표 존재 시 목표 재협상·센터 사전 협의 권고</td></tr>
+  </table></div>
+</section>
+
+<section class="chapter">
+  <div class="chead"><div class="num">4-6</div><h2>근거 자료</h2></div>
+  <ol class="small">
+    <li>경기도 RISE 기본계획(2025~2029)(변경) — 중점성과지표 14종 정의서, 연차별 목표 증가율, 평가등급 기준(pp.66~69) · https://www.gg.go.kr/cmmn/download.do?idx=875834 (사본: rise/references/경기도_RISE_기본계획_2025-2029_변경.pdf)</li>
+    <li>경기도 공고 제2025-899호 수행대학 선정계획(배점표·60% 진입선·"2+3" 구조) · 사본: rise/references/경기도_2025_RISE_수행대학_선정계획_공고_제2025-899호.pdf</li>
+    <li>경기도 RISE 중점성과지표 서식·작성안내 · https://www.gg.go.kr/cmmn/download.do?idx=875835</li>
+    <li>1차년도 연차평가 방식(정량 30%+정성 70%)·일정 — 한국대학신문 https://news.unn.net/news/articleView.html?idxno=591035</li>
+    <li>1차년도 연차평가 결과(매우우수 7·우수 12·보통 11·미흡 4, 인센티브·컨설팅) — NSP통신 https://www.nspna.com/country/?mode=view&amp;newsid=817079 외</li>
+    <li>교육부 「앵커 1차연도 연차점검 추진계획」(정량 400+정성 600, S/A/B/C 1.3/1.0/0.7/0.4, 4,000억 차등) · https://www.korea.kr/briefing/pressReleaseView.do?newsId=156761103 (사본: rise/references/)</li>
+    <li>경기앵커센터 1차연도 성과(벤치마크 평균 산출 근거) · https://www.gganchor.or.kr/perf/year1?mid=611001000000</li>
+    <li>평택대 수행 과제 구조(7개 단위과제) — 평택자치신문 https://m.blog.naver.com/seo8587/223954204377 · 경기앵커센터 대학별 과제 https://www.gganchor.or.kr/info/univStusInfo?mid=602008000000</li>
+  </ol>
+</section>
+</div>
+
+<footer>작성 2026.8.31 · ASPI는 자체 관리지표로서 공식 평가 결과를 보장하지 않음 · 편람 입수 시 갱신 권장</footer>
+</div>
+
+<script>
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('show'); obs.unobserve(e.target);} });
+  }, {threshold:.08});
+  document.querySelectorAll('.chapter').forEach(function(el){ obs.observe(el); });
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.querySelectorAll('.chapter').forEach(function(el){ el.classList.add('show'); });
+  }
+</script>
