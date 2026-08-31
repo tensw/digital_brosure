@@ -32,9 +32,14 @@ const MIME = {
   '.webp': 'image/webp',
 };
 
+// 텍스트류는 charset 을 명시한다. 없으면 브라우저가 인코딩을 추측해
+// meta charset 없는 문서의 한글이 깨진다 (kks/ptu_dashboard 사고).
+const TEXT_EXT = new Set(['.html', '.css', '.js', '.json', '.svg']);
+
 function sendFile(res, filePath, guard) {
   const ext = path.extname(filePath).toLowerCase();
-  const contentType = MIME[ext] || 'application/octet-stream';
+  const contentType = (MIME[ext] || 'application/octet-stream')
+    + (TEXT_EXT.has(ext) ? '; charset=utf-8' : '');
   fs.readFile(filePath, (err, data) => {
     if (err) {
       // 없는 경로는 404 로 끝낸다. 예전에는 대문(브로슈어)을 대신 내보내서,
