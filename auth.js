@@ -144,6 +144,13 @@ function setAdmin(email, on) {
   save();
   return { ok: true, admins: d.admins.slice() };
 }
+
+/* 워터마크용 계정 코드 — 이메일을 화면에 그대로 쓰지 않으면서 누구 화면인지 남긴다 */
+function codeOf(email) {
+  const d = load();
+  return crypto.createHmac('sha256', d.secret).update(norm(email)).digest('hex')
+    .slice(0, 6).toUpperCase();
+}
 function listUsers() {
   const d = load();
   return Object.keys(d.users).sort().map(e => ({
@@ -161,4 +168,4 @@ function resetPw(email) {
 }
 
 module.exports = { load, session, login, changePw, cookieHeader, COOKIE, ADMIN, norm,
-                   allowList, setAllow, listUsers, resetPw, adminList, setAdmin, isAdmin };
+                   allowList, setAllow, listUsers, resetPw, adminList, setAdmin, isAdmin, codeOf };

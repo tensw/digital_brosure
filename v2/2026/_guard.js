@@ -6,7 +6,7 @@
   var css = document.createElement('style');
   css.textContent =
     '.gd-wrap-2q,.gd-wm-2q{position:fixed;inset:0;pointer-events:none;z-index:2147483000}' +
-    '.gd-wm-2q{opacity:.12;overflow:hidden;font:700 12px/1 ui-monospace,Menlo,monospace;color:#fff}' +
+    '.gd-wm-2q{opacity:.035;overflow:hidden;font:600 11px/1 ui-monospace,Menlo,monospace;color:#fff}' +
     '.gd-wm-2q i{position:absolute;white-space:nowrap;font-style:normal;' +
       'transform:rotate(-28deg);transform-origin:0 0;letter-spacing:.06em}' +
     '.gd-pop-2q{position:fixed;inset:0;z-index:2147483600;display:none;place-items:center;' +
@@ -70,9 +70,9 @@
     clearTimeout(timer); timer = setTimeout(function () { pop_el.classList.remove('on'); }, 6000);
   }
 
-  function build(email) {
+  function build(code) {
     var d = new Date(), p = function (n) { return String(n).padStart(2, '0'); };
-    var stamp = email + ' · ' + d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+    var stamp = 'BIBLO ' + code + ' · ' + d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
 
     var wm = document.createElement('div'); wm.className = 'gd-wm-2q';
     var h = '';
@@ -103,6 +103,6 @@
   }
 
   fetch('/api/auth/me').then(function (r) { return r.json(); })
-    .then(function (j) { build(j && j.email ? j.email : 'BIBLO'); })
-    .catch(function () { build('BIBLO'); });
+    .then(function (j) { build(j && j.code ? j.code : '------'); })
+    .catch(function () { build('------'); });
 })();

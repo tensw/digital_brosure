@@ -88,6 +88,7 @@ function handleAuthApi(req, res, urlPath) {
     const d = auth.load();
     const u = s ? d.users[s.e] : null;
     return json(res, 200, { ok: !!s, email: s ? s.e : null,
+      code: s ? auth.codeOf(s.e) : null,
       admin: !!(s && s.a), mustChange: !!(u && u.mustChange) });
   }
   if (req.method !== 'POST') return json(res, 405, { ok: false, msg: 'POST 만 허용' });
