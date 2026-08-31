@@ -134,8 +134,13 @@ function handleAuthApi(req, res, urlPath) {
   return json(res, 404, { ok: false, msg: '없는 경로' });
 }
 
+/* 보호 스크립트 주소에 파일 갱신시각을 붙인다.
+   nginx 가 immutable 로 일주일 캐시하기 때문에, 주소가 그대로면 옛 파일이 계속 나간다. */
+let GUARD_V = '0';
+try { GUARD_V = String(Math.floor(fs.statSync(path.join(ROOT, '2026', '_guard.js')).mtimeMs)); }
+catch (e) {}
 function injectGuard(html) {
-  const tag = '<script src="/2026/_guard.js"></script>';
+  const tag = '<script src="/2026/_guard.js?v=' + GUARD_V + '"></script>';
   const i = html.lastIndexOf('</body>');
   return i < 0 ? html + tag : html.slice(0, i) + tag + html.slice(i);
 }
