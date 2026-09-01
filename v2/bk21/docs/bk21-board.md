@@ -169,3 +169,51 @@ cleanUrls true
 2. `AUTH_SECRET` 없을 때 열지 말고 막는다 (`return Response.redirect(...)`)
 3. `AUTH_USERS` 를 해시로 바꾼다
 4. 데이터를 파일에서 분리해 갱신 때 전체 배포를 피한다
+
+## 11. biblo.ai 로 옮긴 기록 (2026-09-01)
+
+`bk21-board.vercel.app` 의 내용을 `biblo.ai/bk21` 안으로 그대로 가져왔다.
+원본 Vercel 배포는 그대로 두었다. 둘이 병존한다.
+
+| 여기 | 무엇 |
+|---|---|
+| `/bk21/` | 자료 목록 |
+| `/bk21/board/` | 대시보드 본체 (`index.html` 13,238,516자) |
+| `/bk21/board/_src/` | 원본 부속 파일 (관문·로그인·API). **실행되지 않는다.** 기록용 |
+| `/bk21/docs/` | 이 문서 |
+
+### 옮기며 바꾼 것 두 줄
+
+```
+'/api/logout'                →  '/api/auth/logout'      biblo.ai 로그아웃으로 연결
+location.replace('/login')   →  location.replace('/login/')
+```
+
+그 외 13MB 본문은 손대지 않았다.
+
+### 옮겨서 달라진 것
+
+**① 로그인이 biblo.ai 것으로 바뀐다**
+원본의 관문(`middleware.js`)과 로그인 화면은 Vercel Edge 에서만 돈다.
+biblo.ai 에서는 `server.js` 의 `GATED` 목록에 `/bk21` 을 넣어 막는다.
+계정도 biblo.ai 계정을 쓴다. `AUTH_USERS` 는 여기서 쓰이지 않는다.
+
+**② 화면 숨김 설정이 동작하지 않는다**
+대시보드가 `/api/config` 를 부르는데 biblo.ai 에 그 경로가 없다. `try/catch` 로 감싸져 있어
+화면은 멀쩡하고 기능만 빠진다. 숨김 목록은 빈 배열, 역할은 `user` 로 잡혀 설정 버튼이 안 보인다.
+살리려면 서버에 `SB_URL`·`SB_SERVICE_KEY` 를 두고 `/api/config` 를 포팅해야 한다.
+
+**③ 논문 검색은 그대로 된다**
+브라우저에서 Supabase RPC(`search_papers_exact` 등)를 직접 부른다.
+공개키(`sb_publishable_…`)만 쓰고 그 함수들은 SECURITY DEFINER + anon 허용이라 옮겨도 그대로 동작한다.
+
+### 확인한 것
+
+- 로그인 없이 `/bk21`, `/bk21/board/`, `/bk21/board/index.html`, `/bk21/docs/*.md` 전부 막힘
+- 대시보드 렌더 정상 — 좌측 8개 화면, 카드 16개, 실패한 요청 0건
+- 유일한 콘솔 오류는 `/api/config` 호출 하나. 위 ②번 그대로다
+
+### 남는 문제
+
+`index.html` 14MB 가 깃에 들어갔다. 한 번은 괜찮지만 **갱신할 때마다 14MB 가 새로 쌓인다.**
+데이터를 파일에서 분리하거나 Git LFS 로 빼는 것이 맞다.
