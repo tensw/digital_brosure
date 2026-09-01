@@ -6,3 +6,7 @@
 docs/kim_chulhyung_verified_profile_items.md
 docs/IMG_6264.jpg
 .auth-store.json
+
+# BK21 화면에 박히는 데이터 16MB — 교수 실명 포함. 저장소가 공개라 넣지 않는다.
+# 원본: ~/dev/biblo_rims_aws/bk21-src/  · 절차: v2/bk21/docs/source-map.md
+v2/bk21/board/_src/data/
