@@ -15,7 +15,7 @@ bibloai-homepage/v2/bk21/          ← 정본
 ├─ docs/                            문서 9
 │   └─ source-map.md                이 문서
 └─ board/
-    ├─ index.html      17MB         빌드 산출물 = 실제 서비스되는 화면
+    ├─ index.html      17MB         빌드 산출물 = 실제 서비스되는 화면 (깃 밖)
     └─ _src/                        소스 전부
         ├─ build.sh                 빌드기
         ├─ build/       16개 572K   화면 조각 (CSS·HTML·JS)
@@ -39,10 +39,12 @@ vi v2/bk21/board/_src/build/exec.js
 # 2) 빌드한다 (문법검사 → 데이터 확인 → 한 파일로 합침)
 bash v2/bk21/board/_src/build.sh
 
-# 3) 확인하고 올린다
-git add v2/bk21/board/index.html v2/bk21/board/_src/build/exec.js
+# 3) 조각만 올린다. 보드(index.html)는 깃을 타지 않는다
+git add v2/bk21/board/_src/build/exec.js
 git commit && git push origin main
 ```
+
+**푸시해도 서버 화면은 바뀌지 않는다.** 보드를 서버에 넣을 통로가 아직 없다. §9 참조.
 
 산출물은 **외부 요청 없이 혼자 뜨는 단일 HTML** 하나다.
 데이터가 `const` 로 박혀 있어 DB 연결도 API 도 필요 없다.
@@ -177,31 +179,68 @@ node v2/bk21/board/_src/qa/qa33.mjs
 
 `.gitignore` 로 뺐다.
 
-| 대상 | 이유 |
-|---|---|
-| `_src/data/*.json` | 16MB · 교수 실명 포함 · 저장소가 공개 |
+| 대상 | 크기 | 이유 |
+|---|---:|---|
+| `board/index.html` | 17MB | 저장소가 공개다. 교수 성과 데이터와 타 대학 명단이 든 파일 |
+| `_src/data/*.json` | 16MB | 같은 이유 + 갱신마다 저장소가 불어난다 |
 
 `data/` 원본은 `biblo_rims_aws/bk21-src/` 에 있다.
+보드 사본은 `~/Documents/biblo-운영/백업/` 에 있다.
 
-## 8. 저장소가 공개다
+## 8. 보드는 서버가 깃 밖에서 지킨다
 
-`github.com/tensw/digital_brosure` 는 **PUBLIC** 이다.
-`v2/bk21/board/index.html` (17MB) 이 이미 커밋돼 있어 로그인 없이 받아진다.
+2026-09-02 처리. 저장소 `github.com/tensw/digital_brosure` 는 공개라
+보드 17MB 가 로그인 없이 받아지고 있었다. 깃에서 뺐다.
+
+**이력도 다시 썼다.** 18개 판본 287MB 를 전 커밋에서 지웠다.
+
+| | |
+|---|---|
+| 백업 | `~/Documents/biblo-운영/백업/digital_brosure_20260902_071245.bundle` (153MB · 전체 이력) |
+| 이력 잔존 | 0건 |
+| `.git` | 253MB → 149MB |
+| 깃허브 `main` | 404 |
+
+옛 커밋 번호로는 아직 받아진다. 깃허브가 끊어진 객체를 바로 지우지 않기 때문이다.
+스스로 청소될 때까지 둔다 (2026-09-02 대표 판단).
+
+### 배포가 보드를 지키는 방식
+
+보드는 깃이 모르는 파일이라 EC2 의 `git reset --hard` 가 지운다.
+`.github/workflows/deploy.yml` 이 앞뒤로 옮겨 둔다.
 
 ```
-$ curl -I https://raw.githubusercontent.com/tensw/digital_brosure/main/v2/bk21/board/index.html
-200  16,997,835 bytes
+배포 전   v2/bk21/board/index.html  →  /home/ubuntu/bk21-keep/index.html
+          git fetch && git reset --hard origin/main      (보드가 지워짐)
+배포 후   /home/ubuntu/bk21-keep/index.html  →  v2/bk21/board/index.html
+          pm2 restart biblo-ai
 ```
 
-biblo.ai 의 로그인 관문(`server.js` `GATED=['/2026','/admin','/bk21']`)은 **웹 제공만** 막는다.
-깃허브에서 받아 가는 것은 막지 못한다. 그 파일 안에 성균관대 교수 성과 데이터와
-타 대학 명단 4,226명(가림 처리분)이 들어 있다.
+제대로 도는지는 Actions 로그로 본다. 서버에 붙지 않고 확인할 수 있는 유일한 길이다.
 
-지우려면 이력을 다시 써야 하고(force push) 되돌릴 수 없어, 대표 판단 전에는 손대지 않았다.
-고르는 안은 셋이다.
+```bash
+gh run view <실행번호> --log | grep '\[bk21\]'
+#   [bk21] 보관함에 넣음 16997835 bytes
+#   [bk21] 제자리로 되돌림
+#   [bk21] 최종 16997835 bytes
+```
 
-| 안 | 하는 일 | 걸리는 것 |
+잠긴 구간은 **파일이 없어도 로그인 화면을 내준다.** 그래서 주소를 열어 보는 것으로는
+보드가 살아 있는지 알 수 없다. 반드시 로그로 확인한다.
+
+## 9. 보드를 갱신할 통로가 없다
+
+화면을 고치고 `build.sh` 를 돌리면 **이 맥에만** 새 보드가 생긴다.
+깃을 타지 않으므로 서버에는 옛 보드가 그대로 남는다.
+
+이 맥에 EC2 접속 수단이 없다. `EC2_HOST` 와 `EC2_SSH_KEY` 는 GitHub Secrets 안에만
+있고 다시 꺼내 볼 수 없다. 로컬 `.pem` 은 다른 인스턴스 것이라 거절당한다.
+
+여는 방법은 둘이다.
+
+| | 하는 일 | 이후 |
 |---|---|---|
-| 저장소를 비공개로 | `gh repo edit --visibility private` | EC2 가 git pull 로 배포 중이면 배포키 필요 |
-| 보드만 이력에서 제거 | `git filter-repo` 후 force push | 되돌릴 수 없음 · 협업자 재클론 |
-| 보드를 깃 밖으로 | `.gitignore` + 서버에 직접 올림 | 배포 절차가 갈라짐 |
+| EC2 키를 이 맥에 | AWS 콘솔에서 `54.180.31.32` 인스턴스의 키페어 `.pem` 확보 | `rsync` 한 줄로 올린다. 우회로가 없어진다 |
+| 비공개 저장소 경유 | 보드를 비공개 저장소에 두고 배포 워크플로가 받아 서버로 올림 | 시크릿 하나 추가 필요 |
+
+앞의 것이 낫다. 뒤의 것은 배포마다 17MB 가 한 번 더 오간다.

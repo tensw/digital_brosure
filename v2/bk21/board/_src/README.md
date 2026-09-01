@@ -62,15 +62,32 @@ bash _src/build.sh --vercel     # 옛 Vercel 프로젝트용 사본도 함께
 | `vis.js` | 좌측 레일 · 화면 숨김 |
 | `boot.js` | 첫 화면 진입 · 로그아웃 |
 
-## data/ 는 깃에 넣지 않는다
+## 깃에 넣지 않는 것 둘
 
-`.gitignore` 로 뺐다. 두 가지 이유다.
+`.gitignore` 로 뺐다. 저장소(`github.com/tensw/digital_brosure`)가 **공개**이기 때문이다.
 
-1. **저장소가 공개다** (`github.com/tensw/digital_brosure`). 교수 실명이 든 파일을 더 얹지 않는다
-2. 16MB × 갱신 횟수만큼 저장소가 불어난다
+| 대상 | 크기 | 어디 있나 |
+|---|---:|---|
+| `../index.html` (보드) | 17MB | 서버가 `/home/ubuntu/bk21-keep/` 에서 지킨다 |
+| `data/*.json` | 16MB | `~/dev/biblo_rims_aws/bk21-src/` |
 
-원본은 `~/dev/biblo_rims_aws/bk21-src/` 에 그대로 있고, 만드는 절차는
-[`../../docs/source-map.md`](../../docs/source-map.md) 에 적어 두었다.
+2026-09-02 에 **이력도 다시 썼다.** 보드 18개 판본 287MB 를 전 커밋에서 지웠다.
+
+**`build.sh` 를 돌리고 푸시해도 서버 화면은 안 바뀐다.** 보드를 서버에 넣을 통로가 없다.
+[`../../docs/source-map.md`](../../docs/source-map.md) §9 참조.
+
+## 배포
+
+푸시하면 GitHub Actions 가 EC2 에 붙어 `git reset --hard` 후 pm2 를 다시 띄운다.
+보드는 깃이 모르는 파일이라 그 reset 이 지운다. 워크플로가 앞뒤로 옮겨 둔다.
+제대로 도는지는 Actions 로그로 본다.
+
+```bash
+gh run view <실행번호> --log | grep '\[bk21\]'
+```
+
+잠긴 구간은 파일이 없어도 로그인 화면을 내주므로, 주소를 열어 보는 것으로는
+보드가 살아 있는지 알 수 없다.
 
 ## 인증 경로
 

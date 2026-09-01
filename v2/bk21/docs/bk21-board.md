@@ -159,10 +159,12 @@ cleanUrls true
 소스를 홈페이지 저장소(`v2/bk21/board/_src/`)로 옮겨 이력이 남는다.
 데이터 14종(16MB)만 저장소가 공개라 빼 두었고, 원본은 `biblo_rims_aws/bk21-src/` 에 있다.
 
-대신 **다른 것이 드러났다. 저장소가 공개다.**
-`github.com/tensw/digital_brosure` 는 PUBLIC 이고, `v2/bk21/board/index.html` (17MB) 이
-이미 커밋돼 로그인 없이 받아진다. biblo.ai 의 로그인 관문은 웹 제공만 막고
-깃허브에서 받아 가는 것은 막지 못한다. → [`source-map.md` §8](./source-map.md)
+대신 **다른 것이 드러났다. 저장소가 공개였다.**
+`github.com/tensw/digital_brosure` 는 PUBLIC 이고 보드 17MB 가 로그인 없이 받아지고 있었다.
+biblo.ai 의 로그인 관문은 웹 제공만 막고 깃허브에서 받아 가는 것은 막지 못한다.
+
+**2026-09-02 처리했다.** 보드를 깃에서 빼고 이력도 다시 썼다(18개 판본 287MB 제거).
+서버가 배포 때마다 깃 밖에서 지킨다. → [`source-map.md` §8](./source-map.md)
 
 **② 관문이 꺼질 수 있다**
 `AUTH_SECRET` 이 빠지면 전체가 공개된다. 4-1 참조.
@@ -175,7 +177,8 @@ cleanUrls true
 
 ## 10. 손볼 순서 (제안)
 
-1. ~~폴더를 깃에 올린다~~ — 2026-09-02 완료. 다만 **저장소가 공개라 이력에서 보드를 빼든지 저장소를 비공개로 돌리든지 정해야 한다**
+1. ~~폴더를 깃에 올린다~~ · ~~공개 노출을 막는다~~ — 2026-09-02 완료.
+   남은 것은 **보드를 서버에 올릴 통로**다 (EC2 키 확보). → [`source-map.md` §9](./source-map.md)
 2. `AUTH_SECRET` 없을 때 열지 말고 막는다 (`return Response.redirect(...)`)
 3. `AUTH_USERS` 를 해시로 바꾼다
 4. 데이터를 파일에서 분리해 갱신 때 전체 배포를 피한다
