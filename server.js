@@ -18,6 +18,7 @@ const MIME = {
   '.css': 'text/css',
   '.js': 'application/javascript',
   '.json': 'application/json',
+  '.md': 'text/markdown; charset=utf-8',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
@@ -74,7 +75,7 @@ function sendFile(res, filePath, guard) {
 /* ── 로그인 게이트 ────────────────────────────────────────────
    /2026 아래 전부를 막는다. 파일을 직접 부르는 주소도 함께 막히도록
    경로 단위로 판단한다(클라이언트 스크립트로 가리는 방식은 소용없다). */
-const GATED = ['/2026', '/admin'];
+const GATED = ['/2026', '/admin', '/bk21'];
 const isGated = (p) => GATED.some(g => p === g || p.startsWith(g + '/'));
 
 function readBody(req, cb) {

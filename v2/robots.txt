@@ -1,6 +1,7 @@
-# biblo.ai — 2026 소개자료는 로그인 뒤에만 열립니다.
+# biblo.ai — 2026 소개자료와 bk21 관리자료는 로그인 뒤에만 열립니다.
 User-agent: *
 Disallow: /2026
+Disallow: /bk21
 Disallow: /admin
 Disallow: /account
 Disallow: /login
