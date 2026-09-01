@@ -10,3 +10,7 @@ docs/IMG_6264.jpg
 # BK21 화면에 박히는 데이터 16MB — 교수 실명 포함. 저장소가 공개라 넣지 않는다.
 # 원본: ~/dev/biblo_rims_aws/bk21-src/  · 절차: v2/bk21/docs/source-map.md
 v2/bk21/board/_src/data/
+
+# BK21 보드 17MB — 공개 저장소에 두지 않는다. 서버가 깃 밖에서 보관한다.
+# 만드는 법: v2/bk21/board/_src/build.sh · 절차는 v2/bk21/docs/source-map.md
+v2/bk21/board/index.html
