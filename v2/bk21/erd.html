@@ -1,0 +1,329 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<title>BK21 데이터 구조</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+ --bg:#070b16; --bg2:#0c1224; --ink:#e6edfb; --dim:#8ea3c9; --dim2:#5f7699;
+ --line:rgba(120,160,235,.18); --card:rgba(20,31,58,.72);
+ --hub:#f0b429; --on:#5fd0c8; --off:#4a5c7d;
+}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);
+ font:14.5px/1.7 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ -webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:#7fa9e0}
+
+/* ── 머리 ── */
+.top{padding:34px 30px 0;max-width:1560px;margin:0 auto}
+.kick{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.3em;color:#5f7db3}
+h1{margin-top:13px;font-size:27px;font-weight:800;letter-spacing:-.7px}
+.sub{margin-top:11px;color:var(--dim);max-width:74ch;font-size:14.5px}
+.meter{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}
+.mt{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:10px 15px;min-width:118px}
+.mt .l{font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:var(--dim2)}
+.mt .v{margin-top:7px;font-size:20px;font-weight:800;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+.mt .v small{font-size:11.5px;font-weight:600;color:var(--dim);margin-left:4px;letter-spacing:0}
+.mt.hi .v{color:var(--on)}
+
+/* ── 판 ── */
+.wrap{display:grid;grid-template-columns:1fr 384px;gap:22px;
+ max-width:1560px;margin:24px auto 0;padding:0 30px 70px;align-items:start}
+.left{min-width:0}
+.stage{position:relative;height:648px;border:1px solid var(--line);border-radius:20px;
+ background:radial-gradient(circle at 50% 46%,rgba(60,95,175,.16),transparent 62%),rgba(10,16,32,.6);
+ overflow:hidden}
+svg.bonds{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.atom{position:absolute;transform:translate(-50%,-50%);cursor:pointer;
+ background:var(--card);border:1px solid var(--line);border-radius:13px;
+ padding:9px 13px;min-width:96px;text-align:center;
+ transition:border-color .15s,background .15s,transform .15s,box-shadow .15s;user-select:none}
+.atom:hover{border-color:rgba(150,190,255,.5);transform:translate(-50%,-50%) scale(1.05)}
+.atom .n{font-size:13px;font-weight:700;letter-spacing:-.2px;white-space:nowrap}
+.atom .c{margin-top:3px;font:600 10.5px/1 ui-monospace,Menlo,monospace;color:var(--dim2)}
+.atom.on{background:rgba(30,74,74,.9);border-color:var(--on);box-shadow:0 0 0 3px rgba(95,208,200,.15)}
+.atom.on .c{color:#9fe4de}
+.atom.ext{border-style:dashed}
+.atom.broken{opacity:.42;cursor:not-allowed}
+.atom.broken:hover{transform:translate(-50%,-50%)}
+.nuc{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);
+ width:158px;height:158px;border-radius:50%;display:grid;place-items:center;text-align:center;
+ background:radial-gradient(circle at 42% 36%,rgba(240,180,41,.24),rgba(20,30,56,.94));
+ border:1.5px solid rgba(240,180,41,.55);box-shadow:0 0 46px rgba(240,180,41,.14)}
+.nuc .n{font-size:15.5px;font-weight:800}
+.nuc .v{margin-top:4px;font-size:21px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--hub)}
+.nuc .s{margin-top:3px;font:600 10px/1.5 ui-monospace,Menlo,monospace;color:var(--dim2)}
+.hint{position:absolute;left:19px;bottom:16px;font-size:12px;color:var(--dim2)}
+.under{margin-top:26px}
+.under h2{font:800 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.15em;color:#7796c9}
+
+/* ── 성질 패널 ── */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;
+ position:sticky;top:20px;max-height:calc(100vh - 40px);overflow-y:auto}
+.panel h2{font:800 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.15em;color:#7796c9}
+.mol{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;min-height:30px}
+.tag{background:rgba(95,208,200,.14);border:1px solid rgba(95,208,200,.4);color:#adeae4;
+ border-radius:8px;padding:4px 9px;font-size:12px;font-weight:700;cursor:pointer}
+.tag.hub{background:rgba(240,180,41,.14);border-color:rgba(240,180,41,.45);color:#f5cd6a;cursor:default}
+.empty{color:var(--dim2);font-size:13px}
+.formula{margin-top:14px;padding:12px 14px;border-radius:11px;background:rgba(8,13,26,.75);
+ border:1px solid var(--line);font:600 12.5px/1.7 ui-monospace,Menlo,monospace;color:#a8bde0;word-break:break-all}
+.prop{margin-top:18px}
+.prop h3{font-size:12px;font-weight:800;letter-spacing:.13em;color:#7796c9;
+ font-family:ui-monospace,Menlo,monospace}
+.q{margin-top:9px;padding:12px 14px;border-radius:11px;background:rgba(14,22,42,.8);
+ border:1px solid var(--line);cursor:pointer;transition:border-color .15s}
+.q:hover{border-color:rgba(150,190,255,.45)}
+.q .t{font-size:14px;font-weight:700;letter-spacing:-.2px}
+.q .m{margin-top:6px;font-size:12px;color:var(--dim);display:flex;gap:8px;flex-wrap:wrap}
+.q .m b{color:#8fb4e8;font-weight:700}
+.q .lim{margin-top:7px;font-size:12px;color:#c8a15f}
+.q .made{margin-top:7px;font-size:11.5px;font-weight:700;color:#f0b429}
+.q .made span{background:rgba(240,180,41,.12);border-radius:5px;padding:2px 7px;margin-left:5px}
+.none{margin-top:9px;font-size:13px;color:var(--dim2);line-height:1.8}
+
+/* ── 프리셋 ── */
+.presets{max-width:1560px;margin:0 auto;padding:0 30px 70px}
+.presets h2{font:800 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.15em;color:#7796c9}
+.pnote{margin-top:9px;color:var(--dim);font-size:13.5px;max-width:78ch}
+.chips{margin-top:16px;display:flex;flex-wrap:wrap;gap:9px}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:11px 15px;
+ cursor:pointer;transition:border-color .15s,background .15s}
+.chip:hover{border-color:rgba(240,180,41,.5);background:rgba(28,42,78,.8)}
+.chip .n{font-size:13.5px;font-weight:700}
+.chip .f{margin-top:5px;font:600 10.5px/1 ui-monospace,Menlo,monospace;color:var(--dim2)}
+.broke{margin-top:8px}
+.btab{margin-top:14px;width:100%;border-collapse:collapse;font-size:13.5px}
+.btab th{text-align:left;font:800 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;
+ color:var(--dim2);padding:0 12px 10px 0;border-bottom:1px solid var(--line)}
+.btab td{padding:11px 12px 11px 0;border-bottom:1px solid rgba(120,160,235,.09);color:var(--dim);vertical-align:top}
+.btab td:first-child{color:var(--ink);font-weight:700;white-space:nowrap}
+.foot{max-width:1560px;margin:0 auto;padding:0 30px 60px;
+ font:600 11.5px/1.8 ui-monospace,Menlo,monospace;color:#5f7db3;border-top:1px solid var(--line);padding-top:18px}
+
+@media (max-width:1180px){
+ .wrap{grid-template-columns:1fr}
+ .panel{position:static;max-height:none}
+ .stage{height:560px}
+}
+@media (max-width:760px){
+ .top,.presets,.foot{padding-left:18px;padding-right:18px}
+ .wrap{padding-left:18px;padding-right:18px}
+ .stage{height:500px}
+ .atom{min-width:74px;padding:7px 9px}
+ .atom .n{font-size:11.5px}.atom .c{font-size:9.5px}
+ .nuc{width:118px;height:118px}.nuc .v{font-size:17px}
+}
+</style></head><body>
+
+<div class="top">
+  <div class="kick">BIBLO · BK21</div>
+  <h1>BK21 데이터 구조</h1>
+  <p class="sub">논문 한 건에 자르는 축 열둘이 함께 붙어 있습니다.
+   원자를 붙이면 분자의 성질이 바뀌듯, 축을 얹을 때마다 답할 수 있는 질문이 달라집니다.
+   아래 축을 눌러 붙여 보십시오.</p>
+  <div class="meter">
+    <div class="mt"><div class="l">자르는 축</div><div class="v" id="mAx">12</div></div>
+    <div class="mt"><div class="l">만들 수 있는 조합</div><div class="v" id="mAll">4,095</div></div>
+    <div class="mt"><div class="l">비교 대상까지</div><div class="v">20,475<small>자리</small></div></div>
+    <div class="mt"><div class="l">이미 만들어 둔 것</div><div class="v">9<small>· 0.04%</small></div></div>
+    <div class="mt hi"><div class="l">지금 붙인 축</div><div class="v" id="mSel">0</div></div>
+  </div>
+</div>
+
+<div class="wrap">
+ <div class="left">
+  <div class="stage" id="stage">
+    <svg class="bonds" id="bonds"></svg>
+    <div class="nuc"><div>
+      <div class="n">논문</div><div class="v">31,076</div>
+      <div class="s">편 · 2020~2025<br>원장 1억 772만</div>
+    </div></div>
+    <div class="hint">축을 눌러 붙입니다 · 다시 누르면 뗍니다</div>
+  </div>
+
+  <div class="under">
+    <h2>이미 만들어 둔 분자 9개</h2>
+    <p class="pnote">지금 대시보드의 메뉴 아홉 개는 그 자체로 이미 한 번 물어 둔 조합입니다.
+     조합 4,095가지 가운데 아홉입니다. 눌러 보시면 어떤 축이 붙어 있는지 판에 표시됩니다.</p>
+    <div class="chips" id="chips"></div>
+  </div>
+ </div>
+
+  <div class="panel">
+    <h2>지금 만든 분자</h2>
+    <div class="mol" id="mol"><span class="empty">아직 아무 축도 붙이지 않았습니다.</span></div>
+    <div class="formula" id="formula">논문</div>
+    <div class="prop">
+      <h3>이 조합이 답하는 것</h3>
+      <div id="qs"><div class="none">축을 하나 붙이면 답할 수 있는 질문이 여기 뜹니다.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="presets">
+  <div class="broke">
+    <h2>아직 붙지 않는 결합</h2>
+    <p class="pnote">점선으로 그린 것은 지금 붙일 수 없는 자리입니다. 못 하는 이유가 그림에 그대로 보이도록 남겨 둡니다.</p>
+    <table class="btab"><thead><tr><th>끊긴 곳</th><th>왜</th><th>그래서 못 하는 것</th></tr></thead>
+    <tbody id="brk"></tbody></table>
+  </div>
+</div>
+
+<div class="foot">BIBLO · TenSoftWorks · <a href="/bk21/">BK21 관리자료</a> · <a href="/bk21/board/">대시보드</a></div>
+
+<script>
+/* 축(원자) — 값 개수는 bk21_tree.json 실측 */
+const ATOMS=[
+ {id:'y',   n:'연도',      c:'6종 · 2020~2025',      a:-96},
+ {id:'r',   n:'저자역할',   c:'5종 · 공저 16,225',    a:-58},
+ {id:'tr',  n:'저널등급',   c:'7종 · S 7,974',        a:-20},
+ {id:'pct', n:'JCR 백분위', c:'4구간 · 상위5% 9,969', a:18},
+ {id:'g',   n:'등재유형',   c:'3종 · SCI 26,886',     a:56},
+ {id:'ai',  n:'AI 여부',   c:'3종 · 해당 1,775',      a:94},
+ {id:'j',   n:'저널',      c:'4,112종',              a:132},
+ {id:'f',   n:'분야',      c:'232종',                a:170},
+ {id:'dept',n:'학과·전공',  c:'28개',                 a:208},
+ {id:'gy',  n:'계열',      c:'3종 · 이공/의약/인문',   a:246},
+ {id:'kind',n:'사람 구분',  c:'3종 · 교수 442',        a:284},
+ {id:'grp', n:'연구그룹',   c:'115개',                a:322},
+];
+/* 바깥 묶음 — 다른 분자와 결합 */
+const EXT=[
+ {id:'uni',   n:'대학',      c:'국내7·BK21 8·아시아52', a:-140, r:1.42},
+ {id:'net',   n:'공저 관계',  c:'학과쌍·사람쌍',        a:-40,  r:1.42},
+ {id:'qa',    n:'데이터 품질',c:'6층 · 미판정 5.5%',    a:60,   r:1.42},
+ {id:'roster',n:'타교 명단',  c:'8개교 4,226명',        a:160,  r:1.42, broken:1},
+];
+/* 조합이 답하는 질문 — a 가 고른 축의 부분집합이면 뜬다 */
+const QS=[
+ {a:['dept'],            q:'어느 학과가 얼마나 썼나',                     o:'정렬 막대', l:'편수는 학과 규모를 따라간다'},
+ {a:['dept','y'],        q:'이 학과가 늘고 있나',                        o:'선그래프',  l:'2025는 아직 집계 중'},
+ {a:['dept','r'],        q:'주도해서 쓰나 이름만 올리나',                 o:'구성 막대', l:'역할 미상 논문이 있다'},
+ {a:['dept','tr'],       q:'좋은 저널에 싣고 있나',                      o:'100% 누적', l:'미판정은 낮은 등급이 아니다'},
+ {a:['dept','pct'],      q:'JCR 상위 논문이 몇 편인가',                  o:'구간 막대', l:'저널 순위이지 논문 순위가 아니다'},
+ {a:['dept','ai'],       q:'어느 학과가 AI를 하고 있나',                 o:'정렬 막대', l:'제목·게재지 용어 규칙 판정'},
+ {a:['dept','kind'],     q:'교수와 신진 중 누가 떠받치나',                o:'점분포',   l:'사람 수가 적으면 크게 흔들린다'},
+ {a:['dept','grp'],      q:'연구그룹별로 어디가 강한가',                  o:'정렬 막대', l:'그룹 115개는 학과와 1:1이 아니다'},
+ {a:['gy','tr','r'],     q:'계열별 SGCPI+ 환산점수가 얼마인가',           o:'등급 띠',  l:'내부 관리기준 · 공식 평가 아님'},
+ {a:['gy','y'],          q:'어느 계열이 성장하고 있나',                   o:'선그래프',  l:'계열끼리 총량 비교는 이공이 유리'},
+ {a:['y','tr'],          q:'질이 좋아지고 있나 양만 느나',                o:'100% 누적', l:'등급 부여율이 해마다 다르다'},
+ {a:['y','r'],           q:'주저자 비중이 달라졌나',                     o:'선그래프',  l:''},
+ {a:['f','dept'],        q:'학과 이름과 실제 연구 분야가 맞나',           o:'히트맵',   l:'학과명과 분야는 일치하지 않는다'},
+ {a:['f','y'],           q:'어느 분야가 뜨고 지고 있나',                  o:'선그래프',  l:'분야 분류 체계가 원장마다 다르다'},
+ {a:['f','gy'],          q:'인문사회가 어느 분야에서 늘고 있나',          o:'선그래프',  l:'아직 만들어 두지 않은 조합'},
+ {a:['j','dept'],        q:'이 학과가 주로 어디에 싣나',                  o:'상위 저널표', l:'저널 4,112종 중 상위만 의미 있다'},
+ {a:['j','pct'],         q:'우리가 싣는 저널의 급이 어떤가',              o:'구간 막대', l:'ISSN 전파로 붙인 등급 포함'},
+ {a:['ai','y'],          q:'AI 논문이 늘고 있나',                        o:'선그래프',  l:'회색 107건 사람 확인 대기'},
+ {a:['ai','f'],          q:'어느 분야에서 AI를 쓰나',                     o:'히트맵',   l:''},
+ {a:['kind','r'],        q:'학생이 주저자로 쓰고 있나',                   o:'누적 막대', l:'학생 개인 단위 화면은 없다'},
+ {a:['uni'],             q:'대학끼리 견주면 우리가 어디인가',             o:'정렬 막대', l:'총량은 큰 대학이 늘 이긴다'},
+ {a:['uni','y'],         q:'대학별로 어떻게 움직였나',                    o:'선그래프',  l:'최근 연도 미집계'},
+ {a:['uni','f'],         q:'우리와 겹치는 대학이 어디인가',               o:'히트맵',   l:'겹치면 경쟁, 안 겹치면 협력'},
+ {a:['uni','kind'],      q:'BK21 참여 규모가 대학별로 얼마인가',          o:'정렬 막대', l:'대학 전체 지표와 모집단이 다르다'},
+ {a:['net','dept'],      q:'어느 학과끼리 붙어 있나',                     o:'매트릭스',  l:'동명이인 판별에 기댄다'},
+ {a:['net','f'],         q:'이 분야로 같이 할 사람이 누구인가',           o:'후보표',   l:'외부 조회가 막히면 보유값으로 채운다'},
+ {a:['net','y'],         q:'바깥 관계가 언제 트였나',                     o:'연도 막대', l:'사업 시작 시점과 견줘 본다'},
+ {a:['qa'],              q:'이 숫자를 믿어도 되나',                       o:'품질표',   l:''},
+ {a:['qa','dept'],       q:'어느 학과가 기록이 덜 붙었나',                o:'정렬표',   l:'실적이 낮은 것과 다르다'},
+ {a:['qa','tr'],         q:'등급을 못 붙인 논문이 얼마나 되나',           o:'구간 막대', l:'미판정 5.5% 잔존'},
+];
+/* 이미 만들어 둔 분자 = GNB 9 */
+const PRESETS=[
+ {n:'SKKU BK21 성과관리', a:['dept','kind','y','tr','r']},
+ {n:'SKKU BK21 KPI',     a:['gy','tr','r','y','kind']},
+ {n:'교내 관계망',        a:['net','dept']},
+ {n:'글로벌 관계망',      a:['net','f']},
+ {n:'분야 공저자 탐색',    a:['f','kind']},
+ {n:'대학 연구력 비교',    a:['uni','y']},
+ {n:'대학별 성과표',      a:['uni']},
+ {n:'대학 BK21 비교',     a:['uni','y','f','kind']},
+ {n:'데이터풀',           a:['qa']},
+];
+const BROKEN=[
+ ['교육연구단 34 ↔ 학과 28','매핑이 확정되지 않았다','연구단 단위 공식 보고'],
+ ['타교 명단 4,226 ↔ 논문 저자','이름 매칭 미해결','타 대학 개인 성과'],
+ ['대학원생 ↔ 개인','집계만 있고 개인 단위가 없다','학생 개인 평가'],
+ ['학사 시스템 ↔ 교육역량','자료를 못 받았다','LQ 8지표와 논문 아닌 기록 14지표'],
+];
+
+const NAME={}; [...ATOMS,...EXT].forEach(a=>NAME[a.id]=a.n);
+const SEL=new Set();
+const stage=document.getElementById('stage'), bonds=document.getElementById('bonds');
+
+function place(){
+ stage.querySelectorAll('.atom').forEach(e=>e.remove());
+ const W=stage.clientWidth, H=stage.clientHeight;
+ const cx=W/2, cy=H*0.46;
+ const R=Math.min(W,H)*(W<560?0.30:0.375);
+ const mk=(a,rad)=>{
+  const t=a.a*Math.PI/180;
+  let x=cx+Math.cos(t)*rad*(W>H?1.32:1), y=cy+Math.sin(t)*rad;
+  const d=document.createElement('div');
+  d.className='atom'+(a.broken?' broken':'')+(EXT.includes(a)?' ext':'')+(SEL.has(a.id)?' on':'');
+  d.style.left=x+'px'; d.style.top=y+'px'; d.dataset.id=a.id;
+  d.innerHTML=`<div class="n">${a.n}</div><div class="c">${a.c}</div>`;
+  if(!a.broken) d.onclick=()=>{ SEL.has(a.id)?SEL.delete(a.id):SEL.add(a.id); render(); };
+  stage.appendChild(d);
+  /* 좁은 화면에서 원자가 판 밖으로 나가지 않게, 붙인 뒤 실제 크기를 재서 안으로 당긴다.
+     반지름만 줄이면 가운데 핵과 겹친다. */
+  const w=d.offsetWidth/2+6, h=d.offsetHeight/2+6;
+  x=Math.min(Math.max(x,w),W-w); y=Math.min(Math.max(y,h),H-h);
+  d.style.left=x+'px'; d.style.top=y+'px';
+  a._x=x; a._y=y;
+ };
+ ATOMS.forEach(a=>mk(a,R));
+ EXT.forEach(a=>mk(a,R*a.r));
+ drawBonds(cx,cy);
+}
+function drawBonds(cx,cy){
+ const parts=[];
+ [...ATOMS,...EXT].forEach(a=>{
+  const on=SEL.has(a.id);
+  const col=a.broken?'rgba(120,150,200,.22)':(on?'rgba(95,208,200,.75)':'rgba(120,160,235,.13)');
+  parts.push(`<line x1="${cx}" y1="${cy}" x2="${a._x}" y2="${a._y}" stroke="${col}" stroke-width="${on?2.2:1}" ${a.broken?'stroke-dasharray="5 5"':''}/>`);
+ });
+ bonds.innerHTML=parts.join('');
+}
+function render(){
+ stage.querySelectorAll('.atom').forEach(e=>e.classList.toggle('on',SEL.has(e.dataset.id)));
+ drawBonds(stage.clientWidth/2, stage.clientHeight*0.46);
+ document.getElementById('mSel').textContent=SEL.size;
+
+ const mol=document.getElementById('mol');
+ mol.innerHTML='<span class="tag hub">논문</span>'+
+  ([...SEL].map(id=>`<span class="tag" data-x="${id}">${NAME[id]} ✕</span>`).join('')
+   || '<span class="empty">축을 눌러 붙여 보십시오.</span>');
+ mol.querySelectorAll('[data-x]').forEach(t=>t.onclick=()=>{SEL.delete(t.dataset.x);render();});
+ document.getElementById('formula').textContent='논문'+[...SEL].map(id=>' × '+NAME[id]).join('');
+
+ const made=new Set(PRESETS.filter(p=>p.a.every(x=>SEL.has(x))&&SEL.size&&p.a.length===SEL.size).map(p=>p.n));
+ const hit=QS.filter(q=>q.a.every(x=>SEL.has(x))).sort((a,b)=>b.a.length-a.a.length);
+ const box=document.getElementById('qs');
+ if(!SEL.size){ box.innerHTML='<div class="none">축을 하나 붙이면 답할 수 있는 질문이 여기 뜹니다.</div>'; return; }
+ if(!hit.length){
+  box.innerHTML='<div class="none">이 조합으로 미리 적어 둔 질문이 아직 없습니다.<br>'+
+   '조합 4,095가지 중 질문을 붙여 둔 것은 '+QS.length+'개입니다.<br>'+
+   '나머지는 물어보시면 그 자리에서 만들어집니다.</div>'; return; }
+ box.innerHTML=hit.map(q=>{
+  const inMenu=PRESETS.filter(p=>q.a.every(x=>p.a.includes(x))).map(p=>p.n);
+  return `<div class="q">
+   <div class="t">${q.q}</div>
+   <div class="m"><span>그림 <b>${q.o}</b></span><span>축 <b>${q.a.map(x=>NAME[x]).join(' × ')}</b></span></div>
+   ${q.l?`<div class="lim">한계 · ${q.l}</div>`:''}
+   ${inMenu.length?`<div class="made">이미 있음<span>${inMenu.join('</span><span>')}</span></div>`
+                  :`<div class="made" style="color:#5fd0c8">아직 없는 조합</div>`}</div>`;}).join('');
+}
+document.getElementById('chips').innerHTML=PRESETS.map((p,i)=>
+ `<div class="chip" data-i="${i}"><div class="n">${p.n}</div>
+  <div class="f">${p.a.map(x=>NAME[x]).join(' × ')}</div></div>`).join('');
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
+ SEL.clear(); PRESETS[+c.dataset.i].a.forEach(x=>SEL.add(x)); render();
+ document.querySelector('.wrap').scrollIntoView({behavior:'smooth',block:'start'});});
+document.getElementById('brk').innerHTML=BROKEN.map(r=>
+ `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');
+place(); render();
+addEventListener('resize',()=>{place();render();});
+</script>
+</body></html>
