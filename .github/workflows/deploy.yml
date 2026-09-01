@@ -20,6 +20,33 @@ jobs:
           script: |
             set -e
             cd /home/ubuntu/digital_brosure
+
+            # BK21 보드(17MB)는 공개 저장소에 두지 않는다.
+            # 깃이 모르는 파일이라 reset --hard 가 지운다.
+            # 배포 앞에서 따로 보관했다가 뒤에 제자리로 돌려놓는다.
+            KEEP=/home/ubuntu/bk21-keep
+            BOARD=v2/bk21/board/index.html
+            mkdir -p "$KEEP"
+            if [ -f "$BOARD" ]; then
+              cp -f "$BOARD" "$KEEP/index.html"
+              echo "[bk21] 보관함에 넣음 $(stat -c%s "$KEEP/index.html") bytes"
+            else
+              echo "[bk21] 작업트리에 보드 없음"
+            fi
+
             git fetch origin main
             git reset --hard origin/main
+
+            mkdir -p v2/bk21/board
+            if [ -f "$KEEP/index.html" ]; then
+              cp -f "$KEEP/index.html" "$BOARD"
+              echo "[bk21] 제자리로 되돌림"
+            fi
+
+            if [ -f "$BOARD" ]; then
+              echo "[bk21] 최종 $(stat -c%s "$BOARD") bytes  $(stat -c%y "$BOARD")"
+            else
+              echo "[bk21] 최종 보드 없음 — 화면이 안 뜬다"
+            fi
+
             pm2 restart biblo-ai || pm2 start ecosystem.config.js
