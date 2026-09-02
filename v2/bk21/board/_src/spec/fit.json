@@ -1,0 +1,623 @@
+[
+ {
+  "rid": "gnb_sheet",
+  "skin": "sheet_01",
+  "mode": "rows",
+  "slots": 15,
+  "need": 9,
+  "fit": 60,
+  "q": "우리 순위가 어디인가"
+ },
+ {
+  "rid": "e17_uni_rank",
+  "skin": "sheet_01",
+  "mode": "rows",
+  "slots": 15,
+  "need": 9,
+  "fit": 60,
+  "q": "대학끼리 견주면 우리가 어디인가"
+ },
+ {
+  "rid": "gnb_univ",
+  "skin": "univ_02",
+  "mode": "svg",
+  "slots": 0,
+  "need": 4,
+  "fit": null,
+  "q": "대학끼리 견주면 어떻게 움직였나"
+ },
+ {
+  "rid": "e18_uni_year",
+  "skin": "univ_02",
+  "mode": "svg",
+  "slots": 0,
+  "need": 3,
+  "fit": null,
+  "q": "대학별로 어떻게 움직였나"
+ },
+ {
+  "rid": "s01_uni_field",
+  "skin": "univ_01",
+  "mode": "svg",
+  "slots": 0,
+  "need": 4,
+  "fit": null,
+  "q": "경쟁 대학보다 앞서는 분야와 뒤처지는 분야는"
+ },
+ {
+  "rid": "gnb_ucmp",
+  "skin": "ucmp_02",
+  "mode": "rows",
+  "slots": 9,
+  "need": 4,
+  "fit": 44,
+  "q": "BK21 대학끼리 견주면 어디인가"
+ },
+ {
+  "rid": "e19_uni_field",
+  "skin": "ucmp_02",
+  "mode": "rows",
+  "slots": 9,
+  "need": 3,
+  "fit": 33,
+  "q": "우리와 겹치는 대학이 어디인가"
+ },
+ {
+  "rid": "e20_uni_bk",
+  "skin": "ucmp_04",
+  "mode": "rows",
+  "slots": 7,
+  "need": 2,
+  "fit": 29,
+  "q": "BK21 참여 규모가 대학별로 얼마인가"
+ },
+ {
+  "rid": "gnb_exec",
+  "skin": "exec_01",
+  "mode": "rows",
+  "slots": 12,
+  "need": 10,
+  "fit": 83,
+  "q": "사업 전체가 지금 어떤 수준인가"
+ },
+ {
+  "rid": "e06_gy_score",
+  "skin": "exec_01",
+  "mode": "rows",
+  "slots": 12,
+  "need": 10,
+  "fit": 83,
+  "q": "계열별 SGCPI+ 환산점수가 얼마인가"
+ },
+ {
+  "rid": "e01_dept_count",
+  "skin": "exec_06",
+  "mode": "rows",
+  "slots": 2,
+  "need": 2,
+  "fit": 100,
+  "q": "어느 학과가 얼마나 썼나"
+ },
+ {
+  "rid": "new_group",
+  "skin": "exec_06",
+  "mode": "rows",
+  "slots": 2,
+  "need": 2,
+  "fit": 100,
+  "q": "연구그룹별로 어디가 강한가"
+ },
+ {
+  "rid": "e04_dept_ai",
+  "skin": "exec_03",
+  "mode": "rows",
+  "slots": 4,
+  "need": 2,
+  "fit": 50,
+  "q": "어느 학과가 AI를 하고 있나"
+ },
+ {
+  "rid": "e03_dept_pct",
+  "skin": "exec_03",
+  "mode": "rows",
+  "slots": 4,
+  "need": 3,
+  "fit": 75,
+  "q": "JCR 상위 논문이 몇 편인가"
+ },
+ {
+  "rid": "e13_journal_pct",
+  "skin": "exec_03",
+  "mode": "rows",
+  "slots": 4,
+  "need": 2,
+  "fit": 50,
+  "q": "우리가 싣는 저널의 급이 어떤가"
+ },
+ {
+  "rid": "s04_stu_spread",
+  "skin": "exec_03",
+  "mode": "rows",
+  "slots": 4,
+  "need": 2,
+  "fit": 50,
+  "q": "학생 성과가 몇 명에게만 있나"
+ },
+ {
+  "rid": "s03_concentration",
+  "skin": "exec_08",
+  "mode": "manual",
+  "slots": 0,
+  "need": 2,
+  "fit": null,
+  "q": "성과가 일부 연구자에게만 몰렸나"
+ },
+ {
+  "rid": "e05_dept_kind",
+  "skin": "exec_08",
+  "mode": "manual",
+  "slots": 0,
+  "need": 3,
+  "fit": null,
+  "q": "교수와 신진 중 누가 떠받치나"
+ },
+ {
+  "rid": "gnb_tree",
+  "skin": "tree_01",
+  "mode": "rows",
+  "slots": 1,
+  "need": 5,
+  "fit": 20,
+  "q": "이 학과 사람들이 무엇을 얼마나 썼나"
+ },
+ {
+  "rid": "e08_year_grade",
+  "skin": "tree_01",
+  "mode": "rows",
+  "slots": 1,
+  "need": 3,
+  "fit": 33,
+  "q": "질이 좋아지고 있나 양만 느나"
+ },
+ {
+  "rid": "e09_year_role",
+  "skin": "tree_01",
+  "mode": "rows",
+  "slots": 1,
+  "need": 3,
+  "fit": 33,
+  "q": "주저자 비중이 달라졌나"
+ },
+ {
+  "rid": "e16_stu_first",
+  "skin": "tree_01",
+  "mode": "rows",
+  "slots": 1,
+  "need": 3,
+  "fit": 33,
+  "q": "학생이 주저자로 쓰고 있나"
+ },
+ {
+  "rid": "new_jr_role",
+  "skin": "tree_01",
+  "mode": "rows",
+  "slots": 1,
+  "need": 2,
+  "fit": 50,
+  "q": "신진연구인력이 주저자로 쓰나"
+ },
+ {
+  "rid": "new_ai_grade",
+  "skin": "tree_01",
+  "mode": "rows",
+  "slots": 1,
+  "need": 2,
+  "fit": 50,
+  "q": "AI 논문이 좋은 저널에 실리나"
+ },
+ {
+  "rid": "s02_qual_trend",
+  "skin": "univ_02",
+  "mode": "svg",
+  "slots": 0,
+  "need": 3,
+  "fit": null,
+  "q": "논문 수만 늘었나 좋은 논문도 늘었나"
+ },
+ {
+  "rid": "s09_ai_lead",
+  "skin": "univ_02",
+  "mode": "svg",
+  "slots": 0,
+  "need": 3,
+  "fit": null,
+  "q": "AI 논문에 참여만 하나 주도하나"
+ },
+ {
+  "rid": "e07_gy_trend",
+  "skin": "univ_02",
+  "mode": "svg",
+  "slots": 0,
+  "need": 3,
+  "fit": null,
+  "q": "어느 계열이 성장하고 있나"
+ },
+ {
+  "rid": "e14_ai_year",
+  "skin": "univ_02",
+  "mode": "svg",
+  "slots": 0,
+  "need": 2,
+  "fit": null,
+  "q": "AI 논문이 늘고 있나"
+ },
+ {
+  "rid": "new_stu_grade",
+  "skin": "person_05",
+  "mode": "rows",
+  "slots": 1,
+  "need": 2,
+  "fit": 50,
+  "q": "학생 주저자 논문의 등급이 어떤가"
+ },
+ {
+  "rid": "s10_lead_quality",
+  "skin": "person_05",
+  "mode": "rows",
+  "slots": 1,
+  "need": 2,
+  "fit": 50,
+  "q": "주도해서 낸 논문의 질은 어느 정도인가"
+ },
+ {
+  "rid": "e12_journal_dept",
+  "skin": "person_07",
+  "mode": "manual",
+  "slots": 0,
+  "need": 2,
+  "fit": null,
+  "q": "이 학과가 주로 어디에 싣나"
+ },
+ {
+  "rid": "e02_dept_role",
+  "skin": "net_06",
+  "mode": "rows",
+  "slots": 8,
+  "need": 3,
+  "fit": 38,
+  "q": "주도해서 쓰나 이름만 올리나"
+ },
+ {
+  "rid": "gnb_net",
+  "skin": "net_02",
+  "mode": "rows",
+  "slots": 28,
+  "need": 2,
+  "fit": 7,
+  "q": "어느 학과끼리 붙어 있나"
+ },
+ {
+  "rid": "e21_net_dept",
+  "skin": "net_02",
+  "mode": "rows",
+  "slots": 28,
+  "need": 2,
+  "fit": 7,
+  "q": "어느 학과끼리 붙어 있나"
+ },
+ {
+  "rid": "e10_field_dept",
+  "skin": "net_02",
+  "mode": "rows",
+  "slots": 28,
+  "need": 3,
+  "fit": 11,
+  "q": "학과 이름과 실제 연구 분야가 맞나"
+ },
+ {
+  "rid": "gnb_glob",
+  "skin": "glob_03",
+  "mode": "rows",
+  "slots": 2,
+  "need": 2,
+  "fit": 100,
+  "q": "바깥과 얼마나 닿아 있나"
+ },
+ {
+  "rid": "new_hss_field",
+  "skin": "glob_03",
+  "mode": "rows",
+  "slots": 2,
+  "need": 2,
+  "fit": 100,
+  "q": "인문사회는 어느 분야에 있나"
+ },
+ {
+  "rid": "s08_field_conc",
+  "skin": "glob_03",
+  "mode": "rows",
+  "slots": 2,
+  "need": 2,
+  "fit": 100,
+  "q": "성과가 특정 분야에 과도하게 모였나"
+ },
+ {
+  "rid": "new_net_year",
+  "skin": "glob_05",
+  "mode": "rows",
+  "slots": 2,
+  "need": 2,
+  "fit": 100,
+  "q": "사업 시작 뒤 협업이 늘었나"
+ },
+ {
+  "rid": "s07_ext_new",
+  "skin": "glob_05",
+  "mode": "rows",
+  "slots": 2,
+  "need": 2,
+  "fit": 100,
+  "q": "교외 협력이 새로 생기고 유지되나"
+ },
+ {
+  "rid": "s05_prof_stu",
+  "skin": "net_06",
+  "mode": "rows",
+  "slots": 8,
+  "need": 2,
+  "fit": 25,
+  "q": "어느 교수 주변에서 학생 주저자 성과가 나오나"
+ },
+ {
+  "rid": "s06_partner_mix",
+  "skin": "univ_01",
+  "mode": "svg",
+  "slots": 0,
+  "need": 3,
+  "fit": null,
+  "q": "협력 상대가 다양한가 같은 상대와 지속하나"
+ },
+ {
+  "rid": "gnb_exp",
+  "skin": "glob_07",
+  "mode": "rows",
+  "slots": 5,
+  "need": 2,
+  "fit": 40,
+  "q": "이 분야로 누가 일하고 있나"
+ },
+ {
+  "rid": "e22_net_field",
+  "skin": "glob_07",
+  "mode": "rows",
+  "slots": 5,
+  "need": 2,
+  "fit": 40,
+  "q": "이 분야로 같이 할 사람이 누구인가"
+ },
+ {
+  "rid": "gnb_pool",
+  "skin": "pool_06",
+  "mode": "rows",
+  "slots": 4,
+  "need": 3,
+  "fit": 75,
+  "q": "이 숫자를 믿어도 되나"
+ },
+ {
+  "rid": "s11_fix_first",
+  "skin": "pool_06",
+  "mode": "rows",
+  "slots": 4,
+  "need": 3,
+  "fit": 75,
+  "q": "어떤 데이터부터 고치면 판단이 가장 많이 달라지나"
+ },
+ {
+  "rid": "e23_qa_all",
+  "skin": "pool_06",
+  "mode": "rows",
+  "slots": 4,
+  "need": 4,
+  "fit": 100,
+  "q": "이 숫자를 믿어도 되나"
+ },
+ {
+  "rid": "e24_qa_dept",
+  "skin": "pool_06",
+  "mode": "rows",
+  "slots": 4,
+  "need": 2,
+  "fit": 50,
+  "q": "어느 학과가 기록이 덜 붙었나"
+ },
+ {
+  "rid": "e25_qa_grade",
+  "skin": "pool_06",
+  "mode": "rows",
+  "slots": 4,
+  "need": 2,
+  "fit": 50,
+  "q": "등급을 못 붙인 논문이 얼마나 되나"
+ },
+ {
+  "rid": "n01_area",
+  "skin": "exec_02",
+  "mode": "rows",
+  "slots": 1,
+  "need": 4,
+  "fit": 25,
+  "q": "우리가 어느 역량이 약한가"
+ },
+ {
+  "rid": "n02_signal",
+  "skin": "exec_04",
+  "mode": "rows",
+  "slots": 13,
+  "need": 10,
+  "fit": 77,
+  "q": "어느 학과가 처져 있나"
+ },
+ {
+  "rid": "n03_twotrack",
+  "skin": "exec_05",
+  "mode": "svg",
+  "slots": 0,
+  "need": 5,
+  "fit": null,
+  "q": "교수 성과가 학생에게 이어지나"
+ },
+ {
+  "rid": "n04_relscope",
+  "skin": "net_04",
+  "mode": "rows",
+  "slots": 1,
+  "need": 2,
+  "fit": 50,
+  "q": "교내에서 도나 밖으로 나가나"
+ },
+ {
+  "rid": "n05_partnerdist",
+  "skin": "net_05",
+  "mode": "rows",
+  "slots": 2,
+  "need": 2,
+  "fit": 100,
+  "q": "몇 사람이 협업을 떠받치나"
+ },
+ {
+  "rid": "n06_partners",
+  "skin": "net_03",
+  "mode": "rows",
+  "slots": 2,
+  "need": 3,
+  "fit": 67,
+  "q": "이 학과는 누구와 일하나"
+ },
+ {
+  "rid": "n07_netsize",
+  "skin": "glob_02",
+  "mode": "rows",
+  "slots": 6,
+  "need": 2,
+  "fit": 33,
+  "q": "밖과 얼마나 넓게 닿아 있나"
+ },
+ {
+  "rid": "n08_extstruct",
+  "skin": "glob_04",
+  "mode": "rows",
+  "slots": 2,
+  "need": 3,
+  "fit": 67,
+  "q": "학교 밖과 얼마나 하나"
+ },
+ {
+  "rid": "n09_potential",
+  "skin": "glob_06",
+  "mode": "rows",
+  "slots": 6,
+  "need": 2,
+  "fit": 33,
+  "q": "아직 안 붙었는데 붙일 만한 사람이 누구인가"
+ },
+ {
+  "rid": "n10_intl_dom",
+  "skin": "univ_04",
+  "mode": "rows",
+  "slots": 3,
+  "need": 3,
+  "fit": 100,
+  "q": "국제지와 국내지를 나눠 보면"
+ },
+ {
+  "rid": "n11_bk_vs",
+  "skin": "univ_05",
+  "mode": "rows",
+  "slots": 1,
+  "need": 2,
+  "fit": 50,
+  "q": "사업이 실제로 차이를 만들었나"
+ },
+ {
+  "rid": "n12_uni_topic",
+  "skin": "univ_06",
+  "mode": "rows",
+  "slots": 2,
+  "need": 3,
+  "fit": 67,
+  "q": "대학마다 강한 주제가 무엇인가"
+ },
+ {
+  "rid": "n13_measurable",
+  "skin": "univ_07",
+  "mode": "rows",
+  "slots": 5,
+  "need": 2,
+  "fit": 40,
+  "q": "경쟁대학을 어디까지 잴 수 있나"
+ },
+ {
+  "rid": "n14_asia",
+  "skin": "sheet_02",
+  "mode": "rows",
+  "slots": 11,
+  "need": 6,
+  "fit": 55,
+  "q": "아시아에서 우리 위치는"
+ },
+ {
+  "rid": "n15_world",
+  "skin": "sheet_03",
+  "mode": "rows",
+  "slots": 11,
+  "need": 6,
+  "fit": 55,
+  "q": "세계에서 우리 위치는"
+ },
+ {
+  "rid": "n16_pool",
+  "skin": "pool_01",
+  "mode": "svg",
+  "slots": 0,
+  "need": 2,
+  "fit": null,
+  "q": "데이터가 어떤 층을 거쳐 오나"
+ },
+ {
+  "rid": "n17_bk_year",
+  "skin": "ucmp_01",
+  "mode": "rows",
+  "slots": 8,
+  "need": 3,
+  "fit": 38,
+  "q": "BK21 대학끼리 연도별로 어떻게 움직였나"
+ },
+ {
+  "rid": "n18_quality_rank",
+  "skin": "ucmp_03",
+  "mode": "rows",
+  "slots": 2,
+  "need": 7,
+  "fit": 29,
+  "q": "편수 말고 질은 어디쯤인가"
+ },
+ {
+  "rid": "n19_uni_table",
+  "skin": "univ_03",
+  "mode": "rows",
+  "slots": 8,
+  "need": 8,
+  "fit": 100,
+  "q": "대학을 한 표로 견주면"
+ },
+ {
+  "rid": "n20_netmap",
+  "skin": "net_01",
+  "mode": "svg",
+  "slots": 0,
+  "need": 2,
+  "fit": null,
+  "q": "학과 협업을 그림으로 보면"
+ }
+]

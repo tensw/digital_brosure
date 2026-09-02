@@ -210,18 +210,37 @@ def agg_qa(axes, measures):
 def agg_new(r):
     """스킨이 요구하는 새 집계들. 원장 위치가 제각각이라 레시피별로 갈라 쓴다."""
     rid, ms = r['id'], r['measures']
+    if rid in ('gnb_exec','e06_gy_score'):
+        rows=[]
+        for g, v in T['gyo'].items():
+            rq=v['RQ']
+            rows.append([[g], round(v.get('S',0),1), round(v.get('Savg',0),1),
+                         round(rq.get('RQ',0),1), round(rq.get('IQ',0),1), round(rq.get('SQ',0),1),
+                         v.get('papers'), v.get('prof'), v.get('nstu'), v.get('undet')])
+        rows.sort(key=lambda x: -(x[1] or 0)); return rows, ['gy'], len(rows)
+    if rid in ('gnb_sheet','e17_uni_rank','n19_uni_table'):
+        rows=[]
+        for u in U['unis']:
+            rows.append([[u['nm']], u.get('works'), u.get('cites'), u.get('h'), u.get('i10'),
+                         u.get('c2'), u.get('authors'), u.get('kci'),
+                         (C['sum'].get(u['nm']) or {}).get('fw')])
+        rows.sort(key=lambda x: -(x[1] or 0)); return rows, ['uni'], len(rows)
+    if rid in ('n02_signal','n03_twotrack'):
+        rows=[]
+        for dn, d in K['depts'].items():
+            rows.append([[dn], d.get('A01'), d.get('A02'), d.get('B01pc'), d.get('B02pc'),
+                         d.get('B03'), d.get('C01'), d.get('C02'), d.get('qPp10'), d.get('qFwMed')])
+        rows.sort(key=lambda x: -(x[1] or 0)); return rows, ['dept'], len(rows)
+    if rid in ('n14_asia','n15_world'):
+        src = U['asia'] if rid == 'n14_asia' else U['world']
+        rows=[[[x.get('nm') or x.get('en')], x.get('works'), x.get('cites'), x.get('h'),
+               x.get('i10'), x.get('c2')] for x in src]
+        rows.sort(key=lambda x: -(x[1] or 0)); return rows, ['uni'], len(rows)
     if rid == 'n01_area':
         gy = T['gyo']
         rows = [[[g], round(v['RQ']['RQ'],1), round(v['RQ']['IQ'],1), round(v['RQ']['SQ'],1)]
                 for g, v in gy.items()]
         return rows, ['gy'], len(rows)
-    if rid in ('n02_signal','n03_twotrack'):
-        rows=[]
-        for dn, d in K['depts'].items():
-            if d.get('A01') is None and d.get('B01pc') is None: continue
-            rows.append([[dn], d.get('A01'), d.get('B01pc'), d.get('gy')])
-        rows.sort(key=lambda x: -(x[1] or 0))
-        return rows, ['dept'], len(rows)
     if rid == 'n04_relscope':
         return [[[k], v] for k, v in (N.get('scope') or {}).items()], ['scope'], 2
     if rid in ('n05_partnerdist','n07_netsize','n08_extstruct','n09_potential','n06_partners'):
@@ -239,10 +258,6 @@ def agg_new(r):
     if rid == 'n13_measurable':
         rows=[[[m['axis']], m.get('oa'), m.get('kci'), m.get('rims')] for m in U['meta'].get('matrix',[])]
         return rows, ['축'], len(rows)
-    if rid in ('n14_asia','n15_world'):
-        src = U['asia'] if rid == 'n14_asia' else U['world']
-        rows=[[[x.get('nm') or x.get('en')], x.get('works'), x.get('cites'), x.get('h')] for x in src]
-        rows.sort(key=lambda x: -(x[1] or 0)); return rows, ['uni'], len(rows)
     if rid == 'n16_pool':
         rows=[[[x.get('n')+' '+(x.get('t') or '')], len(x.get('items') or [])] for x in P['pool']]
         return rows, ['층'], len(rows)

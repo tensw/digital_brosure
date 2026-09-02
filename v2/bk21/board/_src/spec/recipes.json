@@ -51,14 +51,24 @@
    },
    "measures": [
     "score",
-    "grade_score"
+    "gy_score_pc",
+    "area_rq",
+    "area_iq",
+    "area_sq",
+    "gy_papers",
+    "gy_prof",
+    "gy_stu",
+    "gy_undet"
    ],
    "against": "gy",
    "chart": "band",
    "caveats": [
     "계열: 계열 넘는 비교 금지",
     "내부 관리기준이며 공식 평가 결과가 아니다. 미판정 논문은 0점",
-    "계열별로 배점표가 다르다. 계열을 넘어 견주지 않는다"
+    "합계는 교수 많은 곳이 위로 온다. 1인당으로 견준다",
+    "계열 집계다. 학과로 나눌 수 없다",
+    "LQ 교육역량은 자료를 못 받아 축이 비어 있다",
+    "미판정은 낮은 등급이 아니다"
    ],
    "covered_by": [
     "SKKU BK21 KPI"
@@ -178,13 +188,19 @@
    "filters": {},
    "measures": [
     "uni_works",
-    "uni_fwci",
-    "uni_h"
+    "uni_cites",
+    "uni_h",
+    "uni_i10",
+    "uni_c2",
+    "uni_authors",
+    "uni_kci",
+    "uni_fwci"
    ],
    "against": "국내7",
    "chart": "table",
    "caveats": [
-    "대학 전체이며 BK21 참여자 범위가 아니다"
+    "대학 전체이며 BK21 참여자 범위가 아니다",
+    "국제지와 합쳐 한 줄로 세우면 인문사회가 낮게 보인다"
    ],
    "covered_by": [
     "대학별 성과표"
@@ -801,13 +817,25 @@
     "role": "주저자 가중"
    },
    "measures": [
-    "score"
+    "score",
+    "gy_score_pc",
+    "area_rq",
+    "area_iq",
+    "area_sq",
+    "gy_papers",
+    "gy_prof",
+    "gy_stu",
+    "gy_undet"
    ],
    "against": "gy",
    "chart": "band",
    "caveats": [
     "계열: 계열 넘는 비교 금지",
-    "내부 관리기준이며 공식 평가 결과가 아니다. 미판정 논문은 0점"
+    "내부 관리기준이며 공식 평가 결과가 아니다. 미판정 논문은 0점",
+    "합계는 교수 많은 곳이 위로 온다. 1인당으로 견준다",
+    "계열 집계다. 학과로 나눌 수 없다",
+    "LQ 교육역량은 자료를 못 받아 축이 비어 있다",
+    "미판정은 낮은 등급이 아니다"
    ],
    "covered_by": [
     "SKKU BK21 KPI"
@@ -1066,12 +1094,19 @@
    "filters": {},
    "measures": [
     "uni_works",
+    "uni_cites",
+    "uni_h",
+    "uni_i10",
+    "uni_c2",
+    "uni_authors",
+    "uni_kci",
     "uni_fwci"
    ],
    "against": "국내7",
    "chart": "bar_sorted",
    "caveats": [
-    "대학 전체이며 BK21 참여자 범위가 아니다"
+    "대학 전체이며 BK21 참여자 범위가 아니다",
+    "국제지와 합쳐 한 줄로 세우면 인문사회가 낮게 보인다"
    ],
    "covered_by": [
     "대학별 성과표"
@@ -1341,13 +1376,23 @@
    "filters": {},
    "measures": [
     "prof_top_quality",
-    "stu_first_per_person"
+    "dept_fw_avg2",
+    "stu_first_per_person",
+    "stu_score_pc2",
+    "stu_conv",
+    "growth_prepost",
+    "intl_coauth_rate",
+    "dept_pp_top10_rate",
+    "dept_fwci_med"
    ],
    "against": "gy",
    "chart": "table",
    "caveats": [
     "학과·전공: 기본 조직 단위",
-    "최소 논문 수 컷을 두지 않는다"
+    "최소 논문 수 컷을 두지 않는다",
+    "대학원생 제외. 포함하면 분모가 비어 값이 터진다",
+    "동일",
+    "동일. 평균은 소수 논문이 끌어올린다"
    ],
    "covered_by": [],
    "blocked": null
@@ -1364,7 +1409,9 @@
    "filters": {},
    "measures": [
     "prof_top_quality",
-    "stu_first_per_person"
+    "stu_first_per_person",
+    "dept_fw_avg2",
+    "stu_score_pc2"
    ],
    "against": "gy",
    "chart": "scatter",
@@ -1599,7 +1646,9 @@
    "measures": [
     "uni_works",
     "uni_cites",
-    "uni_h"
+    "uni_h",
+    "uni_i10",
+    "uni_c2"
    ],
    "against": "아시아52",
    "chart": "table",
@@ -1620,7 +1669,9 @@
    "measures": [
     "uni_works",
     "uni_cites",
-    "uni_h"
+    "uni_h",
+    "uni_i10",
+    "uni_c2"
    ],
    "against": "글로벌116",
    "chart": "table",
@@ -1703,12 +1754,16 @@
     "uni_works",
     "uni_cites",
     "uni_h",
-    "uni_c2"
+    "uni_i10",
+    "uni_c2",
+    "uni_authors",
+    "uni_kci"
    ],
    "against": "국내7",
    "chart": "table",
    "caveats": [
-    "대학 전체이며 BK21 참여자 범위가 아니다"
+    "대학 전체이며 BK21 참여자 범위가 아니다",
+    "국제지와 합쳐 한 줄로 세우면 인문사회가 낮게 보인다"
    ],
    "covered_by": [],
    "blocked": null
