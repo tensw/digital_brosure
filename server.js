@@ -1,4 +1,5 @@
 const http = require('http');
+const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const auth = require('./auth');
@@ -8,6 +9,26 @@ const AI_UA = /(GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|Claude-Web|anthropic
 const NOAI = 'noai, noimageai, noindex, nofollow, noarchive, nosnippet';
 
 
+
+/* 비밀은 깃 밖 파일에서만 읽는다. 없으면 그 기능만 꺼진다.
+   {"GEMINI_API_KEY":"..."} · 권한 600 · .gitignore 에 등록돼 있다 */
+const SECRETS = (() => {
+  try { return JSON.parse(fs.readFileSync(path.join(__dirname, '.bk21-secrets.json'), 'utf8')); }
+  catch (e) { return {}; }
+})();
+const GKEY = SECRETS.GEMINI_API_KEY || process.env.GEMINI_API_KEY || '';
+
+/* 남용 방어 — 로그인한 사람이라도 창을 연타하면 외부 API 가 소진된다.
+   IP 당 1분에 20회. 넘으면 429 로 끊고 낱말 매칭으로 돌아가게 한다. */
+const RL = new Map();
+function rateOk(ip, lim = 20, win = 60000) {
+  const now = Date.now();
+  const a = (RL.get(ip) || []).filter(t => now - t < win);
+  if (a.length >= lim) { RL.set(ip, a); return false; }
+  a.push(now); RL.set(ip, a);
+  if (RL.size > 5000) RL.clear();
+  return true;
+}
 
 const PORT = 3000;
 const ROOT = path.resolve(path.join(__dirname, 'v2'));
@@ -160,6 +181,59 @@ function sendGate(res, name) {
   });
 }
 
+function handleAsk(req, res) {
+  if (req.method !== 'POST') return json(res, 405, { ok: false, reason: 'post_only' });
+  if (!auth.session(req))    return json(res, 401, { ok: false, reason: 'login_required' });
+  const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim()
+           || req.socket.remoteAddress || '?';
+  if (!rateOk(ip))           return json(res, 429, { ok: false, reason: 'rate_limited' });
+  if (!GKEY)                 return json(res, 200, { ok: false, reason: 'no_key' });
+
+  readBody(req, (b) => {
+    const q = (b && typeof b.q === 'string') ? b.q.slice(0, 300) : '';
+    const menu = (b && Array.isArray(b.menu)) ? b.menu.slice(0, 120) : [];
+    if (!q || !menu.length) return json(res, 400, { ok: false, reason: 'bad_request' });
+
+    const list = menu.map(m => `${m.id}\t${String(m.q).slice(0, 80)}`).join('\n');
+    const prompt =
+      '아래 목록에서 사용자 질문에 가장 맞는 항목의 id 하나만 답하라.\n' +
+      '맞는 것이 없으면 NONE 이라고만 답하라. 다른 말은 쓰지 마라.\n\n' +
+      '[목록]\n' + list + '\n\n[질문]\n' + q + '\n\n[답]';
+
+    const payload = JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      /* 2.5-flash 는 답 전에 «생각 토큰» 을 쓴다. 끄지 않으면 24토큰에서
+         잘려 finishReason=MAX_TOKENS 로 빈 답이 온다. 실측으로 확인했다. */
+      generationConfig: { temperature: 0, maxOutputTokens: 64,
+                          thinkingConfig: { thinkingBudget: 0 } },
+    });
+    const opt = {
+      hostname: 'generativelanguage.googleapis.com',
+      path: '/v1beta/models/gemini-2.5-flash:generateContent?key=' + encodeURIComponent(GKEY),
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(payload) },
+      timeout: 9000,
+    };
+    const r2 = https.request(opt, (up) => {
+      let buf = '';
+      up.on('data', d => { buf += d; if (buf.length > 20000) up.destroy(); });
+      up.on('end', () => {
+        try {
+          const o = JSON.parse(buf);
+          const t = ((((o.candidates || [])[0] || {}).content || {}).parts || [])
+                    .map(x => x.text || '').join('').trim();
+          const id = (t.match(/[A-Za-z0-9_]+/) || [''])[0];
+          const hit = menu.find(m => m.id === id);
+          json(res, 200, hit ? { ok: true, id: hit.id } : { ok: false, reason: 'no_match' });
+        } catch (e) { json(res, 200, { ok: false, reason: 'parse_failed' }); }
+      });
+    });
+    r2.on('timeout', () => { r2.destroy(); json(res, 200, { ok: false, reason: 'timeout' }); });
+    r2.on('error',   () => json(res, 200, { ok: false, reason: 'upstream_error' }));
+    r2.write(payload); r2.end();
+  });
+}
+
 const server = http.createServer((req, res) => {
   const rawPath = req.url === '/' ? DEFAULT_DOC : req.url.split('?')[0];
   let urlPath;
@@ -171,6 +245,11 @@ const server = http.createServer((req, res) => {
     return;
   }
   if (urlPath.startsWith('/api/auth/')) return handleAuthApi(req, res, urlPath);
+
+  /* BK21 질문 라우팅. 로그인한 사람만 부른다.
+     LLM 은 «레시피 id 하나 고르기» 만 한다. 숫자와 문장은 화면이 데이터로 만든다.
+     그래야 같은 질문에 늘 같은 답이 나오고 없는 것을 지어내지 않는다. */
+  if (urlPath === '/api/bk21/ask') return handleAsk(req, res);
 
   // 잠긴 구간은 세션이 있어야 지나간다.
   // 주소를 바꾸지 않는다 — biblo.ai/2026 그 자리에서 로그인 화면을 그대로 낸다.

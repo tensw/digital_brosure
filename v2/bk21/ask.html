@@ -129,8 +129,25 @@ $('#more').onclick=()=>{const e=$('#rest');const on=e.style.display==='none';
 $('#meta').textContent=`${SPEC.built} 기준 · 논문 31,076편 · 참여자 2,959명 · 성과기간 ${SPEC.period.default}`
  +` · 답할 수 있는 질문 ${OK.length}개`;
 document.addEventListener('click',e=>{const c=e.target.closest('.qi');if(c)open(c.dataset.id);});
-$('#go').onclick=()=>ask($('#q').value.trim());
-$('#q').addEventListener('keydown',e=>{if(e.key==='Enter')ask($('#q').value.trim());});
+$('#go').onclick=()=>route($('#q').value.trim());
+$('#q').addEventListener('keydown',e=>{if(e.key==='Enter')route($('#q').value.trim());});
+
+/* 질문 → 레시피. 서버가 LLM 으로 고르고, 안 되면 낱말 겹침으로 돌아간다.
+   LLM 은 id 하나만 고른다. 숫자와 결론 문장은 아래에서 데이터로 만든다. */
+let BUSY=false;
+async function route(t){
+ if(!t||BUSY) return;
+ BUSY=true; const btn=$('#go'), old=btn.textContent; btn.textContent='찾는 중'; btn.disabled=true;
+ try{
+  const menu=OK.map(r=>({id:r.id,q:r.q[0]}));
+  const res=await fetch('/api/bk21/ask',{method:'POST',
+    headers:{'Content-Type':'application/json'},body:JSON.stringify({q:t,menu})});
+  const o=await res.json();
+  if(o&&o.ok&&o.id&&SPEC.answers[o.id]){ open(o.id); return; }
+ }catch(e){}
+ finally{ BUSY=false; btn.textContent=old; btn.disabled=false; }
+ ask(t);
+}
 $('#back').onclick=()=>{$('#step2').style.display='none';$('#step1').style.display='flex';scrollTo(0,0);};
 
 /* 질문 문장을 레시피로 — 낱말 겹침으로 고른다. 에이전트가 붙으면 이 자리가 바뀐다 */
