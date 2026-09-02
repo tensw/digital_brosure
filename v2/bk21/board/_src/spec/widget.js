@@ -43,14 +43,14 @@ const WIDGET = (() => {
       else if (/e/i.test(c)) h = /[nml]/i.test(prev);                /* 묵음 e: Medicine → 메디슨 */
       else h = /(n|m|l|ng|k|p|t)$/i.test(t);                      /* 우리말로 읽을 때 받침이 남는 끝소리만 */
     }
-    const l = /[가-힣]/.test(c) && (c.charCodeAt(0) - 0xAC00) % 28 === 8;
+    const l = (/[가-힣]/.test(c) && (c.charCodeAt(0) - 0xAC00) % 28 === 8) || /l$/i.test(t);   /* ㄹ 받침(Michael → 마이클로)은 «로» */
     return k === '은' ? (h?'은':'는') : k === '이' ? (h?'이':'가') : k === '과' ? (h?'과':'와') : k === '로' ? (h && !l ? '으로' : '로') : (h?'을':'를');
   };
   const U = m => (m && m.u) ? m.u : '';
   const vu = (v, m) => N(v) + U(m);
 
   /* 축별로 세는 말: 학과·대학은 곳, 쌍은 쌍, 분야·저널은 개 */
-  const ORG = { dept: { w:'곳', n:'곳' }, uni: { w:'곳', n:'곳' }, grp: { w:'곳', n:'곳' }, pair: { w:'쌍', n:'쌍' },
+  const ORG = { dept: { w:'곳', n:'곳' }, dept2: { w:'곳', n:'상대 학과' }, person: { w:'명', n:'사람' }, paper: { w:'편', n:'논문' }, uni: { w:'곳', n:'곳' }, grp: { w:'곳', n:'곳' }, pair: { w:'쌍', n:'쌍' },
                 f: { w:'개', n:'분야' }, j: { w:'개', n:'저널' }, g: { w:'개', n:'등급' }, gy: { w:'개', n:'계열' },
                 r: { w:'개', n:'역할' }, tr: { w:'개', n:'등급' }, kind: { w:'개', n:'구분' }, _: { w:'개', n:'것' } };
   /* ── 모양 읽기 ─────────────────────────────────────────── */
@@ -145,11 +145,16 @@ const WIDGET = (() => {
     const bot = st ? st.bottom : (nz.length ? [labs(nz[nz.length-1]), val(nz[nz.length-1],0)] : [labs(f[f.length-1]), val(f[f.length-1],0)]);
     const zl = st ? (st.zero_names || []) : f.filter(r => !(val(r,0) > 0)).map(lab);   /* 0인 곳은 가장 적은 곳으로 센다 (모수·중앙값과 같은 기준) */
     const zs = zeros ? `0${U(m0)}인 ${zeros}${sh.w}(${zl.slice(0,3).join(' · ')}${zeros > 3 ? ' 등' : ''})이고, 그 위는 ` : '';
-    K.push({ l: '1위', v: lab(top), s: vu(val(top,0), m0) });
+    const tie1 = f.filter(r => val(r,0) === val(top,0));   /* 1위 동률(값이 같은 곳 전부) */
+    if (f.length === 1) K.push({ l: `유일한 ${sh.wn}`, v: lab(top), s: vu(val(top,0), m0) });
+    else if (tie1.length > 1) K.push({ l: '공동 1위', v: tie1.slice(0,3).map(lab).join(' · ') + (tie1.length > 3 ? ` 등 ${tie1.length}${sh.w}` : ''), s: vu(val(top,0), m0) });
+    else K.push({ l: '1위', v: lab(top), s: vu(val(top,0), m0) });
     if (f.length > 3 && sh.count) { const p3 = pct(sum(t3.map(r => val(r,0)||0)), T);
-      P.push(`상위 3${sh.w} ${t3.map(lab).join(' · ')}${jo(lab(t3[2]),'이')} 합쳐 ${p3}%입니다.`); K.push({ l: '상위 3 점유율', v: `${p3}%`, s: `${N(nAll)}${sh.w} 중` }); }
-    else if (f.length > 1) { const cutV = t3[t3.length-1] ? val(t3[t3.length-1],0) : null, ext = f.slice(3).filter(r => val(r,0) === cutV), nx = [...t3.slice(1), ...ext.slice(0,3)];
-      P.push(`그다음은 ${nx.map(r => `${lab(r)} ${vu(val(r,0),m0)}`).join(' · ')}${ext.length > 3 ? ` 등 ${vu(cutV,m0)} 동률 ${ext.length + 1}${sh.w}` : ''}입니다.`); }
+      const cut3 = val(t3[2],0), tieA = f.filter(r => val(r,0) === cut3), rk3 = f.findIndex(r => val(r,0) === cut3) + 1;   /* 3위 값과 같은 곳이 4위 아래에도 있으면 그 값의 공동 순위를 밝힌다 */
+      const over = tieA.length > t3.filter(r => val(r,0) === cut3).length;
+      P.push(`상위 3${sh.w} ${t3.map(lab).join(' · ')}${jo(lab(t3[2]),'이')} 합쳐 ${p3}%입니다${over ? ` (${tieA.slice(0,4).map(lab).join(' · ')}${tieA.length > 4 ? ` 등 ${tieA.length}${sh.w}${jo(sh.w,'은')}` : jo(lab(tieA[tieA.length-1]),'은')} ${vu(cut3,m0)}${jo(U(m0)||'개','로')} 같아 공동 ${rk3}위입니다)` : ''}.`); K.push({ l: '상위 3 점유율', v: `${p3}%`, s: `${N(nAll)}${sh.w} 중` }); }
+    else if (f.length > 1 && tie1.length < f.length) { const cutV = t3[t3.length-1] ? val(t3[t3.length-1],0) : null, ext = f.slice(3).filter(r => val(r,0) === cutV), nx = [...t3.slice(tie1.length), ...ext.slice(0,3)];
+      if (nx.length) P.push(`그다음은 ${nx.map(r => `${lab(r)} ${vu(val(r,0),m0)}`).join(' · ')}${ext.length > 3 ? ` 등 ${vu(cutV,m0)} 동률 ${ext.length + 1}${sh.w}` : ''}입니다.`); }
     const minTie = !st && nz.length > 1 ? nz.filter(r => val(r,0) === val(nz[nz.length-1],0)) : [];   /* 꼴찌 동률 */
     if (f.length > 3 && !st) P.push(part ? `표에 보이는 ${f.length}${sh.w} 중 가장 낮은 것은 ${lab(bot)} ${vu(bot[1],m0)}입니다.`
       : minTie.length > 1 ? `가장 ${sh.count ? '적은' : '낮은'} ${sh.wn}${jo(sh.wn,'은')} ${zs}${vu(bot[1],m0)}인 ${minTie.length}${sh.w}(${minTie.slice(0,3).map(lab).join(' · ')}${minTie.length > 3 ? ' 등' : ''})입니다.`
@@ -188,7 +193,10 @@ const WIDGET = (() => {
         if (meR && !pref.includes(meR)) P2.push(`${cx.me}는 ${rk(meR) === m0.n ? '' : rk(meR) + ' '}${vu(val(meR,0),m0)}입니다.`);
         return { headline: `${lab(big)}${jo(lab(big),'이')} ${m0.n} ${vu(val(big,0),m0)}${jo(U(m0)||N(val(big,0)),'로')} ${lab(sml)} ${vu(val(sml,0),m0)}${vx === vy ? `${jo(U(m0)||N(vy),'과')} 같습니다` : near ? `${jo(U(m0)||N(vy),'과')} 거의 같습니다` : `보다 ${ratio != null ? `${ratio}배 ` : ''}${sh.count ? '많습니다' : '높습니다'}`}`,
           points: P2, kpi: [{ l: lab(x), v: vu(vx,m0), s: rk(x) }, { l: lab(y), v: vu(vy,m0), s: rk(y) }, ...(ratio != null ? [{ l: '격차', v: `${ratio}배`, s: `${lab(big)} ÷ ${lab(sml)}` }] : [])], sorted: f, hi: new Set([f.indexOf(x), f.indexOf(y)]) }; } }
-    return { headline: `${lab(top)}${jo(lab(top),'이')} ${m0.n} ${vu(val(top,0),m0)}${jo(U(m0)||N(val(top,0)),'로')} 가장 ${sh.count ? '많습니다' : '높습니다'}`, points: P, kpi: K, sorted: f, hi: new Set([0,1,2]) };
+    const hl1 = f.length === 1 ? `${sh.wn}${jo(sh.wn,'은')} ${lab(top)} 한 ${sh.w}뿐이고, ${m0.n} ${vu(val(top,0),m0)}입니다`
+      : tie1.length > 1 ? `${tie1.slice(0,3).map(lab).join(' · ')}${tie1.length > 3 ? ` 등 ${tie1.length}${sh.w}` : ''}${jo(tie1.length > 3 ? sh.w : lab(tie1[Math.min(2,tie1.length-1)]),'이')} ${m0.n} ${vu(val(top,0),m0)}${jo(U(m0)||N(val(top,0)),'로')} 공동 1위입니다`
+      : `${lab(top)}${jo(lab(top),'이')} ${m0.n} ${vu(val(top,0),m0)}${jo(U(m0)||N(val(top,0)),'로')} 가장 ${sh.count ? '많습니다' : '높습니다'}`;
+    return { headline: hl1, points: P, kpi: K, sorted: f, hi: new Set([0,1,2]) };
   };
 
   INT.low = (rows, ms, sh, cx) => {
@@ -489,10 +497,12 @@ const WIDGET = (() => {
     const [item, c] = [...cnt.entries()].sort((a,b) => b[1]-a[1] || a[0].localeCompare(b[0]))[0];
     const diff = tops.filter(t => !t.ts.includes(item)), tied = tops.filter(t => t.ts.length > 1 && t.ts.includes(item));
     const me = tops.find(t => t.g.includes(cx.me)), P = [], K = [], IW = ORG[sh.a.cols[1]] || ORG._; let ovS = null;
-    const hl = `${tops.length}${sh.w} 중 ${c}${sh.w}은 ${item}${jo(item,'이')} 1위입니다`;
-    K.push({ l: '가장 흔한 1위', v: item, s: `${tops.length}${sh.w} 중 ${c}${sh.w}${tied.length ? ` (공동 ${tied.length})` : ''}` });
-    if (tied.length) P.push(`${item} 1위 ${c}${sh.w} 중 ${tied.length}${sh.w}${jo(sh.w,'은')} 공동 1위입니다: ${tied.map(t => `${t.g}(${t.ts.filter(x => x !== item).join('·')}와 ${vu(t.a[0][1],m0)}으로 같음)`).join(' · ')}.`);
-    if (diff.length) { P.push(`1위가 다른 곳은 ${diff.slice(0,8).map(t => `${t.g}(${t.top})`).join(' · ')}${diff.length > 8 ? ` 등 ${diff.length}${sh.w}` : ''}입니다.`); K.push({ l: '1위가 다른 곳', v: `${diff.length}${sh.w}`, s: diff.slice(0,3).map(t => t.g).join(' · ') + (diff.length > 3 ? ' 등' : '') }); }
+    /* 둘째 축이 상대 학과(공저 매트릭스)면 «1위» 대신 «가장 많이 공저하는 상대»로 말한다 */
+    const PW = sh.a.cols[1] === 'dept2', TOPW = PW ? '최다 공저 상대' : '1위';
+    const hl = PW ? `${tops.length}${sh.w} 중 ${c}${sh.w}${jo(sh.w,'은')} ${item}${jo(item,'과')} 가장 많이 공저합니다` : `${tops.length}${sh.w} 중 ${c}${sh.w}은 ${item}${jo(item,'이')} 1위입니다`;
+    K.push({ l: PW ? '가장 흔한 최다 공저 상대' : '가장 흔한 1위', v: item, s: `${tops.length}${sh.w} 중 ${c}${sh.w}${tied.length ? `, 공동 ${tied.length}${sh.w} 포함` : ''}` });
+    if (tied.length) P.push(`${item}${jo(item,'이')} ${TOPW}인 ${c}${sh.w} 중 ${tied.length}${sh.w}${jo(sh.w,'은')} 공동${PW ? '' : ' 1위'}입니다: ${tied.map(t => { const ot = t.ts.filter(x => x !== item).join('·'); return `${t.g}(${ot}${jo(ot,'과')} ${vu(t.a[0][1],m0)}${jo(U(m0)||'개','로')} 같음)`; }).join(' · ')}.`);
+    if (diff.length) { P.push(`${TOPW}가 다른 곳은 ${diff.slice(0,8).map(t => `${t.g}(${t.top})`).join(' · ')}${diff.length > 8 ? ` 등 ${diff.length}${sh.w}` : ''}입니다.`); K.push({ l: `${TOPW}가 다른 곳`, v: `${diff.length}${sh.w}`, s: diff.slice(0,3).map(t => t.g).join(' · ') + (diff.length > 3 ? ' 등' : '') }); }
     if (me) {
       P.push(`${cx.me}의 상위 3은 ${me.a.slice(0,3).map(x => `${x[0]} ${vu(x[1],m0)}`).join(' · ')}입니다.`);
       const mine = new Set(me.a.slice(0,5).map(x => x[0]));
@@ -500,7 +510,7 @@ const WIDGET = (() => {
       if (ov.length) { const most = ov.filter(x => x.n === ov[0].n).map(x => x.g), least = ov.filter(x => x.n === ov[ov.length-1].n).map(x => x.g);
         ovS = `${cx.me}와 상위 5 ${IW.n}${jo(IW.n,'이')} 가장 많이 겹치는 곳은 ${most.slice(0,3).join('·')}${most.length > 3 ? ' 등' : ''} (5개 중 ${ov[0].n}개), 가장 적게 겹치는 곳은 ${least.slice(0,3).join('·')}${least.length > 3 ? ' 등' : ''} (${ov[ov.length-1].n}개)입니다.`; P.push(ovS);
         K.splice(1, 0, { l: '우리와 겹침', v: most.slice(0,2).join('·') + (most.length > 2 ? ' 등' : ''), s: `상위 5 중 ${ov[0].n}개` }); }
-    } else { const big = tops.slice().sort((a,b) => b.a[0][1]-a.a[0][1])[0]; P.push(`가장 큰 칸은 ${big.g} × ${big.top} ${vu(big.a[0][1],m0)}입니다.`); }
+    } else { const big = tops.slice().sort((a,b) => b.a[0][1]-a.a[0][1])[0]; P.push(`${PW ? '가장 많이 공저한 짝은' : '가장 큰 칸은'} ${big.g} × ${big.top} ${vu(big.a[0][1],m0)}입니다.`); if (PW) K.push({ l: '가장 많이 공저한 짝', v: `${big.g} × ${big.top}`, s: vu(big.a[0][1],m0) }); }
     let head = hl;
     if (sh.lead === 'overlap' && ovS) {
       /* 질문이 «겹치는 곳»이면 겹침이 결론, 1위 요약은 요점으로 */
@@ -595,7 +605,10 @@ const WIDGET = (() => {
   };
   R.stack100 = (o, a, ms, cx) => {
     const m = cx.M(ms[0]), sh = o.sh;
-    const items = o.sorted.map(r => labs(r)[0]).slice(0, 7), ci = new Map(items.map((it, i) => [it, i]));
+    /* 항목 칸 — INT.share 는 표 칸 수를 맞추려고 sorted 를 [묶음, 항목] 두 칸으로 넘긴다.
+       그때 항목은 0번이 아니라 icol 번이다. 0번으로 읽으면 범례가 전부 '전체'가 되고 색이 안 붙는다. */
+    const ii = (sh.cols === 2 && o.icol != null) ? o.icol : 0;
+    const items = o.sorted.map(r => labs(r)[ii]).slice(0, 7), ci = new Map(items.map((it, i) => [it, i]));
     const legend = `<div style="display:flex;flex-wrap:wrap;gap:6px 12px;font-size:11px;margin:6px 0 8px">${items.map((it, i) => `<span><i style="display:inline-block;width:10px;height:10px;border-radius:2px;background:${col(i)};margin-right:4px;vertical-align:-1px"></i>${esc(it)}</span>`).join('')}</div>`;
     const seg = (a, T) => a.filter(x => ci.has(x[0])).map(x => `<em title="${esc(x[0])} ${vu(x[1],m)} · ${pct(x[1],T)}%" style="display:flex;align-items:center;justify-content:center;width:${pct(x[1],T)}%;height:100%;background:${col(ci.get(x[0]))};font:600 10px var(--num);color:#fff;overflow:hidden">${pct(x[1],T) >= 7 ? Math.round(pct(x[1],T)) + '%' : ''}</em>`).join('');
     if (sh.cols === 1) { const T = sum(nums(o.sorted));
@@ -643,8 +656,8 @@ const WIDGET = (() => {
     const items = [...new Map(a.rows.map(r => [labs(r)[1], 0])).keys()]; const tot = new Map(); a.rows.forEach(r => tot.set(labs(r)[1], (tot.get(labs(r)[1])||0) + (val(r,0)||0)));
     const cols = items.sort((x,y) => tot.get(y)-tot.get(x)).slice(0, 8), max = Math.max(...a.rows.map(r => val(r,0)||0), 1);
     const short = s => { const t = String(s).replace(/,.*$/, ''); return t.length > 26 ? t.slice(0, 25) + '…' : t; };
-    return card(`${m.n} · 진할수록 큼 · 열은 항목 상위 ${cols.length}`, `<div style="overflow-x:auto"><table style="border-collapse:collapse;font-size:11px;width:100%"><thead><tr><th style="text-align:left;padding:4px"></th>${cols.map(c => `<th style="padding:4px 3px;font-weight:600;text-align:center;max-width:76px;white-space:normal;line-height:1.2;font-size:10px;vertical-align:bottom" title="${esc(c)}">${esc(short(c))}</th>`).join('')}</tr></thead><tbody>` +
-      G.slice(0, 20).map(x => { const mp = new Map(x.a); return `<tr><td style="padding:4px;white-space:nowrap;${isMe([x.g],cx) ? 'font-weight:700;color:var(--accent)' : ''}">${esc(x.g)}</td>${cols.map(c => { const v = mp.get(c)||0, al = v/max; return `<td style="padding:4px;text-align:center;background:rgba(75,99,130,${(al*.85).toFixed(2)});color:${al > .5 ? '#fff' : 'var(--ink)'}" title="${esc(x.g)} × ${esc(c)} ${vu(v,m)}">${v ? nfmt(v) : ''}</td>`; }).join('')}</tr>`; }).join('') + '</tbody></table></div>');
+    return card(`${m.n} · 진할수록 큼 · 행 ${Math.min(G.length, 30)}${G.length > 30 ? `/${G.length}` : ''} · 열은 ${(cx.AX && cx.AX[a.cols[1]]) || '항목'} 상위 ${cols.length}${items.length > cols.length ? `/${items.length}` : ''}`, `<div style="overflow-x:auto"><table style="border-collapse:collapse;font-size:11px;width:100%"><thead><tr><th style="text-align:left;padding:4px"></th>${cols.map(c => `<th style="padding:4px 3px;font-weight:600;text-align:center;max-width:76px;white-space:normal;line-height:1.2;font-size:10px;vertical-align:bottom" title="${esc(c)}">${esc(short(c))}</th>`).join('')}</tr></thead><tbody>` +
+      G.slice(0, 30).map(x => { const mp = new Map(x.a); return `<tr><td style="padding:4px;white-space:nowrap;${isMe([x.g],cx) ? 'font-weight:700;color:var(--accent)' : ''}">${esc(x.g)}</td>${cols.map(c => { const v = mp.get(c)||0, al = v/max; return `<td style="padding:4px;text-align:center;background:rgba(75,99,130,${(al*.85).toFixed(2)});color:${al > .5 ? '#fff' : 'var(--ink)'}" title="${esc(x.g)} × ${esc(c)} ${vu(v,m)}">${v ? nfmt(v) : ''}</td>`; }).join('')}</tr>`; }).join('') + '</tbody></table></div>');
   };
   R.kpi = (o, a, ms, cx) => {
     const rows = o.sorted.slice(0, 8), one = a.cols.length === 0 || rows.length === 1;
@@ -662,6 +675,9 @@ const WIDGET = (() => {
     a.rows.slice(0, 40).map(r => `<tr>${labs(r).map(v => `<td style="padding:4px 6px">${esc(v)}</td>`).join('')}${r.slice(1).map((v, j) => `<td style="padding:4px 6px;${typeof v === 'number' ? 'text-align:right' : ''}">${esc(typeof v === 'number' ? vu(v, cx.M((a.mcols || ms)[j])) : (v == null ? '—' : v))}</td>`).join('')}</tr>`).join('') + '</tbody></table></div>');
 
   /* 상위 N 줄. 우리 줄이 그 밖에 있으면 끝에 붙인다 */
+  /* 학과 × 상대 학과 매트릭스는 양방향(A→B, B→A)이 다 들어 있다. 그림(히트맵)은 양쪽을 쓰고, 표는 한 쌍을 한 줄로 */
+  const isPair = a => a.cols[0] === 'dept' && a.cols[1] === 'dept2';
+  const pairOnce = rows => { const seen = new Set(); return rows.filter(r => { const k = labs(r).slice(0,2).slice().sort().join('|'); if (seen.has(k)) return false; seen.add(k); return true; }); };
   const withMe = (rows, cx) => { const s = rows.slice(0, TABLE_N); if (rows.length > TABLE_N) { const me = rows.slice(TABLE_N).find(r => isMe(r, cx)); if (me && !s.some(r => isMe(r, cx))) s.push(me); } return s; };
   /* ── 표 (⑤) : 위젯과 무관하게 상위 N 을 낸다 ─────────────── */
   function table(o, a, ms, cx) {
@@ -675,7 +691,7 @@ const WIDGET = (() => {
           return `<tr class="${isMe([n],cx) ? 'me' : ''}"><td>${esc(n)}</td>${years.map(y => `<td class="n">${mp.has(y) ? vu(mp.get(y),m0) : '—'}</td>`).join('')}<td class="n">${r == null ? '—' : sgn(r) + '%'}</td></tr>`; }).join('')}</tbody></table>`;
       }
     }
-    const rows = withMe(o.sorted || a.rows, cx);
+    const rows = withMe(isPair(a) ? pairOnce(o.sorted || a.rows) : (o.sorted || a.rows), cx);
     const txt = ms.map((id, j) => !!(cx.M(id).text) || (rows.length > 0 && rows.every(r => typeof r[1+j] !== 'number')));
     const hd = `<tr>${a.cols.map(c => `<th>${esc(cx.AX[c]||c)}</th>`).join('')}${ms.map((id, j) => `<th class="${txt[j] ? '' : 'n'}">${esc(cx.M(id).n)}</th>`).join('')}</tr>`;
     return `<table class="t"><thead>${hd}</thead><tbody>${rows.map(r => `<tr class="${isMe(r,cx) ? 'me' : ''}">${labs(r).map(v => `<td>${esc(v)}</td>`).join('')}${ms.map((id, j) => `<td class="${txt[j] ? '' : 'n'}">${typeof r[1+j] === 'number' ? vu(val(r,j),cx.M(id)) : esc(r[1+j] ?? '—')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
@@ -719,6 +735,43 @@ const WIDGET = (() => {
       if (hit.length >= 2 && hit.length < a.rows.length && (Fhit.length >= 2 || hit.length > 2 || Fhit.some(w => nm(cx.me).includes(w)))) { rows = hit; cutF = true; }
       if (miss.length) missLim = `${miss.join(' · ')} 자료가 이 표에 없어 ${miss.length === F.length ? '전체 기준으로 답합니다' : '뺐습니다'}.`;
       if (Fhit.length >= 2 && intent === 'rank_me') intent = 'rank'; }
+    /* 학과 × 상대 학과 매트릭스에 대상 학과 하나를 콕 집으면 그 학과의 행만 남겨 상대 학과 순위로 답한다 */
+    let rowLim = null, pre = null;
+    if (a.cols[1] === 'dept2' && F.length) {
+      const m0 = cx.M(ms[0]), inF = s => Fhit.some(w => nm(s).includes(w));
+      /* 표에 없는 학과가 «다른 학과와 공저 0편»인 학과면 그 사실로 말한다 (자료가 없는 게 아니라 값이 0) */
+      const zs = F.filter(w => !Fhit.includes(w)).map(w => (a.zero || []).find(z => nm(z[0]).includes(w))).filter(Boolean);
+      /* 공저 0편인 학과는 «자료가 없다»가 아니라 «0편»이다. 그 학과를 뺀 나머지만 자료 없음으로 남긴다 */
+      if (zs.length) { const zn = zs.map(z => nm(z[0])), m2 = F.filter(w => !Fhit.includes(w) && !zn.some(z => z.includes(w)));
+        missLim = (m2.length ? `${m2.join(' · ')} 자료가 이 표에 없어 ${m2.length === F.length ? '전체 기준으로 답합니다' : '뺐습니다'}. ` : '') + zs.map(z => `${z[0]}${jo(z[0],'은')} 다른 학과와 공저한 논문이 0편이라 표에 줄이 없습니다${z[1] ? ` (같은 학과 안 공저 ${vu(z[1],m0)})` : ' (같은 학과 안 공저도 0편)'}.`).join(' ') + (Fhit.length ? '' : ' 전체 기준으로 답합니다.') }
+      if (!Fhit.length && zs.length && zs.length === F.length && F.length <= 2) {   /* 물은 학과가 모두 공저 0편: 그 사실이 답이다 */
+        const nz = zs.map(z => z[0]), inner = z => z[1] ? `같은 학과 안 공저 ${vu(z[1],m0)}` : '같은 학과 안 공저도 0편';
+        pre = { headline: nz.length === 2 ? `${nz[0]}${jo(nz[0],'과')} ${nz[1]}의 ${m0.n}${jo(m0.n,'은')} 0${U(m0)}입니다` : `${nz[0]}${jo(nz[0],'은')} 다른 학과와 공저한 논문이 0${U(m0)}입니다`,
+          points: zs.map(z => `${z[0]}${jo(z[0],'은')} 어느 학과와도 공저가 없습니다 (${inner(z)}).`), kpi: nz.length === 2 ? [{ l: `${nz[0]} × ${nz[1]}`, v: `0${U(m0)}`, s: m0.n }] : [{ l: nz[0], v: `0${U(m0)}`, s: `다른 학과와의 ${m0.n}` }] };
+        rows = []; A = { ...a, rows }; intent = 'lookup'; widget = 'kpi'; cutF = false; missLim = null; rowLim = `${nz.join(' · ')}${jo(nz[nz.length-1],'은')} 표에 줄이 없어 표를 내지 않습니다 (표 전체는 ${a.n}칸).`; }
+      else if (!Fhit.length) {}
+      else if (Fhit.length === 1 && zs.length === 1 && F.length === 2) {   /* 한쪽은 표에 있고 다른 쪽은 공저 0편인 학과: 그 쌍은 0편 */
+        const r1 = a.rows.filter(r => inF(labs(r)[0])), g = r1.length ? labs(r1[0])[0] : Fhit[0], z = zs[0][0], fi = s => F.findIndex(w => nm(s).includes(w));
+        const names = [g, z].sort((x,y) => fi(x) - fi(y));
+        pre = { headline: `${names[0]}${jo(names[0],'과')} ${names[1]}의 ${m0.n}${jo(m0.n,'은')} 0${U(m0)}입니다`, points: r1.length ? [`${g}의 상대 학과 ${r1.length}곳에 ${z}${jo(z,'은')} 없습니다 (1위 ${labs(r1.slice().sort((x,y) => val(y,0)-val(x,0))[0])[1]} ${vu(Math.max(...r1.map(r => val(r,0))),m0)}).`] : [], kpi: [{ l: `${names[0]} × ${names[1]}`, v: `0${U(m0)}`, s: m0.n }] };
+        if (r1.length) { rows = r1.map(r => [[labs(r)[1]], ...r.slice(1)]); A = { ...a, cols: ['dept2'], rows }; rowLim = `${g}${jo(g,'과')} 공저한 학과 ${r1.length}곳의 줄만 남겼습니다 (표 전체는 ${a.n}칸).`; }
+        intent = 'lookup'; widget = 'kpi'; cutF = false; }
+      else if (Fhit.length === 1) { const r1 = a.rows.filter(r => inF(labs(r)[0]));
+        if (r1.length) { const g = labs(r1[0])[0]; rows = r1.map(r => [[labs(r)[1]], ...r.slice(1)]); A = { ...a, cols: ['dept2'], rows }; intent = 'rank'; widget = 'bar_h'; cutF = false; perHead = `${g} 기준 `;
+          rowLim = `${g}${jo(g,'과')} 공저한 학과 ${r1.length}곳의 줄만 남겼습니다 (표 전체는 ${a.n}칸).`; } }
+      else if (Fhit.length === 2) {   /* 두 학과의 칸 하나: 편수와, 서로의 상대 학과 가운데 몇째인지 */
+        const both = a.rows.filter(r => inF(labs(r)[0]) && inF(labs(r)[1])), fi = s => Fhit.findIndex(w => nm(s).includes(w));
+        const names = [...new Set(a.rows.filter(r => inF(labs(r)[0])).map(r => labs(r)[0]))].sort((x,y) => fi(x) - fi(y));   /* 질문에 나온 순서대로 */
+        const v = both.length ? val(both[0],0) : 0, K = [], P = [];
+        names.forEach(g => { const mine = a.rows.filter(r => labs(r)[0] === g).sort((x,y) => val(y,0)-val(x,0)), i = mine.findIndex(r => inF(labs(r)[1])), other = names.find(x => x !== g) || '';
+          if (i >= 0) { const rk = rkw(mine.map(r => val(r,0)), val(mine[i],0)), v0 = val(mine[0],0), same = mine.filter(r => val(r,0) === v0 && labs(r)[1] !== labs(mine[i])[1]).map(r => labs(r)[1]);
+            const tail = mine.length === 1 ? '' : rk === '1위' ? '' : rk === '공동 1위' ? ` (같은 ${vu(v0,m0)}: ${same.join(' · ')})` : ` (1위 ${labs(mine[0])[1]} ${vu(v0,m0)})`;   /* 11위·공동 11위는 1위가 아니다 */   /* 1위면 1위를 또 적지 않는다 */
+            P.push(mine.length === 1 ? `${g}의 상대 학과는 ${other} 한 곳뿐입니다.` : `${g}의 상대 학과 ${mine.length}곳 가운데 ${other}${jo(other,'은')} ${rk}입니다${tail}.`); K.push({ l: `${g} 쪽에서 본 순위`, v: rk, s: mine.length === 1 ? '상대 학과 1곳뿐' : `상대 학과 ${mine.length}곳 중` }); }
+          else P.push(`${g}의 상대 학과 ${mine.length}곳에 ${other}${jo(other,'은')} 없습니다 (1위 ${labs(mine[0])[1]} ${vu(val(mine[0],0),m0)}).`); });
+        if (names.length === 2) { pre = { headline: `${names[0]}${jo(names[0],'과')} ${names[1]}의 ${m0.n}${jo(m0.n,'은')} ${vu(v,m0)}입니다`, points: P, kpi: [{ l: `${names[0]} × ${names[1]}`, v: vu(v,m0), s: m0.n }, ...K].slice(0,3) };
+          rows = both.length ? [both.find(r => labs(r)[0] === names[0]) || both[0]] : rows; intent = 'lookup'; widget = 'kpi'; cutF = false; rowLim = `${names[0]} · ${names[1]} 두 학과의 칸만 봤습니다 (표 전체는 ${a.n}칸).`; } }
+      else { const sub = a.rows.filter(r => inF(labs(r)[0]) && inF(labs(r)[1]));   /* 셋 이상: 그 학과들끼리의 매트릭스 */
+        if (sub.length) { rows = sub; cutF = false; rowLim = `${Fhit.length}개 학과끼리의 칸 ${sub.length}개만 남겼습니다 (표 전체는 ${a.n}칸).`; } } }
     /* 기간 한정: 연도 축이 있으면 그 기간 줄만, 한 해만 남으면 추세 대신 그 해의 순위·값, 연도 축이 없으면 전체 기간임을 밝힌다 */
     const yi = a.cols.indexOf('y'); let perOne = null;
     if (per && yi < 0) perLims.push(per.to < lo || per.from > hi ? `${per.how} 자료가 표에 없어 ${lo}–${hi}년 전체로 답합니다.` : `기간을 나눈 표가 없어 ${lo}–${hi}년 전체로 답합니다 (질문: ${per.how}).`);
@@ -734,7 +787,7 @@ const WIDGET = (() => {
     /* 질문어: «몇 편·몇 건»이면 개수를 앞세우고, «나눠·각각·따로»면 지표마다 순위를 결론에 나란히 */
     const qs = (rec.q || []).join(' '); sh.askCount = /몇 ?(편|건|명|개|곳|쌍)/.test(qs); sh.askSplit = /나눠|각각|따로/.test(qs); sh.askGroup = /끼리|서로|비교|견주|별로/.test(qs); sh.askMetric = /어떤 (데이터|지표|값)|어느 (데이터|지표|값)|무슨 (데이터|지표)/.test(qs);
     if (Fhit.length === 1) sh.askGroup = false;   /* 대상 하나를 콕 집은 질문은 집단 비교가 아니다 */
-    const o = (INT[intent] || INT.rank)(rows, ms, sh, cx) || {};
+    const o = pre || (INT[intent] || INT.rank)(rows, ms, sh, cx) || {};
     if (o.rows) rows = o.rows;
     if (perHead && o.headline) o.headline = perHead + o.headline;
     if (Fhit.length === 1 && rows === A.rows && !nm(cx.me).includes(Fhit[0]) && /^(rank|low|quality|rank_me)$/.test(intent) && !A.cols.includes('y') && !(a.capped && !a.stats)) {
@@ -777,15 +830,17 @@ const WIDGET = (() => {
     o.intent = intent; o.sh = sh; o.sorted = o.sorted || rows;
     const mb = cutF && !A.cols.includes('y') ? A.rows : rows, miss = cx.M(ms[0]).text || (mb.length && mb.every(r => typeof r[1] !== 'number')) ? 0 : mb.filter(r => val(r, 0) == null).length;   /* 대상으로 자른 표의 순위 모수는 원표 */
     if (miss) o.miss = miss;
-    let fig = ''; try { fig = (R[widget] || R.bar_h)(o, { ...A, rows }, ms, cx); } catch (e) { fig = ''; o.err = String(e); }
+    let fig = ''; if (rows.length) try { fig = (R[widget] || R.bar_h)(o, { ...A, rows }, ms, cx); } catch (e) { fig = ''; o.err = String(e); }   /* 줄이 없으면 그림도 없다 (근거 칸의 KPI 가 답이다) */
     const W = cx.W[widget] || {}, lims = [];
     if (sh.d === 'low' && intent !== 'quality') lims.push(`${cx.M(ms[0]).n}${jo(cx.M(ms[0]).n,'은')} 낮을수록 좋은 값입니다.`);
     (o.lims || []).forEach(l => lims.push(l));
     if (a.capped && a.stats) lims.push(rows !== a.rows ? `표는 전체 ${N(a.n)}${sh.w} 중 상위 ${a.rows.length}${sh.w}까지만 담았습니다 (합계·중앙값·최소는 전체 ${N(a.n)}${sh.w}${jo(sh.w,'로')} 계산).` : `표는 전체 ${N(a.n)}${sh.w} 중 상위 ${rows.length}${sh.w}까지만 담고 그중 ${Math.min(rows.length, TABLE_N)}${sh.w}${isMeIn(rows, cx) ? '과 우리 줄' : ''}만 보입니다 (합계·중앙값·최소는 전체 ${N(a.n)}${sh.w}${jo(sh.w,'로')} 계산).`);
     else if (a.capped) lims.push(rows.length <= TABLE_N ? `전체 ${N(a.n)}${sh.w} 중 상위 ${rows.length}${sh.w}만 미리 계산해 두었습니다.` : `전체 ${N(a.n)}${sh.w} 중 상위 ${rows.length}${sh.w}만 미리 계산해 두었고, 표는 그중 ${TABLE_N}${sh.w}${isMeIn(rows, cx) ? '과 우리 줄' : ''}만 보입니다.`);
-    else if (rows.length > TABLE_N && !o.series) lims.push(`표는 ${TABLE_N}줄만 보입니다 (전체 ${rows.length}줄).`);
+    else if (rows.length > TABLE_N && !o.series) { const nT = isPair(A) ? pairOnce(rows).length : rows.length; if (nT > TABLE_N) lims.push(`표는 ${TABLE_N}줄만 보입니다 (전체 ${nT}${isPair(A) ? '쌍, 두 학과 한 쌍을 한 줄로' : '줄'}).`); }
     if (o.miss) lims.push(`${cx.M(ms[0]).n} 값이 없는 ${o.miss}${sh.w}${jo(sh.w,'은')} 순위에서 뺐습니다.`);
     if (missLim) lims.push(missLim);
+    if (rowLim) lims.push(rowLim);
+    if (a.note) lims.push(a.note);
     if (Fhit.length && cutF && rows.length < a.rows.length) { const yA = A.cols.indexOf('y'), nEnt = yA >= 0 ? new Set(rows.map(r => labs(r).filter((_, i) => i !== yA).join('·'))).size : rows.length;
       lims.push(`${Fhit.join(' · ')} 기준으로 ${nEnt}${yA >= 0 ? (sh.w || '개') : '줄'}만 남겼습니다.`); }
     perLims.forEach(l => lims.push(l));
@@ -795,8 +850,17 @@ const WIDGET = (() => {
     const said = new Set(lims.flatMap(thr)), caveats = (rec.caveats || []).filter(c => !thr(c).some(t => said.has(t)) && !(o.deix && /고르지 않/.test(c)));
     return { widget, wname: `${W.no || ''} ${W.name || widget}`.trim(), intent, iname: (cx.I[intent] || {}).name || intent,
       headline: o.headline || '', points: (o.points || []).filter(Boolean).slice(0, 5), kpi: (o.kpi || []).slice(0, 3),
-      fig, table: table(o, { ...A, rows }, ms, cx), lims, caveats, rows, sorted: o.sorted, err: o.err };
+      fig, table: rows.length ? table(o, { ...A, rows }, ms, cx) : '', lims, caveats: caveats.map(pol), rows, sorted: o.sorted, err: o.err };
   }
-  return { build, shape, intents: Object.keys(INT), widgets: Object.keys(R) };
+  /* 해라체 종결(«~다»)을 합쇼체(«~습니다»)로. 레시피 주의문은 사람이 해라체로 써 두었고 한계 문장은 «~습니다»라 한 목록에서 섞이지 않게 맞춘다 */
+  const STEM0 = '크르니이쁘고하되내쓰두보주서오나가비';   /* 받침 없는 용언 어간(크다·다르다·아니다·이다…). 그 밖의 받침 없는 글자 + 다는 명사 + 이다로 본다(집계다 → 집계입니다) */
+  const polite = t => { const m = t.match(/([가-힣])니다\.?$/); return !!m && (m[1] === '습' || (m[1].charCodeAt(0) - 0xAC00) % 28 === 17); };   /* 이미 «~습니다 / ~ㅂ니다» */
+  const pol = s => String(s).split(/(?<=\.)\s+/).map(t => { if (polite(t)) return t;
+    return t.replace(/([가-힣])다(\.?)$/, (m, ch, dot) => { const c = ch.charCodeAt(0) - 0xAC00, jong = c % 28, base = c - jong;
+      if (ch === '는') return '습니다' + dot;                                                        /* 않는다 → 않습니다 */
+      if (jong === 4) return String.fromCharCode(0xAC00 + base + 17) + '니다' + dot;                 /* 선다 → 섭니다 · 된다 → 됩니다 */
+      if (jong === 0) return STEM0.includes(ch) ? String.fromCharCode(0xAC00 + base + 17) + '니다' + dot : ch + '입니다' + dot;   /* 크다 → 큽니다 · 수다 → 수입니다 */
+      return ch + '습니다' + dot; }); }).join(' ');                                                   /* 있다 → 있습니다 */
+  return { build, shape, intents: Object.keys(INT), widgets: Object.keys(R), pol };
 })();
 if (typeof module !== 'undefined') module.exports = WIDGET;

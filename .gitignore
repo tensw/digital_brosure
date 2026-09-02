@@ -14,6 +14,7 @@ v2/bk21/board/_src/data/
 # BK21 보드 17MB — 공개 저장소에 두지 않는다. 서버가 깃 밖에서 보관한다.
 # 만드는 법: v2/bk21/board/_src/build.sh · 절차는 v2/bk21/docs/source-map.md
 v2/bk21/board/index.html
+v2/bk21/board/people.json
 
 # BK21 외부 API 키. 서버에만 둔다. {"GEMINI_API_KEY":"..."} · 권한 600
 .bk21-secrets.json

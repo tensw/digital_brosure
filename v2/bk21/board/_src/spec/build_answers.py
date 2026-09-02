@@ -20,7 +20,7 @@ M = json.load(io.open(os.path.join(HERE, 'metrics.json'), encoding='utf-8'))
 R = json.load(io.open(os.path.join(HERE, 'recipes.json'), encoding='utf-8'))
 MET = {m['id']: m for m in M['metrics']}
 CAP = 60   # 화면에 낼 행 상한 (1축)
-CAP2 = 200 # 2축(학과×역할 같은 구성표)은 잘리면 몫이 틀리므로 여기까지는 통째로 둔다
+CAP2 = 300 # 2축(학과×역할 같은 구성표·학과×상대학과 276칸)은 잘리면 몫이 틀리므로 여기까지는 통째로 둔다
 def cap_for(cols): return CAP2 if len(cols) >= 2 else CAP
 
 # ── 논문 한 건을 한 행으로 펴 둔다. 축이 전부 붙어 있어 어느 방향으로도 자른다.
@@ -341,7 +341,15 @@ def agg_new(r):
             for e in (fl or [])[:6]:
                 rows.append([[un, e[0]], e[1]])
         rows.sort(key=lambda x: -(x[1] or 0)); return rows, ['uni','f'], len(rows)
-    if rid in ('n20_netmap', 'gnb_net', 'e21_net_dept', 'n06_partners'):   # 학과 쌍(net.top 상위 쌍)
+    if rid in ('n20_netmap', 'n06_partners'):   # 학과 × 상대 학과 매트릭스(net.mtx, 대각선 제외 · 양방향)
+        rows=[[[a, b], n] for a, row in N['mtx'].items() for b, n in row.items() if a != b and n > 0]
+        rows.sort(key=lambda x: -x[1])
+        sc = N.get('scope') or {}
+        extra = {'note': f"같은 학과 안의 공저 {sc.get('학과 내', 0):,}편은 표에서 뺐고, 학과 사이 공저 {sc.get('학과 간', 0):,}편만 담았습니다 (한 편이 양쪽 학과 칸에 각각 잡힙니다).",
+                 # 다른 학과와 공저가 한 편도 없는 학과: 표에 줄이 없으므로 그 사실을 따로 둔다 (같은 학과 안 공저 편수와 함께)
+                 'zero': [[a, row.get(a, 0)] for a, row in N['mtx'].items() if not any(n > 0 for b, n in row.items() if b != a)]}
+        return rows, ['dept', 'dept2'], len(rows), ['coauth_papers'], extra
+    if rid in ('gnb_net', 'e21_net_dept'):   # 학과 쌍(net.top 상위 쌍)
         rows=[[[e['a'] + ' ↔ ' + e['b']], e['n']] for e in N['top']]
         rows.sort(key=lambda x: -x[1]); return rows, ['pair'], len(rows)
     return None
@@ -387,6 +395,7 @@ for r in R['recipes']:
             if me: keep = keep[:-1] + [me]
         ANS[r['id']] = {'cols': cols, 'measures': ms, 'n': n,
                         'rows': keep, 'capped': n > cap}
+        if len(res) > 4 and res[4]: ANS[r['id']].update(res[4])   # 집계가 덧붙인 것: note(한계 한 줄, 위젯이 그대로 낸다) · zero(표에 줄이 없는 학과)
         # 상한에 걸리면 전체 기준 합계·중앙값·꼴찌를 같이 둔다 (표 안 60줄로 점유율을 내면 부풀려진다)
         if n > cap and len(rows) == n:   # 전 행을 손에 쥔 경우만. 추천 상위 N처럼 일부만 온 목록은 통계를 내지 않는다
             vs = sorted([x for x in rows if isinstance(x[1], (int, float))], key=lambda x: -x[1])

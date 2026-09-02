@@ -1685,24 +1685,24 @@
    ],
    "nucleus": "relation",
    "axes": [
-    "pair"
+    "dept",
+    "dept2"
    ],
    "filters": {},
    "measures": [
     "coauth_papers"
    ],
    "against": null,
-   "chart": "table",
+   "chart": "matrix",
    "caveats": [
-    "사람 단위 자료가 화면에 없어 학과 단위로 답합니다",
-    "학과 쌍: 두 학과의 공저 짝",
+    "학과·전공: 기본 조직 단위",
+    "상대 학과: 공저의 상대편 학과",
     "동명이인 판별 위에 선다"
    ],
    "covered_by": [],
    "blocked": null,
-   "case": "rank",
-   "widget": "bar_h",
-   "note": "사람 단위 자료가 화면에 없어 학과 단위로 답합니다"
+   "case": "profile",
+   "widget": "heat"
   },
   {
    "id": "n07_netsize",
@@ -2026,11 +2026,14 @@
   {
    "id": "n20_netmap",
    "q": [
-    "학과 협업을 그림으로 보면"
+    "학과 협업을 그림으로 보면",
+    "학과 × 학과 협업 매트릭스",
+    "어느 학과끼리 공저가 많나 표로"
    ],
    "nucleus": "relation",
    "axes": [
-    "pair"
+    "dept",
+    "dept2"
    ],
    "filters": {},
    "measures": [
@@ -2039,18 +2042,20 @@
    "against": null,
    "chart": "matrix",
    "caveats": [
-    "학과 쌍: 두 학과의 공저 짝",
+    "학과·전공: 기본 조직 단위",
+    "상대 학과: 공저의 상대편 학과",
     "동명이인 판별 위에 선다"
    ],
    "covered_by": [],
    "blocked": null,
-   "case": "rank",
-   "widget": "bar_h"
+   "case": "profile",
+   "widget": "heat"
   },
   {
    "id": "p01_person_year",
    "q": [
-    "이 사람이 꾸준히 쓰고 있나"
+    "이 사람이 꾸준히 쓰고 있나",
+    "OOO 교수는 해마다 몇 편 쓰나"
    ],
    "nucleus": "paper",
    "axes": [],
@@ -2063,12 +2068,15 @@
    "caveats": [],
    "covered_by": [],
    "blocked": null,
-   "needs": "person"
+   "needs": "person",
+   "case": "trend",
+   "widget": "line"
   },
   {
    "id": "p02_person_top",
    "q": [
-    "이 사람의 대표작이 무엇인가"
+    "이 사람의 대표작이 무엇인가",
+    "OOO 교수의 가장 많이 인용된 논문"
    ],
    "nucleus": "paper",
    "axes": [],
@@ -2081,12 +2089,15 @@
    "caveats": [],
    "covered_by": [],
    "blocked": null,
-   "needs": "person"
+   "needs": "person",
+   "case": "rank",
+   "widget": "bar_h"
   },
   {
    "id": "p03_person_score",
    "q": [
-    "내 점수가 왜 이 값인가"
+    "내 점수가 왜 이 값인가",
+    "OOO 교수 점수는 어떻게 구성되나"
    ],
    "nucleus": "paper",
    "axes": [],
@@ -2104,7 +2115,9 @@
    ],
    "covered_by": [],
    "blocked": null,
-   "needs": "person"
+   "needs": "person",
+   "case": "share",
+   "widget": "stack100"
   }
  ]
 }

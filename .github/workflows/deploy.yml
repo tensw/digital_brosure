@@ -52,6 +52,15 @@ jobs:
               echo "[bk21] 최종 보드 없음 — 화면이 안 뜬다"
             fi
 
+            # 사람 단위 답변용 people.json. 보드 html 에 박힌 데이터에서 서버가 직접 만든다.
+            # 깃 밖 파일이고 /bk21 로그인 문 뒤에서만 읽힌다. 실패해도 배포는 멈추지 않는다(사람 질문만 안 된다).
+            PEOPLE=v2/bk21/board/people.json
+            if [ -f "$BOARD" ]; then
+              node v2/bk21/board/_src/spec/build_people.js "$BOARD" "$PEOPLE" \
+                && echo "[bk21] people.json $(stat -c%s "$PEOPLE") bytes" \
+                || echo "[bk21] people.json 생성 실패 — 사람 질문이 안 된다"
+            fi
+
             # BK21 질문 라우팅 키. 깃 밖 파일이라 reset --hard 에 안 지워지지만,
             # 새 서버에서도 따라가도록 GitHub 시크릿에서 매 배포마다 쓴다.
             if [ -n "$GEMINI_API_KEY" ]; then
