@@ -27,14 +27,14 @@
    "caveats": [
     "학과·전공: 기본 조직 단위",
     "연도: 2026 제외 · 2025 집계 중",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다",
-    "내부 관리기준이며 공식 평가 결과가 아니다. 미판정 논문은 0점",
     "저널의 분야 내 순위이지 논문의 인용 순위가 아니다. 연도 비교에는 커버리지를 함께 낸다"
    ],
    "covered_by": [
     "SKKU BK21 성과관리"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "trend",
+   "widget": "line"
   },
   {
    "id": "gnb_exec",
@@ -63,9 +63,9 @@
    "against": "gy",
    "chart": "band",
    "caveats": [
-    "계열: 계열 넘는 비교 금지",
+    "계열: 이공·의약생명·인문사회. 계열마다 참여교수 수와 배점표가 다르다",
     "내부 관리기준이며 공식 평가 결과가 아니다. 미판정 논문은 0점",
-    "합계는 교수 많은 곳이 위로 온다. 1인당으로 견준다",
+    "환산점수 합계를 참여교수 수로 나눈 값. 계열끼리는 이 값으로 견준다",
     "계열 집계다. 학과로 나눌 수 없다",
     "LQ 교육역량은 자료를 못 받아 축이 비어 있다",
     "미판정은 낮은 등급이 아니다"
@@ -73,7 +73,9 @@
    "covered_by": [
     "SKKU BK21 KPI"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "lookup",
+   "widget": "table_rank"
   },
   {
    "id": "gnb_net",
@@ -83,7 +85,7 @@
    ],
    "nucleus": "relation",
    "axes": [
-    "dept"
+    "pair"
    ],
    "filters": {},
    "measures": [
@@ -92,13 +94,15 @@
    "against": null,
    "chart": "matrix",
    "caveats": [
-    "학과·전공: 기본 조직 단위",
+    "학과 쌍: 두 학과의 공저 짝",
     "동명이인 판별 위에 선다"
    ],
    "covered_by": [
     "교내 관계망"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "rank",
+   "widget": "bar_h"
   },
   {
    "id": "gnb_glob",
@@ -108,24 +112,25 @@
    ],
    "nucleus": "relation",
    "axes": [
-    "f"
+    "dept"
    ],
-   "filters": {
-    "scope": "교외"
-   },
+   "filters": {},
    "measures": [
-    "partner_count"
+    "ext_partner",
+    "ext_ratio"
    ],
    "against": null,
-   "chart": "bar_sorted",
+   "chart": "table",
    "caveats": [
-    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다",
-    "수가 적어도 좋은 상대면 값어치가 크다"
+    "학과·전공: 기본 조직 단위",
+    "상대 사람 수가 아니라 관계 수다"
    ],
    "covered_by": [
     "글로벌 관계망"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "rank",
+   "widget": "table_rank"
   },
   {
    "id": "gnb_exp",
@@ -144,12 +149,16 @@
    "against": null,
    "chart": "table",
    "caveats": [
+    "사람 단위 자료가 화면에 없어 학과 단위로 답합니다",
     "학과·전공: 기본 조직 단위"
    ],
    "covered_by": [
     "분야 공저자 탐색"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "rank",
+   "widget": "table_rank",
+   "note": "사람 단위 자료가 화면에 없어 학과 단위로 답합니다"
   },
   {
    "id": "gnb_univ",
@@ -170,12 +179,14 @@
    "chart": "line_multi",
    "caveats": [
     "연도: 2026 제외 · 2025 집계 중",
-    "대학 전체이며 BK21 참여자 범위가 아니다"
+    "OpenAlex 기관 통계의 대학 전체 논문이며 BK21 참여자 범위가 아니다"
    ],
    "covered_by": [
     "대학 연구력 비교"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "trend",
+   "widget": "line"
   },
   {
    "id": "gnb_sheet",
@@ -199,13 +210,16 @@
    "against": "국내7",
    "chart": "table",
    "caveats": [
-    "대학 전체이며 BK21 참여자 범위가 아니다",
+    "OpenAlex 기관 통계의 대학 전체 논문이며 BK21 참여자 범위가 아니다",
+    "최근 해 논문은 인용이 덜 쌓여 연도 비교에 쓰지 않는다",
     "국제지와 합쳐 한 줄로 세우면 인문사회가 낮게 보인다"
    ],
    "covered_by": [
     "대학별 성과표"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "rank_me",
+   "widget": "table_rank"
   },
   {
    "id": "gnb_ucmp",
@@ -215,25 +229,24 @@
    ],
    "nucleus": "university",
    "axes": [
-    "y",
-    "f"
+    "y"
    ],
    "filters": {},
    "measures": [
-    "uni_works",
-    "uni_fwci"
+    "ucmp_works"
    ],
    "against": "BK21_8",
    "chart": "heatmap",
    "caveats": [
     "연도: 2026 제외 · 2025 집계 중",
-    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다",
-    "대학 전체이며 BK21 참여자 범위가 아니다"
+    "BIBLO에 적재한 논문만 센다. OpenAlex 기관 통계(대학 전체)보다 적다"
    ],
    "covered_by": [
     "대학 BK21 비교"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "trend",
+   "widget": "line"
   },
   {
    "id": "gnb_pool",
@@ -254,12 +267,14 @@
    "chart": "table",
    "caveats": [
     "학과·전공: 기본 조직 단위",
-    "미판정은 낮은 등급이 아니다. 최상위 저널이 들어 있다"
+    "KPI 시트 기준(저널등급 g 없음). 성과관리 배점표의 등급 U(미판정)와 정의가 다르다. 미판정은 낮은 등급이 아니다"
    ],
    "covered_by": [
     "데이터풀"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "quality",
+   "widget": "table_rank"
   },
   {
    "id": "new_hss_field",
@@ -279,11 +294,12 @@
    "against": null,
    "chart": "bar_sorted",
    "caveats": [
-    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다",
-    "분야는 학과 집계로만 있다. 연도·AI 등 다른 축과 겹칠 수 없다"
+    "분야: 논문 한 건마다 붙어 있지 않다. 학과·대학·분야 단위 집계로만 있다. 분야가 여러 개인 논문은 분야마다 세므로 합계가 논문 수보다 많다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "rank",
+   "widget": "bar_h"
   },
   {
    "id": "new_ai_grade",
@@ -303,11 +319,19 @@
    "against": null,
    "chart": "stack100",
    "caveats": [
-    "저널등급: U는 미판정",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "저널등급: S는 JCR 상위 10% 저널, A는 25%, B는 50%, C는 그 아래, K는 KCI, P는 학술대회, U는 미판정"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "share",
+   "widget": "stack100",
+   "pick": {
+    "i": [
+     "S",
+     "A"
+    ],
+    "name": "상위 등급(S·A)"
+   }
   },
   {
    "id": "new_jr_role",
@@ -326,11 +350,20 @@
    ],
    "against": null,
    "chart": "stack100",
-   "caveats": [
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
-   ],
+   "caveats": [],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "share",
+   "widget": "stack100",
+   "pick": {
+    "i": [
+     "제1",
+     "교신",
+     "제1+교신",
+     "단독"
+    ],
+    "name": "주저자"
+   }
   },
   {
    "id": "new_group",
@@ -351,7 +384,9 @@
     "내부 관리기준이며 공식 평가 결과가 아니다. 미판정 논문은 0점"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "rank",
+   "widget": "bar_h"
   },
   {
    "id": "new_uni_pct",
@@ -383,7 +418,7 @@
    ],
    "filters": {},
    "measures": [
-    "partner_count"
+    "ext_new"
    ],
    "against": null,
    "chart": "bar_year",
@@ -392,7 +427,9 @@
     "수가 적어도 좋은 상대면 값어치가 크다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "trend",
+   "widget": "line"
   },
   {
    "id": "new_stu_grade",
@@ -413,11 +450,12 @@
    "against": null,
    "chart": "stack100",
    "caveats": [
-    "저널등급: U는 미판정",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "저널등급: S는 JCR 상위 10% 저널, A는 25%, B는 50%, C는 그 아래, K는 KCI, P는 학술대회, U는 미판정"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "share",
+   "widget": "stack100"
   },
   {
    "id": "s01_uni_field",
@@ -438,10 +476,12 @@
    "against": "국내7",
    "chart": "scatter",
    "caveats": [
-    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다"
+    "분야: 논문 한 건마다 붙어 있지 않다. 학과·대학·분야 단위 집계로만 있다. 분야가 여러 개인 논문은 분야마다 세므로 합계가 논문 수보다 많다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "edge",
+   "widget": "heat"
   },
   {
    "id": "s02_qual_trend",
@@ -464,11 +504,12 @@
    "chart": "line_multi",
    "caveats": [
     "연도: 2026 제외 · 2025 집계 중",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다",
     "저널의 분야 내 순위이지 논문의 인용 순위가 아니다. 연도 비교에는 커버리지를 함께 낸다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "trend",
+   "widget": "line"
   },
   {
    "id": "s03_concentration",
@@ -481,16 +522,21 @@
    ],
    "filters": {},
    "measures": [
-    "dept_concentration"
+    "dept_concentration",
+    "stu_first_n"
    ],
    "against": "gy",
    "chart": "bar_sorted",
    "caveats": [
+    "집중도는 학생 주저자 실적 기준입니다. 교수 실적의 쏠림은 따로 집계돼 있지 않습니다",
     "학과·전공: 기본 조직 단위",
-    "사람이 적은 학과는 크게 흔들린다"
+    "학생 주저자 건수가 적은 학과(10건 미만)는 100%가 쉽게 나온다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "conc",
+   "widget": "bar_h",
+   "note": "집중도는 학생 주저자 실적 기준입니다. 교수 실적의 쏠림은 따로 집계돼 있지 않습니다"
   },
   {
    "id": "s04_stu_spread",
@@ -510,10 +556,14 @@
    "against": null,
    "chart": "stack100",
    "caveats": [
+    "사람 단위 자료가 화면에 없어 학과 단위로 답합니다",
     "학과·전공: 기본 조직 단위"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "conc",
+   "widget": "pareto",
+   "note": "사람 단위 자료가 화면에 없어 학과 단위로 답합니다"
   },
   {
    "id": "s05_prof_stu",
@@ -528,15 +578,18 @@
     "kind": "교수-학생"
    },
    "measures": [
-    "coauth_papers"
+    "rel_kind"
    ],
    "against": null,
    "chart": "table",
    "caveats": [
-    "동명이인 판별 위에 선다"
+    "사람 단위 자료가 화면에 없어 교수·학생 구분 단위의 공저쌍 수로 답합니다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "lookup",
+   "widget": "kpi",
+   "note": "사람 단위 자료가 화면에 없어 교수·학생 구분 단위의 공저쌍 수로 답합니다"
   },
   {
    "id": "s06_partner_mix",
@@ -560,7 +613,9 @@
     "1년이면 일회성이다. 반복관계와 갈라 본다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "link",
+   "widget": "scatter"
   },
   {
    "id": "s07_ext_new",
@@ -571,11 +626,9 @@
    "axes": [
     "y"
    ],
-   "filters": {
-    "scope": "학과 간"
-   },
+   "filters": {},
    "measures": [
-    "partner_count"
+    "ext_new"
    ],
    "against": null,
    "chart": "line_multi",
@@ -584,7 +637,41 @@
     "수가 적어도 좋은 상대면 값어치가 크다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "trend",
+   "widget": "line",
+   "also": "s07b_ext_dur"
+  },
+  {
+   "id": "s07b_ext_dur",
+   "q": [
+    "교외 협력이 얼마나 오래 이어지나"
+   ],
+   "nucleus": "relation",
+   "axes": [
+    "dur"
+   ],
+   "filters": {},
+   "measures": [
+    "ext_rel"
+   ],
+   "against": null,
+   "chart": "bar_sorted",
+   "caveats": [
+    "지속 기간: 단발(1년) / 2~3년 / 4~6년 / 7년+"
+   ],
+   "covered_by": [],
+   "blocked": null,
+   "case": "share",
+   "widget": "stack100",
+   "pick": {
+    "i": [
+     "2~3년",
+     "4~6년",
+     "7년+"
+    ],
+    "name": "2년 이상 이어진 관계"
+   }
   },
   {
    "id": "s08_field_conc",
@@ -602,11 +689,12 @@
    "against": null,
    "chart": "stack100",
    "caveats": [
-    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다",
-    "분야는 학과 집계로만 있다. 연도·AI 등 다른 축과 겹칠 수 없다"
+    "분야: 논문 한 건마다 붙어 있지 않다. 학과·대학·분야 단위 집계로만 있다. 분야가 여러 개인 논문은 분야마다 세므로 합계가 논문 수보다 많다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "conc",
+   "widget": "pareto"
   },
   {
    "id": "s09_ai_lead",
@@ -615,25 +703,33 @@
    ],
    "nucleus": "paper",
    "axes": [
-    "y"
+    "y",
+    "r"
    ],
    "filters": {
-    "ai": "해당",
-    "role": "주저자"
+    "ai": "해당"
    },
    "measures": [
-    "paper_count",
-    "jcr_pct"
+    "paper_count"
    ],
    "against": null,
    "chart": "line_multi",
    "caveats": [
-    "연도: 2026 제외 · 2025 집계 중",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다",
-    "저널의 분야 내 순위이지 논문의 인용 순위가 아니다. 연도 비교에는 커버리지를 함께 낸다"
+    "연도: 2026 제외 · 2025 집계 중"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "grow",
+   "widget": "line",
+   "pick": {
+    "i": [
+     "제1",
+     "교신",
+     "제1+교신",
+     "단독"
+    ],
+    "name": "주도"
+   }
   },
   {
    "id": "s10_lead_quality",
@@ -654,11 +750,12 @@
    "against": "gy",
    "chart": "stack100",
    "caveats": [
-    "저널등급: U는 미판정",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "저널등급: S는 JCR 상위 10% 저널, A는 25%, B는 50%, C는 그 아래, K는 KCI, P는 학술대회, U는 미판정"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "share",
+   "widget": "stack100"
   },
   {
    "id": "s11_fix_first",
@@ -678,10 +775,12 @@
    "chart": "table",
    "caveats": [
     "학과·전공: 기본 조직 단위",
-    "미판정은 낮은 등급이 아니다. 최상위 저널이 들어 있다"
+    "KPI 시트 기준(저널등급 g 없음). 성과관리 배점표의 등급 U(미판정)와 정의가 다르다. 미판정은 낮은 등급이 아니다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "quality",
+   "widget": "table_rank"
   },
   {
    "id": "e01_dept_count",
@@ -700,12 +799,14 @@
    "chart": "bar_sorted",
    "caveats": [
     "학과·전공: 기본 조직 단위",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "합계는 조직 규모를 따라간다. 1인당을 함께 본다"
    ],
    "covered_by": [
     "SKKU BK21 성과관리"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "rank",
+   "widget": "table_rank"
   },
   {
    "id": "e02_dept_role",
@@ -724,13 +825,23 @@
    "against": null,
    "chart": "stack100",
    "caveats": [
-    "학과·전공: 기본 조직 단위",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "학과·전공: 기본 조직 단위"
    ],
    "covered_by": [
     "SKKU BK21 성과관리"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "share",
+   "widget": "stack100",
+   "pick": {
+    "i": [
+     "제1",
+     "교신",
+     "제1+교신",
+     "단독"
+    ],
+    "name": "주저자"
+   }
   },
   {
    "id": "e03_dept_pct",
@@ -750,11 +861,19 @@
    "chart": "bar_group",
    "caveats": [
     "학과·전공: 기본 조직 단위",
-    "JCR 백분위: 저널 순위",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "JCR 백분위: 저널 순위"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "share",
+   "widget": "stack100",
+   "pick": {
+    "i": [
+     "≤5%",
+     "5~10%"
+    ],
+    "name": "JCR 상위 10%"
+   }
   },
   {
    "id": "e04_dept_ai",
@@ -775,12 +894,14 @@
    "chart": "bar_sorted",
    "caveats": [
     "학과·전공: 기본 조직 단위",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "합계는 조직 규모를 따라간다. 1인당을 함께 본다"
    ],
    "covered_by": [
     "SKKU BK21 KPI"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "rank",
+   "widget": "table_rank"
   },
   {
    "id": "e05_dept_kind",
@@ -802,7 +923,9 @@
     "학과·전공: 기본 조직 단위"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "share",
+   "widget": "stack100"
   },
   {
    "id": "e06_gy_score",
@@ -830,9 +953,9 @@
    "against": "gy",
    "chart": "band",
    "caveats": [
-    "계열: 계열 넘는 비교 금지",
+    "계열: 이공·의약생명·인문사회. 계열마다 참여교수 수와 배점표가 다르다",
     "내부 관리기준이며 공식 평가 결과가 아니다. 미판정 논문은 0점",
-    "합계는 교수 많은 곳이 위로 온다. 1인당으로 견준다",
+    "환산점수 합계를 참여교수 수로 나눈 값. 계열끼리는 이 값으로 견준다",
     "계열 집계다. 학과로 나눌 수 없다",
     "LQ 교육역량은 자료를 못 받아 축이 비어 있다",
     "미판정은 낮은 등급이 아니다"
@@ -840,7 +963,9 @@
    "covered_by": [
     "SKKU BK21 KPI"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "lookup",
+   "widget": "table_rank"
   },
   {
    "id": "e07_gy_trend",
@@ -859,12 +984,13 @@
    "against": null,
    "chart": "line_multi",
    "caveats": [
-    "계열: 계열 넘는 비교 금지",
-    "연도: 2026 제외 · 2025 집계 중",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "계열: 이공·의약생명·인문사회. 계열마다 참여교수 수와 배점표가 다르다",
+    "연도: 2026 제외 · 2025 집계 중"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "grow",
+   "widget": "line"
   },
   {
    "id": "e08_year_grade",
@@ -884,11 +1010,22 @@
    "chart": "stack100",
    "caveats": [
     "연도: 2026 제외 · 2025 집계 중",
-    "저널등급: U는 미판정",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "저널등급: S는 JCR 상위 10% 저널, A는 25%, B는 50%, C는 그 아래, K는 KCI, P는 학술대회, U는 미판정"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "grow",
+   "widget": "line",
+   "omit": [
+    "U"
+   ],
+   "pick": {
+    "i": [
+     "S",
+     "A"
+    ],
+    "name": "상위 등급(S·A)"
+   }
   },
   {
    "id": "e09_year_role",
@@ -907,11 +1044,21 @@
    "against": null,
    "chart": "line_multi",
    "caveats": [
-    "연도: 2026 제외 · 2025 집계 중",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "연도: 2026 제외 · 2025 집계 중"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "grow",
+   "widget": "line",
+   "pick": {
+    "i": [
+     "제1",
+     "교신",
+     "제1+교신",
+     "단독"
+    ],
+    "name": "주저자"
+   }
   },
   {
    "id": "e10_field_dept",
@@ -931,13 +1078,14 @@
    "chart": "heatmap",
    "caveats": [
     "학과·전공: 기본 조직 단위",
-    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다",
-    "분야는 학과 집계로만 있다. 연도·AI 등 다른 축과 겹칠 수 없다"
+    "분야: 논문 한 건마다 붙어 있지 않다. 학과·대학·분야 단위 집계로만 있다. 분야가 여러 개인 논문은 분야마다 세므로 합계가 논문 수보다 많다"
    ],
    "covered_by": [
     "글로벌 관계망"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "profile",
+   "widget": "heat"
   },
   {
    "id": "e11_field_year",
@@ -982,12 +1130,15 @@
    "against": null,
    "chart": "table",
    "caveats": [
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "학과를 고르지 않으면 전교 기준입니다"
    ],
    "covered_by": [
     "SKKU BK21 성과관리"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "rank",
+   "widget": "bar_h",
+   "note": "학과를 고르지 않으면 전교 기준입니다"
   },
   {
    "id": "e13_journal_pct",
@@ -1005,11 +1156,12 @@
    "against": null,
    "chart": "bar_group",
    "caveats": [
-    "JCR 백분위: 저널 순위",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "JCR 백분위: 저널 순위"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "share",
+   "widget": "stack100"
   },
   {
    "id": "e14_ai_year",
@@ -1029,11 +1181,12 @@
    "against": null,
    "chart": "line",
    "caveats": [
-    "연도: 2026 제외 · 2025 집계 중",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "연도: 2026 제외 · 2025 집계 중"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "trend",
+   "widget": "line"
   },
   {
    "id": "e15_ai_field",
@@ -1076,13 +1229,23 @@
    ],
    "against": null,
    "chart": "stack100",
-   "caveats": [
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
-   ],
+   "caveats": [],
    "covered_by": [
     "SKKU BK21 KPI"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "share",
+   "widget": "stack100",
+   "pick": {
+    "g": "학생",
+    "i": [
+     "제1",
+     "교신",
+     "제1+교신",
+     "단독"
+    ],
+    "name": "주저자"
+   }
   },
   {
    "id": "e17_uni_rank",
@@ -1105,13 +1268,16 @@
    "against": "국내7",
    "chart": "bar_sorted",
    "caveats": [
-    "대학 전체이며 BK21 참여자 범위가 아니다",
+    "OpenAlex 기관 통계의 대학 전체 논문이며 BK21 참여자 범위가 아니다",
+    "최근 해 논문은 인용이 덜 쌓여 연도 비교에 쓰지 않는다",
     "국제지와 합쳐 한 줄로 세우면 인문사회가 낮게 보인다"
    ],
    "covered_by": [
     "대학별 성과표"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "rank_me",
+   "widget": "table_rank"
   },
   {
    "id": "e18_uni_year",
@@ -1130,12 +1296,14 @@
    "chart": "line_multi",
    "caveats": [
     "연도: 2026 제외 · 2025 집계 중",
-    "대학 전체이며 BK21 참여자 범위가 아니다"
+    "OpenAlex 기관 통계의 대학 전체 논문이며 BK21 참여자 범위가 아니다"
    ],
    "covered_by": [
     "대학 연구력 비교"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "trend",
+   "widget": "line"
   },
   {
    "id": "e19_uni_field",
@@ -1153,12 +1321,15 @@
    "against": "국내7",
    "chart": "heatmap",
    "caveats": [
-    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다"
+    "분야: 논문 한 건마다 붙어 있지 않다. 학과·대학·분야 단위 집계로만 있다. 분야가 여러 개인 논문은 분야마다 세므로 합계가 논문 수보다 많다"
    ],
    "covered_by": [
     "대학 BK21 비교"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "profile",
+   "widget": "heat",
+   "lead": "overlap"
   },
   {
    "id": "e20_uni_bk",
@@ -1179,7 +1350,9 @@
    "covered_by": [
     "대학 BK21 비교"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "rank_me",
+   "widget": "bar_h"
   },
   {
    "id": "e21_net_dept",
@@ -1188,7 +1361,7 @@
    ],
    "nucleus": "relation",
    "axes": [
-    "dept"
+    "pair"
    ],
    "filters": {},
    "measures": [
@@ -1197,13 +1370,15 @@
    "against": null,
    "chart": "matrix",
    "caveats": [
-    "학과·전공: 기본 조직 단위",
+    "학과 쌍: 두 학과의 공저 짝",
     "동명이인 판별 위에 선다"
    ],
    "covered_by": [
     "교내 관계망"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "rank",
+   "widget": "bar_h"
   },
   {
    "id": "e22_net_field",
@@ -1216,18 +1391,21 @@
    ],
    "filters": {},
    "measures": [
-    "partner_count"
+    "field_people"
    ],
    "against": null,
    "chart": "table",
    "caveats": [
-    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다",
-    "수가 적어도 좋은 상대면 값어치가 크다"
+    "사람 이름은 화면 자료에 없어 분야별 연구자 수로 답합니다",
+    "분야: 논문 한 건마다 붙어 있지 않다. 학과·대학·분야 단위 집계로만 있다. 분야가 여러 개인 논문은 분야마다 세므로 합계가 논문 수보다 많다"
    ],
    "covered_by": [
     "글로벌 관계망"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "rank",
+   "widget": "bar_h",
+   "note": "사람 이름은 화면 자료에 없어 분야별 연구자 수로 답합니다"
   },
   {
    "id": "e23_qa_all",
@@ -1245,12 +1423,14 @@
    "against": null,
    "chart": "table",
    "caveats": [
-    "미판정은 낮은 등급이 아니다. 최상위 저널이 들어 있다"
+    "KPI 시트 기준(저널등급 g 없음). 성과관리 배점표의 등급 U(미판정)와 정의가 다르다. 미판정은 낮은 등급이 아니다"
    ],
    "covered_by": [
     "데이터풀"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "quality",
+   "widget": "table_rank"
   },
   {
    "id": "e24_qa_dept",
@@ -1269,12 +1449,14 @@
    "chart": "table",
    "caveats": [
     "학과·전공: 기본 조직 단위",
-    "미판정은 낮은 등급이 아니다. 최상위 저널이 들어 있다"
+    "KPI 시트 기준(저널등급 g 없음). 성과관리 배점표의 등급 U(미판정)와 정의가 다르다. 미판정은 낮은 등급이 아니다"
    ],
    "covered_by": [
     "데이터풀"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "quality",
+   "widget": "bar_h"
   },
   {
    "id": "e25_qa_grade",
@@ -1292,13 +1474,22 @@
    "against": null,
    "chart": "bar_group",
    "caveats": [
-    "저널등급: U는 미판정",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "등급 U는 성과관리 배점표에서 등급을 못 매긴 논문입니다. KPI 시트의 저널등급 미판정률과 정의가 다릅니다",
+    "저널등급: S는 JCR 상위 10% 저널, A는 25%, B는 50%, C는 그 아래, K는 KCI, P는 학술대회, U는 미판정"
    ],
    "covered_by": [
     "데이터풀"
    ],
-   "blocked": null
+   "blocked": null,
+   "case": "share",
+   "widget": "stack100",
+   "pick": {
+    "i": [
+     "U"
+    ],
+    "name": "등급 U(미판정)"
+   },
+   "note": "등급 U는 성과관리 배점표에서 등급을 못 매긴 논문입니다. KPI 시트의 저널등급 미판정률과 정의가 다릅니다"
   },
   {
    "id": "x01_fwci_year",
@@ -1342,7 +1533,7 @@
   {
    "id": "n01_area",
    "q": [
-    "우리가 어느 역량이 약한가"
+    "세 계열 중 어느 계열이 약한가"
    ],
    "nucleus": "dept",
    "axes": [
@@ -1357,12 +1548,14 @@
    "against": null,
    "chart": "radar",
    "caveats": [
-    "계열: 계열 넘는 비교 금지",
+    "계열: 이공·의약생명·인문사회. 계열마다 참여교수 수와 배점표가 다르다",
     "계열 집계다. 학과로 나눌 수 없다",
     "LQ 교육역량은 자료를 못 받아 축이 비어 있다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "low",
+   "widget": "bar_group"
   },
   {
    "id": "n02_signal",
@@ -1391,11 +1584,13 @@
     "학과·전공: 기본 조직 단위",
     "최소 논문 수 컷을 두지 않는다",
     "대학원생 제외. 포함하면 분모가 비어 값이 터진다",
-    "동일",
-    "동일. 평균은 소수 논문이 끌어올린다"
+    "학과 집계로만 있다. JCR 백분위(저널 순위)와 다른 값이다",
+    "평균은 소수 논문이 끌어올린다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "low",
+   "widget": "table_rank"
   },
   {
    "id": "n03_twotrack",
@@ -1420,7 +1615,9 @@
     "최소 논문 수 컷을 두지 않는다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "link",
+   "widget": "scatter"
   },
   {
    "id": "n04_relscope",
@@ -1429,19 +1626,31 @@
    ],
    "nucleus": "relation",
    "axes": [
-    "scope"
+    "dept",
+    "sc"
    ],
    "filters": {},
    "measures": [
-    "rel_scope"
+    "rel_count"
    ],
    "against": null,
    "chart": "stack100",
    "caveats": [
-    "관계 범위: 학과 내 / 학과 간"
+    "학과·전공: 기본 조직 단위",
+    "관계 상대: 교외는 학교 밖 사람, 교내는 학교 안 사람과의 관계. 관계는 참여자 쪽에서 세므로 교내 관계는 양쪽 학과에서 한 번씩 센다",
+    "상대 사람 수가 아니라 관계 수다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "share",
+   "widget": "stack100",
+   "note": null,
+   "pick": {
+    "i": [
+     "교외"
+    ],
+    "name": "교외"
+   }
   },
   {
    "id": "n05_partnerdist",
@@ -1459,11 +1668,15 @@
    "against": null,
    "chart": "bar_sorted",
    "caveats": [
+    "사람 단위 자료가 화면에 없어 학과 단위로 답합니다",
     "학과·전공: 기본 조직 단위",
     "수가 적어도 좋은 상대면 값어치가 크다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "rank",
+   "widget": "bar_h",
+   "note": "사람 단위 자료가 화면에 없어 학과 단위로 답합니다"
   },
   {
    "id": "n06_partners",
@@ -1472,22 +1685,24 @@
    ],
    "nucleus": "relation",
    "axes": [
-    "dept"
+    "pair"
    ],
    "filters": {},
    "measures": [
-    "coauth_papers",
-    "duration"
+    "coauth_papers"
    ],
    "against": null,
    "chart": "table",
    "caveats": [
-    "학과·전공: 기본 조직 단위",
-    "동명이인 판별 위에 선다",
-    "1년이면 일회성이다. 반복관계와 갈라 본다"
+    "사람 단위 자료가 화면에 없어 학과 단위로 답합니다",
+    "학과 쌍: 두 학과의 공저 짝",
+    "동명이인 판별 위에 선다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "rank",
+   "widget": "bar_h",
+   "note": "사람 단위 자료가 화면에 없어 학과 단위로 답합니다"
   },
   {
    "id": "n07_netsize",
@@ -1505,10 +1720,13 @@
    "against": null,
    "chart": "bar_sorted",
    "caveats": [
-    "학과·전공: 기본 조직 단위"
+    "학과·전공: 기본 조직 단위",
+    "상대 사람 수가 아니라 관계 수다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "rank",
+   "widget": "bar_h"
   },
   {
    "id": "n08_extstruct",
@@ -1522,16 +1740,18 @@
    "filters": {},
    "measures": [
     "ext_partner",
-    "duration"
+    "ext_ratio"
    ],
    "against": null,
    "chart": "table",
    "caveats": [
     "학과·전공: 기본 조직 단위",
-    "1년이면 일회성이다. 반복관계와 갈라 본다"
+    "상대 사람 수가 아니라 관계 수다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "rank",
+   "widget": "table_rank"
   },
   {
    "id": "n09_potential",
@@ -1540,7 +1760,7 @@
    ],
    "nucleus": "relation",
    "axes": [
-    "dept"
+    "ppair"
    ],
    "filters": {},
    "measures": [
@@ -1549,11 +1769,13 @@
    "against": null,
    "chart": "table",
    "caveats": [
-    "학과·전공: 기본 조직 단위",
+    "연구자 쌍: 아직 공저하지 않은 두 사람. 분야 유사도로 고른 추천",
     "추천 근거이지 성과 지표가 아니다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "rank",
+   "widget": "bar_h"
   },
   {
    "id": "n10_intl_dom",
@@ -1570,11 +1792,15 @@
    "against": "국내7",
    "chart": "table",
    "caveats": [
-    "대학 전체이며 BK21 참여자 범위가 아니다",
+    "국제지만 따로 센 값은 없습니다. OpenAlex 논문(국제지 위주)과 KCI 국내 논문을 나란히 둡니다",
+    "OpenAlex 기관 통계의 대학 전체 논문이며 BK21 참여자 범위가 아니다",
     "국제지와 합쳐 한 줄로 세우면 인문사회가 낮게 보인다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "rank_me",
+   "widget": "table_rank",
+   "note": "국제지만 따로 센 값은 없습니다. OpenAlex 논문(국제지 위주)과 KCI 국내 논문을 나란히 둡니다"
   },
   {
    "id": "n11_bk_vs",
@@ -1585,15 +1811,22 @@
    "axes": [],
    "filters": {},
    "measures": [
-    "bk_papers"
+    "bk_papers",
+    "bk_people",
+    "bk_fwci"
    ],
    "against": null,
    "chart": "bar_group",
-   "caveats": [
-    "인원 차이를 무시한 총량이다. 1인당을 함께 본다"
-   ],
+   "caveats": [],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "share",
+   "widget": "stack100",
+   "pick": {
+    "i": [
+     "BK 34학과"
+    ]
+   }
   },
   {
    "id": "n12_uni_topic",
@@ -1611,10 +1844,12 @@
    "against": "국내7",
    "chart": "bar_sorted",
    "caveats": [
-    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다"
+    "분야: 논문 한 건마다 붙어 있지 않다. 학과·대학·분야 단위 집계로만 있다. 분야가 여러 개인 논문은 분야마다 세므로 합계가 논문 수보다 많다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "profile",
+   "widget": "heat"
   },
   {
    "id": "n13_measurable",
@@ -1625,7 +1860,9 @@
    "axes": [],
    "filters": {},
    "measures": [
-    "uni_measurable"
+    "meas_oa",
+    "meas_kci",
+    "meas_rims"
    ],
    "against": null,
    "chart": "table",
@@ -1633,7 +1870,9 @@
     "빈칸은 실적 없음이 아니라 자료 못 구함이다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "lookup",
+   "widget": "plain"
   },
   {
    "id": "n14_asia",
@@ -1653,10 +1892,13 @@
    "against": "아시아52",
    "chart": "table",
    "caveats": [
-    "대학 전체이며 BK21 참여자 범위가 아니다"
+    "OpenAlex 기관 통계의 대학 전체 논문이며 BK21 참여자 범위가 아니다",
+    "최근 해 논문은 인용이 덜 쌓여 연도 비교에 쓰지 않는다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "rank_me",
+   "widget": "table_rank"
   },
   {
    "id": "n15_world",
@@ -1676,10 +1918,13 @@
    "against": "글로벌116",
    "chart": "table",
    "caveats": [
-    "대학 전체이며 BK21 참여자 범위가 아니다"
+    "OpenAlex 기관 통계의 대학 전체 논문이며 BK21 참여자 범위가 아니다",
+    "최근 해 논문은 인용이 덜 쌓여 연도 비교에 쓰지 않는다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "rank_me",
+   "widget": "table_rank"
   },
   {
    "id": "n16_pool",
@@ -1690,13 +1935,16 @@
    "axes": [],
    "filters": {},
    "measures": [
+    "pool_what",
     "qa_layer"
    ],
    "against": null,
    "chart": "table",
    "caveats": [],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "lookup",
+   "widget": "plain"
   },
   {
    "id": "n17_bk_year",
@@ -1709,16 +1957,18 @@
    ],
    "filters": {},
    "measures": [
-    "uni_works"
+    "ucmp_works"
    ],
    "against": "BK21_8",
    "chart": "table",
    "caveats": [
     "연도: 2026 제외 · 2025 집계 중",
-    "대학 전체이며 BK21 참여자 범위가 아니다"
+    "BIBLO에 적재한 논문만 센다. OpenAlex 기관 통계(대학 전체)보다 적다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "trend",
+   "widget": "line"
   },
   {
    "id": "n18_quality_rank",
@@ -1740,7 +1990,9 @@
    "chart": "bar_sorted",
    "caveats": [],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "rank_me",
+   "widget": "table_rank"
   },
   {
    "id": "n19_uni_table",
@@ -1762,11 +2014,14 @@
    "against": "국내7",
    "chart": "table",
    "caveats": [
-    "대학 전체이며 BK21 참여자 범위가 아니다",
+    "OpenAlex 기관 통계의 대학 전체 논문이며 BK21 참여자 범위가 아니다",
+    "최근 해 논문은 인용이 덜 쌓여 연도 비교에 쓰지 않는다",
     "국제지와 합쳐 한 줄로 세우면 인문사회가 낮게 보인다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "rank_me",
+   "widget": "table_rank"
   },
   {
    "id": "n20_netmap",
@@ -1775,7 +2030,7 @@
    ],
    "nucleus": "relation",
    "axes": [
-    "dept"
+    "pair"
    ],
    "filters": {},
    "measures": [
@@ -1784,11 +2039,13 @@
    "against": null,
    "chart": "matrix",
    "caveats": [
-    "학과·전공: 기본 조직 단위",
+    "학과 쌍: 두 학과의 공저 짝",
     "동명이인 판별 위에 선다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": null,
+   "case": "rank",
+   "widget": "bar_h"
   },
   {
    "id": "p01_person_year",
@@ -1803,9 +2060,7 @@
    ],
    "against": null,
    "chart": "line",
-   "caveats": [
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
-   ],
+   "caveats": [],
    "covered_by": [],
    "blocked": null,
    "needs": "person"
@@ -1823,9 +2078,7 @@
    ],
    "against": null,
    "chart": "table",
-   "caveats": [
-    "오래된 논문이 유리하다. 연도를 함께 본다"
-   ],
+   "caveats": [],
    "covered_by": [],
    "blocked": null,
    "needs": "person"
@@ -1846,8 +2099,7 @@
    "against": null,
    "chart": "table",
    "caveats": [
-    "내부 관리기준이며 공식 평가 결과가 아니다. 미판정 논문은 0점",
-    "계열별로 배점표가 다르다. 계열을 넘어 견주지 않는다",
+    "계열마다 배점표가 달라 계열 사이 점수 차이에는 배점표 차이가 섞인다",
     "SGCPI+ 는 저자 수를 반영하지 않는다"
    ],
    "covered_by": [],

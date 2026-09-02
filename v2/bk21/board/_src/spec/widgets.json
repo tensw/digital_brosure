@@ -1,0 +1,470 @@
+{
+ "note": "답변 위젯 DB. 위젯 = 그래프형. 형태마다 연도 표기·x축·y축·적합 데이터·행 수 범위가 정해져 있다. 의도(intents)는 정렬·강조·결론 규칙이며 허용 위젯 목록을 가진다. 정본 문서 docs/BK21_답변위젯_설계.md",
+ "value_kinds": {
+  "count": {
+   "name": "개수",
+   "units": [
+    "편",
+    "건",
+    "명",
+    "개",
+    "곳",
+    "회"
+   ],
+   "sum": true
+  },
+  "ratio": {
+   "name": "비율",
+   "units": [
+    "%"
+   ],
+   "sum": false
+  },
+  "score": {
+   "name": "점수",
+   "units": [
+    "점",
+    "배",
+    null
+   ],
+   "sum": false
+  },
+  "text": {
+   "name": "문자",
+   "units": [],
+   "sum": false
+  }
+ },
+ "widgets": {
+  "bar_h": {
+   "no": "W1",
+   "name": "가로막대",
+   "year": false,
+   "x": "수치",
+   "y": "범주(이름)",
+   "axes": [
+    1,
+    1
+   ],
+   "values": [
+    1,
+    1
+   ],
+   "kinds": [
+    "count",
+    "ratio",
+    "score"
+   ],
+   "rows": [
+    4,
+    30
+   ],
+   "skin": "exec_06",
+   "grammar": ".dl > .n + .bar > i + .v",
+   "says": "순위 · 격차"
+  },
+  "bar_v": {
+   "no": "W2",
+   "name": "세로막대",
+   "year": true,
+   "x": "범주·연도",
+   "y": "수치",
+   "axes": [
+    1,
+    1
+   ],
+   "values": [
+    1,
+    1
+   ],
+   "kinds": [
+    "count",
+    "ratio",
+    "score"
+   ],
+   "rows": [
+    2,
+    12
+   ],
+   "skin": "tree_01",
+   "grammar": ".ybar > div > i (단색)",
+   "says": "연도면 증감, 범주면 순위"
+  },
+  "bar_group": {
+   "no": "W3",
+   "name": "묶음막대",
+   "year": true,
+   "x": "범주",
+   "y": "수치 · 계열 2~4",
+   "axes": [
+    1,
+    1
+   ],
+   "values": [
+    2,
+    4
+   ],
+   "kinds": [
+    "count",
+    "ratio",
+    "score"
+   ],
+   "rows": [
+    2,
+    8
+   ],
+   "skin": "exec_03",
+   "grammar": ".dl 묶음 (계열마다 막대)",
+   "says": "지표별 비교"
+  },
+  "stack100": {
+   "no": "W4",
+   "name": "100% 누적막대",
+   "year": true,
+   "x": "묶음·연도",
+   "y": "비율 0~100%",
+   "axes": [
+    1,
+    2
+   ],
+   "values": [
+    1,
+    1
+   ],
+   "kinds": [
+    "count"
+   ],
+   "rows": [
+    1,
+    12
+   ],
+   "items": [
+    2,
+    7
+   ],
+   "skin": "tree_01",
+   "grammar": ".ybar > div > i > em (세로) / .dl .bar > em (가로)",
+   "says": "구성비 · 구성 변화"
+  },
+  "line": {
+   "no": "W5",
+   "name": "선",
+   "year": "필수",
+   "x": "연도",
+   "y": "수치 · 계열 1~7",
+   "axes": [
+    1,
+    2
+   ],
+   "values": [
+    1,
+    2
+   ],
+   "kinds": [
+    "count",
+    "ratio",
+    "score"
+   ],
+   "rows": [
+    3,
+    60
+   ],
+   "series": [
+    1,
+    7
+   ],
+   "skin": "univ_02",
+   "grammar": "svg viewBox 0 0 560 310 · x 52→496 · y 278→16 · --u1..--u7",
+   "says": "증감률 · 꺾인 해"
+  },
+  "scatter": {
+   "no": "W6",
+   "name": "버블·산점",
+   "year": false,
+   "x": "수치 A",
+   "y": "수치 B (크기 = 셋째 값)",
+   "axes": [
+    1,
+    1
+   ],
+   "values": [
+    2,
+    3
+   ],
+   "kinds": [
+    "count",
+    "ratio",
+    "score"
+   ],
+   "rows": [
+    5,
+    60
+   ],
+   "skin": "univ_01",
+   "grammar": "svg 같은 좌표계 · circle r=5 · 평균 점선",
+   "says": "상관 · 사분면"
+  },
+  "heat": {
+   "no": "W7",
+   "name": "히트맵",
+   "year": true,
+   "x": "범주",
+   "y": "범주",
+   "axes": [
+    2,
+    2
+   ],
+   "values": [
+    1,
+    1
+   ],
+   "kinds": [
+    "count",
+    "ratio",
+    "score"
+   ],
+   "rows": [
+    4,
+    900
+   ],
+   "skin": "net_02",
+   "grammar": "table · td 배경 농도",
+   "says": "가장 진한 칸 · 묶음별 1위"
+  },
+  "kpi": {
+   "no": "W8",
+   "name": "숫자박스",
+   "year": false,
+   "x": "없음",
+   "y": "없음",
+   "axes": [
+    0,
+    1
+   ],
+   "values": [
+    1,
+    9
+   ],
+   "kinds": [
+    "count",
+    "ratio",
+    "score"
+   ],
+   "rows": [
+    1,
+    8
+   ],
+   "skin": "exec_01",
+   "grammar": ".kpis > .kpi > .lb + .vl + .dt",
+   "says": "값 그대로"
+  },
+  "table_rank": {
+   "no": "W9",
+   "name": "순위표",
+   "year": false,
+   "x": "열 = 지표",
+   "y": "행 = 대상",
+   "axes": [
+    1,
+    1
+   ],
+   "values": [
+    2,
+    12
+   ],
+   "kinds": [
+    "count",
+    "ratio",
+    "score"
+   ],
+   "rows": [
+    2,
+    60
+   ],
+   "skin": "sheet_01",
+   "grammar": "table · 우리 행 강조 · 열마다 순위",
+   "says": "우리 자리 · 지표별 순위"
+  },
+  "pareto": {
+   "no": "W10",
+   "name": "누적기여",
+   "year": false,
+   "x": "대상(정렬)",
+   "y": "누적 %",
+   "axes": [
+    1,
+    1
+   ],
+   "values": [
+    1,
+    1
+   ],
+   "kinds": [
+    "count"
+   ],
+   "rows": [
+    5,
+    60
+   ],
+   "skin": "exec_08",
+   "grammar": ".dl 정렬 + 누적선",
+   "says": "상위 3 기여율 · 절반 만드는 수"
+  },
+  "plain": {
+   "no": "W0",
+   "name": "표",
+   "year": true,
+   "x": "열",
+   "y": "행",
+   "axes": [
+    0,
+    2
+   ],
+   "values": [
+    1,
+    12
+   ],
+   "kinds": [
+    "count",
+    "ratio",
+    "score",
+    "text"
+   ],
+   "rows": [
+    1,
+    60
+   ],
+   "skin": "univ_07",
+   "grammar": "table",
+   "says": "값 나열"
+  }
+ },
+ "intents": {
+  "rank_me": {
+   "name": "자리",
+   "sort": "desc",
+   "hi": "me",
+   "says": "우리는 {값}로 {N}곳 중 {k}위",
+   "widgets": [
+    "table_rank",
+    "bar_h"
+   ]
+  },
+  "rank": {
+   "name": "상위",
+   "sort": "desc",
+   "hi": "top3",
+   "says": "{1위}가 {값}로 가장 많음",
+   "widgets": [
+    "bar_h",
+    "table_rank",
+    "bar_v",
+    "kpi"
+   ]
+  },
+  "low": {
+   "name": "하위",
+   "sort": "asc",
+   "hi": "bottom3",
+   "says": "{최하}가 {값}로 가장 낮음",
+   "widgets": [
+    "bar_h",
+    "table_rank",
+    "bar_group"
+   ]
+  },
+  "quality": {
+   "name": "손볼 곳",
+   "sort": "desc",
+   "hi": "top3",
+   "says": "{1위}가 {비율}로 먼저 손볼 곳",
+   "widgets": [
+    "bar_h",
+    "table_rank"
+   ]
+  },
+  "trend": {
+   "name": "추이",
+   "sort": "year",
+   "hi": "me",
+   "says": "{대상}은 {시작}→{끝} {증감률}",
+   "widgets": [
+    "line",
+    "bar_v",
+    "stack100"
+   ]
+  },
+  "grow": {
+   "name": "성장",
+   "sort": "year",
+   "hi": "top",
+   "says": "가장 많이 는 {계열}은 {시작}→{끝} {증감률}",
+   "widgets": [
+    "line",
+    "bar_v",
+    "stack100"
+   ]
+  },
+  "share": {
+   "name": "구성",
+   "sort": "desc",
+   "hi": "top1",
+   "says": "{1위}가 {몫}%로 가장 큰 몫",
+   "widgets": [
+    "stack100",
+    "bar_v",
+    "kpi"
+   ]
+  },
+  "conc": {
+   "name": "쏠림",
+   "sort": "desc",
+   "hi": "top3",
+   "says": "상위 3이 {기여율}%, 쏠림 큼/고름",
+   "widgets": [
+    "pareto",
+    "bar_h"
+   ]
+  },
+  "link": {
+   "name": "상관",
+   "sort": "none",
+   "hi": "quad",
+   "says": "A 높으면 B도 높음 (상관 r)",
+   "widgets": [
+    "scatter"
+   ]
+  },
+  "profile": {
+   "name": "프로필",
+   "sort": "group",
+   "hi": "me",
+   "says": "{N}곳 중 {M}곳은 {항목}이 1위",
+   "widgets": [
+    "heat",
+    "stack100"
+   ]
+  },
+  "edge": {
+   "name": "앞·뒤",
+   "sort": "group",
+   "hi": "me",
+   "says": "우리는 {N}개 중 {k}개에서 1위, {m}개에서 꼴찌",
+   "widgets": [
+    "heat",
+    "stack100"
+   ]
+  },
+  "lookup": {
+   "name": "값",
+   "sort": "none",
+   "hi": "none",
+   "says": "{지표}는 {값}",
+   "widgets": [
+    "kpi",
+    "table_rank",
+    "plain"
+   ]
+  }
+ }
+}
