@@ -4,7 +4,7 @@ const J = f => JSON.parse(fs.readFileSync(f, 'utf8'));
 const rec = J('recipes.json').recipes, ans = J('answers.json').answers, wd = J('widgets.json');
 const mets = J('metrics.json').metrics, M = {}; mets.forEach(m => M[m.id] = { n: m.name, u: m.unit, d: m.direction || 'high', y: m.yearcmp, s: m.size, pc: m.pc });
 const AX = {}; Object.entries(J('metrics.json').axes || {}).forEach(([k, a]) => AX[k] = a.name);
-const cx = { me: '성균관대', focus: [], M: id => M[id] || { n: id, u: '', d: 'high' }, AX, W: wd.widgets, I: wd.intents,
+const cx = { me: '성균관대', focus: [], period: '2020-2025', M: id => M[id] || { n: id, u: '', d: 'high' }, AX, W: wd.widgets, I: wd.intents,
              R: id => ({ rec: rec.find(x => x.id === id), ans: ans[id] }) };
 let bad = 0, out = [];
 for (const r of rec) {
