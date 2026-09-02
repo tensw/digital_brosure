@@ -16,7 +16,18 @@ const SECRETS = (() => {
   try { return JSON.parse(fs.readFileSync(path.join(__dirname, '.bk21-secrets.json'), 'utf8')); }
   catch (e) { return {}; }
 })();
-const GKEY = SECRETS.GEMINI_API_KEY || process.env.GEMINI_API_KEY || '';
+const SECFILE = path.join(__dirname, '.bk21-secrets.json');
+let GKEY = SECRETS.GEMINI_API_KEY || process.env.GEMINI_API_KEY || '';
+
+/* 키는 관리자 화면에서 넣는다. 파일은 깃 밖이라 git reset --hard 에 지워지지 않는다.
+   화면으로 되돌려 주지 않는다. 있는지와 뒷자리 넉 자만 알려 준다. */
+function keyMask(k) { return k ? '••••••••' + k.slice(-4) : ''; }
+function keySave(k) {
+  const d = (() => { try { return JSON.parse(fs.readFileSync(SECFILE, 'utf8')); } catch (e) { return {}; } })();
+  if (k) d.GEMINI_API_KEY = k; else delete d.GEMINI_API_KEY;
+  fs.writeFileSync(SECFILE, JSON.stringify(d, null, 2), { mode: 0o600 });
+  GKEY = k || '';
+}
 
 /* 남용 방어 — 로그인한 사람이라도 창을 연타하면 외부 API 가 소진된다.
    IP 당 1분에 20회. 넘으면 429 로 끊고 낱말 매칭으로 돌아가게 한다. */
@@ -146,6 +157,18 @@ function handleAuthApi(req, res, urlPath) {
       if (b.op === 'invite') return json(res, 200, { ok: true, allow: auth.setAllow({ add: b.emails || [] }) });
       if (b.op === 'revoke') return json(res, 200, { ok: true, allow: auth.setAllow({ remove: b.emails || [] }) });
       if (b.op === 'reset')  return json(res, 200, auth.resetPw(b.email));
+      if (b.op === 'keyStatus') return json(res, 200, { ok: true, set: !!GKEY, masked: keyMask(GKEY) });
+      if (b.op === 'keySet') {
+        const k = String(b.key || '').trim();
+        if (!/^[A-Za-z0-9_-]{20,80}$/.test(k))
+          return json(res, 400, { ok: false, msg: '키 형태가 아닙니다.' });
+        try { keySave(k); } catch (e) { return json(res, 500, { ok: false, msg: '저장하지 못했습니다.' }); }
+        return json(res, 200, { ok: true, set: true, masked: keyMask(GKEY) });
+      }
+      if (b.op === 'keyClear') {
+        try { keySave(''); } catch (e) { return json(res, 500, { ok: false, msg: '지우지 못했습니다.' }); }
+        return json(res, 200, { ok: true, set: false, masked: '' });
+      }
       json(res, 400, { ok: false, msg: '알 수 없는 명령' });
     });
   }

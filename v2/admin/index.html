@@ -63,6 +63,9 @@ td.n{font:700 14px/1 ui-monospace,Menlo,monospace}
 .t-adm{background:rgba(160,140,255,.16);border:1px solid rgba(180,160,255,.34);color:#c9b6ff}
 .dim{color:var(--ink3)}
 @media(max-width:820px){.sum{grid-template-columns:repeat(2,1fr)}}
+button.sec{background:#eef1f6;color:#44506b;border:1px solid #d3dae6}
+button.sec:hover{background:#e3e8f0}
+.kst{font-weight:700}
 </style></head><body>
 <div class="wrap">
  <div class="top">
@@ -81,6 +84,17 @@ td.n{font:700 14px/1 ui-monospace,Menlo,monospace}
   <p>이메일을 줄바꿈이나 쉼표로 구분해 넣습니다. 초대된 이메일만 초기 비밀번호 <b>1234</b> 로 처음 들어올 수 있습니다.</p>
   <textarea id="inv" placeholder="name@example.com&#10;name2@example.com"></textarea>
   <div class="act"><button id="add">초대하기</button><span class="msg" id="m"></span></div>
+ </div>
+
+ <div class="box">
+  <h2>BK21 질문 라우팅 키</h2>
+  <p>질문 문장을 레시피로 고르는 데 Gemini 를 씁니다.
+   키가 없으면 낱말 매칭으로만 돌아갑니다(화면은 멀쩡합니다).
+   키는 서버 파일에만 저장되고 화면으로 다시 나오지 않습니다.
+   <b class="kst" id="kst">확인 중</b></p>
+  <textarea id="gk" placeholder="AIzaSy… 로 시작하는 Gemini API 키" rows="2"></textarea>
+  <div class="act"><button id="ksave">저장</button>
+   <button id="kclr" class="sec">지우기</button><span class="msg" id="km"></span></div>
  </div>
 
  <table>
@@ -106,7 +120,30 @@ async function api(body){
 function say(t,err){ const m=$('#m'); m.className='msg'+(err?' err':''); m.textContent=t;
  if(t) setTimeout(()=>{m.textContent='';},4000); }
 
+/* ── BK21 질문 라우팅 키 ── */
+function ksay(t,err){ const m=$('#km'); m.className='msg'+(err?' err':''); m.textContent=t;
+ if(t) setTimeout(()=>{m.textContent='';},4000); }
+async function kdraw(){
+ const j=await api({op:'keyStatus'});
+ $('#kst').textContent = j&&j.set ? '설정됨 · '+j.masked : '아직 없음';
+ $('#kst').style.color = j&&j.set ? '#3f9e73' : '#b06a3a';
+}
+$('#ksave').onclick=async()=>{
+ const k=$('#gk').value.trim();
+ if(!k) return ksay('키를 넣어 주십시오.',1);
+ const j=await api({op:'keySet',key:k});
+ $('#gk').value='';
+ ksay(j&&j.ok?'저장했습니다. 바로 켜집니다.':(j&&j.msg)||'저장하지 못했습니다.', !(j&&j.ok));
+ kdraw();
+};
+$('#kclr').onclick=async()=>{
+ if(!confirm('키를 지우면 질문 라우팅이 낱말 매칭으로 돌아갑니다. 지울까요?')) return;
+ const j=await api({op:'keyClear'});
+ ksay(j&&j.ok?'지웠습니다.':'지우지 못했습니다.', !(j&&j.ok)); kdraw();
+};
+
 async function draw(){
+ kdraw();
  const j=await api({op:'list'});
  if(!j.ok){ say(j.msg||'불러오지 못했습니다.',1); return; }
  const users={}; j.users.forEach(u=>users[u.email]=u);
