@@ -5,6 +5,12 @@ import json, io, os, re
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT  = os.path.normpath(os.path.join(HERE, '..', '..', '..', 'skins.html'))
 S = json.load(io.open(os.path.join(HERE, 'skins.json'), encoding='utf-8'))
+MAP = json.load(io.open(os.path.join(HERE, 'skinmap.json'), encoding='utf-8'))
+REC = json.load(io.open(os.path.join(HERE, 'recipes.json'), encoding='utf-8'))['recipes']
+QOF = {r['id']: r['q'][0] for r in REC}
+USE = {}
+for rid, v in MAP['map'].items():
+    USE.setdefault(v['skin'], []).append({'id': rid, 'q': QOF.get(rid, rid), 'why': v['why']})
 W, H = 720, 1040  # A4 세로 안쪽 (210×297mm · 96dpi · 여백 제외)
 out = {'built': S['built'], 'css': S['css'], 'a4': [W, H], 'skins': []}
 for s in S['skins']:
@@ -14,7 +20,8 @@ for s in S['skins']:
     out['skins'].append({'id': s['id'], 'view': s['view'], 't': s['t'], 'ins': s['ins'],
                          'w': s['w'], 'h': s['h'], 'sc': round(sc, 3),
                          'fit': s['h'] * sc <= H, 'shape': shape,
-                         'rows': s['rows'], 'html': s['html']})
+                         'rows': s['rows'], 'html': s['html'],
+                         'use': USE.get(s['id'], []), 'aux': MAP['aux'].get(s['id'])})
 blob = 'const SK=' + json.dumps(out, ensure_ascii=False, separators=(',', ':')) + ';'
 html = io.open(OUT, encoding='utf-8').read()
 pat = re.compile(r'/\*SPEC_START\*/[\s\S]*?/\*SPEC_END\*/')
@@ -22,4 +29,8 @@ if not pat.search(html): raise SystemExit('skins.html 에 SPEC 자리가 없다'
 REPL = '/*SPEC_START*/' + blob + '/*SPEC_END*/'
 # re.sub 는 치환문자열의 \n · \\ · \1 을 해석해 JSON 을 깨뜨린다. 람다로 그대로 넣는다.
 io.open(OUT, 'w', encoding='utf-8').write(pat.sub(lambda m: REPL, html))
+n_use = sum(1 for x in out['skins'] if x['use'])
+n_aux = sum(1 for x in out['skins'] if x['aux'])
+n_idle = len(out['skins']) - n_use - n_aux
 print(f"스킨 {len(out['skins'])} · {len(blob)/1024/1024:.2f}MB · A4 맞음 {sum(x['fit'] for x in out['skins'])}")
+print(f"  답변에 쓰임 {n_use} · 보조 {n_aux} · 쓰는 질문 없음 {n_idle}")

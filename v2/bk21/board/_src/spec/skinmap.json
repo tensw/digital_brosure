@@ -1,0 +1,228 @@
+{
+ "built": "2026-09-02",
+ "map": {
+  "gnb_sheet": {
+   "skin": "sheet_01",
+   "why": "같은 잣대로 대학을 나란히 놓은 순위표"
+  },
+  "e17_uni_rank": {
+   "skin": "sheet_01",
+   "why": "같은 잣대로 대학을 나란히 놓은 순위표"
+  },
+  "gnb_univ": {
+   "skin": "univ_02",
+   "why": "연도별 추이 선그래프"
+  },
+  "e18_uni_year": {
+   "skin": "univ_02",
+   "why": "연도별 추이 선그래프"
+  },
+  "s01_uni_field": {
+   "skin": "univ_01",
+   "why": "두 축을 놓고 보는 산점도"
+  },
+  "gnb_ucmp": {
+   "skin": "ucmp_02",
+   "why": "대학×분야 비교표"
+  },
+  "e19_uni_field": {
+   "skin": "ucmp_02",
+   "why": "대학×분야 비교표"
+  },
+  "e20_uni_bk": {
+   "skin": "ucmp_04",
+   "why": "BK21 참여 규모 표"
+  },
+  "gnb_exec": {
+   "skin": "exec_01",
+   "why": "계열 3장 환산점수 카드"
+  },
+  "e06_gy_score": {
+   "skin": "exec_01",
+   "why": "계열 3장 환산점수 카드"
+  },
+  "e01_dept_count": {
+   "skin": "exec_06",
+   "why": "학과 정렬 막대 목록"
+  },
+  "new_group": {
+   "skin": "exec_06",
+   "why": "정렬 막대 목록"
+  },
+  "e04_dept_ai": {
+   "skin": "exec_03",
+   "why": "학과별 막대가 붙은 단면표"
+  },
+  "e03_dept_pct": {
+   "skin": "exec_03",
+   "why": "구간별 학과 막대"
+  },
+  "e13_journal_pct": {
+   "skin": "exec_03",
+   "why": "구간별 막대"
+  },
+  "s04_stu_spread": {
+   "skin": "exec_03",
+   "why": "학과별 구성 막대"
+  },
+  "s03_concentration": {
+   "skin": "exec_08",
+   "why": "분포 막대"
+  },
+  "e05_dept_kind": {
+   "skin": "exec_08",
+   "why": "분포 막대"
+  },
+  "gnb_tree": {
+   "skin": "tree_01",
+   "why": "연도별 논문 · 등급 구성 · 저자 역할 한 장"
+  },
+  "e08_year_grade": {
+   "skin": "tree_01",
+   "why": "연도별 등급 구성"
+  },
+  "e09_year_role": {
+   "skin": "tree_01",
+   "why": "연도별 저자 역할"
+  },
+  "e16_stu_first": {
+   "skin": "tree_01",
+   "why": "저자 역할 구성"
+  },
+  "new_jr_role": {
+   "skin": "tree_01",
+   "why": "저자 역할 구성"
+  },
+  "new_ai_grade": {
+   "skin": "tree_01",
+   "why": "등급 구성"
+  },
+  "s02_qual_trend": {
+   "skin": "univ_02",
+   "why": "연도 선그래프 두 줄"
+  },
+  "s09_ai_lead": {
+   "skin": "univ_02",
+   "why": "연도 선그래프 두 줄"
+  },
+  "e07_gy_trend": {
+   "skin": "univ_02",
+   "why": "계열별 연도 선그래프"
+  },
+  "e14_ai_year": {
+   "skin": "univ_02",
+   "why": "연도 선그래프"
+  },
+  "new_stu_grade": {
+   "skin": "person_05",
+   "why": "등급 구성 띠"
+  },
+  "s10_lead_quality": {
+   "skin": "person_05",
+   "why": "등급 구성 띠"
+  },
+  "e12_journal_dept": {
+   "skin": "person_07",
+   "why": "주요 게재 저널 목록"
+  },
+  "e02_dept_role": {
+   "skin": "net_06",
+   "why": "학과별 구성 표"
+  },
+  "gnb_net": {
+   "skin": "net_02",
+   "why": "학과 간 협업 매트릭스"
+  },
+  "e21_net_dept": {
+   "skin": "net_02",
+   "why": "학과 간 협업 매트릭스"
+  },
+  "e10_field_dept": {
+   "skin": "net_02",
+   "why": "두 축 교차 매트릭스"
+  },
+  "gnb_glob": {
+   "skin": "glob_03",
+   "why": "분야 프로필 막대"
+  },
+  "new_hss_field": {
+   "skin": "glob_03",
+   "why": "분야 프로필 막대"
+  },
+  "s08_field_conc": {
+   "skin": "glob_03",
+   "why": "분야 구성 막대"
+  },
+  "new_net_year": {
+   "skin": "glob_05",
+   "why": "관계가 트인 해 · 연도 막대"
+  },
+  "s07_ext_new": {
+   "skin": "glob_05",
+   "why": "관계가 트인 해 · 연도 막대"
+  },
+  "s05_prof_stu": {
+   "skin": "net_06",
+   "why": "상대별 표"
+  },
+  "s06_partner_mix": {
+   "skin": "univ_01",
+   "why": "폭과 깊이 산점도"
+  },
+  "gnb_exp": {
+   "skin": "glob_07",
+   "why": "사람 후보 표"
+  },
+  "e22_net_field": {
+   "skin": "glob_07",
+   "why": "사람 후보 표"
+  },
+  "gnb_pool": {
+   "skin": "pool_06",
+   "why": "산출에서 빠진 것 표"
+  },
+  "s11_fix_first": {
+   "skin": "pool_06",
+   "why": "정비 우선순위 표"
+  },
+  "e23_qa_all": {
+   "skin": "pool_06",
+   "why": "품질 표"
+  },
+  "e24_qa_dept": {
+   "skin": "pool_06",
+   "why": "학과별 품질 표"
+  },
+  "e25_qa_grade": {
+   "skin": "pool_06",
+   "why": "등급 미부여 표"
+  }
+ },
+ "aux": {
+  "tree_02": "출처",
+  "exec_11": "출처",
+  "net_07": "출처",
+  "glob_09": "출처",
+  "exp_03": "출처",
+  "univ_08": "출처",
+  "sheet_05": "출처",
+  "pool_07": "출처",
+  "ucmp_05": "출처",
+  "sheet_04": "근거",
+  "pool_05": "근거",
+  "glob_08": "방법 설명",
+  "glob_01": "분류 설명",
+  "pool_02": "층 설명",
+  "pool_03": "층 설명",
+  "pool_04": "층 설명",
+  "pool_08": "원천 목록",
+  "exp_01": "선택 도구",
+  "exp_02": "검색 도구",
+  "exec_09": "조치 절차",
+  "exec_07": "요약 수치",
+  "person_01": "지표 박스",
+  "person_02": "지표 박스",
+  "person_03": "지표 박스",
+  "person_04": "지표 박스"
+ }
+}
