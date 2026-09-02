@@ -109,7 +109,7 @@
    "against": null,
    "chart": "bar_sorted",
    "caveats": [
-    "분야: 학과명과 다르다",
+    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다",
     "수가 적어도 좋은 상대면 값어치가 크다"
    ],
    "covered_by": [
@@ -211,7 +211,7 @@
    "chart": "heatmap",
    "caveats": [
     "연도: 2026 제외 · 2025 집계 중",
-    "분야: 학과명과 다르다",
+    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다",
     "대학 전체이며 BK21 참여자 범위가 아니다"
    ],
    "covered_by": [
@@ -248,25 +248,23 @@
   {
    "id": "new_hss_field",
    "q": [
-    "인문사회가 어느 분야에서 늘고 있나"
+    "인문사회는 어느 분야에 있나"
    ],
-   "nucleus": "paper",
+   "nucleus": "dept",
    "axes": [
-    "f",
-    "y"
+    "f"
    ],
    "filters": {
     "gy": "인문사회"
    },
    "measures": [
-    "paper_count"
+    "dept_field_papers"
    ],
    "against": null,
-   "chart": "line_multi",
+   "chart": "bar_sorted",
    "caveats": [
-    "분야: 학과명과 다르다",
-    "연도: 2026 제외 · 2025 집계 중",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다",
+    "분야는 학과 집계로만 있다. 연도·AI 등 다른 축과 겹칠 수 없다"
    ],
    "covered_by": [],
    "blocked": null
@@ -418,14 +416,13 @@
     "period": "2020-2025"
    },
    "measures": [
-    "uni_works",
+    "uni_field_papers",
     "uni_fwci"
    ],
    "against": "국내7",
    "chart": "scatter",
    "caveats": [
-    "분야: 학과명과 다르다",
-    "대학 전체이며 BK21 참여자 범위가 아니다"
+    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다"
    ],
    "covered_by": [],
    "blocked": null
@@ -578,21 +575,19 @@
    "q": [
     "성과가 특정 분야에 과도하게 모였나"
    ],
-   "nucleus": "paper",
+   "nucleus": "dept",
    "axes": [
     "f"
    ],
-   "filters": {
-    "dept": "*"
-   },
+   "filters": {},
    "measures": [
-    "paper_count"
+    "dept_field_papers"
    ],
    "against": null,
    "chart": "stack100",
    "caveats": [
-    "분야: 학과명과 다르다",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다",
+    "분야는 학과 집계로만 있다. 연도·AI 등 다른 축과 겹칠 수 없다"
    ],
    "covered_by": [],
    "blocked": null
@@ -895,21 +890,21 @@
    "q": [
     "학과 이름과 실제 연구 분야가 맞나"
    ],
-   "nucleus": "paper",
+   "nucleus": "dept",
    "axes": [
-    "f",
-    "dept"
+    "dept",
+    "f"
    ],
    "filters": {},
    "measures": [
-    "paper_count"
+    "dept_field_papers"
    ],
    "against": null,
    "chart": "heatmap",
    "caveats": [
-    "분야: 학과명과 다르다",
     "학과·전공: 기본 조직 단위",
-    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다",
+    "분야는 학과 집계로만 있다. 연도·AI 등 다른 축과 겹칠 수 없다"
    ],
    "covered_by": [
     "글로벌 관계망"
@@ -938,7 +933,8 @@
     "조직 규모를 따라간다. 1인당과 나란히 낸다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": "층 불일치: 편수(paper_count)은 논문 단위로만 있다. 분야(으)로 자를 수 없다",
+   "blocked_reason_fixed": "분야 집계에 연도가 없다. 분야별 추이는 원천 재추출이 필요하다"
   },
   {
    "id": "e12_journal_dept",
@@ -1033,7 +1029,8 @@
     "조직 규모를 따라간다. 1인당과 나란히 낸다"
    ],
    "covered_by": [],
-   "blocked": null
+   "blocked": "층 불일치: 편수(paper_count)은 논문 단위로만 있다. 분야(으)로 자를 수 없다",
+   "blocked_reason_fixed": "분야 집계에 AI 구분이 없다. 논문에 분야가 붙어야 만들어진다"
   },
   {
    "id": "e16_stu_first",
@@ -1116,13 +1113,12 @@
    ],
    "filters": {},
    "measures": [
-    "uni_works"
+    "uni_field_papers"
    ],
    "against": "국내7",
    "chart": "heatmap",
    "caveats": [
-    "분야: 학과명과 다르다",
-    "대학 전체이며 BK21 참여자 범위가 아니다"
+    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다"
    ],
    "covered_by": [
     "대학 BK21 비교"
@@ -1190,7 +1186,7 @@
    "against": null,
    "chart": "table",
    "caveats": [
-    "분야: 학과명과 다르다",
+    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다",
     "수가 적어도 좋은 상대면 값어치가 크다"
    ],
    "covered_by": [

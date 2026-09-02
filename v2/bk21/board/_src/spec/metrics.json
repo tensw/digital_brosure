@@ -483,6 +483,31 @@
       "status": "internal",
       "source": "glob.reco",
       "caveat": "추천 근거이지 성과 지표가 아니다"
+    },
+    {
+      "id": "dept_field_papers",
+      "name": "분야별 편수",
+      "grain": "dept",
+      "unit": "편",
+      "field": null,
+      "formula": "학과×분야 사전 집계",
+      "population": "학과 28 × 분야",
+      "direction": "high",
+      "status": "official",
+      "source": "glob.deptfield",
+      "caveat": "분야는 학과 집계로만 있다. 연도·AI 등 다른 축과 겹칠 수 없다"
+    },
+    {
+      "id": "uni_field_papers",
+      "name": "대학 분야별 편수",
+      "grain": "university",
+      "unit": "편",
+      "field": null,
+      "formula": "대학×분야 사전 집계",
+      "population": "BK21 8개교",
+      "direction": "high",
+      "status": "official",
+      "source": "ucmp.fld"
     }
   ],
   "uncollected": [
@@ -564,7 +589,7 @@
     "f": {
       "name": "분야",
       "values": 232,
-      "note": "학과명과 다르다"
+      "note": "논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다"
     },
     "dept": {
       "name": "학과·전공",
@@ -599,7 +624,6 @@
       "g",
       "ai",
       "j",
-      "f",
       "dept",
       "gy",
       "kind",
@@ -613,7 +637,8 @@
     ],
     "dept": [
       "dept",
-      "gy"
+      "gy",
+      "f"
     ],
     "relation": [
       "dept",
