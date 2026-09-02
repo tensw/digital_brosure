@@ -31,6 +31,8 @@ blob = 'const SPEC=' + json.dumps(spec, ensure_ascii=False, separators=(',',':')
 html = io.open(ASK, encoding='utf-8').read()
 pat = re.compile(r'/\*SPEC_START\*/[\s\S]*?/\*SPEC_END\*/')
 if not pat.search(html): raise SystemExit('ask.html 에 SPEC 자리가 없다')
-io.open(ASK,'w',encoding='utf-8').write(pat.sub('/*SPEC_START*/'+blob+'/*SPEC_END*/', html))
+REPL = '/*SPEC_START*/' + blob + '/*SPEC_END*/'
+# re.sub 는 치환문자열의 \n · \\ · \1 을 해석해 JSON 을 깨뜨린다. 람다로 그대로 넣는다.
+io.open(ASK, 'w', encoding='utf-8').write(pat.sub(lambda m: REPL, html))
 print(f"spec 주입 {len(blob)/1024:.0f}KB · 레시피 {len(spec['recipes'])} · 답 {len(A['answers'])}")
 print('→', ASK)
