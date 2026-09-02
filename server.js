@@ -312,6 +312,67 @@ function handleReport(req, res) {
   });
 }
 
+/* 보고서를 대화로 고친다. 값은 미리 계산해 둔 표에서만 오고,
+   여기서 받는 것은 «어느 표를 어떻게 놓을지» 뿐이다. 숫자를 만들게 하지 않는다.
+   고르는 일이라 pro 로 쓴다(대표 지시). 한 번 약 20~30원. */
+const EDIT_MODEL = 'gemini-2.5-pro';
+
+function handleEdit(req, res) {
+  if (!guard(req, res)) return;
+  readBody(req, (b) => {
+    const q = (b && typeof b.q === 'string') ? b.q.slice(0, 300) : '';
+    const menu = (b && Array.isArray(b.menu)) ? b.menu.slice(0, 140) : [];
+    const sel = (b && b.sel) || null;
+    if (!q || !menu.length) return json(res, 400, { ok: false, reason: 'bad_request' });
+
+    const list = menu.map(m => `${m.id}\t${String(m.q).slice(0, 70)}`).join('\n');
+    const cur = sel ? [
+      'id: ' + sel.rid,
+      '제목: ' + String(sel.head || '').slice(0, 60),
+      '축: ' + String(sel.cols || '').slice(0, 60),
+      '측정: ' + String(sel.measures || '').slice(0, 60),
+      '행 예시: ' + String(sel.sample || '').slice(0, 300),
+      '현재 상태: ' + String(sel.state || '').slice(0, 200),
+    ].join('\n') : '(고른 표 없음 — 보고서의 첫 표가 대상이다)';
+
+    const prompt =
+      '너는 대학 연구성과 보고서를 대화로 고치는 편집기다.\n' +
+      '사용자의 말을 아래 조작 명령으로 옮긴다. 숫자를 지어내지 마라. 표는 이미 계산돼 있고 너는 고르고 거를 뿐이다.\n' +
+      '아래 JSON 한 덩어리만 출력하라. 다른 말은 쓰지 마라.\n' +
+      '{"ops":[...],"say":"무엇을 했는지 한 문장"}\n\n' +
+      '[쓸 수 있는 조작]\n' +
+      '{"op":"years","from":2021,"to":2025}  기간 한정 (해제는 from,to 를 null)\n' +
+      '{"op":"top","n":10}  상위 n개만. n 이 0 이면 해제\n' +
+      '{"op":"only","name":"의학과"}  이름이 든 행만. name 이 "" 이면 해제\n' +
+      '{"op":"sort","asc":true}  낮은 순. false 면 높은 순\n' +
+      '{"op":"view","v":"table"}  표로 본다. "chart" 면 그림으로\n' +
+      '{"op":"widget","w":"bar_h"}  그림 종류 — bar_h bar_v line stack100 scatter heat pareto bar_group\n' +
+      '{"op":"swap","rid":"..."}  고른 자리의 데이터를 목록의 다른 표로 갈아 끼운다\n' +
+      '{"op":"add","rid":"..."}  목록의 표를 보고서에 새로 넣는다\n' +
+      '{"op":"remove"} {"op":"restore"}  고른 섹션을 빼거나 되살린다\n' +
+      '{"op":"title","text":"..."}  고른 섹션 제목을 바꾼다\n' +
+      '{"op":"reset"}  고른 섹션의 편집을 처음으로\n\n' +
+      '[규칙]\n' +
+      '1. 사용자가 다른 데이터를 달라고 하면 목록에서 골라 swap 또는 add 를 쓴다. "대신·바꿔"는 swap, "같이·추가·하나 더"는 add.\n' +
+      '2. 목록에 맞는 표가 없으면 ops 를 빈 배열로 두고 say 에 없다고 적는다. 비슷한 표를 억지로 고르지 마라.\n' +
+      '3. 한 말에 조작이 여럿이면 순서대로 여러 개 넣는다.\n' +
+      '4. say 는 40자 안팎. 표에 없는 수치를 쓰지 마라.\n\n' +
+      '[지금 고른 표]\n' + cur + '\n\n' +
+      '[쓸 수 있는 표 목록]\n' + list + '\n\n' +
+      '[사용자 말]\n' + q + '\n\n[출력]';
+
+    gemini(EDIT_MODEL, prompt, 3000, (err, t, cost) => {
+      if (err) return json(res, 200, { ok: false, reason: err });
+      const o = firstJson(t || '');
+      if (!o || !Array.isArray(o.ops)) return json(res, 200, { ok: false, reason: 'no_plan', cost });
+      const ids = new Set(menu.map(m => m.id));
+      const ops = o.ops.slice(0, 6).filter(x => x && typeof x.op === 'string')
+        .filter(x => (x.op !== 'swap' && x.op !== 'add') || ids.has(x.rid));
+      json(res, 200, { ok: true, cost, ops, say: String(o.say || '').slice(0, 160) });
+    });
+  });
+}
+
 function handleAsk(req, res) {
   if (!guard(req, res)) return;
   readBody(req, (b) => {
@@ -355,6 +416,7 @@ const server = http.createServer((req, res) => {
      그래야 같은 질문에 늘 같은 답이 나오고 없는 것을 지어내지 않는다. */
   if (urlPath === '/api/bk21/ask')    return handleAsk(req, res);
   if (urlPath === '/api/bk21/report') return handleReport(req, res);
+  if (urlPath === '/api/bk21/edit')   return handleEdit(req, res);
 
   // 잠긴 구간은 세션이 있어야 지나간다.
   // 주소를 바꾸지 않는다 — biblo.ai/2026 그 자리에서 로그인 화면을 그대로 낸다.

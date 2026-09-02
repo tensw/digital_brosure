@@ -1,0 +1,640 @@
+<!doctype html><html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>BK21 보고서</title>
+<style>
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gd:#0e3b2e; --gd2:#155c46; --g:#12b76a; --g2:#059a58; --gl:#dff5e9; --gl2:#f2faf6;
+  --amber:#f5c518; --red:#c0392b; --ink:#1c2b25; --dim:#5d6b74; --dim2:#8b97a0;
+  --line:#dfe4e7; --paper:#fff; --bg:#e6e9ea;
+  --ui:"Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+html,body{height:100%}
+body{font:14px/1.6 var(--ui);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow:hidden}
+.shell{display:flex;height:100vh}
+
+/* ══ 좌: AI 대화 패널 ══ */
+.chat{width:392px;flex:none;background:var(--gd);color:#dff0e7;display:flex;flex-direction:column;min-width:300px}
+.chat .ch-top{padding:20px 20px 15px;border-bottom:1px solid rgba(255,255,255,.10)}
+.chat .kick{font:700 10px/1 var(--mono);letter-spacing:.26em;color:#69b394}
+.chat h1{margin-top:9px;font-size:19px;font-weight:800;letter-spacing:-.4px;color:#fff}
+.chat .sub{margin-top:6px;font-size:12px;color:#8fc4ac;line-height:1.6}
+.chat .back{margin-top:13px;display:inline-flex;align-items:center;gap:6px;font:700 11.5px var(--ui);
+  color:#bde8d1;text-decoration:none;border:1.5px solid rgba(189,232,209,.4);border-radius:999px;padding:6px 13px}
+.chat .back:hover{background:rgba(255,255,255,.08)}
+.msgs{flex:1;overflow:auto;padding:16px 18px;display:flex;flex-direction:column;gap:11px}
+.msgs::-webkit-scrollbar{width:6px}.msgs::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:3px}
+.m{max-width:92%;padding:11px 14px;border-radius:14px;font-size:13px;line-height:1.65;white-space:pre-wrap;word-break:break-word}
+.m.bot{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.10);color:#e4f3ea;border-bottom-left-radius:5px}
+.m.me{align-self:flex-end;background:var(--g);color:#04231a;font-weight:700;border-bottom-right-radius:5px}
+.m.sys{align-self:center;max-width:100%;background:transparent;border:0;color:#7fb79c;font-size:11.5px;text-align:center;padding:2px}
+.m b{color:#9ff0c6}
+.m code{font:600 12px var(--mono);background:rgba(0,0,0,.28);padding:1px 5px;border-radius:4px;color:#a9edcb}
+.quick{padding:0 18px 10px;display:flex;gap:6px;flex-wrap:wrap}
+.quick button{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);color:#c9ead8;
+  border-radius:999px;padding:6px 11px;font:600 11.5px var(--ui);cursor:pointer;white-space:nowrap}
+.quick button:hover{background:var(--g);color:#04231a;border-color:var(--g)}
+.inbox{padding:12px 16px 16px;border-top:1px solid rgba(255,255,255,.10);display:flex;gap:8px}
+.inbox input{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:12px;
+  padding:12px 14px;color:#eaf6ef;font:500 13.5px var(--ui);outline:none}
+.inbox input:focus{border-color:var(--g)}
+.inbox input::placeholder{color:#6fa88e}
+.inbox button{background:var(--g);border:0;color:#04231a;border-radius:12px;padding:0 17px;font:800 13px var(--ui);cursor:pointer}
+.inbox button:hover{background:#0fa35e}
+.grip{width:6px;flex:none;cursor:col-resize;background:linear-gradient(90deg,rgba(0,0,0,.10),transparent)}
+.grip:hover{background:var(--g)}
+
+/* ══ 우: 보고서 ══ */
+.view{flex:1;overflow:auto;padding:26px 0 90px}
+.page{width:794px;min-height:1123px;background:var(--paper);margin:0 auto 24px;box-shadow:0 2px 14px rgba(14,59,46,.13);
+  display:flex;flex-direction:column;position:relative}
+.body{flex:1;padding:38px 44px 26px}
+.pfoot{flex:none;display:flex;justify-content:space-between;align-items:center;padding:9px 22px;
+  border-top:2px solid var(--gd);font:700 12.5px var(--ui);color:var(--gd)}
+.pfoot .mid{flex:1;text-align:center;font-weight:600;color:var(--dim)}
+/* 표지 */
+.cover{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;padding:40px}
+.cover .prj{font-size:16px;color:var(--dim);font-weight:600;letter-spacing:2px}
+.cover .bdg{font:800 13px var(--ui);color:#04231a;background:var(--g);padding:5px 16px;border-radius:999px;letter-spacing:.5px}
+.cover .ttl{font-size:40px;font-weight:800;color:var(--gd);line-height:1.24;letter-spacing:-1.4px;margin:6px 0}
+.cover .sys{font-size:19px;color:var(--gd2);font-weight:600}
+.cover .div{width:78px;height:3px;background:var(--g);margin:14px 0}
+.cover .meta{font-size:15px;color:var(--dim);line-height:2}
+.cover .meta strong{color:var(--ink);display:inline-block;width:78px;text-align:right;margin-right:12px}
+.cover .logo{margin-top:20px;font-size:18px;font-weight:800;color:var(--gd);letter-spacing:3px}
+/* 본문 */
+h2.sh{font-size:19px;color:var(--gd);font-weight:800;border-bottom:2px solid var(--gd);padding-bottom:6px;margin:0 0 12px;letter-spacing:-.4px}
+h3.sh{font-size:15.5px;color:var(--gd);font-weight:700;margin:18px 0 8px}
+.lead{font-size:14px;color:#33413a;line-height:1.8;margin-bottom:12px}
+.kpis{display:flex;gap:11px;margin:12px 0 14px;flex-wrap:wrap}
+.kpis .c{flex:1;min-width:130px;border:1px solid var(--line);border-radius:11px;padding:12px 13px;background:var(--gl2)}
+.kpis .c .n{font-size:24px;font-weight:800;color:var(--gd);line-height:1.2;letter-spacing:-.8px}
+.kpis .c .n.a{color:var(--g2)}
+.kpis .c .l{font-size:11.5px;color:var(--dim);margin-top:3px;font-weight:600}
+.toc{list-style:none}
+.toc li{padding:7px 0;border-bottom:1px dotted #cfd6d2;font-size:14px;display:flex;gap:8px;cursor:pointer}
+.toc li:hover{color:var(--g2)}
+.toc li .no{font:800 12px var(--mono);color:var(--g2);width:22px}
+.toc li .pg{margin-left:auto;font-weight:700;color:var(--gd)}
+.box{border-left:4px solid var(--g);background:var(--gl2);padding:11px 15px;border-radius:0 8px 8px 0;margin:11px 0;font-size:13.5px;line-height:1.75}
+.box.warn{border-color:var(--amber);background:#fdf8e6}
+.box.cav{border-color:var(--dim2);background:#f4f6f7;color:#4a565e;font-size:12.5px}
+.box b{color:var(--gd)}
+/* 섹션(차트) */
+.sec{border:1.5px solid transparent;border-radius:12px;padding:12px;margin:0 -12px 18px;transition:.15s;cursor:pointer}
+.sec:hover{background:#fafcfb}
+.sec.on{border-color:var(--g);background:var(--gl2);box-shadow:0 0 0 3px rgba(18,183,106,.10)}
+.sec .sechd{display:flex;align-items:flex-start;gap:9px;margin-bottom:7px}
+.sec .no{font:800 11px var(--mono);background:var(--gd);color:#fff;border-radius:6px;padding:4px 7px;flex:none;margin-top:2px}
+.sec.on .no{background:var(--g);color:#04231a}
+.sec h4{font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.3px}
+.sec .meta{font-size:11.5px;color:var(--dim2);font-weight:600;margin-top:3px}
+.sec .tag{margin-left:auto;font:700 10.5px var(--ui);background:#eef2f0;color:var(--dim);padding:4px 9px;border-radius:999px;flex:none}
+.sec.on .tag{background:var(--g);color:#04231a}
+.plot{margin:10px 0 6px}
+.plot svg{width:100%;display:block;overflow:visible}
+.src{font:600 11px var(--mono);color:var(--dim2);margin-top:7px;letter-spacing:.01em}
+.hidden{display:none}
+.sec.off{opacity:.36}
+.sec.off .plot,.sec.off table,.sec.off .dl{display:none}
+/* 표 */
+table.rt{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:8px}
+table.rt th{background:var(--gd);color:#fff;padding:7px 8px;font-size:11.5px;font-weight:700;border:1px solid var(--gd);text-align:left}
+table.rt th.n{text-align:right}
+table.rt td{border:1px solid var(--line);padding:6px 9px;vertical-align:top}
+table.rt td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+table.rt tr:nth-child(even) td{background:#f7faf8}
+table.rt tr.me td{background:var(--gl);font-weight:800;color:var(--gd)}
+/* 가로 막대 */
+.dl{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.dl .r{display:grid;grid-template-columns:158px 1fr auto;align-items:center;gap:11px;font-size:12.5px}
+.dl .n{color:#3d4a44;font-weight:700;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dl .bar{height:15px;border-radius:4px;background:#eef2f0;overflow:hidden}
+.dl .bar i{display:block;height:100%;border-radius:4px;background:var(--g)}
+.dl .bar i.alt{background:var(--gd2)}
+.dl .v{font-weight:800;color:var(--gd);font-variant-numeric:tabular-nums;min-width:64px;text-align:right}
+.leg{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--dim);font-weight:600;margin:2px 0 4px}
+.leg i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.stk{display:flex;height:22px;border-radius:6px;overflow:hidden;margin-top:6px}
+.stk i{height:100%;display:block}
+.stkrow{margin:9px 0}
+.stkrow .nm{font-size:12px;font-weight:700;color:#3d4a44;margin-bottom:3px}
+.prt{position:fixed;right:16px;bottom:16px;z-index:50;display:flex;align-items:center;gap:6px;padding:9px 13px;
+  background:var(--gd);color:#fff;border:0;border-radius:999px;font:800 12px var(--ui);cursor:pointer;
+  box-shadow:0 8px 22px rgba(14,59,46,.3);opacity:.55;transition:.15s}
+.prt:hover{opacity:1}
+.prt:hover{background:#12503d}
+@media print{
+  body{overflow:visible;background:#fff}.shell{display:block;height:auto}
+  .chat,.grip,.prt{display:none!important}
+  .view{overflow:visible;padding:0}
+  .page{width:100%;min-height:100vh;margin:0;box-shadow:none;page-break-after:always}
+  .sec{border-color:transparent!important;background:none!important;box-shadow:none!important}
+  @page{size:portrait;margin:9mm}
+}
+
+/* ── 고른 표 · AI 상태 ─────────────── */
+.selbar{padding:0 20px 12px;display:none}
+.selbar.on{display:block}
+.selbar .pill{display:inline-flex;align-items:center;gap:8px;max-width:100%;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:999px;
+  padding:7px 8px 7px 13px;font:700 12px var(--ui);color:#fff;letter-spacing:-.1px}
+.selbar .pill .no{background:var(--g);color:#06251b;border-radius:50%;width:17px;height:17px;
+  display:inline-flex;align-items:center;justify-content:center;font:800 10px var(--mono);flex:none}
+.selbar .pill .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.selbar .pill button{border:0;background:rgba(255,255,255,.16);color:#fff;border-radius:50%;
+  width:19px;height:19px;cursor:pointer;font-size:12px;line-height:1;flex:none}
+.selbar .hint{margin-top:7px;font:600 11px var(--ui);color:rgba(255,255,255,.5)}
+.m.think{opacity:.75}
+.m.think .dots i{display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor;
+  margin-right:3px;animation:bl 1s infinite}
+.m.think .dots i:nth-child(2){animation-delay:.15s}
+.m.think .dots i:nth-child(3){animation-delay:.3s}
+@keyframes bl{0%,60%,100%{opacity:.25}30%{opacity:1}}
+.m .cost{display:block;margin-top:5px;font:700 10px var(--mono);opacity:.5;letter-spacing:.04em}
+</style></head><body>
+<div class="shell">
+  <!-- 좌: AI 대화 -->
+  <aside class="chat" id="chat">
+    <div class="ch-top">
+      <div class="kick">BK21 · REPORT EDITOR</div>
+      <h1 id="rTitle">보고서</h1>
+      <div class="sub">왼쪽에서 말하면 오른쪽 보고서가 바뀝니다. 차트를 눌러 고를 수 있습니다.</div>
+      <a class="back" href="bk21-widgets.html">← 위젯 대시보드</a>
+    </div>
+    <div class="selbar" id="selbar"></div>
+    <div class="msgs" id="msgs"></div>
+    <div class="quick" id="quick"></div>
+    <div class="inbox">
+      <input id="cin" placeholder="예: 3번을 표로 바꿔줘" autocomplete="off">
+      <button id="csend">보내기</button>
+    </div>
+  </aside>
+  <div class="grip" id="grip"></div>
+  <!-- 우: 보고서 -->
+  <main class="view" id="view"></main>
+</div>
+<button class="prt" onclick="window.print()">🖨 인쇄</button>
+
+<script src="spec.js"></script>
+<script src="reports.js"></script>
+<script>
+/* ═══════ 기본 ═══════ */
+const S=window.SPEC, RPT=window.REPORTS, MET=S.metrics, AX=S.axes;
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const PAL=['#12b76a','#2e6fd9','#f5c518','#7c5cf0','#0ea5a5','#c0392b','#8b97a0'];
+const fmt=(v,u)=>{ if(v==null||isNaN(v))return'—';
+  if(u==='%')return(Math.round(v*10)/10)+'';
+  if(Math.abs(v)>=100)return Math.round(v).toLocaleString();
+  if(Math.abs(v)>=10)return(Math.round(v*10)/10)+'';
+  return(Math.round(v*100)/100)+''; };
+const short=(s,n)=>{s=String(s);return s.length>n?s.slice(0,n-1)+'…':s;};
+const mname=k=>(MET[k]&&MET[k].n)||k, munit=k=>(MET[k]&&MET[k].u)||'', axname=k=>AX[k]||k;
+const lab=(r,i)=>{const l=r[0];return Array.isArray(l)?l[i||0]:l;};
+
+const P=new URLSearchParams(location.search);
+const REP=JSON.parse(JSON.stringify(RPT.find(r=>r.id===P.get('r'))||RPT[0]));
+const FOCUS0=P.get('c');
+let SEL=null;                       /* 선택된 차트 rid */
+const E={};                         /* 편집 상태 rid -> {...} */
+const HIST=[];                      /* 되돌리기 스택 */
+REP.charts.forEach(c=>E[c.rid]={view:'chart',top:0,y0:null,y1:null,only:null,off:false,head:c.head,asc:false});
+
+/* ═══════ 데이터 파이프 ═══════ */
+function rowsOf(rid){
+  const a=S.answers[rid], e=E[rid]; let rows=a.rows.slice();
+  const yi=a.cols.indexOf('y');
+  if(yi>=0&&(e.y0||e.y1)) rows=rows.filter(r=>{const y=+lab(r,yi);return (!e.y0||y>=e.y0)&&(!e.y1||y<=e.y1);});
+  if(e.only) rows=rows.filter(r=>String(Array.isArray(r[0])?r[0].join(' '):r[0]).includes(e.only));
+  if(e.asc) rows=rows.slice().sort((p,q)=>(p[1]||0)-(q[1]||0));
+  if(e.top>0) rows=rows.slice(0,e.top);
+  return rows;
+}
+function series(a,rows,mi){
+  const yi=a.cols.indexOf('y'); if(yi<0)return null;
+  const other=yi===0?1:0, two=a.cols.length>1, map=new Map();
+  rows.forEach(r=>{const k=two?lab(r,other):'전체', x=String(two?lab(r,yi):lab(r,0));
+    if(!map.has(k))map.set(k,[]); map.get(k).push([x,r[1+mi]]);});
+  const out=[...map].map(([key,pts])=>{pts.sort((p,q)=>p[0].localeCompare(q[0]));
+    return{key,pts,sum:pts.reduce((s,p)=>s+(p[1]||0),0)};});
+  out.sort((p,q)=>q.sum-p.sum); return out;
+}
+
+/* ═══════ 큰 차트 ═══════ */
+const W=700;
+function gLine(a,rows,mi){
+  const ss=series(a,rows,mi); if(!ss||!ss.length)return gTable(a,rows);
+  const use=ss.slice(0,5), H=248, L=46, R=12, T=12, B=26;
+  const xs=[...new Set(rows.map(r=>String(lab(r,a.cols.indexOf('y')))))].sort();
+  let mx=0; use.forEach(s=>s.pts.forEach(p=>{if(p[1]>mx)mx=p[1];})); mx=mx||1;
+  const X=x=>L+(W-L-R)*(xs.indexOf(x)/Math.max(1,xs.length-1));
+  const Y=v=>H-B-(H-B-T)*(v/mx);
+  let g='';
+  for(let i=0;i<=4;i++){const v=mx*i/4,y=Y(v);
+    g+=`<line x1="${L}" y1="${y.toFixed(1)}" x2="${W-R}" y2="${y.toFixed(1)}" stroke="#eef2f0"/>
+        <text x="${L-7}" y="${(y+3.5).toFixed(1)}" font-size="10" fill="#8b97a0" text-anchor="end">${fmt(v,munit(a.measures[mi]))}</text>`;}
+  use.forEach((s,i)=>{const c=PAL[i%PAL.length];
+    const d=s.pts.map((p,j)=>(j?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join(' ');
+    g+=`<path d="${d}" fill="none" stroke="${c}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>`;
+    s.pts.forEach(p=>{g+=`<circle cx="${X(p[0]).toFixed(1)}" cy="${Y(p[1]).toFixed(1)}" r="3.2" fill="#fff" stroke="${c}" stroke-width="2"/>`;});});
+  xs.forEach(x=>{g+=`<text x="${X(x).toFixed(1)}" y="${H-8}" font-size="10.5" fill="#5d6b74" text-anchor="middle" font-weight="600">${esc(x)}</text>`;});
+  const leg=`<div class="leg">`+use.map((s,i)=>`<span><i style="background:${PAL[i%PAL.length]}"></i>${esc(short(s.key,16))}</span>`).join('')+`</div>`;
+  return leg+`<div class="plot"><svg viewBox="0 0 ${W} ${H}">${g}</svg></div>`;
+}
+function gBarH(a,rows,mi){
+  const mx=Math.max(...rows.map(r=>r[1+mi]||0))||1, u=munit(a.measures[mi]);
+  const n=rows.length>18?18:rows.length;
+  return `<div class="dl">`+rows.slice(0,n).map(r=>{
+    const l=Array.isArray(r[0])?r[0].join(' × '):r[0];
+    const me=String(l).includes('성균관');
+    return `<div class="r"><span class="n" title="${esc(l)}">${esc(short(l,20))}</span>
+      <span class="bar"><i class="${me?'alt':''}" style="width:${Math.max(1.5,(r[1+mi]/mx)*100).toFixed(1)}%"></i></span>
+      <span class="v">${fmt(r[1+mi],u)}${u==='%'?'%':''}</span></div>`;}).join('')+`</div>`;
+}
+function gStack(a,rows,mi){
+  const two=a.cols.length>1;
+  const groups=two?[...new Set(rows.map(r=>lab(r,0)))].slice(0,8):['(전체)'];
+  const segAll=[...new Set(rows.map(r=>String(lab(r,two?1:0))))];
+  const col={}; segAll.forEach((s,i)=>col[s]=PAL[i%PAL.length]);
+  let h=`<div class="leg">`+segAll.slice(0,7).map(s=>`<span><i style="background:${col[s]}"></i>${esc(short(s,14))}</span>`).join('')+`</div>`;
+  groups.forEach(gk=>{
+    const rs=two?rows.filter(r=>lab(r,0)===gk):rows;
+    const tot=rs.reduce((s,r)=>s+(r[1+mi]||0),0)||1;
+    h+=`<div class="stkrow">${two?`<div class="nm">${esc(gk)} <span style="color:#8b97a0;font-weight:600">${fmt(tot)}</span></div>`:''}
+      <div class="stk">`+rs.map(r=>{const s=String(lab(r,two?1:0)),p=(r[1+mi]||0)/tot*100;
+        return `<i style="width:${p.toFixed(2)}%;background:${col[s]}" title="${esc(s)} ${p.toFixed(1)}%"></i>`;}).join('')+`</div></div>`;});
+  return h;
+}
+function gScatter(a,rows){
+  const H=270,L=52,R=14,T=14,B=34;
+  const xm=Math.max(...rows.map(r=>r[1]||0))||1, ym=Math.max(...rows.map(r=>r[2]||0))||1;
+  const X=v=>L+(W-L-R)*(v/xm), Y=v=>H-B-(H-B-T)*(v/ym);
+  let g=`<line x1="${L}" y1="${H-B}" x2="${W-R}" y2="${H-B}" stroke="#cfd6d2"/><line x1="${L}" y1="${T}" x2="${L}" y2="${H-B}" stroke="#cfd6d2"/>`;
+  for(let i=1;i<=4;i++){const y=Y(ym*i/4);g+=`<line x1="${L}" y1="${y.toFixed(1)}" x2="${W-R}" y2="${y.toFixed(1)}" stroke="#f2f5f3"/>
+    <text x="${L-7}" y="${(y+3.5).toFixed(1)}" font-size="10" fill="#8b97a0" text-anchor="end">${fmt(ym*i/4)}</text>`;}
+  rows.forEach(r=>{const me=String(lab(r,0)).includes('성균관');
+    const x=X(r[1]||0),y=Y(r[2]||0);
+    g+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${me?6:4.4}" fill="${me?'#0e3b2e':'#12b76a'}" opacity="${me?1:.62}"/>`;
+    if(me||r[1]>=xm*.62||r[2]>=ym*.72) g+=`<text x="${(x+7).toFixed(1)}" y="${(y+3.5).toFixed(1)}" font-size="9.5" fill="#3d4a44" font-weight="600">${esc(short(String(lab(r,0)),9))}</text>`;});
+  g+=`<text x="${W/2}" y="${H-6}" font-size="10.5" fill="#5d6b74" text-anchor="middle" font-weight="600">${esc(mname(a.measures[0]))} →</text>
+      <text x="12" y="${T+10}" font-size="10.5" fill="#5d6b74" font-weight="600">↑ ${esc(mname(a.measures[1]||a.measures[0]))}</text>`;
+  return `<div class="plot"><svg viewBox="0 0 ${W} ${H}">${g}</svg></div>`;
+}
+function gHeat(a,rows,mi){
+  const R=[...new Set(rows.map(r=>lab(r,0)))].slice(0,12), C=[...new Set(rows.map(r=>lab(r,1)))].slice(0,10);
+  const m=new Map(rows.map(r=>[lab(r,0)+'|'+lab(r,1),r[1+mi]||0]));
+  const mx=Math.max(...rows.map(r=>r[1+mi]||0))||1;
+  const L=118,T=52,cw=(W-L-8)/C.length,ch=21,H=T+R.length*ch+8;
+  let g='';
+  C.forEach((c,j)=>{g+=`<text transform="translate(${(L+j*cw+cw/2).toFixed(1)},${T-8}) rotate(-38)" font-size="9.5" fill="#5d6b74" text-anchor="start" font-weight="600">${esc(short(String(c),13))}</text>`;});
+  R.forEach((rr,i)=>{
+    g+=`<text x="${L-7}" y="${(T+i*ch+ch/2+3.5).toFixed(1)}" font-size="10" fill="#3d4a44" text-anchor="end" font-weight="600">${esc(short(String(rr),14))}</text>`;
+    C.forEach((cc,j)=>{const v=m.get(rr+'|'+cc)||0,t=Math.pow(v/mx,.55);
+      g+=`<rect x="${(L+j*cw+1).toFixed(1)}" y="${(T+i*ch+1).toFixed(1)}" width="${(cw-2).toFixed(1)}" height="${ch-2}" rx="2.5" fill="#12b76a" opacity="${(0.06+t*0.9).toFixed(3)}"/>`;
+      if(v&&t>.5) g+=`<text x="${(L+j*cw+cw/2).toFixed(1)}" y="${(T+i*ch+ch/2+3.5).toFixed(1)}" font-size="9" fill="#04231a" text-anchor="middle" font-weight="700">${fmt(v)}</text>`;});});
+  return `<div class="plot"><svg viewBox="0 0 ${W} ${H}">${g}</svg></div>`;
+}
+function gPareto(a,rows,mi){
+  const rs=rows.slice().sort((p,q)=>(q[1+mi]||0)-(p[1+mi]||0)).slice(0,20);
+  const tot=rows.reduce((s,r)=>s+(r[1+mi]||0),0)||1, mx=rs[0][1+mi]||1;
+  const H=250,L=46,R=40,T=12,B=44, bw=(W-L-R)/rs.length;
+  let g='',acc=0,pts=[];
+  for(let i=0;i<=4;i++){const y=T+(H-B-T)*(i/4);
+    g+=`<line x1="${L}" y1="${y.toFixed(1)}" x2="${W-R}" y2="${y.toFixed(1)}" stroke="#eef2f0"/>
+        <text x="${W-R+6}" y="${(y+3.5).toFixed(1)}" font-size="9.5" fill="#8b97a0">${100-i*25}%</text>`;}
+  rs.forEach((r,i)=>{const v=r[1+mi]||0,h=(v/mx)*(H-B-T);
+    g+=`<rect x="${(L+i*bw+1.5).toFixed(1)}" y="${(H-B-h).toFixed(1)}" width="${(bw-3).toFixed(1)}" height="${h.toFixed(1)}" rx="2" fill="#bfe9d4"/>`;
+    acc+=v; pts.push([L+i*bw+bw/2,T+(H-B-T)*(1-acc/tot)]);
+    g+=`<text transform="translate(${(L+i*bw+bw/2).toFixed(1)},${H-B+8}) rotate(-42)" font-size="9" fill="#5d6b74" text-anchor="end">${esc(short(String(lab(r,0)),10))}</text>`;});
+  g+=`<path d="${pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ')}" fill="none" stroke="#0e3b2e" stroke-width="2.2"/>`;
+  pts.forEach(p=>{g+=`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.8" fill="#0e3b2e"/>`;});
+  return `<div class="leg"><span><i style="background:#bfe9d4"></i>${esc(mname(a.measures[mi]))}</span><span><i style="background:#0e3b2e"></i>누적 비율</span></div>
+    <div class="plot"><svg viewBox="0 0 ${W} ${H}">${g}</svg></div>`;
+}
+function gBarGroup(a,rows){
+  const ms=a.measures.slice(0,3), H=230,L=46,R=12,T=12,B=30;
+  const mx=Math.max(...rows.flatMap(r=>ms.map((_,i)=>r[1+i]||0)))||1;
+  const gw=(W-L-R)/rows.length;
+  let g='';
+  for(let i=0;i<=4;i++){const y=T+(H-B-T)*(i/4);
+    g+=`<line x1="${L}" y1="${y.toFixed(1)}" x2="${W-R}" y2="${y.toFixed(1)}" stroke="#eef2f0"/>
+        <text x="${L-7}" y="${(y+3.5).toFixed(1)}" font-size="10" fill="#8b97a0" text-anchor="end">${fmt(mx*(1-i/4))}</text>`;}
+  rows.forEach((r,gi)=>{const bw=(gw-26)/ms.length;
+    ms.forEach((m,i)=>{const h=((r[1+i]||0)/mx)*(H-B-T);
+      g+=`<rect x="${(L+gi*gw+13+i*bw).toFixed(1)}" y="${(H-B-h).toFixed(1)}" width="${(bw-4).toFixed(1)}" height="${h.toFixed(1)}" rx="2.5" fill="${PAL[i]}"/>`;});
+    g+=`<text x="${(L+gi*gw+gw/2).toFixed(1)}" y="${H-10}" font-size="11" fill="#3d4a44" text-anchor="middle" font-weight="700">${esc(String(lab(r,0)))}</text>`;});
+  return `<div class="leg">`+ms.map((m,i)=>`<span><i style="background:${PAL[i]}"></i>${esc(mname(m))}</span>`).join('')+`</div>
+    <div class="plot"><svg viewBox="0 0 ${W} ${H}">${g}</svg></div>`;
+}
+function gTable(a,rows){
+  const n=Math.min(rows.length,18), ms=a.measures.slice(0,4);
+  let h=`<table class="rt"><thead><tr>`+a.cols.map(c=>`<th>${esc(axname(c))}</th>`).join('')+
+    ms.map(m=>`<th class="n">${esc(mname(m))}${munit(m)?` (${esc(munit(m))})`:''}</th>`).join('')+`</tr></thead><tbody>`;
+  rows.slice(0,n).forEach(r=>{
+    const l=Array.isArray(r[0])?r[0]:[r[0]];
+    const me=l.join(' ').includes('성균관');
+    h+=`<tr class="${me?'me':''}">`+l.map(x=>`<td>${esc(x)}</td>`).join('')+
+      ms.map((m,i)=>`<td class="n">${fmt(r[1+i],munit(m))}</td>`).join('')+`</tr>`;});
+  h+=`</tbody></table>`;
+  if(rows.length>n) h+=`<div class="src">전체 ${rows.length.toLocaleString()}행 중 ${n}행만 보입니다.</div>`;
+  return h;
+}
+function drawBig(rid){
+  const a=S.answers[rid], r=S.recipes.find(x=>x.id===rid), e=E[rid], rows=rowsOf(rid);
+  if(!rows.length) return `<div class="box warn">거르개를 적용하니 남는 행이 없습니다. <b>되돌려</b>라고 말해 보세요.</div>`;
+  if(e.view==='table') return gTable(a,rows);
+  const w=e.widget||r.widget;
+  try{
+    if(w==='line')return gLine(a,rows,0);
+    if(w==='bar_h')return gBarH(a,rows,0);
+    if(w==='stack100')return gStack(a,rows,0);
+    if(w==='scatter')return gScatter(a,rows);
+    if(w==='heat')return gHeat(a,rows,0);
+    if(w==='pareto')return gPareto(a,rows,0);
+    if(w==='bar_group')return gBarGroup(a,rows);
+    return gTable(a,rows);
+  }catch(err){return gTable(a,rows);}
+}
+
+/* ═══════ 보고서 렌더 ═══════ */
+function kpiCards(){
+  const cs=REP.charts.slice(0,4).map(c=>{
+    const a=S.answers[c.rid],r=S.recipes.find(x=>x.id===c.rid);
+    const vals=a.rows.map(x=>x[1]).filter(v=>typeof v==='number');
+    const tot=vals.reduce((s,v)=>s+v,0), u=munit(a.measures[0]);
+    const isRate=u==='%'||u==='배';
+    const v=isRate?(tot/(vals.length||1)):tot;
+    return `<div class="c"><div class="n${isRate?' a':''}">${fmt(v,u)}${u==='%'?'%':''}</div>
+      <div class="l">${esc(short(mname(a.measures[0]),10))} · ${esc(short(c.head,16))}</div></div>`;}).join('');
+  return `<div class="kpis">${cs}</div>`;
+}
+function secHtml(c,i){
+  const a=S.answers[c.rid], r=S.recipes.find(x=>x.id===c.rid), e=E[c.rid];
+  const flt=Object.entries(r.filters||{}).map(([k,v])=>k+'='+v).join(' · ')||'2020–2025';
+  const src=`${(S.grains&&S.grains[r.nucleus])||r.nucleus}[${a.cols.map(axname).join(' × ')}] {${flt}} → ${a.measures.map(mname).join(' · ')}`;
+  const cav=(r.caveats||[]).slice(0,3);
+  const badge=e.view==='table'?'표':(e.widget||r.widget);
+  const ed=[]; if(e.top)ed.push('상위 '+e.top); if(e.y0||e.y1)ed.push((e.y0||'')+'–'+(e.y1||'')); if(e.only)ed.push('“'+e.only+'”'); if(e.asc)ed.push('낮은 순');
+  return `<div class="sec${SEL===c.rid?' on':''}${e.off?' off':''}" data-rid="${c.rid}" id="sec-${c.rid}">
+    <div class="sechd"><span class="no">${i+1}</span>
+      <div><h4>${esc(e.head)}</h4>
+        <div class="meta">${esc(a.cols.map(axname).join(' × '))} · ${esc(a.measures.map(mname).join(', '))}${ed.length?' · '+esc(ed.join(' · ')):''}</div></div>
+      <span class="tag">${esc(badge)}</span></div>
+    ${e.off?'<div class="box cav">이 섹션은 보고서에서 뺐습니다. <b>3번 되살려</b>처럼 말하면 돌아옵니다.</div>':drawBig(c.rid)}
+    ${cav.length&&!e.off?`<div class="box cav">주의 · ${cav.map(esc).join(' / ')}</div>`:''}
+    <div class="src">${esc(src)} · ${esc(S.built)} 기준</div>
+  </div>`;
+}
+function render(){
+  const on=REP.charts.filter(c=>!E[c.rid].off);
+  let h='';
+  /* 표지 */
+  h+=`<div class="page"><div class="cover">
+    <div class="prj">성균관대학교 BK21 교육연구단</div>
+    <div class="bdg">${esc(REP.tag)}</div>
+    <div class="ttl">${esc(REP.title)}</div>
+    <div class="sys">${esc(REP.sub)}</div><div class="div"></div>
+    <div class="meta">
+      <div><strong>성과기간</strong>${esc(REP.period)} (2026 제외 · 2025 집계 중)</div>
+      <div><strong>차트</strong>${on.length}개 · 근거 ${REP.charts.length}개 레시피</div>
+      <div><strong>기준일</strong>${esc(S.built)}</div>
+      <div><strong>근거</strong>BK21 원장 실측 집계</div>
+    </div>
+    <div class="logo">BIBLO</div>
+    <div style="font-size:13px;color:#8b97a0">연구성과 인텔리전스</div>
+  </div><div class="pfoot"><span></span><span class="mid">${esc(REP.title)}</span><span></span></div></div>`;
+  /* 요약 + 목차 */
+  h+=`<div class="page"><div class="body">
+    <h2 class="sh">요약</h2>
+    ${kpiCards()}
+    <div class="box"><b>이 보고서가 답하는 것</b><br>${esc(REP.lead)}</div>
+    <h2 class="sh" style="margin-top:20px">목차</h2>
+    <ul class="toc">`+REP.charts.map((c,i)=>`<li data-go="${c.rid}"><span class="no">${i+1}</span>
+      <span>${esc(E[c.rid].head)}</span><span class="pg">${3+Math.floor(i/2)}</span></li>`).join('')+`</ul>
+    <div class="box cav">숫자는 값 옆에 품질을 함께 봅니다. 미판정은 실적 없음이 아니라 등급을 못 붙인 상태입니다.
+      축이 3개를 넘으면 결론을 만들지 않고 표로만 냅니다.</div>
+  </div><div class="pfoot"><span>BIBLO</span><span class="mid">${esc(REP.title)}</span><span>2</span></div></div>`;
+  /* 본문: 페이지당 차트 2개 */
+  for(let i=0;i<REP.charts.length;i+=2){
+    const pair=REP.charts.slice(i,i+2);
+    h+=`<div class="page"><div class="body">
+      ${i===0?`<h2 class="sh">본문</h2>`:''}
+      ${pair.map((c,j)=>secHtml(c,i+j)).join('')}
+    </div><div class="pfoot"><span>BIBLO</span><span class="mid">${esc(REP.title)}</span><span>${3+i/2}</span></div></div>`;
+  }
+  $('#view').innerHTML=h;
+  $('#view').querySelectorAll('.sec').forEach(el=>el.onclick=()=>{SEL=el.dataset.rid;render();
+    say('bot',`<b>${esc(E[SEL].head)}</b> 를 골랐습니다. 이 차트에 명령이 적용됩니다.`);});
+  $('#view').querySelectorAll('.toc li').forEach(el=>el.onclick=()=>{SEL=el.dataset.go;render();scrollTo(SEL);});
+  selbar();
+}
+function scrollTo(rid){const el=document.getElementById('sec-'+rid); if(el)el.scrollIntoView({behavior:'smooth',block:'center'});}
+
+/* ═══════ 대화 ═══════ */
+function say(who,html){const d=document.createElement('div');d.className='m '+who;d.innerHTML=html;
+  $('#msgs').appendChild(d);$('#msgs').scrollTop=$('#msgs').scrollHeight;}
+function pick(t){
+  const m=t.match(/(\d+)\s*번/); if(m){const i=+m[1]-1; if(REP.charts[i])return REP.charts[i].rid;}
+  for(const c of REP.charts){ const w=E[c.rid].head.replace(/\s/g,'');
+    if(w && t.replace(/\s/g,'').includes(w.slice(0,6))) return c.rid; }
+  return SEL||REP.charts[0].rid;
+}
+function snap(rid){HIST.push({rid,state:JSON.parse(JSON.stringify(E[rid]))}); if(HIST.length>40)HIST.shift();}
+function done(rid,msg){render();scrollTo(rid);say('bot',msg);}
+
+function handle(raw){
+  const t=raw.trim(); if(!t)return;
+  say('me',esc(t));
+  const s=t.replace(/\s+/g,' ');
+
+  if(/^(도움|명령|뭐 할|어떻게)/.test(s)||s==='?'){
+    return say('bot',`할 수 있는 말입니다.\n· <code>3번을 표로</code> · <code>차트로</code>\n· <code>막대로</code> <code>선으로</code> <code>히트맵으로</code>\n· <code>상위 10개만</code>\n· <code>2023년부터</code> · <code>최근 3년</code>\n· <code>성균관대만</code> · <code>의학과만</code>\n· <code>낮은 순으로</code>\n· <code>2번 빼줘</code> · <code>2번 되살려</code>\n· <code>제목을 …로</code>\n· <code>되돌려</code>\n\n규칙에 없는 말은 AI 가 받습니다.\n· <code>대신 질 순위로 보여줘</code>\n· <code>대학 비교표도 같이 넣어줘</code>\n· <code>이 표 말고 학과별 협업으로</code>`);
+  }
+  if(/되돌|취소|원래대로/.test(s)){
+    const h=HIST.pop(); if(!h)return say('bot','되돌릴 편집이 없습니다.');
+    E[h.rid]=h.state; SEL=h.rid; return done(h.rid,'직전 편집을 되돌렸습니다.');
+  }
+  const rid=pick(s), e=E[rid], head=esc(E[rid].head);
+  SEL=rid;
+
+  if(/(빼|숨겨|제외|지워)/.test(s)&&!/되살|다시/.test(s)){snap(rid);e.off=true;return done(rid,`<b>${head}</b> 를 보고서에서 뺐습니다. 목차에는 남습니다.`);}
+  if(/(되살|다시 넣|복구)/.test(s)){snap(rid);e.off=false;return done(rid,`<b>${head}</b> 를 되살렸습니다.`);}
+  if(/표로|테이블/.test(s)){snap(rid);e.view='table';return done(rid,`<b>${head}</b> 를 표로 바꿨습니다. 값을 그대로 옮겨 쓸 수 있습니다.`);}
+  if(/차트로|그래프로|그림으로/.test(s)){snap(rid);e.view='chart';return done(rid,`<b>${head}</b> 를 다시 차트로 바꿨습니다.`);}
+  let w=null;
+  if(/막대|바 차트|bar/i.test(s)&&!/누적/.test(s))w='bar_h';
+  else if(/선으로|라인|추이로/.test(s))w='line';
+  else if(/누적|구성비|비율로/.test(s))w='stack100';
+  else if(/히트맵|열지도|격자/.test(s))w='heat';
+  else if(/산점|흩어|scatter/i.test(s))w='scatter';
+  else if(/누적기여|파레토/.test(s))w='pareto';
+  if(w){const a=S.answers[rid];
+    if((w==='heat'||w==='scatter')&&a.cols.length<2&&w==='heat')
+      return say('bot',`이 자료는 축이 하나라 히트맵으로 그릴 수 없습니다. 막대나 표를 권합니다.`);
+    snap(rid);e.widget=w;e.view='chart';
+    return done(rid,`<b>${head}</b> 를 ${w==='bar_h'?'가로막대':w==='line'?'선':w==='stack100'?'100% 누적':w==='heat'?'히트맵':w==='scatter'?'산점도':'누적기여'}로 바꿨습니다.`);}
+  let m=s.match(/상위\s*(\d+)|(\d+)\s*(개|곳|명|편|위)\s*(만|까지)?/);
+  if(m){const n=+(m[1]||m[2]); if(n>0){snap(rid);e.top=n;return done(rid,`<b>${head}</b> 를 상위 ${n}개만 남겼습니다.`);}}
+  if(/전부|전체 다|모두 보여/.test(s)){snap(rid);e.top=0;return done(rid,`<b>${head}</b> 의 행 제한을 풀었습니다.`);}
+  m=s.match(/(20\d\d)\s*[~\-–]\s*(20\d\d)/);
+  if(m){snap(rid);e.y0=+m[1];e.y1=+m[2];return done(rid,`기간을 ${m[1]}–${m[2]}로 좁혔습니다.`);}
+  m=s.match(/(20\d\d)\s*년?\s*(부터|이후|이래)/);
+  if(m){snap(rid);e.y0=+m[1];e.y1=null;return done(rid,`${m[1]}년부터로 좁혔습니다.`);}
+  m=s.match(/(20\d\d)\s*년?\s*(까지|이전)/);
+  if(m){snap(rid);e.y1=+m[1];e.y0=null;return done(rid,`${m[1]}년까지로 좁혔습니다.`);}
+  m=s.match(/최근\s*(\d)\s*년/);
+  if(m){const end=2025,st=end-(+m[1])+1;snap(rid);e.y0=st;e.y1=end;return done(rid,`최근 ${m[1]}년(${st}–${end})으로 좁혔습니다.`);}
+  if(/기간.*(풀|해제|전체)/.test(s)){snap(rid);e.y0=e.y1=null;return done(rid,'기간 제한을 풀었습니다.');}
+  m=s.match(/([가-힣A-Za-z0-9·\s]{2,20}?)\s*(만|만 보여|만 남)/);
+  if(m&&!/전부|전체/.test(m[1])){const k=m[1].trim().replace(/(을|를|은|는)$/,'');
+    if(k.length>=2&&!/^\d+개?$/.test(k)){
+      const test=S.answers[rid].rows.some(r=>String(Array.isArray(r[0])?r[0].join(' '):r[0]).includes(k));
+      if(!test)return say('bot',`이 표에 “${esc(k)}”가 없습니다. 다른 이름으로 말해 보세요.`);
+      snap(rid);e.only=k;return done(rid,`“${esc(k)}”만 남겼습니다.`);}}
+  if(/(대상|필터).*(풀|해제)|전부 보여/.test(s)){snap(rid);e.only=null;return done(rid,'대상 제한을 풀었습니다.');}
+  if(/낮은 순|오름차순|적은 순/.test(s)){snap(rid);e.asc=true;return done(rid,'낮은 순으로 정렬했습니다.');}
+  if(/높은 순|내림차순|많은 순/.test(s)){snap(rid);e.asc=false;return done(rid,'높은 순으로 정렬했습니다.');}
+  m=s.match(/제목(을|를)?\s*[「"']?(.+?)[」"']?\s*(로|으로)\s*(바꿔|고쳐|해)/);
+  if(m){snap(rid);e.head=m[2].trim();return done(rid,`제목을 <b>${esc(e.head)}</b> 로 바꿨습니다.`);}
+
+  askAI(s, rid);
+}
+
+/* ═══════ AI 편집 (서버 프록시 · Gemini 2.5 Pro) ═══════ */
+/* 값은 미리 계산된 표에서만 온다. 모델이 하는 일은 «어느 표를 어떻게 놓을지» 고르는 것뿐이다. */
+const MENU = S.recipes.filter(r=>S.answers[r.id]).map(r=>({id:r.id, q:(r.q&&r.q[0])||r.id}));
+
+function selInfo(rid){
+  const a=S.answers[rid], e=E[rid];
+  const sample=a.rows.slice(0,5).map(r=>{
+    const l=Array.isArray(r[0])?r[0].join('/'):r[0];
+    return l+': '+r.slice(1).join(', ');}).join(' | ');
+  const st=[]; if(e.top)st.push('상위'+e.top); if(e.y0||e.y1)st.push((e.y0||'')+'-'+(e.y1||''));
+  if(e.only)st.push('"'+e.only+'"만'); if(e.asc)st.push('낮은순');
+  st.push(e.view==='table'?'표':(e.widget||(S.recipes.find(x=>x.id===rid)||{}).widget||'차트'));
+  return {rid, head:e.head, cols:a.cols.map(axname).join(' × '),
+    measures:a.measures.map(mname).join(', '), sample, state:st.join(' · ')};
+}
+
+function addChart(rid, head){
+  if(E[rid]) return false;
+  const r=S.recipes.find(x=>x.id===rid); if(!r||!S.answers[rid]) return false;
+  const h=head||(r.q&&r.q[0])||rid;
+  REP.charts.push({rid, size:'3x2', head:h});
+  E[rid]={view:'chart',top:0,y0:null,y1:null,only:null,off:false,head:h,asc:false};
+  return true;
+}
+/* 갈아 끼우기 — 고른 자리에 다른 표를 넣는다. 자리와 제목은 두고 데이터만 바뀐다. */
+function swapChart(rid, nrid){
+  const i=REP.charts.findIndex(c=>c.rid===rid); if(i<0) return false;
+  const r=S.recipes.find(x=>x.id===nrid); if(!r||!S.answers[nrid]) return false;
+  if(E[nrid]&&nrid!==rid) return false;
+  const size=REP.charts[i].size, h=(r.q&&r.q[0])||nrid;
+  REP.charts[i]={rid:nrid, size, head:h};
+  E[nrid]={view:'chart',top:0,y0:null,y1:null,only:null,off:false,head:h,asc:false};
+  if(nrid!==rid) delete E[rid];
+  return true;
+}
+
+const WIDGETS=['bar_h','bar_v','line','stack100','scatter','heat','pareto','bar_group'];
+function applyOps(ops, rid){
+  let cur=rid, msgs=[], moved=false;
+  ops.forEach(o=>{
+    const e=E[cur]; if(!e&&o.op!=='add') return;
+    if(o.op==='years'){ snap(cur); e.y0=o.from?+o.from:null; e.y1=o.to?+o.to:null;
+      msgs.push(e.y0||e.y1?`기간 ${e.y0||''}–${e.y1||''}`:'기간 제한 해제'); }
+    else if(o.op==='top'){ snap(cur); e.top=Math.max(0,+o.n||0); msgs.push(e.top?`상위 ${e.top}개`:'상위 제한 해제'); }
+    else if(o.op==='only'){ const k=String(o.name||'').trim();
+      if(k){ const ok=S.answers[cur].rows.some(r=>String(Array.isArray(r[0])?r[0].join(' '):r[0]).includes(k));
+        if(!ok){ msgs.push(`“${k}”는 이 표에 없습니다`); return; }
+        snap(cur); e.only=k; msgs.push(`“${k}”만`); }
+      else { snap(cur); e.only=null; msgs.push('대상 제한 해제'); } }
+    else if(o.op==='sort'){ snap(cur); e.asc=!!o.asc; msgs.push(e.asc?'낮은 순':'높은 순'); }
+    else if(o.op==='view'){ snap(cur); e.view=(o.v==='table')?'table':'chart'; msgs.push(e.view==='table'?'표로':'차트로'); }
+    else if(o.op==='widget'&&WIDGETS.indexOf(o.w)>=0){ snap(cur); e.view='chart'; e.widget=o.w; msgs.push(o.w); }
+    else if(o.op==='remove'){ snap(cur); e.off=true; msgs.push('섹션 뺌'); }
+    else if(o.op==='restore'){ snap(cur); e.off=false; msgs.push('섹션 되살림'); }
+    else if(o.op==='title'&&o.text){ snap(cur); e.head=String(o.text).slice(0,60); msgs.push('제목 변경'); }
+    else if(o.op==='reset'){ snap(cur); const c=REP.charts.find(x=>x.rid===cur);
+      E[cur]={view:'chart',top:0,y0:null,y1:null,only:null,off:false,head:(c&&c.head)||e.head,asc:false};
+      msgs.push('처음 상태로'); }
+    else if(o.op==='swap'&&o.rid){ if(swapChart(cur,o.rid)){ cur=o.rid; SEL=cur; moved=true;
+        msgs.push(`데이터를 «${E[cur].head}» 로 갈아 끼움`); } else msgs.push('그 표로는 못 바꿉니다'); }
+    else if(o.op==='add'&&o.rid){ if(addChart(o.rid)){ cur=o.rid; SEL=cur; moved=true;
+        msgs.push(`«${E[cur].head}» 를 보고서에 넣음`); } else msgs.push('이미 들어 있는 표입니다'); }
+  });
+  return {cur, msgs, moved};
+}
+
+function askAI(t, rid){
+  const th=document.createElement('div');
+  th.className='m bot think';
+  th.innerHTML='표를 다시 찾는 중 <span class="dots"><i></i><i></i><i></i></span>';
+  $('#msgs').appendChild(th); $('#msgs').scrollTop=$('#msgs').scrollHeight;
+  const kill=()=>{ if(th.parentNode) th.parentNode.removeChild(th); };
+  let settled=false;
+  const tmr=setTimeout(()=>{ if(settled)return; settled=true; kill();
+    say('bot','응답이 늦습니다. <code>도움말</code>의 말로 다시 시도해 주세요.'); }, 35000);
+
+  fetch('/api/bk21/edit',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({q:t, sel:selInfo(rid), menu:MENU})})
+   .then(r=>r.json())
+   .then(o=>{
+     if(settled)return; settled=true; clearTimeout(tmr); kill();
+     if(!o||!o.ok){
+       const why={login_required:'로그인이 필요합니다.',rate_limited:'잠시 뒤 다시 시도해 주세요.',
+         no_key:'AI 키가 서버에 없습니다. 규칙에 있는 말로는 그대로 됩니다.',
+         no_plan:'무슨 뜻인지 못 옮겼습니다.',timeout:'응답이 늦습니다.'}[o&&o.reason]||'AI 응답을 받지 못했습니다.';
+       return say('bot',esc(why)+' <code>도움말</code>이라고 치면 할 수 있는 말을 보여드립니다.');
+     }
+     const cost=o.cost?`<span class="cost">GEMINI 2.5 PRO · ${o.cost.krw}원</span>`:'';
+     if(!o.ops.length) return say('bot',esc(o.say||'그 데이터는 지금 보고서에 없습니다.')+cost);
+     const r2=applyOps(o.ops, rid);
+     render(); scrollTo(r2.cur);
+     say('bot',`${esc(o.say||'고쳤습니다.')}<br><b>${esc(r2.msgs.join(' · '))}</b>${cost}`);
+   })
+   .catch(()=>{ if(settled)return; settled=true; clearTimeout(tmr); kill();
+     say('bot','서버에 닿지 못했습니다. 배포된 주소에서 열면 AI 편집이 됩니다.'); });
+}
+
+/* 고른 표를 챗 위에 띄운다 */
+function selbar(){
+  const b=$('#selbar');
+  if(!SEL||!E[SEL]){ b.className='selbar'; b.innerHTML=''; return; }
+  const i=REP.charts.findIndex(c=>c.rid===SEL);
+  b.className='selbar on';
+  b.innerHTML=`<div class="pill"><span class="no">${i+1}</span>
+    <span class="nm">${esc(E[SEL].head)}</span><button id="selx" title="선택 해제">×</button></div>
+    <div class="hint">이 표에 명령이 적용됩니다. 다른 데이터를 부르면 이 자리가 바뀝니다.</div>`;
+  $('#selx').onclick=(ev)=>{ev.stopPropagation();SEL=null;render();};
+}
+
+/* ═══════ 시작 ═══════ */
+$('#rTitle').textContent=REP.title;
+document.title='BK21 · '+REP.title;
+const QUICK=['표로','상위 10개만','최근 3년','막대로','되돌려','대신 질 순위로 보여줘','대학 비교표도 같이','도움말'];
+$('#quick').innerHTML=QUICK.map(q=>`<button>${q}</button>`).join('');
+$('#quick').querySelectorAll('button').forEach(b=>b.onclick=()=>handle(b.textContent));
+$('#csend').onclick=()=>{handle($('#cin').value);$('#cin').value='';};
+$('#cin').addEventListener('keydown',e=>{if(e.key==='Enter'){handle($('#cin').value);$('#cin').value='';}});
+/* 폭 조절 */
+(function(){let drag=false;
+  $('#grip').addEventListener('mousedown',e=>{drag=true;e.preventDefault();document.body.style.userSelect='none';});
+  window.addEventListener('mousemove',e=>{if(!drag)return;
+    $('#chat').style.width=Math.max(300,Math.min(600,e.clientX))+'px';});
+  window.addEventListener('mouseup',()=>{drag=false;document.body.style.userSelect='';});})();
+
+SEL=FOCUS0&&E[FOCUS0]?FOCUS0:null;
+render();
+say('bot',`<b>${esc(REP.title)}</b> 보고서를 열었습니다. 차트 ${REP.charts.length}개.`);
+if(SEL){scrollTo(SEL);say('bot',`대시보드에서 고른 <b>${esc(E[SEL].head)}</b> 위치로 옮겼습니다. 이 차트에 명령이 적용됩니다.`);}
+else say('bot','오른쪽에서 차트를 누르면 그 차트가 대상이 됩니다. <code>도움말</code>이라고 치면 할 수 있는 말을 보여드립니다.');
+const Q0=P.get('q');
+if(Q0){ setTimeout(()=>say('bot',`질문 <b>${esc(Q0)}</b> 으로 이 자리를 열었습니다. 이어서 말하면 이 표를 고칩니다.`),120); }
+</script>
+</body></html>
