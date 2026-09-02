@@ -6,6 +6,9 @@ ASK  = os.path.normpath(os.path.join(HERE, '..', '..', '..', 'ask.html'))
 M = json.load(io.open(os.path.join(HERE,'metrics.json'), encoding='utf-8'))
 R = json.load(io.open(os.path.join(HERE,'recipes.json'), encoding='utf-8'))
 A = json.load(io.open(os.path.join(HERE,'answers.json'), encoding='utf-8'))
+PU = json.load(io.open(os.path.join(HERE,'punched.json'), encoding='utf-8'))
+SKN = json.load(io.open(os.path.join(HERE,'skins.json'), encoding='utf-8'))
+SMAP = json.load(io.open(os.path.join(HERE,'skinmap.json'), encoding='utf-8'))['map']
 KO = {'paper':'논문','person':'사람','dept':'학과','relation':'관계','university':'대학','quality':'품질'}
 
 # 스텝1 에 먼저 보일 다섯 (레시피 §6-3 우선순위)
@@ -26,6 +29,11 @@ spec = {
  'answers': A['answers'],
  'cap': A['cap'],
  'uncollected': M['uncollected'],
+ 'skinmap': {k: v['skin'] for k, v in SMAP.items()},
+ # 행 치환이 되는 틀만 싣는다. SVG 는 좌표 재계산이 필요해 아직 못 쓴다.
+ 'tpl': {k: {'html': v['html'], 'slots': v['slots'], 'hints': v['hints']}
+         for k, v in PU['tpl'].items() if v['mode'] == 'rows' and v.get('html')},
+ 'skincss': SKN['css'],
 }
 blob = 'const SPEC=' + json.dumps(spec, ensure_ascii=False, separators=(',',':')) + ';'
 html = io.open(ASK, encoding='utf-8').read()

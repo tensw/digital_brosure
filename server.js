@@ -204,14 +204,116 @@ function sendGate(res, name) {
   });
 }
 
-function handleAsk(req, res) {
-  if (req.method !== 'POST') return json(res, 405, { ok: false, reason: 'post_only' });
-  if (!auth.session(req))    return json(res, 401, { ok: false, reason: 'login_required' });
+/* 제미나이 한 번 부르기. 모델과 프롬프트만 갈아 끼운다.
+   2.5 계열은 답 전에 «생각 토큰» 을 쓴다. 끄지 않으면 빈 답이 온다(실측). */
+/* 값은 1M 토큰당 달러. 생각 토큰은 출력으로 친다.
+   라우팅은 기계적이라 flash 로 충분하다(실측 0.9초·정확). 리포트만 pro 로 쓴다. */
+const PRICE = {
+  'gemini-2.5-flash': { in: 0.30, out: 2.50 },
+  'gemini-2.5-pro':   { in: 1.25, out: 10.00 },
+};
+const FX = 1380;  // 원/달러
+function costOf(model, u) {
+  const p = PRICE[model] || PRICE['gemini-2.5-flash'];
+  const i = u.in || 0, o = (u.out || 0) + (u.think || 0);
+  const usd = i / 1e6 * p.in + o / 1e6 * p.out;
+  return { model, in: i, out: u.out || 0, think: u.think || 0,
+           usd: +usd.toFixed(6), krw: Math.round(usd * FX * 10) / 10 };
+}
+
+function gemini(model, prompt, maxTok, cb) {
+  /* flash 는 사고를 끌 수 있어 빠르고 싸다.
+     pro 는 «Budget 0 is invalid. This model only works in thinking mode» 로 거절하므로
+     끄지 않고, 생각 토큰이 출력 상한에 들어가는 만큼 넉넉히 준다. 실측으로 확인했다. */
+  const gc = { temperature: 0, maxOutputTokens: maxTok };
+  if (model.indexOf('flash') >= 0) gc.thinkingConfig = { thinkingBudget: 0 };
+  const payload = JSON.stringify({
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: gc,
+  });
+  const r2 = https.request({
+    hostname: 'generativelanguage.googleapis.com',
+    path: '/v1beta/models/' + model + ':generateContent?key=' + encodeURIComponent(GKEY),
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(payload) },
+    timeout: 20000,
+  }, (up) => {
+    let buf = '';
+    up.on('data', d => { buf += d; if (buf.length > 200000) up.destroy(); });
+    up.on('end', () => {
+      try {
+        const o = JSON.parse(buf);
+        const t = ((((o.candidates || [])[0] || {}).content || {}).parts || [])
+                  .map(x => x.text || '').join('').trim();
+        const m = o.usageMetadata || {};
+        cb(null, t, costOf(model, { in: m.promptTokenCount, out: m.candidatesTokenCount,
+                                    think: m.thoughtsTokenCount }));
+      } catch (e) { cb('parse_failed'); }
+    });
+  });
+  r2.on('timeout', () => { r2.destroy(); cb('timeout'); });
+  r2.on('error', () => cb('upstream_error'));
+  r2.write(payload); r2.end();
+}
+/* 답 자체는 미리 계산해 둔 표와 스킨으로 만든다. 여기 값이 드는 것은 두 가지뿐이다.
+     라우팅  질문을 레시피로 옮긴다. 규칙으로는 안 되는 일이라 부른다 (약 0.6원)
+     해설    사람이 눌렀을 때만 문장으로 풀어 쓴다 (flash 약 1원 · pro 약 27원)
+   결론 문장은 화면이 데이터로 만든다. 그걸 LLM 에게 다시 쓰게 하면 같은 것을 두 번 만드는 것이다. */
+const ROUTE_MODEL   = 'gemini-2.5-flash';
+const WRITE_MODEL   = 'gemini-2.5-flash';  // 해설 기본
+const WRITE_DEEP    = 'gemini-2.5-pro';    // «더 깊게» 를 누를 때만
+
+/* 답 안에서 첫 JSON 덩어리만 꺼낸다. 모델이 설명을 덧붙여도 견딘다. */
+function firstJson(t) {
+  const i = t.indexOf('{'), j = t.lastIndexOf('}');
+  if (i < 0 || j <= i) return null;
+  try { return JSON.parse(t.slice(i, j + 1)); } catch (e) { return null; }
+}
+
+function guard(req, res) {
+  if (req.method !== 'POST') { json(res, 405, { ok: false, reason: 'post_only' }); return false; }
+  if (!auth.session(req))    { json(res, 401, { ok: false, reason: 'login_required' }); return false; }
   const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim()
            || req.socket.remoteAddress || '?';
-  if (!rateOk(ip))           return json(res, 429, { ok: false, reason: 'rate_limited' });
-  if (!GKEY)                 return json(res, 200, { ok: false, reason: 'no_key' });
+  if (!rateOk(ip))           { json(res, 429, { ok: false, reason: 'rate_limited' }); return false; }
+  if (!GKEY)                 { json(res, 200, { ok: false, reason: 'no_key' }); return false; }
+  return true;
+}
 
+/* 리포트를 쓴다. 숫자는 화면이 데이터에서 만들고, 여기서는 «읽는 법» 만 쓴다. */
+function handleReport(req, res) {
+  if (!guard(req, res)) return;
+  readBody(req, (b) => {
+    if (!b || !b.q || !b.data) return json(res, 400, { ok: false, reason: 'bad_request' });
+    const prompt =
+      '너는 대학 연구성과 보고서를 쓰는 분석가다. 아래 표만 근거로 한국어 보고서를 쓴다.\n' +
+      '표에 없는 숫자를 지어내지 마라. 표에 있는 값만 인용하라.\n' +
+      '예측·전망·추정을 쓰지 마라. 표는 이미 일어난 집계이며 미래값이 아니다.\n' +
+      '아래 [한계] 를 어기는 문장을 쓰지 마라.\n' +
+      '아래 JSON 한 덩어리만 출력하라. 다른 말은 쓰지 마라.\n' +
+      '{"headline":"결론 한 문장","points":["근거 문장",".."],"caution":"이 답으로 하면 안 되는 것 한 줄"}\n' +
+      'headline 은 25자 안팎. points 는 2~4개, 각 40자 안팎이며 반드시 표의 숫자를 넣는다.\n\n' +
+      '[질문]\n' + String(b.q).slice(0, 200) + '\n\n' +
+      (b.focus && b.focus.length ? '[주목 대상] ' + b.focus.join(', ') + '\n\n' : '') +
+      '[표]\n' + String(b.data).slice(0, 6000) + '\n\n' +
+      (b.caveats ? '[이미 알려진 한계]\n' + String(b.caveats).slice(0, 800) + '\n\n' : '') +
+      '[출력]';
+    /* pro 는 사고를 끌 수 없다(Budget 0 is invalid). 생각 토큰이 출력 상한에 들어가므로
+       넉넉히 준다. 1500 으로는 잘려 빈 답이 온다(실측). */
+    const deep = !!b.deep;
+    gemini(deep ? WRITE_DEEP : WRITE_MODEL, prompt, deep ? 3000 : 900, (err, t, cost) => {
+      if (err) return json(res, 200, { ok: false, reason: err });
+      const o = firstJson(t || '');
+      if (!o || !o.headline) return json(res, 200, { ok: false, reason: 'no_report', cost });
+      json(res, 200, { ok: true, cost, headline: String(o.headline).slice(0, 120),
+        points: (Array.isArray(o.points) ? o.points : []).slice(0, 4).map(x => String(x).slice(0, 160)),
+        caution: String(o.caution || '').slice(0, 200) });
+    });
+  });
+}
+
+function handleAsk(req, res) {
+  if (!guard(req, res)) return;
   readBody(req, (b) => {
     const q = (b && typeof b.q === 'string') ? b.q.slice(0, 300) : '';
     const menu = (b && Array.isArray(b.menu)) ? b.menu.slice(0, 120) : [];
@@ -219,41 +321,20 @@ function handleAsk(req, res) {
 
     const list = menu.map(m => `${m.id}\t${String(m.q).slice(0, 80)}`).join('\n');
     const prompt =
-      '아래 목록에서 사용자 질문에 가장 맞는 항목의 id 하나만 답하라.\n' +
-      '맞는 것이 없으면 NONE 이라고만 답하라. 다른 말은 쓰지 마라.\n\n' +
-      '[목록]\n' + list + '\n\n[질문]\n' + q + '\n\n[답]';
+      '사용자 질문에 맞는 항목을 목록에서 하나 고르고, 질문에 나온 «주목 대상» 을 뽑아라.\n' +
+      '주목 대상은 대학명·학과명·연도처럼 질문이 콕 집은 것이다. 없으면 빈 배열.\n' +
+      '아래 JSON 한 덩어리만 출력하라. 다른 말은 쓰지 마라.\n' +
+      '{"id":"항목id 또는 NONE","focus":["대상",".."]}\n\n' +
+      '[목록]\n' + list + '\n\n[질문]\n' + q + '\n\n[출력]';
 
-    const payload = JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      /* 2.5-flash 는 답 전에 «생각 토큰» 을 쓴다. 끄지 않으면 24토큰에서
-         잘려 finishReason=MAX_TOKENS 로 빈 답이 온다. 실측으로 확인했다. */
-      generationConfig: { temperature: 0, maxOutputTokens: 64,
-                          thinkingConfig: { thinkingBudget: 0 } },
+    gemini(ROUTE_MODEL, prompt, 300, (err, t, cost) => {
+      if (err) return json(res, 200, { ok: false, reason: err });
+      const o = firstJson(t || '') || {};
+      const hit = menu.find(m => m.id === o.id);
+      if (!hit) return json(res, 200, { ok: false, reason: 'no_match', cost });
+      json(res, 200, { ok: true, id: hit.id, cost,
+        focus: (Array.isArray(o.focus) ? o.focus : []).slice(0, 5).map(x => String(x).slice(0, 40)) });
     });
-    const opt = {
-      hostname: 'generativelanguage.googleapis.com',
-      path: '/v1beta/models/gemini-2.5-flash:generateContent?key=' + encodeURIComponent(GKEY),
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(payload) },
-      timeout: 9000,
-    };
-    const r2 = https.request(opt, (up) => {
-      let buf = '';
-      up.on('data', d => { buf += d; if (buf.length > 20000) up.destroy(); });
-      up.on('end', () => {
-        try {
-          const o = JSON.parse(buf);
-          const t = ((((o.candidates || [])[0] || {}).content || {}).parts || [])
-                    .map(x => x.text || '').join('').trim();
-          const id = (t.match(/[A-Za-z0-9_]+/) || [''])[0];
-          const hit = menu.find(m => m.id === id);
-          json(res, 200, hit ? { ok: true, id: hit.id } : { ok: false, reason: 'no_match' });
-        } catch (e) { json(res, 200, { ok: false, reason: 'parse_failed' }); }
-      });
-    });
-    r2.on('timeout', () => { r2.destroy(); json(res, 200, { ok: false, reason: 'timeout' }); });
-    r2.on('error',   () => json(res, 200, { ok: false, reason: 'upstream_error' }));
-    r2.write(payload); r2.end();
   });
 }
 
@@ -272,7 +353,8 @@ const server = http.createServer((req, res) => {
   /* BK21 질문 라우팅. 로그인한 사람만 부른다.
      LLM 은 «레시피 id 하나 고르기» 만 한다. 숫자와 문장은 화면이 데이터로 만든다.
      그래야 같은 질문에 늘 같은 답이 나오고 없는 것을 지어내지 않는다. */
-  if (urlPath === '/api/bk21/ask') return handleAsk(req, res);
+  if (urlPath === '/api/bk21/ask')    return handleAsk(req, res);
+  if (urlPath === '/api/bk21/report') return handleReport(req, res);
 
   // 잠긴 구간은 세션이 있어야 지나간다.
   // 주소를 바꾸지 않는다 — biblo.ai/2026 그 자리에서 로그인 화면을 그대로 낸다.
