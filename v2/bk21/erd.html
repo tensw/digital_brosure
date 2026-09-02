@@ -4,326 +4,278 @@
 <title>BK21 데이터 구조</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
- --bg:#070b16; --bg2:#0c1224; --ink:#e6edfb; --dim:#8ea3c9; --dim2:#5f7699;
- --line:rgba(120,160,235,.18); --card:rgba(20,31,58,.72);
- --hub:#f0b429; --on:#5fd0c8; --off:#4a5c7d;
-}
+:root{--bg:#070b16;--ink:#e6edfb;--dim:#8ea3c9;--dim2:#5f7699;
+ --line:rgba(120,160,235,.18);--card:rgba(20,31,58,.72);
+ --nuc:#f0b429;--on:#5fd0c8;--warn:#e0864f}
 html,body{height:100%}
 body{background:var(--bg);color:var(--ink);
  font:14.5px/1.7 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
  -webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:#7fa9e0}
-
-/* ── 머리 ── */
 .top{padding:34px 30px 0;max-width:1560px;margin:0 auto}
 .kick{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.3em;color:#5f7db3}
 h1{margin-top:13px;font-size:27px;font-weight:800;letter-spacing:-.7px}
-.sub{margin-top:11px;color:var(--dim);max-width:74ch;font-size:14.5px}
+.sub{margin-top:11px;color:var(--dim);max-width:76ch}
 .meter{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}
-.mt{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:10px 15px;min-width:118px}
+.mt{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:10px 15px;min-width:112px}
 .mt .l{font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:var(--dim2)}
 .mt .v{margin-top:7px;font-size:20px;font-weight:800;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
 .mt .v small{font-size:11.5px;font-weight:600;color:var(--dim);margin-left:4px;letter-spacing:0}
 .mt.hi .v{color:var(--on)}
 
-/* ── 판 ── */
-.wrap{display:grid;grid-template-columns:1fr 384px;gap:22px;
- max-width:1560px;margin:24px auto 0;padding:0 30px 70px;align-items:start}
+/* 핵 고르기 */
+.nucrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.nb{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:9px 14px;cursor:pointer;
+ transition:border-color .15s,background .15s}
+.nb:hover{border-color:rgba(240,180,41,.45)}
+.nb.on{background:rgba(240,180,41,.13);border-color:rgba(240,180,41,.6)}
+.nb .n{font-size:13.5px;font-weight:700}
+.nb .c{margin-top:3px;font:600 10.5px/1 ui-monospace,Menlo,monospace;color:var(--dim2)}
+.nb.on .c{color:#f0cd8a}
+
+.wrap{display:grid;grid-template-columns:1fr 400px;gap:22px;
+ max-width:1560px;margin:20px auto 0;padding:0 30px 60px;align-items:start}
 .left{min-width:0}
-.stage{position:relative;height:648px;border:1px solid var(--line);border-radius:20px;
+.stage{position:relative;height:620px;border:1px solid var(--line);border-radius:20px;
  background:radial-gradient(circle at 50% 46%,rgba(60,95,175,.16),transparent 62%),rgba(10,16,32,.6);
  overflow:hidden}
 svg.bonds{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .atom{position:absolute;transform:translate(-50%,-50%);cursor:pointer;
  background:var(--card);border:1px solid var(--line);border-radius:13px;
- padding:9px 13px;min-width:96px;text-align:center;
- transition:border-color .15s,background .15s,transform .15s,box-shadow .15s;user-select:none}
+ padding:9px 13px;min-width:92px;text-align:center;
+ transition:border-color .15s,background .15s,transform .15s,opacity .15s;user-select:none}
 .atom:hover{border-color:rgba(150,190,255,.5);transform:translate(-50%,-50%) scale(1.05)}
 .atom .n{font-size:13px;font-weight:700;letter-spacing:-.2px;white-space:nowrap}
 .atom .c{margin-top:3px;font:600 10.5px/1 ui-monospace,Menlo,monospace;color:var(--dim2)}
 .atom.on{background:rgba(30,74,74,.9);border-color:var(--on);box-shadow:0 0 0 3px rgba(95,208,200,.15)}
 .atom.on .c{color:#9fe4de}
-.atom.ext{border-style:dashed}
-.atom.broken{opacity:.42;cursor:not-allowed}
-.atom.broken:hover{transform:translate(-50%,-50%)}
-.nuc{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);
- width:158px;height:158px;border-radius:50%;display:grid;place-items:center;text-align:center;
+.atom.off{opacity:.28;cursor:not-allowed}
+.atom.off:hover{transform:translate(-50%,-50%)}
+.nucdot{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);
+ width:156px;height:156px;border-radius:50%;display:grid;place-items:center;text-align:center;
  background:radial-gradient(circle at 42% 36%,rgba(240,180,41,.24),rgba(20,30,56,.94));
  border:1.5px solid rgba(240,180,41,.55);box-shadow:0 0 46px rgba(240,180,41,.14)}
-.nuc .n{font-size:15.5px;font-weight:800}
-.nuc .v{margin-top:4px;font-size:21px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--hub)}
-.nuc .s{margin-top:3px;font:600 10px/1.5 ui-monospace,Menlo,monospace;color:var(--dim2)}
+.nucdot .n{font-size:15.5px;font-weight:800}
+.nucdot .v{margin-top:4px;font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--nuc)}
+.nucdot .s{margin-top:3px;font:600 10px/1.5 ui-monospace,Menlo,monospace;color:var(--dim2)}
 .hint{position:absolute;left:19px;bottom:16px;font-size:12px;color:var(--dim2)}
-.under{margin-top:26px}
-.under h2{font:800 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.15em;color:#7796c9}
 
-/* ── 성질 패널 ── */
 .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;
  position:sticky;top:20px;max-height:calc(100vh - 40px);overflow-y:auto}
 .panel h2{font:800 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.15em;color:#7796c9}
-.mol{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;min-height:30px}
+.mol{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;min-height:28px}
 .tag{background:rgba(95,208,200,.14);border:1px solid rgba(95,208,200,.4);color:#adeae4;
  border-radius:8px;padding:4px 9px;font-size:12px;font-weight:700;cursor:pointer}
-.tag.hub{background:rgba(240,180,41,.14);border-color:rgba(240,180,41,.45);color:#f5cd6a;cursor:default}
+.tag.core{background:rgba(240,180,41,.14);border-color:rgba(240,180,41,.45);color:#f5cd6a;cursor:default}
 .empty{color:var(--dim2);font-size:13px}
-.formula{margin-top:14px;padding:12px 14px;border-radius:11px;background:rgba(8,13,26,.75);
+.formula{margin-top:13px;padding:12px 14px;border-radius:11px;background:rgba(8,13,26,.75);
  border:1px solid var(--line);font:600 12.5px/1.7 ui-monospace,Menlo,monospace;color:#a8bde0;word-break:break-all}
 .prop{margin-top:18px}
-.prop h3{font-size:12px;font-weight:800;letter-spacing:.13em;color:#7796c9;
- font-family:ui-monospace,Menlo,monospace}
-.q{margin-top:9px;padding:12px 14px;border-radius:11px;background:rgba(14,22,42,.8);
- border:1px solid var(--line);cursor:pointer;transition:border-color .15s}
-.q:hover{border-color:rgba(150,190,255,.45)}
+.prop h3{font-size:12px;font-weight:800;letter-spacing:.13em;color:#7796c9;font-family:ui-monospace,Menlo,monospace}
+.q{margin-top:9px;padding:12px 14px;border-radius:11px;background:rgba(14,22,42,.8);border:1px solid var(--line)}
 .q .t{font-size:14px;font-weight:700;letter-spacing:-.2px}
 .q .m{margin-top:6px;font-size:12px;color:var(--dim);display:flex;gap:8px;flex-wrap:wrap}
 .q .m b{color:#8fb4e8;font-weight:700}
-.q .lim{margin-top:7px;font-size:12px;color:#c8a15f}
+.q .lim{margin-top:6px;font-size:11.8px;color:#c8a15f;line-height:1.65}
 .q .made{margin-top:7px;font-size:11.5px;font-weight:700;color:#f0b429}
 .q .made span{background:rgba(240,180,41,.12);border-radius:5px;padding:2px 7px;margin-left:5px}
+.q .newm{margin-top:7px;font-size:11.5px;font-weight:700;color:var(--on)}
+.q.blk{border-color:rgba(224,134,79,.45);background:rgba(46,26,16,.55)}
+.q.blk .t{color:#f0a877}
+.q .why{margin-top:7px;font-size:12px;color:#e0a37c}
 .none{margin-top:9px;font-size:13px;color:var(--dim2);line-height:1.8}
 
-/* ── 프리셋 ── */
+.under{margin-top:26px}
+.under h2{font:800 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.15em;color:#7796c9}
+.pnote{margin-top:9px;color:var(--dim);font-size:13.5px;max-width:80ch}
+.chips{margin-top:15px;display:flex;flex-wrap:wrap;gap:9px}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:10px 14px;cursor:pointer;
+ transition:border-color .15s,background .15s}
+.chip:hover{border-color:rgba(240,180,41,.5);background:rgba(28,42,78,.8)}
+.chip .n{font-size:13px;font-weight:700}
+.chip .f{margin-top:5px;font:600 10.5px/1 ui-monospace,Menlo,monospace;color:var(--dim2)}
 .presets{max-width:1560px;margin:0 auto;padding:0 30px 70px}
 .presets h2{font:800 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.15em;color:#7796c9}
-.pnote{margin-top:9px;color:var(--dim);font-size:13.5px;max-width:78ch}
-.chips{margin-top:16px;display:flex;flex-wrap:wrap;gap:9px}
-.chip{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:11px 15px;
- cursor:pointer;transition:border-color .15s,background .15s}
-.chip:hover{border-color:rgba(240,180,41,.5);background:rgba(28,42,78,.8)}
-.chip .n{font-size:13.5px;font-weight:700}
-.chip .f{margin-top:5px;font:600 10.5px/1 ui-monospace,Menlo,monospace;color:var(--dim2)}
-.broke{margin-top:8px}
 .btab{margin-top:14px;width:100%;border-collapse:collapse;font-size:13.5px}
 .btab th{text-align:left;font:800 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;
  color:var(--dim2);padding:0 12px 10px 0;border-bottom:1px solid var(--line)}
 .btab td{padding:11px 12px 11px 0;border-bottom:1px solid rgba(120,160,235,.09);color:var(--dim);vertical-align:top}
 .btab td:first-child{color:var(--ink);font-weight:700;white-space:nowrap}
-.foot{max-width:1560px;margin:0 auto;padding:0 30px 60px;
- font:600 11.5px/1.8 ui-monospace,Menlo,monospace;color:#5f7db3;border-top:1px solid var(--line);padding-top:18px}
-
-@media (max-width:1180px){
- .wrap{grid-template-columns:1fr}
- .panel{position:static;max-height:none}
- .stage{height:560px}
-}
+.foot{max-width:1560px;margin:0 auto;padding:18px 30px 60px;
+ font:600 11.5px/1.8 ui-monospace,Menlo,monospace;color:#5f7db3;border-top:1px solid var(--line)}
+@media (max-width:1180px){.wrap{grid-template-columns:1fr}.panel{position:static;max-height:none}.stage{height:560px}}
 @media (max-width:760px){
- .top,.presets,.foot{padding-left:18px;padding-right:18px}
- .wrap{padding-left:18px;padding-right:18px}
- .stage{height:500px}
- .atom{min-width:74px;padding:7px 9px}
+ .top,.presets,.foot,.wrap{padding-left:18px;padding-right:18px}
+ .stage{height:500px}.atom{min-width:72px;padding:7px 9px}
  .atom .n{font-size:11.5px}.atom .c{font-size:9.5px}
- .nuc{width:118px;height:118px}.nuc .v{font-size:17px}
-}
+ .nucdot{width:116px;height:116px}.nucdot .v{font-size:17px}}
 </style></head><body>
 
 <div class="top">
   <div class="kick">BIBLO · BK21</div>
   <h1>BK21 데이터 구조</h1>
-  <p class="sub">논문 한 건에 자르는 축 열둘이 함께 붙어 있습니다.
-   원자를 붙이면 분자의 성질이 바뀌듯, 축을 얹을 때마다 답할 수 있는 질문이 달라집니다.
-   아래 축을 눌러 붙여 보십시오.</p>
+  <p class="sub">무엇을 셀지(핵)를 고르고 자르는 축을 붙입니다.
+   핵이 바뀌면 붙일 수 있는 축이 달라집니다. 학과 단위로 이미 집계된 값은 다시 자를 수 없기 때문입니다.
+   축을 얹을 때마다 답할 수 있는 질문이 바뀝니다.</p>
   <div class="meter">
-    <div class="mt"><div class="l">자르는 축</div><div class="v" id="mAx">12</div></div>
-    <div class="mt"><div class="l">만들 수 있는 조합</div><div class="v" id="mAll">4,095</div></div>
-    <div class="mt"><div class="l">비교 대상까지</div><div class="v">20,475<small>자리</small></div></div>
-    <div class="mt"><div class="l">이미 만들어 둔 것</div><div class="v">9<small>· 0.04%</small></div></div>
+    <div class="mt"><div class="l">핵</div><div class="v" id="mNuc">5</div></div>
+    <div class="mt"><div class="l">자르는 축</div><div class="v" id="mAx">13</div></div>
+    <div class="mt"><div class="l">만들 수 있는 조합</div><div class="v" id="mAll">4,150</div></div>
+    <div class="mt"><div class="l">레시피로 적힌 것</div><div class="v" id="mRec">51</div></div>
     <div class="mt hi"><div class="l">지금 붙인 축</div><div class="v" id="mSel">0</div></div>
   </div>
+  <div class="nucrow" id="nucrow"></div>
 </div>
 
 <div class="wrap">
  <div class="left">
   <div class="stage" id="stage">
     <svg class="bonds" id="bonds"></svg>
-    <div class="nuc"><div>
-      <div class="n">논문</div><div class="v">31,076</div>
-      <div class="s">편 · 2020~2025<br>원장 1억 772만</div>
-    </div></div>
-    <div class="hint">축을 눌러 붙입니다 · 다시 누르면 뗍니다</div>
+    <div class="nucdot" id="nucdot"></div>
+    <div class="hint">흐린 축은 이 핵에 붙지 않습니다</div>
   </div>
-
   <div class="under">
     <h2>이미 만들어 둔 분자 9개</h2>
     <p class="pnote">지금 대시보드의 메뉴 아홉 개는 그 자체로 이미 한 번 물어 둔 조합입니다.
-     조합 4,095가지 가운데 아홉입니다. 눌러 보시면 어떤 축이 붙어 있는지 판에 표시됩니다.</p>
+     조합 4,150가지 가운데 아홉입니다. 눌러 보시면 그 핵과 축이 판에 표시됩니다.</p>
     <div class="chips" id="chips"></div>
   </div>
  </div>
 
   <div class="panel">
     <h2>지금 만든 분자</h2>
-    <div class="mol" id="mol"><span class="empty">아직 아무 축도 붙이지 않았습니다.</span></div>
-    <div class="formula" id="formula">논문</div>
+    <div class="mol" id="mol"></div>
+    <div class="formula" id="formula"></div>
     <div class="prop">
       <h3>이 조합이 답하는 것</h3>
-      <div id="qs"><div class="none">축을 하나 붙이면 답할 수 있는 질문이 여기 뜹니다.</div></div>
+      <div id="qs"></div>
     </div>
   </div>
 </div>
 
 <div class="presets">
-  <div class="broke">
-    <h2>아직 붙지 않는 결합</h2>
-    <p class="pnote">점선으로 그린 것은 지금 붙일 수 없는 자리입니다. 못 하는 이유가 그림에 그대로 보이도록 남겨 둡니다.</p>
-    <table class="btab"><thead><tr><th>끊긴 곳</th><th>왜</th><th>그래서 못 하는 것</th></tr></thead>
-    <tbody id="brk"></tbody></table>
-  </div>
+  <h2>원자가 없어 못 만드는 것</h2>
+  <p class="pnote">여기 적힌 것은 「모른다」가 아니라 「이 원자가 없다」입니다.
+   무엇이 오면 만들어지는지가 함께 적혀 있습니다.</p>
+  <table class="btab"><thead><tr><th>못 만드는 것</th><th>무엇이 오면 되나</th></tr></thead>
+  <tbody id="unc"></tbody></table>
 </div>
 
-<div class="foot">BIBLO · TenSoftWorks · <a href="/bk21/">BK21 관리자료</a> · <a href="/bk21/board/">대시보드</a></div>
+<div class="foot">BIBLO · TenSoftWorks · <a href="/bk21/">BK21 관리자료</a> · <a href="/bk21/board/">대시보드</a>
+ · spec <span id="built"></span></div>
 
 <script>
-/* 축(원자) — 값 개수는 bk21_tree.json 실측 */
-const ATOMS=[
- {id:'y',   n:'연도',      c:'6종 · 2020~2025',      a:-96},
- {id:'r',   n:'저자역할',   c:'5종 · 공저 16,225',    a:-58},
- {id:'tr',  n:'저널등급',   c:'7종 · S 7,974',        a:-20},
- {id:'pct', n:'JCR 백분위', c:'4구간 · 상위5% 9,969', a:18},
- {id:'g',   n:'등재유형',   c:'3종 · SCI 26,886',     a:56},
- {id:'ai',  n:'AI 여부',   c:'3종 · 해당 1,775',      a:94},
- {id:'j',   n:'저널',      c:'4,112종',              a:132},
- {id:'f',   n:'분야',      c:'232종',                a:170},
- {id:'dept',n:'학과·전공',  c:'28개',                 a:208},
- {id:'gy',  n:'계열',      c:'3종 · 이공/의약/인문',   a:246},
- {id:'kind',n:'사람 구분',  c:'3종 · 교수 442',        a:284},
- {id:'grp', n:'연구그룹',   c:'115개',                a:322},
-];
-/* 바깥 묶음 — 다른 분자와 결합 */
-const EXT=[
- {id:'uni',   n:'대학',      c:'국내7·BK21 8·아시아52', a:-140, r:1.42},
- {id:'net',   n:'공저 관계',  c:'학과쌍·사람쌍',        a:-40,  r:1.42},
- {id:'qa',    n:'데이터 품질',c:'6층 · 미판정 5.5%',    a:60,   r:1.42},
- {id:'roster',n:'타교 명단',  c:'8개교 4,226명',        a:160,  r:1.42, broken:1},
-];
-/* 조합이 답하는 질문 — a 가 고른 축의 부분집합이면 뜬다 */
-const QS=[
- {a:['dept'],            q:'어느 학과가 얼마나 썼나',                     o:'정렬 막대', l:'편수는 학과 규모를 따라간다'},
- {a:['dept','y'],        q:'이 학과가 늘고 있나',                        o:'선그래프',  l:'2025는 아직 집계 중'},
- {a:['dept','r'],        q:'주도해서 쓰나 이름만 올리나',                 o:'구성 막대', l:'역할 미상 논문이 있다'},
- {a:['dept','tr'],       q:'좋은 저널에 싣고 있나',                      o:'100% 누적', l:'미판정은 낮은 등급이 아니다'},
- {a:['dept','pct'],      q:'JCR 상위 논문이 몇 편인가',                  o:'구간 막대', l:'저널 순위이지 논문 순위가 아니다'},
- {a:['dept','ai'],       q:'어느 학과가 AI를 하고 있나',                 o:'정렬 막대', l:'제목·게재지 용어 규칙 판정'},
- {a:['dept','kind'],     q:'교수와 신진 중 누가 떠받치나',                o:'점분포',   l:'사람 수가 적으면 크게 흔들린다'},
- {a:['dept','grp'],      q:'연구그룹별로 어디가 강한가',                  o:'정렬 막대', l:'그룹 115개는 학과와 1:1이 아니다'},
- {a:['gy','tr','r'],     q:'계열별 SGCPI+ 환산점수가 얼마인가',           o:'등급 띠',  l:'내부 관리기준 · 공식 평가 아님'},
- {a:['gy','y'],          q:'어느 계열이 성장하고 있나',                   o:'선그래프',  l:'계열끼리 총량 비교는 이공이 유리'},
- {a:['y','tr'],          q:'질이 좋아지고 있나 양만 느나',                o:'100% 누적', l:'등급 부여율이 해마다 다르다'},
- {a:['y','r'],           q:'주저자 비중이 달라졌나',                     o:'선그래프',  l:''},
- {a:['f','dept'],        q:'학과 이름과 실제 연구 분야가 맞나',           o:'히트맵',   l:'학과명과 분야는 일치하지 않는다'},
- {a:['f','y'],           q:'어느 분야가 뜨고 지고 있나',                  o:'선그래프',  l:'분야 분류 체계가 원장마다 다르다'},
- {a:['f','gy'],          q:'인문사회가 어느 분야에서 늘고 있나',          o:'선그래프',  l:'아직 만들어 두지 않은 조합'},
- {a:['j','dept'],        q:'이 학과가 주로 어디에 싣나',                  o:'상위 저널표', l:'저널 4,112종 중 상위만 의미 있다'},
- {a:['j','pct'],         q:'우리가 싣는 저널의 급이 어떤가',              o:'구간 막대', l:'ISSN 전파로 붙인 등급 포함'},
- {a:['ai','y'],          q:'AI 논문이 늘고 있나',                        o:'선그래프',  l:'회색 107건 사람 확인 대기'},
- {a:['ai','f'],          q:'어느 분야에서 AI를 쓰나',                     o:'히트맵',   l:''},
- {a:['kind','r'],        q:'학생이 주저자로 쓰고 있나',                   o:'누적 막대', l:'학생 개인 단위 화면은 없다'},
- {a:['uni'],             q:'대학끼리 견주면 우리가 어디인가',             o:'정렬 막대', l:'총량은 큰 대학이 늘 이긴다'},
- {a:['uni','y'],         q:'대학별로 어떻게 움직였나',                    o:'선그래프',  l:'최근 연도 미집계'},
- {a:['uni','f'],         q:'우리와 겹치는 대학이 어디인가',               o:'히트맵',   l:'겹치면 경쟁, 안 겹치면 협력'},
- {a:['uni','kind'],      q:'BK21 참여 규모가 대학별로 얼마인가',          o:'정렬 막대', l:'대학 전체 지표와 모집단이 다르다'},
- {a:['net','dept'],      q:'어느 학과끼리 붙어 있나',                     o:'매트릭스',  l:'동명이인 판별에 기댄다'},
- {a:['net','f'],         q:'이 분야로 같이 할 사람이 누구인가',           o:'후보표',   l:'외부 조회가 막히면 보유값으로 채운다'},
- {a:['net','y'],         q:'바깥 관계가 언제 트였나',                     o:'연도 막대', l:'사업 시작 시점과 견줘 본다'},
- {a:['qa'],              q:'이 숫자를 믿어도 되나',                       o:'품질표',   l:''},
- {a:['qa','dept'],       q:'어느 학과가 기록이 덜 붙었나',                o:'정렬표',   l:'실적이 낮은 것과 다르다'},
- {a:['qa','tr'],         q:'등급을 못 붙인 논문이 얼마나 되나',           o:'구간 막대', l:'미판정 5.5% 잔존'},
-];
-/* 이미 만들어 둔 분자 = GNB 9 */
-const PRESETS=[
- {n:'SKKU BK21 성과관리', a:['dept','kind','y','tr','r']},
- {n:'SKKU BK21 KPI',     a:['gy','tr','r','y','kind']},
- {n:'교내 관계망',        a:['net','dept']},
- {n:'글로벌 관계망',      a:['net','f']},
- {n:'분야 공저자 탐색',    a:['f','kind']},
- {n:'대학 연구력 비교',    a:['uni','y']},
- {n:'대학별 성과표',      a:['uni']},
- {n:'대학 BK21 비교',     a:['uni','y','f','kind']},
- {n:'데이터풀',           a:['qa']},
-];
-const BROKEN=[
- ['교육연구단 34 ↔ 학과 28','매핑이 확정되지 않았다','연구단 단위 공식 보고'],
- ['타교 명단 4,226 ↔ 논문 저자','이름 매칭 미해결','타 대학 개인 성과'],
- ['대학원생 ↔ 개인','집계만 있고 개인 단위가 없다','학생 개인 평가'],
- ['학사 시스템 ↔ 교육역량','자료를 못 받았다','LQ 8지표와 논문 아닌 기록 14지표'],
-];
+/*SPEC_START*/const SPEC={"axes":{"y":{"name":"연도","values":6,"note":"2026 제외 · 2025 집계 중"},"r":{"name":"저자역할","values":5},"tr":{"name":"저널등급","values":7,"note":"U는 미판정"},"pct":{"name":"JCR 백분위","values":5,"note":"저널 순위"},"g":{"name":"등재유형","values":3},"ai":{"name":"AI 여부","values":3,"note":"회색 107건 확인 대기"},"j":{"name":"저널","values":4112},"f":{"name":"분야","values":232,"note":"학과명과 다르다"},"dept":{"name":"학과·전공","values":28,"note":"기본 조직 단위"},"gy":{"name":"계열","values":3,"note":"계열 넘는 비교 금지"},"kind":{"name":"사람 구분","values":4},"grp":{"name":"연구그룹","values":115},"scope":{"name":"관계 범위","values":2,"note":"학과 내 / 학과 간"}},"sliceable":{"paper":["y","r","tr","pct","g","ai","j","f","dept","gy","kind","grp"],"person":["dept","gy","kind","grp"],"dept":["dept","gy"],"relation":["dept","kind","scope","y","f"],"university":["y","f"],"quality":["dept","gy"]},"grains":{"paper":{"ko":"논문","note":"논문 한 건에 붙어 있다. 어느 축으로도 다시 자를 수 있다"},"person":{"ko":"사람","note":"사람 한 명에 붙어 있다. 사람에 붙는 축까지만"},"dept":{"ko":"학과","note":"학과 단위로 이미 집계돼 있다. 다시 자를 수 없다"},"relation":{"ko":"관계","note":"공저 한 쌍에 붙어 있다"},"university":{"ko":"대학","note":"대학 한 곳에 붙어 있다"},"quality":{"ko":"품질","note":"데이터 진단 항목"}},"metrics":[{"id":"paper_count","name":"편수","grain":"paper","unit":"편","caveat":"조직 규모를 따라간다. 1인당과 나란히 낸다"},{"id":"citations","name":"피인용","grain":"paper","unit":"회","caveat":"오래된 논문이 유리하다. 연도를 함께 본다"},{"id":"grade_score","name":"등급점수 g","grain":"paper","unit":"점","caveat":"계열별로 배점표가 다르다. 계열을 넘어 견주지 않는다"},{"id":"role_weight","name":"역할가중 w","grain":"paper","unit":"배","caveat":"SGCPI+ 는 저자 수를 반영하지 않는다"},{"id":"score","name":"환산점수","grain":"paper","unit":"점","caveat":"내부 관리기준이며 공식 평가 결과가 아니다. 미판정 논문은 0점"},{"id":"jcr_pct","name":"JCR 백분위","grain":"paper","unit":"%","caveat":"저널의 분야 내 순위이지 논문의 인용 순위가 아니다. 연도 비교에는 커버리지를 함께 낸다"},{"id":"impact_factor","name":"임팩트팩터","grain":"paper","unit":null,"caveat":"DORA 권고에 따라 개인·논문 평가에 쓰지 않는다. PP(top 10%) 로 대신한다"},{"id":"person_papers","name":"총편수","grain":"person","unit":"편","caveat":null},{"id":"person_papers_pre","name":"사업 전 편수","grain":"person","unit":"편","caveat":"대학원생은 사업 전 재학 전이라 분모가 빈다"},{"id":"person_papers_post","name":"사업 후 편수","grain":"person","unit":"편","caveat":null},{"id":"dept_fwci_avg","name":"FWCI 평균","grain":"dept","unit":"배","caveat":"학과 집계로만 있다. 연도·역할 등 다른 축으로 다시 자를 수 없다"},{"id":"dept_fwci_med","name":"FWCI 중앙값","grain":"dept","unit":"배","caveat":"동일. 평균은 소수 논문이 끌어올린다"},{"id":"dept_pp_top10_n","name":"PP(top 10%) 편수","grain":"dept","unit":"편","caveat":"학과 집계로만 있다. JCR 백분위(저널 순위)와 다른 값이다"},{"id":"dept_pp_top10_rate","name":"PP(top 10%) 비율","grain":"dept","unit":"%","caveat":"동일"},{"id":"dept_jcr_q1_rate","name":"JCR Q1 비율","grain":"dept","unit":"%","caveat":null},{"id":"dept_concentration","name":"집중도","grain":"dept","unit":null,"caveat":"사람이 적은 학과는 크게 흔들린다"},{"id":"prof_top_quality","name":"교수 대표논문 질","grain":"dept","unit":"점","caveat":"최소 논문 수 컷을 두지 않는다"},{"id":"stu_first_per_person","name":"학생 주저자 건수 1인당","grain":"dept","unit":"건","caveat":null},{"id":"stu_score_per_person","name":"학생 환산점수 1인당","grain":"dept","unit":"점","caveat":null},{"id":"growth_prepost","name":"전후 성장률","grain":"dept","unit":"%","caveat":"대학원생 제외. 포함하면 분모가 비어 값이 터진다"},{"id":"intl_coauth_rate","name":"국제공저율","grain":"dept","unit":"%","caveat":null},{"id":"uni_works","name":"논문","grain":"university","unit":"편","caveat":"대학 전체이며 BK21 참여자 범위가 아니다"},{"id":"uni_cites","name":"피인용","grain":"university","unit":"회","caveat":null},{"id":"uni_h","name":"h-index","grain":"university","unit":null,"caveat":null},{"id":"uni_c2","name":"편당 인용","grain":"university","unit":"회","caveat":null},{"id":"uni_fwci","name":"FWCI","grain":"university","unit":"배","caveat":null},{"id":"uni_bk_prof","name":"BK21 참여교수","grain":"university","unit":"명","caveat":"위 대학 지표와 모집단이 다르다. 한 문장에 섞지 않는다"},{"id":"qa_coverage","name":"커버리지","grain":"quality","unit":"%","caveat":null},{"id":"qa_undetermined","name":"미판정률","grain":"quality","unit":"%","caveat":"미판정은 낮은 등급이 아니다. 최상위 저널이 들어 있다"},{"id":"qa_review","name":"검토필요율","grain":"quality","unit":"%","caveat":null},{"id":"coauth_papers","name":"공저 편수","grain":"relation","unit":"편","caveat":"동명이인 판별 위에 선다"},{"id":"partner_count","name":"상대 수","grain":"relation","unit":"명","caveat":"수가 적어도 좋은 상대면 값어치가 크다"},{"id":"duration","name":"지속기간","grain":"relation","unit":"년","caveat":"1년이면 일회성이다. 반복관계와 갈라 본다"},{"id":"ext_partner","name":"교외 상대 수","grain":"relation","unit":"명","caveat":null},{"id":"field_similarity","name":"분야 유사도","grain":"relation","unit":"%","caveat":"추천 근거이지 성과 지표가 아니다"}],"uncollected":[{"id":"lq_all","name":"교육역량 LQ 8지표","need":"학사 시스템"},{"id":"awards_patents","name":"수상·특허·산학 14지표","need":"학사·산학 시스템"},{"id":"degree_out","name":"학위배출","kpi_id":"BK-C-03","need":"학적 원장"},{"id":"paper_fwci","name":"논문 단위 FWCI","need":"paper_citation_metric 재추출"},{"id":"paper_pp","name":"논문 단위 PP(top 10%)","need":"동일"},{"id":"semester","name":"학기 단위 집계","need":"기존 데이터 재집계"},{"id":"other_uni_person","name":"타 대학 개인 성과","need":"명단 ↔ 저자 매칭"},{"id":"other_uni_sgcpi","name":"타 대학 SGCPI+","need":"타 대학 논문 등급·역할"}],"period":{"default":"2020-2025","pre":"2015-2019","excluded":["2026"],"reason":"BK21 4단계 성과기간"},"recipes":[{"id":"gnb_tree","q":"이 학과 사람들이 무엇을 얼마나 썼나","nucleus":"paper","axes":["dept","y"],"filters":{"period":"2020-2025"},"measures":["paper_count","score","jcr_pct"],"against":null,"chart":"line_multi","caveats":["학과·전공: 기본 조직 단위","연도: 2026 제외 · 2025 집계 중","조직 규모를 따라간다. 1인당과 나란히 낸다","내부 관리기준이며 공식 평가 결과가 아니다. 미판정 논문은 0점","저널의 분야 내 순위이지 논문의 인용 순위가 아니다. 연도 비교에는 커버리지를 함께 낸다"],"covered_by":["SKKU BK21 성과관리"],"blocked":null},{"id":"gnb_exec","q":"사업 전체가 지금 어떤 수준인가","nucleus":"paper","axes":["gy"],"filters":{"role":"주저자 가중"},"measures":["score","grade_score"],"against":"gy","chart":"band","caveats":["계열: 계열 넘는 비교 금지","내부 관리기준이며 공식 평가 결과가 아니다. 미판정 논문은 0점","계열별로 배점표가 다르다. 계열을 넘어 견주지 않는다"],"covered_by":["SKKU BK21 KPI"],"blocked":null},{"id":"gnb_net","q":"어느 학과끼리 붙어 있나","nucleus":"relation","axes":["dept"],"filters":{},"measures":["coauth_papers"],"against":null,"chart":"matrix","caveats":["학과·전공: 기본 조직 단위","동명이인 판별 위에 선다"],"covered_by":["교내 관계망"],"blocked":null},{"id":"gnb_glob","q":"바깥과 얼마나 닿아 있나","nucleus":"relation","axes":["f"],"filters":{"scope":"교외"},"measures":["partner_count"],"against":null,"chart":"bar_sorted","caveats":["분야: 학과명과 다르다","수가 적어도 좋은 상대면 값어치가 크다"],"covered_by":["글로벌 관계망"],"blocked":null},{"id":"gnb_exp","q":"이 분야로 누가 일하고 있나","nucleus":"person","axes":["dept"],"filters":{},"measures":["person_papers"],"against":null,"chart":"table","caveats":["학과·전공: 기본 조직 단위"],"covered_by":["분야 공저자 탐색"],"blocked":null},{"id":"gnb_univ","q":"대학끼리 견주면 어떻게 움직였나","nucleus":"university","axes":["y"],"filters":{},"measures":["uni_works","uni_cites"],"against":"국내7","chart":"line_multi","caveats":["연도: 2026 제외 · 2025 집계 중","대학 전체이며 BK21 참여자 범위가 아니다"],"covered_by":["대학 연구력 비교"],"blocked":null},{"id":"gnb_sheet","q":"우리 순위가 어디인가","nucleus":"university","axes":[],"filters":{},"measures":["uni_works","uni_fwci","uni_h"],"against":"국내7","chart":"table","caveats":["대학 전체이며 BK21 참여자 범위가 아니다"],"covered_by":["대학별 성과표"],"blocked":null},{"id":"gnb_ucmp","q":"BK21 대학끼리 견주면 어디인가","nucleus":"university","axes":["y","f"],"filters":{},"measures":["uni_works","uni_fwci"],"against":"BK21_8","chart":"heatmap","caveats":["연도: 2026 제외 · 2025 집계 중","분야: 학과명과 다르다","대학 전체이며 BK21 참여자 범위가 아니다"],"covered_by":["대학 BK21 비교"],"blocked":null},{"id":"gnb_pool","q":"이 숫자를 믿어도 되나","nucleus":"quality","axes":["dept"],"filters":{},"measures":["qa_coverage","qa_undetermined"],"against":null,"chart":"table","caveats":["학과·전공: 기본 조직 단위","미판정은 낮은 등급이 아니다. 최상위 저널이 들어 있다"],"covered_by":["데이터풀"],"blocked":null},{"id":"new_hss_field","q":"인문사회가 어느 분야에서 늘고 있나","nucleus":"paper","axes":["f","y"],"filters":{"gy":"인문사회"},"measures":["paper_count"],"against":null,"chart":"line_multi","caveats":["분야: 학과명과 다르다","연도: 2026 제외 · 2025 집계 중","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":[],"blocked":null},{"id":"new_ai_grade","q":"AI 논문이 좋은 저널에 실리나","nucleus":"paper","axes":["tr"],"filters":{"ai":"해당"},"measures":["paper_count"],"against":null,"chart":"stack100","caveats":["저널등급: U는 미판정","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":[],"blocked":null},{"id":"new_jr_role","q":"신진연구인력이 주저자로 쓰나","nucleus":"paper","axes":["r"],"filters":{"kind":"신진"},"measures":["paper_count"],"against":null,"chart":"stack100","caveats":["조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":[],"blocked":null},{"id":"new_group","q":"연구그룹별로 어디가 강한가","nucleus":"paper","axes":["grp"],"filters":{},"measures":["score"],"against":"gy","chart":"bar_sorted","caveats":["내부 관리기준이며 공식 평가 결과가 아니다. 미판정 논문은 0점"],"covered_by":[],"blocked":null},{"id":"new_uni_pct","q":"우리가 싣는 저널의 급이 대학마다 다른가","nucleus":"university","axes":["pct"],"filters":{},"measures":["uni_works"],"against":"국내7","chart":"stack100","caveats":[],"covered_by":[],"blocked":"층 불일치: 논문(uni_works)은 대학 단위로만 있다. JCR 백분위(으)로 자를 수 없다"},{"id":"new_net_year","q":"사업 시작 뒤 협업이 늘었나","nucleus":"relation","axes":["y"],"filters":{},"measures":["partner_count"],"against":null,"chart":"bar_year","caveats":["연도: 2026 제외 · 2025 집계 중","수가 적어도 좋은 상대면 값어치가 크다"],"covered_by":[],"blocked":null},{"id":"new_stu_grade","q":"학생 주저자 논문의 등급이 어떤가","nucleus":"paper","axes":["tr"],"filters":{"kind":"학생","role":"주저자"},"measures":["paper_count"],"against":null,"chart":"stack100","caveats":["저널등급: U는 미판정","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":[],"blocked":null},{"id":"s01_uni_field","q":"경쟁 대학보다 앞서는 분야와 뒤처지는 분야는","nucleus":"university","axes":["f"],"filters":{"period":"2020-2025"},"measures":["uni_works","uni_fwci"],"against":"국내7","chart":"scatter","caveats":["분야: 학과명과 다르다","대학 전체이며 BK21 참여자 범위가 아니다"],"covered_by":[],"blocked":null},{"id":"s02_qual_trend","q":"논문 수만 늘었나 좋은 논문도 늘었나","nucleus":"paper","axes":["y"],"filters":{"dept":"*","pct":"<=25"},"measures":["paper_count","jcr_pct"],"against":null,"chart":"line_multi","caveats":["연도: 2026 제외 · 2025 집계 중","조직 규모를 따라간다. 1인당과 나란히 낸다","저널의 분야 내 순위이지 논문의 인용 순위가 아니다. 연도 비교에는 커버리지를 함께 낸다"],"covered_by":[],"blocked":null},{"id":"s03_concentration","q":"성과가 일부 연구자에게만 몰렸나","nucleus":"dept","axes":["dept"],"filters":{},"measures":["dept_concentration"],"against":"gy","chart":"bar_sorted","caveats":["학과·전공: 기본 조직 단위","사람이 적은 학과는 크게 흔들린다"],"covered_by":[],"blocked":null},{"id":"s04_stu_spread","q":"학생 성과가 몇 명에게만 있나","nucleus":"person","axes":["dept"],"filters":{"kind":"학생"},"measures":["person_papers"],"against":null,"chart":"stack100","caveats":["학과·전공: 기본 조직 단위"],"covered_by":[],"blocked":null},{"id":"s05_prof_stu","q":"어느 교수 주변에서 학생 주저자 성과가 나오나","nucleus":"relation","axes":["kind"],"filters":{"kind":"교수-학생"},"measures":["coauth_papers"],"against":null,"chart":"table","caveats":["동명이인 판별 위에 선다"],"covered_by":[],"blocked":null},{"id":"s06_partner_mix","q":"협력 상대가 다양한가 같은 상대와 지속하나","nucleus":"relation","axes":["dept"],"filters":{},"measures":["partner_count","duration"],"against":null,"chart":"scatter","caveats":["학과·전공: 기본 조직 단위","수가 적어도 좋은 상대면 값어치가 크다","1년이면 일회성이다. 반복관계와 갈라 본다"],"covered_by":[],"blocked":null},{"id":"s07_ext_new","q":"교외 협력이 새로 생기고 유지되나","nucleus":"relation","axes":["y"],"filters":{"scope":"학과 간"},"measures":["partner_count"],"against":null,"chart":"line_multi","caveats":["연도: 2026 제외 · 2025 집계 중","수가 적어도 좋은 상대면 값어치가 크다"],"covered_by":[],"blocked":null},{"id":"s08_field_conc","q":"성과가 특정 분야에 과도하게 모였나","nucleus":"paper","axes":["f"],"filters":{"dept":"*"},"measures":["paper_count"],"against":null,"chart":"stack100","caveats":["분야: 학과명과 다르다","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":[],"blocked":null},{"id":"s09_ai_lead","q":"AI 논문에 참여만 하나 주도하나","nucleus":"paper","axes":["y"],"filters":{"ai":"해당","role":"주저자"},"measures":["paper_count","jcr_pct"],"against":null,"chart":"line_multi","caveats":["연도: 2026 제외 · 2025 집계 중","조직 규모를 따라간다. 1인당과 나란히 낸다","저널의 분야 내 순위이지 논문의 인용 순위가 아니다. 연도 비교에는 커버리지를 함께 낸다"],"covered_by":[],"blocked":null},{"id":"s10_lead_quality","q":"주도해서 낸 논문의 질은 어느 정도인가","nucleus":"paper","axes":["tr"],"filters":{"dept":"*","role":"주저자"},"measures":["paper_count"],"against":"gy","chart":"stack100","caveats":["저널등급: U는 미판정","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":[],"blocked":null},{"id":"s11_fix_first","q":"어떤 데이터부터 고치면 판단이 가장 많이 달라지나","nucleus":"quality","axes":["dept"],"filters":{},"measures":["qa_undetermined","qa_review"],"against":null,"chart":"table","caveats":["학과·전공: 기본 조직 단위","미판정은 낮은 등급이 아니다. 최상위 저널이 들어 있다"],"covered_by":[],"blocked":null},{"id":"e01_dept_count","q":"어느 학과가 얼마나 썼나","nucleus":"paper","axes":["dept"],"filters":{},"measures":["paper_count"],"against":null,"chart":"bar_sorted","caveats":["학과·전공: 기본 조직 단위","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":["SKKU BK21 성과관리"],"blocked":null},{"id":"e02_dept_role","q":"주도해서 쓰나 이름만 올리나","nucleus":"paper","axes":["dept","r"],"filters":{},"measures":["paper_count"],"against":null,"chart":"stack100","caveats":["학과·전공: 기본 조직 단위","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":["SKKU BK21 성과관리"],"blocked":null},{"id":"e03_dept_pct","q":"JCR 상위 논문이 몇 편인가","nucleus":"paper","axes":["dept","pct"],"filters":{},"measures":["paper_count"],"against":null,"chart":"bar_group","caveats":["학과·전공: 기본 조직 단위","JCR 백분위: 저널 순위","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":[],"blocked":null},{"id":"e04_dept_ai","q":"어느 학과가 AI를 하고 있나","nucleus":"paper","axes":["dept"],"filters":{"ai":"해당"},"measures":["paper_count"],"against":null,"chart":"bar_sorted","caveats":["학과·전공: 기본 조직 단위","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":["SKKU BK21 KPI"],"blocked":null},{"id":"e05_dept_kind","q":"교수와 신진 중 누가 떠받치나","nucleus":"person","axes":["dept","kind"],"filters":{},"measures":["person_papers"],"against":null,"chart":"dots","caveats":["학과·전공: 기본 조직 단위"],"covered_by":[],"blocked":null},{"id":"e06_gy_score","q":"계열별 SGCPI+ 환산점수가 얼마인가","nucleus":"paper","axes":["gy"],"filters":{"role":"주저자 가중"},"measures":["score"],"against":"gy","chart":"band","caveats":["계열: 계열 넘는 비교 금지","내부 관리기준이며 공식 평가 결과가 아니다. 미판정 논문은 0점"],"covered_by":["SKKU BK21 KPI"],"blocked":null},{"id":"e07_gy_trend","q":"어느 계열이 성장하고 있나","nucleus":"paper","axes":["gy","y"],"filters":{},"measures":["paper_count"],"against":null,"chart":"line_multi","caveats":["계열: 계열 넘는 비교 금지","연도: 2026 제외 · 2025 집계 중","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":[],"blocked":null},{"id":"e08_year_grade","q":"질이 좋아지고 있나 양만 느나","nucleus":"paper","axes":["y","tr"],"filters":{},"measures":["paper_count"],"against":null,"chart":"stack100","caveats":["연도: 2026 제외 · 2025 집계 중","저널등급: U는 미판정","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":[],"blocked":null},{"id":"e09_year_role","q":"주저자 비중이 달라졌나","nucleus":"paper","axes":["y","r"],"filters":{},"measures":["paper_count"],"against":null,"chart":"line_multi","caveats":["연도: 2026 제외 · 2025 집계 중","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":[],"blocked":null},{"id":"e10_field_dept","q":"학과 이름과 실제 연구 분야가 맞나","nucleus":"paper","axes":["f","dept"],"filters":{},"measures":["paper_count"],"against":null,"chart":"heatmap","caveats":["분야: 학과명과 다르다","학과·전공: 기본 조직 단위","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":["글로벌 관계망"],"blocked":null},{"id":"e11_field_year","q":"어느 분야가 뜨고 지고 있나","nucleus":"paper","axes":["f","y"],"filters":{},"measures":["paper_count"],"against":null,"chart":"line_multi","caveats":["분야: 학과명과 다르다","연도: 2026 제외 · 2025 집계 중","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":[],"blocked":null},{"id":"e12_journal_dept","q":"이 학과가 주로 어디에 싣나","nucleus":"paper","axes":["j"],"filters":{"dept":"*"},"measures":["paper_count"],"against":null,"chart":"table","caveats":["조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":["SKKU BK21 성과관리"],"blocked":null},{"id":"e13_journal_pct","q":"우리가 싣는 저널의 급이 어떤가","nucleus":"paper","axes":["pct"],"filters":{},"measures":["paper_count"],"against":null,"chart":"bar_group","caveats":["JCR 백분위: 저널 순위","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":[],"blocked":null},{"id":"e14_ai_year","q":"AI 논문이 늘고 있나","nucleus":"paper","axes":["y"],"filters":{"ai":"해당"},"measures":["paper_count"],"against":null,"chart":"line","caveats":["연도: 2026 제외 · 2025 집계 중","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":[],"blocked":null},{"id":"e15_ai_field","q":"어느 분야에서 AI를 쓰나","nucleus":"paper","axes":["f"],"filters":{"ai":"해당"},"measures":["paper_count"],"against":null,"chart":"heatmap","caveats":["분야: 학과명과 다르다","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":[],"blocked":null},{"id":"e16_stu_first","q":"학생이 주저자로 쓰고 있나","nucleus":"paper","axes":["kind","r"],"filters":{},"measures":["paper_count"],"against":null,"chart":"stack100","caveats":["조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":["SKKU BK21 KPI"],"blocked":null},{"id":"e17_uni_rank","q":"대학끼리 견주면 우리가 어디인가","nucleus":"university","axes":[],"filters":{},"measures":["uni_works","uni_fwci"],"against":"국내7","chart":"bar_sorted","caveats":["대학 전체이며 BK21 참여자 범위가 아니다"],"covered_by":["대학별 성과표"],"blocked":null},{"id":"e18_uni_year","q":"대학별로 어떻게 움직였나","nucleus":"university","axes":["y"],"filters":{},"measures":["uni_works"],"against":"국내7","chart":"line_multi","caveats":["연도: 2026 제외 · 2025 집계 중","대학 전체이며 BK21 참여자 범위가 아니다"],"covered_by":["대학 연구력 비교"],"blocked":null},{"id":"e19_uni_field","q":"우리와 겹치는 대학이 어디인가","nucleus":"university","axes":["f"],"filters":{},"measures":["uni_works"],"against":"국내7","chart":"heatmap","caveats":["분야: 학과명과 다르다","대학 전체이며 BK21 참여자 범위가 아니다"],"covered_by":["대학 BK21 비교"],"blocked":null},{"id":"e20_uni_bk","q":"BK21 참여 규모가 대학별로 얼마인가","nucleus":"university","axes":[],"filters":{},"measures":["uni_bk_prof"],"against":"BK21_8","chart":"bar_sorted","caveats":["위 대학 지표와 모집단이 다르다. 한 문장에 섞지 않는다"],"covered_by":["대학 BK21 비교"],"blocked":null},{"id":"e21_net_dept","q":"어느 학과끼리 붙어 있나","nucleus":"relation","axes":["dept"],"filters":{},"measures":["coauth_papers"],"against":null,"chart":"matrix","caveats":["학과·전공: 기본 조직 단위","동명이인 판별 위에 선다"],"covered_by":["교내 관계망"],"blocked":null},{"id":"e22_net_field","q":"이 분야로 같이 할 사람이 누구인가","nucleus":"relation","axes":["f"],"filters":{},"measures":["partner_count"],"against":null,"chart":"table","caveats":["분야: 학과명과 다르다","수가 적어도 좋은 상대면 값어치가 크다"],"covered_by":["글로벌 관계망"],"blocked":null},{"id":"e23_qa_all","q":"이 숫자를 믿어도 되나","nucleus":"quality","axes":[],"filters":{},"measures":["qa_coverage","qa_undetermined","qa_review"],"against":null,"chart":"table","caveats":["미판정은 낮은 등급이 아니다. 최상위 저널이 들어 있다"],"covered_by":["데이터풀"],"blocked":null},{"id":"e24_qa_dept","q":"어느 학과가 기록이 덜 붙었나","nucleus":"quality","axes":["dept"],"filters":{},"measures":["qa_undetermined"],"against":null,"chart":"table","caveats":["학과·전공: 기본 조직 단위","미판정은 낮은 등급이 아니다. 최상위 저널이 들어 있다"],"covered_by":["데이터풀"],"blocked":null},{"id":"e25_qa_grade","q":"등급을 못 붙인 논문이 얼마나 되나","nucleus":"paper","axes":["tr"],"filters":{},"measures":["paper_count"],"against":null,"chart":"bar_group","caveats":["저널등급: U는 미판정","조직 규모를 따라간다. 1인당과 나란히 낸다"],"covered_by":["데이터풀"],"blocked":null},{"id":"x01_fwci_year","q":"학과 FWCI가 해마다 어떻게 변했나","nucleus":"paper","axes":["dept","y"],"filters":{},"measures":["dept_fwci_med"],"against":null,"chart":"line_multi","caveats":[],"covered_by":[],"blocked":"층 불일치: FWCI 중앙값(dept_fwci_med)은 학과 단위로만 있다. 연도(으)로 자를 수 없다"},{"id":"x02_pp_role","q":"주저자 논문의 PP(top 10%)는","nucleus":"paper","axes":["r"],"filters":{},"measures":["dept_pp_top10_rate"],"against":null,"chart":"bar_sorted","caveats":[],"covered_by":[],"blocked":"층 불일치: PP(top 10%) 비율(dept_pp_top10_rate)은 학과 단위로만 있다. 저자역할(으)로 자를 수 없다"}],"combos":{"paper":4095,"person":15,"dept":3,"relation":31,"university":3,"quality":3},"combo_total":4150,"built":"2026-09-02"};/*SPEC_END*/
 
-const NAME={}; [...ATOMS,...EXT].forEach(a=>NAME[a.id]=a.n);
+/* 핵마다 판에 적을 크기. 문서 §2-1 실측 */
+const NUCINFO={
+ paper:      {v:'31,076', s:'편 · 2020~2025<br>원장 1억 772만'},
+ person:     {v:'2,959',  s:'명 · 교수442·신진71<br>미분류12 · 학생2,434'},
+ dept:       {v:'28',     s:'학과·전공<br>계열 3'},
+ relation:   {v:'6,001',  s:'공저쌍<br>공저자 1,749명'},
+ university: {v:'7 · 8',  s:'국내 · BK21<br>아시아52 · 글로벌116'},
+ quality:    {v:'6',      s:'진단 층<br>미판정 5.5%'},
+};
+const NUCORDER=['paper','person','dept','relation','university','quality'];
+let NUC='paper';
 const SEL=new Set();
 const stage=document.getElementById('stage'), bonds=document.getElementById('bonds');
+const AX=SPEC.axes, SL=SPEC.sliceable, KO=id=>(AX[id]||{}).name||id;
+const METN={}; (SPEC.metrics||[]).forEach(m=>METN[m.id]=m);
 
+function nucBar(){
+ document.getElementById('nucrow').innerHTML=NUCORDER.map(g=>{
+  const i=NUCINFO[g]||{v:'',s:''};
+  return `<div class="nb${g===NUC?' on':''}" data-g="${g}">
+   <div class="n">${SPEC.grains[g].ko}</div>
+   <div class="c">${i.v} · 축 ${SL[g].length} · 조합 ${SPEC.combos[g].toLocaleString()}</div></div>`;}).join('');
+ document.querySelectorAll('.nb').forEach(b=>b.onclick=()=>{
+  NUC=b.dataset.g; SEL.clear(); nucBar(); place(); render();});
+}
 function place(){
  stage.querySelectorAll('.atom').forEach(e=>e.remove());
- const W=stage.clientWidth, H=stage.clientHeight;
- const cx=W/2, cy=H*0.46;
+ const W=stage.clientWidth, H=stage.clientHeight, cx=W/2, cy=H*0.46;
  const R=Math.min(W,H)*(W<560?0.30:0.375);
- const mk=(a,rad)=>{
-  const t=a.a*Math.PI/180;
-  let x=cx+Math.cos(t)*rad*(W>H?1.32:1), y=cy+Math.sin(t)*rad;
+ const ids=Object.keys(AX);
+ const step=360/ids.length;
+ ids.forEach((id,i)=>{
+  const usable=SL[NUC].includes(id);
+  const t=(-96+step*i)*Math.PI/180;
+  let x=cx+Math.cos(t)*R*(W>H?1.34:1), y=cy+Math.sin(t)*R;
   const d=document.createElement('div');
-  d.className='atom'+(a.broken?' broken':'')+(EXT.includes(a)?' ext':'')+(SEL.has(a.id)?' on':'');
-  d.style.left=x+'px'; d.style.top=y+'px'; d.dataset.id=a.id;
-  d.innerHTML=`<div class="n">${a.n}</div><div class="c">${a.c}</div>`;
-  if(!a.broken) d.onclick=()=>{ SEL.has(a.id)?SEL.delete(a.id):SEL.add(a.id); render(); };
+  d.className='atom'+(usable?'':' off')+(SEL.has(id)?' on':'');
+  d.dataset.id=id;
+  d.innerHTML=`<div class="n">${AX[id].name}</div><div class="c">${AX[id].values.toLocaleString()}종</div>`;
+  if(usable) d.onclick=()=>{SEL.has(id)?SEL.delete(id):SEL.add(id);render();};
   stage.appendChild(d);
-  /* 좁은 화면에서 원자가 판 밖으로 나가지 않게, 붙인 뒤 실제 크기를 재서 안으로 당긴다.
-     반지름만 줄이면 가운데 핵과 겹친다. */
   const w=d.offsetWidth/2+6, h=d.offsetHeight/2+6;
   x=Math.min(Math.max(x,w),W-w); y=Math.min(Math.max(y,h),H-h);
-  d.style.left=x+'px'; d.style.top=y+'px';
-  a._x=x; a._y=y;
- };
- ATOMS.forEach(a=>mk(a,R));
- EXT.forEach(a=>mk(a,R*a.r));
+  d.style.left=x+'px'; d.style.top=y+'px'; d._x=x; d._y=y;
+ });
+ const i=NUCINFO[NUC];
+ document.getElementById('nucdot').innerHTML=
+  `<div><div class="n">${SPEC.grains[NUC].ko}</div><div class="v">${i.v}</div><div class="s">${i.s}</div></div>`;
  drawBonds(cx,cy);
 }
 function drawBonds(cx,cy){
- const parts=[];
- [...ATOMS,...EXT].forEach(a=>{
-  const on=SEL.has(a.id);
-  const col=a.broken?'rgba(120,150,200,.22)':(on?'rgba(95,208,200,.75)':'rgba(120,160,235,.13)');
-  parts.push(`<line x1="${cx}" y1="${cy}" x2="${a._x}" y2="${a._y}" stroke="${col}" stroke-width="${on?2.2:1}" ${a.broken?'stroke-dasharray="5 5"':''}/>`);
- });
- bonds.innerHTML=parts.join('');
+ bonds.innerHTML=[...stage.querySelectorAll('.atom')].map(d=>{
+  const on=SEL.has(d.dataset.id), off=d.classList.contains('off');
+  const col=off?'rgba(120,150,200,.10)':(on?'rgba(95,208,200,.75)':'rgba(120,160,235,.14)');
+  return `<line x1="${cx}" y1="${cy}" x2="${d._x}" y2="${d._y}" stroke="${col}" stroke-width="${on?2.2:1}" ${off?'stroke-dasharray="4 5"':''}/>`;
+ }).join('');
 }
 function render(){
  stage.querySelectorAll('.atom').forEach(e=>e.classList.toggle('on',SEL.has(e.dataset.id)));
  drawBonds(stage.clientWidth/2, stage.clientHeight*0.46);
  document.getElementById('mSel').textContent=SEL.size;
-
  const mol=document.getElementById('mol');
- mol.innerHTML='<span class="tag hub">논문</span>'+
-  ([...SEL].map(id=>`<span class="tag" data-x="${id}">${NAME[id]} ✕</span>`).join('')
-   || '<span class="empty">축을 눌러 붙여 보십시오.</span>');
+ mol.innerHTML=`<span class="tag core">${SPEC.grains[NUC].ko}</span>`+
+  ([...SEL].map(id=>`<span class="tag" data-x="${id}">${KO(id)} ✕</span>`).join('')
+   ||'<span class="empty">축을 눌러 붙여 보십시오. 축 없이도 총량은 나옵니다.</span>');
  mol.querySelectorAll('[data-x]').forEach(t=>t.onclick=()=>{SEL.delete(t.dataset.x);render();});
- document.getElementById('formula').textContent='논문'+[...SEL].map(id=>' × '+NAME[id]).join('');
+ document.getElementById('formula').textContent=
+  SPEC.grains[NUC].ko+(SEL.size?'['+[...SEL].map(KO).join(' × ')+']':'[없음]');
 
- const made=new Set(PRESETS.filter(p=>p.a.every(x=>SEL.has(x))&&SEL.size&&p.a.length===SEL.size).map(p=>p.n));
- const hit=QS.filter(q=>q.a.every(x=>SEL.has(x))).sort((a,b)=>b.a.length-a.a.length);
+ const hit=SPEC.recipes.filter(r=>r.nucleus===NUC
+   && r.axes.length===SEL.size && r.axes.every(a=>SEL.has(a)));
+ const near=SPEC.recipes.filter(r=>r.nucleus===NUC && !hit.includes(r)
+   && SEL.size>0 && r.axes.every(a=>SEL.has(a)));
  const box=document.getElementById('qs');
- if(!SEL.size){ box.innerHTML='<div class="none">축을 하나 붙이면 답할 수 있는 질문이 여기 뜹니다.</div>'; return; }
- if(!hit.length){
-  box.innerHTML='<div class="none">이 조합으로 미리 적어 둔 질문이 아직 없습니다.<br>'+
-   '조합 4,095가지 중 질문을 붙여 둔 것은 '+QS.length+'개입니다.<br>'+
-   '나머지는 물어보시면 그 자리에서 만들어집니다.</div>'; return; }
- box.innerHTML=hit.map(q=>{
-  const inMenu=PRESETS.filter(p=>q.a.every(x=>p.a.includes(x))).map(p=>p.n);
-  return `<div class="q">
-   <div class="t">${q.q}</div>
-   <div class="m"><span>그림 <b>${q.o}</b></span><span>축 <b>${q.a.map(x=>NAME[x]).join(' × ')}</b></span></div>
-   ${q.l?`<div class="lim">한계 · ${q.l}</div>`:''}
-   ${inMenu.length?`<div class="made">이미 있음<span>${inMenu.join('</span><span>')}</span></div>`
-                  :`<div class="made" style="color:#5fd0c8">아직 없는 조합</div>`}</div>`;}).join('');
+ const list=[...hit,...near];
+ if(!list.length){
+  box.innerHTML=`<div class="none">이 조합으로 적어 둔 질문이 아직 없습니다.<br>
+   ${SPEC.grains[NUC].ko} 핵의 조합 ${SPEC.combos[NUC].toLocaleString()}가지 중
+   레시피에 적힌 것은 ${SPEC.recipes.filter(r=>r.nucleus===NUC&&!r.blocked).length}개입니다.<br>
+   나머지는 물어보시면 그 자리에서 만들어집니다.</div>`;
+  return;}
+ box.innerHTML=list.map(r=>{
+  if(r.blocked) return `<div class="q blk"><div class="t">${r.q}</div>
+   <div class="why">막힘 · ${r.blocked}</div></div>`;
+  const ms=r.measures.map(m=>(METN[m]||{}).name||m).join(' · ');
+  return `<div class="q"><div class="t">${r.q}</div>
+   <div class="m"><span>값 <b>${ms}</b></span><span>그림 <b>${r.chart}</b></span>
+    ${r.against?`<span>견줌 <b>${r.against}</b></span>`:''}</div>
+   ${r.caveats.length?`<div class="lim">${r.caveats.map(c=>'· '+c).join('<br>')}</div>`:''}
+   ${r.covered_by.length?`<div class="made">이미 있음<span>${r.covered_by.join('</span><span>')}</span></div>`
+                        :`<div class="newm">아직 화면에 없는 조합</div>`}</div>`;}).join('');
 }
-document.getElementById('chips').innerHTML=PRESETS.map((p,i)=>
- `<div class="chip" data-i="${i}"><div class="n">${p.n}</div>
-  <div class="f">${p.a.map(x=>NAME[x]).join(' × ')}</div></div>`).join('');
+/* 프리셋 = GNB 9 */
+const GNB=SPEC.recipes.filter(r=>r.covered_by.length&&r.id.startsWith('gnb_'));
+document.getElementById('chips').innerHTML=GNB.map((r,i)=>
+ `<div class="chip" data-i="${i}"><div class="n">${r.covered_by[0]}</div>
+  <div class="f">${SPEC.grains[r.nucleus].ko}${r.axes.length?'['+r.axes.map(KO).join(' × ')+']':'[없음]'}</div></div>`).join('');
 document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
- SEL.clear(); PRESETS[+c.dataset.i].a.forEach(x=>SEL.add(x)); render();
+ const r=GNB[+c.dataset.i]; NUC=r.nucleus; SEL.clear(); r.axes.forEach(a=>SEL.add(a));
+ nucBar(); place(); render();
  document.querySelector('.wrap').scrollIntoView({behavior:'smooth',block:'start'});});
-document.getElementById('brk').innerHTML=BROKEN.map(r=>
- `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');
-place(); render();
+document.getElementById('unc').innerHTML=SPEC.uncollected.map(u=>
+ `<tr><td>${u.name}</td><td>${u.need}</td></tr>`).join('');
+document.getElementById('mNuc').textContent=Object.keys(SPEC.grains).length;
+document.getElementById('mAx').textContent=Object.keys(AX).length;
+document.getElementById('mAll').textContent=SPEC.combo_total.toLocaleString();
+document.getElementById('mRec').textContent=SPEC.recipes.filter(r=>!r.blocked).length;
+document.getElementById('built').textContent=SPEC.built;
+nucBar(); place(); render();
 addEventListener('resize',()=>{place();render();});
 </script>
 </body></html>

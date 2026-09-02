@@ -6,6 +6,7 @@
   {
    "id": "gnb_tree",
    "q": [
+    "이 학과 사람들이 무엇을 얼마나 썼나",
     "성과관리"
    ],
    "nucleus": "paper",
@@ -38,6 +39,7 @@
   {
    "id": "gnb_exec",
    "q": [
+    "사업 전체가 지금 어떤 수준인가",
     "경영자 KPI"
    ],
    "nucleus": "paper",
@@ -66,6 +68,7 @@
   {
    "id": "gnb_net",
    "q": [
+    "어느 학과끼리 붙어 있나",
     "교내 관계망"
    ],
    "nucleus": "relation",
@@ -90,6 +93,7 @@
   {
    "id": "gnb_glob",
    "q": [
+    "바깥과 얼마나 닿아 있나",
     "글로벌 관계망"
    ],
    "nucleus": "relation",
@@ -116,6 +120,7 @@
   {
    "id": "gnb_exp",
    "q": [
+    "이 분야로 누가 일하고 있나",
     "분야 공저자 탐색"
    ],
    "nucleus": "person",
@@ -139,6 +144,7 @@
   {
    "id": "gnb_univ",
    "q": [
+    "대학끼리 견주면 어떻게 움직였나",
     "대학 연구력 비교"
    ],
    "nucleus": "university",
@@ -164,6 +170,7 @@
   {
    "id": "gnb_sheet",
    "q": [
+    "우리 순위가 어디인가",
     "대학별 성과표"
    ],
    "nucleus": "university",
@@ -187,6 +194,7 @@
   {
    "id": "gnb_ucmp",
    "q": [
+    "BK21 대학끼리 견주면 어디인가",
     "대학 BK21 비교"
    ],
    "nucleus": "university",
@@ -214,6 +222,7 @@
   {
    "id": "gnb_pool",
    "q": [
+    "이 숫자를 믿어도 되나",
     "데이터풀"
    ],
    "nucleus": "quality",
