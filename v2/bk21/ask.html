@@ -554,9 +554,11 @@ const WIDGET = (() => {
   INT.low = (rows, ms, sh, cx) => {
     const m0 = cx.M(ms[0]), f = asc(fold(rows), 0), bot = f[0], top = f[f.length-1], P = [], K = [];
     K.push({ l: '가장 낮은 곳', v: lab(bot), s: vu(val(bot,0), m0) });
-    P.push(f.length > 3 ? `아래쪽 셋은 ${f.slice(0,3).map(r => `${lab(r)} ${vu(val(r,0),m0)}`).join(' · ')}입니다.` : `${f.map(r => `${lab(r)} ${vu(val(r,0),m0)}`).join(' · ')} 순입니다.`);
-    if (val(bot,0) && val(top,0)) { const x = RX(val(top,0),val(bot,0));
-      P.push(`가장 높은 ${lab(top)} ${vu(val(top,0),m0)}${jo(U(m0)||N(val(top,0)),'과')} ${x}배 차이입니다.`); K.push({ l: '최고와 격차', v: `${x}배`, s: lab(top) }); }
+    /* 나열은 결론 항목(가장 낮은 곳)을 빼고 «그다음은 …». 행이 셋 이하면 전부 나열되므로 최고값은 배수 문장에서 다시 적지 않는다 */
+    const nx = f.length > 3 ? f.slice(1,3) : f.slice(1), topSaid = f.length <= 3;
+    if (nx.length) P.push(`그다음은 ${nx.map(r => `${lab(r)} ${vu(val(r,0),m0)}`).join(' · ')}입니다.`);
+    if (val(bot,0) && val(top,0) && top !== bot) { const x = RX(val(top,0),val(bot,0));
+      P.push(topSaid ? `가장 높은 ${lab(top)}${jo(lab(top),'과')} ${x}배 차이입니다.` : `가장 높은 ${lab(top)} ${vu(val(top,0),m0)}${jo(U(m0)||N(val(top,0)),'과')} ${x}배 차이입니다.`); K.push({ l: '최고와 격차', v: `${x}배`, s: lab(top) }); }
     if (f.length > 3) K.push({ l: '하위 3', v: f.slice(0,3).map(lab).join(' · '), s: f.slice(0,3).map(r => vu(val(r,0),m0)).join(' · ') });
     /* 규모 열이 있으면 1인당으로 한 번 더 본다 (합계가 낮은 곳이 규모도 작을 수 있다) */
     const szj = sizeCol(ms, sh, cx);
@@ -583,13 +585,18 @@ const WIDGET = (() => {
     /* 첫 값 지표 기준. 낮을수록 좋은 값(미판정율)은 높은 순, 높을수록 좋은 값(채움률)은 낮은 순으로 '먼저 손볼 곳' */
     const k = 0, m0 = cx.M(ms[0]), low = m0.d === 'low', worstFirst = (i, m) => m.d === 'low' ? desc(rows, i) : asc(rows, i);
     const f = worstFirst(0, m0), w = f.slice(0,3), vs = nums(f, 0), avg = vs.length ? sum(vs)/vs.length : 0, over = f.filter(r => low ? (val(r,0)||0) > avg : (val(r,0)||0) < avg).length;
-    const P = [], K = [{ l: `가장 ${low ? '높은' : '낮은'} 곳`, v: lab(w[0]), s: vu(val(w[0],0),m0) }];
+    const mn = ms[1] ? `${m0.n} ` : '', P = [], K = [{ l: `${mn}가장 ${low ? '높은' : '낮은'} 곳`, v: lab(w[0]), s: vu(val(w[0],0),m0) }];
     if (w.length > 1) P.push(`그다음은 ${w.slice(1).map(r => `${lab(r)} ${vu(val(r,0),m0)}`).join(' · ')}입니다.`);
     if (ms[1]) { const m1 = cx.M(ms[1]), f1 = worstFirst(1, m1).filter(r => val(r,1) != null);
       if (f1.length) { const low1 = m1.d === 'low'; P.push(`${m1.n}${jo(m1.n,'은')} ${f1.slice(0,2).map(r => `${lab(r)} ${vu(val(r,1),m1)}`).join(' · ')} 순으로 ${low1 ? '높습니다' : '낮습니다'}.`); K.push({ l: `${m1.n} 가장 ${low1 ? '높은' : '낮은'} 곳`, v: lab(f1[0]), s: vu(val(f1[0],1),m1) }); } }
-    P.push(`평균 ${vu(Math.round(avg*10)/10,m0)}, 평균보다 ${low ? '높은' : '낮은'} 곳이 ${f.length}${sh.w} 중 ${over}${sh.w}입니다.`);
-    K.push({ l: `평균보다 ${low ? '높은' : '낮은'} 곳`, v: `${over}${sh.w}`, s: `${f.length}${sh.w} 중 · 평균 ${vu(Math.round(avg*10)/10,m0)}` });
-    return { headline: `${lab(w[0])}${jo(lab(w[0]),'이')} ${m0.n} ${vu(val(w[0],0),m0)}${jo(U(m0)||N(val(w[0],0)),'로')} 가장 ${low ? '높습니다' : '낮습니다'}`,
+    const avgS = vu(Math.round(avg*10)/10,m0);
+    /* 질문이 «어떤 데이터·지표»면 지표끼리 견준 말이 결론. 같은 단위의 둘째 지표가 있을 때만 */
+    let head = null;
+    if (sh.askMetric && ms[1] && U(cx.M(ms[1])) === U(m0)) { const m1 = cx.M(ms[1]), v1 = nums(rows, 1), a1 = v1.length ? sum(v1)/v1.length : null;
+      if (a1 != null) head = `${m0.n}${jo(m0.n,'이')} 평균 ${avgS}${jo(U(m0),'로')} ${m1.n} ${vu(Math.round(a1*10)/10,m1)}보다 ${avg > a1 ? '높고' : '낮고'}, 가장 ${low ? '높은' : '낮은'} 곳은 ${lab(w[0])} ${vu(val(w[0],0),m0)}입니다`; }
+    P.push(head ? `${mn}평균보다 ${low ? '높은' : '낮은'} 곳이 ${f.length}${sh.w} 중 ${over}${sh.w}입니다.` : `${mn}평균 ${avgS}, 평균보다 ${low ? '높은' : '낮은'} 곳이 ${f.length}${sh.w} 중 ${over}${sh.w}입니다.`);
+    K.push({ l: `${mn}평균보다 ${low ? '높은' : '낮은'} 곳`, v: `${over}${sh.w}`, s: `${f.length}${sh.w} 중 · 평균 ${avgS}` });
+    return { headline: head || `${lab(w[0])}${jo(lab(w[0]),'이')} ${m0.n} ${vu(val(w[0],0),m0)}${jo(U(m0)||N(val(w[0],0)),'로')} 가장 ${low ? '높습니다' : '낮습니다'}`,
       points: P, kpi: K, sorted: f, hi: new Set([0,1,2]), sortBy: k, sortDir: low ? 'desc' : 'asc' };
   };
 
@@ -610,20 +617,21 @@ const WIDGET = (() => {
         const word = low ? '입니다 (낮을수록 상위)' : '입니다';
         P.push(`${m1.n}${jo(m1.n,'은')} 같은 기간 ${vu(v0,m1)}에서 ${vu(v1,m1)}${jo(U(m1)||N(v1),'로')} ${ch}${word}.`); K.push({ l: m1.n, v: ch, s: `${vu(v0,m1)}→${vu(v1,m1)}${low ? ' · 낮을수록 상위' : ''}` }); } }
     const peak = b.slice().sort((x,y) => y[1]-x[1])[0];
-    if (open && peak && l[1] > peak[1]) P.push(`${l[0]}년은 집계 중인데도 이미 가장 높습니다 (집계가 끝난 해 중 최고는 ${peak[0]}년 ${vu(peak[1],m0)}).`);
-    else if (peak && peak[0] !== l[0] && peak[0] !== f[0]) P.push(`${open ? '집계가 끝난 해 중 ' : ''}가장 높았던 해는 ${peak[0]}년 ${vu(peak[1],m0)}입니다.`);
+    const who = names.length > 1 ? `${main}의 ` : '';   /* 계열이 여럿이면 «나» 계열 요점에 주어 */
+    if (open && peak && l[1] > peak[1]) P.push(`${who}${l[0]}년 ${vu(l[1],m0)}${jo(U(m0)||N(l[1]),'이')} ${a.length}개 연도 중 가장 높습니다 (${b[b.length-1][0]}년까지의 최고는 ${peak[0]}년 ${vu(peak[1],m0)}).`);
+    else if (peak && peak[0] !== l[0] && peak[0] !== f[0]) P.push(`${who}${open ? '집계가 끝난 해 중 ' : ''}가장 높았던 해는 ${peak[0]}년 ${vu(peak[1],m0)}입니다.`);
     /* 꺾임: 앞뒤 부호가 바뀌고, 그 폭이 앞 값의 5% 이상일 때만 (그 안은 제자리로 본다) */
     let turn = -1, dips = 0, peaks = 0; for (let i = 1; i < b.length-1; i++) if ((b[i][1]-b[i-1][1]) * (b[i+1][1]-b[i][1]) < 0 && b[i-1][1] && Math.abs(b[i][1]-b[i-1][1]) / b[i-1][1] >= 0.05) { turn = i; if (b[i][1] < b[i-1][1]) dips++; else peaks++; }
     if (turn > 0) { const p0 = b[turn-1], p1 = b[turn], p2 = b[turn+1], dnUp = p1[1] < p0[1], k = dnUp ? dips : peaks;
-      P.push(dnUp ? `${p0[0]}년 ${vu(p0[1],m0)}에서 ${p1[0]}년 ${vu(p1[1],m0)}${jo(U(m0)||N(p1[1]),'로')} 한 번 줄었다가 ${p2[0]}년 ${vu(p2[1],m0)}${jo(U(m0)||N(p2[1]),'로')} 다시 늘었습니다${k > 1 ? ` (이런 하락이 ${k}번)` : ''}.`
-                  : `${p1[0]}년 ${vu(p1[1],m0)}까지 늘다가 ${p2[0]}년 ${vu(p2[1],m0)}${jo(U(m0)||N(p2[1]),'로')} 줄었습니다${k > 1 ? ` (이런 하락이 ${k}번)` : ''}.`); }
+      P.push(who + (dnUp ? `${p0[0]}년 ${vu(p0[1],m0)}에서 ${p1[0]}년 ${vu(p1[1],m0)}${jo(U(m0)||N(p1[1]),'로')} 한 번 줄었다가 ${p2[0]}년 ${vu(p2[1],m0)}${jo(U(m0)||N(p2[1]),'로')} 다시 늘었습니다${k > 1 ? ` (이런 하락이 ${k}번)` : ''}.`
+                  : `${p1[0]}년 ${vu(p1[1],m0)}까지 늘다가 ${p2[0]}년 ${vu(p2[1],m0)}${jo(U(m0)||N(p2[1]),'로')} 줄었습니다${k > 1 ? ` (이런 하락이 ${k}번)` : ''}.`)); }
     if (a.length > 2) { let bi = 1; for (let i = 2; i < a.length; i++) if (a[i][1]-a[i-1][1] > a[bi][1]-a[bi-1][1]) bi = i;
-      const d = a[bi][1]-a[bi-1][1]; if (d > 0) P.push(`한 해 증가폭이 가장 컸던 때는 ${a[bi-1][0]}→${a[bi][0]}년 ${vu(d,m0)}입니다.`); }
-    if (a.length > 1) { const avg = sum(a.map(p => p[1]))/a.length; P.push(`${a.length}년 평균 ${vu(Math.round(avg*10)/10,m0)}, ${l[0]}년은 평균의 ${RX(l[1],Math.round(avg*10)/10)}배입니다.`); }
+      const d = a[bi][1]-a[bi-1][1]; if (d > 0) P.push(`${who}한 해 증가폭이 가장 컸던 때는 ${a[bi-1][0]}→${a[bi][0]}년 ${vu(d,m0)}입니다.`); }
+    if (a.length > 1) { const avg = sum(a.map(p => p[1]))/a.length; P.push(`${who}${a.length}년 평균 ${vu(Math.round(avg*10)/10,m0)}, ${l[0]}년은 평균의 ${RX(l[1],Math.round(avg*10)/10)}배입니다.`); }
     /* 첫해가 둘째 해의 6할도 안 되면 첫해 기준 증감률이 부풀려진다. 둘째 해부터의 증감률을 같이 둔다 */
-    if (a.length > 2 && a[0][1] < a[1][1] * 0.6) { const r1 = rate(a.slice(1)); lims.push(`${f[0]}년 ${vu(f[1],m0)}${jo(U(m0)||N(f[1]),'은')} ${a[1][0]}년 ${vu(a[1][1],m0)}의 ${pct(f[1], a[1][1])}%로 낮아 첫해 기준 증감률이 크게 잡힙니다. ${a[1][0]}년부터 보면 ${r1 == null ? '—' : sgn(r1) + '%'}입니다.`); }
+    if (a.length > 2 && a[0][1] < a[1][1] * 0.6) { const r1 = rate(a.slice(1)); lims.push(`${who}${f[0]}년 ${vu(f[1],m0)}${jo(U(m0)||N(f[1]),'은')} ${a[1][0]}년 ${vu(a[1][1],m0)}의 ${pct(f[1], a[1][1])}%로 낮아 첫해 기준 증감률이 크게 잡힙니다. ${a[1][0]}년부터 보면 ${r1 == null ? '—' : sgn(r1) + '%'}입니다.`); }
     /* 집계가 끝난 최근 3년이 ±5% 안이면 제자리 */
-    if (b.length >= 3) { const t3 = b.slice(-3), mx3 = Math.max(...t3.map(p => p[1])), mn3 = Math.min(...t3.map(p => p[1])); if (mx3 && (mx3 - mn3) / mx3 <= 0.05) P.push(`${t3[0][0]}년부터는 ${t3.map(p => vu(p[1],m0)).join('→')}${jo(U(m0)||N(t3[2][1]),'로')} 제자리입니다${open ? ` (${l[0]}년은 집계 중)` : ''}.`); }
+    if (b.length >= 3) { const t3 = b.slice(-3), mx3 = Math.max(...t3.map(p => p[1])), mn3 = Math.min(...t3.map(p => p[1])); if (mx3 && (mx3 - mn3) / mx3 <= 0.05) P.push(`${who}${t3[0][0]}년부터는 ${t3.map(p => vu(p[1],m0)).join('→')}${jo(U(m0)||N(t3[2][1]),'로')} 제자리입니다${open ? ` (${l[0]}년은 집계 중)` : ''}.`); }
     const om = new Set(sh.omit || []); let grp = null;
     if (names.length > 1) {
       const rs = names.filter(n => !om.has(n)).map(n => ({ n, r: rate(g.get(n)) })).filter(x => x.r != null).sort((x,y) => y.r-x.r);
@@ -653,13 +661,15 @@ const WIDGET = (() => {
     const m0 = cx.M(ms[0]), g = series(rows, sh, 0);
     if (!g || g.size < 2) return INT.trend(rows, ms, sh, cx);
     /* 콕 집은 항목들은 한 계열로 합친다 (주도 = 제1+교신+…). 나머지는 그대로 */
-    const pk = sh.pick; let pkName = null;
+    const pk = sh.pick; let pkName = null; const g0 = new Map(g);   /* 묶기 전 낱개 계열. 증감률 순위·나열은 이것으로 */
     if (pk && pk.i && pk.i.length) { const set = new Set(pk.i), acc = new Map(); let any = false;
       [...g.keys()].forEach(n => { if (!set.has(n)) return; any = true; g.get(n).forEach(([y, v]) => acc.set(y, (acc.get(y) || 0) + v)); g.delete(n); });
       if (any) { pkName = pk.name || pk.i.join('·'); g.set(pkName, [...acc.entries()].sort((x, y) => String(x[0]).localeCompare(String(y[0])))); } }
     if (g.size < 2) return INT.trend(rows, ms, sh, cx);
     const om = new Set(sh.omit || []);
-    const all = [...g.keys()].filter(n => !om.has(n)).map(n => { const s = g.get(n); return { n, s, r: rate(s), f: s[0], l: s[s.length-1] }; }).filter(x => x.r != null).sort((x,y) => y.r-x.r);
+    const rec = (n, s) => ({ n, s, r: rate(s), f: s[0], l: s[s.length-1] });
+    const tot = y => sum([...g.values()].map(s => { const p = s.find(q => q[0] === y); return p ? p[1] : 0; }));   /* 표의 연도 합계 (모든 계열) */
+    const all = [...g0.keys()].filter(n => !om.has(n)).map(n => rec(n, g0.get(n))).filter(x => x.r != null).sort((x,y) => y.r-x.r);
     /* 시작값이 너무 작은 계열(10 미만 또는 첫해 전체의 2% 미만)은 증감률이 튀어 비교에서 뺀다 */
     const y0 = all.length ? all.map(x => x.f[0]).sort()[0] : null, T0 = sum(all.map(x => x.f[0] === y0 ? x.f[1] : 0)), minBase = sh.count ? Math.max(10, T0 * 0.02) : 0;
     const small = all.filter(x => x.f[1] < minBase), rs = (all.filter(x => x.f[1] >= minBase).length ? all.filter(x => x.f[1] >= minBase) : all);
@@ -668,16 +678,17 @@ const WIDGET = (() => {
     const l = top.l, open = String(l[0]) === String(new Date().getFullYear()) || String(l[0]) === '2025';
     K.push({ l: '가장 많이 는 ' + sh.wn, v: top.n, s: `${sgn(top.r)}% · ${vu(top.f[1],m0)}→${vu(top.l[1],m0)}` });
     K.push({ l: down.length ? '줄어든 ' + sh.wn : '가장 적게 는 ' + sh.wn, v: down.length ? down.map(x => x.n).slice(0,2).join(' · ') : bot.n, s: down.length ? `${down.length}${sh.w}` : `${sgn(bot.r)}%` });
-    const listOf = ex => { const q = rs.filter(x => x.n !== ex); return `${q.slice(0,6).map(x => `${x.n} ${sgn(x.r)}%`).join(' · ')}${q.length > 6 ? ` 등 ${q.length}${sh.w}` : ''}.`; };
-    const listAll = listOf(null); P.push(listAll);
+    /* 나열은 결론·앞 요점이 이미 집은 항목(가장 많이 는 곳 · 콕 집은 계열)을 빼고 «그다음은 …»으로 잇는다 */
+    const said = new Set([top.n]); if (pkName) said.add(pkName);
+    const q = rs.filter(x => !said.has(x.n));
+    if (q.length) P.push(`그다음은 ${q.slice(0,6).map(x => `${x.n} ${sgn(x.r)}%`).join(' · ')}${q.length > 6 ? ` 등 ${q.length}${sh.w}` : ''}입니다.`);
     let shareHL = null;
     if (sh.count) {
       /* 몫의 변화: 콕 집은 계열(없으면 가장 많이 는 계열)이 전체에서 차지하는 몫이 처음과 끝에 얼마인가 */
-      const sb = (pkName && rs.find(x => x.n === pkName)) || top;
-      const tot = y => sum([...g.values()].map(s => { const p = s.find(q => q[0] === y); return p ? p[1] : 0; }));
+      const sb = pkName ? rec(pkName, g.get(pkName)) : top;
       const t0 = tot(sb.f[0]), t1 = tot(sb.l[0]), p0 = pct(sb.f[1], t0), p1 = pct(sb.l[1], t1), dp = t0 && t1 ? Math.round((p1 - p0) * 10) / 10 : null;
       const sent = `${sb.n}${jo(sb.n,'이')} 전체에서 차지하는 몫은 ${sb.f[0]}년 ${p0}%에서 ${sb.l[0]}년 ${p1}%${jo('%','로')} ${dp == null ? '' : sgn(dp) + '%p'}입니다`;
-      if (sb.n === pkName) { shareHL = sent; if (rs.length > 1) P[P.indexOf(listAll)] = listOf(pkName); else P.splice(P.indexOf(listAll), 1); P.unshift(`${sb.n} ${m0.n}${jo(m0.n,'은')} ${sb.f[0]}년 ${vu(sb.f[1],m0)}에서 ${sb.l[0]}년 ${vu(sb.l[1],m0)}${jo(U(m0)||N(sb.l[1]),'로')} ${sgn(sb.r)}%${top.n === sb.n ? '' : `, 가장 많이 는 ${sh.wn}${jo(sh.wn,'은')} ${top.n}(${sgn(top.r)}%)`}입니다.`); K.unshift({ l: `${sb.n} 몫`, v: `${p1}%`, s: `${sb.f[0]}년 ${p0}% · ${sgn(dp)}%p` }); }
+      if (sb.n === pkName) { shareHL = sent; P.unshift(`${sb.n} ${m0.n}${jo(m0.n,'은')} ${sb.f[0]}년 ${vu(sb.f[1],m0)}에서 ${sb.l[0]}년 ${vu(sb.l[1],m0)}${jo(U(m0)||N(sb.l[1]),'로')} ${sgn(sb.r)}%${top.n === sb.n ? '' : `, 가장 많이 는 ${sh.wn}${jo(sh.wn,'은')} ${top.n}(${sgn(top.r)}%)`}입니다.`); K.unshift({ l: `${sb.n} 몫`, v: `${p1}%`, s: `${sb.f[0]}년 ${p0}% · ${sgn(dp)}%p` }); }
       else { P.push(sent + '.'); K.push({ l: `${sb.n} 몫`, v: `${p1}%`, s: `${sb.f[0]}년 ${p0}%` }); }
     }
     const big = rs.slice().sort((x,y) => y.l[1]-x.l[1])[0];
@@ -688,8 +699,8 @@ const WIDGET = (() => {
     const lims = open ? [`${l[0]}년은 집계 중이라 증감률이 실제보다 낮게 나올 수 있습니다.`] : [];
     /* 첫해가 둘째 해의 6할도 안 되는 계열은 첫해 기준 증감률이 부풀려진다. 둘째 해부터의 증감률을 같이 둔다 */
     const lowF = rs.filter(x => x.s.length > 2 && x.f[1] < x.s[1][1] * 0.6);
-    if (lowF.length > 1 && lowF.length === rs.length) { const T0f = sum(lowF.map(x => x.f[1])), T1f = sum(lowF.map(x => x.s[1][1])), y1 = lowF[0].s[1][0];
-      lims.push(`${lowF[0].f[0]}년은 ${y1}년의 ${pct(T0f, T1f)}%(${vu(T0f,m0)}/${vu(T1f,m0)})로 낮아 첫해 기준 증감률이 크게 잡힙니다. ${y1}년부터 보면 ${lowF.map(x => { const r1 = rate(x.s.slice(1)); return `${x.n} ${r1 == null ? '—' : sgn(r1) + '%'}`; }).join(' · ')}입니다.`); }
+    if (lowF.length > 1 && lowF.length === rs.length && sh.count) { const y0f = lowF[0].f[0], y1 = lowF[0].s[1][0], T0f = tot(y0f), T1f = tot(y1);
+      lims.push(`${y0f}년 전체 ${vu(T0f,m0)}${jo(U(m0)||N(T0f),'은')} ${y1}년 ${vu(T1f,m0)}의 ${pct(T0f, T1f)}%로 낮아 첫해 기준 증감률이 크게 잡힙니다. ${y1}년부터 보면 ${lowF.map(x => { const r1 = rate(x.s.slice(1)); return `${x.n} ${r1 == null ? '—' : sgn(r1) + '%'}`; }).join(' · ')}입니다.`); }
     else lowF.slice(0,3).forEach(x => { const r1 = rate(x.s.slice(1));
       lims.push(`${x.n}${jo(x.n,'은')} ${x.f[0]}년 ${vu(x.f[1],m0)}${jo(U(m0)||N(x.f[1]),'이')} ${x.s[1][0]}년 ${vu(x.s[1][1],m0)}의 ${pct(x.f[1], x.s[1][1])}%로 낮아 첫해 기준 증감률이 크게 잡힙니다. ${x.s[1][0]}년부터 보면 ${r1 == null ? '—' : sgn(r1) + '%'}입니다.`); });
     /* 집계가 끝난 최근 3년이 ±5% 안인 계열은 제자리 */
@@ -825,10 +836,9 @@ const WIDGET = (() => {
     const diff = tops.filter(t => !t.ts.includes(item)), tied = tops.filter(t => t.ts.length > 1 && t.ts.includes(item));
     const me = tops.find(t => t.g.includes(cx.me)), P = [], K = [], IW = ORG[sh.a.cols[1]] || ORG._; let ovS = null;
     const hl = `${tops.length}${sh.w} 중 ${c}${sh.w}은 ${item}${jo(item,'이')} 1위입니다`;
-    if (tops.length <= 8) P.push(`1위: ${tops.map(t => `${t.g} ${t.top}`).join(' · ')}.`);
     K.push({ l: '가장 흔한 1위', v: item, s: `${tops.length}${sh.w} 중 ${c}${sh.w}${tied.length ? ` (공동 ${tied.length})` : ''}` });
     if (tied.length) P.push(`${item} 1위 ${c}${sh.w} 중 ${tied.length}${sh.w}${jo(sh.w,'은')} 공동 1위입니다: ${tied.map(t => `${t.g}(${t.ts.filter(x => x !== item).join('·')}와 ${vu(t.a[0][1],m0)}으로 같음)`).join(' · ')}.`);
-    if (diff.length) { if (tops.length > 8) P.push(`1위가 다른 곳은 ${diff.slice(0,8).map(t => `${t.g}(${t.top})`).join(' · ')}${diff.length > 8 ? ` 등 ${diff.length}${sh.w}` : ''}입니다.`); K.push({ l: '1위가 다른 곳', v: `${diff.length}${sh.w}`, s: diff.slice(0,3).map(t => t.g).join(' · ') + (diff.length > 3 ? ' 등' : '') }); }
+    if (diff.length) { P.push(`1위가 다른 곳은 ${diff.slice(0,8).map(t => `${t.g}(${t.top})`).join(' · ')}${diff.length > 8 ? ` 등 ${diff.length}${sh.w}` : ''}입니다.`); K.push({ l: '1위가 다른 곳', v: `${diff.length}${sh.w}`, s: diff.slice(0,3).map(t => t.g).join(' · ') + (diff.length > 3 ? ' 등' : '') }); }
     if (me) {
       P.push(`${cx.me}의 상위 3은 ${me.a.slice(0,3).map(x => `${x[0]} ${vu(x[1],m0)}`).join(' · ')}입니다.`);
       const mine = new Set(me.a.slice(0,5).map(x => x[0]));
@@ -867,11 +877,13 @@ const WIDGET = (() => {
     P.push(`앞서는 쪽: ${tied3(mine)}.`);
     P.push(`뒤처지는 쪽: ${tied3(mine.slice().reverse())}.`);
     if (m1) { const q = mine.filter(x => x.r1).sort((a,b) => (a.r1/a.n1) - (b.r1/b.n1)); if (q.length) P.push(`${m1.n}${jo(m1.n,'로')} 보면 가장 앞서는 ${IW.n}${jo(IW.n,'은')} ${q[0].it} ${q[0].r1}위/${q[0].n1}${sh.w} (${vu(q[0].v1,m1)}), 가장 뒤처지는 ${IW.n}${jo(IW.n,'은')} ${q[q.length-1].it} ${q[q.length-1].r1}위/${q[q.length-1].n1}${sh.w} (${vu(q[q.length-1].v1,m1)})입니다.`); }
-    K.push({ l: '1위인 ' + IW.n, v: `${lead.length}${IW.w}`, s: lead.slice(0,3).map(x => x.it).join(' · ') || '없음' });
-    K.push({ l: '꼴찌인 ' + IW.n, v: `${lag.length}${IW.w}`, s: lag.slice(0,3).map(x => x.it).join(' · ') || '없음' });
-    K.push({ l: '가장 앞서는 ' + IW.n, v: best.slice(0,2).map(x => x.it).join('·') + (best.length > 2 ? ' 등' : ''), s: `${mine[0].r}위/${mine[0].n}${sh.w}${best.length > 1 ? ` · ${best.length}개 동률` : ''}` });
+    /* 지표가 둘이면 어느 지표의 순위인지 박는다. 세는 지표는 단위로 짧게 (대학 분야별 편수 → 편수) */
+    const mn0 = /^(편|건|명|개|곳|회)$/.test(U(m0)) && /수$/.test(m0.n) ? `${U(m0)}수` : m0.n, mn = m1 ? `(${mn0})` : '';
+    K.push({ l: '1위인 ' + IW.n + mn, v: `${lead.length}${IW.w}`, s: lead.slice(0,3).map(x => x.it).join(' · ') || '없음' });
+    K.push({ l: '꼴찌인 ' + IW.n + mn, v: `${lag.length}${IW.w}`, s: lag.slice(0,3).map(x => x.it).join(' · ') || '없음' });
+    K.push({ l: '가장 앞서는 ' + IW.n + mn, v: best.slice(0,2).map(x => x.it).join('·') + (best.length > 2 ? ' 등' : ''), s: `${mine[0].r}위/${mine[0].n}${sh.w}${best.length > 1 ? ` · ${best.length}개 동률` : ''}` });
     const G = new Map(); rows.forEach(r => { const g = labs(r)[0]; (G.get(g) || G.set(g, []).get(g)).push([labs(r)[1], val(r,0)||0]); }); G.forEach(a => a.sort((x,y) => y[1]-x[1]));
-    return { headline: `${cx.me}${jo(cx.me,'은')} ${mine.length}${IW.w} ${IW.n} 중 ${lead.length}${IW.w}에서 1위, ${lag.length}${IW.w}에서 꼴찌입니다`, points: P, kpi: K,
+    return { headline: `${cx.me}${jo(cx.me,'은')} ${m1 ? `${mn0}${jo(mn0,'로')} ` : ''}${mine.length}${IW.w} ${IW.n} 중 ${lead.length}${IW.w}에서 1위, ${lag.length}${IW.w}에서 꼴찌입니다`, points: P, kpi: K,
       groups: [...G.entries()].map(([g,a]) => ({ g, top: a[0][0], a })), lims: [`${IW.n}${jo(IW.n,'은')} ${GN}마다 상위 8${IW.w}만 있어 순위는 그 ${IW.n}${jo(IW.n,'을')} 상위 8에 둔 ${GN} 사이의 순위입니다.`] };
   };
 
@@ -1036,9 +1048,16 @@ const WIDGET = (() => {
     if (F.length) { const want = [...F, cx.me], hit = a.rows.filter(r => want.some(w => lab(r).includes(w))); if (hit.length >= 2) rows = hit; }
     const sh = shape({ ...a, rows }, cx); sh.a = a; sh.pick = rec.pick || null; sh.omit = rec.omit || null; sh.lead = rec.lead || null; sh.ctx = ctxOf(rec.filters, cx);
     /* 질문어: «몇 편·몇 건»이면 개수를 앞세우고, «나눠·각각·따로»면 지표마다 순위를 결론에 나란히 */
-    const qs = (rec.q || []).join(' '); sh.askCount = /몇 ?(편|건|명|개|곳|쌍)/.test(qs); sh.askSplit = /나눠|각각|따로/.test(qs); sh.askGroup = /끼리|서로|비교|견주|별로/.test(qs);
+    const qs = (rec.q || []).join(' '); sh.askCount = /몇 ?(편|건|명|개|곳|쌍)/.test(qs); sh.askSplit = /나눠|각각|따로/.test(qs); sh.askGroup = /끼리|서로|비교|견주|별로/.test(qs); sh.askMetric = /어떤 (데이터|지표|값)|어느 (데이터|지표|값)|무슨 (데이터|지표)/.test(qs);
     const o = (INT[intent] || INT.rank)(rows, ms, sh, cx) || {};
-    if (o.rows) rows = o.rows;   /* 의도가 줄을 더 좁혔으면 (묶음 안의 구성) 그 줄로 */
+    if (o.rows) rows = o.rows;
+    /* 지시어: 질문이 «이 학과·이 대학…»을 가리키는데 고른 대상(focus·filters)이 없으면 전체 순위로 답한다고 밝히고 결론에 모수를 앞세운다 */
+    const DEIX = { '학과': 'dept', '전공': 'dept', '대학': 'uni', '분야': 'f', '저널': 'j', '연구자': 'kind', '교수': 'kind', '사람': 'kind' };
+    const dm = (cx.q || (rec.q || []).join(' ')).match(/(?:^|[\s«"'])(?:이|우리|해당|그) ?(학과|전공|대학|분야|저널|연구자|교수|사람)/);
+    const fk = dm && DEIX[dm[1]], fv = fk && rec.filters ? rec.filters[fk] : null;
+    if (dm && !F.length && (fv == null || fv === '*')) { const ax = (rec.axes || []).find(k => k !== 'y'), scope = ((ax && cx.AX && cx.AX[ax]) || sh.wn).split('·')[0], nAll = (a.n && a.capped) ? a.n : rows.length;
+      const rk = /^(rank|low)$/.test(intent); o.deix = `${dm[1]}${jo(dm[1],'을')} 고르지 않아 ${scope} 전체 ${rk ? '순위로' : '기준으로'} 답합니다.`;
+      if (o.headline && rk) o.headline = `${N(nAll)}개 ${scope} 중 ${o.headline}`; }   /* 의도가 줄을 더 좁혔으면 (묶음 안의 구성) 그 줄로 */
     if (o.fallback) widget = o.fallback;
     /* 짝 레시피(also): 그 답의 머리말을 둘째 줄과 첫 KPI 로 끌어온다 (한 단계만) */
     if (rec.also && cx.R && !cx._deep) { const c = cx.R(rec.also);
@@ -1056,13 +1075,14 @@ const WIDGET = (() => {
     if (sh.d === 'low' && intent !== 'quality') lims.push(`${cx.M(ms[0]).n}${jo(cx.M(ms[0]).n,'은')} 낮을수록 좋은 값입니다.`);
     (o.lims || []).forEach(l => lims.push(l));
     if (a.capped && a.stats) lims.push(`표는 전체 ${N(a.n)}${sh.w} 중 상위 ${rows.length}${sh.w}까지만 담고 그중 ${Math.min(rows.length, TABLE_N)}${sh.w}${isMeIn(rows, cx) ? '과 우리 줄' : ''}만 보입니다 (합계·중앙값·최소는 전체 ${N(a.n)}${sh.w}${jo(sh.w,'로')} 계산).`);
-    else if (a.capped) lims.push(`전체 ${N(a.n)}${sh.w} 중 상위 ${rows.length}${sh.w}만 미리 계산해 두었고, 표는 그중 ${Math.min(rows.length, TABLE_N)}${sh.w}${isMeIn(rows, cx) ? '과 우리 줄' : ''}만 보입니다.`);
+    else if (a.capped) lims.push(rows.length <= TABLE_N ? `전체 ${N(a.n)}${sh.w} 중 상위 ${rows.length}${sh.w}만 미리 계산해 두었습니다.` : `전체 ${N(a.n)}${sh.w} 중 상위 ${rows.length}${sh.w}만 미리 계산해 두었고, 표는 그중 ${TABLE_N}${sh.w}${isMeIn(rows, cx) ? '과 우리 줄' : ''}만 보입니다.`);
     else if (rows.length > TABLE_N && !o.series) lims.push(`표는 ${TABLE_N}줄만 보입니다 (전체 ${rows.length}줄).`);
     if (o.miss) lims.push(`${cx.M(ms[0]).n} 값이 없는 ${o.miss}곳은 순위에서 뺐습니다.`);
     if (F.length && rows !== a.rows) lims.push(`${F.join(' · ')} 기준으로 ${rows.length}줄만 남겼습니다.`);
+    if (o.deix) lims.push(o.deix);
     /* 레시피 주의 가운데 위젯 한계가 같은 문턱(«10건 미만»)을 이미 말한 문장은 뺀다 */
     const thr = c => (c.match(/\d[\d,]*(편|건|명|개|곳|쌍|%) ?미만/g) || []);
-    const said = new Set(lims.flatMap(thr)), caveats = (rec.caveats || []).filter(c => !thr(c).some(t => said.has(t)));
+    const said = new Set(lims.flatMap(thr)), caveats = (rec.caveats || []).filter(c => !thr(c).some(t => said.has(t)) && !(o.deix && /고르지 않/.test(c)));
     return { widget, wname: `${W.no || ''} ${W.name || widget}`.trim(), intent, iname: (cx.I[intent] || {}).name || intent,
       headline: o.headline || '', points: (o.points || []).filter(Boolean).slice(0, 5), kpi: (o.kpi || []).slice(0, 3),
       fig, table: table(o, { ...a, rows }, ms, cx), lims, caveats, rows, err: o.err };
@@ -1084,7 +1104,7 @@ function open(id,opt){
    <div class="lim"><div>이 질문은 지금 만들 수 없습니다.</div><div>${esc(r.blocked||'집계 결과가 없습니다')}</div></div>
    </div>`; return;}
  const FOCUS=(opt.focus||[]).filter(Boolean);
- const cx={me:ME,focus:FOCUS,M:k=>MET[k]||{n:k,u:'',d:'high'},AX:AXN,W:SPEC.widgets.W,I:SPEC.widgets.I,
+ const cx={me:ME,focus:FOCUS,q:opt.q||'',M:k=>MET[k]||{n:k,u:'',d:'high'},AX:AXN,W:SPEC.widgets.W,I:SPEC.widgets.I,
   R:k=>({rec:SPEC.recipes.find(x=>x.id===k),ans:SPEC.answers[k]})};
  let o;
  try{ o=WIDGET.build(r,a,cx); }
