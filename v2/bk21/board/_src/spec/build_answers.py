@@ -9,6 +9,7 @@ def load(n): return json.load(io.open(os.path.join(D, n + '.json'), encoding='ut
 
 T, K, U, C, N = load('bk21_tree'), load('kpi'), load('univ'), load('ucmp'), load('net')
 G = load('glob')
+P = load('pool')
 M = json.load(io.open(os.path.join(HERE, 'metrics.json'), encoding='utf-8'))
 R = json.load(io.open(os.path.join(HERE, 'recipes.json'), encoding='utf-8'))
 MET = {m['id']: m for m in M['metrics']}
@@ -206,12 +207,84 @@ def agg_qa(axes, measures):
     out.sort(key=lambda r: -(r[1] or 0))
     return out, ['dept'], len(out)
 
+def agg_new(r):
+    """스킨이 요구하는 새 집계들. 원장 위치가 제각각이라 레시피별로 갈라 쓴다."""
+    rid, ms = r['id'], r['measures']
+    if rid == 'n01_area':
+        gy = T['gyo']
+        rows = [[[g], round(v['RQ']['RQ'],1), round(v['RQ']['IQ'],1), round(v['RQ']['SQ'],1)]
+                for g, v in gy.items()]
+        return rows, ['gy'], len(rows)
+    if rid in ('n02_signal','n03_twotrack'):
+        rows=[]
+        for dn, d in K['depts'].items():
+            if d.get('A01') is None and d.get('B01pc') is None: continue
+            rows.append([[dn], d.get('A01'), d.get('B01pc'), d.get('gy')])
+        rows.sort(key=lambda x: -(x[1] or 0))
+        return rows, ['dept'], len(rows)
+    if rid == 'n04_relscope':
+        return [[[k], v] for k, v in (N.get('scope') or {}).items()], ['scope'], 2
+    if rid in ('n05_partnerdist','n07_netsize','n08_extstruct','n09_potential','n06_partners'):
+        rows=[]
+        for e in (G.get('dept') or []):
+            if isinstance(e, list) and len(e) >= 3: rows.append([[e[0]], e[1], e[2]])
+        rows.sort(key=lambda x: -(x[1] or 0))
+        return rows, ['dept'], len(rows)
+    if rid == 'n10_intl_dom':
+        rows=[[[u['nm']], u.get('works'), u.get('kci')] for u in U['unis']]
+        rows.sort(key=lambda x: -(x[1] or 0)); return rows, ['uni'], len(rows)
+    if rid == 'n11_bk_vs':
+        b = U['meta']['skku_bk']
+        return [[['BK21 참여학과'], b['bk']], [['그 외 학과'], b['nonbk']]], ['구분'], 2
+    if rid == 'n13_measurable':
+        rows=[[[m['axis']], m.get('oa'), m.get('kci'), m.get('rims')] for m in U['meta'].get('matrix',[])]
+        return rows, ['축'], len(rows)
+    if rid in ('n14_asia','n15_world'):
+        src = U['asia'] if rid == 'n14_asia' else U['world']
+        rows=[[[x.get('nm') or x.get('en')], x.get('works'), x.get('cites'), x.get('h')] for x in src]
+        rows.sort(key=lambda x: -(x[1] or 0)); return rows, ['uni'], len(rows)
+    if rid == 'n16_pool':
+        rows=[[[x.get('n')+' '+(x.get('t') or '')], len(x.get('items') or [])] for x in P['pool']]
+        return rows, ['층'], len(rows)
+    if rid == 'n17_bk_year':
+        rows=[]
+        for un, yy in (C.get('yr') or {}).items():
+            if isinstance(yy, dict):
+                for y, v in yy.items():
+                    if 2020 <= int(y) <= 2025:
+                        rows.append([[un, y], v.get('n') if isinstance(v, dict) else v])
+            elif isinstance(yy, list):
+                for e in yy:
+                    if isinstance(e, list) and len(e) >= 2 and 2020 <= int(e[0]) <= 2025:
+                        rows.append([[un, str(e[0])], e[1]])
+        return rows, ['uni','y'], len(rows)
+    if rid == 'n18_quality_rank':
+        rows=[[[u], v.get('fw'), v.get('fw2'), v.get('c100'), v.get('oa'), v.get('corr'), v.get('first')]
+              for u, v in C['sum'].items()]
+        rows.sort(key=lambda x: -(x[1] or 0)); return rows, ['uni'], len(rows)
+    if rid == 'n19_uni_table':
+        rows=[[[u['nm']], u.get('works'), u.get('cites'), u.get('h'), u.get('c2')] for u in U['unis']]
+        rows.sort(key=lambda x: -(x[1] or 0)); return rows, ['uni'], len(rows)
+    if rid == 'n12_uni_topic':
+        rows=[]
+        for un, fl in (C.get('fld') or {}).items():
+            for e in (fl or [])[:6]:
+                rows.append([[un, e[0]], e[1]])
+        rows.sort(key=lambda x: -(x[1] or 0)); return rows, ['uni','f'], len(rows)
+    if rid == 'n20_netmap':
+        rows=[[[e['a'] + ' ↔ ' + e['b']], e['n']] for e in N['top']]
+        rows.sort(key=lambda x: -x[1]); return rows, ['dept'], len(rows)
+    return None
+
 ANS, skipped = {}, []
 for r in R['recipes']:
-    if r['blocked']: continue
+    if r['blocked'] or r.get('needs'): continue
     try:
         nuc, ax, ms = r['nucleus'], r['axes'], r['measures']
-        if 'dept_field_papers' in ms:
+        got = agg_new(r)
+        if got:
+            rows, cols, n = got
+        elif 'dept_field_papers' in ms:
             rows, cols, n = agg_field(ax, r['filters'], ms)
         elif nuc == 'paper':      rows, cols, n = agg_paper(ax, r['filters'], ms)
         elif nuc == 'person':     rows, cols, n = agg_person(ax, r['filters'], ms)

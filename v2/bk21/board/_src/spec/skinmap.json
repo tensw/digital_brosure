@@ -196,6 +196,98 @@
   "e25_qa_grade": {
    "skin": "pool_06",
    "why": "등급 미부여 표"
+  },
+  "n01_area": {
+   "skin": "exec_02",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n02_signal": {
+   "skin": "exec_04",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n03_twotrack": {
+   "skin": "exec_05",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n04_relscope": {
+   "skin": "net_04",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n05_partnerdist": {
+   "skin": "net_05",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n06_partners": {
+   "skin": "net_03",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n07_netsize": {
+   "skin": "glob_02",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n08_extstruct": {
+   "skin": "glob_04",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n09_potential": {
+   "skin": "glob_06",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n10_intl_dom": {
+   "skin": "univ_04",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n11_bk_vs": {
+   "skin": "univ_05",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n12_uni_topic": {
+   "skin": "univ_06",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n13_measurable": {
+   "skin": "univ_07",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n14_asia": {
+   "skin": "sheet_02",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n15_world": {
+   "skin": "sheet_03",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n16_pool": {
+   "skin": "pool_01",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n17_bk_year": {
+   "skin": "ucmp_01",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n18_quality_rank": {
+   "skin": "ucmp_03",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n19_uni_table": {
+   "skin": "univ_03",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "n20_netmap": {
+   "skin": "net_01",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "p01_person_year": {
+   "skin": "person_06",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "p02_person_top": {
+   "skin": "person_08",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
+  },
+  "p03_person_score": {
+   "skin": "person_09",
+   "why": "스킨이 먼저 있고 질문을 붙였다"
   }
  },
  "aux": {
@@ -223,6 +315,7 @@
   "person_01": "지표 박스",
   "person_02": "지표 박스",
   "person_03": "지표 박스",
-  "person_04": "지표 박스"
+  "person_04": "지표 박스",
+  "exec_10": "정의 목록"
  }
 }

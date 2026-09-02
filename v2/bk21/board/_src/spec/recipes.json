@@ -1303,6 +1303,501 @@
    "caveats": [],
    "covered_by": [],
    "blocked": "층 불일치: PP(top 10%) 비율(dept_pp_top10_rate)은 학과 단위로만 있다. 저자역할(으)로 자를 수 없다"
+  },
+  {
+   "id": "n01_area",
+   "q": [
+    "우리가 어느 역량이 약한가"
+   ],
+   "nucleus": "dept",
+   "axes": [
+    "gy"
+   ],
+   "filters": {},
+   "measures": [
+    "area_rq",
+    "area_iq",
+    "area_sq"
+   ],
+   "against": null,
+   "chart": "radar",
+   "caveats": [
+    "계열: 계열 넘는 비교 금지",
+    "계열 집계다. 학과로 나눌 수 없다",
+    "LQ 교육역량은 자료를 못 받아 축이 비어 있다"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n02_signal",
+   "q": [
+    "어느 학과가 처져 있나"
+   ],
+   "nucleus": "dept",
+   "axes": [
+    "dept"
+   ],
+   "filters": {},
+   "measures": [
+    "prof_top_quality",
+    "stu_first_per_person"
+   ],
+   "against": "gy",
+   "chart": "table",
+   "caveats": [
+    "학과·전공: 기본 조직 단위",
+    "최소 논문 수 컷을 두지 않는다"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n03_twotrack",
+   "q": [
+    "교수 성과가 학생에게 이어지나"
+   ],
+   "nucleus": "dept",
+   "axes": [
+    "dept"
+   ],
+   "filters": {},
+   "measures": [
+    "prof_top_quality",
+    "stu_first_per_person"
+   ],
+   "against": "gy",
+   "chart": "scatter",
+   "caveats": [
+    "학과·전공: 기본 조직 단위",
+    "최소 논문 수 컷을 두지 않는다"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n04_relscope",
+   "q": [
+    "교내에서 도나 밖으로 나가나"
+   ],
+   "nucleus": "relation",
+   "axes": [
+    "scope"
+   ],
+   "filters": {},
+   "measures": [
+    "rel_scope"
+   ],
+   "against": null,
+   "chart": "stack100",
+   "caveats": [
+    "관계 범위: 학과 내 / 학과 간"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n05_partnerdist",
+   "q": [
+    "몇 사람이 협업을 떠받치나"
+   ],
+   "nucleus": "relation",
+   "axes": [
+    "dept"
+   ],
+   "filters": {},
+   "measures": [
+    "partner_count"
+   ],
+   "against": null,
+   "chart": "bar_sorted",
+   "caveats": [
+    "학과·전공: 기본 조직 단위",
+    "수가 적어도 좋은 상대면 값어치가 크다"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n06_partners",
+   "q": [
+    "이 학과는 누구와 일하나"
+   ],
+   "nucleus": "relation",
+   "axes": [
+    "dept"
+   ],
+   "filters": {},
+   "measures": [
+    "coauth_papers",
+    "duration"
+   ],
+   "against": null,
+   "chart": "table",
+   "caveats": [
+    "학과·전공: 기본 조직 단위",
+    "동명이인 판별 위에 선다",
+    "1년이면 일회성이다. 반복관계와 갈라 본다"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n07_netsize",
+   "q": [
+    "밖과 얼마나 넓게 닿아 있나"
+   ],
+   "nucleus": "relation",
+   "axes": [
+    "dept"
+   ],
+   "filters": {},
+   "measures": [
+    "ext_partner"
+   ],
+   "against": null,
+   "chart": "bar_sorted",
+   "caveats": [
+    "학과·전공: 기본 조직 단위"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n08_extstruct",
+   "q": [
+    "학교 밖과 얼마나 하나"
+   ],
+   "nucleus": "relation",
+   "axes": [
+    "dept"
+   ],
+   "filters": {},
+   "measures": [
+    "ext_partner",
+    "duration"
+   ],
+   "against": null,
+   "chart": "table",
+   "caveats": [
+    "학과·전공: 기본 조직 단위",
+    "1년이면 일회성이다. 반복관계와 갈라 본다"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n09_potential",
+   "q": [
+    "아직 안 붙었는데 붙일 만한 사람이 누구인가"
+   ],
+   "nucleus": "relation",
+   "axes": [
+    "dept"
+   ],
+   "filters": {},
+   "measures": [
+    "field_similarity"
+   ],
+   "against": null,
+   "chart": "table",
+   "caveats": [
+    "학과·전공: 기본 조직 단위",
+    "추천 근거이지 성과 지표가 아니다"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n10_intl_dom",
+   "q": [
+    "국제지와 국내지를 나눠 보면"
+   ],
+   "nucleus": "university",
+   "axes": [],
+   "filters": {},
+   "measures": [
+    "uni_works",
+    "uni_kci"
+   ],
+   "against": "국내7",
+   "chart": "table",
+   "caveats": [
+    "대학 전체이며 BK21 참여자 범위가 아니다",
+    "국제지와 합쳐 한 줄로 세우면 인문사회가 낮게 보인다"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n11_bk_vs",
+   "q": [
+    "사업이 실제로 차이를 만들었나"
+   ],
+   "nucleus": "dept",
+   "axes": [],
+   "filters": {},
+   "measures": [
+    "bk_papers"
+   ],
+   "against": null,
+   "chart": "bar_group",
+   "caveats": [
+    "인원 차이를 무시한 총량이다. 1인당을 함께 본다"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n12_uni_topic",
+   "q": [
+    "대학마다 강한 주제가 무엇인가"
+   ],
+   "nucleus": "university",
+   "axes": [
+    "f"
+   ],
+   "filters": {},
+   "measures": [
+    "uni_field_papers"
+   ],
+   "against": "국내7",
+   "chart": "bar_sorted",
+   "caveats": [
+    "분야: 논문에 붙어 있지 않다. 학과별(glob.deptfield) · 대학별(ucmp.fld) · 분야별(explore.fields) 집계로만 있다. bk21_tree 논문의 f 필드는 분야가 아니라 사업 전후 표시다"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n13_measurable",
+   "q": [
+    "경쟁대학을 어디까지 잴 수 있나"
+   ],
+   "nucleus": "quality",
+   "axes": [],
+   "filters": {},
+   "measures": [
+    "uni_measurable"
+   ],
+   "against": null,
+   "chart": "table",
+   "caveats": [
+    "빈칸은 실적 없음이 아니라 자료 못 구함이다"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n14_asia",
+   "q": [
+    "아시아에서 우리 위치는"
+   ],
+   "nucleus": "university",
+   "axes": [],
+   "filters": {},
+   "measures": [
+    "uni_works",
+    "uni_cites",
+    "uni_h"
+   ],
+   "against": "아시아52",
+   "chart": "table",
+   "caveats": [
+    "대학 전체이며 BK21 참여자 범위가 아니다"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n15_world",
+   "q": [
+    "세계에서 우리 위치는"
+   ],
+   "nucleus": "university",
+   "axes": [],
+   "filters": {},
+   "measures": [
+    "uni_works",
+    "uni_cites",
+    "uni_h"
+   ],
+   "against": "글로벌116",
+   "chart": "table",
+   "caveats": [
+    "대학 전체이며 BK21 참여자 범위가 아니다"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n16_pool",
+   "q": [
+    "데이터가 어떤 층을 거쳐 오나"
+   ],
+   "nucleus": "quality",
+   "axes": [],
+   "filters": {},
+   "measures": [
+    "qa_layer"
+   ],
+   "against": null,
+   "chart": "table",
+   "caveats": [],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n17_bk_year",
+   "q": [
+    "BK21 대학끼리 연도별로 어떻게 움직였나"
+   ],
+   "nucleus": "university",
+   "axes": [
+    "y"
+   ],
+   "filters": {},
+   "measures": [
+    "uni_works"
+   ],
+   "against": "BK21_8",
+   "chart": "table",
+   "caveats": [
+    "연도: 2026 제외 · 2025 집계 중",
+    "대학 전체이며 BK21 참여자 범위가 아니다"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n18_quality_rank",
+   "q": [
+    "편수 말고 질은 어디쯤인가"
+   ],
+   "nucleus": "university",
+   "axes": [],
+   "filters": {},
+   "measures": [
+    "uni_fwci",
+    "uni_fw2",
+    "uni_c100",
+    "uni_oa",
+    "uni_corr",
+    "uni_first"
+   ],
+   "against": "BK21_8",
+   "chart": "bar_sorted",
+   "caveats": [],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n19_uni_table",
+   "q": [
+    "대학을 한 표로 견주면"
+   ],
+   "nucleus": "university",
+   "axes": [],
+   "filters": {},
+   "measures": [
+    "uni_works",
+    "uni_cites",
+    "uni_h",
+    "uni_c2"
+   ],
+   "against": "국내7",
+   "chart": "table",
+   "caveats": [
+    "대학 전체이며 BK21 참여자 범위가 아니다"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "n20_netmap",
+   "q": [
+    "학과 협업을 그림으로 보면"
+   ],
+   "nucleus": "relation",
+   "axes": [
+    "dept"
+   ],
+   "filters": {},
+   "measures": [
+    "coauth_papers"
+   ],
+   "against": null,
+   "chart": "matrix",
+   "caveats": [
+    "학과·전공: 기본 조직 단위",
+    "동명이인 판별 위에 선다"
+   ],
+   "covered_by": [],
+   "blocked": null
+  },
+  {
+   "id": "p01_person_year",
+   "q": [
+    "이 사람이 꾸준히 쓰고 있나"
+   ],
+   "nucleus": "paper",
+   "axes": [],
+   "filters": {},
+   "measures": [
+    "paper_count"
+   ],
+   "against": null,
+   "chart": "line",
+   "caveats": [
+    "조직 규모를 따라간다. 1인당과 나란히 낸다"
+   ],
+   "covered_by": [],
+   "blocked": null,
+   "needs": "person"
+  },
+  {
+   "id": "p02_person_top",
+   "q": [
+    "이 사람의 대표작이 무엇인가"
+   ],
+   "nucleus": "paper",
+   "axes": [],
+   "filters": {},
+   "measures": [
+    "citations"
+   ],
+   "against": null,
+   "chart": "table",
+   "caveats": [
+    "오래된 논문이 유리하다. 연도를 함께 본다"
+   ],
+   "covered_by": [],
+   "blocked": null,
+   "needs": "person"
+  },
+  {
+   "id": "p03_person_score",
+   "q": [
+    "내 점수가 왜 이 값인가"
+   ],
+   "nucleus": "paper",
+   "axes": [],
+   "filters": {},
+   "measures": [
+    "score",
+    "grade_score",
+    "role_weight"
+   ],
+   "against": null,
+   "chart": "table",
+   "caveats": [
+    "내부 관리기준이며 공식 평가 결과가 아니다. 미판정 논문은 0점",
+    "계열별로 배점표가 다르다. 계열을 넘어 견주지 않는다",
+    "SGCPI+ 는 저자 수를 반영하지 않는다"
+   ],
+   "covered_by": [],
+   "blocked": null,
+   "needs": "person"
   }
  ]
 }
