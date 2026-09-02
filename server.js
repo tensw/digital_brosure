@@ -160,7 +160,7 @@ function handleAuthApi(req, res, urlPath) {
       if (b.op === 'keyStatus') return json(res, 200, { ok: true, set: !!GKEY, masked: keyMask(GKEY) });
       if (b.op === 'keySet') {
         const k = String(b.key || '').trim();
-        if (!/^[A-Za-z0-9_-]{20,80}$/.test(k))
+        if (!/^[A-Za-z0-9._-]{20,120}$/.test(k))
           return json(res, 400, { ok: false, msg: '키 형태가 아닙니다.' });
         try { keySave(k); } catch (e) { return json(res, 500, { ok: false, msg: '저장하지 못했습니다.' }); }
         return json(res, 200, { ok: true, set: true, masked: keyMask(GKEY) });
