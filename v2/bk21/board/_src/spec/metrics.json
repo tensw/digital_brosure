@@ -1,0 +1,635 @@
+{
+  "version": "0.1",
+  "built": "2026-09-02",
+  "note": "지표 레지스트리. grain 이 핵심 필드다. 레시피 검사2가 이것으로 axes 를 막는다.",
+  "period": {
+    "default": "2020-2025",
+    "pre": "2015-2019",
+    "excluded": [
+      "2026"
+    ],
+    "reason": "BK21 4단계 성과기간"
+  },
+  "grains": {
+    "paper": "논문 한 건에 붙어 있다. 어느 축으로도 다시 자를 수 있다",
+    "person": "사람 한 명에 붙어 있다. 사람에 붙는 축까지만",
+    "dept": "학과 단위로 이미 집계돼 있다. 다시 자를 수 없다",
+    "relation": "공저 한 쌍에 붙어 있다",
+    "university": "대학 한 곳에 붙어 있다",
+    "quality": "데이터 진단 항목"
+  },
+  "status": {
+    "official": "BK21 지침에 있는 지표",
+    "proxy": "지침 지표를 대신하는 값",
+    "internal": "우리가 정한 내부 관리기준",
+    "provisional": "산식 확정 전",
+    "uncollected": "원천 없음"
+  },
+  "metrics": [
+    {
+      "id": "paper_count",
+      "name": "편수",
+      "grain": "paper",
+      "unit": "편",
+      "field": null,
+      "formula": "COUNT(논문)",
+      "population": "BK21 참여자 논문 31,076",
+      "direction": "high",
+      "status": "official",
+      "source": "bk21_tree.papers",
+      "caveat": "조직 규모를 따라간다. 1인당과 나란히 낸다"
+    },
+    {
+      "id": "citations",
+      "name": "피인용",
+      "grain": "paper",
+      "unit": "회",
+      "field": "c",
+      "formula": "SUM(c)",
+      "population": "동일",
+      "direction": "high",
+      "status": "official",
+      "source": "bk21_tree.papers",
+      "caveat": "오래된 논문이 유리하다. 연도를 함께 본다"
+    },
+    {
+      "id": "grade_score",
+      "name": "등급점수 g",
+      "grain": "paper",
+      "unit": "점",
+      "field": "gs",
+      "formula": "SGCPI+ 계열별 저널등급 배점",
+      "population": "동일",
+      "direction": "high",
+      "status": "internal",
+      "source": "bk21_tree.papers",
+      "caveat": "계열별로 배점표가 다르다. 계열을 넘어 견주지 않는다"
+    },
+    {
+      "id": "role_weight",
+      "name": "역할가중 w",
+      "grain": "paper",
+      "unit": "배",
+      "field": "gw",
+      "formula": "주저자 1 · 공저자 1/2",
+      "population": "동일",
+      "direction": "high",
+      "status": "internal",
+      "source": "bk21_tree.papers",
+      "caveat": "SGCPI+ 는 저자 수를 반영하지 않는다"
+    },
+    {
+      "id": "score",
+      "name": "환산점수",
+      "grain": "paper",
+      "unit": "점",
+      "field": "sc",
+      "formula": "Σ(g × w)",
+      "population": "동일",
+      "direction": "high",
+      "status": "internal",
+      "source": "bk21_tree.papers",
+      "caveat": "내부 관리기준이며 공식 평가 결과가 아니다. 미판정 논문은 0점"
+    },
+    {
+      "id": "jcr_pct",
+      "name": "JCR 백분위",
+      "grain": "paper",
+      "unit": "%",
+      "field": "pct",
+      "formula": "IF_PUB_RANK 의 순위 ÷ 전체 × 100",
+      "population": "pct 값 있는 23,838편 (미부여 7,238)",
+      "direction": "low",
+      "status": "official",
+      "source": "paper_citation_metric → bk21_tree.papers",
+      "coverage": {
+        "2020": 82.7,
+        "2021": 78.9,
+        "2022": 74.5,
+        "2023": 82.3,
+        "2024": 73.9,
+        "2025": 71.8
+      },
+      "caveat": "저널의 분야 내 순위이지 논문의 인용 순위가 아니다. 연도 비교에는 커버리지를 함께 낸다"
+    },
+    {
+      "id": "impact_factor",
+      "name": "임팩트팩터",
+      "grain": "paper",
+      "unit": null,
+      "field": "if",
+      "formula": "저널 IF",
+      "population": "47.4% (14,715 / 31,076)",
+      "direction": "high",
+      "status": "proxy",
+      "source": "bk21_tree.papers",
+      "caveat": "DORA 권고에 따라 개인·논문 평가에 쓰지 않는다. PP(top 10%) 로 대신한다"
+    },
+    {
+      "id": "person_papers",
+      "name": "총편수",
+      "grain": "person",
+      "unit": "편",
+      "field": "np",
+      "formula": "그 사람의 논문 수",
+      "population": "참여자 2,959명",
+      "direction": "high",
+      "status": "official",
+      "source": "bk21_tree.depts[].profs"
+    },
+    {
+      "id": "person_papers_pre",
+      "name": "사업 전 편수",
+      "grain": "person",
+      "unit": "편",
+      "field": "nb",
+      "formula": "2015~2019 논문 수",
+      "population": "교수·신진만",
+      "direction": "high",
+      "status": "official",
+      "source": "동일",
+      "caveat": "대학원생은 사업 전 재학 전이라 분모가 빈다"
+    },
+    {
+      "id": "person_papers_post",
+      "name": "사업 후 편수",
+      "grain": "person",
+      "unit": "편",
+      "field": "na",
+      "formula": "2020~2025 논문 수",
+      "population": "동일",
+      "direction": "high",
+      "status": "official",
+      "source": "동일"
+    },
+    {
+      "id": "dept_fwci_avg",
+      "name": "FWCI 평균",
+      "grain": "dept",
+      "unit": "배",
+      "field": "qFwAvg",
+      "formula": "논문 FWCI 평균 (1.0 = 세계평균)",
+      "population": "학과",
+      "direction": "high",
+      "status": "proxy",
+      "source": "kpi.depts[]",
+      "kpi_id": "BK-A-02",
+      "caveat": "학과 집계로만 있다. 연도·역할 등 다른 축으로 다시 자를 수 없다"
+    },
+    {
+      "id": "dept_fwci_med",
+      "name": "FWCI 중앙값",
+      "grain": "dept",
+      "unit": "배",
+      "field": "qFwMed",
+      "formula": "논문 FWCI 중앙값",
+      "population": "학과",
+      "direction": "high",
+      "status": "proxy",
+      "source": "kpi.depts[]",
+      "caveat": "동일. 평균은 소수 논문이 끌어올린다"
+    },
+    {
+      "id": "dept_pp_top10_n",
+      "name": "PP(top 10%) 편수",
+      "grain": "dept",
+      "unit": "편",
+      "field": "PP",
+      "formula": "같은 분야·연도 피인용 상위 10% 논문 수",
+      "population": "학과",
+      "direction": "high",
+      "status": "official",
+      "source": "kpi.depts[]",
+      "caveat": "학과 집계로만 있다. JCR 백분위(저널 순위)와 다른 값이다"
+    },
+    {
+      "id": "dept_pp_top10_rate",
+      "name": "PP(top 10%) 비율",
+      "grain": "dept",
+      "unit": "%",
+      "field": "qPp10",
+      "formula": "PP ÷ 학과 논문 수",
+      "population": "학과",
+      "direction": "high",
+      "status": "official",
+      "source": "kpi.depts[]",
+      "caveat": "동일"
+    },
+    {
+      "id": "dept_jcr_q1_rate",
+      "name": "JCR Q1 비율",
+      "grain": "dept",
+      "unit": "%",
+      "field": "qJcrQ1",
+      "formula": "상위 25% 저널 논문 ÷ 판정된 논문",
+      "population": "학과",
+      "direction": "high",
+      "status": "proxy",
+      "source": "kpi.depts[]"
+    },
+    {
+      "id": "dept_concentration",
+      "name": "집중도",
+      "grain": "dept",
+      "unit": null,
+      "field": "conc",
+      "formula": "상위 소수 인원의 실적 기여율",
+      "population": "학과",
+      "direction": "low",
+      "status": "internal",
+      "source": "kpi.depts[]",
+      "caveat": "사람이 적은 학과는 크게 흔들린다"
+    },
+    {
+      "id": "prof_top_quality",
+      "name": "교수 대표논문 질",
+      "grain": "dept",
+      "unit": "점",
+      "field": "A01",
+      "formula": "상위 1~3편의 g·FWCI·C",
+      "population": "학과 교수",
+      "direction": "high",
+      "status": "provisional",
+      "source": "kpi.depts[]",
+      "kpi_id": "BK-A-01",
+      "caveat": "최소 논문 수 컷을 두지 않는다"
+    },
+    {
+      "id": "stu_first_per_person",
+      "name": "학생 주저자 건수 1인당",
+      "grain": "dept",
+      "unit": "건",
+      "field": "B01pc",
+      "formula": "학생 주저자(제1·교신·단독) ÷ 학생 수",
+      "population": "학과 학생",
+      "direction": "high",
+      "status": "provisional",
+      "source": "kpi.depts[]",
+      "kpi_id": "BK-B-01"
+    },
+    {
+      "id": "stu_score_per_person",
+      "name": "학생 환산점수 1인당",
+      "grain": "dept",
+      "unit": "점",
+      "field": "B02pc",
+      "formula": "Σ(g×w) ÷ 학생 수",
+      "population": "동일",
+      "direction": "high",
+      "status": "proxy",
+      "source": "kpi.depts[]",
+      "kpi_id": "BK-B-02"
+    },
+    {
+      "id": "growth_prepost",
+      "name": "전후 성장률",
+      "grain": "dept",
+      "unit": "%",
+      "field": "C01",
+      "formula": "(2020~25 − 2015~19) ÷ 2015~19",
+      "population": "교수·신진만",
+      "direction": "high",
+      "status": "provisional",
+      "source": "kpi.depts[]",
+      "kpi_id": "BK-C-01",
+      "caveat": "대학원생 제외. 포함하면 분모가 비어 값이 터진다"
+    },
+    {
+      "id": "intl_coauth_rate",
+      "name": "국제공저율",
+      "grain": "dept",
+      "unit": "%",
+      "field": "C02",
+      "formula": "국제협력 코드(wi·wn) ÷ 전체",
+      "population": "학과",
+      "direction": "high",
+      "status": "proxy",
+      "source": "kpi.depts[]",
+      "kpi_id": "BK-C-02"
+    },
+    {
+      "id": "uni_works",
+      "name": "논문",
+      "grain": "university",
+      "unit": "편",
+      "field": "works",
+      "formula": "OpenAlex 기관 논문 수",
+      "population": "대학 전체",
+      "direction": "high",
+      "status": "official",
+      "source": "univ.unis / ucmp",
+      "caveat": "대학 전체이며 BK21 참여자 범위가 아니다"
+    },
+    {
+      "id": "uni_cites",
+      "name": "피인용",
+      "grain": "university",
+      "unit": "회",
+      "field": "cites",
+      "formula": "SUM",
+      "population": "동일",
+      "direction": "high",
+      "status": "official",
+      "source": "univ.unis"
+    },
+    {
+      "id": "uni_h",
+      "name": "h-index",
+      "grain": "university",
+      "unit": null,
+      "field": "h",
+      "formula": "OpenAlex 기관 h",
+      "population": "동일",
+      "direction": "high",
+      "status": "official",
+      "source": "univ.unis"
+    },
+    {
+      "id": "uni_c2",
+      "name": "편당 인용",
+      "grain": "university",
+      "unit": "회",
+      "field": "c2",
+      "formula": "cites ÷ works",
+      "population": "동일",
+      "direction": "high",
+      "status": "official",
+      "source": "univ.unis"
+    },
+    {
+      "id": "uni_fwci",
+      "name": "FWCI",
+      "grain": "university",
+      "unit": "배",
+      "field": "fw",
+      "formula": "분야·연도 보정 피인용 (1.0 = 세계평균)",
+      "population": "동일",
+      "direction": "high",
+      "status": "official",
+      "source": "ucmp.sum"
+    },
+    {
+      "id": "uni_bk_prof",
+      "name": "BK21 참여교수",
+      "grain": "university",
+      "unit": "명",
+      "field": "roster.prof",
+      "formula": "4단계 명단 교수 수",
+      "population": "BK21 참여자",
+      "direction": null,
+      "status": "official",
+      "source": "ucmp.roster",
+      "caveat": "위 대학 지표와 모집단이 다르다. 한 문장에 섞지 않는다"
+    },
+    {
+      "id": "qa_coverage",
+      "name": "커버리지",
+      "grain": "quality",
+      "unit": "%",
+      "field": null,
+      "formula": "원천 논문DB 연결 ÷ 전체",
+      "population": "참여자",
+      "direction": "high",
+      "status": "internal",
+      "source": "kpi.depts[].Q04",
+      "kpi_id": "BK-Q-04"
+    },
+    {
+      "id": "qa_undetermined",
+      "name": "미판정률",
+      "grain": "quality",
+      "unit": "%",
+      "field": "Ur",
+      "formula": "등급 미부여 ÷ 전체",
+      "population": "논문",
+      "direction": "low",
+      "status": "internal",
+      "source": "kpi.depts[]",
+      "caveat": "미판정은 낮은 등급이 아니다. 최상위 저널이 들어 있다"
+    },
+    {
+      "id": "qa_review",
+      "name": "검토필요율",
+      "grain": "quality",
+      "unit": "%",
+      "field": "Q02",
+      "formula": "검토필요 ÷ 참여자",
+      "population": "참여자",
+      "direction": "low",
+      "status": "internal",
+      "source": "kpi.depts[]",
+      "kpi_id": "BK-Q-02"
+    },
+    {
+      "id": "coauth_papers",
+      "name": "공저 편수",
+      "grain": "relation",
+      "unit": "편",
+      "field": "n",
+      "formula": "두 사람(또는 두 학과)이 함께 쓴 논문 수",
+      "population": "공저쌍 6,001",
+      "direction": "high",
+      "status": "official",
+      "source": "net.rel / net.trel / net.top",
+      "caveat": "동명이인 판별 위에 선다"
+    },
+    {
+      "id": "partner_count",
+      "name": "상대 수",
+      "grain": "relation",
+      "unit": "명",
+      "field": null,
+      "formula": "고유 공저 상대 수",
+      "population": "공저자 1,749명",
+      "direction": "high",
+      "status": "official",
+      "source": "net.rel",
+      "caveat": "수가 적어도 좋은 상대면 값어치가 크다"
+    },
+    {
+      "id": "duration",
+      "name": "지속기간",
+      "grain": "relation",
+      "unit": "년",
+      "field": "y1-y0",
+      "formula": "마지막 공저연도 − 첫 공저연도 + 1",
+      "population": "동일",
+      "direction": "high",
+      "status": "official",
+      "source": "net.trel",
+      "caveat": "1년이면 일회성이다. 반복관계와 갈라 본다"
+    },
+    {
+      "id": "ext_partner",
+      "name": "교외 상대 수",
+      "grain": "relation",
+      "unit": "명",
+      "field": null,
+      "formula": "학교 밖 공저 상대 수",
+      "population": "교외 관계",
+      "direction": "high",
+      "status": "official",
+      "source": "glob.ext"
+    },
+    {
+      "id": "field_similarity",
+      "name": "분야 유사도",
+      "grain": "relation",
+      "unit": "%",
+      "field": null,
+      "formula": "분야 벡터 코사인 유사도",
+      "population": "미공저 교내 후보",
+      "direction": "high",
+      "status": "internal",
+      "source": "glob.reco",
+      "caveat": "추천 근거이지 성과 지표가 아니다"
+    }
+  ],
+  "uncollected": [
+    {
+      "id": "lq_all",
+      "name": "교육역량 LQ 8지표",
+      "need": "학사 시스템"
+    },
+    {
+      "id": "awards_patents",
+      "name": "수상·특허·산학 14지표",
+      "need": "학사·산학 시스템"
+    },
+    {
+      "id": "degree_out",
+      "name": "학위배출",
+      "kpi_id": "BK-C-03",
+      "need": "학적 원장"
+    },
+    {
+      "id": "paper_fwci",
+      "name": "논문 단위 FWCI",
+      "need": "paper_citation_metric 재추출"
+    },
+    {
+      "id": "paper_pp",
+      "name": "논문 단위 PP(top 10%)",
+      "need": "동일"
+    },
+    {
+      "id": "semester",
+      "name": "학기 단위 집계",
+      "need": "기존 데이터 재집계"
+    },
+    {
+      "id": "other_uni_person",
+      "name": "타 대학 개인 성과",
+      "need": "명단 ↔ 저자 매칭"
+    },
+    {
+      "id": "other_uni_sgcpi",
+      "name": "타 대학 SGCPI+",
+      "need": "타 대학 논문 등급·역할"
+    }
+  ],
+  "axes": {
+    "y": {
+      "name": "연도",
+      "values": 6,
+      "note": "2026 제외 · 2025 집계 중"
+    },
+    "r": {
+      "name": "저자역할",
+      "values": 5
+    },
+    "tr": {
+      "name": "저널등급",
+      "values": 7,
+      "note": "U는 미판정"
+    },
+    "pct": {
+      "name": "JCR 백분위",
+      "values": 5,
+      "note": "저널 순위"
+    },
+    "g": {
+      "name": "등재유형",
+      "values": 3
+    },
+    "ai": {
+      "name": "AI 여부",
+      "values": 3,
+      "note": "회색 107건 확인 대기"
+    },
+    "j": {
+      "name": "저널",
+      "values": 4112
+    },
+    "f": {
+      "name": "분야",
+      "values": 232,
+      "note": "학과명과 다르다"
+    },
+    "dept": {
+      "name": "학과·전공",
+      "values": 28,
+      "note": "기본 조직 단위"
+    },
+    "gy": {
+      "name": "계열",
+      "values": 3,
+      "note": "계열 넘는 비교 금지"
+    },
+    "kind": {
+      "name": "사람 구분",
+      "values": 4
+    },
+    "grp": {
+      "name": "연구그룹",
+      "values": 115
+    },
+    "scope": {
+      "name": "관계 범위",
+      "values": 2,
+      "note": "학과 내 / 학과 간"
+    }
+  },
+  "sliceable": {
+    "paper": [
+      "y",
+      "r",
+      "tr",
+      "pct",
+      "g",
+      "ai",
+      "j",
+      "f",
+      "dept",
+      "gy",
+      "kind",
+      "grp"
+    ],
+    "person": [
+      "dept",
+      "gy",
+      "kind",
+      "grp"
+    ],
+    "dept": [
+      "dept",
+      "gy"
+    ],
+    "relation": [
+      "dept",
+      "kind",
+      "scope",
+      "y",
+      "f"
+    ],
+    "university": [
+      "y",
+      "f"
+    ],
+    "quality": [
+      "dept",
+      "gy"
+    ]
+  },
+  "sliceable_note": "grain 이 paper 면 어느 축으로도 자른다. dept 면 학과·계열까지만. 레시피의 axes 가 여기 없는 축을 쓰면 막고 «이 값은 <층> 단위로만 있습니다» 로 답한다. 관계의 분야 축은 glob.deptfield 기준이며 논문 분야(232)와 세밀도가 다르다."
+}
