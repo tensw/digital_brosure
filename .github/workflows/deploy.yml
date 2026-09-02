@@ -13,10 +13,13 @@ jobs:
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
+          envs: GEMINI_API_KEY
           script: |
             set -e
             cd /home/ubuntu/digital_brosure
@@ -47,6 +50,17 @@ jobs:
               echo "[bk21] 최종 $(stat -c%s "$BOARD") bytes  $(stat -c%y "$BOARD")"
             else
               echo "[bk21] 최종 보드 없음 — 화면이 안 뜬다"
+            fi
+
+            # BK21 질문 라우팅 키. 깃 밖 파일이라 reset --hard 에 안 지워지지만,
+            # 새 서버에서도 따라가도록 GitHub 시크릿에서 매 배포마다 쓴다.
+            if [ -n "$GEMINI_API_KEY" ]; then
+              umask 077
+              printf '{"GEMINI_API_KEY":"%s"}' "$GEMINI_API_KEY" > .bk21-secrets.json
+              chmod 600 .bk21-secrets.json
+              echo "[bk21] 키 파일 씀 $(stat -c'%a %s' .bk21-secrets.json) (perm bytes)"
+            else
+              echo "[bk21] GEMINI_API_KEY 시크릿 없음 — 키 파일 건너뜀"
             fi
 
             pm2 restart biblo-ai || pm2 start ecosystem.config.js
