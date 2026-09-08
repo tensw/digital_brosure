@@ -1,0 +1,354 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 200" width="360" height="200"
+     role="img" aria-label="블릿이 오르내리며 지나온 자리가 그래프 선으로 남는다">
+<title>블릿이 지나온 자리로 그리는 그래프</title>
+<!-- 블릿은 오른쪽 한 자리(bx)에서 위아래로만 움직인다.
+     그 자리를 일정 간격으로 표본으로 남기고, 표본들이 왼쪽으로 흘러가며 선이 된다.
+     즉 선은 블릿을 따라오는 줄이 아니라 «블릿이 지나온 길»이다.
+
+     표본이 너무 촘촘하면 선이 지저분해지므로 최소 간격을 두고, 표본 사이는
+     Catmull-Rom 곡선으로 부드럽게 잇는다(trail.gap · trail.smooth).
+
+     선은 CFG.lines 에 적은 만큼(최대 3개) 그려진다. 선마다 색·굵기·면·블릿을 따로 두고,
+     phase 를 달리해 서로 어긋나게 움직이므로 선끼리 교차한다.
+
+     배경 격자는 CFG.grid 로 따로 켜고 끈다. 가로선은 y축에 직각으로 10% 간격(0~100%),
+     세로선은 x축에 직각으로 1m~60m 자리에 서고 왼쪽으로 흐른다(60m 뒤에 다시 1m).
+     선이 흐르는 속도는 격자와 같은 grid.speed 를 쓴다 — 날짜 눈금과 데이터가 함께 움직인다.
+
+     그림 요소(격자·면·수직선·선·블릿·눈금·값)는 아래 스크립트가 만들어 붙인다. -->
+<defs></defs>
+
+<g id="layerGrid"></g>
+<g id="layerArea"></g>
+<g id="layerStem"></g>
+<g id="layerLine"></g>
+<g id="layerDot"></g>
+<g id="layerAxis"></g>
+<g id="layerValBox"></g>
+<g id="layerValText"></g>
+
+<script><![CDATA[
+(function(){
+  var SVGNS = 'http://www.w3.org/2000/svg';
+
+  var CFG = {
+    // ── 모든 선이 함께 쓰는 값 ──────────────────────────────
+    bx:288,             // 블릿이 자리 잡는 세로축(화면 폭 360 의 80% 지점)
+    introFrom:0,        // 처음에 블릿이 출발하는 가로 자리(화면 왼쪽 끝)
+    introY:0,           // 처음에 블릿이 출발하는 높이(%). 0 이면 맨 아래에서 올라온다
+    intro:true,         // 켜면 도입부를 재생한다. 끄면 처음부터 화면이 차 있고 바로 흐른다
+    by:100,             // 기준 높이의 한가운데
+    x0:-14,             // 표본이 사라지는 왼쪽 끝(화면 밖)
+    bottom:200,         // 면과 수직선이 닿는 아래 끝 — viewBox 높이와 같게 둔다
+
+    amp:15,             // 블릿이 오르내리는 폭(기준 높이에서 위아래로)
+    period:1.8,         // 한 번 왕복하는 데 걸리는 시간(초)
+    baseEvery:2,        // 목표에 닿은 뒤 다음 높이를 고르기까지 쉬는 시간(초). 0.6~1.4배로 흩어진다
+                        //   ※ 기준 높이의 흔들림 폭(baseRange)은 선마다 따로 잡는다 — 아래 lines 참조
+    baseEase:0.035,     // 새 높이로 옮겨 가는 속도. 작을수록 여러 번에 걸쳐 천천히 닿는다
+                        //   (rideStroke 를 켜면 멈춰 있는 시간을 감안해 안에서 두 배로 쓴다)
+    rideStroke:true,    // 켜면 방향이 맞는 스트로크에서만 옮겨 간다. 끄면 시점을 가리지 않는다
+
+    // ── 지나온 길 ──────────────────────────────────────────
+    trail:{
+      gap:9,           // 표본을 남기는 가로 간격. 작을수록 촘촘하다(최소 3 으로 자동 제한)
+      smooth:0.2,      // 표본 사이를 잇는 곡선의 부드러움. 0이면 꺾은선, 커질수록 둥글다
+      tipSmooth:1.5     // 끝점이 움직이는 속도의 상한(표본 간격 대비). 0이면 상한 없음.
+                        //   블릿의 잔파동을 걸러 내는 값이기도 하다(톱니 방지).
+                        //   표본을 막 찍은 직후 끝점이 순간값으로 튀는 것을 막는다.
+                        //   블릿·수직선·값도 이 다듬어진 높이를 따라가므로 선과 늘 붙어 있다
+    },
+
+    // ── 배경 격자. on 을 false 로 두면 격자가 통째로 사라진다 ──
+    grid: {
+      on:true,
+      x0:0, x1:360,       // 격자가 놓이는 가로 범위
+      yTop:6, yBot:194,   // 100% 와 0% 의 높이
+      stepPct:10,         // 가로선 간격(%) — y축에 직각인 얇은 선
+      cols:60,            // 세로선 개수. 1m~60m — x축에 직각인 얇은 선
+      unit:'m',           // 눈금 이름 뒤에 붙는 글자. 'D' 로 두면 1D~ 가 된다
+      speed:36,           // 왼쪽으로 흐르는 속도(초당). 선도 이 속도로 함께 흐른다. 0이면 멈춘다
+      color:'#DFE3E6', w:0.25,
+      xLabels:true,       // 아래 날짜 이름(1D~30D)
+      yLabels:false,      // 왼쪽 퍼센트 숫자 — 지금은 빼 두었다
+      labelColor:'#AEB6BD', labelSize:4,
+      labelEvery:5,       // 이름을 몇 칸마다 붙일지. 5 면 5m·10m·15m … 만 적는다
+      yLabelX:2.5,        // 왼쪽 숫자가 놓이는 가로 위치
+      xLabelY:199         // 날짜 이름이 놓이는 세로 위치
+    },
+
+    // ── 선마다 다른 값. 줄이거나 늘리면 그린 선의 수가 바뀐다(최대 3개) ──
+    //    baseRange 는 굴곡의 크기, appear 는 그 선이 나타나는 시각(초)이다.
+    //    appear 0 인 선만 도입부를 그리고, 나머지는 bx 의 0% 자리에서 바로 시작한다
+    lines: [
+      { c1:'#F0808E', c2:'#8FB4F2', lineW:0.4, fillOp:0.3,
+        dotR:1.75, cDot:'#F0808E', stem:true, stemW:0.15, phase:0,    baseRange:80, appear:0,
+        val:true, valSize:2.75, valGap:2.6, valColor:'#FFFFFF', valBg:'#F0808E' },
+      { c1:'#5AD2F4', c2:'#2E86E0', lineW:0.4, fillOp:0.3,
+        dotR:1.75, cDot:'#2E8FE0', stem:true, stemW:0.15, phase:3.68, baseRange:80, appear:11,
+        val:true, valSize:2.75, valGap:2.6, valColor:'#FFFFFF', valBg:'#2E8FE0' },
+      { c1:'#A78BFA', c2:'#5B4BC4', lineW:0.4, fillOp:0.3,
+        dotR:1.75, cDot:'#5C4CC0', stem:true, stemW:0.15, phase:0.48, baseRange:63, appear:15,
+        val:true, valSize:2.75, valGap:2.6, valColor:'#FFFFFF', valBg:'#5C4CC0' }
+    ]
+  };
+
+  var defs = document.querySelector('defs'),
+      layer = { grid:document.getElementById('layerGrid'), area:document.getElementById('layerArea'),
+                stem:document.getElementById('layerStem'), line:document.getElementById('layerLine'),
+                dot:document.getElementById('layerDot'),   axis:document.getElementById('layerAxis'),
+                valBox:document.getElementById('layerValBox'),
+                valText:document.getElementById('layerValText') };
+
+  function el(name, attrs, parent){
+    var n = document.createElementNS(SVGNS, name);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    parent.appendChild(n); return n;
+  }
+
+  // ── 배경 격자 ──────────────────────────────────────────────
+  // 가로선은 제자리에 두고, 세로선과 날짜 이름만 왼쪽으로 흐른다.
+  // 퍼센트를 화면 높이로 (0% = 맨 아래, 100% = 맨 위)
+  function pctY(v){ var G = CFG.grid; return G.yBot - (G.yBot - G.yTop) * (v / 100); }
+
+  var flowT = 0, flowStarted = !CFG.intro;            // 종이(격자·표본)가 흐른 시간 · 흐르기 시작했는지
+
+  var col = [];
+  function drawGrid(){
+    var G = CFG.grid;
+    layer.grid.textContent = ''; layer.axis.textContent = ''; col = [];
+    if (!G.on) return;
+    var font = '-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif';
+    for (var v = 0; v <= 100; v += G.stepPct){
+      var y = G.yBot - (G.yBot - G.yTop) * (v / 100);
+      el('line', {x1:G.x0, y1:y, x2:G.x1, y2:y, stroke:G.color, 'stroke-width':G.w}, layer.grid);
+      if (G.yLabels)
+        el('text', {x:G.yLabelX, y:y + G.labelSize * 0.36, fill:G.labelColor,
+                    'font-size':G.labelSize, 'font-family':font}, layer.axis).textContent = v + '%';
+    }
+    for (var i = 0; i <= G.cols; i++){
+      var ln = el('line', {y1:G.yTop, y2:G.yBot, stroke:G.color, 'stroke-width':G.w}, layer.grid);
+      var tx = G.xLabels ? el('text', {y:G.xLabelY, fill:G.labelColor, 'text-anchor':'middle',
+                                       'font-size':G.labelSize, 'font-family':font}, layer.axis) : null;
+      col.push({line:ln, text:tx});
+    }
+    moveGrid(0);
+  }
+  function moveGrid(t){
+    var G = CFG.grid;
+    if (!G.on || !col.length) return;
+    var band = (G.x1 - G.x0) / G.cols;
+    var travel = G.speed * t, off = ((travel % band) + band) % band, jump = Math.floor(travel / band);
+    for (var i = 0; i < col.length; i++){
+      var x = G.x0 + band * (i + 0.5) - off;
+      col[i].line.setAttribute('x1', x.toFixed(2));
+      col[i].line.setAttribute('x2', x.toFixed(2));
+      if (col[i].text){
+        var n = ((i + jump) % G.cols + G.cols) % G.cols + 1;
+        col[i].text.setAttribute('x', x.toFixed(2));
+        col[i].text.textContent = (n % G.labelEvery === 0) ? (n + G.unit) : '';
+      }
+    }
+  }
+
+  // 표본을 부드러운 곡선으로 잇는다(Catmull-Rom → 3차 베지에).
+  // 마디 길이가 들쭉날쭉해도 꺾이지 않도록 접선을 이웃 마디 길이에 비례해 줄인다.
+  function curve(P, k){
+    if (P.length < 2) return '';
+    function len(a, b){ var dx = b.x - a.x, dy = b.y - a.y; return Math.sqrt(dx*dx + dy*dy) || 1e-6; }
+    var d = 'M' + P[0].x.toFixed(2) + ' ' + P[0].y.toFixed(2);
+    for (var i = 0; i < P.length - 1; i++){
+      var p0 = P[i-1] || P[i], p1 = P[i], p2 = P[i+1], p3 = P[i+2] || P[i+1];
+      var d1 = len(p0, p1), d2 = len(p1, p2), d3 = len(p2, p3);
+      var a = k * 2 * d2 / (d1 + d2), b = k * 2 * d2 / (d2 + d3);
+      d += 'C' + (p1.x + (p2.x - p0.x) * a).toFixed(2) + ' ' + (p1.y + (p2.y - p0.y) * a).toFixed(2)
+         + ' ' + (p2.x - (p3.x - p1.x) * b).toFixed(2) + ' ' + (p2.y - (p3.y - p1.y) * b).toFixed(2)
+         + ' ' + p2.x.toFixed(2) + ' ' + p2.y.toFixed(2);
+    }
+    return d;
+  }
+
+  // ── 선 하나 ────────────────────────────────────────────────
+  // 선마다 제 도입부를 갖는다. 나중에 lines 에 하나를 더하면 그 선만 0 부터 다시 그린다
+  function Line(cf, i, withIntro){
+    this.cf = cf;
+    this.pts = [];                     // 블릿이 지나온 자리. 왼쪽으로 흘러간다
+    this.x = withIntro ? CFG.introFrom : CFG.bx;      // 이 선의 블릿이 서 있는 가로 자리
+    this.introDone = !withIntro;
+    var y0 = CFG.intro ? pctY(CFG.introY) : CFG.by;   // 시작 높이(도입을 켜면 0% 자리)
+    this.base = y0; this.target = null; this.restUntil = 0; this.y = y0;
+    this.shown = y0;                 // 화면에 그리는 높이(끝점이 튀지 않게 다듬은 값)
+
+    var g = el('linearGradient', {id:'gHue'+i, gradientUnits:'userSpaceOnUse',
+                                  x1:0, y1:0, x2:360, y2:0}, defs);
+    el('stop', {offset:'0', 'stop-color':cf.c1}, g);
+    el('stop', {offset:'1', 'stop-color':cf.c2}, g);
+
+    var fg = el('linearGradient', {id:'gFade'+i, gradientUnits:'userSpaceOnUse',
+                                   x1:0, y1:60, x2:0, y2:CFG.bottom}, defs);
+    el('stop', {offset:'0',   'stop-color':'#fff', 'stop-opacity':'1'},   fg);
+    el('stop', {offset:'.55', 'stop-color':'#fff', 'stop-opacity':'.38'}, fg);
+    el('stop', {offset:'1',   'stop-color':'#fff', 'stop-opacity':'0'},   fg);
+    var mk = el('mask', {id:'mFade'+i, maskUnits:'userSpaceOnUse',
+                         x:-400, y:0, width:800, height:CFG.bottom}, defs);
+    el('rect', {x:-400, y:0, width:800, height:CFG.bottom, fill:'url(#gFade'+i+')'}, mk);
+    this.fade = fg;
+
+    var wrap = el('g', {mask:'url(#mFade'+i+')'}, layer.area);
+    this.area = el('path', {fill:'url(#gHue'+i+')', 'fill-opacity':cf.fillOp, stroke:'none'}, wrap);
+    this.stem = el('line', {x1:this.x, x2:this.x, y2:CFG.bottom, stroke:cf.cDot,
+                            'stroke-width':cf.stemW, display:cf.stem ? '' : 'none'}, layer.stem);
+    this.line = el('path', {fill:'none', stroke:'url(#gHue'+i+')', 'stroke-width':cf.lineW,
+                            'stroke-linecap':'round', 'stroke-linejoin':'round'}, layer.line);
+    this.dot  = el('circle', {cx:this.x, r:cf.dotR, fill:cf.cDot}, layer.dot);
+    this.box  = cf.val ? el('rect', {fill:cf.valBg}, layer.valBox) : null;
+    this.val  = cf.val ? el('text', {x:this.x, fill:cf.valColor, 'text-anchor':'middle',
+                                     'font-size':cf.valSize, 'font-weight':'700',
+                                     'font-family':'-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif'},
+                             layer.valText) : null;
+  }
+
+  // 목표 높이를 하나 뽑아 두고, 오르내림의 방향이 맞을 때에만 그쪽으로 미끄러진다.
+  // y 는 아래로 갈수록 큰 값이라 cos 이 음수면 올라가는 중, 양수면 내려가는 중이다.
+  Line.prototype.bulletY = function(dt, t){
+    var w = 2 * Math.PI / CFG.period, tp = t + this.cf.phase;
+    if (this.target === null && t >= this.restUntil){
+      this.target = CFG.by + (Math.random() * 2 - 1) * this.cf.baseRange;
+    }
+    if (this.target !== null){
+      var goingUp = Math.cos(tp * w) < 0, needUp = this.target < this.base;
+      if (!CFG.rideStroke || goingUp === needUp){
+        var rate = CFG.baseEase * (CFG.rideStroke ? 2 : 1);
+        this.base += (this.target - this.base) * Math.min(1, rate * dt * 60);
+      }
+      if (Math.abs(this.target - this.base) < 0.4){
+        this.base = this.target; this.target = null;
+        this.restUntil = t + CFG.baseEvery * (0.6 + Math.random() * 0.8);
+      }
+    }
+    return this.base + CFG.amp * Math.sin(tp * w);
+  };
+
+  Line.prototype.step = function(dt, t){
+    this.y = this.bulletY(dt, t);
+    // 끝점이 한 프레임에 뛸 수 있는 폭을 표본 간격에 맞춰 제한한다
+    var span = Math.max(3, CFG.trail.gap) / Math.max(CFG.grid.speed, 0.001);   // 표본 한 칸의 시간
+    var tau = CFG.trail.tipSmooth * span;
+    this.shown += (this.y - this.shown) * (tau > 0 ? Math.min(1, dt / tau) : 1);
+    // 0%~100% 밖으로는 나가지 않는다(도입 시작 높이에 진자 폭이 더해져 눈금을 뚫는 것 방지)
+    var G = CFG.grid;
+    if (this.shown > G.yBot) this.shown = G.yBot;
+    if (this.shown < G.yTop) this.shown = G.yTop;
+    var p = this.pts;
+    if (!this.introDone){                              // 이 선의 도입 — 블릿이 오른쪽으로 간다
+      this.x += CFG.grid.speed * dt;
+      if (this.x >= CFG.bx){ this.x = CFG.bx; this.introDone = true; flowStarted = true; }
+    }
+    if (flowStarted) for (var i = 0; i < p.length; i++) p[i].x -= CFG.grid.speed * dt;   // 종이가 흐른다
+    // 얼리는 값은 지금 끝점 값 그대로다. 그래야 표본이 되는 순간 선의 모양이 변하지 않는다
+    var gap = Math.max(3, CFG.trail.gap);                        // 너무 촘촘해지지 않게 최소 간격
+    if (!p.length || this.x - p[p.length-1].x >= gap) p.push({x:this.x, y:this.shown});
+    while (p.length > 1 && p[1].x < CFG.x0) p.shift();           // 화면 밖으로 나간 것은 버린다
+  };
+
+  Line.prototype.draw = function(){
+    var P = this.pts.slice();
+    if (!P.length || this.x - P[P.length-1].x > 0.01)             // 같은 자리에 점을 겹치지 않는다
+      P.push({x:this.x, y:this.shown});
+    var top = P[0].y;
+    for (var i = 1; i < P.length; i++) if (P[i].y < top) top = P[i].y;
+    var d = curve(P, CFG.trail.smooth);
+    this.line.setAttribute('d', d);
+    this.area.setAttribute('d', d ? d + 'L' + P[P.length-1].x.toFixed(2) + ' ' + CFG.bottom
+                                      + 'L' + P[0].x.toFixed(2) + ' ' + CFG.bottom + 'Z' : '');
+    this.fade.setAttribute('y1', (top - 1).toFixed(2));
+    this.dot.setAttribute('cx', this.x.toFixed(2));
+    this.dot.setAttribute('cy', this.shown.toFixed(2));
+    this.stem.setAttribute('x1', this.x.toFixed(2));
+    this.stem.setAttribute('x2', this.x.toFixed(2));
+    this.stem.setAttribute('y1', this.shown.toFixed(2));
+    if (this.val) this.val.setAttribute('x', this.x.toFixed(2));
+    if (this.val){
+      var G = CFG.grid, cf = this.cf;
+      this.val.textContent = Math.round((G.yBot - this.shown) / (G.yBot - G.yTop) * 100) + '%';
+      var padX = cf.valSize * 0.52, padY = cf.valSize * 0.34;
+      this._h = cf.valSize * 1.12 + padY * 2;
+      this._w = this.val.getComputedTextLength() + padX * 2;
+      this._padY = padY;
+      this._top = this.shown - cf.dotR - cf.valGap - this._h;
+    }
+  };
+
+  Line.prototype.placeValue = function(){
+    this.box.setAttribute('x', (this.x - this._w / 2).toFixed(2));
+    this.box.setAttribute('y', this._top.toFixed(2));
+    this.box.setAttribute('width', this._w.toFixed(2));
+    this.box.setAttribute('height', this._h.toFixed(2));
+    this.box.setAttribute('rx', (this._h * 0.34).toFixed(2));
+    this.val.setAttribute('y', (this._top + this._padY + this.cf.valSize * 0.82).toFixed(2));
+  };
+
+  // 값 상자끼리 겹치면 위아래로 밀어 떼어 놓는다
+  function layoutValues(){
+    var box = [];
+    for (var i = 0; i < lines.length; i++) if (lines[i].val) box.push(lines[i]);
+    if (!box.length) return;
+    box.sort(function(a, b){ return a._top - b._top; });
+    for (var i = 1; i < box.length; i++){
+      var need = box[i-1]._top + box[i-1]._h + 1.5;
+      if (box[i]._top < need) box[i]._top = need;
+    }
+    var last = box[box.length-1], over = last._top + last._h - (CFG.bottom - 1);
+    if (over > 0) for (var i = 0; i < box.length; i++) box[i]._top -= over;
+    if (box[0]._top < 1){
+      var up = 1 - box[0]._top;
+      for (var i = 0; i < box.length; i++) box[i]._top += up;
+    }
+    for (var i = 0; i < box.length; i++) box[i].placeValue();
+  }
+
+  drawGrid();
+  var lines = [];
+  function spawn(i){                                   // i 번 선을 화면에 올린다
+    var L = new Line(CFG.lines[i], i, i === 0 && CFG.intro), lead = lines[0];
+    if (lead){                                         // 1번 블릿이 지금 서 있는 x 에서 출발한다
+      L.x = lead.x;                                    //   (1번이 도입 중이면 함께 오른쪽으로 간다)
+      L.introDone = lead.introDone;
+    }
+    lines.push(L);
+  }
+  spawn(0);                                            // 도입부는 블릿 하나로 시작
+
+  function tick(dt, t){
+    if (flowStarted) flowT += dt;                      // 종이가 흐른 시간 — 격자를 미는 데 쓴다
+    // 때가 된 선을 하나씩 올린다. 도입 없이 bx 의 0% 자리에서 시작한다
+    while (lines.length < Math.min(CFG.lines.length, 3) && t >= (CFG.lines[lines.length].appear || 0))
+      spawn(lines.length);
+    for (var i = 0; i < lines.length; i++) lines[i].step(dt, t);
+    for (var i = 0; i < lines.length; i++) lines[i].draw();
+    layoutValues();
+    moveGrid(flowT);
+  }
+
+  var still = false;
+  try { still = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){}
+
+  var t = 0;
+  if (!CFG.intro){                                     // 도입을 끄면 화면을 미리 채워 둔다
+    var warm = (CFG.bx - CFG.x0) / Math.max(CFG.grid.speed, 0.001) + 2;
+    for (var n = 0; n < Math.min(warm * 60, 6000); n++){ t += 1/60; tick(1/60, t); }
+  }
+
+  if (still) return;                                   // 움직임을 끈 사용자에게는 정지 화면
+
+  var last = 0;
+  function frame(now){
+    if (!last) last = now;
+    var dt = Math.min((now - last) / 1000, 1/30); last = now; t += dt;
+    tick(dt, t);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+]]></script>
+</svg>

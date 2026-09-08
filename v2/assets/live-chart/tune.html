@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<title>선과 블릿 — 값 맞추기 (B · 지나온 길 방식)</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#F1F3F4;color:#1E1E1E;
+  font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Segoe UI',sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 24px 60px}
+h1{font-size:19px;margin:0 0 4px}
+.sub{font-size:13px;color:#5A6470;margin-bottom:22px}
+.badge{font-size:12px;font-weight:800;color:#fff;background:#D6144A;border-radius:6px;
+  padding:3px 8px;vertical-align:middle;margin-left:6px}
+.stage{background:#fff;border:1px solid #E6E9EA;border-radius:16px;padding:10px;
+  box-shadow:0 2px 16px rgba(30,40,45,.06)}
+.stage svg{display:block;width:100%;height:auto}
+.zoomrow{display:flex;align-items:center;gap:10px;margin-top:10px;padding:0 4px 4px;
+  font-size:12.5px;color:#5A6470}
+.zoomrow input{flex:1;accent-color:#D6144A}
+.zoomrow b{font-variant-numeric:tabular-nums;color:#D6144A;min-width:46px;text-align:right}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;margin-top:22px}
+.ctl{background:#fff;border:1px solid #E6E9EA;border-radius:12px;padding:12px 15px}
+.ctl label{display:flex;justify-content:space-between;align-items:baseline;
+  font-size:13px;font-weight:700;margin-bottom:7px}
+.ctl b{font-variant-numeric:tabular-nums;color:#D6144A;font-size:13.5px}
+.ctl small{display:block;font-size:11.5px;color:#7B8794;font-weight:500;margin-top:6px;line-height:1.5}
+.ctl.sw label{margin-bottom:0;cursor:pointer}
+.ctl.sw input[type=checkbox]{width:auto;transform:scale(1.25);accent-color:#D6144A}
+.ctl.sw input[type=color]{width:46px;height:26px;padding:0;border:none;background:none;cursor:pointer}
+.head{grid-column:1 / -1;font-size:12px;font-weight:800;letter-spacing:.06em;color:#7B8794;
+  margin:12px 0 -4px}
+input[type=range]{width:100%;accent-color:#D6144A}
+.tabs{grid-column:1 / -1;display:flex;gap:8px;margin:14px 0 -2px}
+.tabs button{font:inherit;font-size:13px;font-weight:800;padding:9px 16px;border-radius:10px;
+  border:1px solid #D5DAE0;background:#fff;cursor:pointer;display:flex;align-items:center;gap:7px}
+.tabs button.on{border-color:#1E1E1E;background:#1E1E1E;color:#fff}
+.tabs .swatch{width:12px;height:12px;border-radius:3px;border:1px solid rgba(0,0,0,.15)}
+.tabs button.off{opacity:.4}
+.stagebar{display:flex;align-items:center;gap:12px;margin-top:12px}
+.stagebar .play{font:inherit;font-size:13px;font-weight:800;padding:10px 16px;border-radius:10px;
+  border:none;background:#1E1E1E;color:#fff;cursor:pointer}
+.stagebar .play:hover{background:#D6144A}
+.stagebar span{font-size:12px;color:#7B8794;font-weight:500}
+.presets{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.presets button{font:inherit;font-size:13px;font-weight:700;padding:9px 14px;border-radius:10px;
+  border:1px solid #D5DAE0;background:#fff;cursor:pointer}
+.presets button:hover{border-color:#D6144A;color:#D6144A}
+.out{margin-top:20px;background:#15213F;color:#DCE3EE;border-radius:12px;padding:14px 16px;
+  font:12.5px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre;overflow-x:auto}
+.out b{color:#FFC93D;font-weight:700}
+</style></head>
+<body><div class="wrap">
+<h1>선과 블릿 — 움직임 값 맞추기 <span class="badge">B · 지나온 길</span></h1>
+<p class="sub">블릿은 오른쪽 한 자리에서 위아래로만 움직이고, 지나온 자리가 왼쪽으로 흘러가며 선이 됩니다.
+막대를 밀어 느낌을 찾은 뒤 아래 상자의 값을 알려 주시면 그 값으로 SVG를 확정합니다.</p>
+
+<div class="stage">
+<svg viewBox="0 0 360 200" id="scene">
+  <defs id="defs"></defs>
+  <g id="layerGrid"></g>
+  <g id="layerArea"></g>
+  <g id="layerStem"></g>
+  <g id="layerLine"></g>
+  <g id="layerDot"></g>
+  <g id="layerAxis"></g>
+  <g id="layerValBox"></g>
+  <g id="layerValText"></g>
+</svg>
+<div class="zoomrow"><span>화면 확대 — 눈으로 보기용이라 값에는 영향이 없습니다</span>
+  <input type="range" id="zoom" min="1" max="5" step="0.1" value="1"><b id="zv">1.0배</b></div>
+</div>
+
+<div class="stagebar">
+  <button data-p="intro" class="play">▶ 도입부 다시 보기</button>
+  <span>열 때 한 번 재생됩니다. 블릿이 왼쪽 끝에서 출발해 80% 지점까지 선을 그린 뒤, 그 자리에 서고 화면이 흐릅니다.</span>
+</div>
+
+<div class="grid" id="ctls"></div>
+
+<div class="presets">
+  <button data-p="mine">내 설정</button>
+  <button data-p="calm">잔잔한 흐름</button>
+  <button data-p="spiky">들쭉날쭉</button>
+  <button data-p="raw">끝점 튐 잡기 끄기</button>
+</div>
+
+<div class="out" id="out"></div>
+</div>
+
+<script>
+var SVGNS='http://www.w3.org/2000/svg';
+
+var CFG = {
+  lineCount:1,
+  bx:288, bxPct:80, introFrom:0, introY:0, by:100, x0:-14, bottom:200,
+  amp:15, period:1.8, baseEvery:2, baseEase:0.035, rideStroke:1,
+  trail:{gap:9, smooth:0.2, tipSmooth:1.5},
+  grid:{on:1, x0:0, x1:360, yTop:6, yBot:194, stepPct:10, cols:60, unit:'m', speed:36,
+        color:'#DFE3E6', w:0.25, xLabels:1, yLabels:0, labelColor:'#AEB6BD', labelSize:4,
+        labelEvery:5, yLabelX:2.5, xLabelY:199},
+  lines:[
+    {c1:'#F0808E', c2:'#8FB4F2', lineW:0.4, fillOp:0.3, dotR:1.75, cDot:'#F0808E', stem:1, stemW:0.15,
+     phase:0,    baseRange:80, val:1, valSize:2.75, valGap:2.6, valColor:'#FFFFFF', valBg:'#F0808E'},
+    {c1:'#5AD2F4', c2:'#2E86E0', lineW:0.4, fillOp:0.3, dotR:1.75, cDot:'#2E8FE0', stem:1, stemW:0.15,
+     phase:3.68, baseRange:80, val:1, valSize:2.75, valGap:2.6, valColor:'#FFFFFF', valBg:'#2E8FE0'},
+    {c1:'#A78BFA', c2:'#5B4BC4', lineW:0.4, fillOp:0.3, dotR:1.75, cDot:'#5C4CC0', stem:1, stemW:0.15,
+     phase:0.48, baseRange:63, val:1, valSize:2.75, valGap:2.6, valColor:'#FFFFFF', valBg:'#5C4CC0'}
+  ]
+};
+var SHOT = JSON.stringify(CFG);
+var sel = 0;
+
+var SHARED = [
+  ['~선 개수','head'],
+  ['lineCount','그릴 선의 수',1,3,1,'1로 시작합니다. 늘리면 새 블릿이 첫 블릿과 같은 세로축의 0% 자리에서 시작해 왼쪽으로 선을 남깁니다.'],
+  ['bxPct','블릿이 서는 자리(%)',40,95,1,'도입부가 끝나면 블릿이 이 자리에 서고, 그때부터 화면이 흐릅니다.'],
+  ['introY','도입 시작 높이(%)',0,100,1,'도입부에서 블릿이 출발하는 높이. 0 이면 맨 아래에서 올라옵니다.'],
+  ['~블릿의 오르내림','head'],
+  ['amp','블릿이 오르내리는 폭',4,90,1,'기준 높이에서 위아래로.'],
+  ['period','한 번 왕복하는 시간(초)',0.6,5,0.1,'클수록 느긋합니다.'],
+  ['~기준 높이가 떠다니는 정도','head'],
+  ['rideStroke','움직임 방향에 얹어서 옮기기','bool',0,0,'켜면 새 높이가 지금보다 위일 때는 올라가는 동안에만, 아래일 때는 내려가는 동안에만 옮겨 갑니다.'],
+  ['baseEvery','목표에 닿은 뒤 쉬는 시간(초)',0,6,0.1,'이 값의 0.6~1.4배로 흩어집니다.'],
+  ['baseEase','새 높이로 옮겨가는 속도',0.005,0.2,0.005,'작을수록 완만한 언덕, 클수록 가파른 봉우리가 됩니다.']
+];
+var TRAIL = [
+  ['~지나온 길','head'],
+  ['gap','표본 간격',3,40,1,'블릿의 높이를 몇 칸마다 기록할지. 작을수록 촘촘하고, 3 아래로는 내려가지 않습니다.'],
+  ['smooth','곡선 부드러움',0,1,0.01,'0이면 표본을 직선으로 잇고, 커질수록 둥글게 이어집니다. 0.35 를 넘으면 곡선이 표본 바깥으로 부풀기 시작하고, 0.6 을 넘으면 스스로 감기며 고리가 생깁니다.'],
+  ['tipSmooth','끝점 튐 잡기',0,1.5,0.05,'끝점이 한 번에 움직일 수 있는 폭의 상한. 블릿의 잔파동을 걸러 톱니도 함께 막습니다. 0이면 상한 없음.'],
+];
+var GRIDSPEC = [
+  ['~배경 격자','head'],
+  ['on','배경 격자 넣기','bool',0,0,'끄면 격자와 눈금 글씨가 통째로 사라집니다. 선이 흐르는 속도는 아래 속도값을 계속 씁니다.'],
+  ['xLabels','아래 눈금 이름 넣기','bool',0,0,'1m 부터 세로선마다.'],
+  ['yLabels','왼쪽 퍼센트 숫자 넣기','bool',0,0,'0% 부터 100% 까지.'],
+  ['cols','세로선 개수(칸)',1,90,1,'한 칸이 1분입니다. 60이면 1m~60m 가 돌아갑니다.'],
+  ['stepPct','가로선 간격(%)',5,25,5,'10이면 0%부터 100%까지 열한 줄입니다.'],
+  ['speed','왼쪽으로 흐르는 속도',0,40,0.5,'격자와 선이 함께 이 속도로 흐릅니다. 0이면 멈춥니다.'],
+  ['w','격자 굵기',0.05,1.5,0.05,''],
+  ['labelSize','눈금 글씨 크기',2.5,12,0.5,''],
+  ['labelEvery','이름을 몇 칸마다',1,15,1,'5 면 5m·10m·15m … 만 적습니다. 칸이 좁아 이름이 붙을 때 올리십시오.'],
+  ['color','격자 색','color',0,0,''],
+  ['labelColor','눈금 글씨 색','color',0,0,'']
+];
+var PERLINE = [
+  ['~고른 선의 그림','head'],
+  ['lineW','선 굵기',0.05,6,0.05,''],
+  ['fillOp','선 아래 면 진하기',0,1,0.05,'0이면 면이 사라지고 선만 남습니다.'],
+  ['dotR','블릿 크기',0,10,0.25,'0이면 블릿이 사라집니다.'],
+  ['stem','블릿에서 내려가는 수직선','bool',0,0,''],
+  ['stemW','수직선 굵기',0,3,0.05,''],
+  ['baseRange','기준 높이 흔들림 폭',0,80,1,'이 선의 굴곡 크기입니다. 0이면 늘 한가운데서만 오르내립니다. 선마다 따로 잡힙니다.'],
+  ['phase','다른 선과 어긋나는 정도(초)',0,4,0.02,'0이면 다른 선과 같은 박자로 움직입니다.'],
+  ['val','블릿 위에 값 표기','bool',0,0,'y축 0~100% 로 환산한 숫자.'],
+  ['valSize','값 글씨 크기',1.5,14,0.25,''],
+  ['valGap','값과 블릿 사이',0,8,0.1,''],
+  ['c1','왼쪽 색','color',0,0,'왼쪽과 오른쪽 색을 같게 두면 단색이 됩니다.'],
+  ['c2','오른쪽 색','color',0,0,''],
+  ['cDot','블릿·수직선 색','color',0,0,''],
+  ['valColor','값 글씨 색','color',0,0,''],
+  ['valBg','값 상자 색','color',0,0,'']
+];
+
+var PRESET = {
+  calm :{amp:8,  period:2.4, baseEvery:2.6, baseEase:0.02},
+  spiky:{amp:26, period:1.2, baseEvery:1.0, baseEase:0.09},
+  raw  :{}
+};
+
+var defs=document.getElementById('defs'), scene=document.getElementById('scene'), out=document.getElementById('out');
+var layer={grid:document.getElementById('layerGrid'), area:document.getElementById('layerArea'),
+           stem:document.getElementById('layerStem'), line:document.getElementById('layerLine'),
+           dot:document.getElementById('layerDot'),   axis:document.getElementById('layerAxis'),
+           valBox:document.getElementById('layerValBox'), valText:document.getElementById('layerValText')};
+
+function el(name,attrs,parent){
+  var n=document.createElementNS(SVGNS,name);
+  for(var k in attrs) n.setAttribute(k,attrs[k]);
+  parent.appendChild(n); return n;
+}
+
+// ── 배경 격자 ──────────────────────────────────────────────
+var col=[];
+function drawGrid(){
+  var G=CFG.grid;
+  layer.grid.textContent=''; layer.axis.textContent=''; col=[];
+  if(!G.on) return;
+  var font='-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif';
+  for(var v=0; v<=100; v+=G.stepPct){
+    var y=G.yBot-(G.yBot-G.yTop)*(v/100);
+    el('line',{x1:G.x0,y1:y,x2:G.x1,y2:y,stroke:G.color,'stroke-width':G.w},layer.grid);
+    if(G.yLabels)
+      el('text',{x:G.yLabelX,y:y+G.labelSize*0.36,fill:G.labelColor,
+                 'font-size':G.labelSize,'font-family':font},layer.axis).textContent=v+'%';
+  }
+  var n=Math.round(G.cols);
+  for(var i=0;i<=n;i++){
+    var ln=el('line',{y1:G.yTop,y2:G.yBot,stroke:G.color,'stroke-width':G.w},layer.grid);
+    var tx=G.xLabels?el('text',{y:G.xLabelY,fill:G.labelColor,'text-anchor':'middle',
+                                'font-size':G.labelSize,'font-family':font},layer.axis):null;
+    col.push({line:ln,text:tx});
+  }
+  moveGrid(t||0);
+}
+function moveGrid(tt){
+  var G=CFG.grid; if(!G.on||!col.length) return;
+  var n=Math.round(G.cols), band=(G.x1-G.x0)/n;
+  var travel=G.speed*tt, off=((travel%band)+band)%band, jump=Math.floor(travel/band);
+  for(var i=0;i<col.length;i++){
+    var x=G.x0+band*(i+0.5)-off;
+    col[i].line.setAttribute('x1',x.toFixed(2));
+    col[i].line.setAttribute('x2',x.toFixed(2));
+    if(col[i].text){
+      var num=((i+jump)%n+n)%n+1, ev=Math.round(G.labelEvery);
+      col[i].text.setAttribute('x',x.toFixed(2));
+      col[i].text.textContent=(num%ev===0)?(num+G.unit):'';
+    }
+  }
+}
+
+// 표본을 부드러운 곡선으로 잇는다(Catmull-Rom → 3차 베지에).
+// 마디 길이가 들쭉날쭉해도 꺾이지 않도록 접선을 이웃 마디 길이에 비례해 줄인다.
+function curve(P,k){
+  if(P.length<2) return '';
+  function len(a,b){ var dx=b.x-a.x, dy=b.y-a.y; return Math.sqrt(dx*dx+dy*dy)||1e-6; }
+  var d='M'+P[0].x.toFixed(2)+' '+P[0].y.toFixed(2);
+  for(var i=0;i<P.length-1;i++){
+    var p0=P[i-1]||P[i], p1=P[i], p2=P[i+1], p3=P[i+2]||P[i+1];
+    var d1=len(p0,p1), d2=len(p1,p2), d3=len(p2,p3);
+    var a=k*2*d2/(d1+d2), b=k*2*d2/(d2+d3);
+    d+='C'+(p1.x+(p2.x-p0.x)*a).toFixed(2)+' '+(p1.y+(p2.y-p0.y)*a).toFixed(2)
+      +' '+(p2.x-(p3.x-p1.x)*b).toFixed(2)+' '+(p2.y-(p3.y-p1.y)*b).toFixed(2)
+      +' '+p2.x.toFixed(2)+' '+p2.y.toFixed(2);
+  }
+  return d;
+}
+
+// ── 선 하나 ────────────────────────────────────────────────
+function Line(cf,i,withIntro){
+  this.cf=cf;
+  this.pts=[];
+  this.x = withIntro ? CFG.introFrom : CFG.bx;   // 이 선의 블릿이 지금 서 있는 가로 자리
+  this.introDone = !withIntro;
+  var startY = pctY(CFG.introY);   // 도입이든 중간 합류든 이 높이(기본 0%)에서 시작
+  this.base=startY; this.target=null; this.restUntil=0; this.y=startY;
+  this.shown=startY;
+  this.nodes=[];   // 이 선이 만든 그림 요소 — 선을 뺄 때 같이 지운다
+
+  var bx0=this.x;
+  var g=el('linearGradient',{id:'gHue'+i,gradientUnits:'userSpaceOnUse',x1:0,y1:0,x2:360,y2:0},defs);
+  this.s1=el('stop',{offset:'0','stop-color':cf.c1},g);
+  this.s2=el('stop',{offset:'1','stop-color':cf.c2},g);
+
+  var fg=el('linearGradient',{id:'gFade'+i,gradientUnits:'userSpaceOnUse',x1:0,y1:60,x2:0,y2:CFG.bottom},defs);
+  el('stop',{offset:'0','stop-color':'#fff','stop-opacity':'1'},fg);
+  el('stop',{offset:'.55','stop-color':'#fff','stop-opacity':'.38'},fg);
+  el('stop',{offset:'1','stop-color':'#fff','stop-opacity':'0'},fg);
+  var mk=el('mask',{id:'mFade'+i,maskUnits:'userSpaceOnUse',x:-400,y:0,width:800,height:CFG.bottom},defs);
+  el('rect',{x:-400,y:0,width:800,height:CFG.bottom,fill:'url(#gFade'+i+')'},mk);
+  this.fade=fg;
+
+  var wrap=el('g',{mask:'url(#mFade'+i+')'},layer.area);
+  this.area=el('path',{fill:'url(#gHue'+i+')','fill-opacity':cf.fillOp,stroke:'none'},wrap);
+  this.stem=el('line',{x1:bx0,x2:bx0,y2:CFG.bottom,stroke:cf.cDot,
+                       'stroke-width':cf.stemW,display:cf.stem?'':'none'},layer.stem);
+  this.line=el('path',{fill:'none',stroke:'url(#gHue'+i+')','stroke-width':cf.lineW,
+                       'stroke-linecap':'round','stroke-linejoin':'round'},layer.line);
+  this.dot=el('circle',{cx:bx0,r:cf.dotR,fill:cf.cDot},layer.dot);
+  this.box=el('rect',{fill:cf.valBg},layer.valBox);
+  this.nodes=[g,fg,mk,wrap,this.stem,this.line,this.dot,this.box];
+  this.val=el('text',{x:bx0,fill:cf.valColor,'text-anchor':'middle','font-size':cf.valSize,
+                      'font-weight':'700',
+                      'font-family':'-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif'},layer.valText);
+  this.nodes.push(this.val);
+}
+Line.prototype.remove=function(){ this.nodes.forEach(function(n){ if(n&&n.parentNode) n.parentNode.removeChild(n); }); };
+Line.prototype.paint=function(){
+  var cf=this.cf;
+  this.s1.setAttribute('stop-color',cf.c1); this.s2.setAttribute('stop-color',cf.c2);
+  this.area.setAttribute('fill-opacity',cf.fillOp);
+  this.line.setAttribute('stroke-width',cf.lineW);
+  this.dot.setAttribute('r',cf.dotR); this.dot.setAttribute('fill',cf.cDot);
+  this.stem.setAttribute('stroke',cf.cDot); this.stem.setAttribute('stroke-width',cf.stemW);
+  this.stem.setAttribute('display',cf.stem?'':'none');
+  this.val.setAttribute('fill',cf.valColor); this.val.setAttribute('font-size',cf.valSize);
+  this.val.setAttribute('display',cf.val?'':'none');
+  this.box.setAttribute('fill',cf.valBg); this.box.setAttribute('display',cf.val?'':'none');
+};
+Line.prototype.bulletY=function(dt,t){
+  var w=2*Math.PI/CFG.period, tp=t+this.cf.phase;
+  if(this.target===null && t>=this.restUntil){
+    this.target=CFG.by+(Math.random()*2-1)*this.cf.baseRange;
+  }
+  if(this.target!==null){
+    var goingUp=Math.cos(tp*w)<0, needUp=this.target<this.base;
+    if(!CFG.rideStroke || goingUp===needUp){
+      var rate=CFG.baseEase*(CFG.rideStroke?2:1);
+      this.base+=(this.target-this.base)*Math.min(1,rate*dt*60);
+    }
+    if(Math.abs(this.target-this.base)<0.4){
+      this.base=this.target; this.target=null;
+      this.restUntil=t+CFG.baseEvery*(0.6+Math.random()*0.8);
+    }
+  }
+  return this.base+CFG.amp*Math.sin(tp*w);
+};
+Line.prototype.step=function(dt,t){
+  this.y=this.bulletY(dt,t);
+  var span=Math.max(3,CFG.trail.gap)/Math.max(CFG.grid.speed,0.001);
+  var tau=CFG.trail.tipSmooth*span;
+  this.shown+=(this.y-this.shown)*(tau>0?Math.min(1,dt/tau):1);
+  // 0%~100% 밖으로는 나가지 않는다
+  var G=CFG.grid;
+  if(this.shown>G.yBot) this.shown=G.yBot;
+  if(this.shown<G.yTop) this.shown=G.yTop;
+  var p=this.pts;
+  if(!this.introDone){                                  // 이 선의 도입 — 블릿이 오른쪽으로 간다
+    this.x+=CFG.grid.speed*dt;
+    if(this.x>=CFG.bx){ this.x=CFG.bx; this.introDone=true; flowStarted=true; }
+  }
+  if(flowStarted) for(var i=0;i<p.length;i++) p[i].x-=CFG.grid.speed*dt;   // 종이가 흐른다
+  // 얼리는 값은 지금 끝점 값 그대로다. 그래야 표본이 되는 순간 선의 모양이 변하지 않는다
+  var gap=Math.max(3,CFG.trail.gap);
+  if(!p.length || this.x-p[p.length-1].x>=gap) p.push({x:this.x,y:this.shown});
+  while(p.length>1 && p[1].x<CFG.x0) p.shift();
+};
+Line.prototype.draw=function(){
+  var P=this.pts.slice();
+  if(!P.length || this.x-P[P.length-1].x>0.01) P.push({x:this.x,y:this.shown});
+  var top=P[0].y;
+  for(var i=1;i<P.length;i++) if(P[i].y<top) top=P[i].y;
+  var d=curve(P,CFG.trail.smooth);
+  this.line.setAttribute('d',d);
+  this.area.setAttribute('d', d? d+'L'+P[P.length-1].x.toFixed(2)+' '+CFG.bottom
+                                +'L'+P[0].x.toFixed(2)+' '+CFG.bottom+'Z' : '');
+  this.fade.setAttribute('y1',(top-1).toFixed(2));
+  this.dot.setAttribute('cx',this.x.toFixed(2));
+  this.dot.setAttribute('cy',this.shown.toFixed(2));
+  this.stem.setAttribute('x1',this.x.toFixed(2));
+  this.stem.setAttribute('x2',this.x.toFixed(2));
+  this.stem.setAttribute('y1',this.shown.toFixed(2));
+  this.val.setAttribute('x',this.x.toFixed(2));
+  if(this.cf.val){
+    var G=CFG.grid, cf=this.cf;
+    this.val.textContent=Math.round((G.yBot-this.shown)/(G.yBot-G.yTop)*100)+'%';
+    var padX=cf.valSize*0.52, padY=cf.valSize*0.34;
+    this._h=cf.valSize*1.12+padY*2;
+    this._w=this.val.getComputedTextLength()+padX*2;
+    this._padY=padY;
+    this._top=this.shown-cf.dotR-cf.valGap-this._h;
+  }
+};
+Line.prototype.placeValue=function(){
+  this.box.setAttribute('x',(this.x-this._w/2).toFixed(2));
+  this.box.setAttribute('y',this._top.toFixed(2));
+  this.box.setAttribute('width',this._w.toFixed(2));
+  this.box.setAttribute('height',this._h.toFixed(2));
+  this.box.setAttribute('rx',(this._h*0.34).toFixed(2));
+  this.val.setAttribute('y',(this._top+this._padY+this.cf.valSize*0.82).toFixed(2));
+};
+function layoutValues(){
+  var box=[];
+  for(var i=0;i<lines.length;i++) if(lines[i].cf.val) box.push(lines[i]);
+  if(!box.length) return;
+  box.sort(function(a,b){return a._top-b._top;});
+  for(var i=1;i<box.length;i++){
+    var need=box[i-1]._top+box[i-1]._h+1.5;
+    if(box[i]._top<need) box[i]._top=need;
+  }
+  var last=box[box.length-1], over=last._top+last._h-(CFG.bottom-1);
+  if(over>0) for(var i=0;i<box.length;i++) box[i]._top-=over;
+  if(box[0]._top<1){ var up=1-box[0]._top; for(var i=0;i<box.length;i++) box[i]._top+=up; }
+  for(var i=0;i<box.length;i++) box[i].placeValue();
+}
+
+var lines=[], t=0, last=0;
+// 선을 더하거나 뺀다. 새로 더한 선만 제 도입부를 처음부터 그린다
+function setLineCount(n){
+  n=Math.round(n);
+  while(lines.length>n){ lines.pop().remove(); }
+  // 나중에 더한 선은 1번 블릿이 지금 서 있는 x 의 0% 자리에서 시작한다.
+  // 1번이 아직 도입 중이면 그 x 에서 함께 오른쪽으로 간다
+  while(lines.length<n){
+    var L=new Line(CFG.lines[lines.length], lines.length, false), lead=lines[0];
+    if(lead){ L.x=lead.x; L.introDone=lead.introDone; }
+    lines.push(L);
+  }
+}
+function pctY(v){ var G=CFG.grid; return G.yBot-(G.yBot-G.yTop)*(v/100); }   // 0%=맨 아래
+var flowT=0, flowStarted=true;   // 종이(격자·표본)가 흐르기 시작했는지   // 블릿의 지금 가로 위치 · 흐른 시간 · 도입 끝났는지
+function build(withIntro){
+  defs.textContent='';
+  layer.area.textContent=''; layer.stem.textContent=''; layer.line.textContent='';
+  layer.dot.textContent=''; layer.valBox.textContent=''; layer.valText.textContent='';
+  lines=[]; flowT=0; flowStarted=!withIntro;
+  drawGrid();
+  for(var i=0;i<Math.round(CFG.lineCount);i++) lines.push(new Line(CFG.lines[i],i,withIntro&&i===0));
+  if(!withIntro){   // 값을 맞추는 중에는 도입을 건너뛰고 화면을 미리 채운다
+    var warm=(CFG.bx-CFG.x0)/Math.max(CFG.grid.speed,0.001)+2;
+    for(var n=0;n<Math.min(warm*60,6000);n++){ t+=1/60; tick(1/60,t); }
+  }
+}
+function tick(dt,tt){
+  if(flowStarted) flowT+=dt;            // 종이가 흐른 시간 — 격자를 미는 데 쓴다
+  for(var i=0;i<lines.length;i++) lines[i].step(dt,tt);
+  for(var i=0;i<lines.length;i++) lines[i].draw();
+  layoutValues();
+  moveGrid(flowT);
+}
+function paint(){ for(var i=0;i<lines.length;i++) lines[i].paint(); }
+function frame(now){
+  if(!last) last=now;
+  var dt=Math.min((now-last)/1000,1/30); last=now; t+=dt;
+  tick(dt,t); requestAnimationFrame(frame);
+}
+
+// ── 조작판 ─────────────────────────────────────────────────
+var ctls=document.getElementById('ctls');
+function makeCtl(spec,set,onChange){
+  var k=spec[0], e=document.createElement('div');
+  if(spec[1]==='head'){ e.className='head'; e.textContent=k.slice(1); ctls.appendChild(e); return; }
+  if(spec[2]==='bool'||spec[2]==='color'){
+    e.className='ctl sw';
+    var type=spec[2]==='bool'?'checkbox':'color';
+    e.innerHTML='<label for="c_'+k+'"><span>'+spec[1]+'</span>'+
+      '<input type="'+type+'" id="c_'+k+'"></label>'+(spec[5]?'<small>'+spec[5]+'</small>':'');
+    ctls.appendChild(e);
+    e.querySelector('input').addEventListener(spec[2]==='bool'?'change':'input',function(ev){
+      set(spec[2]==='bool'?(ev.target.checked?1:0):ev.target.value); onChange(k); sync();
+    });
+    return;
+  }
+  e.className='ctl';
+  e.innerHTML='<label><span>'+spec[1]+'</span><b id="v_'+k+'"></b></label>'+
+    '<input type="range" id="c_'+k+'" min="'+spec[2]+'" max="'+spec[3]+'" step="'+spec[4]+'">'+
+    (spec[5]?'<small>'+spec[5]+'</small>':'');
+  ctls.appendChild(e);
+  e.querySelector('input').addEventListener('input',function(ev){
+    set(parseFloat(ev.target.value)); onChange(k); sync();
+  });
+}
+
+function rebuildPanel(){
+  ctls.textContent='';
+  SHARED.forEach(function(s){
+    makeCtl(s, function(v){CFG[s[0]]=v;},
+      function(k){ if(k==='bxPct') CFG.bx=Math.round(3.6*CFG.bxPct);
+                   if(k==='lineCount'){ setLineCount(CFG.lineCount); refreshTabs(); }
+                   else if(k==='bxPct'){ build(); refreshTabs(); }
+                   if(k==='introY') build(true); });
+  });
+  TRAIL.forEach(function(s){
+    makeCtl(s, function(v){CFG.trail[s[0]]=v;},
+      function(k){ if(k==='gap'||k==='tipSmooth') build(); });   // 표본 규칙이 바뀌면 다시 채운다
+  });
+  GRIDSPEC.forEach(function(s){
+    makeCtl(s, function(v){CFG.grid[s[0]]=v;},
+      function(k){ if(k==='speed') build(); else drawGrid(); });
+  });
+  var tabs=document.createElement('div'); tabs.className='tabs'; tabs.id='tabs';
+  ctls.appendChild(tabs);
+  PERLINE.forEach(function(s){
+    makeCtl(s, function(v){CFG.lines[sel][s[0]]=v;},
+      function(){ paint(); refreshTabs(); });
+  });
+  refreshTabs(); sync();
+}
+function refreshTabs(){
+  var tabs=document.getElementById('tabs'); if(!tabs) return;
+  tabs.textContent='';
+  for(var i=0;i<3;i++){
+    (function(i){
+      var b=document.createElement('button');
+      b.className=(i===sel?'on ':'')+(i<Math.round(CFG.lineCount)?'':'off');
+      b.innerHTML='<span class="swatch" style="background:'+CFG.lines[i].c1+'"></span>라인 '+(i+1);
+      b.addEventListener('click',function(){ sel=i; sync(); refreshTabs(); });
+      tabs.appendChild(b);
+    })(i);
+  }
+}
+
+function put(spec,val){
+  var k=spec[0], e=document.getElementById('c_'+k); if(!e) return;
+  if(spec[2]==='bool'){ e.checked=!!val; return; }
+  if(spec[2]==='color'){ e.value=val; return; }
+  e.value=val; document.getElementById('v_'+k).textContent=val;
+}
+function sync(){
+  SHARED.forEach(function(s){ if(s[1]!=='head') put(s,CFG[s[0]]); });
+  TRAIL.forEach(function(s){ if(s[1]!=='head') put(s,CFG.trail[s[0]]); });
+  GRIDSPEC.forEach(function(s){ if(s[1]!=='head') put(s,CFG.grid[s[0]]); });
+  PERLINE.forEach(function(s){ if(s[1]!=='head') put(s,CFG.lines[sel][s[0]]); });
+  var T=CFG.trail, G=CFG.grid;
+  var txt='<b>이 값을 알려 주십시오</b>\n'+
+    'lineCount '+Math.round(CFG.lineCount)+'  ·  bxPct '+Math.round(CFG.bxPct)+'  ·  introY '+Math.round(CFG.introY)+'  ·  amp '+CFG.amp+'  ·  period '+CFG.period+'\n'+
+    'baseEvery '+CFG.baseEvery+'  ·  baseEase '+CFG.baseEase+
+      '  ·  rideStroke '+(CFG.rideStroke?'켬':'끔')+'\n'+
+    '지나온길  gap '+T.gap+'  smooth '+T.smooth+'  tipSmooth '+T.tipSmooth+'\n'+
+    '격자 '+(G.on?'켬':'끔')+'  xLabels '+(G.xLabels?'켬':'끔')+'  yLabels '+(G.yLabels?'켬':'끔')+
+      '  cols '+Math.round(G.cols)+'  stepPct '+G.stepPct+'  speed '+G.speed+'  w '+G.w+
+      '  labelSize '+G.labelSize+'  labelEvery '+Math.round(G.labelEvery)+
+      '  color '+G.color+'  labelColor '+G.labelColor+'\n';
+  for(var i=0;i<Math.round(CFG.lineCount);i++){
+    var L=CFG.lines[i];
+    txt+='라인'+(i+1)+'  lineW '+L.lineW+'  fillOp '+L.fillOp+'  dotR '+L.dotR+
+         '  baseRange '+L.baseRange+'  stem '+(L.stem?'켬':'끔')+'  stemW '+L.stemW+'  phase '+L.phase+
+         '  val '+(L.val?'켬':'끔')+'  valSize '+L.valSize+'  valGap '+L.valGap+
+         '  c1 '+L.c1+'  c2 '+L.c2+'  cDot '+L.cDot+'  valColor '+L.valColor+'  valBg '+L.valBg+'\n';
+  }
+  out.innerHTML=txt;
+}
+
+document.querySelectorAll('[data-p]').forEach(function(b){
+  b.addEventListener('click',function(){
+    if(b.dataset.p==='intro'){ build(true); paint(); sync(); return; }
+    if(b.dataset.p==='mine'){ var s=JSON.parse(SHOT); for(var k in s) CFG[k]=s[k]; }
+    else if(b.dataset.p==='raw'){ CFG.trail.tipSmooth=0; }
+    else { var s=PRESET[b.dataset.p]; for(var k in s) CFG[k]=s[k]; }
+    build(); paint(); sync(); refreshTabs();
+  });
+});
+
+var zoom=document.getElementById('zoom'), zv=document.getElementById('zv');
+zoom.addEventListener('input',function(){
+  var z=parseFloat(zoom.value), w=360/z, h=200/z;
+  scene.setAttribute('viewBox',(360-w)+' '+((200-h)/2)+' '+w+' '+h);
+  zv.textContent=z.toFixed(1)+'배';
+});
+
+build(true); rebuildPanel(); paint(); requestAnimationFrame(frame);   // 열 때 도입부를 재생한다
+</script>
+</body></html>
