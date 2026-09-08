@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320"
+     preserveAspectRatio="xMidYMid meet" role="img" aria-label="세 대학의 월별 논문 수, 2015년부터 2025년까지">
+<title>월별 논문 수 — 성균관대와 앵커 대학</title>
+<!-- 값은 지어내지 않는다. OpenAlex 기관 단위 월별 실측(132개월 × 3개 대학).
+     1월 1일은 «발행일이 연도만 알려진» 논문이 몰리는 자리라 빼고 모았다(각주에 건수).
+     연·월은 순환하지 않으므로 되감지 않는다. 2015-01 부터 2025-12 까지 한 번 흐르고 멈춘다. -->
+<defs>
+  <clipPath id="clipPlot"><rect x="44" y="0" width="408" height="286"/></clipPath>
+</defs>
+<g id="head"></g>
+<g id="gridY"></g>
+<g clip-path="url(#clipPlot)">
+  <g id="gridX"></g><g id="areas"></g><g id="lines"></g>
+</g>
+<g id="axis"></g>
+<g id="dots"></g>
+<g id="labs"></g>
+<script><![CDATA[
+(function(){
+  var NS='http://www.w3.org/2000/svg', FONT='-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif';
+  var KEYS=["2015-01", "2015-02", "2015-03", "2015-04", "2015-05", "2015-06", "2015-07", "2015-08", "2015-09", "2015-10", "2015-11", "2015-12", "2016-01", "2016-02", "2016-03", "2016-04", "2016-05", "2016-06", "2016-07", "2016-08", "2016-09", "2016-10", "2016-11", "2016-12", "2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07", "2017-08", "2017-09", "2017-10", "2017-11", "2017-12", "2018-01", "2018-02", "2018-03", "2018-04", "2018-05", "2018-06", "2018-07", "2018-08", "2018-09", "2018-10", "2018-11", "2018-12", "2019-01", "2019-02", "2019-03", "2019-04", "2019-05", "2019-06", "2019-07", "2019-08", "2019-09", "2019-10", "2019-11", "2019-12", "2020-01", "2020-02", "2020-03", "2020-04", "2020-05", "2020-06", "2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12", "2021-01", "2021-02", "2021-03", "2021-04", "2021-05", "2021-06", "2021-07", "2021-08", "2021-09", "2021-10", "2021-11", "2021-12", "2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06", "2022-07", "2022-08", "2022-09", "2022-10", "2022-11", "2022-12", "2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06", "2023-07", "2023-08", "2023-09", "2023-10", "2023-11", "2023-12", "2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06", "2024-07", "2024-08", "2024-09", "2024-10", "2024-11", "2024-12", "2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12"], SER=[{"nm": "성균관대", "c": "#E0566B", "v": [315, 325, 375, 382, 442, 509, 401, 387, 394, 441, 373, 455, 334, 407, 390, 413, 467, 435, 408, 444, 470, 445, 468, 482, 346, 399, 420, 410, 442, 422, 434, 459, 433, 502, 454, 443, 348, 423, 399, 412, 458, 451, 474, 440, 435, 610, 524, 442, 399, 436, 416, 441, 515, 470, 540, 417, 434, 512, 519, 475, 374, 458, 439, 459, 525, 503, 495, 497, 555, 549, 633, 499, 525, 446, 602, 466, 563, 546, 526, 501, 528, 548, 510, 510, 474, 518, 518, 530, 552, 591, 524, 518, 619, 551, 605, 637, 491, 530, 601, 546, 532, 734, 580, 551, 584, 678, 638, 622, 550, 569, 577, 548, 638, 666, 553, 529, 578, 613, 591, 612, 506, 573, 563, 590, 566, 590, 634, 603, 615, 754, 765, 714]}, {"nm": "고려대", "c": "#E08A2E", "v": [259, 327, 308, 382, 363, 407, 354, 377, 386, 381, 314, 404, 289, 390, 360, 349, 357, 404, 317, 389, 408, 404, 354, 405, 276, 343, 415, 364, 388, 382, 384, 378, 440, 414, 427, 388, 332, 349, 376, 353, 411, 392, 463, 380, 426, 455, 417, 387, 385, 380, 419, 382, 434, 454, 448, 439, 451, 461, 463, 429, 407, 430, 439, 443, 464, 477, 499, 456, 523, 603, 496, 481, 506, 457, 500, 491, 482, 510, 483, 504, 469, 528, 513, 525, 420, 447, 485, 490, 444, 443, 468, 484, 554, 538, 506, 463, 417, 526, 479, 433, 500, 523, 482, 487, 474, 586, 582, 540, 477, 520, 534, 502, 583, 565, 551, 515, 534, 682, 581, 627, 557, 567, 589, 575, 613, 620, 658, 541, 572, 733, 699, 704]}, {"nm": "연세대", "c": "#12A594", "v": [366, 419, 498, 460, 536, 587, 521, 456, 561, 540, 434, 577, 379, 473, 506, 515, 608, 559, 477, 508, 645, 554, 479, 540, 347, 480, 542, 511, 480, 567, 526, 497, 591, 541, 543, 488, 430, 488, 571, 527, 572, 531, 627, 525, 605, 669, 612, 542, 485, 531, 585, 578, 630, 588, 728, 547, 678, 612, 657, 680, 505, 556, 627, 558, 672, 746, 693, 692, 747, 720, 715, 775, 656, 684, 820, 633, 804, 851, 696, 706, 729, 798, 705, 811, 619, 668, 742, 735, 712, 833, 697, 725, 791, 719, 858, 800, 630, 657, 771, 696, 713, 954, 717, 728, 773, 925, 982, 877, 689, 702, 798, 766, 774, 789, 728, 707, 700, 857, 769, 847, 671, 698, 742, 770, 773, 793, 832, 673, 759, 920, 881, 1086]}];
+  var CFG={
+    x0:44, x1:452, labelX:458, yTop:70, yBot:262, bottom:274,
+    yMax:1300, yStep:300,
+    win:48,            // 화면에 들어오는 개월 수
+    mps:3.4,           // 초당 몇 개월 흐르는가
+    title:'월별 논문 수 — 성균관대와 앵커 대학',
+    sub:'OpenAlex 기관 단위 실측 · 2015-01 ~ 2025-12 · 132개월',
+    foot:'발행일이 연도까지만 등록된 논문(1월 1일로 몰림)은 뺐다 — 성균관대 9,840편 · 고려대 9,030편 · 연세대 13,648편. 연·월은 순환하지 않으므로 되감지 않는다.'
+  };
+  var g=function(i){return document.getElementById(i);};
+  function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e;}
+  function comma(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+  var BAND=(CFG.x1-CFG.x0)/CFG.win;                      // 한 달의 가로 폭
+  function Y(v){return CFG.yBot-(CFG.yBot-CFG.yTop)*Math.min(1,v/CFG.yMax);}
+
+  el('text',{x:CFG.x0,y:26,fill:'#1E1E1E','font-size':14,'font-weight':'800','font-family':FONT},g('head')).textContent=CFG.title;
+  el('text',{x:CFG.x0,y:41,fill:'#7B8794','font-size':7.5,'font-weight':'500','font-family':FONT},g('head')).textContent=CFG.sub;
+  el('text',{x:CFG.x0,y:308,fill:'#AEB6BD','font-size':6.5,'font-weight':'500','font-family':FONT},g('head')).textContent=CFG.foot;
+
+  for(var v=0;v<=CFG.yMax+1;v+=CFG.yStep){
+    var y=Y(v);
+    el('line',{x1:CFG.x0,y1:y,x2:CFG.x1,y2:y,stroke:'#E7EBEE','stroke-width':0.5},g('gridY'));
+    el('text',{x:CFG.x0-5,y:y+2.4,fill:'#9AA3AB','text-anchor':'end','font-size':6.5,'font-family':FONT},g('gridY')).textContent=comma(v);
+  }
+
+  // 세로선·달 이름은 1월에만 세운다(해가 바뀌는 자리)
+  var ticks=[];
+  for(var i=0;i<KEYS.length;i++) if(KEYS[i].slice(5)==='01') ticks.push({i:i,t:KEYS[i].slice(0,4)});
+  ticks.forEach(function(k){
+    k.line=el('line',{y1:CFG.yTop,y2:CFG.yBot,stroke:'#EDF1F3','stroke-width':0.6},g('gridX'));
+    k.text=el('text',{y:CFG.yBot+13,fill:'#9AA3AB','text-anchor':'middle','font-size':6.5,'font-family':FONT},g('axis'));
+    k.text.textContent=k.t;
+  });
+
+  SER.forEach(function(s,i){
+    var gr=el('linearGradient',{id:'g'+i,gradientUnits:'userSpaceOnUse',x1:0,y1:CFG.yTop,x2:0,y2:CFG.bottom},g('head'));
+    el('stop',{offset:'0','stop-color':s.c,'stop-opacity':'.28'},gr);
+    el('stop',{offset:'1','stop-color':s.c,'stop-opacity':'0'},gr);
+    s.area=el('path',{fill:'url(#g'+i+')',stroke:'none'},g('areas'));
+    s.line=el('path',{fill:'none',stroke:s.c,'stroke-width':1.4,'stroke-linejoin':'round','stroke-linecap':'round'},g('lines'));
+    s.dot=el('circle',{r:2.2,fill:s.c},g('dots'));
+    s.lab=el('text',{x:CFG.labelX,fill:'#3A424A','font-size':7.5,'font-weight':'800','font-family':FONT},g('labs'));
+  });
+
+  var head=0;                                            // 지금 화면 오른쪽 끝이 가리키는 달(소수)
+  function draw(){
+    var first=Math.max(0,Math.floor(head-CFG.win)), lastF=head;
+    function X(i){ return CFG.x1-(lastF-i)*BAND; }
+    ticks.forEach(function(k){
+      var x=X(k.i), on=(x>CFG.x0-1&&x<CFG.x1+1);
+      k.line.setAttribute('x1',x.toFixed(1)); k.line.setAttribute('x2',x.toFixed(1));
+      k.line.setAttribute('opacity',on?1:0);
+      k.text.setAttribute('x',x.toFixed(1)); k.text.setAttribute('opacity',on?1:0);
+    });
+    var ends=[];
+    SER.forEach(function(s){
+      var iEnd=Math.min(s.v.length-1,Math.floor(head)), d='';
+      for(var i=first;i<=iEnd;i++) d+=(i===first?'M':'L')+X(i).toFixed(1)+' '+Y(s.v[i]).toFixed(1);
+      // 마지막 마디는 소수만큼만 나아간다(툭툭 끊기지 않게)
+      var f=head-Math.floor(head);
+      if(iEnd+1<s.v.length&&f>0){
+        var y=s.v[iEnd]+(s.v[iEnd+1]-s.v[iEnd])*f;
+        d+='L'+X(head).toFixed(1)+' '+Y(y).toFixed(1);
+        ends.push({s:s,x:X(head),y:Y(y),v:y});
+      } else ends.push({s:s,x:X(iEnd),y:Y(s.v[iEnd]),v:s.v[iEnd]});
+      s.line.setAttribute('d',d);
+      s.area.setAttribute('d',d?d+'L'+ends[ends.length-1].x.toFixed(1)+' '+CFG.bottom+'L'+X(first).toFixed(1)+' '+CFG.bottom+'Z':'');
+    });
+    ends.sort(function(a,b){return a.y-b.y;});
+    for(var i=1;i<ends.length;i++) if(ends[i].y<ends[i-1].y+9) ends[i].y=ends[i-1].y+9;
+    ends.forEach(function(e){
+      e.s.dot.setAttribute('cx',e.x.toFixed(1)); e.s.dot.setAttribute('cy',Y(e.v).toFixed(1));
+      e.s.lab.setAttribute('y',(e.y+2.4).toFixed(1));
+      e.s.lab.textContent=e.s.nm+'  '+comma(e.v);
+      e.s.lab.setAttribute('fill',e.s.c);
+    });
+  }
+
+  var still=false; try{ still=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+  if(still){ head=KEYS.length-1; draw(); return; }
+  var last=0;
+  function frame(now){
+    if(!last) last=now;
+    var dt=Math.min((now-last)/1000,1/20); last=now;
+    head=Math.min(KEYS.length-1, head+CFG.mps*dt);
+    draw();
+    if(head<KEYS.length-1) requestAnimationFrame(frame);
+  }
+  head=Math.min(KEYS.length-1, CFG.win*0.35);            // 조금 채워 놓고 출발
+  requestAnimationFrame(frame);
+})();
+]]></script>
+</svg>
