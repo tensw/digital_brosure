@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320"
      preserveAspectRatio="xMidYMid meet" role="img" aria-label="세 대학의 누적 논문 수, 2015년부터 2025년까지">
-<title>누적 논문 수 — 성균관대와 앵커 대학</title>
+<title>누적 논문 수 (성균관대와 앵커 대학)</title>
 <!-- 값은 지어내지 않는다. OpenAlex 기관 단위 월별 실측 132개월.
      발행일이 연도까지만 등록된 논문(1월 1일로 몰림)은 빼고 모았다 — 각주에 건수.
      연·월은 순환하지 않으므로 되감지 않는다. 2025-12 에 닿으면 멈춘다.
@@ -47,13 +47,13 @@ function makeChart(root, DATA, CFG){
     CFG._ym=YM; CFG._step=step;
 
     el('text',{x:CFG.x0,y:26,fill:'#1E1E1E','font-size':14,'font-weight':'800','font-family':FONT},L.head)
-      .textContent = CFG.cum ? '누적 논문 수 — 성균관대와 앵커 대학' : '월별 논문 수 — 성균관대와 앵커 대학';
+      .textContent = CFG.cum ? '누적 논문 수 (성균관대와 앵커 대학)' : '월별 논문 수 (성균관대와 앵커 대학)';
     el('text',{x:CFG.x0,y:41,fill:'#7B8794','font-size':7.5,'font-weight':'500','font-family':FONT},L.head)
       .textContent = 'OpenAlex 기관 단위 실측 · '+DATA.keys[0]+' ~ '+DATA.keys[DATA.keys.length-1]
                      +' · '+DATA.keys.length+'개월'+(CFG.cum?' · 2015-01 부터 쌓은 값':'');
     var unk=CFG.pick.map(function(n){ return n+' '+comma(DATA.unknownJan[n]||0); }).join(' · ');
     el('text',{x:CFG.x0,y:CFG.foY,fill:'#AEB6BD','font-size':6.5,'font-weight':'500','font-family':FONT},L.head)
-      .textContent='발행일이 연도까지만 등록된 논문(1월 1일로 몰림)은 뺐다 — '+unk+'편. 연·월은 순환하지 않으므로 되감지 않는다.';
+      .textContent='발행일이 연도까지만 등록된 논문(1월 1일로 몰림)은 뺐다. '+unk+'편. 연·월은 순환하지 않으므로 되감지 않는다.';
 
     for(var v=0; v<=YM+1; v+=step){
       var y=Y(v);
