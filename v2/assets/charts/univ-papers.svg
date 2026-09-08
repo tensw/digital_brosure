@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 330"
+     preserveAspectRatio="xMidYMid meet" role="img" aria-label="2015년부터 2025년까지 일곱 대학의 연도별 논문 수">
+<title>논문 수 — 성균관대와 앵커 대학</title>
+<!-- 값은 지어내지 않는다. OpenAlex 기관 단위 실측치(측정 2026-08-25)를 그대로 그린다.
+     연도는 순환하지 않으므로 흐르게 하지 않았다. 왼쪽에서 오른쪽으로 한 번 그려진 뒤 멈춘다.
+     가로세로를 적지 않아 창이나 감싸는 자리에 맞춰 커진다(비 560:330). -->
+<defs>
+  <clipPath id="reveal"><rect id="revealRect" x="0" y="0" width="0" height="330"/></clipPath>
+</defs>
+<g id="head"></g>
+<g id="grid"></g>
+<g clip-path="url(#reveal)"><g id="lines"></g></g>
+<line id="sweep" y1="0" y2="0" stroke="#C9CFD5" stroke-width="0.7" opacity="0"/>
+<g id="ends" opacity="0"></g>
+<script><![CDATA[
+(function(){
+  var NS='http://www.w3.org/2000/svg';
+  var FONT='-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif';
+
+  var YEARS = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
+  var SERIES = [{"nm": "서울대", "c": "#2E5FD9", "v": [9698, 9792, 9900, 10283, 10861, 11947, 12104, 12450, 13725, 17801, 13827]}, {"nm": "연세대", "c": "#12A594", "v": [7664, 7659, 7314, 7847, 8415, 9469, 10300, 11138, 11738, 11908, 11861]}, {"nm": "성균관대", "c": "#E0566B", "v": [5873, 6182, 6046, 6244, 6495, 7054, 7755, 8012, 8694, 8730, 8894]}, {"nm": "고려대", "c": "#E08A2E", "v": [5053, 5334, 5350, 5539, 5913, 6539, 6919, 6691, 7067, 7739, 8687]}, {"nm": "카이스트", "c": "#7B5CD6", "v": [4461, 4772, 4395, 4613, 4808, 5056, 5182, 4918, 5282, 5787, 6224]}, {"nm": "포스텍", "c": "#3FA9F5", "v": [2277, 2459, 2079, 2240, 2249, 2475, 2649, 2717, 2797, 2906, 3021]}, {"nm": "한양대", "c": "#8A9199", "v": [3979, 4249, 3838, 4100, 4388, 4666, 4771, 5248, 5779, 5813, 5919]}];          // {nm, c, v[]}
+  var CFG = {
+    x0:46, x1:452, labelX:458,      // 그래프 범위와 오른쪽 이름 자리
+    yTop:70, yBot:274, bottom:286,
+    yMax:18000, yStep:3000, // 세로축 최대·눈금 간격
+    unit:'편',
+    hi:'성균관대',                   // 굵게 볼 대학
+    drawSec:2.6,                    // 그려지는 데 걸리는 시간(초)
+    title:'논문 수 — 성균관대와 앵커 대학', sub:'연도별 발표 논문 수 · 2015~2025 · OpenAlex 기관 단위 실측', foot:'고려대와의 격차는 2015년 820편에서 2023년 1,627편으로 벌어졌다가 2025년 207편으로 좁혀졌다.'
+  };
+
+  var g=function(id){return document.getElementById(id);};
+  function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e;}
+  function comma(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+  function X(i){ return CFG.x0 + (CFG.x1-CFG.x0)*i/(YEARS.length-1); }
+  function Y(v){ return CFG.yBot - (CFG.yBot-CFG.yTop)*Math.min(1, v/CFG.yMax); }
+  function short(n){ return n>=10000 ? Math.round(n/1000)+'천' : comma(n); }
+
+  // 머리글
+  el('text',{x:CFG.x0,y:26,fill:'#1E1E1E','font-size':14,'font-weight':'800','font-family':FONT},g('head'))
+    .textContent=CFG.title;
+  el('text',{x:CFG.x0,y:41,fill:'#7B8794','font-size':7.5,'font-weight':'500','font-family':FONT},g('head'))
+    .textContent=CFG.sub;
+  el('text',{x:CFG.x0,y:318,fill:'#AEB6BD','font-size':6.5,'font-weight':'500','font-family':FONT},g('head'))
+    .textContent=CFG.foot;
+
+  // 격자·눈금
+  for(var v=0; v<=CFG.yMax+1; v+=CFG.yStep){
+    var y=Y(v);
+    el('line',{x1:CFG.x0,y1:y,x2:CFG.x1,y2:y,stroke:'#E7EBEE','stroke-width':0.5},g('grid'));
+    el('text',{x:CFG.x0-5,y:y+2.4,fill:'#9AA3AB','text-anchor':'end','font-size':6.5,
+               'font-family':FONT},g('grid')).textContent=short(v);
+  }
+  for(var i=0;i<YEARS.length;i++){
+    el('line',{x1:X(i),y1:CFG.yTop,x2:X(i),y2:CFG.yBot,stroke:'#F0F3F5','stroke-width':0.5},g('grid'));
+    el('text',{x:X(i),y:CFG.yBot+13,fill:'#9AA3AB','text-anchor':'middle','font-size':6.5,
+               'font-family':FONT},g('grid')).textContent=YEARS[i];
+  }
+
+  // 선 — 연도 사이는 곧게 잇는다(없는 중간값을 지어내지 않으려고)
+  var ends=[];
+  SERIES.forEach(function(s){
+    var hi = (s.nm===CFG.hi);
+    var d='M'+X(0).toFixed(1)+' '+Y(s.v[0]).toFixed(1);
+    for(var i=1;i<s.v.length;i++) d+='L'+X(i).toFixed(1)+' '+Y(s.v[i]).toFixed(1);
+    el('path',{d:d,fill:'none',stroke:s.c,'stroke-width':hi?2.2:1,'stroke-linejoin':'round',
+               'stroke-linecap':'round',opacity:hi?1:0.72},g('lines'));
+    for(var i=0;i<s.v.length;i++)
+      el('circle',{cx:X(i),cy:Y(s.v[i]),r:hi?1.9:1.2,fill:s.c,opacity:hi?1:0.72},g('lines'));
+    ends.push({nm:s.nm,c:s.c,hi:hi,y:Y(s.v[s.v.length-1]),last:s.v[s.v.length-1]});
+  });
+
+  // 오른쪽 끝 이름표 — 겹치면 위아래로 밀어 떼어 놓는다
+  ends.sort(function(a,b){return a.y-b.y;});
+  for(var i=1;i<ends.length;i++) if(ends[i].y < ends[i-1].y+9) ends[i].y = ends[i-1].y+9;
+  var over = ends[ends.length-1].y - CFG.yBot;
+  if(over>0) ends.forEach(function(e){e.y-=over;});
+  ends.forEach(function(e){
+    el('circle',{cx:CFG.x1,cy:e.y,r:1.6,fill:e.c},g('ends'));
+    var t=el('text',{x:CFG.labelX,y:e.y+2.4,fill:e.hi?'#1E1E1E':'#5A6470',
+                     'font-size':e.hi?8:7,'font-weight':e.hi?'800':'700','font-family':FONT},g('ends'));
+    t.textContent=e.nm+'  '+comma(e.last);
+  });
+
+  // 왼쪽에서 오른쪽으로 한 번 그린다
+  var rect=g('revealRect'), sweep=g('sweep'), W=CFG.x1-CFG.x0;
+  rect.setAttribute('x',CFG.x0-2);
+  sweep.setAttribute('y1',CFG.yTop-6); sweep.setAttribute('y2',CFG.yBot+6);
+  var still=false; try{ still=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+  if(still){ rect.setAttribute('width',W+4); g('ends').setAttribute('opacity',1); return; }
+  var t0=0;
+  function frame(now){
+    if(!t0) t0=now;
+    var p=Math.min(1,(now-t0)/1000/CFG.drawSec);
+    var e=p<0.5 ? 2*p*p : 1-Math.pow(-2*p+2,2)/2;      // 시작과 끝을 부드럽게
+    rect.setAttribute('width',(W*e+4).toFixed(1));
+    sweep.setAttribute('x1',(CFG.x0+W*e).toFixed(1));
+    sweep.setAttribute('x2',(CFG.x0+W*e).toFixed(1));
+    sweep.setAttribute('opacity', p<1 ? 0.9 : 0);
+    g('ends').setAttribute('opacity', Math.max(0,(p-0.75)/0.25).toFixed(2));
+    if(p<1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+]]></script>
+</svg>
