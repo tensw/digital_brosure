@@ -1,0 +1,285 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 270" width="480" height="270"
+     role="img" aria-label="평택대학교 도서관의 시간대별 대출과 반납">
+<title>도서관의 하루 — 시간대별 대출과 반납</title>
+<!-- 값은 지어내지 않는다. 평택대 LAS(ODISU) 대출 이력 BOOK.CDH 를 시간대로 접은 실측치다.
+     대출 106,056건(LentDate) · 반납 101,956건(ReturnedDate), 2004-03-16 ~ 2026-08-13.
+     세로축은 하루 정점(13시 대출 13,988건) 대비 비율이고, 블릿 위 숫자는 실제 건수다.
+
+     블릿은 오른쪽 자리(bx)에서 그 시각의 값을 따라 오르내리고, 지나온 자리가 선이 된다.
+     하루가 한 바퀴 돌면 0시로 되돌아온다. 값·색·속도는 아래 CFG 한 곳에서 바꾼다. -->
+<defs>
+  <clipPath id="clipPlot"><rect id="clipRect" x="0" y="0" width="480" height="240"/></clipPath>
+</defs>
+
+<g id="layerHead"></g>
+<g clip-path="url(#clipPlot)">
+  <g id="layerGrid"></g>
+  <g id="layerArea"></g>
+  <g id="layerLine"></g>
+</g>
+<g id="layerAxis"></g>
+<g id="layerStem"></g>
+<g id="layerDot"></g>
+<g id="layerValBox"></g>
+<g id="layerValText"></g>
+
+<script><![CDATA[
+(function(){
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var FONT = '-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif';
+
+  // ── 실측 데이터 — 시간(0~23시)별 건수 ────────────────────────
+  var DATA = {
+    lend: [433,280,159,89,51,68,100,316,807,7255,7555,7850,12512,13988,13021,10840,11351,8755,4393,2579,2326,440,417,471],
+    ret : [433,273,159,89,51,67,100,316,1469,10685,7480,8172,11986,12098,12038,9926,10163,7642,3629,2028,1834,433,416,469]
+  };
+
+  var CFG = {
+    // ── 판 ─────────────────────────────────────────────────
+    x0:30, x1:480,      // 그래프가 놓이는 가로 범위(왼쪽은 세로축 숫자 자리)
+    yTop:58, yBot:228,  // 100% 와 0% 의 높이
+    bottom:240,         // 면과 수직선이 닿는 아래 끝
+    bxPct:0.8,          // 블릿이 자리 잡는 가로 위치(그래프 폭 대비)
+    hours:24,           // 한 바퀴 = 24시간
+    speed:34,           // 왼쪽으로 흐르는 속도(초당). 0이면 멈춘다
+    intro:true,         // 켜면 블릿이 왼쪽에서 출발해 제자리까지 그린다
+
+    // ── 지나온 길 ──────────────────────────────────────────
+    trail:{ gap:6, smooth:0.2 },
+
+    // ── 격자 ───────────────────────────────────────────────
+    grid:{ color:'#E4E8EB', w:0.4, stepPct:10,
+           labelColor:'#9AA3AB', labelSize:6.5, hourEvery:3 },
+
+    // ── 선 ─────────────────────────────────────────────────
+    lines:[
+      { key:'lend', name:'대출', c1:'#F0808E', c2:'#E0566B', fillOp:0.26,
+        lineW:1.1, dotR:2.6, cDot:'#E0566B', stem:true, stemW:0.5 },
+      { key:'ret',  name:'반납', c1:'#5AD2F4', c2:'#2E86E0', fillOp:0.26,
+        lineW:1.1, dotR:2.6, cDot:'#2E86E0', stem:false, stemW:0.5 }
+    ],
+
+    val:{ size:6, gap:3.4, color:'#FFFFFF' },   // 블릿 위 건수 상자
+
+    head:{
+      title:'도서관의 하루',
+      sub:'시간대별 대출과 반납 · 2004~2026 · 대출 106,056건 · 반납 101,956건',
+      foot:'세로축은 하루 정점(13시 대출 13,988건) 대비 비율. 평택대 도서관 대출 이력 실측.'
+    }
+  };
+
+  var PEAK = Math.max.apply(null, DATA.lend.concat(DATA.ret));   // 13,988
+  var BX = CFG.x0 + (CFG.x1 - CFG.x0) * CFG.bxPct;
+  var BAND = (CFG.x1 - CFG.x0) / CFG.hours;
+
+  var layer = {}, ids = ['Head','Grid','Area','Line','Axis','Stem','Dot','ValBox','ValText'];
+  ids.forEach(function(n){ layer[n.charAt(0).toLowerCase()+n.slice(1)] = document.getElementById('layer'+n); });
+  var defs = document.querySelector('defs');
+
+  function el(name, attrs, parent){
+    var n = document.createElementNS(SVGNS, name);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    parent.appendChild(n); return n;
+  }
+  function pctY(p){ return CFG.yBot - (CFG.yBot - CFG.yTop) * (p / 100); }
+  function comma(n){ return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+  // 시각(소수 포함)에서 값을 읽는다. 시간과 시간 사이는 부드럽게 잇는다
+  function valueAt(key, h){
+    var a = DATA[key], n = a.length;
+    var i = Math.floor(h) % n, j = (i + 1) % n, f = h - Math.floor(h);
+    var s = f * f * (3 - 2 * f);                     // 급하게 꺾이지 않게
+    return a[i] + (a[j] - a[i]) * s;
+  }
+
+  // ── 머리글·범례 ────────────────────────────────────────────
+  (function head(){
+    var H = CFG.head;
+    el('text', {x:CFG.x0, y:22, fill:'#1E1E1E', 'font-size':13.5, 'font-weight':'800',
+                'font-family':FONT}, layer.head).textContent = H.title;
+    el('text', {x:CFG.x0, y:36, fill:'#7B8794', 'font-size':7, 'font-weight':'500',
+                'font-family':FONT}, layer.head).textContent = H.sub;
+    el('text', {x:CFG.x0, y:262, fill:'#AEB6BD', 'font-size':6, 'font-weight':'500',
+                'font-family':FONT}, layer.head).textContent = H.foot;
+    var lx = CFG.x1 - 6;   // 오른쪽 끝에 붙지 않게
+    for (var i = CFG.lines.length - 1; i >= 0; i--){
+      var L = CFG.lines[i];
+      var t = el('text', {x:lx, y:23, fill:'#5A6470', 'font-size':7.5, 'font-weight':'700',
+                          'text-anchor':'end', 'font-family':FONT}, layer.head);
+      t.textContent = L.name;
+      lx -= t.getComputedTextLength() + 6;
+      el('circle', {cx:lx, cy:20.6, r:2.6, fill:L.cDot}, layer.head);
+      lx -= 12;
+    }
+  })();
+
+  // ── 격자 ───────────────────────────────────────────────────
+  var col = [];
+  (function grid(){
+    for (var v = 0; v <= 100; v += CFG.grid.stepPct){
+      var y = pctY(v);
+      el('line', {x1:CFG.x0, y1:y, x2:CFG.x1, y2:y,
+                  stroke:CFG.grid.color, 'stroke-width':CFG.grid.w}, layer.grid);
+      if (v % 50 === 0)
+        el('text', {x:CFG.x0 - 4, y:y + CFG.grid.labelSize * 0.36, fill:CFG.grid.labelColor,
+                    'text-anchor':'end', 'font-size':CFG.grid.labelSize,
+                    'font-family':FONT}, layer.axis).textContent = v + '%';
+    }
+    for (var i = 0; i <= CFG.hours; i++){
+      col.push({ line: el('line', {y1:CFG.yTop, y2:CFG.yBot, stroke:CFG.grid.color,
+                                   'stroke-width':CFG.grid.w}, layer.grid),
+                 text: el('text', {y:242, fill:CFG.grid.labelColor, 'text-anchor':'middle',
+                                   'font-size':CFG.grid.labelSize, 'font-family':FONT}, layer.axis) });
+    }
+  })();
+
+  function moveGrid(travel){
+    var off = ((travel % BAND) + BAND) % BAND, jump = Math.floor(travel / BAND);
+    for (var i = 0; i < col.length; i++){
+      var x = CFG.x0 + BAND * (i + 0.5) - off;
+      col[i].line.setAttribute('x1', x.toFixed(2));
+      col[i].line.setAttribute('x2', x.toFixed(2));
+      var h = ((i + jump) % CFG.hours + CFG.hours) % CFG.hours;
+      var show = (h % CFG.grid.hourEvery === 0) && x > CFG.x0 - 1 && x < CFG.x1 + 1;
+      col[i].text.setAttribute('x', x.toFixed(2));
+      col[i].text.textContent = show ? (h + '시') : '';
+    }
+  }
+
+  // 표본을 부드러운 곡선으로 잇는다(마디 길이에 비례한 접선)
+  function curve(P, k){
+    if (P.length < 2) return '';
+    function len(a, b){ var dx = b.x - a.x, dy = b.y - a.y; return Math.sqrt(dx*dx + dy*dy) || 1e-6; }
+    var d = 'M' + P[0].x.toFixed(2) + ' ' + P[0].y.toFixed(2);
+    for (var i = 0; i < P.length - 1; i++){
+      var p0 = P[i-1] || P[i], p1 = P[i], p2 = P[i+1], p3 = P[i+2] || P[i+1];
+      var d1 = len(p0,p1), d2 = len(p1,p2), d3 = len(p2,p3);
+      var a = k * 2 * d2 / (d1 + d2), b = k * 2 * d2 / (d2 + d3);
+      d += 'C' + (p1.x + (p2.x-p0.x)*a).toFixed(2) + ' ' + (p1.y + (p2.y-p0.y)*a).toFixed(2)
+         + ' ' + (p2.x - (p3.x-p1.x)*b).toFixed(2) + ' ' + (p2.y - (p3.y-p1.y)*b).toFixed(2)
+         + ' ' + p2.x.toFixed(2) + ' ' + p2.y.toFixed(2);
+    }
+    return d;
+  }
+
+  // ── 선 ─────────────────────────────────────────────────────
+  function Line(cf, i){
+    this.cf = cf; this.pts = []; this.n = 0; this.y = pctY(0);
+
+    var g = el('linearGradient', {id:'g'+i, gradientUnits:'userSpaceOnUse',
+                                  x1:CFG.x0, y1:0, x2:CFG.x1, y2:0}, defs);
+    el('stop', {offset:'0', 'stop-color':cf.c1}, g);
+    el('stop', {offset:'1', 'stop-color':cf.c2}, g);
+    var fg = el('linearGradient', {id:'f'+i, gradientUnits:'userSpaceOnUse',
+                                   x1:0, y1:CFG.yTop, x2:0, y2:CFG.bottom}, defs);
+    el('stop', {offset:'0',   'stop-color':'#fff', 'stop-opacity':'1'},   fg);
+    el('stop', {offset:'.55', 'stop-color':'#fff', 'stop-opacity':'.38'}, fg);
+    el('stop', {offset:'1',   'stop-color':'#fff', 'stop-opacity':'0'},   fg);
+    var mk = el('mask', {id:'m'+i, maskUnits:'userSpaceOnUse',
+                         x:0, y:0, width:CFG.x1, height:CFG.bottom}, defs);
+    el('rect', {x:0, y:0, width:CFG.x1, height:CFG.bottom, fill:'url(#f'+i+')'}, mk);
+    this.fade = fg;
+
+    this.area = el('path', {fill:'url(#g'+i+')', 'fill-opacity':cf.fillOp, stroke:'none',
+                            mask:'url(#m'+i+')'}, layer.area);
+    this.line = el('path', {fill:'none', stroke:'url(#g'+i+')', 'stroke-width':cf.lineW,
+                            'stroke-linecap':'round', 'stroke-linejoin':'round'}, layer.line);
+    this.stem = el('line', {x1:BX, x2:BX, y2:CFG.bottom, stroke:cf.cDot, 'stroke-width':cf.stemW,
+                            display:cf.stem ? '' : 'none'}, layer.stem);
+    this.dot  = el('circle', {cx:BX, r:cf.dotR, fill:cf.cDot}, layer.dot);
+    this.box  = el('rect', {fill:cf.cDot}, layer.valBox);
+    this.val  = el('text', {x:BX, fill:CFG.val.color, 'text-anchor':'middle',
+                            'font-size':CFG.val.size, 'font-weight':'700',
+                            'font-family':FONT}, layer.valText);
+  }
+
+  Line.prototype.step = function(dt, travel, penX){
+    this.n = valueAt(this.cf.key, travel / BAND);      // 지금 시각의 건수
+    this.y = pctY(this.n / PEAK * 100);
+    var p = this.pts;
+    if (penX >= BX) for (var i = 0; i < p.length; i++) p[i].x -= CFG.speed * dt;   // 종이가 흐른다
+    var gap = Math.max(2, CFG.trail.gap);
+    if (!p.length || penX - p[p.length-1].x >= gap) p.push({x:penX, y:this.y});
+    while (p.length > 1 && p[1].x < CFG.x0 - gap) p.shift();
+  };
+
+  Line.prototype.draw = function(penX){
+    var P = this.pts.slice();
+    if (!P.length || penX - P[P.length-1].x > 0.01) P.push({x:penX, y:this.y});
+    var top = P[0].y;
+    for (var i = 1; i < P.length; i++) if (P[i].y < top) top = P[i].y;
+    var d = curve(P, CFG.trail.smooth);
+    this.line.setAttribute('d', d);
+    this.area.setAttribute('d', d ? d + 'L' + penX.toFixed(2) + ' ' + CFG.bottom
+                                      + 'L' + P[0].x.toFixed(2) + ' ' + CFG.bottom + 'Z' : '');
+    this.fade.setAttribute('y1', (top - 1).toFixed(2));
+    this.dot.setAttribute('cx', penX.toFixed(2));
+    this.dot.setAttribute('cy', this.y.toFixed(2));
+    this.stem.setAttribute('x1', penX.toFixed(2));
+    this.stem.setAttribute('x2', penX.toFixed(2));
+    this.stem.setAttribute('y1', this.y.toFixed(2));
+    this.val.setAttribute('x', penX.toFixed(2));
+    this.val.textContent = comma(this.n);
+    var padX = CFG.val.size * 0.52, padY = CFG.val.size * 0.34;
+    this._h = CFG.val.size * 1.12 + padY * 2;
+    this._w = this.val.getComputedTextLength() + padX * 2;
+    this._padY = padY;
+    this._top = this.y - this.cf.dotR - CFG.val.gap - this._h;
+  };
+
+  Line.prototype.place = function(penX){
+    this.box.setAttribute('x', (penX - this._w / 2).toFixed(2));
+    this.box.setAttribute('y', this._top.toFixed(2));
+    this.box.setAttribute('width', this._w.toFixed(2));
+    this.box.setAttribute('height', this._h.toFixed(2));
+    this.box.setAttribute('rx', (this._h * 0.34).toFixed(2));
+    this.val.setAttribute('y', (this._top + this._padY + CFG.val.size * 0.82).toFixed(2));
+  };
+
+  // 값 상자끼리 겹치면 위아래로 밀어 떼어 놓는다
+  function layoutValues(penX){
+    var b = lines.slice().sort(function(a, c){ return a._top - c._top; });
+    for (var i = 1; i < b.length; i++){
+      var need = b[i-1]._top + b[i-1]._h + 1.6;
+      if (b[i]._top < need) b[i]._top = need;
+    }
+    var last = b[b.length-1], over = last._top + last._h - (CFG.yBot + 4);
+    if (over > 0) for (var i = 0; i < b.length; i++) b[i]._top -= over;
+    if (b[0]._top < CFG.yTop - 12){
+      var up = (CFG.yTop - 12) - b[0]._top;
+      for (var i = 0; i < b.length; i++) b[i]._top += up;
+    }
+    for (var i = 0; i < b.length; i++) b[i].place(penX);
+  }
+
+  var lines = CFG.lines.map(function(cf, i){ return new Line(cf, i); });
+  var penX = CFG.intro ? CFG.x0 : BX, travel = 0;
+
+  function tick(dt){
+    travel += CFG.speed * dt;                          // 종이 위를 지나온 거리 = 시각
+    if (penX < BX){ penX = Math.min(BX, CFG.x0 + travel); }
+    for (var i = 0; i < lines.length; i++) lines[i].step(dt, travel, penX);
+    for (var i = 0; i < lines.length; i++) lines[i].draw(penX);
+    layoutValues(penX);
+    moveGrid(penX >= BX ? travel - (BX - CFG.x0) : 0);
+  }
+
+  var still = false;
+  try { still = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){}
+  if (still){                                          // 움직임을 끈 사용자에게는 하루 전체를 한 장으로
+    penX = BX;
+    for (var n = 0; n < 24 * 60; n++) tick(1/60);
+    return;
+  }
+
+  var last = 0;
+  function frame(now){
+    if (!last) last = now;
+    var dt = Math.min((now - last) / 1000, 1/30); last = now;
+    tick(dt);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+]]></script>
+</svg>
