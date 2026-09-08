@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 270" width="480" height="270"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 270"
+     preserveAspectRatio="xMidYMid meet"
      role="img" aria-label="평택대학교 도서관의 시간대별 대출과 반납">
 <title>도서관의 하루 — 시간대별 대출과 반납</title>
 <!-- 값은 지어내지 않는다. 평택대 LAS(ODISU) 대출 이력 BOOK.CDH 를 시간대로 접은 실측치다.
@@ -6,7 +7,10 @@
      세로축은 하루 정점(13시 대출 13,988건) 대비 비율이고, 블릿 위 숫자는 실제 건수다.
 
      블릿은 오른쪽 자리(bx)에서 그 시각의 값을 따라 오르내리고, 지나온 자리가 선이 된다.
-     하루가 한 바퀴 돌면 0시로 되돌아온다. 값·색·속도는 아래 CFG 한 곳에서 바꾼다. -->
+     하루가 한 바퀴 돌면 0시로 되돌아온다. 값·색·속도는 아래 CFG 한 곳에서 바꾼다.
+
+     가로세로 크기를 적지 않았다. 브라우저로 바로 열면 창에 꽉 차고,
+     페이지에 넣을 때는 감싸는 자리의 크기를 따라간다(가로세로 비 480:270 유지). -->
 <defs>
   <clipPath id="clipPlot"><rect id="clipRect" x="0" y="0" width="480" height="240"/></clipPath>
 </defs>
