@@ -315,13 +315,13 @@ footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-si
   </div>
 
   <section aria-labelledby="mx-h">
-    <div class="sec-head"><h2 id="mx-h">현황판</h2><p class="lead">고객별로 보면 각 거래처의 상태가, 솔루션별로 보면 무엇이 팔리고 안 팔리는지가 보인다. 칩이나 카드 번호를 누르면 사업 카드로 간다.</p></div>
-    <div class="tabs" role="tablist" aria-label="현황판 보기"><button type="button" role="tab" id="tab-clients" aria-selected="true">고객별</button><button type="button" role="tab" id="tab-matrix" aria-selected="false">솔루션 × 고객</button></div>
-    <div class="ccards" id="clients" role="tabpanel"></div>
-    <div id="mxwrap" role="tabpanel" hidden>
+    <div class="sec-head"><h2 id="mx-h">현황판</h2><p class="lead">솔루션별로 보면 무엇이 팔리고 안 팔리는지가, 고객별로 보면 각 거래처의 상태가 보인다. 칩이나 카드 번호를 누르면 사업 카드로 간다.</p></div>
+    <div class="tabs" role="tablist" aria-label="현황판 보기"><button type="button" role="tab" id="tab-matrix" aria-selected="true">솔루션 × 고객</button><button type="button" role="tab" id="tab-clients" aria-selected="false">고객별</button></div>
+    <div id="mxwrap" role="tabpanel">
       <div class="scroll"><table class="mx" id="matrix"></table></div>
       <div class="legend" id="stlegend"></div>
     </div>
+    <div class="ccards" id="clients" role="tabpanel" hidden></div>
   </section>
 
   <section aria-labelledby="bk-h">
@@ -545,7 +545,7 @@ function setView(v){
   const clients = v === "clients";
   $("#clients").hidden = !clients; $("#mxwrap").hidden = clients;
   $("#tab-clients").setAttribute("aria-selected", String(clients)); $("#tab-matrix").setAttribute("aria-selected", String(!clients));
-  try { localStorage.setItem("board-view", v); } catch(e){}
+  try { localStorage.setItem("board-view2", v); } catch(e){}
 }
 $("#tab-clients").addEventListener("click", () => setView("clients"));
 $("#tab-matrix").addEventListener("click", () => setView("matrix"));
@@ -731,7 +731,7 @@ $("#discardbtn").addEventListener("click", () => { clearPending(); location.relo
 
 // ---------- 시작 ----------
 renderHeader(); renderTiles(); renderTimeline(); renderFilters(); renderActions(); renderDecisions(); renderClients(); renderMatrix(); renderBlocked(); renderCards(); renderGaps();
-let savedView = "clients"; try { savedView = localStorage.getItem("board-view") || "clients"; } catch(e){}
+let savedView = "matrix"; try { savedView = localStorage.getItem("board-view2") || "matrix"; } catch(e){}
 setView(savedView);
 updateSavebar();
 $("#mode").textContent = "불러오는 중";
