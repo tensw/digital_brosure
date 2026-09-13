@@ -1,5 +1,5 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive"><title>지난 이관에서 확인된 것</title>
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive"><title>지난 이관에서 일어난 것</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
@@ -64,17 +64,17 @@ code{font:600 .9em ui-monospace,Menlo,monospace;background:var(--line2);padding:
 .fs .w b{color:var(--purple);font-weight:800}
 .chk{display:inline-flex;gap:6px;margin-top:8px}
 </style></head><body><div class="slide"><div id="stage"><div class="wrap">
-<div class="hd"><div><div class="kick">01 · 지난 이관</div><h1>지난 이관에서 <em>확인된 것</em></h1><p class=lead>네 가지 확인 사항이 있다. 당시 공유된 정보와 판단 경위는 <b>추가 확인이 필요</b>하며, 여기서는 기록과 실측으로 확인된 상태만 적는다.</p></div><div class=meta>작성 <b>2026-09-14</b> · 대상 <b>개발·운영 전원</b><br>책임자 <b>선임연구원 김경수</b></div></div>
+<div class="hd"><div><div class="kick">01 · 지난 이관</div><h1>시작 전에 <em>정하지 않은 네 가지</em></h1><p class=lead>이번 문제는 API가 없거나 요청을 안 한 것이 아니다. 시작 전에 <b>작업 범위 · 완료 기준 · 영향범위 · 관리자와 직원에게 안내할 범위</b>를 정하지 않고 지시된 내용만 수행했다. 그 결과 작업이 담당 업무 범위를 넘어 전체 시스템에 영향을 주었고, 기존 관리자 기능이 멈췄다.</p></div><div class=meta>작성 <b>2026-09-14</b> · 대상 <b>개발·운영 전원</b><br>책임자 <b>선임연구원 김경수</b></div></div>
 <div class="body" style="flex-direction:column;gap:16px">
- <div class="grid2" style="flex:1">
-  <div class="card"><div class="ck">확인 1 · 기능 이관</div><div class="ct">화면은 재현했고, API(창구)는 없었다</div><div class="sub">구 관리자 22화면을 화면 기준으로 재현했다. 사서 업무 5종(정기교육 개설 · 스터디룸 방 설정 · 사물함 신설 · 지정도서 등록 · 포인트 관리)은 쓰기 API가 없어 <b>저장할 곳이 없는 상태</b>였다.</div></div>
-  <div class="card"><div class="ck">확인 2 · 외부 연계</div><div class="ct">화면에 보이지 않던 의존</div><div class="sub">구 시스템이 자기 백엔드를 <code>lib.ptu.ac.kr</code> 이름으로 부르고 있었고, dCollection(논문 제출)도 같은 주소로 인증을 요청하고 있었다. 9/9 주소 전환 직후 <b>검색·소장·로그인·스터디룸과 논문 제출 인증이 실패</b>했다.</div></div>
-  <div class="card"><div class="ck">확인 3 · 위험 기록의 활용</div><div class="ct">위험은 기록되어 있었다</div><div class="sub">8/21 · 8/26 · 9/5 문서 3건에 관리자 API 미제공과 미조치 항목이 기재되어 있다. 이 기록이 오픈·전환 판단에 <b>어떻게 사용되었는지는 확인이 필요</b>하다.</div></div>
-  <div class="card"><div class="ck">확인 4 · 종료 범위</div><div class="ct">「종료」의 범위가 정의되지 않았다</div><div class="sub">문서에는 9/8 종료로 기재되어 있다. 9/14 실측에서 구 시스템은 <code>weblib.ptu.ac.kr</code>에서 동작 중이었다. <b>문서상 종료가 무엇을 뜻했는지 확인이 필요</b>하다.</div></div>
+ <div class="grid2" style="flex:1;grid-template-columns:repeat(4,1fr)">
+  <div class="card"><div class="ck">정하지 않은 것 1</div><div class="ct">어디까지</div><div class="sub">지시된 범위는 <b>이용자 화면</b>이었다. 작업은 관리자 화면 43개, 주소 전환, 구 시스템 연계까지 확대되었지만, <b>이번 작업에 포함할 범위와 제외할 범위를 정하지 않았다.</b></div></div>
+  <div class="card"><div class="ck">정하지 않은 것 2</div><div class="ct">무엇을</div><div class="sub">「홈페이지를 옮긴다」로 시작했다. <b>완료 기준</b>(어느 메뉴가 저장까지 동작하면 끝인가)과 <b>제외 범위</b>(무엇은 하지 않는가)가 없었다.</div></div>
+  <div class="card"><div class="ck">정하지 않은 것 3</div><div class="ct">영향범위</div><div class="sub">주소 변경이 <b>화면 밖의 기능과 연계</b>에 미치는 영향을 사전에 확인하지 않았다. 주소 전환으로 구 시스템의 내부 호출, 논문 제출 인증, PDF 서빙이 함께 중단되었다.</div></div>
+  <div class="card"><div class="ck">정하지 않은 것 4</div><div class="ct">안내 범위</div><div class="sub">도서관 관리자와 우리 직원에게 <b>무엇이 언제 바뀌는지, 무엇을 못 하게 되는지</b> 알려야 할 범위가 정해지지 않았다. 사서는 관리자 기능이 멈춘 뒤에 알았다.</div></div>
  </div>
- <div class="card panel" style="flex:0 0 auto;flex-direction:row;align-items:center;gap:28px"><div class="ck" style="flex:0 0 auto">현재 상태 · 9/14</div>
-  <div class="sub" style="margin:0;font-size:16.5px">서비스는 응답한다. 임시 릴레이 2개를 사용 중이며, 관리자 18개 화면은 인포테크 API 제공 대기 상태다. 응답 확인은 업무 기능의 정상 작동을 뜻하지 않는다.</div></div>
-</div><div class="foot"><div class="q"><i>논의 질문</i>이 네 항목 중 실제 업무 영향이 충분히 설명되지 않은 부분은 무엇입니까?</div><div class=fd>근거 <b>요청서 3건 · 교차검증 체크리스트 · 9/14 서버 실측</b></div></div>
+ <div class="card ink" style="flex:0 0 auto;flex-direction:row;align-items:center;gap:28px"><div class="ck" style="flex:0 0 auto">그래서 일어난 것</div>
+  <div class="sub" style="margin:0;font-size:18px;color:#fff">사전에 네 가지를 정하지 않고 지시된 내용만 수행 → <b style="color:#fff">담당 업무 범위를 넘어</b> 전체 시스템에 영향 → <b style="color:#fff">기존 관리자 기능 정지</b> · 이용자 서비스 장애. 관리자 API 미제공도 이 과정에서 드러났지만, 출발점은 작업 전에 네 가지를 정하지 않고 진행한 데 있다.</div></div>
+</div><div class="foot"><div class="q"><i>논의 질문</i>네 가지 각각에 대해, 착수 전에 정해야 할 내용은 구체적으로 무엇입니까?</div><div class=fd>근거 <b>요청서 3건 · 교차검증 체크리스트 · 9/9 장애 기록</b></div></div>
 </div></div></div><script>
 function fitStage(){const st=document.getElementById('stage');if(!st)return;
  const k=Math.min(innerWidth/1600,innerHeight/900);st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
