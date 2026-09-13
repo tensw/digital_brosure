@@ -66,14 +66,14 @@ code{font:600 .9em ui-monospace,Menlo,monospace;background:var(--line2);padding:
 </style></head><body><div class="slide"><div id="stage"><div class="wrap">
 <div class="hd"><div><div class="kick">01 · 지난 이관</div><h1>시작 전에 <em>정하지 않은 네 가지</em></h1><p class=lead>이번 문제는 API가 없거나 요청을 안 한 것이 아니다. 시작 전에 <b>작업 범위 · 완료 기준 · 영향범위 · 관리자와 직원에게 안내할 범위</b>를 정하지 않고 지시된 내용만 수행했다. 그 결과 작업이 담당 업무 범위를 넘어 전체 시스템에 영향을 주었고, 기존 관리자 기능이 멈췄다.</p></div><div class=meta>작성 <b>2026-09-14</b> · 대상 <b>개발·운영 전원</b><br>책임자 <b>선임연구원 김경수</b></div></div>
 <div class="body" style="flex-direction:column;gap:16px">
- <div class="grid2" style="flex:1;grid-template-columns:repeat(4,1fr)">
+ <div class="grid2" style="flex:0 0 auto;grid-template-columns:repeat(4,1fr)">
   <div class="card"><div class="ck">정하지 않은 것 1</div><div class="ct">어디까지</div><div class="sub">지시된 범위는 <b>이용자 화면</b>이었다. 작업은 관리자 화면 43개, 주소 전환, 구 시스템 연계까지 확대되었지만, <b>이번 작업에 포함할 범위와 제외할 범위를 정하지 않았다.</b></div></div>
   <div class="card"><div class="ck">정하지 않은 것 2</div><div class="ct">무엇을</div><div class="sub">「홈페이지를 옮긴다」로 시작했다. <b>완료 기준</b>(어느 메뉴가 저장까지 동작하면 끝인가)과 <b>제외 범위</b>(무엇은 하지 않는가)가 없었다.</div></div>
   <div class="card"><div class="ck">정하지 않은 것 3</div><div class="ct">영향범위</div><div class="sub">주소 변경이 <b>화면 밖의 기능과 연계</b>에 미치는 영향을 사전에 확인하지 않았다. 주소 전환으로 구 시스템의 내부 호출, 논문 제출 인증, PDF 서빙이 함께 중단되었다.</div></div>
   <div class="card"><div class="ck">정하지 않은 것 4</div><div class="ct">안내 범위</div><div class="sub">도서관 관리자와 우리 직원에게 <b>무엇이 언제 바뀌는지, 무엇을 못 하게 되는지</b> 알려야 할 범위가 정해지지 않았다. 사서는 관리자 기능이 멈춘 뒤에 알았다.</div></div>
  </div>
- <div class="card ink" style="flex:0 0 auto;flex-direction:row;align-items:center;gap:28px"><div class="ck" style="flex:0 0 auto">그래서 일어난 것</div>
-  <div class="sub" style="margin:0;font-size:18px;color:#fff">사전에 네 가지를 정하지 않고 지시된 내용만 수행 → <b style="color:#fff">담당 업무 범위를 넘어</b> 전체 시스템에 영향 → <b style="color:#fff">기존 관리자 기능 정지</b> · 이용자 서비스 장애. 관리자 API 미제공도 이 과정에서 드러났지만, 출발점은 작업 전에 네 가지를 정하지 않고 진행한 데 있다.</div></div>
+ <div class="card ink" style="flex:1;flex-direction:row;align-items:center;gap:36px;padding:28px 34px"><div class="ck" style="flex:0 0 auto;font-size:14px">그래서 일어난 것</div>
+  <div class="sub" style="margin:0;font-size:24px;line-height:1.6;color:#fff">사전에 네 가지를 정하지 않고 지시된 내용만 수행 → <b style="color:#fff">담당 업무 범위를 넘어</b> 전체 시스템에 영향 → <b style="color:#fff">기존 관리자 기능 정지</b> · 이용자 서비스 장애. 관리자 API 미제공도 이 과정에서 드러났지만, 출발점은 작업 전에 네 가지를 정하지 않고 진행한 데 있다.</div></div>
 </div><div class="foot"><div class="q"><i>논의 질문</i>네 가지 각각에 대해, 착수 전에 정해야 할 내용은 구체적으로 무엇입니까?</div><div class=fd>근거 <b>요청서 3건 · 교차검증 체크리스트 · 9/9 장애 기록</b></div></div>
 </div></div></div><script>
 function fitStage(){const st=document.getElementById('stage');if(!st)return;
