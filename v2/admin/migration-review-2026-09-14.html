@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>도서관 홈페이지 이관 경과와 착수·전환 판단 기준</title>
+<style>
+:root{
+  --ink:#15181C; --ink2:#3A424A; --dim:#6B757F; --faint:#9AA3AB;
+  --line:#E2E6EA; --line2:#F0F3F5; --bg:#FFFFFF; --panel:#F7F9FA;
+  --mark:#B45309;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#EEF1F3;color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Pretendard','Segoe UI',sans-serif;
+  font-size:15px;line-height:1.78;letter-spacing:-.01em}
+.sheet{max-width:930px;margin:0 auto;background:var(--bg);padding:56px 62px 90px;
+  box-shadow:0 1px 24px rgba(20,30,40,.07)}
+
+.top{border-bottom:2.5px solid var(--ink);padding-bottom:20px;margin-bottom:30px}
+.kicker{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--dim);margin-bottom:9px}
+h1{font-size:26px;font-weight:850;margin:0 0 12px;line-height:1.38;letter-spacing:-.02em}
+.meta{font-size:13px;color:var(--dim);display:flex;gap:18px;flex-wrap:wrap}
+.meta b{color:var(--ink2);font-weight:700}
+
+.lead{background:var(--panel);border-left:3px solid var(--ink);padding:17px 22px;margin:0 0 14px;font-size:14.5px}
+.lead p{margin:0 0 8px} .lead p:last-child{margin:0}
+
+.part{font-size:12px;font-weight:850;letter-spacing:.14em;color:#fff;background:var(--ink);
+  display:inline-block;padding:5px 13px;border-radius:3px;margin:50px 0 18px}
+
+h2{font-size:18.5px;font-weight:820;margin:38px 0 10px;letter-spacing:-.015em}
+h2 .n{color:var(--faint);font-weight:800;margin-right:9px;font-variant-numeric:tabular-nums}
+h3{font-size:15px;font-weight:800;margin:24px 0 7px}
+p{margin:0 0 12px}
+ul,ol{margin:0 0 14px;padding-left:20px} li{margin-bottom:6px}
+strong{font-weight:800}
+
+table{width:100%;border-collapse:collapse;margin:13px 0 20px;font-size:13.5px;line-height:1.62}
+th{background:var(--panel);text-align:left;font-weight:800;font-size:12.5px;color:var(--ink2);
+  padding:9px 11px;border-bottom:1.5px solid var(--line);vertical-align:bottom}
+td{padding:9px 11px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:1px solid var(--line)}
+td.d{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink2)}
+td.src,.src{font-size:12px;color:var(--dim)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.87em;
+  background:var(--line2);padding:1px 5px;border-radius:3px;
+  overflow-wrap:anywhere}
+.st{font-weight:800;white-space:nowrap}
+.st.no{color:var(--mark)}
+blockquote{margin:10px 0 14px;padding:11px 18px;border-left:3px solid var(--line);
+  background:var(--panel);font-size:14px;color:var(--ink2)}
+blockquote p{margin:0}
+blockquote .src{display:block;margin-top:6px}
+
+.box{border:1px solid var(--line);border-radius:8px;padding:19px 23px;margin:16px 0}
+.box h3{margin-top:0}
+.box.mark{border-color:#EBD3B4;background:#FFFCF7}
+.box.rule{background:var(--ink);color:#fff;border:none;padding:22px 26px}
+.box.rule p{margin:0;font-size:16px;font-weight:800;line-height:1.6}
+
+.chk{list-style:none;padding:0;margin:14px 0 20px;counter-reset:c}
+.chk li{counter-increment:c;position:relative;padding:13px 0 13px 44px;border-bottom:1px solid var(--line2)}
+.chk li:last-child{border-bottom:none}
+.chk li::before{content:counter(c);position:absolute;left:0;top:12px;width:27px;height:27px;
+  background:var(--ink);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:12.5px;font-weight:800}
+.chk b{display:block;font-size:15px;margin-bottom:2px}
+.chk span{font-size:13.5px;color:var(--dim);display:block}
+
+.form{background:#15181C;color:#E6EBEF;border-radius:8px;padding:23px 26px;margin:14px 0 10px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.95;
+  white-space:pre-wrap;overflow-x:auto}
+.copy{font:inherit;font-size:13px;font-weight:700;border:1px solid var(--line);background:#fff;
+  color:var(--ink2);padding:8px 15px;border-radius:6px;cursor:pointer}
+.copy:hover{border-color:var(--ink);color:var(--ink)}
+.copy.done{border-color:var(--ink);color:var(--ink)}
+
+.foot{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--faint);line-height:1.8}
+
+@media (max-width:760px){
+  .sheet{padding:32px 20px 60px}
+  h1{font-size:21px} body{font-size:14.5px}
+  /* 좁은 화면에서는 표를 가로로 밀어 본다. 본문이 가로로 밀리지 않게 표 안에서만 스크롤 */
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    font-size:12.5px;max-width:100%}
+  th,td{padding:7px 8px}
+}
+@media print{
+  body{background:#fff;font-size:10.5pt}
+  .sheet{max-width:none;box-shadow:none;padding:0}
+  .copy{display:none}
+  h2{page-break-after:avoid} table,.box,.form{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<div class="top">
+  <div class="kicker">텐소프트웍스 내부 자료</div>
+  <h1>평택대학교 도서관 홈페이지 이관<br>경과와 착수·전환 판단 기준</h1>
+  <div class="meta">
+    <span>작성 <b>2026-09-14</b></span>
+    <span>대상 <b>개발·운영 전원</b></span>
+    <span>근거 <b>저장소 기록 · 점검 체크리스트 · 서버 응답 실측</b></span>
+  </div>
+</div>
+
+<div class="lead">
+  <p>이 문서는 도서관 홈페이지 이관 경과와 기능 제공 상태를 정리하고, 후속 작업의 착수·전환 판단 기준을 제시한다.</p>
+  <p>1부는 기록과 실측으로 확인한 사항, 2부는 다음 작업부터 적용할 절차다. <b>확인한 사실과 추가 확인이 필요한 사항을 구분해 표기</b>한다.</p>
+</div>
+<p class="src">수치와 상태값은 저장소 기록(2026-07-14 ~ 2026-09-14), 2026-09-05 교차검증 체크리스트, 2026-09-14 서버 응답 실측에서 가져왔다. 종료·전환 결정 과정의 기록(메일·회의록·승인)은 확인하지 못했으며, 해당 부분은 「확인 필요」로 표기했다.</p>
+
+<!-- ═══════════════ 1부 ═══════════════ -->
+<div class="part">1부 · 확인한 사항</div>
+
+<h2><span class="n">1</span>프로젝트 개요</h2>
+<p>평택대학교 도서관 홈페이지를 텐소프트웍스가 새로 구축하는 사업이다.</p>
+<table>
+  <tr><th style="width:24%">항목</th><th style="width:24%">값</th><th>집계 기준</th></tr>
+  <tr><td>저장소 최초 커밋</td><td>2026-07-14</td><td class="src">계약상 착수일은 별도 확인 필요</td></tr>
+  <tr><td>커밋</td><td>2,238건</td><td class="src">2026-09-14 기준 main 브랜치 누적</td></tr>
+  <tr><td>이용자 화면</td><td>123개</td><td class="src">저장소 최상위 HTML 파일 수</td></tr>
+  <tr><td>관리자 화면</td><td>43개</td><td class="src"><code>admin/</code> HTML 파일 수</td></tr>
+  <tr><td>서버 API</td><td>105개</td><td class="src">워커 API 파일 수</td></tr>
+</table>
+
+<h2><span class="n">2</span>시스템과 공급사</h2>
+<p>본문에서 쓰는 명칭을 다음과 같이 구분한다.</p>
+<table>
+  <tr><th style="width:17%">이름</th><th style="width:15%">주체</th><th>정의</th></tr>
+  <tr>
+    <td><b>LAS</b></td><td>업계 일반 용어</td>
+    <td>도서관 자동화 시스템. 서지·소장·대출·반납·이용자 정보를 관리하는 기간계 시스템이다.</td>
+  </tr>
+  <tr>
+    <td><b>ODISU · Cheetah</b></td><td>인포테크</td>
+    <td>평택대가 사용하는 LAS 제품명. 대출·예약·소장·이용자 데이터를 관리한다.</td>
+  </tr>
+  <tr>
+    <td><b>인포테크</b></td><td>LAS 공급사</td>
+    <td>ODISU의 개발·운영사. 외부 시스템이 ODISU 데이터를 조회하거나 변경하려면 인포테크가 제공하는 연계 API가 필요하다.</td>
+  </tr>
+  <tr>
+    <td><b>BIBLO</b></td><td>텐소프트웍스</td>
+    <td>본 사업에서 구축하는 도서관 화면과 검색 엔진. LAS를 대체하지 않고 LAS 데이터를 조회해 표시한다.</td>
+  </tr>
+</table>
+<p class="src">본 사업 문서에서는 연계 API를 「창구」로도 표기한다(사서 대상 안내문 기준).</p>
+
+<h2><span class="n">3</span>요청 범위와 연계 조건</h2>
+<p><b>지시된 범위는 도서관 이용자 화면이다</b>(대표 지시). LAS는 유지하고 화면을 새로 구축하는 구조다.</p>
+<p>이 구조에서 따라오는 조건이 있다. <b>LAS 데이터의 조회·변경이 필요한 기능은 해당 연계 API의 제공 여부를 먼저 확인해야 한다.</b> API가 제공되지 않는 기능은 화면을 동일하게 구현해도 동작하지 않는다.</p>
+<p>실제 산출물은 이용자 화면 123개와 관리자 화면 43개다. 구 관리자 메뉴 22개는 화면 기준으로 전부 재현했다. <span class="src">관리자 화면이 요청 범위에 포함된 경위와 시점은 확인 필요.</span></p>
+
+<h2><span class="n">4</span>주소 연결 대상</h2>
+<p>2026-09-09 도메인 전환 이후 주소별 연결 대상은 다음과 같다.</p>
+<table>
+  <tr><th style="width:25%">주소</th><th style="width:23%">연결 대상</th><th>비고</th></tr>
+  <tr><td><code>lib.ptu.ac.kr</code></td><td>신규 시스템(텐소프트웍스)</td><td>전환 전에는 구 시스템 주소였다</td></tr>
+  <tr><td><code>weblib.ptu.ac.kr</code></td><td>구 시스템(인포테크)</td><td>Libraapi · Cheetah · BooknReader</td></tr>
+  <tr><td><code>newlib.ptu.ac.kr</code></td><td>없음</td><td>신규 시스템의 전환 전 임시 주소. DNS 삭제됨</td></tr>
+</table>
+
+<h2><span class="n">5</span>경과</h2>
+<table>
+  <tr><th style="width:11%">날짜</th><th style="width:45%">기록된 사항</th><th>출처</th></tr>
+  <tr><td class="d">07-14</td><td>저장소 최초 커밋</td><td class="src">저장소</td></tr>
+  <tr><td class="d">07-23</td><td>인포테크에 1차 API 요청(내서재 4종)</td><td class="src">ODISU-API-추가요청-목록.md</td></tr>
+  <tr><td class="d">08-21</td><td>관리자 API 요청서 제출. 기존 명세는 이용자용 중심이며 관리자 쓰기·관리 API가 없다는 내용 기재</td><td class="src">ODISU-API-추가요청-관리자.md</td></tr>
+  <tr><td class="d">08-25</td><td>인포테크 회신(명세 v3). 이용자 API 추가, 관리자 쓰기 API 미포함</td><td class="src">평택대-ODISU-API/README.md</td></tr>
+  <tr><td class="d">08-26</td><td>2차 요청서 제출. A절에 구 관리자 화면 사용 종료 시 업무가 불가능해지는 항목 기재</td><td class="src">ODISU-API-추가요청-목록-2차.md</td></tr>
+  <tr><td class="d">09-05</td><td>구 시스템과 신규 시스템 전 메뉴 교차검증 실시. P0 5건 상태 「미조치」</td><td class="src">교차검증 체크리스트</td></tr>
+  <tr><td class="d">09-08</td><td>신규 시스템 정식 오픈. 접근 제한 게이트 해제</td><td class="src">저장소</td></tr>
+  <tr><td class="d">09-09</td><td>도메인 전환. 구 시스템 기능 장애 발생(§7)</td><td class="src">nginx 릴레이 적용 기록</td></tr>
+  <tr><td class="d">09-10</td><td>dCollection 인증 실패 확인. 릴레이 추가 적용</td><td class="src">apply-libraapi-relay.sh</td></tr>
+  <tr><td class="d">09-14</td><td>인포테크 관리자 API 제공 예정일</td><td class="src">프로젝트 지침</td></tr>
+</table>
+
+<h2><span class="n">6</span>구 시스템의 현재 상태</h2>
+<div class="box mark">
+  <h3>구 시스템은 종료되지 않았다</h3>
+  <p>사업 문서에는 구 시스템을 2026-09-08에 종료한다고 기재되어 있었다. <b>2026-09-14 실측 결과, 구 시스템은 <code>weblib.ptu.ac.kr</code> 주소에서 동작하고 있다.</b></p>
+  <table style="margin-bottom:6px">
+    <tr><th style="width:40%">확인 경로</th><th style="width:20%">응답</th><th>내용</th></tr>
+    <tr><td>구 이용자 홈 <code>/Cheetah/PTUL/Index</code></td><td>HTTP 200</td><td>제목 「평택대학교 도서관」, 본문 50,807바이트, 주요 메뉴 표시</td></tr>
+    <tr><td>구 관리자 <code>/Cheetah/Admin/…</code></td><td>HTTP 302</td><td>같은 서버 로그인 페이지로 이동(화면 경로 유지)</td></tr>
+    <tr><td>구 내서재 <code>/Cheetah/MyLibrary/…</code></td><td>HTTP 302</td><td>같은 서버 로그인 페이지로 이동</td></tr>
+    <tr><td>구 백엔드 API <code>/Libraapi/…</code></td><td>HTTP 200</td><td>정상 응답</td></tr>
+    <tr><td>평택서재 <code>/BooknReader/…</code></td><td>HTTP 200</td><td>본문 14,671바이트</td></tr>
+  </table>
+  <p style="margin-bottom:0"><b>확인 필요 사항</b>: ① 사서 계정으로 구 관리자에 로그인해 실제 업무 처리가 가능한지 (로그인 실측은 수행하지 않았다) ② 구 시스템의 새 주소가 사서에게 안내되었는지 ③ 구 시스템의 유지 기간과 계약 조건</p>
+</div>
+<p>구 이용자 홈 화면에서 주소 변경이나 서비스 종료를 알리는 문구는 확인되지 않았다. 옛 주소로 접속하면 신규 시스템이 표시되며, 구 시스템으로 이동하는 안내는 없다.</p>
+
+<h2><span class="n">7</span>관리자 API 미제공 항목과 업무 영향</h2>
+<p>2026-08-26 요청서 A절에 기재된 항목이다. 신규 시스템에서는 연계 API가 없어 처리할 수 없다.</p>
+<table>
+  <tr><th style="width:34%">업무</th><th style="width:18%">신규 시스템</th><th>기재된 사유</th></tr>
+  <tr><td>정기교육 개설·수정·삭제</td><td class="st no">처리 불가</td><td>사서용 개설 API 없음. 신청 API가 ODISU 교육번호를 요구</td></tr>
+  <tr><td>스터디룸 방·시간·인원 변경</td><td class="st no">처리 불가</td><td>등록 API 없음. 자체 DB에 등록해도 ODISU가 해당 키를 인식하지 못해 학생 예약 불가</td></tr>
+  <tr><td>사물함 신설·폐지</td><td class="st no">처리 불가</td><td>설정 저장 API 없음(조회만 제공)</td></tr>
+  <tr><td>지정도서 등록·삭제</td><td class="st no">처리 불가</td><td>등록 API 없음(조회만 제공)</td></tr>
+  <tr><td>포인트 적립·시상·항목 관리</td><td class="st no">처리 불가</td><td>포인트 관련 API가 명세에 없음</td></tr>
+</table>
+<p>자체 DB로 임시 구현할지는 <b>「자체 DB에만 저장해도 이용자 쪽 기능이 동작하는가」</b>를 기준으로 판단했다. 위 항목은 ODISU가 해당 데이터를 참조해 동작하므로 임시 구현을 수행하지 않았다. <span class="src">판단 근거는 프로젝트 지침의 임시 구현 기준에 기재.</span></p>
+<p>구 시스템이 <code>weblib</code>에서 동작하고 있으므로, <b>위 업무를 구 관리자에서 계속 처리할 수 있는지 확인이 필요하다.</b> 가능하다면 업무 중단이 아니라 접속 경로 안내 문제가 된다.</p>
+
+<h3>2026-09-05 교차검증 판정</h3>
+<table>
+  <tr><th style="width:26%">구분</th><th>판정</th></tr>
+  <tr><td>이용자 메뉴 63건<br><span class="src">구 시스템 메뉴 기준</span></td><td>대응 41 · 부분 8 · 방식변경 5 · 구 시스템 의존 4 · 미구현 3 · 기타 2</td></tr>
+  <tr><td>관리자 메뉴 26건<br><span class="src">구 22 + 신규 전용 4</span></td><td>부분 13 · 대응 7 · 신규 5 · 미구현 1</td></tr>
+</table>
+
+<h3>P0 항목 5건 (2026-09-05 기준 「미조치」)</h3>
+<ol>
+  <li>학술DB 매뉴얼 PDF 8종이 구 서버에서 제공됨</li>
+  <li>피어선 박사 저서·피어선신학논단 원문 PDF가 구 서버에서 제공됨</li>
+  <li>평택서재(BooknReader)가 구 도메인을 참조</li>
+  <li>정기교육 신청 내역 조회가 3개 계정 모두 오류</li>
+  <li>전자잡지(모아진) 메뉴 미구현</li>
+</ol>
+<p>다섯 항목은 파일 제공 경로, 도메인 연결, 조회 오류, 메뉴 구현 여부에 관한 사항으로 성격이 서로 다르다. <b>2026-09-08 오픈 시점의 상태는 재점검 기록이 없어 추가 확인이 필요하다.</b></p>
+
+<h2><span class="n">8</span>도메인 전환 시 발생한 장애</h2>
+<p>2026-09-09 도메인 전환 후 구 시스템의 검색·소장·로그인·스터디룸 기능에서 실패가 발생했다. 구 홈페이지를 이용하던 이용자도 영향을 받았다.</p>
+<div class="box mark">
+  <h3>기록된 원인</h3>
+  <p>구 시스템의 Libraapi는 자기 내부 백엔드를 <code>http://lib.ptu.ac.kr/OdisuService/…</code> 라는 주소로 호출하고 있었다. 해당 주소가 신규 시스템으로 연결되면서 구 서버가 백엔드를 찾지 못했다. 오류 메시지는 「수신 대기 중인 끝점이 없습니다」였다.</p>
+  <p style="margin-bottom:0">같은 원인으로 다음 날 dCollection(본교 논문 제출)의 인증이 실패했다. dCollection은 도서관 인증 API를 <code>lib.ptu.ac.kr/Libraapi/user/usrauth</code> 주소로 호출하고 있었다.</p>
+</div>
+<p>두 건 모두 <b>신규 시스템 화면에는 나타나지 않는 의존 관계</b>다. 화면 점검 외에 호출 설정과 연계 시스템의 동작을 별도로 확인해야 발견할 수 있다.</p>
+<p>조치는 nginx에 릴레이 두 개를 추가해 해당 경로의 요청을 구 서버로 전달하는 것이었다. 릴레이는 호출 주소가 <code>weblib</code>로 변경되기 전까지 유지하는 임시 조치이며, 정식 해결에는 인포테크와 KERIS의 설정 변경이 필요하다.</p>
+
+<h2><span class="n">9</span>2026-09-14 점검 결과</h2>
+<table>
+  <tr><th style="width:50%">점검 경로</th><th style="width:20%">응답</th><th>상태</th></tr>
+  <tr><td>신규 시스템 <code>lib.ptu.ac.kr/home.html</code></td><td>HTTP 200</td><td>응답 확인</td></tr>
+  <tr><td>구 시스템 <code>weblib.ptu.ac.kr/Cheetah/PTUL/Index</code></td><td>HTTP 200</td><td>응답 확인</td></tr>
+  <tr><td>구 시스템 검색 API</td><td>success</td><td>정상 응답</td></tr>
+  <tr><td><code>/OdisuService/</code> 릴레이</td><td>HTTP 200</td><td class="st no">임시 조치 유지 중</td></tr>
+  <tr><td><code>/Libraapi/</code> 릴레이</td><td>HTTP 200</td><td class="st no">임시 조치 유지 중</td></tr>
+  <tr><td>관리자 화면의 「API 미제공·임시」 안내</td><td>18개 화면</td><td class="st no">인포테크 제공 대기</td></tr>
+</table>
+<p class="src">HTTP 200은 해당 경로의 응답을 확인한 것이며, 로그인·조회·등록 등 업무 기능의 정상 여부는 별도 검증이 필요하다.</p>
+
+<h2><span class="n">10</span>기록된 사항과 확인이 필요한 사항</h2>
+<div class="box">
+  <h3>기록되어 있던 것</h3>
+  <p>2026-08-21 관리자 API 요청서에 관리자 쓰기·관리 API 미제공 사항이 기재되어 있다. 2026-08-26 요청서 A절에는 구 관리자 화면 사용 종료 시 처리가 불가능해지는 업무와, 다음 확인 질문이 포함되어 있다.</p>
+  <blockquote>
+    <p>9/8 이후 사서가 정기교육을 개설하는 창구가 따로 있나요(사서용 클라이언트 등)? 없다면 위 API 가 필수입니다.</p>
+    <span class="src">ODISU-API-추가요청-목록-2차.md A-1, 2026-08-26</span>
+  </blockquote>
+  <p>2026-09-05 교차검증에는 P0 5건이 「미조치」로 기록되어 있다.</p>
+  <p style="margin-bottom:0">이 기록은 <b>전환 전에 관련 미해결 사항이 문서화되어 있었음을 보여 준다.</b></p>
+</div>
+<div class="box">
+  <h3>이번 면담에서 확인할 사항</h3>
+  <ol style="margin-bottom:0">
+    <li><b>전환 결정 시점에 공유된 정보</b>. 위 요청서와 점검표가 오픈·전환 판단에 사용되었는지, 항목별 조치 상태가 어떻게 정리되어 있었는지.</li>
+    <li><b>인포테크 회신 여부</b>. 2026-08-26 확인 질문에 대한 전환 전 회신이 있었는지. 메일·회의록 대조 필요.</li>
+    <li><b>대체 업무 경로</b>. 관리자 API 미제공 업무를 구 관리자(<code>weblib</code>)에서 처리할 수 있는지, 사서에게 안내되었는지.</li>
+    <li><b>외부 연계 점검 여부</b>. 도메인 전환 전에 외부 시스템과 구 시스템 내부의 호출 주소를 확인하는 절차가 있었는지.</li>
+    <li><b>승인 기록</b>. 오픈과 도메인 전환의 승인자와 승인 근거가 어디에 남아 있는지.</li>
+  </ol>
+</div>
+<p>확인되지 않은 항목을 전제로 원인을 단정하지 않는다. 위 다섯 가지가 정리되면 재발 방지 대상이 절차인지, 정보 공유인지, 판단 기준인지 구분할 수 있다.</p>
+
+<!-- ═══════════════ 2부 ═══════════════ -->
+<div class="part">2부 · 적용할 절차</div>
+
+<h2><span class="n">11</span>원칙</h2>
+<div class="box rule">
+  <p>작업 책임자는 착수 전 미팅을 소집하고, 영향받는 업무 담당자와 승인자가 확인한 결과를 지정된 위치에 기록한다. 보고서 없이 착수하지 않는다.</p>
+</div>
+<table>
+  <tr><th style="width:22%">구분</th><th>적용</th></tr>
+  <tr><td>대상 작업</td><td>신규 기능, 외부 연계 변경, 데이터 구조 변경, 전환·종료 작업</td></tr>
+  <tr><td>간소화 대상</td><td>문구 수정, 스타일 조정 등 영향범위가 한 화면에 그치는 작업. 보고서 1~2항만 기록</td></tr>
+  <tr><td>긴급 복구</td><td>사전 미팅 없이 착수하되, <b>착수 시각·조치 내용·영향범위를 즉시 기록</b>하고 24시간 내 사후 검토</td></tr>
+  <tr><td>참석자</td><td>작업 책임자, 운영 담당자, 영향받는 업무 담당자, 승인자. 외부 연계가 있으면 연계 담당자 포함</td></tr>
+  <tr><td>회의 시간</td><td>확인 항목과 미확인 사항에 따라 정한다. 필수 항목 확인 전에는 착수 여부를 확정하지 않는다</td></tr>
+  <tr><td>기록 위치</td><td>작업 저장소의 지정 폴더. 변경 시 이력을 남긴다</td></tr>
+</table>
+
+<h2><span class="n">12</span>미팅에서 확정할 다섯 가지</h2>
+<ol class="chk">
+  <li><b>작업 정의</b><span>목적, 포함 범위, 제외 범위, 산출물, 완료 기준. 「홈페이지를 옮긴다」가 아니라 「구 시스템 이용자 메뉴 63건을 신규 화면으로 대체한다」처럼 경계가 드러나게 기재한다.</span></li>
+  <li><b>영향범위</b><span>화면·데이터·파일·외부 연계·사람·복구 가능성. §13 점검표로 항목별 확인.</span></li>
+  <li><b>업무 영향</b><span>실패하거나 지연될 경우 영향받는 사용자, 업무 담당자, 외부 기관을 각각 기재한다.</span></li>
+  <li><b>외부 의존 사항</b><span>다른 담당자·기관의 제공 또는 승인이 필요한 사항. 무엇을, 누가, 언제까지, 확보되지 않을 경우의 처리까지.</span></li>
+  <li><b>보류 조건과 판단 담당자</b><span>어떤 조건이 충족되지 않으면 진행하지 않는지, 그 판단을 누가 하는지. 필수 기재 항목이다.</span></li>
+</ol>
+
+<h2><span class="n">13</span>영향범위 점검표</h2>
+<p>이번 이관의 관련 사례를 함께 제시한다.</p>
+<table>
+  <tr><th style="width:14%">구분</th><th style="width:41%">확인 항목</th><th>이번 이관의 사례</th></tr>
+  <tr><td><b>화면</b></td><td>이 화면이 호출하는 연계 API가 제공되는가. 조회만 되는가, 등록·수정·삭제까지 되는가</td><td>관리자 메뉴 22개를 화면으로 재현했으나 쓰기 API 미제공으로 5개 업무 처리 불가</td></tr>
+  <tr><td><b>데이터</b></td><td>원본 시스템이 어디인가. 자체 저장 시 원본이 이중화되는가</td><td>ODISU가 참조하는 키를 자체 DB에 만들면 이용자 기능이 동작하지 않음</td></tr>
+  <tr><td><b>파일</b></td><td>이 페이지가 참조하는 PDF·이미지·첨부가 어느 서버에 있는가</td><td>학술DB 매뉴얼 8종, 컬렉션 원문 PDF가 구 서버에서 제공</td></tr>
+  <tr><td><b>외부 연계</b></td><td><b>우리 주소를 호출하는 외부 시스템이 있는가.</b> 상대 시스템의 설정에 우리 주소가 등록되어 있는가</td><td>dCollection 인증, 구 시스템 내부 호출. 모두 화면 점검으로는 확인되지 않음</td></tr>
+  <tr><td><b>사람</b></td><td>이 기능이 없으면 어떤 업무가 중단되는가. 대체 경로를 안내했는가</td><td>사서 업무 5종. 구 관리자 접속 경로 안내 여부 확인 필요</td></tr>
+  <tr><td><b>복구</b></td><td>복구 가능 여부, 복구 절차, 소요시간, 복구 불가 항목</td><td>도메인 전환은 DNS 전파 시간이 필요하며 즉시 복구되지 않음</td></tr>
+</table>
+
+<h2><span class="n">14</span>미팅 보고서 양식</h2>
+<p>아래를 복사해 채운다. 미확인 항목에는 확인 담당자와 기한을 기록한다. <b>착수 필수조건이 미확인인 경우 확인 완료 전까지 착수를 보류한다.</b></p>
+<div class="form" id="tpl"># 착수 전 미팅 보고서
+
+작업명   :
+일시     :        장소/방식 :
+작업 책임자 :      작성자 :
+참석     :
+
+## 1. 작업 정의
+목적      :
+포함 범위  :
+제외 범위  :
+산출물    :
+완료 기준  :
+
+## 2. 영향범위
+화면     :
+데이터   :
+파일     :
+외부 연계 :
+사람     :
+복구     :
+
+## 3. 업무 영향 (실패·지연 시)
+영향받는 사용자 :
+업무 담당자    :
+외부 기관     :
+
+## 4. 외부 의존 사항
+무엇 / 담당 / 기한 / 미확보 시 처리
+1)
+2)
+
+## 5. 보류 조건
+진행하지 않는 조건 :
+판단 담당자       :
+
+## 6. 미확인 사항
+항목 / 확인 담당자 / 기한 / 착수 보류 여부
+1)
+
+## 7. 검증 결과와 증빙
+확인한 내용 :
+증빙 위치   :
+
+## 8. 결정
+착수 여부  : 진행 / 보류
+승인자    :        승인 일시 :
+승인 근거  :
+예외 승인 내역 (있는 경우) :
+
+## 9. 후속
+다음 확인 시점 / 확인 항목 / 담당 :
+보고서 보관 위치 :
+변경 이력       :
+</div>
+<button class="copy" id="cp" type="button">양식 복사</button>
+
+<h2><span class="n">15</span>전환·종료 작업의 추가 기준</h2>
+<p>기존 시스템을 종료하거나 주소를 이전하는 작업은 다음 조건의 <b>검증 결과와 승인 기록이 확보된 후</b> 실행한다.</p>
+<table>
+  <tr><th style="width:26%">확인 항목</th><th>기준</th></tr>
+  <tr><td>잔여 항목 처리</td><td>필수 통과 항목과 조건부 승인 가능 항목을 구분한다. 조건부로 진행하는 항목은 업무 영향, 대체 운영 방안, 조치 담당자, 기한, 예외 승인자를 기록한다</td></tr>
+  <tr><td>외부 호출 확인</td><td>연계 기관·외부 시스템의 설정에 우리 주소가 등록되어 있는지 확인한다. 접근 권한이 없으면 상대 담당자의 설정 확인 자료와 연계 시험 결과를 확보한다</td></tr>
+  <tr><td>회신과 검증 구분</td><td>회신 내용, 제공 완료, 연계 시험 결과, 업무 사용자 확인을 각각 구분해 기록한다. 회신이 없으면 「제공 여부 미확인」으로 기록하고, 필수 의존사항이면 진행을 보류한다</td></tr>
+  <tr><td>업무 처리 시험</td><td>핵심 업무를 실제로 한 건 처리해 확인한다. 응답 코드 확인만으로 판단하지 않는다</td></tr>
+  <tr><td>복구 계획</td><td>복구 가능 여부, 절차, 소요시간, 복구 불가 항목, 복구 결정자를 사전에 확정한다</td></tr>
+  <tr><td>전환 직전 재확인</td><td>착수 미팅 이후 조건이 바뀔 수 있다. <b>전환 직전에 검증 결과를 다시 확인하고 승인 기록을 남긴다</b></td></tr>
+  <tr><td>전환 후 관찰</td><td>관찰 기간, 이상 판단 기준, 연락 체계, 임시 조치 해제 조건을 정한다</td></tr>
+  <tr><td>승인 기록</td><td>전환·종료 승인자의 이름과 승인 일시를 기록한다</td></tr>
+  <tr><td>이용 부서 통지</td><td>영향받는 부서에 변경 내용과 대체 경로를 사전 통지하고 통지 기록을 남긴다</td></tr>
+</table>
+
+<div class="foot">
+  근거 자료 · 저장소 커밋 기록(2026-07-14 ~ 2026-09-14) · ODISU API 추가요청 1차(2026-07-23) · 관리자편(2026-08-21) · 2차(2026-08-26) · 구 시스템 신규 시스템 전 메뉴 교차검증 체크리스트(2026-09-05) · 서버 응답 실측(2026-09-14)<br>
+  본 문서는 텐소프트웍스 내부 자료다. 외부 공유 전 확인이 필요하다.
+</div>
+
+</div>
+<script>
+document.getElementById('cp').addEventListener('click', function () {
+  var btn = this, txt = document.getElementById('tpl').textContent;
+  function done() { btn.textContent = '복사했습니다'; btn.classList.add('done');
+    setTimeout(function () { btn.textContent = '양식 복사'; btn.classList.remove('done'); }, 2000); }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(done, fallback);
+  } else fallback();
+  function fallback() {
+    var ta = document.createElement('textarea');
+    ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+});
+</script>
+</body>
+</html>
