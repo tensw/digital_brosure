@@ -1,0 +1,101 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>문단 단위 정보 추출 사례</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;overflow:visible;background:transparent}
+h1{position:absolute;left:82px;top:66px;font-size:42px;font-weight:800;letter-spacing:-1.5px;line-height:1.2;color:#111827}
+h1 .ac{color:#1e4be8}
+.h1s{position:absolute;left:82px;top:130px;font-size:15.5px;font-weight:600;letter-spacing:-.3px;color:#4b5563}
+.kick{position:absolute;left:82px;top:40px;font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color:#98a1b2}
+.meta{position:absolute;right:82px;top:52px;text-align:right;font:700 12px/1.8 ui-monospace,Menlo,monospace;color:#98a1b2}
+.meta b{color:#4b5563}
+.sent{position:absolute;left:82px;right:82px;top:180px;background:#fff;border-radius:14px;border:1px solid #e6eaf3;
+ box-shadow:0 3px 12px rgba(30,50,90,.06);padding:24px 30px}
+.sent .lb{font:700 11px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#98a1b2}
+.sent p{margin-top:12px;font-size:19px;line-height:1.75;font-weight:600;color:#1f2a3d;letter-spacing:-.3px}
+.sent .src{margin-top:12px;font:600 12px ui-monospace,Menlo,monospace;color:#98a1b2}
+mark{background:transparent;padding:0 1px;font-weight:800}
+.m-plc{color:#158a45;box-shadow:inset 0 -7px 0 rgba(74,222,128,.28)}
+.m-tim{color:#b45309;box-shadow:inset 0 -7px 0 rgba(251,191,36,.34)}
+.m-num{color:#475569;box-shadow:inset 0 -7px 0 rgba(100,116,139,.24)}
+.two{position:absolute;left:82px;right:82px;top:400px;bottom:96px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.card{background:#fff;border-radius:14px;border:1px solid #e6eaf3;box-shadow:0 3px 12px rgba(30,50,90,.06);overflow:hidden;display:flex;flex-direction:column}
+.card .band{background:var(--c);color:#fff;font-size:16px;font-weight:800;letter-spacing:-.4px;padding:11px 22px}
+.card .cw{flex:1;overflow:hidden}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+th{background:#f4f6fb;color:#6b7488;font:700 11px "Pretendard",sans-serif;text-align:left;padding:8px 18px;border-bottom:1px solid #e2e7f1}
+td{padding:9px 18px;border-bottom:1px solid #eef1f7;color:#455066;vertical-align:top;line-height:1.5;font-size:13px;word-break:keep-all}
+tbody tr:last-child td{border-bottom:none}
+td.k{font-weight:800;color:#111827;white-space:nowrap;width:120px}
+.tag{display:inline-block;font:800 10.5px ui-monospace,Menlo,monospace;padding:2px 7px;border-radius:5px;color:#fff;width:34px;text-align:center}
+.foot{position:absolute;left:82px;right:82px;bottom:40px;display:flex;align-items:center}
+.foot .big{font-size:22px;font-weight:800;letter-spacing:-.5px;color:#111827}
+.foot .big b{color:#1e4be8}
+.foot .fm{margin-left:auto;font:700 11px ui-monospace,Menlo,monospace;color:#98a1b2}
+</style><style>
+/* 전체 지도 위치 표시 (insam-map.html 기준) */
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;
+ display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;
+ background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+.mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
+</style>
+</head><body>
+<div class="slide"><div id="stage"><div class="mappos-i0"><i>1</i>지도 1 · 원자 추출</div>
+ <div class="kick">INDP · 2부 그래프 구성 방법 · 03</div>
+ <h1>문단 단위 <span class="ac">정보 추출과 관계 판정 사례</span></h1>
+ <div class="meta">표본 <b>유관순</b> · 아우내 장터 문단<br>본문 직접 확인</div>
+ <div class="sent">
+  <span class="lb">본문 두 문장</span>
+  <p><mark class="m-tim">1919년 4월 1일</mark> <mark class="m-tim">오후 1시</mark> <mark class="m-plc">병천 아우내 장터</mark>에는 약 <mark class="m-num">3천 명</mark>의 군중이 모여들었다. <mark class="m-plc">갈전면</mark>은 물론이고, 서쪽의 <mark class="m-plc">목천면</mark>과 <mark class="m-plc">북면</mark>, 남쪽의 <mark class="m-plc">성남면</mark>과 <mark class="m-plc">수신면</mark> 방면, 동쪽의 <mark class="m-plc">동면</mark>과 <mark class="m-plc">진천군</mark> 등 각 방면에서 모여든 사람들이었다.</p>
+  <span class="src">유관순 · 아우내 장터 문단 (두 문장) · 추출 항목 11개와 사건 인스턴스 1건</span>
+ </div>
+ <div class="two">
+  <section class="card" style="--c:#1e4be8">
+   <div class="band">뽑히는 추출 항목</div>
+   <div class="cw"><table>
+    <colgroup><col style="width:70px"><col></colgroup>
+    <thead><tr><th>유형</th><th>뽑히는 값</th></tr></thead>
+    <tbody>
+     <tr><td><span class="tag" style="background:#d97706">C1</span></td><td>1919-04-01</td></tr>
+     <tr><td><span class="tag" style="background:#d97706">C4</span></td><td>오후 1시 · 같은 날 사건 순서</td></tr>
+     <tr><td><span class="tag" style="background:#158a45">D4</span></td><td>아우내 장터 (시위 발생 지점)</td></tr>
+     <tr><td><span class="tag" style="background:#64748b">I1</span></td><td>3,000 · 근사</td></tr>
+     <tr><td><span class="tag" style="background:#158a45">D1</span></td><td>군중이 모여든 출발 지역: 갈전면 · 목천면 · 북면 · 성남면 · 수신면 · 동면 · 진천군 (발생 장소와 구분)</td></tr>
+    </tbody>
+   </table></div>
+  </section>
+  <section class="card" style="--c:#c2590a">
+   <div class="band">구성한 사건 인스턴스 1건</div>
+   <div class="cw"><table>
+    <colgroup><col style="width:120px"><col></colgroup>
+    <tbody>
+     <tr><td class="k">유형</td><td>만세시위 (서술형 · 이름 없음)</td></tr>
+     <tr><td class="k">시점</td><td>1919-04-01 오후 1시</td></tr>
+     <tr><td class="k">발생 장소</td><td>아우내 장터</td></tr>
+     <tr><td class="k">참여자</td><td>유관순 · 유중권 · 이소제 · 유중무 · 조인원 (문단 내 다른 문장 근거)</td></tr>
+     <tr><td class="k">규모</td><td>약 3,000명 (수치 속성 · 인물 노드로 만들지 않음)</td></tr>
+     <tr><td class="k">근거</td><td>참여자마다 해당 서술 문장을 연결해 저장</td></tr>
+    </tbody>
+   </table></div>
+  </section>
+ </div>
+ <div class="foot">
+  <div class="big">이름 없는 사건도 <b>행위·시점·장소·참여자</b>가 있으면 사건 인스턴스가 된다</div>
+  <div class="fm">추출 항목 11개 + 사건 인스턴스 1건 · 유관순 본문</div>
+ </div>
+</div></div>
+<script>const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
+if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);</script></body></html>

@@ -5,6 +5,7 @@ Disallow: /bk21
 Disallow: /admin
 Disallow: /account
 Disallow: /login
+Disallow: /edu2026-01
 
 # 학습용 수집 거부
 User-agent: GPTBot

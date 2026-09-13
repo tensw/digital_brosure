@@ -1,0 +1,87 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>정형 사건 필드의 표기 분절과 분석 범위</title>
+<style>
+/* 스킨: biblo-bottleneck (dark · KPI 4칸 + 서술 3칸 + key) */
+:root{--ink:#e6eefb;--ink2:#8ea6cf;--ink3:#54688f;--hi:#38bdf8;--weak:#f59e0b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:radial-gradient(1000px 700px at 55% 46%,#0b1226 0%,#060a16 58%,#03050c 100%);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
+html,body{overflow:hidden}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+.wrap{width:1600px;height:900px;padding:48px 82px 40px;display:flex;flex-direction:column;justify-content:space-between}
+.kick{font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--hi)}
+h1{font-size:42px;font-weight:800;letter-spacing:-1.5px;line-height:1.2;margin-top:12px}
+h1 b{color:var(--hi);font-weight:800}
+.h1s{margin-top:12px;font-size:15.5px;font-weight:600;letter-spacing:-.3px;color:var(--ink2);max-width:110ch}
+.h1s b{color:var(--ink);font-weight:700}
+.cols{display:grid;gap:18px;margin-top:18px}
+.c4{grid-template-columns:repeat(4,1fr)}.c3{grid-template-columns:repeat(3,1fr)}
+.bx{background:linear-gradient(180deg,rgba(22,32,60,.72),rgba(10,16,34,.72));border:1px solid rgba(96,165,250,.16);border-radius:16px;padding:18px 20px 16px;display:flex;flex-direction:column}
+.bx .t{font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:var(--ink3)}
+.bx h3{margin-top:10px;font-size:18px;font-weight:800;line-height:1.3;letter-spacing:-.5px;color:var(--ink)}
+.bx .v{margin-top:11px;font:800 32px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.5px;color:var(--hi)}
+.bx .v em{font-style:normal;font-size:13px;font-weight:700;color:var(--ink3);margin-left:6px;letter-spacing:0}
+.bx .v.w{color:var(--weak)}
+.bx .cap{margin-top:7px;font:600 11px/1.5 ui-monospace,Menlo,monospace;color:var(--ink3)}
+.bx p{margin-top:11px;font-size:13.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;color:var(--ink2)}
+.bx p b{color:var(--ink);font-weight:700}
+.bx table{width:100%;border-collapse:collapse;margin-top:10px;font-size:12.5px}
+.bx td{padding:5px 4px;border-bottom:1px solid rgba(140,170,230,.1);color:var(--ink2);vertical-align:top}
+.bx tr:last-child td{border-bottom:0}
+.bx td.k{color:var(--ink);font-weight:700}.bx td.n{font:800 12.5px ui-monospace,Menlo,monospace;color:var(--weak);text-align:right;white-space:nowrap}
+.key{margin-top:18px;border-radius:16px;padding:18px 26px;text-align:center;background:linear-gradient(100deg,rgba(56,189,248,.16),rgba(37,99,235,.16));border:1px solid rgba(96,165,250,.28)}
+.key h2{font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:var(--hi)}
+.key p{margin-top:10px;font-size:18px;font-weight:600;line-height:1.55;letter-spacing:-.4px;color:var(--ink)}
+.key p b{color:#fff;font-weight:800}
+.src{margin-top:12px;font:600 11px/1.6 ui-monospace,Menlo,monospace;color:var(--ink3);text-align:right}
+.emb-bg0,.emb-bg0 body,.emb-bg0 .slide{background:transparent!important}
+</style><style>
+/* 전체 지도 위치 표시 (insam-map.html 기준) */
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;
+ display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;
+ background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+.mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
+</style>
+</head><body>
+<div class="slide"><div id="stage"><div class="mappos-i0"><i>2</i>지도 2 · 정규화</div><div class="wrap">
+<div>
+ <div class="kick">INDP · 3부 정규화 방법 · 01</div>
+ <h1>정형 사건 필드의 <b>표기 분절</b>과 분석 범위</h1>
+ <div class="h1s">발간본 정형 필드 <b>engaged_events</b>를 그대로 노드로 쓰면 같은 사건이 표기 차이로 갈라지고, 인물 대부분이 사건 하나에만 묶인다. 사건명 문자열을 식별자로 쓰므로 표기 차이와 사건 동일성을 구분하지 못한다.</div>
+ <div class="cols c4">
+  <div class="bx"><div class="t">COVERAGE · 사건 보유</div><h3>분석 대상 인물</h3><div class="v">9,096<em>명</em></div><div class="cap">수집본 15,027건 중 60.5% · 조직 보유 7,931명(52.8%)</div><p>나머지 <b>39.5%</b>는 정형 필드에 사건이 없어 본문 추출 없이는 그래프에 들어오지 않는다.</p></div>
+  <div class="bx"><div class="t">SPLIT · 표기 분절</div><h3>같은 사건, 다른 표기</h3><div class="v w">4,876<em>표기</em></div><div class="cap">괄호·구두점·공백 통일 후 4,324 (−552)</div><p>"3.1운동" <b>528명</b>과 "3·1운동" <b>41명</b>이 별개 노드였다.</p></div>
+  <div class="bx"><div class="t">SPARSITY · 참여 기록</div><h3>사건 1건만 있는 인물</h3><div class="v w">90.1<em>%</em></div><div class="cap">8,194명 / 9,096명 · 인물당 평균 1.14건</div><p>투영망에서 <b>대형 사건에만 묶이거나 고립</b>된다. 최대 참여 사건 수는 10건.</p></div>
+  <div class="bx"><div class="t">SCALE · 사건 규모</div><h3>규모 분포의 편중</h3><div class="v">6<em>건 ≥ 100명</em></div><div class="cap">1명 3,188 · 2~9명 1,056 · 10~99명 74</div><p>사건의 <b>73.7%</b>가 참여자 1명이라 투영에 기여하지 않고, 6건이 투영을 지배한다.</p></div>
+ </div>
+</div>
+ <div class="cols c3">
+  <div class="bx"><div class="t">CASE 01 · 구두점·공백</div><h3>표기 변형</h3>
+   <table><tr><td class="k">3.1운동</td><td class="n">528</td></tr><tr><td class="k">3·1운동</td><td class="n">41</td></tr><tr><td class="k">경신참변</td><td class="n">160</td></tr><tr><td class="k">경신참변(간도참변)</td><td class="n">55</td></tr></table>
+   <p>규칙으로 통일할 수 있는 층. 괄호 부기·중점·마침표 차이.</p></div>
+  <div class="bx"><div class="t">CASE 02 · 범위가 다른 이름</div><h3>상위·하위 사건</h3>
+   <table><tr><td class="k">1919년 만세운동</td><td class="n">76</td></tr><tr><td class="k">1919년 서울 만세운동</td><td class="n">39</td></tr><tr><td class="k">서울 만세운동</td><td class="n">36</td></tr><tr><td class="k">3.1운동 (전국)</td><td class="n">528</td></tr></table>
+   <p>같은 사건인지 지역 하위 사건인지는 <b>표기 규칙이 아니라 판정</b>이 필요한 층. 통합하면 분석 단위가 바뀐다.</p></div>
+  <div class="bx"><div class="t">CASE 03 · 시기 구분 사건</div><h3>동명 계열 사건</h3>
+   <table><tr><td class="k">후기의병</td><td class="n">893</td></tr><tr><td class="k">중기의병</td><td class="n">98</td></tr><tr><td class="k">전기의병</td><td class="n">102</td></tr><tr><td class="k">(정규화 후 최대) 후기의병 계열</td><td class="n">1,302</td></tr></table>
+   <p>부대·지역 괄호 부기를 제거하면 후기의병 계열이 <b>참여자 1,302명의 초대형 노드</b>로 과병합되어 투영 편향이 커진다.</p></div>
+ </div>
+<div>
+ <div class="key"><h2>WHY WE NORMALIZE</h2><p>사건 식별 기준에 따라 <b>표기 통일과 동일성 판정을 구분</b>한다. 규칙으로 통일할 층과 판정이 필요한 층을 나눠 처리한다(3부 02~06).</p></div>
+ <div class="src">개방 API 15,037명(수집 15,027 · 1,096페이지 10건 API 미응답) · engagedEvents 보유 9,096명 실측 2026-09-14 · 표기 통일 규칙: 괄호 부기·중점·마침표·공백 제거</div>
+</div>
+</div></div></div>
+<script>
+function fitStage(){const st=document.getElementById('stage');if(!st)return;st.style.height='900px';
+ const k=Math.min(innerWidth/1600,innerHeight/900);st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fitStage();addEventListener('resize',fitStage);addEventListener('load',fitStage);addEventListener('pageshow',fitStage);
+if(window.ResizeObserver)new ResizeObserver(fitStage).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitStage);
+
+</script></body></html>

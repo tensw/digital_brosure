@@ -1,0 +1,107 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>개체·관계·속성 추출 절차</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;overflow:visible;background:transparent}
+
+.kick{position:absolute;left:82px;top:52px;font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color:#98a1b2}
+h1{position:absolute;left:82px;top:74px;font-size:44px;font-weight:800;letter-spacing:-1.5px;line-height:1.2;color:#111827}
+h1 .ac{color:#1e4be8}
+.h1s{position:absolute;left:82px;top:140px;font-size:16px;font-weight:600;letter-spacing:-.3px;color:#4b5563}
+.h1s b{color:#111827;font-weight:700}
+.meta{position:absolute;right:82px;top:78px;text-align:right;font:700 12px/1.85 ui-monospace,Menlo,monospace;color:#98a1b2;letter-spacing:.03em}
+.meta b{color:#4b5563}
+.rule{position:absolute;left:82px;right:82px;height:1px;background:#c3ccdf;z-index:3}
+.r1{top:186px} .r2{top:735px}
+
+/* 9 정보 범주 3x3 */
+.grid9{position:absolute;left:82px;right:82px;top:210px;height:508px;
+ display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:16px}
+.gc{position:relative;background:#fff;border-radius:14px;border:1px solid #e6eaf3;overflow:hidden;
+ display:flex;flex-direction:column;box-shadow:0 3px 12px rgba(30,50,90,.06)}
+.gc .band{background:var(--c,#1e4be8);display:flex;align-items:center;gap:11px;padding:11px 20px}
+.gc .band .sym{font:800 26px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.4px;color:rgba(255,255,255,.92);transform:skewX(-9deg)}
+.gc .band h2{font-size:21px;font-weight:800;letter-spacing:-.6px;color:#fff}
+.gc .band .cnt{margin-left:auto;font:700 11px ui-monospace,Menlo,monospace;color:#fff;
+ background:rgba(255,255,255,.2);padding:3px 9px;border-radius:20px;letter-spacing:.02em}
+.gc .body{padding:12px 20px 14px;flex:1;display:flex;flex-direction:column}
+.gc .sub{display:flex;flex-wrap:wrap;gap:5px}
+.gc .t{font-size:12.5px;font-weight:600;letter-spacing:-.2px;color:#3a4560;background:#f1f4fb;border:1px solid #e2e7f1;border-radius:6px;padding:3px 8px}
+.gc p{margin-top:9px;font-size:12.5px;font-weight:500;line-height:1.48;letter-spacing:-.3px;color:#5b6577;word-break:keep-all}
+
+.foot{position:absolute;left:82px;right:82px;top:757px;display:flex;align-items:center;gap:26px}
+.foot .big{font-size:23px;font-weight:800;letter-spacing:-.5px;color:#111827}
+.foot .big b{color:#1e4be8}
+.foot .fm{margin-left:auto;text-align:right;font:700 11px/1.7 ui-monospace,Menlo,monospace;color:#98a1b2}
+.foot .fm b{color:#4b5563}
+</style><style>
+/* 전체 지도 위치 표시 (insam-map.html 기준) */
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;
+ display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;
+ background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+.mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
+</style>
+</head><body>
+<div class="slide"><div id="stage"><div class="mappos-i0"><i>1</i>지도 1 · 원자 추출</div>
+ <div class="kick">INDP · 2부 그래프 구성 방법 · 02</div>
+
+ <h1>네트워크 구축을 위한 <span class="ac">개체·관계·속성 추출 절차</span></h1>
+ <div class="h1s">전기 한 편에서 <b>아홉 개 정보 범주, 41개 추출·정규화 항목</b>을 정의한다. 개체 유형·관계·속성·표기가 섞여 있어, 범주별로 정리한 뒤 노드와 간선으로 그래프를 구축한다.</div>
+ <div class="meta">표제어 <b>15,037명</b> · 본문 <b>100%</b><br>평균 <b>1,190자</b><br>표본 <b>이상재·유관순</b> 본문 직접 확인</div>
+
+ <div class="rule r1"></div>
+ <div class="grid9" id="grid9"></div>
+ <div class="rule r2"></div>
+
+ <div class="foot">
+  <div class="big">범주별 추출 항목을 <b>개체·관계·속성</b>으로 구분해 그래프를 구성한다</div>
+  <div class="fm">유형은 이상재·유관순 본문에서 확인한 표기만 세움<br>표본 2인 기준 · 추가 표본에서 유형 보강</div>
+ </div>
+
+</div></div>
+<script>
+const G=[
+ {s:'A',c:'#2563c7',t:'사람',n:'6유형',tags:['표제어 본인','친족','동지','외국인','일제 관헌','제3자 관계'],
+  d:'한 편에 표제어 본인 외에 부모·형제·자녀, 동지, 외국인 선교사, 일제 관헌이 뒤섞여 나온다.'},
+ {s:'B',c:'#4f46e5',t:'이름 표기',n:'5유형',tags:['한자 병기','본관','자·호','이명','직함 붙은 표기'],
+  d:'한 사람이 한자·본관·자·호·이명을 따로 갖는다. 묶지 못하면 같은 인물이 여러 명으로 갈라진다.'},
+ {s:'C',c:'#d97706',t:'시간',n:'7유형',tags:['완전일자','연월·연도','시각','음력 병기','상대 표현','기간'],
+  d:'“그해·이튿날·6일 뒤”처럼 앞 문장에 기대는 표현이 섞인다. 기준점이 없으면 풀지 않고 원문 그대로 둔다.'},
+ {s:'D',c:'#158a45',t:'장소',n:'5유형',tags:['행정 계층','현행명','속칭','시설·지점','외국 지명'],
+  d:'도·군·면·리 계층에 현행명과 속칭이 겹친다. 계층을 쪼개야 사적지·소장처와 대조된다.'},
+ {s:'E',c:'#0891b2',t:'조직',n:'5유형',tags:['관청','단체','학교','일제 기관','종교·선교'],
+  d:'관청·단체·학교와 일제 기관이 나온다. 일제 기관은 사건이 일어난 자리이자 조직으로 함께 선다.'},
+ {s:'F',c:'#c2590a',t:'사건',n:'3유형',tags:['고유 사건명','서술형 사건','재판·처분'],
+  d:'이름 붙은 사건은 몇 개뿐이고 대다수는 서술형이다. 행위·시점·장소·참여자의 묶음으로 저장한다.'},
+ {s:'G',c:'#7c3aed',t:'직임',n:'3유형',tags:['관직','품계','학내·단체 직위'],
+  d:'소속 조직과 직명을 나눠 잡는다. 직임은 사람과 조직을 잇는 역할이 된다.'},
+ {s:'H',c:'#9333ea',t:'문헌',n:'3유형',tags:['책·매체','글·문서','법령·관제·조약'],
+  d:'겹낫표는 책, 홑낫표는 글이다. 괄호 종류가 유형을 갈라 준다. 법령은 사건의 근거로 붙인다.'},
+ {s:'I',c:'#64748b',t:'수치',n:'4유형',tags:['인원','거리·규모','형량','기간'],
+  d:'“여·약”이 붙으면 근사값으로 표시한다. 사건의 규모와 재판 사실의 속성이 된다.'}
+];
+document.getElementById('grid9').innerHTML=G.map(g=>`
+ <div class="gc" style="--c:${g.c}">
+  <div class="band"><span class="sym">${g.s}</span><h2>${g.t}</h2><span class="cnt">${g.n}</span></div>
+  <div class="body">
+   <div class="sub">${g.tags.map(t=>`<span class="t">${t}</span>`).join('')}</div>
+   <p>${g.d}</p>
+  </div>
+ </div>`).join('');
+const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
+if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+</script></body></html>

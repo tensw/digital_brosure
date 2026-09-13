@@ -1,0 +1,564 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>한국독립운동 인명사전 전기 본문의 관계망 재구성 — Project Proposal</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#0b1220}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ color:#fff;-webkit-font-smoothing:antialiased}
+
+/* ══ 덱 골격 ══ */
+#deck{position:fixed;inset:0}
+.s{position:absolute;inset:0;overflow:hidden;opacity:0;visibility:hidden;transition:opacity .26s ease}
+.s.on{opacity:1;visibility:visible}
+.s.dark{background:linear-gradient(180deg,#0f6ae8 0%,#1a5ee0 34%,#2b45d8 68%,#3a2fd2 100%)}
+.s.light{background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+.stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+
+/* ══ 공통 타이포 ══ */
+.s h1{position:absolute;left:82px;top:88px;font-size:52px;font-weight:800;letter-spacing:-1.6px;
+ line-height:1.18;word-break:keep-all}
+.s .h1s{position:absolute;left:82px;top:auto;font-size:17px;font-weight:600;letter-spacing:-.3px;
+ word-break:keep-all;max-width:1200px}
+.s.dark h1{color:#fff} .s.dark .h1s{color:rgba(255,255,255,.82)}
+.s.light h1{color:#111827} .s.light .h1s{color:#4b5563}
+.s.light .ac{color:#1e4be8}
+.s.dark .ac{color:#a9ff5e}
+.rule{position:absolute;left:82px;right:82px;height:1px}
+.s.dark .rule{background:rgba(255,255,255,.42)}
+.s.light .rule{background:#dfe6f4}
+.concl{position:absolute;left:82px;right:82px;top:772px;text-align:center;
+ font-size:25px;font-weight:800;line-height:1.5;letter-spacing:-.7px;word-break:keep-all}
+.s.dark .concl{color:#fff} .s.light .concl{color:#111827}
+.kick{position:absolute;left:82px;top:52px;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em}
+.s.dark .kick{color:#a9ff5e} .s.light .kick{color:#1e4be8}
+
+/* ══ 태그 ══ */
+.tg{display:inline-block;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;
+ padding:5px 9px;border-radius:6px;vertical-align:middle}
+.s.dark .tg{background:rgba(169,255,94,.18);color:#a9ff5e}
+.s.light .tg{background:#e8efff;color:#1e4be8}
+.tg.off{background:rgba(255,255,255,.16);color:#fff}
+.s.light .tg.off{background:#eef1f7;color:#98a1b2}
+
+/* ══ 표지 ══ */
+.cv h1{top:300px;font-size:74px;letter-spacing:-2.6px;line-height:1.16;max-width:1180px}
+.cv .lead{position:absolute;left:82px;top:236px;font-size:20px;font-weight:700;color:#a9ff5e;letter-spacing:-.4px}
+.cv .sub{position:absolute;left:82px;top:504px;font-size:19px;font-weight:500;color:rgba(255,255,255,.86);
+ letter-spacing:-.4px;max-width:940px;word-break:keep-all}
+.cv .meta{position:absolute;left:82px;top:604px;display:flex;gap:10px}
+.cv .foot{position:absolute;left:82px;right:82px;top:790px;display:flex;justify-content:space-between;
+ align-items:baseline;font:600 14px/1 ui-monospace,Menlo,monospace;color:rgba(255,255,255,.6)}
+.cv .orb{position:absolute;right:-140px;top:-120px;width:820px;height:820px;border-radius:50%;
+ background:radial-gradient(circle at 32% 32%,rgba(169,255,94,.22),rgba(143,215,255,.12) 42%,transparent 66%)}
+.cv .ring{position:absolute;border:1px solid rgba(255,255,255,.16);border-radius:50%}
+.cv .ring.a{right:60px;top:170px;width:560px;height:560px}
+.cv .ring.b{right:180px;top:290px;width:320px;height:320px}
+.cv .node{position:absolute;width:12px;height:12px;border-radius:50%;background:#a9ff5e;
+ box-shadow:0 0 0 6px rgba(169,255,94,.18)}
+
+/* ══ 카드 그리드 ══ */
+.cards{position:absolute;left:82px;right:82px;display:flex;gap:16px}
+.card{flex:1;min-width:0;border-radius:14px;padding:24px 24px 22px;display:flex;flex-direction:column}
+.s.light .card{background:#fff;border:1px solid #e3e8f2;
+ box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 30px -22px rgba(30,92,240,.35)}
+.s.light .card.key{border:1px solid #b9ccff;box-shadow:0 1px 2px rgba(17,24,39,.04),0 18px 36px -18px rgba(30,75,232,.5)}
+.s.dark .card{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.22)}
+.s.dark .card.key{background:rgba(169,255,94,.13);border:1px solid rgba(169,255,94,.45)}
+.card .n{font:400 26px/1 ui-monospace,Menlo,monospace;letter-spacing:-.5px}
+.s.light .card .n{color:#c7d0e6} .s.light .card.key .n{color:#1e4be8}
+.s.dark .card .n{color:rgba(255,255,255,.5)} .s.dark .card.key .n{color:#a9ff5e}
+.card h3{margin-top:12px;font-size:21px;font-weight:800;line-height:1.3;letter-spacing:-.6px;word-break:keep-all}
+.s.light .card h3{color:#111827} .s.light .card.key h3{color:#1e4be8}
+.s.dark .card h3{color:#fff} .s.dark .card.key h3{color:#a9ff5e}
+.card p{margin-top:12px;font-size:14.5px;font-weight:500;line-height:1.55;letter-spacing:-.3px;word-break:keep-all}
+.s.light .card p{color:#4b5563} .s.dark .card p{color:rgba(255,255,255,.88)}
+.card .st{margin-top:auto;padding-top:16px;display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.card .st b{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px}
+.s.light .card .st b{color:#6b7280} .s.light .card.key .st b{color:#1e4be8}
+.s.dark .card .st b{color:rgba(255,255,255,.8)} .s.dark .card.key .st b{color:#a9ff5e}
+.card .st span{font:600 12px/1.4 ui-monospace,Menlo,monospace}
+.s.light .card .st span{color:#98a1b2} .s.dark .card .st span{color:rgba(255,255,255,.6)}
+.card .cd{margin-top:auto;font:700 12.5px/1.55 ui-monospace,Menlo,monospace;border-radius:8px;
+ padding:10px 12px;word-break:keep-all}
+.s.light .card .cd{color:#4b5563;background:#f3f6fc}
+.s.dark .card .cd{color:rgba(255,255,255,.9);background:rgba(0,0,0,.16)}
+
+/* ══ 하단 배너 ══ */
+.bn{position:absolute;left:82px;right:82px;height:92px;border-radius:16px;
+ display:flex;align-items:center;gap:22px;padding:0 26px}
+.s.light .bn{background:#f3f6fc;border:1px solid #e3e8f2}
+.s.dark .bn{background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.16)}
+.bn .msg{font-size:16.5px;font-weight:500;letter-spacing:-.35px;word-break:keep-all}
+.s.light .bn .msg{color:#4b5563} .s.light .bn .msg b{color:#111827;font-weight:800}
+.s.dark .bn .msg{color:rgba(255,255,255,.82)} .s.dark .bn .msg b{color:#a9ff5e;font-weight:800}
+.bn .sp{flex:1}
+.pill{display:flex;align-items:center;gap:12px;height:50px;padding:0 22px 0 8px;border-radius:25px;flex:none}
+.s.light .pill{background:#111827;color:#fff}
+.s.dark .pill{background:#fff;color:#111827}
+.pill i{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:15px}
+.s.light .pill i{background:#fff;color:#111827} .s.dark .pill i{background:#111827;color:#fff}
+.pill span{font:700 15px/1 ui-monospace,Menlo,monospace;letter-spacing:-.2px;white-space:nowrap}
+
+/* ══ 4번 · 축 공유 도식 ══ */
+.wire{position:absolute;left:82px;top:230px;width:1436px;height:470px}
+.bio{position:absolute;width:430px;height:104px;border-radius:12px;background:rgba(255,255,255,.10);
+ border:1px solid rgba(255,255,255,.24);padding:16px 20px}
+.bio .nm{font-size:19px;font-weight:800;color:#fff;letter-spacing:-.4px}
+.bio .at{margin-top:7px;font:600 13px/1.5 ui-monospace,Menlo,monospace;color:rgba(255,255,255,.72)}
+.bio .at b{color:#a9ff5e;font-weight:800}
+.axn{position:absolute;width:470px;height:120px;border-radius:14px;background:rgba(169,255,94,.14);
+ border:1px solid rgba(169,255,94,.45);padding:20px 24px}
+.axn .lb{font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:#a9ff5e}
+.axn .vl{margin-top:10px;font-size:26px;font-weight:800;color:#fff;letter-spacing:-.8px}
+.axn .sm{margin-top:5px;font-size:13px;font-weight:600;color:rgba(255,255,255,.72)}
+svg.lines{position:absolute;left:0;top:0;width:1436px;height:470px;overflow:visible}
+
+/* ══ 6번 · 두 칼럼 ══ */
+.two{position:absolute;left:82px;right:82px;top:200px;display:flex;gap:22px}
+.pane{flex:1;border-radius:14px;padding:24px 26px 22px;background:#fff;border:1px solid #e3e8f2;
+ box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 30px -22px rgba(30,92,240,.35)}
+.pane.now{border-color:#b9ccff}
+.pane .ph{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:800;color:#111827;letter-spacing:-.5px}
+.pane .ph .tg{margin-left:auto}
+.pane ul{margin-top:16px;list-style:none}
+.pane li{display:flex;gap:11px;padding:9px 0;border-top:1px solid #f0f3f9;font-size:14.5px;
+ font-weight:500;color:#4b5563;letter-spacing:-.3px;word-break:keep-all;align-items:baseline}
+.pane li:first-child{border-top:0}
+.pane li i{font-style:normal;font:700 11.5px/1.7 ui-monospace,Menlo,monospace;color:#98a1b2;flex:none;width:34px}
+.pane li b{color:#111827;font-weight:700}
+.pane.now li i{color:#1e4be8}
+
+/* ══ 7번 · 타임라인 ══ */
+.tl{position:absolute;left:82px;right:82px;top:250px;height:300px}
+.tl .bar{position:absolute;left:0;right:0;top:41px;height:3px;background:#dbe3f2;border-radius:2px}
+.tl .fill{position:absolute;left:0;top:41px;height:3px;width:9%;background:#1e4be8;border-radius:2px}
+.tl .pt{position:absolute;top:0;width:15%;text-align:center;transform:translateX(-50%);z-index:2}
+.tl .pt .d{font:800 15px/1 ui-monospace,Menlo,monospace;color:#111827;letter-spacing:-.4px}
+.tl .pt .dot{margin:20px auto 0;width:15px;height:15px;border-radius:50%;background:#fff;border:3px solid #c7d0e6}
+.tl .pt.key .dot{border-color:#1e4be8;background:#1e4be8;box-shadow:0 0 0 6px rgba(30,75,232,.14)}
+.tl .pt.now .dot{border-color:#1e4be8;background:#fff;box-shadow:0 0 0 6px rgba(30,75,232,.14)}
+.tl .pt .t{margin-top:18px;font-size:14.5px;font-weight:700;color:#111827;letter-spacing:-.35px;word-break:keep-all}
+.tl .pt .sd{margin-top:5px;font-size:12.5px;font-weight:500;color:#98a1b2;word-break:keep-all}
+.tl .pt.key .t{color:#1e4be8}
+.trk{position:absolute;left:82px;right:82px;top:470px;display:flex;gap:16px}
+.trk .t1{flex:1;border-radius:12px;padding:18px 22px;background:#fff;border:1px solid #e3e8f2}
+.trk .t1 .hd{font-size:15px;font-weight:800;color:#1e4be8;letter-spacing:-.4px}
+.trk .t1 .bd{margin-top:7px;font-size:14px;font-weight:500;color:#4b5563;letter-spacing:-.3px;word-break:keep-all}
+
+/* ══ 8번 · 마무리 ══ */
+.lim{position:absolute;left:82px;top:236px;width:620px}
+.endrow{position:absolute;left:82px;right:82px;top:596px;display:flex;gap:16px}
+.endrow .e1{flex:1;border-radius:14px;padding:22px 24px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.18)}
+.endrow .e1 b{display:block;font:800 34px/1 ui-monospace,Menlo,monospace;color:#a9ff5e;letter-spacing:-1.5px}
+.endrow .e1 span{display:block;margin-top:11px;font-size:13.5px;font-weight:600;color:rgba(255,255,255,.76);letter-spacing:-.3px;word-break:keep-all}
+.lim .lh{font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:rgba(255,255,255,.6)}
+.lim ul{margin-top:16px;list-style:none}
+.lim li{padding:12px 0;border-top:1px solid rgba(255,255,255,.2);font-size:15px;font-weight:500;
+ color:rgba(255,255,255,.86);letter-spacing:-.3px;word-break:keep-all}
+.lim li:first-child{border-top:0}
+.askbox{position:absolute;left:760px;right:82px;top:236px;border-radius:16px;padding:34px 36px;
+ background:rgba(169,255,94,.13);border:1px solid rgba(169,255,94,.45)}
+.askbox .ah{font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:#a9ff5e}
+.askbox .ab{margin-top:18px;font-size:26px;font-weight:800;line-height:1.5;color:#fff;letter-spacing:-.7px;word-break:keep-all}
+.askbox .ab em{font-style:normal;color:#a9ff5e}
+.askbox .an{margin-top:20px;padding-top:18px;border-top:1px solid rgba(255,255,255,.22);
+ font-size:14.5px;font-weight:500;color:rgba(255,255,255,.78);letter-spacing:-.3px;word-break:keep-all}
+
+/* ══ 2번 · 전기 낱장 ══ */
+.sheets{position:absolute;left:82px;top:236px;width:700px;height:400px}
+.sheet{position:absolute;width:300px;height:180px;border-radius:12px;background:#fff;
+ border:1px solid #e3e8f2;box-shadow:0 16px 34px -22px rgba(30,92,240,.5);padding:18px 20px}
+.sheet .sn{font-size:17px;font-weight:800;color:#111827;letter-spacing:-.4px}
+.sheet .sl{margin-top:12px}
+.sheet .sl i{display:block;height:7px;border-radius:99px;background:#eef2fa;margin-bottom:8px}
+.sheet .sl i:nth-child(1){width:100%} .sheet .sl i:nth-child(2){width:88%}
+.sheet .sl i:nth-child(3){width:94%} .sheet .sl i:nth-child(4){width:62%}
+.sheet.a{left:0;top:0;transform:rotate(-2.4deg)}
+.sheet.b{left:196px;top:112px;transform:rotate(1.6deg)}
+.sheet.c{left:24px;top:224px;transform:rotate(-.8deg)}
+.nolink{position:absolute;left:424px;top:338px;font:700 12px/1 ui-monospace,Menlo,monospace;
+ color:#98a1b2;letter-spacing:.1em}
+.stats3{position:absolute;left:840px;right:82px;top:250px;display:flex;flex-direction:column;gap:16px}
+.stat{border-radius:14px;background:#fff;border:1px solid #e3e8f2;padding:22px 26px;display:flex;
+ align-items:baseline;gap:16px;box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 30px -24px rgba(30,92,240,.35)}
+.stat b{font:800 42px/1 ui-monospace,Menlo,monospace;color:#1e4be8;letter-spacing:-2px;flex:none}
+.stat .lb{font-size:15.5px;font-weight:700;color:#111827;letter-spacing:-.4px}
+.stat .sb{margin-top:4px;font-size:13px;font-weight:500;color:#98a1b2}
+
+/* ══ 내비게이션 ══ */
+#nav{position:fixed;right:26px;bottom:22px;display:flex;align-items:center;gap:14px;z-index:20}
+#dots{display:flex;gap:7px}
+#dots b{width:7px;height:7px;border-radius:50%;background:rgba(120,140,180,.42);cursor:pointer;
+ transition:all .2s;display:block}
+#dots b.on{width:22px;border-radius:4px}
+.nl #dots b{background:rgba(17,24,39,.2)} .nl #dots b.on{background:#1e4be8}
+.nd #dots b{background:rgba(255,255,255,.34)} .nd #dots b.on{background:#a9ff5e}
+#cap{font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em}
+.nl #cap{color:#98a1b2} .nd #cap{color:rgba(255,255,255,.7)}
+#tmr{position:fixed;left:26px;bottom:22px;font:700 12px/1 ui-monospace,Menlo,monospace;z-index:20;
+ letter-spacing:.08em;opacity:.72}
+.nl #tmr{color:#98a1b2} .nd #tmr{color:rgba(255,255,255,.72)}
+#hint{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:20;
+ font:600 11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;opacity:.5;transition:opacity .5s}
+.nl #hint{color:#98a1b2} .nd #hint{color:rgba(255,255,255,.7)}
+#hint.gone{opacity:0}
+
+/* ══ 인쇄 · PDF 내보내기 ══ */
+@media print{
+  @page{size:1600px 900px;margin:0}
+  html,body{overflow:visible;height:auto;background:#fff}
+  #nav,#tmr,#hint{display:none !important}
+  #deck{position:static}
+  .s{position:relative;inset:auto;width:1600px;height:900px;opacity:1 !important;visibility:visible !important;
+     break-after:page;page-break-after:always;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .s:last-child{break-after:auto;page-break-after:auto}
+  .stage{position:absolute;left:0;top:0;transform:none !important}
+}
+</style></head><body class="nd">
+
+<div id="deck">
+
+<!-- ═══ 1 · 표지 ═══ -->
+<section class="s dark cv"><div class="stage">
+  <div class="orb"></div><div class="ring a"></div><div class="ring b"></div>
+  <span class="node" style="right:322px;top:236px"></span>
+  <span class="node" style="right:110px;top:452px"></span>
+  <span class="node" style="right:498px;top:560px"></span>
+  <span class="node" style="right:236px;top:700px"></span>
+  <div class="kick">PROJECT PROPOSAL · 2026-09-28</div>
+  <div class="lead">인터랙티브그래프마이닝</div>
+  <h1>한국독립운동 인명사전<br>전기 본문의 <span class="ac">관계망 재구성</span></h1>
+  <p class="sub">구조화 필드가 담지 못한 범위를 전기 본문에서 추출해, 축 공유 관계망을 구성하고 그 구조를 분석한다.</p>
+  <div class="meta">
+    <span class="tg">인물 15,037명</span>
+    <span class="tg">본문 채움 100%</span>
+    <span class="tg off">DIM5004-01 · 한진영 교수</span>
+  </div>
+  <div class="foot"><span>(팀번호 · 구성원 기재)</span><span>기준일 2026-09-12</span></div>
+</div></section>
+
+<!-- ═══ 2 · 자료의 형태 ═══ -->
+<section class="s light"><div class="stage">
+  <div class="kick">01 · 자료의 형태</div>
+  <h1>전기 15,037편은<br>서로 <span class="ac">이어지지 않는다</span></h1>
+  <div class="h1s" style="top:216px">각 전기는 그 인물의 생애만 서술한다. 다른 전기와 이어지는 지점은 기록되어 있지 않다.</div>
+
+  <div class="sheets" style="top:282px">
+    <div class="sheet a"><div class="sn">유관순</div><div class="sl"><i></i><i></i><i></i><i></i></div></div>
+    <div class="sheet b"><div class="sn">조인원</div><div class="sl"><i></i><i></i><i></i><i></i></div></div>
+    <div class="sheet c"><div class="sn">김구응</div><div class="sl"><i></i><i></i><i></i><i></i></div></div>
+    <div class="nolink">연결 없음</div>
+  </div>
+
+  <div class="stats3" style="top:296px">
+    <div class="stat"><b>15,037</b><div><div class="lb">수록 인물</div><div class="sb">독립유공자 · 개방 API 제공</div></div></div>
+    <div class="stat"><b>100%</b><div><div class="lb">전기 본문 채움률</div><div class="sb">평균 1,190자</div></div></div>
+    <div class="stat"><b>41</b><div><div class="lb">본문 원자 유형 (9개 군)</div><div class="sb">사람 · 이름 · 시간 · 장소 · 조직 · 사건 · 직임 · 문헌 · 수치</div></div></div>
+  </div>
+
+  <div class="concl">한 문장에서 원자 11개와 사실 1건이 나온다. 모두 산문 안에 있다</div>
+</div></section>
+
+<!-- ═══ 3 · 필드 vs 본문 (핵심) ═══ -->
+<section class="s light"><div class="stage">
+  <div class="kick">02 · 구조화 필드와 본문의 차이</div>
+  <h1>아우내 만세운동을 찾으면</h1>
+  <div class="h1s" style="top:176px">같은 사건을 어디에서 찾느냐에 따라 잡히는 인물 수가 달라진다.</div>
+
+  <div class="cards" style="top:250px;height:326px">
+    <div class="card">
+      <span class="n">01</span>
+      <h3>구조화 필드</h3>
+      <p><code style="font:700 13px ui-monospace,Menlo,monospace;color:#1e4be8">engagedEvents</code> 에 기재된 인물만 잡힌다.</p>
+      <div class="st"><b>11</b><span>명 · 채움률 60.5%</span></div>
+    </div>
+    <div class="card">
+      <span class="n">02</span>
+      <h3>+ 주요활동</h3>
+      <p><code style="font:700 13px ui-monospace,Menlo,monospace;color:#1e4be8">activities</code> 까지 더해도 절반에 못 미친다.</p>
+      <div class="st"><b>35</b><span>명 · 채움률 99.2%</span></div>
+    </div>
+    <div class="card key">
+      <span class="n">03</span>
+      <h3>전기 본문</h3>
+      <p>필드에 기재되지 않은 인물도 본문에서는 그 사건을 서술하고 있다.</p>
+      <div class="st"><b>53</b><span>편 · 채움률 100%</span></div>
+    </div>
+  </div>
+
+  <div class="bn" style="top:610px">
+    <span class="msg">구조화 필드로 찾으면 <b>11명</b>, 본문까지 읽으면 <b>53편</b></span>
+    <span class="sp"></span>
+    <span class="pill"><i>×</i><span>약 5배</span></span>
+  </div>
+
+  <div class="concl" style="top:740px">본문에는 있고 필드에는 없다. 그래서 본문을 분석한다</div>
+</div></section>
+
+<!-- ═══ 4 · 축 공유 (핵심) ═══ -->
+<section class="s dark"><div class="stage">
+  <div class="kick">03 · 관계를 구성하는 방법</div>
+  <h1>축을 공유하면 <span class="ac">연결이 된다</span></h1>
+
+  <div class="wire">
+    <svg class="lines" viewBox="0 0 1436 470" preserveAspectRatio="none">
+      <g fill="none" stroke="rgba(169,255,94,.55)" stroke-width="2">
+        <path d="M430,66 C560,66 580,150 700,150"/>
+        <path d="M430,196 C560,196 580,150 700,150"/>
+        <path d="M430,326 C560,326 580,150 700,150"/>
+        <path d="M430,66 C560,66 580,330 700,330"/>
+        <path d="M430,196 C560,196 580,330 700,330"/>
+        <path d="M430,326 C560,326 580,330 700,330"/>
+      </g>
+    </svg>
+    <div class="bio" style="left:0;top:14px">
+      <div class="nm">유관순 전기</div>
+      <div class="at"><b>1919-04-01</b> · <b>아우내 장터</b> · 3천여 명</div>
+    </div>
+    <div class="bio" style="left:0;top:144px">
+      <div class="nm">조인원 전기</div>
+      <div class="at"><b>1919-04-01</b> · <b>아우내 장터</b> · 독립선언서 낭독</div>
+    </div>
+    <div class="bio" style="left:0;top:274px">
+      <div class="nm">김구응 전기</div>
+      <div class="at"><b>1919-04-01</b> · <b>병천</b> · 순국</div>
+    </div>
+    <div class="axn" style="left:700px;top:90px">
+      <div class="lb">TIME AXIS · 시간 축</div>
+      <div class="vl">1919-04-01</div>
+      <div class="sm">세 전기가 같은 날짜를 가리킨다</div>
+    </div>
+    <div class="axn" style="left:700px;top:270px">
+      <div class="lb">PLACE AXIS · 장소 축</div>
+      <div class="vl">아우내 장터 · 병천</div>
+      <div class="sm">정규화하면 같은 장소로 모인다</div>
+    </div>
+  </div>
+
+  <div class="bn" style="top:706px">
+    <span class="msg">채택 축 <b>장소 · 시간 · 조직 · 문헌 · 사람</b></span>
+    <span class="sp"></span>
+    <span class="tg off">서술형 사건은 그래프 미반영 · 표본 검증만</span>
+  </div>
+
+  <div class="concl" style="top:822px">세 전기는 서로를 언급하지 않는다. 축을 세울 때 연결이 나타난다</div>
+</div></section>
+
+<!-- ═══ 5 · 연구 질문 ═══ -->
+<section class="s light"><div class="stage">
+  <div class="kick">04 · 연구 질문</div>
+  <h1>그래프로 무엇을 알아낼 것인가</h1>
+  <div class="h1s" style="top:176px">Q1이 핵심 산출이고, Q2·Q3이 그 관계망의 구조를 분석하는 후속 산출이다.</div>
+
+  <div class="cards" style="top:250px;height:340px">
+    <div class="card key">
+      <span class="n">Q1</span>
+      <h3>얼마나 확장되는가</h3>
+      <p>본문 원자로 만든 그래프를 구조화 필드 그래프와 노드·엣지 수로 비교한다.</p>
+      <div class="cd">그래프 표현 · 이분 그래프</div>
+    </div>
+    <div class="card">
+      <span class="n">Q2</span>
+      <h3>어떤 구조인가</h3>
+      <p>차수 분포·거대 성분·평균 경로·군집 계수를 랜덤그래프와 대조한다.</p>
+      <div class="cd">네트워크 속성 · 랜덤그래프</div>
+    </div>
+    <div class="card">
+      <span class="n">Q3</span>
+      <h3>어디가 두드러지는가</h3>
+      <p>중심성·RolX로 연결 위치를 보고, 커뮤니티가 운동계열과 맞는지 잰다.</p>
+      <div class="cd">중심성 · RolX · 커뮤니티 탐지</div>
+    </div>
+    <div class="card">
+      <span class="n">Q4</span>
+      <h3>예측할 수 있는가</h3>
+      <p>관계망 구조만으로 운동계열 16종을 분류한다. GCN·GraphSAGE·GAT 비교.</p>
+      <div class="cd">GNN 노드 분류</div>
+    </div>
+  </div>
+
+  <div class="bn" style="top:624px">
+    <span class="msg">Q1~Q3 → <b>11/9 Mining Project</b> · Q4 → <b>12/7 Learning Project</b></span>
+    <span class="sp"></span>
+    <span class="pill"><i>→</i><span>같은 데이터 한 벌</span></span>
+  </div>
+
+  <div class="concl" style="top:760px">중심성은 기록상 연결 위치일 뿐, 역사적 기여도가 아니다</div>
+</div></section>
+
+<!-- ═══ 6 · 확보 현황과 수행 범위 ═══ -->
+<section class="s light"><div class="stage">
+  <div class="kick">05 · 확보 현황과 수행 범위</div>
+  <h1>어디까지 왔고, 무엇이 남았는가</h1>
+
+  <div class="two" style="top:224px">
+    <div class="pane">
+      <div class="ph">이미 확보<span class="tg">완료</span></div>
+      <ul>
+        <li><i>API</i><span>개방 API 규격·필드·건수 확인 · <b>15,037명</b></span></li>
+        <li><i>채움률</i><span>필드 8종 측정 · 단체 <b>52.8%</b> · 사건 <b>60.5%</b> · 본문 <b>100%</b></span></li>
+        <li><i>기준선</i><span>구조화 필드 그래프 <b>노드 24,967 · 엣지 25,376</b></span></li>
+        <li><i>라벨</i><span>운동계열 <b>16종</b> 결측 0 · 상위 4종 81.8%</span></li>
+        <li><i>결함</i><span>표기 변이 · 후기의병 <b>893명</b> 참여 집중 확인</span></li>
+      </ul>
+    </div>
+    <div class="pane now">
+      <div class="ph">앞으로 수행<span class="tg">예정</span></div>
+      <ul>
+        <li><i>P1</i><span>본문 전량 수집 <b>15,027건</b> 완료(9/14) · 1,096페이지 10건 미응답</span></li>
+        <li><i>P2</i><span>규칙 기반 원자 추출 · 표본 <b>100건</b> 정밀도·재현율 측정</span></li>
+        <li><i>P3</i><span>축별 표기 정규화 · 정규화 전후 고유값 비교</span></li>
+        <li><i>P4</i><span>축 그래프 구성 · 노드·엣지 실측 기록</span></li>
+        <li><i>범위</i><span>문맥 판단 필요 유형은 <b>그래프 미반영</b>, 표본 검증만</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="bn" style="top:578px">
+    <span class="msg">비교 기준선은 이미 측정을 마쳤다. <b>Q1은 수집 직후 바로 산출된다</b></span>
+    <span class="sp"></span>
+    <span class="pill"><i>✓</i><span>Cora 노드 2,708 대비 9배</span></span>
+  </div>
+
+  <div class="concl" style="top:782px">본문에 없는 값은 채우지 않고 미상으로 둔다</div>
+</div></section>
+
+<!-- ═══ 7 · 일정 ═══ -->
+<section class="s light"><div class="stage">
+  <div class="kick">06 · 수행 일정</div>
+  <h1>한 학기 안에 두 번 제출한다</h1>
+
+  <div class="tl">
+    <div class="bar"></div><div class="fill"></div>
+    <div class="pt now" style="left:9%"><div class="d">9/28</div><div class="dot"></div><div class="t">제안 발표</div><div class="sd">오늘</div></div>
+    <div class="pt" style="left:27%"><div class="d">10/12</div><div class="dot"></div><div class="t">수집 · 추출</div><div class="sd">P1 · P2 표본 검증</div></div>
+    <div class="pt" style="left:45%"><div class="d">10/19</div><div class="dot"></div><div class="t">중간점검</div><div class="sd">P3 · P4 · Q1 비교 결과</div></div>
+    <div class="pt key" style="left:63%"><div class="d">11/9</div><div class="dot"></div><div class="t">Mining 발표</div><div class="sd">Q1 · Q2 · Q3</div></div>
+    <div class="pt" style="left:81%"><div class="d">11/30</div><div class="dot"></div><div class="t">학습 파이프라인</div><div class="sd">모델 비교</div></div>
+    <div class="pt key" style="left:97%"><div class="d">12/7</div><div class="dot"></div><div class="t">Learning 발표</div><div class="sd">Q4</div></div>
+  </div>
+
+  <div class="trk">
+    <div class="t1"><div class="hd">전반기 · Graph Mining</div>
+      <div class="bd">축 그래프 구성 후 차수 분포·중심성·RolX·커뮤니티 탐지. NetworkX와 Gephi.</div></div>
+    <div class="t1"><div class="hd">후반기 · Graph Learning</div>
+      <div class="bd">노드 분류·링크 예측·이종 그래프. GCN·GraphSAGE·GAT·R-GCN 비교.</div></div>
+    <div class="t1"><div class="hd">평가 설계</div>
+      <div class="bd">정확도와 macro-F1 병행. 축이 라벨을 담는지 조건부 분포로 먼저 확인.</div></div>
+  </div>
+
+  <div class="concl" style="top:790px">같은 데이터로 마이닝과 학습을 이어간다</div>
+</div></section>
+
+<!-- ═══ 8 · 한계와 승인 요청 ═══ -->
+<section class="s dark"><div class="stage">
+  <div class="kick">07 · 한계와 승인 요청</div>
+  <h1>어떤 범위를 <span class="ac">승인받는가</span></h1>
+
+  <div class="lim">
+    <div class="lh">한계 · 미확인</div>
+    <ul>
+      <li>원자 41유형 중 문맥 판단이 필요한 유형은 그래프에 반영하지 않는다. 표본 정확도만 보고한다.</li>
+      <li>규칙 기반 추출의 정밀도·재현율은 표본 100건 측정값이며 전수 정확도가 아니다.</li>
+      <li>인명사전은 서훈을 받은 인물을 수록한 자료이므로 결과는 그 수록 범위에 한정된다.</li>
+      <li>단체 중 2명 이상 참여가 30.9%인 원인이 표기 변이인지 실제 분포인지 미확인.</li>
+    </ul>
+  </div>
+
+  <div class="askbox">
+    <div class="ah">승인 요청 범위</div>
+    <div class="ab">규칙 기반 추출 범위에서 <em>축 공유 관계망</em>을 구성하고,<br>
+      <em>11/9</em>에 Q1~Q3, <em>12/7</em>에 Q4의 결과를 발표하는 계획의 승인을 요청한다.</div>
+    <div class="an">확장 항목(사적지 교차 검증 · 인용 네트워크 · LLM 추출 비교)은 필수 범위에 포함하지 않는다.</div>
+  </div>
+
+  <div class="endrow">
+    <div class="e1"><b>11 → 53</b><span>아우내 · 필드 대비 본문</span></div>
+    <div class="e1"><b>41유형</b><span>본문 원자 · 9개 군</span></div>
+    <div class="e1"><b>25,376</b><span>비교 기준선 엣지</span></div>
+    <div class="e1"><b>16종</b><span>운동계열 라벨 · 결측 0</span></div>
+  </div>
+
+  <div class="concl" style="top:790px">필드로는 11명, 본문으로는 53편. 그 차이를 그래프로 본다</div>
+</div></section>
+
+</div>
+
+<div id="tmr">00:00</div>
+<div id="hint">← → 이동 · F 전체화면 · P 인쇄</div>
+<div id="nav"><span id="cap">01 / 08</span><span id="dots"></span></div>
+
+<script>
+(function(){
+ const slides=[...document.querySelectorAll('#deck > section.s')];
+ const dots=document.getElementById('dots');
+ const cap=document.getElementById('cap');
+ const hint=document.getElementById('hint');
+ let cur=-1;
+
+ slides.forEach((_,i)=>{
+   const b=document.createElement('b');
+   b.addEventListener('click',()=>go(i));
+   dots.appendChild(b);
+ });
+ const dl=[...dots.children];
+
+ function go(i){
+   i=Math.max(0,Math.min(slides.length-1,i));
+   if(i===cur) return;
+   cur=i;
+   slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+   dl.forEach((d,k)=>d.classList.toggle('on',k===i));
+   cap.textContent=String(i+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+   document.body.className=slides[i].classList.contains('dark')?'nd':'nl';
+   try{history.replaceState(null,'','#'+(i+1));}catch(_){}
+ }
+
+ /* 1600×900 무대를 화면에 맞춘다 */
+ const SW=1600,SH=900;
+ function fit(){
+   const k=Math.min(innerWidth/SW,innerHeight/SH);
+   document.querySelectorAll('.stage').forEach(st=>{
+     st.style.transform='translate(-50%,-50%) scale('+k.toFixed(4)+')';
+   });
+ }
+ fit();
+ addEventListener('resize',fit);
+ addEventListener('pageshow',fit);
+ if(window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
+ if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+
+ /* 키보드 · 클릭 */
+ addEventListener('keydown',e=>{
+   if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '||e.key==='Enter'){e.preventDefault();go(cur+1);}
+   else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(cur-1);}
+   else if(e.key==='Home'){e.preventDefault();go(0);}
+   else if(e.key==='End'){e.preventDefault();go(slides.length-1);}
+   else if(e.key==='f'||e.key==='F'){
+     if(document.fullscreenElement) document.exitFullscreen();
+     else document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();
+   }
+   else if(e.key==='p'||e.key==='P'){e.preventDefault();print();}
+ });
+ addEventListener('click',e=>{
+   if(e.target.closest('#nav')) return;
+   go(cur + (e.clientX > innerWidth*0.42 ? 1 : -1));
+ });
+
+ /* 경과 시간 — 5분 안에 끝내기 위한 눈금 */
+ const t0=Date.now();
+ setInterval(()=>{
+   const s=Math.floor((Date.now()-t0)/1000);
+   document.getElementById('tmr').textContent=
+     String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+ },1000);
+
+ setTimeout(()=>hint.classList.add('gone'),4200);
+
+ const h=parseInt(String(location.hash||'').replace(/[^0-9]/g,''),10);
+ go(h>=1&&h<=slides.length?h-1:0);
+})();
+</script>
+</body></html>

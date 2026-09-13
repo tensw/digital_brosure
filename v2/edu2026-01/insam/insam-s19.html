@@ -1,0 +1,91 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>사건명 정규화 규칙의 적용 결과와 판정 과제</title>
+<style>
+/* 스킨: bk21-status-09 (블루 blob · 흰 표 + 셀 내 진행바) */
+:root{--card:#fff;--ink:#111827;--ink2:#4b5563;--ink3:#98a1b2;--bl:#1e4be8;--line:#e3e8f2;--bg-7k:#1b9df2;--bg2-7k:#4fb8f7;--bg3-7k:#0d7ec9}
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:var(--bg-7k);color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:var(--bg-7k)}
+.blob-7k{position:absolute;border-radius:50%;pointer-events:none}
+.b1-7k{width:1180px;height:1180px;background:var(--bg2-7k);opacity:.55;left:34%;top:-30%}
+.b2-7k{width:820px;height:820px;background:var(--bg2-7k);opacity:.38;left:64%;top:44%}
+.b3-7k{width:560px;height:560px;background:var(--bg3-7k);opacity:.22;left:-12%;top:52%}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;overflow:visible;background:transparent}
+.kick{position:absolute;left:82px;top:52px;font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color:rgba(255,255,255,.7)}
+h1{position:absolute;left:82px;top:74px;font-size:44px;font-weight:800;letter-spacing:-1.5px;line-height:1.2;color:#fff}
+.h1s{position:absolute;left:82px;top:140px;font-size:16px;font-weight:600;letter-spacing:-.3px;color:rgba(255,255,255,.88)}
+.h1s b{color:#fff}
+.meta{position:absolute;right:82px;top:60px;text-align:right;font:700 12px/1.8 ui-monospace,Menlo,monospace;color:rgba(255,255,255,.7)}
+.meta b{color:#fff}
+.tblwrap{position:absolute;left:82px;right:82px;top:196px}
+.tbl-53fi{width:100%;border-collapse:collapse;background:var(--card);border-radius:16px;overflow:hidden;box-shadow:0 10px 28px -20px rgba(17,24,39,.2)}
+.tbl-53fi th{text-align:left;font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:var(--ink3);padding:14px 18px;border-bottom:1px solid var(--line)}
+.tbl-53fi td{padding:10px 18px;font-size:12.5px;border-bottom:1px solid #f0f3f9;vertical-align:middle;line-height:1.5}
+.tbl-53fi tr:last-child td{border-bottom:0}
+.lt-53fi{font-weight:800;white-space:nowrap;width:150px;color:#111827}
+.raw{color:var(--ink2)} .raw b{color:#111827}
+.lb-53fi{width:170px}
+.lb-53fi i{display:block;height:7px;min-width:6px;border-radius:99px;background:linear-gradient(90deg,var(--bl),#7ea0ff)}
+.lv-53fi{font:800 13px/1 ui-monospace,Menlo,monospace;text-align:right;width:90px;letter-spacing:-.4px}
+.rule{font:700 10.5px ui-monospace,Menlo,monospace;letter-spacing:.06em;color:var(--ink3);white-space:nowrap;width:150px}
+.st{white-space:nowrap;width:130px}
+.st span{display:inline-block;font:800 10.5px ui-monospace,Menlo,monospace;letter-spacing:.08em;padding:3px 8px;border-radius:6px}
+.st .ok{background:#e3f5ea;color:#158a45}.st .hold{background:#fff3d6;color:#b45309}.st .risk{background:#fde8e8;color:#c0392b}
+.foot{position:absolute;left:82px;right:82px;top:706px;display:flex;gap:14px}
+.fx{flex:1;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:12px;padding:12px 16px;color:#fff}
+.fx .v{font:800 22px/1 ui-monospace,Menlo,monospace;letter-spacing:-1px}
+.fx .l{font-size:12px;font-weight:700;margin-top:6px;color:rgba(255,255,255,.85);line-height:1.4}
+.concl{position:absolute;left:0;right:0;top:822px;text-align:center;font-size:22px;font-weight:800;letter-spacing:-.4px;color:#fff}
+.emb-bg0,.emb-bg0 body,.emb-bg0 .slide{background:transparent!important}
+</style><style>
+/* 전체 지도 위치 표시 (insam-map.html 기준) */
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;
+ display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;
+ background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+.mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
+</style>
+</head><body>
+<div class="slide">
+ <span class="blob-7k b1-7k"></span><span class="blob-7k b2-7k"></span><span class="blob-7k b3-7k"></span>
+ <div id="stage"><div class="mappos-i0"><i>2</i>지도 2 · 정규화</div>
+ <div class="kick">INDP · 3부 정규화 방법 · 06</div>
+ <h1>사건명 정규화 규칙의 적용 결과와 판정 과제</h1>
+ <div class="h1s">규칙(괄호 부기·중점·마침표·공백 제거)을 정형 필드 사건명 4,876표기에 적용한 결과다. <b>자동 병합</b>·<b>판정 보류</b>·<b>과병합 경고</b> 세 층으로 나누고, 원표기 → 표준 키 → 판정 근거를 기록한다.</div>
+ <div class="meta">병합 키 <b>192</b> / 4,324 · 표기 <b>−552</b><br>개방 API engagedEvents 실측</div>
+ <div class="tblwrap">
+  <table class="tbl-53fi">
+   <thead><tr><th>표준 키</th><th>원표기 (인원)</th><th>병합 규모</th><th style="text-align:right">합계</th><th>적용 규칙</th><th>판정</th></tr></thead>
+   <tbody>
+    <tr><td class="lt-53fi">3·1운동</td><td class="raw"><b>3.1운동</b> 528 · 3·1운동 41 · 3.1.운동 1 · 3.1 운동 1 · 기타 2</td><td class="lb-53fi"><i style="width:44%"></i></td><td class="lv-53fi">573</td><td class="rule">구두점·공백 제거</td><td class="st"><span class="ok">자동 병합</span></td></tr>
+    <tr><td class="lt-53fi">3·1운동(합천)</td><td class="raw">3·1운동(합천) 1 → 규칙상 3·1운동에 흡수</td><td class="lb-53fi"><i style="width:1%"></i></td><td class="lv-53fi">1</td><td class="rule">괄호 부기 제거</td><td class="st"><span class="hold">판정 보류</span></td></tr>
+    <tr><td class="lt-53fi">경신참변</td><td class="raw"><b>경신참변</b> 160 · 경신참변(간도참변) 55 · 경신참변(庚申慘變) 2 · 기타 1</td><td class="lb-53fi"><i style="width:17%"></i></td><td class="lv-53fi">218</td><td class="rule">괄호 부기·한자 제거</td><td class="st"><span class="ok">자동 병합</span></td></tr>
+    <tr><td class="lt-53fi">간도참변</td><td class="raw">간도참변 15 · 간도참변(경신참변) 23 · 간도참변(間島慘變) 3 — <b>경신참변과 동일 사건</b>이나 규칙으로는 안 합쳐짐</td><td class="lb-53fi"><i style="width:3%"></i></td><td class="lv-53fi">41</td><td class="rule">동의어 (규칙 밖)</td><td class="st"><span class="hold">사전 필요</span></td></tr>
+    <tr><td class="lt-53fi">후기의병</td><td class="raw"><b>후기의병</b> 893 + 괄호 부기 표기 409건(이강년 의병부대 26 · 이석용 19 · 안규홍 14 …)</td><td class="lb-53fi"><i style="width:100%"></i></td><td class="lv-53fi">1,302</td><td class="rule">괄호 부기 제거</td><td class="st"><span class="risk">과병합 경고</span></td></tr>
+    <tr><td class="lt-53fi">전기·중기의병</td><td class="raw">전기의병 102 + 부대명 부기 62 → 164 · 중기의병 98 + 40 → 138</td><td class="lb-53fi"><i style="width:23%"></i></td><td class="lv-53fi">302</td><td class="rule">괄호 부기 제거</td><td class="st"><span class="risk">과병합 경고</span></td></tr>
+    <tr><td class="lt-53fi">파리장서운동</td><td class="raw">파리장서운동 60 · 파리장서 운동 13</td><td class="lb-53fi"><i style="width:6%"></i></td><td class="lv-53fi">73</td><td class="rule">공백 제거</td><td class="st"><span class="ok">자동 병합</span></td></tr>
+    <tr><td class="lt-53fi">105인 사건</td><td class="raw">105인 사건 52 · 105인사건 15 · 105인 사건(신민회 사건) 1</td><td class="lb-53fi"><i style="width:5%"></i></td><td class="lv-53fi">68</td><td class="rule">공백·괄호 제거</td><td class="st"><span class="ok">자동 병합</span></td></tr>
+    <tr><td class="lt-53fi">군자금 모집</td><td class="raw">군자금 모집 31 · 군자금모집 9 — 사건이 아니라 <b>활동 유형</b></td><td class="lb-53fi"><i style="width:3%"></i></td><td class="lv-53fi">40</td><td class="rule">공백 제거</td><td class="st"><span class="hold">분석 단위 보류</span></td></tr>
+   </tbody>
+  </table>
+ </div>
+ <div class="foot">
+  <div class="fx"><div class="v">자동 병합</div><div class="l">구두점·공백·한자 병기 차이. 원표기를 보존하고 표준 키로 연결한다.</div></div>
+  <div class="fx"><div class="v">판정 보류</div><div class="l">지역 하위 사건·동의어·활동 유형. 규칙이 아니라 사전과 원문 대조로 결정한다.</div></div>
+  <div class="fx"><div class="v">과병합 경고</div><div class="l">괄호 부기가 부대·지역 단위 하위 사건일 때. 통합하면 분석 단위가 바뀌고 투영 편향이 커진다.</div></div>
+ </div>
+ <div class="concl">괄호 부기 제거에서 후기의병 계열의 과병합이 확인되었고, 간도참변·경신참변은 미병합으로 남았다</div>
+</div></div>
+<script>
+const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');const k=Math.min(innerWidth/SW,innerHeight/SH);st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
+if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+
+</script></body></html>

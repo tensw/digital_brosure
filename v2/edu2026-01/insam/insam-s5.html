@@ -1,0 +1,72 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>조직·사건 동일성 판정</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;overflow:visible;background:transparent}
+h1{position:absolute;left:82px;top:66px;font-size:42px;font-weight:800;letter-spacing:-1.5px;line-height:1.2;color:#111827}
+h1 .ac{color:#1e4be8}
+.h1s{position:absolute;left:82px;top:130px;font-size:15.5px;font-weight:600;letter-spacing:-.3px;color:#4b5563}
+.kick{position:absolute;left:82px;top:40px;font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color:#98a1b2}
+.meta{position:absolute;right:82px;top:52px;text-align:right;font:700 12px/1.8 ui-monospace,Menlo,monospace;color:#98a1b2}
+.meta b{color:#4b5563}
+.body{position:absolute;left:82px;right:82px;top:176px;bottom:40px;display:flex;flex-direction:column;gap:14px}
+.sec{background:#fff;border-radius:12px;border:1px solid #e6eaf3;box-shadow:0 3px 12px rgba(30,50,90,.06);overflow:hidden;display:flex;flex-direction:column;min-height:0}
+.sec .band{background:var(--c);display:flex;align-items:center;gap:11px;padding:9px 20px;flex:none}
+.sec .band .sym{font:800 22px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.2px;color:rgba(255,255,255,.92);transform:skewX(-9deg)}
+.sec .band h2{font-size:18px;font-weight:800;letter-spacing:-.5px;color:#fff}
+.sec .band .cnt{margin-left:auto;font:700 11px ui-monospace,Menlo,monospace;color:#fff;background:rgba(255,255,255,.2);padding:3px 10px;border-radius:20px}
+.tw{flex:1;overflow:hidden}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+col.c-code{width:52px} col.c-ty{width:132px} col.c-cri{width:290px} col.c-res{width:210px}
+th{background:#f4f6fb;color:#6b7488;font:700 11px/1.3 "Pretendard",sans-serif;text-align:left;padding:7px 16px;border-bottom:1px solid #e2e7f1;letter-spacing:-.2px}
+td{padding:7px 16px;border-bottom:1px solid #eef1f7;color:#455066;vertical-align:top;line-height:1.5;font-size:12.5px;word-break:keep-all}
+tbody tr:last-child td{border-bottom:none}
+td.code{color:var(--c);font-weight:800;font-family:ui-monospace,Menlo,monospace;font-size:12px}
+td.ty{font-weight:800;color:#111827}
+td.ex{color:#1f2a3d}
+td.res{font:600 11.5px ui-monospace,Menlo,monospace;color:#6b7488;letter-spacing:-.2px}</style><style>
+/* 전체 지도 위치 표시 (insam-map.html 기준) */
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;
+ display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;
+ background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+.mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
+</style>
+</head><body>
+<div class="slide"><div id="stage"><div class="mappos-i0"><i>2</i>지도 2 · 정규화</div>
+ <div class="kick">INDP · 3부 정규화 방법 · 04</div>
+ <h1>조직·사건의 <span class="ac">동일성 판정과 분석 단위 설정</span></h1>
+ <div class="h1s">관청·단체·학교·일제기관 조직과, 이름 있는 사건·서술형 사건·재판을 나눈다.</div>
+ <div class="meta">표본 <b>이상재·유관순</b><br>본문 직접 확인 · 2026-09-10</div>
+ <div class="body">
+ <section class="sec" style="--c:#0891b2;flex:6.3">
+ <div class="band"><span class="sym">E</span><h2>조직</h2><span class="cnt">5유형</span></div>
+ <div class="tw"><table>
+  <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
+  <tbody><tr><td class="code">E1</td><td class="ty">관청</td><td class="ex">우정총국(현 우체국) · 학부 · 중추원 · 의정부 · 경위원</td><td>현행명 병기가 있으면 함께 보존</td><td class="res">org · 유형 관청</td></tr><tr><td class="code">E2</td><td class="ty">단체</td><td class="ex">독립협회 · 만민공동회 · 정동구락부 · 신사유람단</td><td>결사·모임·사절단을 모두 단체로 둔다</td><td class="res">org · 유형 단체</td></tr><tr><td class="code">E3</td><td class="ty">학교</td><td class="ex">이화학당 · 이화여자고등보통학교 · 한성사범학교 · 목천공립보통학교 · 관립외국어학교</td><td>같은 학교의 이름이 바뀐 경우 이명으로 묶는다</td><td class="res">org · 유형 학교</td></tr><tr><td class="code">E4</td><td class="ty">일제 기관</td><td class="ex">경무총감부 · 헌병 주재소 · 종로경찰서 · 경성지방법원 · 서대문형무소</td><td>사건이 일어난 자리이자 기관이다. 조직과 장소 양쪽으로 선다</td><td class="res">org + place</td></tr><tr><td class="code">E5</td><td class="ty">종교 · 선교</td><td class="ex">감리교 · 지령리 감리교회</td><td>교단과 개별 교회를 나눈다</td><td class="res">org · 유형 종교</td></tr></tbody>
+ </table></div>
+</section><section class="sec" style="--c:#c2590a;flex:4.3">
+ <div class="band"><span class="sym">F</span><h2>사건</h2><span class="cnt">3유형</span></div>
+ <div class="tw"><table>
+  <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
+  <tbody><tr><td class="code">F1</td><td class="ty">고유 사건명</td><td class="ex">갑신정변(甲申政變) · 아관파천(俄館播遷) · 개혁당 사건 · 3·1운동</td><td>이름이 있으므로 개체로 바로 선다</td><td class="res">event · 사전 등재</td></tr><tr><td class="code">F2</td><td class="ty">서술형 사건</td><td class="ex">“만세시위 대열에 합류하였다” · “횃불을 올렸다” · “태극기를 나누어 주었다” · “붙잡혔다”</td><td>이름이 없다. 행위 + 시점 + 장소 + 참여자로 사실을 만든다</td><td class="res">idic_fact · 이름 없는 사실</td></tr><tr><td class="code">F3</td><td class="ty">재판 · 처분</td><td class="ex">“징역 1년을 받았다” · “15년형을 받아” · “형집행정지로 가출옥”</td><td>선고·수감·석방을 각각 다른 사실로 나눈다</td><td class="res">사실 3건 · 각각 시점</td></tr></tbody>
+ </table></div>
+</section>
+ </div>
+</div></div>
+<script>const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
+if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);</script></body></html>

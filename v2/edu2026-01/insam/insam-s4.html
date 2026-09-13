@@ -1,0 +1,72 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>시간·장소 표준화</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;overflow:visible;background:transparent}
+h1{position:absolute;left:82px;top:66px;font-size:42px;font-weight:800;letter-spacing:-1.5px;line-height:1.2;color:#111827}
+h1 .ac{color:#1e4be8}
+.h1s{position:absolute;left:82px;top:130px;font-size:15.5px;font-weight:600;letter-spacing:-.3px;color:#4b5563}
+.kick{position:absolute;left:82px;top:40px;font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color:#98a1b2}
+.meta{position:absolute;right:82px;top:52px;text-align:right;font:700 12px/1.8 ui-monospace,Menlo,monospace;color:#98a1b2}
+.meta b{color:#4b5563}
+.body{position:absolute;left:82px;right:82px;top:176px;bottom:40px;display:flex;flex-direction:column;gap:14px}
+.sec{background:#fff;border-radius:12px;border:1px solid #e6eaf3;box-shadow:0 3px 12px rgba(30,50,90,.06);overflow:hidden;display:flex;flex-direction:column;min-height:0}
+.sec .band{background:var(--c);display:flex;align-items:center;gap:11px;padding:9px 20px;flex:none}
+.sec .band .sym{font:800 22px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.2px;color:rgba(255,255,255,.92);transform:skewX(-9deg)}
+.sec .band h2{font-size:18px;font-weight:800;letter-spacing:-.5px;color:#fff}
+.sec .band .cnt{margin-left:auto;font:700 11px ui-monospace,Menlo,monospace;color:#fff;background:rgba(255,255,255,.2);padding:3px 10px;border-radius:20px}
+.tw{flex:1;overflow:hidden}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+col.c-code{width:52px} col.c-ty{width:132px} col.c-cri{width:290px} col.c-res{width:210px}
+th{background:#f4f6fb;color:#6b7488;font:700 11px/1.3 "Pretendard",sans-serif;text-align:left;padding:7px 16px;border-bottom:1px solid #e2e7f1;letter-spacing:-.2px}
+td{padding:7px 16px;border-bottom:1px solid #eef1f7;color:#455066;vertical-align:top;line-height:1.5;font-size:12.5px;word-break:keep-all}
+tbody tr:last-child td{border-bottom:none}
+td.code{color:var(--c);font-weight:800;font-family:ui-monospace,Menlo,monospace;font-size:12px}
+td.ty{font-weight:800;color:#111827}
+td.ex{color:#1f2a3d}
+td.res{font:600 11.5px ui-monospace,Menlo,monospace;color:#6b7488;letter-spacing:-.2px}</style><style>
+/* 전체 지도 위치 표시 (insam-map.html 기준) */
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;
+ display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;
+ background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+.mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
+</style>
+</head><body>
+<div class="slide"><div id="stage"><div class="mappos-i0"><i>2</i>지도 2 · 정규화</div>
+ <div class="kick">INDP · 3부 정규화 방법 · 03</div>
+ <h1>사건 식별을 위한 <span class="ac">시간·장소 표준화</span></h1>
+ <div class="h1s">완전일자부터 상대 표현까지의 시간, 계층·현행명·속칭이 겹치는 장소를 나눈다.</div>
+ <div class="meta">표본 <b>이상재·유관순</b><br>본문 직접 확인 · 2026-09-10</div>
+ <div class="body">
+ <section class="sec" style="--c:#d97706;flex:8.3">
+ <div class="band"><span class="sym">C</span><h2>시간</h2><span class="cnt">7유형</span></div>
+ <div class="tw"><table>
+  <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
+  <tbody><tr><td class="code">C1</td><td class="ty">완전일자</td><td class="ex">1851년 10월 26일 · 1919년 4월 1일</td><td>그대로 확정</td><td class="res">1851-10-26 · 확정</td></tr><tr><td class="code">C2</td><td class="ty">연월</td><td class="ex">1902년 6월 · 1918년 3월</td><td>일자는 미상으로 둔다</td><td class="res">1902-06 · 일 미상</td></tr><tr><td class="code">C3</td><td class="ty">연도만</td><td class="ex">1867년 · 1884년 · 1915년경</td><td>“경”이 붙으면 추정으로 표시</td><td class="res">1867 · 1915 추정</td></tr><tr><td class="code">C4</td><td class="ty">시각</td><td class="ex">오후 1시</td><td>같은 날 사건의 선후를 가른다</td><td class="res">사건 순서 속성</td></tr><tr><td class="code">C5</td><td class="ty">음력 병기</td><td class="ex">4월 1일(음력 3월 1일)</td><td>양력을 기준값으로, 음력은 원문 표기로 보존</td><td class="res">기준 1919-04-01 · 원문 병기</td></tr><tr><td class="code">C6</td><td class="ty">상대 표현</td><td class="ex">그해 10월 · 이튿날인 3월 14일 · 6일 뒤 · 이보다 앞서 · 그후 · 잠시후 · 이때부터</td><td>앞 문장의 날짜를 기준점으로 잡아 푼다. 기준점이 없으면 풀지 않고 원문 그대로 둔다</td><td class="res">해소 시 일자 · 실패 시 미해소 표기</td></tr><tr><td class="code">C7</td><td class="ty">기간</td><td class="ex">약 1년간 · 두 달여 · 15년형</td><td>시작·끝을 알 수 있으면 구간, 아니면 길이만</td><td class="res">구간 또는 기간 값</td></tr></tbody>
+ </table></div>
+</section><section class="sec" style="--c:#158a45;flex:6.3">
+ <div class="band"><span class="sym">D</span><h2>장소</h2><span class="cnt">5유형</span></div>
+ <div class="tw"><table>
+  <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
+  <tbody><tr><td class="code">D1</td><td class="ty">행정 계층</td><td class="ex">충남 서천군(舒川郡) 한산면(韓山面) 종지리(種芝里)</td><td>도·군·면·리 네 단계로 쪼갠다</td><td class="res">계층별 place 4개</td></tr><tr><td class="code">D2</td><td class="ty">현행명 병기</td><td class="ex">용두리(현 천안시 동남구 병천면 용두리) · 남대문역(현 서울역)</td><td>옛 이름과 현행명을 한 개체의 두 표기로 묶는다</td><td class="res">옛 이름 · 현행명 각각 보존</td></tr><tr><td class="code">D3</td><td class="ty">속칭</td><td class="ex">용두리(속칭 지령지) · 지령리</td><td>같은 곳의 다른 부름을 이명으로 둔다</td><td class="res">지명 이명</td></tr><tr><td class="code">D4</td><td class="ty">시설 · 지점</td><td class="ex">탑골공원 · 덕수궁 · 아우내 장터 · 매봉산 · 한성감옥소</td><td>행정구역이 아닌 지점. 사적지와 이어지는 주요 축</td><td class="res">place · 유형 시설</td></tr><tr><td class="code">D5</td><td class="ty">외국 지명</td><td class="ex">일본 · 미국 · 워싱턴</td><td>국가와 도시를 나눈다</td><td class="res">place · 국외</td></tr></tbody>
+ </table></div>
+</section>
+ </div>
+</div></div>
+<script>const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
+if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);</script></body></html>

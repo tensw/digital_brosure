@@ -1,0 +1,192 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>데이터 정제의 필요성</title>
+<style>
+.root-i1s1{--ink:#e9eefb;--ink2:#9fb0d4;--ink3:#5d7099;
+ --per:#5b9dff;--evt:#fb923c;--doc:#c084fc;--plc:#4ade80;--tim:#fbbf24;
+ font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ color:var(--ink);
+ background:radial-gradient(1200px 900px at 50% 8%,#0b1226 0%,#060a16 58%,#03050c 100%);
+ -webkit-font-smoothing:antialiased;position:relative}
+.root-i1s1 *{box-sizing:border-box;margin:0;padding:0}
+body{margin:0;font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:#060a16}
+html,body{overflow:hidden}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+.emb-bg0,.emb-bg0 body,.emb-bg0 .slide,.emb-bg0 .root-i1s1{background:transparent!important}
+.wrap-i1s1{position:relative;z-index:2;width:1600px;height:900px;padding:30px 74px 14px;display:flex;flex-direction:column}
+
+.hd-i1s1{display:flex;gap:24px;align-items:flex-start}
+.kick-i1s1{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
+.h1-i1s1{font-size:40px;font-weight:800;letter-spacing:-1.4px;margin-top:9px;line-height:1.15}
+.h1-i1s1 span{background:linear-gradient(90deg,#5b9dff,#c084fc 42%,#4ade80 70%,#fbbf24);
+ -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lead-i1s1{color:var(--ink2);font-size:14px;font-weight:600;margin-top:9px;max-width:122ch;line-height:1.5}
+.lead-i1s1 b{color:var(--ink)}
+.meta-i1s1{margin-left:auto;text-align:right;font:600 11px/1.9 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.04em;white-space:nowrap}
+.meta-i1s1 b{color:var(--ink2)}
+
+.pair-i1s1{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px;position:relative}
+.pair-i1s1::after{content:"구분";position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;z-index:6;
+ display:grid;place-items:center;border-radius:50%;font:800 15px/1 "Pretendard",sans-serif;letter-spacing:-.02em;color:#fff;
+ background:linear-gradient(150deg,#1a2044,#0d1230);border:1px solid rgba(160,180,255,.34);
+ box-shadow:0 18px 40px -12px rgba(4,8,26,.8),0 0 0 9px rgba(10,14,34,.55)}
+.pane-i1s1{position:relative;border-radius:22px;overflow:hidden;display:flex;flex-direction:column;min-height:0}
+
+/* 좌 — 원본 발간본 (밝은 카드) */
+.lite-i1s1{background:#f6f5fb;color:#191934;padding:24px 28px 20px}
+.pk-i1s1{display:flex;align-items:center;gap:8px;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.04em}
+.lite-i1s1 .pk-i1s1{color:#6a5ad6}
+.pt-i1s1{margin-top:11px;font-size:24px;font-weight:800;letter-spacing:-.7px}
+.pt-i1s1 span{font-size:17px;color:#6b6b8f;font-weight:700;margin-left:4px}
+.psub-i1s1{margin-top:3px;font-size:11.5px;font-weight:600;color:#6b6b8f}
+.kv-i1s1{margin-top:13px;display:flex;flex-wrap:wrap;gap:5px}
+.kv-i1s1 .kv{font-size:11px;font-weight:600;padding:3px 9px;border-radius:7px;background:#eceaf8;border:1px solid #ddd8f0;color:#4a4870;letter-spacing:-.2px}
+.kv-i1s1 .kv b{color:#6a5ad6;font-weight:800}
+.bhd-i1s1{margin-top:15px;padding-top:12px;border-top:1px solid #e2def2;font:700 11px ui-monospace,Menlo,monospace;color:#8a8aad;letter-spacing:.02em}
+.body-i1s1{margin-top:11px;flex:1;overflow:hidden;font-size:15.5px;line-height:1.95;color:#2f2f4c;column-count:2;column-gap:28px}
+.body-i1s1 p{margin-bottom:12px;break-inside:avoid}
+mark{background:transparent;padding:0 1px;border-radius:2px;font-weight:700}
+.m-per{color:#2563c7;box-shadow:inset 0 -6px 0 rgba(91,157,255,.28)}
+.m-evt{color:#c2590a;box-shadow:inset 0 -6px 0 rgba(251,146,60,.30)}
+.m-doc{color:#8b32c9;box-shadow:inset 0 -6px 0 rgba(192,132,252,.28)}
+.m-plc{color:#158a45;box-shadow:inset 0 -6px 0 rgba(74,222,128,.34)}
+.m-tim{color:#9a6a06;box-shadow:inset 0 -6px 0 rgba(251,191,36,.40)}
+
+/* 우 — 다섯 정보 범주별 항목 (어두운 카드) */
+.dark-i1s1{background:linear-gradient(168deg,#1a2168 0%,#141a54 46%,#101542 100%);
+ border:1px solid rgba(150,160,240,.22);padding:22px 26px 18px;color:#eef1ff}
+.dhd-i1s1{display:flex;align-items:baseline;gap:10px}
+.dhd-i1s1 .pk-i1s1{color:#b3a6ff}
+.dhd-i1s1 .cnt{margin-left:auto;font:700 11px ui-monospace,Menlo,monospace;color:#8b96d4}
+.axes-i1s1{margin-top:12px;flex:1;display:flex;flex-direction:column;gap:9px;min-height:0}
+.ax-i1s1{border-radius:13px;background:rgba(255,255,255,.035);border:1px solid rgba(150,165,255,.12);
+ padding:11px 14px;display:flex;gap:13px;align-items:flex-start;flex:1;min-height:0}
+.ax-i1s1 .lb{flex:none;width:96px;display:flex;flex-direction:column;gap:6px}
+.ax-i1s1 .dot{width:13px;height:13px;border-radius:50%}
+.ax-i1s1 .nm{font-size:21px;font-weight:800;letter-spacing:-.5px;line-height:1.1}
+.ax-i1s1 .sub{font:600 10.5px ui-monospace,Menlo,monospace;color:#8b96d4;letter-spacing:.02em}
+.ax-i1s1 .vals{flex:1;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start}
+.chip-i1s1{font-size:15.5px;font-weight:600;line-height:1.35;padding:4px 11px;border-radius:8px;
+ background:rgba(150,170,255,.11);border:1px solid rgba(160,180,255,.16);color:#dde3ff;letter-spacing:-.2px}
+.chip-i1s1 b{color:#fff;font-weight:800}
+
+.foot-i1s1{margin-top:12px;display:flex;align-items:center;gap:16px}
+.fk-i1s1{font-size:16px;font-weight:800;letter-spacing:-.5px;color:#eef1ff}
+.fk-i1s1 span{color:#fbbf24}
+.fd-i1s1{font:600 10.5px/1.75 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.02em;margin-left:auto;text-align:right}
+.fd-i1s1 b{color:var(--ink2)}
+</style><style>
+/* 전체 지도 위치 표시 (insam-map.html 기준) */
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;
+ display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;
+ background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+.mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
+</style>
+</head><body>
+<div class="slide"><div id="stage"><div class="mappos-i0"><i>1</i>지도 1 · 원자 추출</div>
+<div class="root-i1s1"><div class="wrap-i1s1">
+
+ <div class="hd-i1s1">
+  <div>
+   <div class="kick-i1s1">INDP · 1부 정제 이유 · 01</div>
+   <h1 class="h1-i1s1">인물 공동참여 구조 분석을 위한 <span>데이터 정제의 필요성</span></h1>
+   <p class="lead-i1s1">독립기념관이 제공하는 독립운동 인명사전은 편찬과 인쇄본 발간을 위해 작성되었으며, 전기 본문은 <b>자연어 문장이 모인 말뭉치</b>에 가깝다.
+    본문에 서술된 <b>인물·사건·물건·장소·시간</b>의 관계는 문장을 읽으며 확인하는 구조다. 어떤 인물이 어떤 사건에 관여했고 어떤 물건·장소·시간과 연결되는지 함께 살펴보려면,
+    흩어진 정보를 추출해 <b>관계 그래프로 구성</b>할 필요가 있다. 이 화면에서는 안중근 전기를 예로 들어 관계를 정리할 항목을 다섯 정보 범주로 구분하였다.</p>
+  </div>
+  <div class="meta-i1s1">
+   표제어 <b>15,037명</b> · 본문 <b>100%</b><br>
+   예시 <b>안중근</b>(ID 676) · 본문 <b>10,034자</b><br>
+   출처 <b>인명사전 발간본 · 개방 API</b>
+  </div>
+ </div>
+
+ <div class="pair-i1s1">
+
+  <!-- 좌: 발간본 원본 -->
+  <section class="pane-i1s1 lite-i1s1">
+   <div class="pk-i1s1">◤ 인명사전 발간본 · 기본 항목과 본문 발췌 (ID 676)</div>
+   <div class="pt-i1s1">안중근 <span>安重根</span></div>
+   <div class="psub-i1s1">1879. 9. 2 ~ 1910. 3. 26 · 건국훈장 대한민국장 (1962)</div>
+   <div class="kv-i1s1">
+    <span class="kv">공훈번호 <b>3150</b></span>
+    <span class="kv">계열 <b>AO</b></span>
+    <span class="kv">이명 <b>응칠·자임</b></span>
+    <span class="kv">본관 <b>순흥</b></span>
+    <span class="kv">출생 <b>황해 해주</b></span>
+    <span class="kv">관련조직 <b>삼흥학교·돈의학교·단지동맹</b></span>
+    <span class="kv">관련사건 <b>하얼빈 의거</b></span>
+    <span class="kv">원고 <b>57.7쪽</b></span>
+    <span class="kv">개수 <b>이재문</b></span>
+    <span class="kv">감수 <b>조재곤</b></span>
+   </div>
+   <div class="bhd-i1s1">전기 본문 발췌 · 전체 10,034자 · 색상은 오른쪽 다섯 정보 범주과 대응</div>
+   <div class="body-i1s1">
+    <p><mark class="m-tim">1879년 9월 2일</mark> <mark class="m-plc">황해도 해주부 광석동</mark>에서 아버지 <mark class="m-per">안태훈</mark>과 어머니 <mark class="m-per">조마리아</mark> 사이에서 장남으로 태어났다. 본관은 <mark class="m-plc">순흥</mark>으로 고려 말 명유 <mark class="m-per">안향</mark>의 후예였고, 할아버지 <mark class="m-per">안인수</mark>가 <mark class="m-per">응칠</mark>이란 이름을 지어 주었다.</p>
+    <p><mark class="m-tim">1885년</mark> 가솔을 이끌고 <mark class="m-plc">신천군 청계동</mark>으로 이주하였다. <mark class="m-tim">1897년</mark> 천주교에 입교해 <mark class="m-per">도마</mark>란 영세명을 받고, 프랑스인 <mark class="m-per">홍석구 신부</mark>를 수행하며 <mark class="m-plc">해주·옹진</mark> 등지를 순회하였다.</p>
+    <p><mark class="m-tim">1906년 봄</mark> <mark class="m-plc">진남포</mark>로 이사해 삼흥학교를 설립하고 교장을 맡았다. 두 아우 <mark class="m-per">안정근</mark>·<mark class="m-per">안공근</mark>도 힘을 합하였고, 이어 돈의학교를 인수하며 <mark class="m-evt">교육운동</mark>에 힘을 쏟았다.</p>
+    <p><mark class="m-tim">1907년 가을</mark> <mark class="m-plc">블라디보스토크</mark>로 망명해 동의회를 조직하고 <mark class="m-per">최재형</mark>을 회장으로 추대하였다. <mark class="m-tim">1908년 6월</mark> <mark class="m-per">엄인섭</mark>과 함께 <mark class="m-plc">함경북도 경흥</mark>의 일본군 수비대를 급습하였다. <mark class="m-tim">음력 1909년 1월</mark> 동지 11명과 <mark class="m-evt">단지동맹</mark>을 맺었다.</p>
+    <p><mark class="m-tim">1909년 10월 26일</mark> 아침 <mark class="m-plc">하얼빈 역</mark>에서 <mark class="m-doc">브라우닝 8연발 권총</mark>으로 <mark class="m-evt">이토 히로부미를 저격</mark>하였다. 동지 <mark class="m-per">우덕순</mark>·<mark class="m-per">조도선</mark>은 <mark class="m-plc">채가구</mark>에 배치되었다.</p>
+    <p>옥중에서 <mark class="m-doc">『안응칠 역사』</mark>와 <mark class="m-doc">『동양평화론』</mark>을 집필하였다. <mark class="m-tim">1910년 2월 14일</mark> 사형을 선고받고 <mark class="m-tim">3월 26일</mark> <mark class="m-plc">뤼순 감옥</mark>에서 순국하였다.</p>
+   </div>
+  </section>
+
+  <!-- 우: 다섯 정보 범주별 항목 -->
+  <section class="pane-i1s1 dark-i1s1">
+   <div class="dhd-i1s1">
+    <div class="pk-i1s1">◢ 안중근 전기 본문 · 다섯 정보 범주별 항목</div>
+    <div class="cnt">본문에서 확인한 항목</div>
+   </div>
+   <div class="axes-i1s1" id="axes-i1s1"></div>
+  </section>
+
+ </div>
+
+ <div class="foot-i1s1">
+  <div class="fk-i1s1">분석 질문에서 <span>노드·간선의 의미</span>를 정의하고, 그 정의를 위반하는 표기·개체·관계 오류를 정제한다</div>
+  <div class="fd-i1s1">추출 근거: 안중근 전기 본문 실측 · 출처: 인명사전 발간본<br>오른쪽에는 발췌문 외 본문에서 확인한 항목도 포함 · 개수는 화면에 표시한 항목 수</div>
+ </div>
+
+</div></div>
+<script>
+(function(){
+const AX=[
+ {c:'#5b9dff',nm:'인물',sub:'PERSON',w:14,vals:[
+   ['안태훈(아버지)',1],['조마리아(어머니)',0],['안인수(할아버지)',0],['안정근·안공근(동생)',0],
+   ['우덕순(동지)',0],['조도선',0],['유동하',0],['최재형',0],['엄인섭',0],
+   ['홍석구 신부(프랑스인)',0],['이토 히로부미(저격 대상)',0],['응칠(별칭)·도마(영세명)',0]]},
+ {c:'#fb923c',nm:'사건',sub:'EVENT',w:7,vals:[
+   ['하얼빈 의거',1],['이토 히로부미 저격',0],['단지동맹',0],['국내진입작전(1908년)',0],
+   ['국채보상운동 참여',0],['갑오농민혁명 출전',0],['사형 집행(1910년)',0]]},
+ {c:'#c084fc',nm:'물건',sub:'OBJECT',w:5,vals:[
+   ['『안응칠 역사』',1],['『동양평화론』(미완)',0],['브라우닝 8연발 권총',0],['『대동공보』',0]]},
+ {c:'#4ade80',nm:'장소',sub:'PLACE',w:7,vals:[
+   ['해주부 광석동(출생지)',1],['청계동(이주지)',0],['진남포',0],['블라디보스토크',0],
+   ['하얼빈 역',0],['채가구',0],['뤼순 감옥',0]]},
+ {c:'#fbbf24',nm:'시간',sub:'TIME',w:10,vals:[
+   ['1879년 9월 2일(출생)',1],['1909년 10월 26일(의거)',0],['1910년 3월 26일(순국)',0],
+   ['음력 1909년 1월',0],['이듬해인 1885년(상대 표현)',0],['20세 무렵(추정)',0]]}
+];
+document.getElementById('axes-i1s1').innerHTML=AX.map(a=>`
+ <div class="ax-i1s1" style="flex:${a.w}">
+  <div class="lb"><span class="dot" style="background:${a.c}"></span>
+   <span class="nm" style="color:${a.c}">${a.nm}</span>
+   <span class="sub">${a.sub} · 항목 ${a.vals.length}</span></div>
+  <div class="vals">${a.vals.map(v=>`<span class="chip-i1s1">${v[1]?'<b>':''}${v[0]}${v[1]?'</b>':''}</span>`).join('')}</div>
+ </div>`).join('');
+})();
+function fitStage(){const st=document.getElementById('stage');if(!st)return;
+ st.style.height='900px';const k=Math.min(innerWidth/1600,innerHeight/900);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fitStage();addEventListener('resize',fitStage);addEventListener('load',fitStage);addEventListener('pageshow',fitStage);
+if(window.ResizeObserver)new ResizeObserver(fitStage).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitStage);
+</script>
+<script></script>
+</div></div>
+</body></html>

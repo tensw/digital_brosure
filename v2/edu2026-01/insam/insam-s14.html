@@ -1,0 +1,123 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>정규화 전후의 커뮤니티 구성과 소속 유사도</title>
+<style>
+/* 스킨: bk21-status-12 (light · 규칙선 · 등폭 컬럼) — 2컬럼 */
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;overflow:visible;background:transparent}
+.kick{position:absolute;left:82px;top:52px;font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color:#98a1b2}
+h1{position:absolute;left:82px;top:74px;font-size:44px;font-weight:800;letter-spacing:-1.5px;line-height:1.2;color:#111827}
+h1 .ac{color:#1e4be8}
+.h1s{position:absolute;left:82px;top:140px;font-size:16px;font-weight:600;letter-spacing:-.3px;color:#4b5563}
+.h1s b{color:#111827}
+.meta{position:absolute;right:82px;top:60px;text-align:right;font:700 12px/1.8 ui-monospace,Menlo,monospace;color:#98a1b2}
+.meta b{color:#4b5563}
+.rule{position:absolute;left:82px;right:82px;height:1px;background:#c3ccdf;z-index:3}
+.r1{top:196px}.r3{top:790px}
+.cols{position:absolute;left:82px;right:82px;top:196px;height:594px;display:flex;background:#fff}
+.col{flex:1;position:relative;min-width:0;padding:22px 26px 22px;display:flex;flex-direction:column}
+.col+.col{border-left:1px solid #c3ccdf}
+.col .n{font:800 40px/1 ui-monospace,Menlo,monospace;letter-spacing:-2px;transform:skewX(-9deg);display:inline-block;color:#c7d0e6}
+.col .n.m{color:#9dbcff}
+.col .lb{font:700 10.5px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#98a1b2;margin-left:10px}
+.col .lb.m{color:#1e4be8}
+.col h2{margin-top:8px;font-size:20px;font-weight:800;line-height:1.3;letter-spacing:-.6px;color:#1e4be8}
+.col h2 span{color:#111827}
+.col p{margin-top:9px;font-size:14px;font-weight:500;line-height:1.5;letter-spacing:-.3px;color:#4b5563;word-break:keep-all}
+.col p b{color:#111827;font-weight:700}
+.col .cap{margin-top:auto;text-align:center;font:600 11.5px/1.6 ui-monospace,Menlo,monospace;color:#98a1b2;padding-top:8px}
+/* 전후 막대 */
+.bars{margin-top:14px}
+.bars .h{font:700 10.5px ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#98a1b2;margin-bottom:6px}
+.brow{display:grid;grid-template-columns:70px 1fr 64px;gap:10px;align-items:center;margin-top:6px;font-size:12.5px}
+.brow .l{font:700 11px ui-monospace,Menlo,monospace;color:#6b7488}
+.brow i{display:block;height:18px;border-radius:6px}
+.brow.raw i{background:#e3e8f2}.brow.norm i{background:linear-gradient(90deg,#1e4be8,#5b83ff)}
+.brow .v{font:800 12.5px ui-monospace,Menlo,monospace;color:#111827;text-align:right}
+.qrow{display:flex;gap:10px;margin-top:14px}
+.q{flex:1;background:#f3f6fc;border-radius:10px;padding:10px 12px}
+.q .v{font:800 21px/1 ui-monospace,Menlo,monospace;color:#1e4be8;letter-spacing:-1px}
+.q .v s{text-decoration:none;color:#98a1b2;font-size:14px;margin-right:4px}
+.q .l{font-size:11px;font-weight:700;color:#98a1b2;margin-top:5px;line-height:1.35}
+.eq{margin-top:12px;font-family:"Times New Roman",Georgia,serif;font-style:italic;font-size:17px;color:#1f2a3d;background:#f3f6fc;border-radius:9px;padding:10px 14px;text-align:center;line-height:1.55}
+table.def{width:100%;border-collapse:collapse;margin-top:12px;font-size:12.5px}
+table.def th{text-align:left;font:700 10.5px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#98a1b2;padding:6px 8px;border-bottom:1px solid #e3e8f2}
+table.def td{padding:7px 8px;border-bottom:1px solid #f0f3f9;color:#4b5563;vertical-align:top;line-height:1.45}
+table.def td.k{font-weight:800;color:#111827;white-space:nowrap}
+.note{margin-top:12px;background:#fff7e6;border:1px solid #f0d9a6;border-radius:9px;padding:10px 13px;font-size:12.5px;color:#6b551a;line-height:1.5}
+.note b{color:#5a4610}
+.concl{position:absolute;left:0;right:0;top:822px;text-align:center;font-size:22px;font-weight:800;letter-spacing:-.4px;color:#111827}
+.concl b{color:#1e4be8}
+.emb-bg0,.emb-bg0 body,.emb-bg0 .slide{background:transparent!important}
+</style><style>
+/* 전체 지도 위치 표시 (insam-map.html 기준) */
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;
+ display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;
+ background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+.mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
+</style>
+</head><body>
+<div class="slide"><div id="stage"><div class="mappos-i0"><i>6</i>지도 6 · 재기</div>
+ <div class="kick">INDP · 4부 검증과 분석 결과 · 04</div>
+ <h1>사건명 정규화 전후의 <span class="ac">커뮤니티 구성과 소속 유사도</span></h1>
+ <div class="h1s">같은 설정(가중 Louvain, seed 7)으로 정규화 전후 거대성분을 분할했다. 왼쪽은 군집 수·모듈러리티·상위 군집 크기와 <b>소속 유사도(NMI)</b> 실측, 오른쪽은 지표 정의와 해석 조건이다.</div>
+ <div class="meta">거대성분 전 <b>2,929</b> · 후 <b>3,587</b> · 공통 <b>2,929</b>명<br>도구 NetworkX community</div>
+ <div class="rule r1"></div>
+ <div class="cols">
+  <div class="col">
+   <span class="n">1</span><span class="lb">실측 · BEFORE → AFTER</span>
+   <h2>군집 15 → 12, <span>Q 0.465 → 0.350</span></h2>
+   <p>정규화 후 군집 수는 줄고 모듈러리티는 <b>낮아졌다</b>. 1,302명 노드 생성과의 인과는 사건 규모 보정 실험으로 확인한다. 공통 2,929명에 대한 두 분할의 유사도는 <b>NMI 0.853</b>이다.</p>
+   <div class="bars">
+    <div class="h">상위 군집 크기 (명) · 회색 전 / 파랑 후</div>
+    <div class="brow raw"><span class="l">C1 전</span><i style="width:69%"></i><span class="v">892</span></div>
+    <div class="brow norm"><span class="l">C1 후</span><i style="width:100%"></i><span class="v">1,299</span></div>
+    <div class="brow raw"><span class="l">C2 전</span><i style="width:42%"></i><span class="v">549</span></div>
+    <div class="brow norm"><span class="l">C2 후</span><i style="width:58%"></i><span class="v">754</span></div>
+    <div class="brow raw"><span class="l">C3 전</span><i style="width:41%"></i><span class="v">537</span></div>
+    <div class="brow norm"><span class="l">C3 후</span><i style="width:46%"></i><span class="v">602</span></div>
+    <div class="brow raw"><span class="l">C4 전</span><i style="width:27%"></i><span class="v">345</span></div>
+    <div class="brow norm"><span class="l">C4 후</span><i style="width:34%"></i><span class="v">436</span></div>
+   </div>
+   <div class="qrow">
+    <div class="q"><div class="v"><s>15</s>12</div><div class="l">커뮤니티 수</div></div>
+    <div class="q"><div class="v"><s>0.465</s>0.350</div><div class="l">모듈러리티 Q</div></div>
+    <div class="q"><div class="v">0.853</div><div class="l">소속 NMI (공통 2,929명)</div></div>
+   </div>
+   <div class="cap">가중 Louvain · seed 7 고정 · 복수 시드 안정성은 후속 산출</div>
+  </div>
+  <div class="col">
+   <span class="n m">2</span><span class="lb m">모델 · DEFINITION</span>
+   <h2>모듈러리티와 <span>소속 유사도</span></h2>
+   <div class="eq">Q = (1/2m) Σ<sub>ij</sub> [ A<sub>ij</sub> − k<sub>i</sub>k<sub>j</sub>/2m ] δ(c<sub>i</sub>, c<sub>j</sub>)<br><span style="font-size:12.5px;font-style:normal;color:#6b7488">군집 안 간선이 무작위 기대치보다 얼마나 많은가</span></div>
+   <table class="def">
+    <thead><tr><th style="width:110px">개념</th><th>정의 · 이 비교에서의 의미</th></tr></thead>
+    <tbody>
+     <tr><td class="k">Louvain / Leiden</td><td>Q를 국소 최적화. 결과가 시드·해상도에 따라 달라지므로 전후 비교는 <b>같은 설정</b>으로 고정한다.</td></tr>
+     <tr><td class="k">NMI</td><td>두 분할이 공유하는 정보량을 0~1로 정규화. 1이면 동일 분할. 0.853은 두 분할의 유사도이며 개별 소속 유지를 보장하지 않는다.</td></tr>
+     <tr><td class="k">Q 하락의 의미</td><td>초대형 노드가 군집을 병합하면 군집 내부 밀도 대비 기대치가 커져 Q가 내려간다. <b>구조가 나빠진 것이 아니라 분석 단위가 커진 것</b>이다.</td></tr>
+    </tbody>
+   </table>
+   <div class="note"><b>해석 조건:</b> 군집이 지역·시기·운동 계열과 대응하는지는 속성 대조로 검증한다(미검증). 후기의병 계열 통합이 타당한 동일성 판정인지에 따라 이 비교의 의미가 달라진다. 투영과 커뮤니티 탐지는 상호작용한다(Arthur, 2019).</div>
+   <div class="cap">Blondel et al. 2008 · Traag et al. 2019 · Arthur 2019</div>
+  </div>
+ </div>
+ <div class="rule r3"></div>
+ <div class="concl">군집 수는 15 → <b>12개</b>, Q는 0.465 → <b>0.350</b>로 감소했다. 공통 인물 2,929명의 소속 NMI는 <b>0.853</b>이다</div>
+</div></div>
+<script>
+const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');const k=Math.min(innerWidth/SW,innerHeight/SH);st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
+if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+
+</script></body></html>
