@@ -1,111 +1,98 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
-<title>도서관 홈페이지 이관 · 무엇이 있었고, 무엇을 바꾸는가</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive"><title>착수 전에 묻는다 · 업무 방식 변경 논의</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{background:#060a16;overflow:hidden;font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
-.deck{position:relative;height:100vh;overflow-y:auto;overflow-x:hidden;scroll-snap-type:y mandatory;scroll-behavior:smooth;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}
+body{background:#fff;overflow:hidden;font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
+.deck{position:relative;height:100vh;overflow-y:auto;overflow-x:hidden;scroll-snap-type:y mandatory;scroll-behavior:smooth;scrollbar-width:none;overscroll-behavior-y:contain}
 .deck::-webkit-scrollbar{display:none}
 .slide{height:100vh;scroll-snap-align:start;scroll-snap-stop:always;position:relative;overflow:hidden}
-.slide iframe{border:0;width:100%;height:100%;display:block;background:transparent}
+.slide iframe{border:0;width:100%;height:100%;display:block;background:#fff}
 .nav{position:fixed;left:16px;top:50%;transform:translateY(-50%);z-index:10;display:flex;flex-direction:column;gap:4px;padding:14px 20px 14px 8px}
 .ns{all:unset;cursor:pointer;position:relative;display:block;width:24px;height:9px}
-.ns i{position:absolute;left:0;top:0;height:100%;width:3px;border-radius:2px;background:rgba(150,180,235,.28);transition:width .22s cubic-bezier(.2,.8,.2,1),background .22s ease,box-shadow .22s ease}
-.ns:hover i{width:12px;background:rgba(190,215,255,.6)}
-.ns[aria-current="true"] i{width:18px;background:#7dd3fc;box-shadow:0 0 12px rgba(125,211,252,.85),0 0 26px rgba(125,211,252,.35)}
-.ns b{position:absolute;left:0;top:50%;transform:translate(14px,-50%) scale(.92);transform-origin:left center;opacity:0;pointer-events:none;white-space:nowrap;font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:#e6efff;padding:5px 9px;border-radius:7px;background:rgba(6,10,24,.9);border:1px solid rgba(150,180,235,.24);box-shadow:0 8px 22px -10px rgba(0,0,0,.95);transition:opacity .18s ease,transform .22s cubic-bezier(.2,.8,.2,1)}
+.ns i{position:absolute;left:0;top:0;height:100%;width:3px;border-radius:2px;background:#D5DAE0;transition:width .22s,background .22s}
+.ns:hover i{width:12px;background:#9AA3AB}
+.ns[aria-current="true"] i{width:18px;background:#1D4ED8}
+.ns b{position:absolute;left:0;top:50%;transform:translate(14px,-50%) scale(.92);transform-origin:left center;opacity:0;pointer-events:none;white-space:nowrap;font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:#15181C;padding:5px 9px;border-radius:7px;background:#fff;border:1px solid #D5DAE0;box-shadow:0 8px 22px -10px rgba(0,0,0,.35);transition:opacity .18s,transform .22s}
 .ns:hover b,.ns[aria-current="true"] b{opacity:1;transform:translate(20px,-50%) scale(1)}
-.cap{position:fixed;right:22px;bottom:20px;z-index:10;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:#8ba0c8;background:rgba(6,10,24,.7);border:1px solid rgba(150,180,235,.2);padding:8px 13px;border-radius:20px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.cap b{color:#e6efff}
-@media print{.nav,.cap{display:none}.deck{height:auto;overflow:visible}.slide{page-break-after:always;height:100vh}}
+.cap{position:fixed;right:22px;bottom:20px;z-index:10;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:#6B757F;background:rgba(255,255,255,.9);border:1px solid #D5DAE0;padding:8px 13px;border-radius:20px}
+.cap b{color:#15181C}
+.notes{position:fixed;left:0;right:0;bottom:0;z-index:20;background:#15181C;color:#fff;padding:18px 90px 22px 70px;font-size:19px;line-height:1.6;word-break:keep-all;transform:translateY(100%);transition:transform .25s;border-top:3px solid #1D4ED8}
+.notes.on{transform:none}
+.notes .k{font:800 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;color:#9FB0D4;margin-bottom:8px;display:flex;gap:16px}
+.notes .k span{color:#6B757F;margin-left:auto;letter-spacing:.06em}
+@media print{.nav,.cap,.notes{display:none}.deck{height:auto;overflow:visible}.slide{page-break-after:always;height:100vh}}
 </style></head><body>
-<div class="deck" id="deck"></div>
-<nav class="nav" id="nav"></nav>
-<div class="cap" id="cap"><b>1</b> / 15</div>
+<div class="deck" id="deck"></div><nav class="nav" id="nav"></nav>
+<div class="cap" id="cap"><b>1</b> / 11</div>
+<div class="notes" id="notes"><div class="k">발표 멘트 <span>N 키로 닫기</span></div><div id="ntext"></div></div>
 <script>
 var SLIDES=[
  [
   "s0.html",
-  "표지 · 무엇이 있었고, 무엇을 바꾸는가"
+  "표지 · 착수 전에 묻는다",
+  "오늘은 앞으로의 작업에서 무엇을 확인하고, 누가 진행 여부를 결정할지 논의하겠습니다. 지난 이관은 1·2장에서 확인하고, 나머지 시간은 업무 절차를 정하는 데 쓰겠습니다."
  ],
  [
   "s1.html",
-  "1부 지금까지 · 프로젝트와 등장 주체"
+  "지난 이관에서 확인된 것",
+  "현재 자료에는 기능 이관, 외부 연계, 위험 기록의 활용, 종료 범위에 관한 확인 사항이 있습니다. 당시 공유된 정보와 판단 경위는 추가 확인이 필요합니다. 앞으로는 이 항목들의 확인 결과와 진행 판단을 함께 기록하는 방안을 논의하겠습니다."
  ],
  [
   "s2.html",
-  "1부 지금까지 · 화면은 우리, 데이터는 LAS"
+  "네 확인 사항이 가리키는 장치",
+  "확인 항목마다 결과가 필요한 시점이 다릅니다. 착수 전에 필요한 조건과 전환·종료 전에 필요한 조건을 구분하고, 확인 담당자와 판단 시점을 정하겠습니다."
  ],
  [
   "s3.html",
-  "1부 지금까지 · 경과"
+  "원칙",
+  "보고서에는 진행 판단에 필요한 내용을 기록하겠습니다. 일반 작업, 간소화 작업, 긴급 복구에 각각 어느 수준의 확인이 필요한지 정해 보겠습니다."
  ],
  [
   "s4.html",
-  "1부 지금까지 · 주소 세 개"
+  "미팅에서 확정할 다섯 가지",
+  "보류 조건이나 판단 담당자가 정해지지 않은 항목은 미확인으로 남기겠습니다. 해당 항목이 해결되기 전까지 진행할 수 있는 범위도 함께 정하겠습니다."
  ],
  [
   "s5.html",
-  "2부 확인된 문제 · ① 화면은 재현했고, 창구는 없었다"
+  "영향범위 점검표",
+  "코드와 설정에서 확인한 연계 정보에 업무 담당자와 외부 담당자의 확인을 더하겠습니다. 서로 다른 내용은 시험이나 추가 확인으로 정리하겠습니다."
  ],
  [
   "s6.html",
-  "2부 확인된 문제 · ② 화면에 보이지 않는 의존"
+  "착수 전 미팅 보고서 양식",
+  "확인되지 않은 내용은 「미확인」으로 적고 담당자와 기한을 붙이겠습니다. 책임자가 단계별 필수조건을 제안하고 승인자가 확정하며, 해당 조건이 충족되지 않으면 그 단계의 진행을 보류하겠습니다."
  ],
  [
   "s7.html",
-  "2부 확인된 문제 · ③ 위험은 적혀 있었다"
+  "전환·종료 작업의 단계별 조건",
+  "전환과 구 시스템 종료는 각각 확인하겠습니다. 실행 전에 시험 결과와 복구 조건을 확인하고, 실행 후에는 정해진 기간 동안 업무 처리 결과를 관찰하겠습니다."
  ],
  [
   "s8.html",
-  "2부 확인된 문제 · ④ 「종료」의 범위가 정해지지 않았다"
+  "실행 흐름과 역할",
+  "각 단계에서 남길 결과와 확인 역할을 제안했습니다. 오늘은 승인자와 대행자를 정하고, 작업별 수행·검토·관찰 담당자는 착수 미팅에서 지정하는 방식으로 논의하겠습니다."
  ],
  [
   "s9.html",
-  "2부 확인된 문제 · ⑤ 오늘 상태"
+  "오늘 정할 것 여섯 가지",
+  "오늘은 첫 작업에 적용할 기준을 정하겠습니다. 추가 확인이 필요한 항목은 담당자와 결정 기한을 남기고, 첫 적용 결과를 본 뒤 절차를 보완하겠습니다."
  ],
  [
   "s10.html",
-  "3부 업무 방식 변경 · 원칙"
- ],
- [
-  "s11.html",
-  "3부 업무 방식 변경 · 미팅에서 확정할 다섯 가지"
- ],
- [
-  "s12.html",
-  "3부 업무 방식 변경 · 영향범위 점검표"
- ],
- [
-  "s13.html",
-  "3부 업무 방식 변경 · 전환·종료 관문"
- ],
- [
-  "s14.html",
-  "3부 업무 방식 변경 · 오늘 정할 것과 보고서 양식"
+  "부록 · 이번 건에서 확인할 것",
+  "이번 건의 남은 확인 항목은 담당자와 기한에 따라 별도로 확인하겠습니다. 오늘은 확인 일정과 결과 검토 담당자를 정하겠습니다."
  ]
 ];
-var deck=document.getElementById('deck'),nav=document.getElementById('nav'),cap=document.getElementById('cap');
+var deck=document.getElementById('deck'),nav=document.getElementById('nav'),cap=document.getElementById('cap'),notes=document.getElementById('notes'),ntext=document.getElementById('ntext');
 var N=SLIDES.length,cur=0;
-SLIDES.forEach(function(s,i){
- var sec=document.createElement('section');sec.className='slide';
- var f=document.createElement('iframe');f.src=s[0];f.title=s[1];if(i>0)f.loading='lazy';
- sec.appendChild(f);deck.appendChild(sec);
- var b=document.createElement('button');b.className='ns';b.setAttribute('aria-label',(i+1)+'. '+s[1]);
- b.innerHTML='<i></i><b>'+(i+1)+'. '+s[1]+'</b>';b.onclick=function(){go(i)};nav.appendChild(b);
-});
+SLIDES.forEach(function(s,i){var sec=document.createElement('section');sec.className='slide';var f=document.createElement('iframe');f.src=s[0];f.title=s[1];if(i>0)f.loading='lazy';sec.appendChild(f);deck.appendChild(sec);
+ var b=document.createElement('button');b.className='ns';b.setAttribute('aria-label',(i+1)+'. '+s[1]);b.innerHTML='<i></i><b>'+(i+1)+'. '+s[1]+'</b>';b.onclick=function(){go(i)};nav.appendChild(b);});
 var slides=[].slice.call(deck.querySelectorAll('.slide')),navs=[].slice.call(nav.querySelectorAll('.ns'));
-function setActive(i){cur=i;cap.innerHTML='<b>'+(i+1)+'</b> / '+N;navs.forEach(function(n,k){n.setAttribute('aria-current',k===i?'true':'false')});}
+function setActive(i){cur=i;cap.innerHTML='<b>'+(i+1)+'</b> / '+N;navs.forEach(function(n,k){n.setAttribute('aria-current',k===i?'true':'false')});ntext.textContent=SLIDES[i][2];}
 function go(i){i=Math.max(0,Math.min(N-1,i));slides[i].scrollIntoView({behavior:'smooth'});setActive(i);}
-if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&e.intersectionRatio>=0.5){setActive(slides.indexOf(e.target));}});},{root:deck,threshold:[0.5]});slides.forEach(function(s){io.observe(s)});}
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&e.intersectionRatio>=0.5)setActive(slides.indexOf(e.target));});},{root:deck,threshold:[0.5]});slides.forEach(function(s){io.observe(s)});}
 setActive(0);
-document.addEventListener('keydown',function(e){
- if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '||e.key==='ArrowRight'){e.preventDefault();go(cur+1);}
- else if(e.key==='ArrowUp'||e.key==='PageUp'||e.key==='ArrowLeft'){e.preventDefault();go(cur-1);}
- else if(e.key==='Home'){e.preventDefault();go(0);}else if(e.key==='End'){e.preventDefault();go(N-1);}
-});
-/* iframe 안에서 누른 키도 덱이 받는다 */
-window.addEventListener('message',function(e){if(e.data&&e.data.deckKey){document.dispatchEvent(new KeyboardEvent('keydown',{key:e.data.deckKey}));}});
+function key(k){if(k==='ArrowDown'||k==='PageDown'||k===' '||k==='ArrowRight')go(cur+1);else if(k==='ArrowUp'||k==='PageUp'||k==='ArrowLeft')go(cur-1);else if(k==='Home')go(0);else if(k==='End')go(N-1);else if(k==='n'||k==='N')notes.classList.toggle('on');}
+document.addEventListener('keydown',function(e){if(['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End','ArrowRight','ArrowLeft','n','N'].indexOf(e.key)>-1){e.preventDefault();key(e.key);}});
+window.addEventListener('message',function(e){if(e.data&&e.data.deckKey)key(e.data.deckKey);});
 </script></body></html>
