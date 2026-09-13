@@ -1,98 +1,88 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
-<title>원칙</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive"><title>부록</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
-body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:#060a16;color:#e9eefb;-webkit-font-smoothing:antialiased}
-.slide{position:relative;width:100vw;height:100vh;overflow:hidden;
- background:radial-gradient(1200px 900px at 50% 8%,#0b1226 0%,#060a16 58%,#03050c 100%)}
+body{font:16px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:#FFFFFF;color:#15181C;-webkit-font-smoothing:antialiased}
+:root{--ink:#15181C;--ink2:#3A424A;--dim:#6B757F;--faint:#A0A8B0;--line:#E3E7EA;--line2:#F0F3F5;--panel:#F6F8F9;
+ --blue:#1D4ED8;--amber:#B45309;--green:#0A7C3A;--purple:#6D28D9;--red:#B91C1C}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
 #stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
-.wrap{position:relative;z-index:2;width:1600px;height:900px;padding:42px 74px 26px;display:flex;flex-direction:column}
-:root{--ink:#e9eefb;--ink2:#9fb0d4;--ink3:#5d7099;--blue:#5b9dff;--amber:#fbbf24;--green:#4ade80;--purple:#c084fc;--orange:#fb923c;--red:#f87171}
+.wrap{position:relative;width:1600px;height:900px;padding:44px 76px 30px;display:flex;flex-direction:column}
 .hd{display:flex;gap:24px;align-items:flex-start}
-.kick{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
-h1{font-size:48px;font-weight:800;letter-spacing:-1.7px;margin-top:10px;line-height:1.15}
-h1 span{background:linear-gradient(90deg,#5b9dff,#c084fc 45%,#4ade80 75%,#fbbf24);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.lead{color:var(--ink2);font-size:18px;font-weight:600;margin-top:10px;max-width:118ch;line-height:1.55;word-break:keep-all}
-.lead b{color:var(--ink)}
-.meta{margin-left:auto;text-align:right;font:600 11px/1.9 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.04em;white-space:nowrap}
-.meta b{color:var(--ink2)}
-.body{flex:1;min-height:0;margin-top:22px;display:flex;gap:22px}
-.foot{margin-top:16px;padding-top:14px;border-top:1px solid rgba(150,165,255,.14);display:flex;align-items:center;gap:16px}
-.fk{font-size:22px;font-weight:800;letter-spacing:-.5px;color:#eef1ff;word-break:keep-all}
-.fk span{color:var(--amber)}
-.fd{font:600 10.5px/1.75 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.02em;margin-left:auto;text-align:right;white-space:nowrap}
-.fd b{color:var(--ink2)}
-.card{border-radius:18px;background:rgba(255,255,255,.035);border:1px solid rgba(150,165,255,.14);padding:22px 26px;display:flex;flex-direction:column;min-height:0}
-.card.lite{background:#f6f5fb;color:#191934;border-color:#e2def2}
-.ck{font:700 12.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:#8b96d4;display:flex;align-items:center;gap:8px}
-.lite .ck{color:#6a5ad6}
-.ct{margin-top:10px;font-size:27px;font-weight:800;letter-spacing:-.6px;line-height:1.2}
-.big{font-size:72px;font-weight:800;letter-spacing:-2.5px;line-height:1;margin-top:10px}
-.big small{font-size:18px;font-weight:700;color:var(--ink2);letter-spacing:-.3px;margin-left:6px}
-.sub{margin-top:8px;font-size:16.5px;font-weight:600;color:var(--ink2);line-height:1.5;word-break:keep-all}
-.lite .sub{color:#6b6b8f}
-table{width:100%;border-collapse:collapse;font-size:18px;line-height:1.5}
-th{text-align:left;font:700 12.5px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:#8b96d4;padding:0 12px 10px;border-bottom:1px solid rgba(150,165,255,.2);vertical-align:bottom}
-table.tight td{padding:9px 12px;font-size:17px}
-td{padding:13px 12px;border-bottom:1px solid rgba(150,165,255,.1);vertical-align:top;color:#dde3ff;word-break:keep-all}
-td b{color:#fff}
-td.no{color:var(--orange);font-weight:800;white-space:nowrap}
-td.d{font:700 16px/1.6 ui-monospace,Menlo,monospace;color:var(--ink2);white-space:nowrap}
-td.src,.src{font:600 12.5px/1.6 ui-monospace,Menlo,monospace;color:var(--ink3)}
-.lite table td{color:#2f2f4c;border-color:#e2def2} .lite table td b{color:#191934} .lite th{color:#8a8aad;border-color:#ddd8f0}
-.tag{display:inline-block;font:800 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;padding:5px 9px;border-radius:7px;white-space:nowrap}
-.t-ok{background:rgba(74,222,128,.14);color:#4ade80} .t-no{background:rgba(251,146,60,.16);color:#fb923c}
-.t-wait{background:rgba(251,191,36,.14);color:#fbbf24} .t-ask{background:rgba(192,132,252,.16);color:#c084fc} .t-info{background:rgba(91,157,255,.14);color:#5b9dff}
-code{font:600 .92em ui-monospace,Menlo,monospace;background:rgba(150,170,255,.12);padding:1px 6px;border-radius:5px;color:#dde3ff}
-.lite code{background:#eceaf8;color:#4a4870}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;flex:1;min-height:0}
+.kick{font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;color:var(--dim)}
+h1{font-size:46px;font-weight:850;letter-spacing:-1.6px;margin-top:12px;line-height:1.18;color:var(--ink)}
+h1 em{font-style:normal;color:var(--blue)}
+.lead{color:var(--ink2);font-size:18px;font-weight:500;margin-top:10px;max-width:120ch;line-height:1.6;word-break:keep-all}
+.lead b{color:var(--ink);font-weight:800}
+.meta{margin-left:auto;text-align:right;font:600 11.5px/1.9 ui-monospace,Menlo,monospace;color:var(--faint);white-space:nowrap}
+.meta b{color:var(--dim)}
+.body{flex:1;min-height:0;margin-top:24px;display:flex;gap:22px}
+.foot{margin-top:16px;padding-top:14px;border-top:1.5px solid var(--ink);display:flex;align-items:center;gap:20px}
+.q{font-size:20px;font-weight:800;letter-spacing:-.4px;color:var(--ink);word-break:keep-all}
+.q i{font-style:normal;font:800 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;color:#fff;background:var(--purple);padding:6px 9px;border-radius:5px;margin-right:12px;vertical-align:3px}
+.fd{font:600 11px/1.7 ui-monospace,Menlo,monospace;color:var(--faint);margin-left:auto;text-align:right;white-space:nowrap}
+.card{border-radius:14px;background:#fff;border:1.5px solid var(--line);padding:22px 26px;display:flex;flex-direction:column;min-height:0}
+.card.panel{background:var(--panel);border-color:var(--line2)}
+.card.ink{background:var(--ink);color:#fff;border-color:var(--ink)}
+.card.ink .ck{color:#B8C2CC} .card.ink .sub{color:#DDE3E8}
+.card.mark{border-color:#F0C9A8;background:#FFFBF6}
+.ck{font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;color:var(--dim);display:flex;align-items:center;gap:8px}
+.ct{margin-top:10px;font-size:26px;font-weight:850;letter-spacing:-.6px;line-height:1.25;word-break:keep-all}
+.big{font-size:72px;font-weight:850;letter-spacing:-2.5px;line-height:1;margin-top:8px}
+.big small{font-size:18px;font-weight:700;color:var(--dim);letter-spacing:-.2px;margin-left:6px}
+.sub{margin-top:10px;font-size:17.5px;color:var(--ink2);line-height:1.55;word-break:keep-all}
+.sub b{color:var(--ink);font-weight:800}
+table{width:100%;border-collapse:collapse;font-size:19.5px;line-height:1.55}
+th{text-align:left;font:800 12.5px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:var(--dim);padding:0 12px 10px;border-bottom:1.5px solid var(--ink);vertical-align:bottom}
+td{padding:16px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink2);word-break:keep-all}
+td b{color:var(--ink);font-weight:800}
+table.tight td{padding:12px 12px;font-size:18px}
+td.k{font-weight:800;color:var(--ink);white-space:nowrap}
+td.t{font:800 14px/1.5 ui-monospace,Menlo,monospace;color:var(--purple);white-space:nowrap}
+.src{font:600 12.5px/1.6 ui-monospace,Menlo,monospace;color:var(--faint)}
+.tag{display:inline-block;font:800 11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;padding:5px 9px;border-radius:6px;white-space:nowrap}
+.t-ok{background:#E6F5EC;color:var(--green)} .t-no{background:#FCEBE6;color:var(--red)} .t-wait{background:#FEF3E2;color:var(--amber)} .t-ask{background:#EFEAFB;color:var(--purple)} .t-info{background:#E7EFFD;color:var(--blue)}
+code{font:600 .9em ui-monospace,Menlo,monospace;background:var(--line2);padding:1px 6px;border-radius:5px;color:var(--ink2)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1;min-height:0}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;flex:1;min-height:0}
-.stat{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.stat .card{padding:18px 22px}
 .num{counter-reset:n;list-style:none;display:flex;flex-direction:column;gap:10px;flex:1;min-height:0}
-.num li{counter-increment:n;position:relative;padding:14px 18px 14px 62px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(150,165,255,.14);flex:1}
-.num li::before{content:counter(n);position:absolute;left:18px;top:14px;width:30px;height:30px;border-radius:50%;background:#5b9dff;color:#06101f;display:grid;place-items:center;font:800 14px/1 ui-monospace,Menlo,monospace}
-.num b{display:block;font-size:23px;font-weight:800;letter-spacing:-.4px;color:#fff}
-.num.tight li{padding:10px 16px 10px 58px} .num.tight span{font-size:15px} .num.tight b{font-size:20px}
-.num span{display:block;margin-top:5px;font-size:16.5px;color:var(--ink2);line-height:1.5;word-break:keep-all}
-.arrow{display:flex;align-items:center;justify-content:center;color:var(--ink3);font-size:30px;font-weight:300}
-.quote{border-left:3px solid var(--amber);padding:12px 18px;background:rgba(251,191,36,.06);border-radius:0 10px 10px 0;font-size:18px;color:#eef1ff;line-height:1.55;word-break:keep-all}
-.quote .src{display:block;margin-top:6px}
-.mark{border-color:rgba(251,191,36,.45);background:rgba(251,191,36,.06)}
-.ask{margin-top:auto;padding-top:12px;border-top:1px dashed rgba(150,165,255,.2);font-size:15.5px;color:var(--ink2);line-height:1.55;word-break:keep-all}
-.ask b{color:var(--purple)}
-</style></head><body>
-<div class="slide"><div id="stage"><div class="wrap">
-<div class="hd"><div><div class="kick">3부 업무 방식 변경 · 01</div><h1>착수 전에 <span>미팅하고, 기록하고, 승인받는다</span></h1><p class="lead">2부의 네 문제는 모두 <b>착수 전에 물었어야 할 질문</b>으로 되돌아간다. 창구가 있는가, 바깥에서 우리를 부르는가, 기록이 결정에 닿는가, 끈다는 것이 무엇인가.</p></div><div class="meta">근거 <b>저장소 기록 · 점검 체크리스트 · 서버 실측</b><br>작성 <b>2026-09-14</b> · 대상 <b>개발·운영 전원</b></div></div>
-<div class="body" style="flex-direction:column;gap:18px">
- <div class="card" style="background:linear-gradient(150deg,#1a2044,#0d1230);border-color:rgba(160,180,255,.34);padding:30px 36px">
-  <div class="ck" style="color:#b3a6ff">원칙</div>
-  <div style="margin-top:10px;font-size:27px;font-weight:800;letter-spacing:-.8px;line-height:1.35;word-break:keep-all">작업 책임자(선임연구원 김경수)는 착수 전 미팅을 소집하고, 영향받는 업무 담당자와 승인자가 확인한 결과를 지정된 위치에 기록한다.<br><span style="color:#fbbf24">보고서 없이 착수하지 않는다.</span></div>
- </div>
- <div class="card" style="flex:1;padding:16px 26px"><div class="ck">적용</div>
-  <table class="tight" style="margin-top:8px">
-   <tr><th style="width:20%">구분</th><th>적용</th></tr>
-   <tr><td><b>대상 작업</b></td><td>신규 기능, 외부 연계 변경, 데이터 구조 변경, 전환·종료 작업</td></tr>
-   <tr><td><b>간소화 대상</b></td><td>문구 수정, 스타일 조정 등 영향범위가 한 화면에 그치는 작업. 보고서 1~2항만 기록</td></tr>
-   <tr><td><b>긴급 복구</b></td><td>사전 미팅 없이 착수하되 <b>착수 시각·조치 내용·영향범위를 즉시 기록</b>하고 24시간 내 사후 검토</td></tr>
-   <tr><td><b>작업 책임자</b></td><td><b>선임연구원 김경수</b>. 미팅 소집, 보고서 작성, 보류 조건 1차 판단, 승인 요청까지 책임진다</td></tr>
-   <tr><td><b>참석자</b></td><td>작업 책임자, 운영 담당자, 영향받는 업무 담당자, 승인자. 외부 연계가 있으면 연계 담당자 포함</td></tr>
-   <tr><td><b>회의 시간</b></td><td>확인 항목과 미확인 사항에 따라 정한다. 필수 항목 확인 전에는 착수 여부를 확정하지 않는다</td></tr>
-   <tr><td><b>기록 위치</b></td><td>작업 저장소의 지정 폴더. 변경 시 이력을 남긴다</td></tr>
-  </table></div>
-</div><div class="foot"><div class="fk">미팅의 목적은 <span>회의</span>가 아니라 <span>답이 적힌 보고서</span>다.</div></div>
-</div></div></div>
-<script>
+.num li{counter-increment:n;position:relative;padding:14px 18px 14px 64px;border-radius:12px;background:var(--panel);border:1.5px solid var(--line2);flex:1}
+.num li::before{content:counter(n);position:absolute;left:18px;top:14px;width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font:800 15px/1 ui-monospace,Menlo,monospace}
+.num b{display:block;font-size:22px;font-weight:850;letter-spacing:-.4px;color:var(--ink)}
+.num span{display:block;margin-top:5px;font-size:16px;color:var(--ink2);line-height:1.5;word-break:keep-all}
+.num.tight li{padding:11px 16px 11px 60px} .num.tight b{font-size:19px} .num.tight span{font-size:15px}
+.rule{border-left:5px solid var(--blue);background:var(--panel);padding:22px 28px;border-radius:0 14px 14px 0;font-size:21px;line-height:1.65;color:var(--ink);word-break:keep-all}
+.rule b{color:var(--blue);font-weight:850}
+.flow{display:grid;grid-template-columns:repeat(9,1fr);gap:8px;align-items:stretch;flex:0 0 400px!important}
+.fs{border:1.5px solid var(--line);border-radius:12px;padding:12px 10px;display:flex;flex-direction:column;position:relative;background:#fff}
+.fs.hi{border-color:var(--blue);background:#F3F7FF}
+.fs .n{font:800 11px/1 ui-monospace,Menlo,monospace;color:var(--faint);letter-spacing:.1em}
+.fs .t{margin-top:8px;font-size:19px;font-weight:850;letter-spacing:-.3px;line-height:1.25;color:var(--ink);word-break:keep-all}
+.fs .o{margin-top:12px;font-size:14.5px;line-height:1.5;color:var(--ink2);word-break:keep-all;flex:1}
+.fs .w{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:13.5px;line-height:1.4;color:var(--dim);word-break:keep-all}
+.fs .w b{color:var(--purple);font-weight:800}
+.chk{display:inline-flex;gap:6px;margin-top:8px}
+</style></head><body><div class="slide"><div id="stage"><div class="wrap">
+<div class="hd"><div><div class="kick">부록 · 참조용</div><h1>이번 건에서 <em>확인할 것</em></h1><p class=lead>발표에서 설명하지 않는다. 9장 6번에서 확인 일정만 정한다. 확인 담당자는 <b>선임연구원 김경수</b>이며, 각 항목에 확인 상태 · 근거 · 다음 조치 · 기한을 기록한다.</p></div><div class=meta>작성 <b>2026-09-14</b> · 대상 <b>개발·운영 전원</b><br>책임자 <b>선임연구원 김경수</b></div></div>
+<div class="body"><div class="card" style="flex:1"><table class="tight">
+ <tr><th style="width:5%"></th><th style="width:34%">항목</th><th>확인할 내용</th><th style="width:14%">외부 회신</th></tr>
+ <tr><td class="t">1</td><td class="k">전환 시점에 공유된 정보</td><td>요청서·점검표가 오픈·전환 판단에 사용되었는지, 항목별 조치 상태</td><td></td></tr>
+ <tr><td class="t">2</td><td class="k">인포테크 회신 여부</td><td>8/26 확인 질문에 대한 전환 전 회신. 메일·회의록 대조. <b>회신 여부와 API 제공 여부는 구분</b></td><td><span class="tag t-wait">필요</span></td></tr>
+ <tr><td class="t">3</td><td class="k">관리자 API 제공 여부</td><td>9/14 예정분 도착 여부 · 제공 범위 · 실제 업무 처리 시험 결과</td><td><span class="tag t-wait">필요</span></td></tr>
+ <tr><td class="t">4</td><td class="k">대체 업무 경로</td><td>구 관리자(weblib) <b>로그인 가능 여부</b>와 <b>사서 업무 처리 가능 여부</b>를 구분해 확인 · 사서 안내 여부</td><td></td></tr>
+ <tr><td class="t">5</td><td class="k">외부 연계 점검 여부</td><td>전환 전에 외부 시스템과 구 시스템 내부의 호출 주소를 확인하는 절차가 있었는지</td><td></td></tr>
+ <tr><td class="t">6</td><td class="k">승인 기록</td><td>오픈과 주소 전환의 승인자와 승인 근거가 어디에 남아 있는지</td><td></td></tr>
+ <tr><td class="t">7</td><td class="k">구 시스템 유지 기간 · 계약</td><td>확인 근거와 승인 필요 여부를 함께 기록</td><td><span class="tag t-wait">필요</span></td></tr>
+ <tr><td class="t">8</td><td class="k">임시 릴레이 해제 조건</td><td>인포테크·KERIS 주소 변경 완료 여부 · 인증서 갱신 시 설정 복원 확인 · 해제 승인자</td><td><span class="tag t-wait">필요</span></td></tr>
+</table>
+<div class="sub" style="margin-top:auto;padding-top:12px;border-top:1px dashed var(--line);font-size:15px">외부 회신이 필요한 항목은 내부 요청 담당자와 미회신 시 처리 방안을 함께 기록한다.</div></div></div>
+<div class="foot"><div class="q"><i>논의 질문</i>현재 업무를 이어가기 위해 이 목록에서 가장 먼저 확인해야 할 항목은 무엇입니까?</div></div>
+</div></div></div><script>
 function fitStage(){const st=document.getElementById('stage');if(!st)return;
- const k=Math.min(innerWidth/1600,innerHeight/900);
- st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+ const k=Math.min(innerWidth/1600,innerHeight/900);st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
 fitStage();addEventListener('resize',fitStage);addEventListener('load',fitStage);addEventListener('pageshow',fitStage);
 if(window.ResizeObserver)new ResizeObserver(fitStage).observe(document.documentElement);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitStage);
-/* iframe 안에서 누른 방향키를 덱으로 올린다 */
-if(window!==parent)document.addEventListener('keydown',function(e){if(['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End','ArrowRight','ArrowLeft'].indexOf(e.key)>-1){e.preventDefault();parent.postMessage({deckKey:e.key},'*');}});
-</script>
-</body></html>
+if(window!==parent)document.addEventListener('keydown',function(e){if(['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End','ArrowRight','ArrowLeft','n','N'].indexOf(e.key)>-1){e.preventDefault();parent.postMessage({deckKey:e.key},'*');}});
+</script></body></html>

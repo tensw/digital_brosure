@@ -1,95 +1,84 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
-<title>화면은 우리, 데이터는 LAS</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive"><title>가리키는 장치</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
-body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:#060a16;color:#e9eefb;-webkit-font-smoothing:antialiased}
-.slide{position:relative;width:100vw;height:100vh;overflow:hidden;
- background:radial-gradient(1200px 900px at 50% 8%,#0b1226 0%,#060a16 58%,#03050c 100%)}
+body{font:16px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:#FFFFFF;color:#15181C;-webkit-font-smoothing:antialiased}
+:root{--ink:#15181C;--ink2:#3A424A;--dim:#6B757F;--faint:#A0A8B0;--line:#E3E7EA;--line2:#F0F3F5;--panel:#F6F8F9;
+ --blue:#1D4ED8;--amber:#B45309;--green:#0A7C3A;--purple:#6D28D9;--red:#B91C1C}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden;background:#fff}
 #stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
-.wrap{position:relative;z-index:2;width:1600px;height:900px;padding:42px 74px 26px;display:flex;flex-direction:column}
-:root{--ink:#e9eefb;--ink2:#9fb0d4;--ink3:#5d7099;--blue:#5b9dff;--amber:#fbbf24;--green:#4ade80;--purple:#c084fc;--orange:#fb923c;--red:#f87171}
+.wrap{position:relative;width:1600px;height:900px;padding:44px 76px 30px;display:flex;flex-direction:column}
 .hd{display:flex;gap:24px;align-items:flex-start}
-.kick{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
-h1{font-size:48px;font-weight:800;letter-spacing:-1.7px;margin-top:10px;line-height:1.15}
-h1 span{background:linear-gradient(90deg,#5b9dff,#c084fc 45%,#4ade80 75%,#fbbf24);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.lead{color:var(--ink2);font-size:18px;font-weight:600;margin-top:10px;max-width:118ch;line-height:1.55;word-break:keep-all}
-.lead b{color:var(--ink)}
-.meta{margin-left:auto;text-align:right;font:600 11px/1.9 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.04em;white-space:nowrap}
-.meta b{color:var(--ink2)}
-.body{flex:1;min-height:0;margin-top:22px;display:flex;gap:22px}
-.foot{margin-top:16px;padding-top:14px;border-top:1px solid rgba(150,165,255,.14);display:flex;align-items:center;gap:16px}
-.fk{font-size:22px;font-weight:800;letter-spacing:-.5px;color:#eef1ff;word-break:keep-all}
-.fk span{color:var(--amber)}
-.fd{font:600 10.5px/1.75 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.02em;margin-left:auto;text-align:right;white-space:nowrap}
-.fd b{color:var(--ink2)}
-.card{border-radius:18px;background:rgba(255,255,255,.035);border:1px solid rgba(150,165,255,.14);padding:22px 26px;display:flex;flex-direction:column;min-height:0}
-.card.lite{background:#f6f5fb;color:#191934;border-color:#e2def2}
-.ck{font:700 12.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:#8b96d4;display:flex;align-items:center;gap:8px}
-.lite .ck{color:#6a5ad6}
-.ct{margin-top:10px;font-size:27px;font-weight:800;letter-spacing:-.6px;line-height:1.2}
-.big{font-size:72px;font-weight:800;letter-spacing:-2.5px;line-height:1;margin-top:10px}
-.big small{font-size:18px;font-weight:700;color:var(--ink2);letter-spacing:-.3px;margin-left:6px}
-.sub{margin-top:8px;font-size:16.5px;font-weight:600;color:var(--ink2);line-height:1.5;word-break:keep-all}
-.lite .sub{color:#6b6b8f}
-table{width:100%;border-collapse:collapse;font-size:18px;line-height:1.5}
-th{text-align:left;font:700 12.5px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:#8b96d4;padding:0 12px 10px;border-bottom:1px solid rgba(150,165,255,.2);vertical-align:bottom}
-table.tight td{padding:9px 12px;font-size:17px}
-td{padding:13px 12px;border-bottom:1px solid rgba(150,165,255,.1);vertical-align:top;color:#dde3ff;word-break:keep-all}
-td b{color:#fff}
-td.no{color:var(--orange);font-weight:800;white-space:nowrap}
-td.d{font:700 16px/1.6 ui-monospace,Menlo,monospace;color:var(--ink2);white-space:nowrap}
-td.src,.src{font:600 12.5px/1.6 ui-monospace,Menlo,monospace;color:var(--ink3)}
-.lite table td{color:#2f2f4c;border-color:#e2def2} .lite table td b{color:#191934} .lite th{color:#8a8aad;border-color:#ddd8f0}
-.tag{display:inline-block;font:800 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;padding:5px 9px;border-radius:7px;white-space:nowrap}
-.t-ok{background:rgba(74,222,128,.14);color:#4ade80} .t-no{background:rgba(251,146,60,.16);color:#fb923c}
-.t-wait{background:rgba(251,191,36,.14);color:#fbbf24} .t-ask{background:rgba(192,132,252,.16);color:#c084fc} .t-info{background:rgba(91,157,255,.14);color:#5b9dff}
-code{font:600 .92em ui-monospace,Menlo,monospace;background:rgba(150,170,255,.12);padding:1px 6px;border-radius:5px;color:#dde3ff}
-.lite code{background:#eceaf8;color:#4a4870}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;flex:1;min-height:0}
+.kick{font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.24em;color:var(--dim)}
+h1{font-size:46px;font-weight:850;letter-spacing:-1.6px;margin-top:12px;line-height:1.18;color:var(--ink)}
+h1 em{font-style:normal;color:var(--blue)}
+.lead{color:var(--ink2);font-size:18px;font-weight:500;margin-top:10px;max-width:120ch;line-height:1.6;word-break:keep-all}
+.lead b{color:var(--ink);font-weight:800}
+.meta{margin-left:auto;text-align:right;font:600 11.5px/1.9 ui-monospace,Menlo,monospace;color:var(--faint);white-space:nowrap}
+.meta b{color:var(--dim)}
+.body{flex:1;min-height:0;margin-top:24px;display:flex;gap:22px}
+.foot{margin-top:16px;padding-top:14px;border-top:1.5px solid var(--ink);display:flex;align-items:center;gap:20px}
+.q{font-size:20px;font-weight:800;letter-spacing:-.4px;color:var(--ink);word-break:keep-all}
+.q i{font-style:normal;font:800 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;color:#fff;background:var(--purple);padding:6px 9px;border-radius:5px;margin-right:12px;vertical-align:3px}
+.fd{font:600 11px/1.7 ui-monospace,Menlo,monospace;color:var(--faint);margin-left:auto;text-align:right;white-space:nowrap}
+.card{border-radius:14px;background:#fff;border:1.5px solid var(--line);padding:22px 26px;display:flex;flex-direction:column;min-height:0}
+.card.panel{background:var(--panel);border-color:var(--line2)}
+.card.ink{background:var(--ink);color:#fff;border-color:var(--ink)}
+.card.ink .ck{color:#B8C2CC} .card.ink .sub{color:#DDE3E8}
+.card.mark{border-color:#F0C9A8;background:#FFFBF6}
+.ck{font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;color:var(--dim);display:flex;align-items:center;gap:8px}
+.ct{margin-top:10px;font-size:26px;font-weight:850;letter-spacing:-.6px;line-height:1.25;word-break:keep-all}
+.big{font-size:72px;font-weight:850;letter-spacing:-2.5px;line-height:1;margin-top:8px}
+.big small{font-size:18px;font-weight:700;color:var(--dim);letter-spacing:-.2px;margin-left:6px}
+.sub{margin-top:10px;font-size:17.5px;color:var(--ink2);line-height:1.55;word-break:keep-all}
+.sub b{color:var(--ink);font-weight:800}
+table{width:100%;border-collapse:collapse;font-size:19.5px;line-height:1.55}
+th{text-align:left;font:800 12.5px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:var(--dim);padding:0 12px 10px;border-bottom:1.5px solid var(--ink);vertical-align:bottom}
+td{padding:16px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink2);word-break:keep-all}
+td b{color:var(--ink);font-weight:800}
+table.tight td{padding:12px 12px;font-size:18px}
+td.k{font-weight:800;color:var(--ink);white-space:nowrap}
+td.t{font:800 14px/1.5 ui-monospace,Menlo,monospace;color:var(--purple);white-space:nowrap}
+.src{font:600 12.5px/1.6 ui-monospace,Menlo,monospace;color:var(--faint)}
+.tag{display:inline-block;font:800 11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;padding:5px 9px;border-radius:6px;white-space:nowrap}
+.t-ok{background:#E6F5EC;color:var(--green)} .t-no{background:#FCEBE6;color:var(--red)} .t-wait{background:#FEF3E2;color:var(--amber)} .t-ask{background:#EFEAFB;color:var(--purple)} .t-info{background:#E7EFFD;color:var(--blue)}
+code{font:600 .9em ui-monospace,Menlo,monospace;background:var(--line2);padding:1px 6px;border-radius:5px;color:var(--ink2)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1;min-height:0}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;flex:1;min-height:0}
-.stat{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.stat .card{padding:18px 22px}
 .num{counter-reset:n;list-style:none;display:flex;flex-direction:column;gap:10px;flex:1;min-height:0}
-.num li{counter-increment:n;position:relative;padding:14px 18px 14px 62px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid rgba(150,165,255,.14);flex:1}
-.num li::before{content:counter(n);position:absolute;left:18px;top:14px;width:30px;height:30px;border-radius:50%;background:#5b9dff;color:#06101f;display:grid;place-items:center;font:800 14px/1 ui-monospace,Menlo,monospace}
-.num b{display:block;font-size:23px;font-weight:800;letter-spacing:-.4px;color:#fff}
-.num.tight li{padding:10px 16px 10px 58px} .num.tight span{font-size:15px} .num.tight b{font-size:20px}
-.num span{display:block;margin-top:5px;font-size:16.5px;color:var(--ink2);line-height:1.5;word-break:keep-all}
-.arrow{display:flex;align-items:center;justify-content:center;color:var(--ink3);font-size:30px;font-weight:300}
-.quote{border-left:3px solid var(--amber);padding:12px 18px;background:rgba(251,191,36,.06);border-radius:0 10px 10px 0;font-size:18px;color:#eef1ff;line-height:1.55;word-break:keep-all}
-.quote .src{display:block;margin-top:6px}
-.mark{border-color:rgba(251,191,36,.45);background:rgba(251,191,36,.06)}
-.ask{margin-top:auto;padding-top:12px;border-top:1px dashed rgba(150,165,255,.2);font-size:15.5px;color:var(--ink2);line-height:1.55;word-break:keep-all}
-.ask b{color:var(--purple)}
-</style></head><body>
-<div class="slide"><div id="stage"><div class="wrap">
-<div class="hd"><div><div class="kick">1부 지금까지 · 02</div><h1>화면이 하는 모든 일은 <span>창구를 지나야 한다</span></h1><p class="lead">이 구조에서 따라오는 조건이 하나 있다. <b>LAS 데이터의 조회·변경이 필요한 기능은 연계 API가 있어야 동작한다.</b> API가 없는 기능은 화면을 똑같이 만들어도 동작하지 않는다.</p></div><div class="meta">근거 <b>저장소 기록 · 점검 체크리스트 · 서버 실측</b><br>작성 <b>2026-09-14</b> · 대상 <b>개발·운영 전원</b></div></div>
-<div class="body" style="flex-direction:column;gap:18px">
- <div style="display:grid;grid-template-columns:1fr 60px 1.3fr 60px 1fr;gap:0;align-items:stretch;flex:0 0 250px">
-  <div class="card lite"><div class="ck">이용자 · 사서</div><div class="ct">브라우저</div><div class="sub">검색하고, 빌리고, 예약하고, 교육을 열고, 사물함을 만든다</div></div>
-  <div class="arrow">→</div>
-  <div class="card" style="border-color:rgba(91,157,255,.5)"><div class="ck" style="color:#5b9dff">우리 · 텐소프트웍스</div><div class="ct">BIBLO 화면 + 서버</div><div class="sub">이용자 화면 123 · 관리자 화면 43 · 워커 API 105. 데이터를 <b>보여 주고, 요청을 전달</b>한다</div></div>
-  <div class="arrow" style="flex-direction:column;font-size:13px;color:#fbbf24;font-weight:800;letter-spacing:.06em;font-family:ui-monospace,Menlo,monospace"><span style="font-size:30px;font-weight:300;color:#5d7099">→</span>창구<br>API</div>
-  <div class="card" style="border-color:rgba(251,191,36,.5)"><div class="ck" style="color:#fbbf24">인포테크</div><div class="ct">ODISU · LAS 원장</div><div class="sub">대출·예약·소장·이용자·교육·스터디룸·사물함·포인트의 <b>원본</b>. 창구를 여는 권한은 여기에 있다</div></div>
- </div>
- <div class="grid3">
-  <div class="card"><div class="ck"><span class="tag t-ok">되는 경우</span></div><div class="ct" style="font-size:21px">조회 창구가 있다</div><div class="sub">대출 현황·예약·소장·검색·내서재. 8/25 회신으로 이용자용 창구가 대폭 열렸다. <b>이용자 화면은 이 위에서 돈다.</b></div></div>
-  <div class="card mark"><div class="ck"><span class="tag t-no">안 되는 경우</span></div><div class="ct" style="font-size:21px">쓰기 창구가 없다</div><div class="sub">정기교육 개설, 스터디룸 방 설정, 사물함 신설, 지정도서 등록, 포인트 관리. <b>화면은 있지만 저장할 곳이 없다.</b></div></div>
-  <div class="card"><div class="ck"><span class="tag t-ask">피한 경우</span></div><div class="ct" style="font-size:21px">우리 DB에 만들면</div><div class="sub">원본이 둘로 갈라진다. 우리 DB에 방을 만들어도 ODISU가 그 키를 모르면 <b>학생이 예약할 수 없다.</b> 그래서 임시 구현을 하지 않았다.</div></div>
- </div>
-</div><div class="foot"><div class="fk">창구가 없는 기능은 <span>화면이 똑같아도 동작하지 않는다.</span> 이 조건이 이번 건의 출발점이다.</div><div class="fd">출처 <b>프로젝트 지침 · 임시 구현 판단 기준(2026-08-25)</b></div></div>
-</div></div></div>
-<script>
+.num li{counter-increment:n;position:relative;padding:14px 18px 14px 64px;border-radius:12px;background:var(--panel);border:1.5px solid var(--line2);flex:1}
+.num li::before{content:counter(n);position:absolute;left:18px;top:14px;width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font:800 15px/1 ui-monospace,Menlo,monospace}
+.num b{display:block;font-size:22px;font-weight:850;letter-spacing:-.4px;color:var(--ink)}
+.num span{display:block;margin-top:5px;font-size:16px;color:var(--ink2);line-height:1.5;word-break:keep-all}
+.num.tight li{padding:11px 16px 11px 60px} .num.tight b{font-size:19px} .num.tight span{font-size:15px}
+.rule{border-left:5px solid var(--blue);background:var(--panel);padding:22px 28px;border-radius:0 14px 14px 0;font-size:21px;line-height:1.65;color:var(--ink);word-break:keep-all}
+.rule b{color:var(--blue);font-weight:850}
+.flow{display:grid;grid-template-columns:repeat(9,1fr);gap:8px;align-items:stretch;flex:0 0 400px!important}
+.fs{border:1.5px solid var(--line);border-radius:12px;padding:12px 10px;display:flex;flex-direction:column;position:relative;background:#fff}
+.fs.hi{border-color:var(--blue);background:#F3F7FF}
+.fs .n{font:800 11px/1 ui-monospace,Menlo,monospace;color:var(--faint);letter-spacing:.1em}
+.fs .t{margin-top:8px;font-size:19px;font-weight:850;letter-spacing:-.3px;line-height:1.25;color:var(--ink);word-break:keep-all}
+.fs .o{margin-top:12px;font-size:14.5px;line-height:1.5;color:var(--ink2);word-break:keep-all;flex:1}
+.fs .w{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:13.5px;line-height:1.4;color:var(--dim);word-break:keep-all}
+.fs .w b{color:var(--purple);font-weight:800}
+.chk{display:inline-flex;gap:6px;margin-top:8px}
+</style></head><body><div class="slide"><div id="stage"><div class="wrap">
+<div class="hd"><div><div class="kick">02 · 지난 이관</div><h1>네 확인 사항이 <em>가리키는 장치</em></h1><p class=lead>확인 항목마다 결과가 필요한 시점이 다르다. <b>착수 전에 필요한 조건</b>과 <b>전환·종료 전에 필요한 조건</b>을 구분하고, 확인 담당자와 판단 시점을 정한다.</p></div><div class=meta>작성 <b>2026-09-14</b> · 대상 <b>개발·운영 전원</b><br>책임자 <b>선임연구원 김경수</b></div></div>
+<div class="body"><div class="card" style="flex:1"><table>
+ <tr><th style="width:26%">확인 항목</th><th style="width:16%">필요한 시점</th><th style="width:30%">앞으로 기록하는 곳</th><th>기록할 내용</th></tr>
+ <tr><td class="k">API 제공 · 저장 기능</td><td class="t">착수 전</td><td>영향범위 점검표 「화면·기능」 「데이터」</td><td>조회·저장·수정·삭제와 권한별 동작 여부. 미제공이면 담당자와 확보 기한</td></tr>
+ <tr><td class="k">외부 시스템의 호출 관계</td><td class="t">착수 전 조사<br>전환 전 시험</td><td>영향범위 점검표 「외부 연계」</td><td>들어오는 호출과 나가는 호출, 주소·인증 변경, 연계 담당자, 시험 결과</td></tr>
+ <tr><td class="k">위험 검토</td><td class="t">착수 · 승인 시</td><td>보고서 「보류 조건」 「결정」</td><td>보류 조건마다 적용 단계·충족 증빙·판단 담당자. 승인 근거와 예외 범위</td></tr>
+ <tr><td class="k">전환 · 종료 범위</td><td class="t">전환 직전</td><td>전환·종료 관문</td><td>단계별 실행 조건, 시험 결과, 복구 계획, 구 시스템 종료는 별도 승인</td></tr>
+</table>
+<div class="sub" style="margin-top:auto;padding-top:14px;border-top:1px dashed var(--line);font-size:16px">바꾸는 대상은 사람이 아니라 <b>착수 전에 무엇을 묻고, 누가 답하고, 어디에 적는가</b>다. 3장부터 그 절차다.</div></div></div>
+<div class="foot"><div class="q"><i>논의 질문</i>이 네 항목은 각각 어느 시점까지 확인되어야 업무를 진행할 수 있습니까?</div></div>
+</div></div></div><script>
 function fitStage(){const st=document.getElementById('stage');if(!st)return;
- const k=Math.min(innerWidth/1600,innerHeight/900);
- st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+ const k=Math.min(innerWidth/1600,innerHeight/900);st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
 fitStage();addEventListener('resize',fitStage);addEventListener('load',fitStage);addEventListener('pageshow',fitStage);
 if(window.ResizeObserver)new ResizeObserver(fitStage).observe(document.documentElement);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitStage);
-/* iframe 안에서 누른 방향키를 덱으로 올린다 */
-if(window!==parent)document.addEventListener('keydown',function(e){if(['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End','ArrowRight','ArrowLeft'].indexOf(e.key)>-1){e.preventDefault();parent.postMessage({deckKey:e.key},'*');}});
-</script>
-</body></html>
+if(window!==parent)document.addEventListener('keydown',function(e){if(['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End','ArrowRight','ArrowLeft','n','N'].indexOf(e.key)>-1){e.preventDefault();parent.postMessage({deckKey:e.key},'*');}});
+</script></body></html>
