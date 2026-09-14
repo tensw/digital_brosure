@@ -179,8 +179,8 @@ li::marker{color:var(--faint)}
 <p>전기는 인물별 생애를 중심으로 서술되며, 전기 간의 연결 관계를 별도로 명시하지 않는다.</p>
 
 <h3><span class="n">1.2</span>전기 본문의 구성 요소</h3>
-<p>전기 본문은 전원이 보유하고 있으며 평균 1,190자이다. 본문에는 사람·이름·시간·장소·조직·사건·직임·문헌·수치가 서술 형태로 들어 있다. 독립기념관 개방사업이 이상재(ENTRY_ID 651)와 유관순(ENTRY_ID 614)의 전기 두 편을 직접 읽어 9개 군 41개 유형으로 분류하였다. 본 제안서에서는 이 추출 단위를 원자로 지칭하며, 전체 분류는 부록 A에 둔다.</p>
-<p>밀도는 문장 단위로도 확인된다. 유관순 전기의 아우내 장터 관련 한 문장에서 원자 11개와 사실 1건을 확인하였고, 이상재 전기 첫 문단의 한 문장에서 사람 원자 7개와 친족 관계 4종을 확인하였다.</p>
+<p>전기 본문은 전원이 보유하고 있으며 평균 1,190자이다. 본문에는 사람·이름·시간·장소·조직·사건·직임·문헌·수치가 서술 형태로 들어 있다. 독립기념관 개방사업이 이상재(ENTRY_ID 651)와 유관순(ENTRY_ID 614)의 전기 두 편을 직접 읽어 9개 군 41개 유형으로 분류하였다. 본 제안서에서는 이 추출 단위를 개체(entity)로, 개체를 뽑는 작업을 정보 추출로 지칭하며, 전체 분류는 부록 A에 둔다.</p>
+<p>밀도는 문장 단위로도 확인된다. 유관순 전기의 아우내 장터 관련 한 문장에서 개체 11개와 사실 1건을 확인하였고, 이상재 전기 첫 문단의 한 문장에서 사람 개체 7개와 친족 관계 4종을 확인하였다.</p>
 
 <h3><span class="n">1.3</span>구조화 필드와 본문의 차이</h3>
 <p>인명사전은 <code>engagedOrganizations</code>(소속 단체)와 <code>engagedEvents</code>(참여 사건)를 구조화 필드로 제공한다. 이 필드가 담는 범위는 본문보다 좁다.</p>
@@ -201,7 +201,7 @@ li::marker{color:var(--faint)}
 <p>전기 본문과 구조화 필드의 채움률에도 차이가 있다. 본문은 수집본 15,027건 기준 100%가 채워져 있고, 소속 단체의 채움률은 52.8%, 참여 사건은 60.5%이다.</p>
 
 <h3><span class="n">1.4</span>축 공유를 기준으로 한 연결 구성</h3>
-<p>전기와 전기 사이의 관계는 기록에 명시되어 있지 않다. 두 인물이 서로를 언급하지 않아도, 각 전기에서 추출한 원자가 동일한 축 값을 공유하면 두 사람 사이에 연결을 구성할 수 있다.</p>
+<p>전기와 전기 사이의 관계는 기록에 명시되어 있지 않다. 두 인물이 서로를 언급하지 않아도, 각 전기에서 추출한 개체가 동일한 축 값을 공유하면 두 사람 사이에 연결을 구성할 수 있다.</p>
 
 <div class="dia">
   <div class="row"><span class="who">유관순 전기</span><span class="arrow">→</span><span class="val"><b>1919-04-01</b> · <b>아우내 장터</b> · 3천여 명</span></div>
@@ -210,7 +210,7 @@ li::marker{color:var(--faint)}
   <p class="note">세 전기는 서로를 언급하지 않는다. 시간 축과 장소 축을 공유할 때 연결이 구성된다.</p>
 </div>
 
-<p>이 연결은 어느 전기에도 문장으로 적혀 있지 않다. 원자를 축으로 세우고 축의 공유를 엣지로 표현할 때 분석 대상이 된다.</p>
+<p>이 연결은 어느 전기에도 문장으로 적혀 있지 않다. 개체를 축으로 세우고 축의 공유를 엣지로 표현할 때 분석 대상이 된다.</p>
 <p>축별로 구성하려는 연결과 본 과제의 채택 범위는 다음과 같다.</p>
 
 <div class="tw"><table class="t">
@@ -234,12 +234,12 @@ li::marker{color:var(--faint)}
 <div class="tw"><table class="t">
 <thead><tr><th style="width:44px">#</th><th>질문</th><th>대응 강의 범위</th></tr></thead>
 <tbody>
-<tr><td>Q1</td><td>본문 원자를 축으로 세우면 관계망은 구조화 필드 대비 얼마나 확장되는가</td><td>그래프 표현·이분 그래프 (9/7 이수)</td></tr>
+<tr><td>Q1</td><td>본문 개체를 축으로 세우면 관계망은 구조화 필드 대비 얼마나 확장되는가</td><td>그래프 표현·이분 그래프 (9/7 이수)</td></tr>
 <tr><td>Q2</td><td>그렇게 구성된 관계망은 어떤 구조를 갖는가</td><td>네트워크 속성·랜덤그래프 (9/14)</td></tr>
 <tr><td>Q3</td><td>기록상 연결 위치가 두드러진 인물·장소·시기는 어디이며, 운동계열 구분이 커뮤니티 구조와 일치하는가</td><td>중심성·RolX (9/21) · 커뮤니티 탐지 (9/28)</td></tr>
 <tr><td>Q4</td><td>관계망 구조만으로 인물의 운동계열을 예측할 수 있는가</td><td>GNN 노드 분류 (11/16 이후)</td></tr>
 </tbody></table></div>
-<p>Q1에서는 구조화 필드 기반 그래프와 본문 원자 기반 그래프의 노드·엣지·연결 인물 수를 비교하여 관계망의 확장 정도를 정량으로 제시한다. Q1이 본 과제의 핵심 산출이며, Q2와 Q3이 그 관계망의 구조를 분석하는 후속 산출이다. Q1에서 Q3까지가 Mining Project(11/9), Q4가 Learning Project(12/7)에 해당한다.</p>
+<p>Q1에서는 구조화 필드 기반 그래프와 본문 개체 기반 그래프의 노드·엣지·연결 인물 수를 비교하여 관계망의 확장 정도를 정량으로 제시한다. Q1이 본 과제의 핵심 산출이며, Q2와 Q3이 그 관계망의 구조를 분석하는 후속 산출이다. Q1에서 Q3까지가 Mining Project(11/9), Q4가 Learning Project(12/7)에 해당한다.</p>
 
 <h3><span class="n">1.7</span>해석 범위의 한정</h3>
 <p>중심성 지표는 기록상 연결 위치를 나타내는 값으로만 사용하며, 인물의 역사적 기여도나 중요도 순위로 해석하지 않는다. 인명사전은 서훈을 받은 인물을 수록한 자료이므로, 기록에 남지 않은 활동과 수록되지 않은 인물은 그래프에 나타나지 않는다. 분석 결과는 이 수록 범위 안에서만 유효하다.</p>
@@ -262,7 +262,7 @@ li::marker{color:var(--faint)}
 <div class="tw"><table class="t">
 <thead><tr><th>필드</th><th>내용</th><th>본 과제에서의 역할</th></tr></thead>
 <tbody>
-<tr><td><code>content</code></td><td>전기 본문 (평균 1,190자, 채움률 100%)</td><td>원자 추출 대상</td></tr>
+<tr><td><code>content</code></td><td>전기 본문 (평균 1,190자, 채움률 100%)</td><td>정보 추출 대상</td></tr>
 <tr><td><code>engagedOrganizations</code></td><td>소속 단체 (쉼표 구분, 52.8%)</td><td>Q1 비교 기준선</td></tr>
 <tr><td><code>engagedEvents</code></td><td>참여 사건 (쉼표 구분, 60.5%)</td><td>Q1 비교 기준선</td></tr>
 <tr><td><code>activities</code></td><td>주요활동 (99.2%)</td><td>보조 추출 대상</td></tr>
@@ -322,8 +322,8 @@ li::marker{color:var(--faint)}
 <!-- ══ 3 ══ -->
 <h2><span class="n">3.</span>그래프 기반 분석 계획</h2>
 
-<h3><span class="n">3.1</span>원자 추출 범위</h3>
-<p>원자 41유형 중 규칙으로 추출 가능한 유형을 채택 범위로 두고, 문맥 판단이 필요한 유형은 그래프에 반영하지 않는다.</p>
+<h3><span class="n">3.1</span>정보 추출 범위</h3>
+<p>추출 스키마 41유형 중 규칙으로 추출 가능한 유형을 채택 범위로 두고, 문맥 판단이 필요한 유형은 그래프에 반영하지 않는다.</p>
 <h4>채택 — 규칙 기반 추출, 그래프에 반영</h4>
 <div class="tw"><table class="t">
 <thead><tr><th>축</th><th>유형</th><th>추출 방법</th></tr></thead>
@@ -344,7 +344,7 @@ li::marker{color:var(--faint)}
 <thead><tr><th style="width:56px">단계</th><th>내용</th><th>검증</th></tr></thead>
 <tbody>
 <tr><td>P1</td><td>개방 API 전량 수집 (1,504페이지) 후 XML 파싱</td><td>수집 건수와 <code>total_count</code> 대조</td></tr>
-<tr><td>P2</td><td>3.1절 채택 범위의 원자 추출</td><td>표본 100건 수작업 대조로 정밀도·재현율 측정</td></tr>
+<tr><td>P2</td><td>3.1절 채택 범위의 정보 추출</td><td>표본 100건 수작업 대조로 정밀도·재현율 측정</td></tr>
 <tr><td>P3</td><td>축별 표기 정규화 (지명 계층·사건명·구분자)</td><td>정규화 전후 고유값 수 비교</td></tr>
 <tr><td>P4</td><td>축 그래프 구성</td><td>노드·엣지 수 실측 기록</td></tr>
 </tbody></table></div>
@@ -354,7 +354,7 @@ li::marker{color:var(--faint)}
 <p>인물과 축을 잇는 이분 그래프를 기본형으로 두고, 축 공유를 통한 인물 간 투영 그래프를 병행 구성한다.</p>
 <div class="dia">
   <div class="row"><span class="who">노드</span><span class="arrow">·</span><span class="val">인물 · 장소 · 시간(연) · 조직 · 사건 · 문헌</span></div>
-  <div class="row"><span class="who">엣지</span><span class="arrow">·</span><span class="val">인물 ─ 축 <span style="color:#93a2bd">(본문에서 해당 원자가 추출된 관계)</span></span></div>
+  <div class="row"><span class="who">엣지</span><span class="arrow">·</span><span class="val">인물 ─ 축 <span style="color:#93a2bd">(본문에서 해당 개체가 추출된 관계)</span></span></div>
   <div class="row"><span class="who"></span><span class="arrow">·</span><span class="val">인물 ─ 인물 <span style="color:#93a2bd">(축 공유 투영, 가중치 = 공유한 축의 수)</span></span></div>
 </div>
 <p>대형 사건에 대한 참여 집중은 두 방법으로 처리하고 결과 차이를 비교한다.</p>
@@ -367,7 +367,7 @@ li::marker{color:var(--faint)}
 <div class="tw"><table class="t">
 <thead><tr><th style="width:56px">질문</th><th>분석</th><th>도구</th></tr></thead>
 <tbody>
-<tr><td>Q1</td><td>구조화 필드 그래프와 본문 원자 그래프의 노드·엣지·연결 인물 수 비교</td><td>NetworkX</td></tr>
+<tr><td>Q1</td><td>구조화 필드 그래프와 본문 개체 그래프의 노드·엣지·연결 인물 수 비교</td><td>NetworkX</td></tr>
 <tr><td>Q1</td><td>축별 기여도 측정 (시간·장소·조직·문헌이 각각 추가하는 엣지 수)</td><td>NetworkX</td></tr>
 <tr><td>Q2</td><td>차수 분포, 연결 성분, 거대 성분 비율, 평균 경로 길이, 군집 계수</td><td>NetworkX</td></tr>
 <tr><td>Q2</td><td>동일 노드·엣지 수의 Erdős–Rényi 랜덤그래프와 대조</td><td>NetworkX</td></tr>
@@ -410,7 +410,7 @@ li::marker{color:var(--faint)}
 <tr><td>확보</td><td>구조화 필드 기반 그래프 규모 산출 (Q1 비교 기준선)</td><td>완료</td></tr>
 <tr><td>확보</td><td>라벨 분포·표기 변이·참여 집중 확인</td><td>완료</td></tr>
 <tr><td>확보</td><td>P1 본문 전량 수집 · 15,027건 (1,096페이지 10건 미응답)</td><td>완료 (9/14)</td></tr>
-<tr><td>수행</td><td>P2 원자 추출 및 표본 100건 검증</td><td>예정 (~10/12)</td></tr>
+<tr><td>수행</td><td>P2 정보 추출 및 표본 100건 검증</td><td>예정 (~10/12)</td></tr>
 <tr><td>수행</td><td>P3 정규화, P4 축 그래프 구성</td><td>예정 (~10/19)</td></tr>
 <tr><td>산출</td><td>Q1~Q3 분석 결과</td><td>11/9 발표</td></tr>
 <tr><td>산출</td><td>Q4 학습·평가 결과</td><td>12/7 발표</td></tr>
@@ -421,7 +421,7 @@ li::marker{color:var(--faint)}
 <thead><tr><th style="width:120px">일자</th><th>산출</th></tr></thead>
 <tbody>
 <tr><td>9/28</td><td>본 제안서 발표</td></tr>
-<tr><td>~10/12</td><td>P2 원자 추출 및 표본 검증 (P1 수집은 9/14 완료)</td></tr>
+<tr><td>~10/12</td><td>P2 정보 추출 및 표본 검증 (P1 수집은 9/14 완료)</td></tr>
 <tr><td>10/19</td><td>중간점검, P3·P4 완료 및 Q1 비교 결과</td></tr>
 <tr><td>11/9</td><td>Mining Project 발표 (Q1~Q3)</td></tr>
 <tr><td>~11/30</td><td>학습 파이프라인 구축, 모델 비교</td></tr>
@@ -435,13 +435,13 @@ li::marker{color:var(--faint)}
 <tbody>
 <tr><td>한계</td><td>1,504페이지 전체에 수집을 시도해 15,027건을 확보하였다. 1,096페이지의 10건은 API 미응답으로 수집하지 못했으며, 분석 모집단은 15,027명이다.</td></tr>
 <tr><td>전제</td><td>축별 정규화 규칙을 확정해야 그래프 구성이 가능하다. 규칙은 P3에서 결정하고 발표에 명시한다.</td></tr>
-<tr><td>한계</td><td>원자 41유형 중 문맥 판단이 필요한 유형은 그래프에 반영하지 않는다. 해당 유형은 표본 정확도 측정 결과만 보고한다.</td></tr>
+<tr><td>한계</td><td>추출 스키마 41유형 중 문맥 판단이 필요한 유형은 그래프에 반영하지 않는다. 해당 유형은 표본 정확도 측정 결과만 보고한다.</td></tr>
 <tr><td>한계</td><td>규칙 기반 추출의 정밀도·재현율은 표본 100건으로 측정할 예정이며, 전수 정확도가 아니다.</td></tr>
 <tr><td>한계</td><td>인명사전은 서훈을 받은 인물을 수록한 자료이므로, 분석 결과는 해당 수록 범위에 한정된다.</td></tr>
 <tr><td>미확인</td><td>단체 5,064개 중 2명 이상이 참여한 단체가 1,564개(30.9%)인 원인이 표기 변이인지 실제 분포인지 검증하지 않았다.</td></tr>
 <tr><td>미확인</td><td>1,096페이지 10건이 응답하지 않는 원인을 확인하지 않았다.</td></tr>
 </tbody></table></div>
-<p>본 제안서의 수치는 본문 평균 길이·채움률·그래프 규모·라벨 분포·표기 변이·아우내 조회 결과(필드·주요활동·본문)까지 본 팀이 2026-09-14에 개방 API 수집본으로 직접 측정하였다. 원자 41유형 분류는 독립기념관 개방사업 실측 자료를 인용하였다.</p>
+<p>본 제안서의 수치는 본문 평균 길이·채움률·그래프 규모·라벨 분포·표기 변이·아우내 조회 결과(필드·주요활동·본문)까지 본 팀이 2026-09-14에 개방 API 수집본으로 직접 측정하였다. 추출 스키마 41유형 분류는 독립기념관 개방사업 실측 자료를 인용하였다.</p>
 
 <!-- ══ 5 ══ -->
 <h2><span class="n">5.</span>승인 요청 범위</h2>
@@ -450,10 +450,10 @@ li::marker{color:var(--faint)}
 </div>
 
 <!-- ══ 부록 ══ -->
-<h2><span class="n">부록 A.</span>전기 본문 원자 분류 (41유형)</h2>
+<h2><span class="n">부록 A.</span>전기 본문 추출 스키마 (41유형)</h2>
 <p>독립기념관 개방사업이 이상재(ENTRY_ID 651)·유관순(ENTRY_ID 614) 전기 두 편을 직접 읽어 정리한 분류이다. 본 과제의 채택 범위는 3.1절에 있다.</p>
 <div class="tw"><table class="t">
-<thead><tr><th style="width:110px">군</th><th class="num">유형 수</th><th>원자</th></tr></thead>
+<thead><tr><th style="width:110px">군</th><th class="num">유형 수</th><th>개체 유형</th></tr></thead>
 <tbody>
 <tr><td>A 사람</td><td class="num">6</td><td>표제어 본인 · 친족 · 동지 · 외국인 · 일제 관헌 · 제3자 관계 부기</td></tr>
 <tr><td>B 이름 표기</td><td class="num">5</td><td>한자 병기 · 본관 · 자·호 · 이명 · 직함 붙은 표기</td></tr>
