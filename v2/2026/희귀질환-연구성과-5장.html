@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>성균관대 희귀질환 연구 · 다섯 장면</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;900&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F5F7F4; --surface:#FFFFFF; --ink:#172019; --ink-2:#4E5A53; --muted:#7F8A84;
+  --line:#DBE2DD; --grid:#E8EEEA; --accent:#0E6B45; --accent-ink:#0A573A;
+  --g-soft:#DDEFE5; --g-wash:#EEF6F1; --kr:#B9822D; --kr-soft:#F3E6CF;
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --head:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F1412; --surface:#171D1A; --ink:#F0F4F1; --ink-2:#B7C0BA; --muted:#8B958F;
+  --line:#2A322D; --grid:#222925; --accent:#4CC08C; --accent-ink:#7FD4AA;
+  --g-soft:#1B3328; --g-wash:#15241C; --kr:#D9A24C; --kr-soft:#3A2E17;
+}}
+:root[data-theme="dark"]{
+  --bg:#0F1412; --surface:#171D1A; --ink:#F0F4F1; --ink-2:#B7C0BA; --muted:#8B958F;
+  --line:#2A322D; --grid:#222925; --accent:#4CC08C; --accent-ink:#7FD4AA;
+  --g-soft:#1B3328; --g-wash:#15241C; --kr:#D9A24C; --kr-soft:#3A2E17;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:0 72px}
+a{color:inherit}
+h1,h2,h3{font-family:var(--head);text-wrap:balance;margin:0}
+.tab{font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+
+.mast{padding-block:40px 26px;border-bottom:1px solid var(--line)}
+.mast .eyebrow{margin-bottom:12px}
+.mast h1{font-size:clamp(30px,5vw,56px);font-weight:900;line-height:1.12;letter-spacing:-.02em}
+.mast h1 em{font-style:normal;color:var(--accent)}
+.mast .lede{max-width:48em;font-size:16.5px;color:var(--ink-2);margin:16px 0 0}
+
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:28px}
+.kpis a{display:block;background:var(--surface);padding:16px 16px 14px;text-decoration:none}
+.kpis a:hover,.kpis a:focus-visible{background:var(--g-wash);outline:none}
+.kpis .m{font-size:11.5px;font-weight:600;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.kpis .v{font-family:var(--head);font-weight:900;font-size:27px;line-height:1.05;letter-spacing:-.02em;color:var(--accent-ink);margin-top:8px}
+.kpis .v small{font-size:13px;font-weight:700;color:var(--ink-2);margin-left:3px}
+.kpis .k{font-size:12.5px;color:var(--ink-2);margin-top:8px;line-height:1.45}
+@media (max-width:980px){.kpis{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:560px){.kpis{grid-template-columns:repeat(2,1fr)}}
+
+.layout{display:grid;grid-template-columns:196px 1fr;gap:40px;align-items:start}
+.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 18px);padding-top:26px}
+.rail ol{list-style:none;margin:0;padding:0;border-left:1px solid var(--line)}
+.rail li a{display:block;padding:8px 0 8px 14px;text-decoration:none;color:var(--ink-2);font-size:13px;line-height:1.35;border-left:2px solid transparent;margin-left:-1px}
+.rail li a b{display:block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.rail li a:hover,.rail li a.on{color:var(--ink);border-left-color:var(--accent)}
+.rail .note{font-size:12px;color:var(--muted);margin:18px 0 0;line-height:1.5}
+@media (max-width:860px){.layout{grid-template-columns:1fr;gap:0}.rail{position:static;padding-top:14px}.rail ol{display:flex;flex-wrap:wrap;gap:4px 14px;border-left:0}.rail li a{padding:4px 0;border-left:0;margin:0}.rail li a b{display:inline;margin-right:4px}.rail .note{display:none}}
+
+section.m{padding-block:52px 44px;border-bottom:1px solid var(--line)}
+section.m:last-of-type{border-bottom:0}
+.gov{font-size:clamp(23px,3vw,34px);font-weight:900;line-height:1.25;letter-spacing:-.015em;margin-top:12px}
+.gov em{font-style:normal;color:var(--accent)}
+.sub{max-width:54em;color:var(--ink-2);margin:12px 0 0;font-size:15.5px}
+.gov-band{padding:16px 18px;border-left:4px solid var(--accent);background:var(--g-wash);margin-top:16px}
+.gov-band p{margin:0;font-size:14px;color:var(--ink-2)}
+
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:24px}
+.tiles div{background:var(--surface);padding:15px 16px}
+.tiles .v{font-family:var(--head);font-weight:900;font-size:28px;line-height:1.05;letter-spacing:-.02em;color:var(--accent-ink)}
+.tiles .v small{font-size:13px;font-weight:700;color:var(--ink-2);margin-left:2px}
+.tiles .k{font-size:12.5px;color:var(--ink-2);margin-top:7px;line-height:1.45}
+@media (max-width:820px){.tiles{grid-template-columns:repeat(2,1fr)}}
+
+dl.w6{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:22px 0 0}
+dl.w6 div{background:var(--surface);padding:11px 13px}
+dl.w6 dt{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--accent);text-transform:uppercase}
+dl.w6 dd{margin:3px 0 0;font-size:13.5px;line-height:1.45;color:var(--ink)}
+@media (max-width:640px){dl.w6{grid-template-columns:repeat(2,1fr)}}
+
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:22px;background:var(--surface);border:1px solid var(--line)}
+.tbl caption{caption-side:top;text-align:left;font-size:14.5px;font-weight:700;font-family:var(--head);padding:12px 14px 4px}
+.tbl th,.tbl td{text-align:left;padding:9px 14px;border-bottom:1px solid var(--grid)}
+.tbl th{color:var(--muted);font-weight:600;font-size:12px;letter-spacing:.02em}
+.tbl td.n{font-variant-numeric:tabular-nums;font-weight:600;color:var(--accent-ink);white-space:nowrap}
+.tbl tr:last-child td{border-bottom:0}
+.tbl-wrap{overflow-x:auto}
+
+ul.pts{margin:20px 0 0;padding:0;list-style:none;display:grid;gap:10px}
+ul.pts li{padding-left:20px;position:relative;color:var(--ink-2);font-size:14.5px;line-height:1.55}
+ul.pts li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;border-radius:2px;background:var(--accent)}
+ul.pts li b{color:var(--ink);font-weight:600}
+
+.src{margin-top:22px;font-size:12px;color:var(--muted);line-height:1.6;border-top:1px solid var(--grid);padding-top:12px}
+.foot{padding-block:40px 0;color:var(--muted);font-size:12.5px;line-height:1.7}
+.foot b{color:var(--ink-2)}
+.toggle{position:fixed;right:16px;bottom:16px;z-index:20;background:var(--surface);border:1px solid var(--line);color:var(--ink-2);border-radius:999px;padding:9px 15px;font:600 12px/1 var(--sans);cursor:pointer}
+@media print{.toggle{display:none}.rail{display:none}.layout{grid-template-columns:1fr}section.m{page-break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="mast">
+    <p class="eyebrow">성균관대학교 · 삼성서울·강북삼성·삼성창원병원 · 희귀질환 연구 2006–2025</p>
+    <h1>희귀질환, <em>다섯 장면</em>으로 보는 성균관대 20년</h1>
+    <p class="lede">환자가 2만 명도 안 되는 병은 시장도 국가도 먼저 나서지 않는다. 그 분야에서 성균관대와 삼성 계열 병원이 20년간 무엇을 얼마나, 어떤 질로, 누구를 위해 남겼는지를 다섯 장면으로 정리한다.</p>
+    <nav class="kpis">
+      <a href="#s1"><div class="m">1 · 국제</div><div class="v tab">7,000<small>+ 종</small></div><div class="k">알려진 희귀질환 · 72% 유전 · 4억 명</div></a>
+      <a href="#s2"><div class="m">2 · 국내</div><div class="v tab">1,389<small>종</small></div><div class="k">국가관리 희귀질환 · 진료 39.5만 명</div></a>
+      <a href="#s3"><div class="m">3 · 양과 질</div><div class="v tab">1,753<small>편</small></div><div class="k">20년 핵심 논문 · FWCI 1.12</div></a>
+      <a href="#s4"><div class="m">4 · 자랑</div><div class="v tab">20<small>/20년</small></div><div class="k">끊긴 해 없음 · 대표 성과 2,792 피인용</div></a>
+      <a href="#s5"><div class="m">5 · 후학</div><div class="v tab">전문<small>기관</small></div><div class="k">센터·코호트·책 4·학술지 4</div></a>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <aside class="rail">
+      <ol>
+        <li><a href="#s1"><b>장면 1</b>국제 희귀질환의 종류</a></li>
+        <li><a href="#s2"><b>장면 2</b>국내 희귀질환과 연구 여건</a></li>
+        <li><a href="#s3"><b>장면 3</b>성균관대 연구의 양과 질</a></li>
+        <li><a href="#s4"><b>장면 4</b>꾸준함과 대표 성과</a></li>
+        <li><a href="#s5"><b>장면 5</b>미래 후학 양성</a></li>
+      </ol>
+      <p class="note">수치는 공개 자료와 성균관대 희귀질환 연구 대시보드(biblo.ai/kks/disease) 실측을 근거로 한다.</p>
+    </aside>
+
+    <main>
+
+      <!-- 1 -->
+      <section class="m" id="s1">
+        <p class="eyebrow">장면 1 · 국제 희귀질환의 종류</p>
+        <h2 class="gov">알려진 희귀질환은 <em>7,000종이 넘고</em>, 대부분 유전에서 비롯된다</h2>
+        <p class="sub">희귀질환은 한 나라 안에서는 소수지만, 종류를 합치면 전 세계 4억 명 이상이 앓는다. 나라마다 ‘희귀’를 정하는 기준이 다르고, 종류의 대부분은 유전 질환이며 어릴 때 발병한다.</p>
+        <div class="tiles">
+          <div><div class="v tab">7,000<small>~10,800종</small></div><div class="k">알려진 희귀질환 (집계 기준에 따라 6,000~10,800)</div></div>
+          <div><div class="v tab">72<small>%</small></div><div class="k">유전에서 비롯된 질환 (종류 기준)</div></div>
+          <div><div class="v tab">약 70<small>%</small></div><div class="k">소아기 발병 (3,510종이 소아 발병만)</div></div>
+          <div><div class="v tab">4<small>억 명+</small></div><div class="k">전 세계 환자 (인구의 3.5~5.9%)</div></div>
+        </div>
+        <div class="tbl-wrap">
+        <table class="tbl">
+          <caption>나라마다 다른 ‘희귀’의 기준</caption>
+          <thead><tr><th>관할</th><th>기준</th><th>규모</th></tr></thead>
+          <tbody>
+            <tr><td>한국 (희귀질환관리법)</td><td>유병인구 2만 명 이하 또는 진단 곤란</td><td class="n">1,389종</td></tr>
+            <tr><td>미국 (Orphan Drug Act)</td><td>환자 20만 명 미만</td><td class="n">—</td></tr>
+            <tr><td>EU (Reg. 141/2000)</td><td>유병률 1만 명당 5명 이하</td><td class="n">Orphanet 11,645항목</td></tr>
+            <tr><td>일본 (지정난병)</td><td>인구의 약 0.1% 이하</td><td class="n">348종</td></tr>
+            <tr><td>WHO (WHA78.11, 2025)</td><td>흔히 2,000명당 1명 미만</td><td class="n">7,000여 질환 · 3억 명+</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <ul class="pts">
+          <li><b>종류의 구성.</b> 국제적으로는 유전질환이 72%로 다수. 한국 지정 목록도 희귀 804종·극희귀 468종·기타 염색체이상 117종으로 나뉜다.</li>
+          <li><b>치료의 공백.</b> 알려진 희귀질환의 95% 이상은 효과적인 치료법이 아직 없다.</li>
+        </ul>
+        <p class="src">출처: Nguengang Wakap et al., <i>Eur J Hum Genet</i> (2020) Orphanet 데이터 분석 · WHO 총회 결의 WHA78.11(2025) · 희귀질환관리법 제2조 · 질병관리청 국가관리대상 희귀질환 공고 제2025-3635호. 종수·유전 비율은 집계 기준에 따라 6,000~10,800종, 70~80%로 보고된다.</p>
+      </section>
+
+      <!-- 2 -->
+      <section class="m" id="s2">
+        <p class="eyebrow">장면 2 · 국내 희귀질환과 연구 여건</p>
+        <h2 class="gov">환자는 많고 투자는 적은 분야에서, <em>국내 주요 대학병원이 연구해 왔다</em></h2>
+        <p class="sub">한국은 1,389종을 국가관리대상으로 지정해 매년 40만 명 가까이 진료한다. 국가 희귀질환 연구비는 보건의료 R&amp;D의 1% 남짓이고, 세계 논문 순위 상위 10위 안에 한국은 없다. 이 분야의 연구는 국내 주요 대학병원이 이어 왔다.</p>
+        <div class="tiles">
+          <div><div class="v tab">39.5<small>만 명</small></div><div class="k">희귀질환 산정특례 진료 환자 (2025)</div></div>
+          <div><div class="v tab">6.2<small>만 명</small></div><div class="k">신규 등록 환자 (2023) · 매년 5~6만</div></div>
+          <div><div class="v tab">1.3<small>%</small></div><div class="k">국가 희귀질환 연구비 비중 (보건의료 R&amp;D 대비)</div></div>
+          <div><div class="v tab">10위 밖</div><div class="k">세계 희귀질환 논문 국가 순위에 한국 없음</div></div>
+        </div>
+        <ul class="pts">
+          <li><b>연구비.</b> 국가 희귀질환 연구비는 196억 원(2020)이다. 보건의료 R&amp;D 예산(2022)과 견주면 약 1.3%이나, 두 수치의 연도가 달라 동일 연도 비중은 추가 확인이 필요하다.</li>
+          <li><b>세계 순위.</b> 희귀질환 논문 국가 순위(WoS 2013–2023, 10,754편)에서 미국 2,423편·중국 1,969편이 상위이고 상위 10위에 한국은 없다.</li>
+          <li><b>국내 연구 주체.</b> 서울대·연세대·울산대(서울아산)·가톨릭대 등 주요 대학병원이 이 분야의 연구에 참여해 왔고, 성균관대·삼성 계열 병원에서도 분석 대상 20년간 매년 희귀질환 논문이 발표되었다.</li>
+          <li><b>국가 대응.</b> 「제2차 희귀질환관리 종합계획(2022–2026)」과 전문기관 지정제로 진료·연구 인프라를 제도화하는 중이다.</li>
+        </ul>
+        <p class="src">출처: 국민건강보험공단 중증질환 산정특례 진료현황(2025-12-31 기준) · 질병관리청 국가관리대상 희귀질환 공고 제2025-3635호 · Kong et al.(2025) 세계 희귀질환 논문 국가 분석(WoS 2013–2023) · 제2차 희귀질환관리 종합계획(보건복지부) · 2022년 보건의료 R&amp;D 예산 보도자료. 연구비 비중은 연도가 달라(2020/2022) 근사치.</p>
+      </section>
+
+      <!-- 3 -->
+      <section class="m" id="s3">
+        <p class="eyebrow">장면 3 · 성균관대 연구의 양과 질</p>
+        <h2 class="gov">20년간 <em>1,753편·531개 질환</em>, 넓게 그리고 세계 평균을 넘는 질로</h2>
+        <p class="sub">규모로 세계를 앞서지는 않는다. 국가 지정 질환의 38%를 다뤘고, 최근 5년 핵심 논문의 FWCI는 1.12로 세계 분야 평균 1.0을 상회했다.</p>
+        <dl class="w6">
+          <div><dt>참여 연구자</dt><dd>성균관대·삼성 계열 병원 676명 (5년 이상 146명)</dd></div>
+          <div><dt>논문 규모</dt><dd>핵심 1,753편 (SCI 1,708 · KCI 229) · 확장 2,655편</dd></div>
+          <div><dt>다룬 질환 폭</dt><dd>국가 지정 1,389종 중 531종 (38.2%)</dd></div>
+          <div><dt>연구 분야</dt><dd>신경계 625건 · 혈액 · 소아 유전대사 · 호흡기 · 류마티스</dd></div>
+          <div><dt>국내 집중도</dt><dd>샤르코-마리-투스병 10편 중 6편, 시신경척수염 5편 중 1편</dd></div>
+          <div><dt>인용 지표</dt><dd>최근 5년 FWCI 1.12 (세계 분야 평균 1.0 상회)</dd></div>
+        </dl>
+        <div class="tiles">
+          <div><div class="v tab">1,753<small>편</small></div><div class="k">20년 핵심 논문 · 의학 논문의 2.97%</div></div>
+          <div><div class="v tab">531<small>종</small></div><div class="k">연구한 지정 질환 (전체의 38.2%)</div></div>
+          <div><div class="v tab">1.12<small> FWCI</small></div><div class="k">최근 5년 논문의 질 · 0.80→1.12로 상승</div></div>
+          <div><div class="v tab">53.1<small>%</small></div><div class="k">상위 저널(Q1) 게재 비중 · 36.8%→53.1%</div></div>
+        </div>
+        <ul class="pts">
+          <li><b>규모.</b> 원저 1,015편, 초록·색인까지 넓히면 2,655편. 비의학 대학 소속 논문은 46편으로 집계됐다.</li>
+          <li><b>인용.</b> 100회 넘게 인용된 논문 25편, 오픈액세스 36.1%. 최근 5년 FWCI 1.12는 세계 분야 평균 1.0을 넘는다.</li>
+        </ul>
+        <p class="src">출처: 성균관대 희귀질환 연구력 측정 조사(2026-09-16) §2·§4 · biblo-rims 논문 데이터 141,382편(2026-09-16) · PubMed E-utilities 직접 집계(2026-09-17) · Scopus/SciVal FWCI(2026-09-16) · JCR 2024. 병원별 편수는 저자 소속 문자열 기준으로 중복 허용.</p>
+      </section>
+
+      <!-- 4 -->
+      <section class="m" id="s4">
+        <p class="eyebrow">장면 4 · 꾸준함과 대표 성과</p>
+        <h2 class="gov">20년 중 <em>끊긴 해가 없고</em>, 대표 성과는 치료제 임상·진료지침으로 이어졌다</h2>
+        <p class="sub">전체 의학 논문이 4배로 커지는 동안에도 희귀질환은 비중을 지켰다. 연 산출은 최소 36편에서 최대 126편 사이였고, 대표 성과에는 치료제 3상 임상, 진단 기준, 진료지침 관련 연구가 포함된다.</p>
+        <div class="tiles">
+          <div><div class="v tab">20<small>/20년</small></div><div class="k">산출이 끊긴 해 0 · 26개 질환 10년 이상 연속</div></div>
+          <div><div class="v tab">2.3<small>배</small></div><div class="k">5년 평균 첫 구간 대비 마지막 구간 · 연평균 6.8% 성장(p=0.001)</div></div>
+          <div><div class="v tab">1.5<small>배</small></div><div class="k">세계 평균 대비 희귀질환 논문 비중(동일 집계 기준)</div></div>
+          <div><div class="v tab">17→24<small>%</small></div><div class="k">국가 WGS 재분석으로 높인 진단율</div></div>
+        </div>
+        <div class="tbl-wrap">
+        <table class="tbl">
+          <caption>대표 성과 (피인용 · Scopus 2026-09-16)</caption>
+          <thead><tr><th>성과</th><th>게재</th><th>피인용</th></tr></thead>
+          <tbody>
+            <tr><td>유전성 트랜스티레틴 아밀로이드증 RNAi 치료제 파티시란 3상</td><td>NEJM · 2018</td><td class="n">2,792</td></tr>
+            <tr><td>AL 아밀로이드증 다라투무맙 병용 3상</td><td>NEJM · 2021</td><td class="n">621</td></tr>
+            <tr><td>신생아 대사이상 선별검사 절단값 국제 기준</td><td>Genetics in Medicine · 2011</td><td class="n">327</td></tr>
+            <tr><td>모야모야병 진단과 치료 종설</td><td>Lancet Neurology · 2022</td><td class="n">348</td></tr>
+            <tr><td>자가면역뇌염 임상평가척도(CASE) 개발</td><td>Annals of Neurology · 2019</td><td class="n">216</td></tr>
+            <tr><td>발작성 야간혈색소뇨증 경구 치료제 iptacopan 3상</td><td>NEJM · 2024</td><td class="n">155</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <ul class="pts">
+          <li><b>논문 밖 기여.</b> 신생아 선별검사 국제 기준 공동 수립(2011), 자가면역뇌염 평가척도 CASE 국제 통용(2019), 유전성 용혈성빈혈·파브리 신병증 국내 진료지침 수립.</li>
+        </ul>
+        <p class="src">출처: 성균관대 희귀질환 연구력 측정 조사(2026-09-16) §3·§4 · 성균관대 희귀질환 연구 EDA 보고서(2026-09-16) 대표 성과 · Scopus(2026-09-16) · Mann-Kendall 추세 검정(핵심 편수 z=3.47, p=0.001). 파티시란 논문은 제목 키워드 기준 집계 성과로, 지정 질환명 기준 핵심 집합과는 범위가 다르다.</p>
+      </section>
+
+      <!-- 5 -->
+      <section class="m" id="s5">
+        <p class="eyebrow">장면 5 · 미래 후학 양성</p>
+        <h2 class="gov">후속 연구를 위한 <em>기반이 구축돼 있다</em></h2>
+        <p class="sub">국가가 지정한 전문기관과 전담 센터, 20년 동안 쌓은 환자 코호트, 환자와 의료진을 위한 책과 학술지, 국가 교육자료까지 구축돼 있다. 후속 연구의 활용 범위와 접근 조건은 별도 확인이 필요하다.</p>
+        <div class="tiles">
+          <div><div class="v tab">전문<small>기관</small></div><div class="k">질병관리청 제1기 서울권 희귀질환 전문기관 지정(2024)</div></div>
+          <div><div class="v tab">4<small>종 · 4곳</small></div><div class="k">환자·의료진용 단행본 4종 · 학술지 4곳</div></div>
+          <div><div class="v tab">11<small>건</small></div><div class="k">국가 희귀질환 교육자료 집필·감수</div></div>
+          <div><div class="v tab">~2030</div><div class="k">G-CROWN 국가 R&amp;D 플랫폼 주관</div></div>
+        </div>
+        <div class="tbl-wrap">
+        <table class="tbl">
+          <caption>구축·발간 내역 (2008–2026)</caption>
+          <thead><tr><th>연도</th><th>남긴 것</th></tr></thead>
+          <tbody>
+            <tr><td class="n">2008</td><td>바이오뱅크 개소 (2019년 기증 8만 례)</td></tr>
+            <tr><td class="n">2011</td><td>『샤르코 마리 투스병』 국내 첫 환자 안내서 · 헬프라인 질환정보 주관</td></tr>
+            <tr><td class="n">2014–15</td><td>『헌터증후군 길잡이』 · 『헐러증후군 길잡이』</td></tr>
+            <tr><td class="n">2016</td><td>뮤코다당증센터 개소</td></tr>
+            <tr><td class="n">2020</td><td>국가 희귀질환 WGS 시범사업 최다 등록 (발단자 682)</td></tr>
+            <tr><td class="n">2022</td><td>희귀질환센터 설립 · G-CROWN 국가 R&amp;D 플랫폼 주관</td></tr>
+            <tr><td class="n">2024</td><td>질병관리청 제1기 서울권 희귀질환 전문기관 지정</td></tr>
+            <tr><td class="n">2026</td><td>신생아 WGS 선별연구</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <ul class="pts">
+          <li><b>사람과 코호트.</b> CMT 1,143가계 · 마르판 343명 · 프라더-윌리 211명 등 장기 코호트가 후속 연구의 출발점으로 남아 있다.</li>
+          <li><b>진료 기반.</b> 2024년 전국 종합병원급 희귀질환 진료인원 35.4만 명 중 46.6%를 전문기관 17곳이 맡는다.</li>
+        </ul>
+        <p class="src">출처: 성균관대 희귀질환 연구력 측정 조사(2026-09-16) §5 · 질병관리청 희귀질환 전문기관 지정 현황. 각 항목은 발간물·기관 공고 등 공개 자료로 확인.</p>
+      </section>
+
+      <footer class="foot">
+        <p><b>집계 기준.</b> 성균관대 의과대학과 삼성서울·강북삼성·삼성창원병원 논문을 하나의 성균관대로 집계. 핵심 수치는 질병관리청 지정 질환명이 논문 제목·저자키워드에 명시된 논문 기준. 원자료와 방법·한계는 성균관대 희귀질환 연구 대시보드(biblo.ai/kks/disease)의 부록을 따른다.</p>
+      </footer>
+
+    </main>
+  </div>
+</div>
+
+<button class="toggle" id="tg" type="button">라이트 / 다크</button>
+<script>
+(function(){
+  var b=document.getElementById('tg'); if(!b) return;
+  b.addEventListener('click',function(){
+    var r=document.documentElement, cur=r.getAttribute('data-theme');
+    var dark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+    var next=cur?(cur==='dark'?'light':'dark'):(dark?'light':'dark');
+    r.setAttribute('data-theme',next);
+  });
+  var rail=document.querySelectorAll('.rail a'), secs=document.querySelectorAll('section.m');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){rail.forEach(function(a){a.classList.toggle('on', a.getAttribute('href')==='#'+e.target.id);});}
+    });},{rootMargin:'-45% 0px -50% 0px'});
+    secs.forEach(function(s){io.observe(s);});
+  }
+})();
+</script>
+</body>
+</html>
