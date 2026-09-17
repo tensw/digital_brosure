@@ -1,0 +1,353 @@
+{
+ "years": {
+  "2006": {
+   "world_total": 750390,
+   "world_rd": 1328,
+   "kr_total": 10718,
+   "kr_rd": 25,
+   "skku_total": 587,
+   "skku_rd": 0
+  },
+  "2007": {
+   "world_total": 786776,
+   "world_rd": 1422,
+   "kr_total": 12730,
+   "kr_rd": 42,
+   "skku_total": 707,
+   "skku_rd": 3
+  },
+  "2008": {
+   "world_total": 837236,
+   "world_rd": 1638,
+   "kr_total": 15274,
+   "kr_rd": 38,
+   "skku_total": 757,
+   "skku_rd": 3
+  },
+  "2009": {
+   "world_total": 877683,
+   "world_rd": 1521,
+   "kr_total": 17596,
+   "kr_rd": 45,
+   "skku_total": 820,
+   "skku_rd": 2
+  },
+  "2010": {
+   "world_total": 942368,
+   "world_rd": 1821,
+   "kr_total": 21076,
+   "kr_rd": 63,
+   "skku_total": 1071,
+   "skku_rd": 2
+  },
+  "2011": {
+   "world_total": 1020845,
+   "world_rd": 1965,
+   "kr_total": 24582,
+   "kr_rd": 51,
+   "skku_total": 1379,
+   "skku_rd": 3
+  },
+  "2012": {
+   "world_total": 1090503,
+   "world_rd": 2363,
+   "kr_total": 27475,
+   "kr_rd": 74,
+   "skku_total": 1536,
+   "skku_rd": 9
+  },
+  "2013": {
+   "world_total": 1150126,
+   "world_rd": 2532,
+   "kr_total": 30261,
+   "kr_rd": 76,
+   "skku_total": 1780,
+   "skku_rd": 5
+  },
+  "2014": {
+   "world_total": 1205918,
+   "world_rd": 2934,
+   "kr_total": 33893,
+   "kr_rd": 102,
+   "skku_total": 2474,
+   "skku_rd": 13
+  },
+  "2015": {
+   "world_total": 1258170,
+   "world_rd": 3012,
+   "kr_total": 37274,
+   "kr_rd": 89,
+   "skku_total": 3200,
+   "skku_rd": 7
+  },
+  "2016": {
+   "world_total": 1285546,
+   "world_rd": 3158,
+   "kr_total": 38858,
+   "kr_rd": 99,
+   "skku_total": 3456,
+   "skku_rd": 8
+  },
+  "2017": {
+   "world_total": 1304374,
+   "world_rd": 3307,
+   "kr_total": 39714,
+   "kr_rd": 71,
+   "skku_total": 3515,
+   "skku_rd": 4
+  },
+  "2018": {
+   "world_total": 1351709,
+   "world_rd": 3380,
+   "kr_total": 41120,
+   "kr_rd": 70,
+   "skku_total": 3565,
+   "skku_rd": 5
+  },
+  "2019": {
+   "world_total": 1418992,
+   "world_rd": 3730,
+   "kr_total": 43052,
+   "kr_rd": 92,
+   "skku_total": 3767,
+   "skku_rd": 9
+  },
+  "2020": {
+   "world_total": 1641213,
+   "world_rd": 3867,
+   "kr_total": 48210,
+   "kr_rd": 100,
+   "skku_total": 4006,
+   "skku_rd": 12
+  },
+  "2021": {
+   "world_total": 1787575,
+   "world_rd": 4406,
+   "kr_total": 52330,
+   "kr_rd": 91,
+   "skku_total": 4195,
+   "skku_rd": 10
+  },
+  "2022": {
+   "world_total": 1783568,
+   "world_rd": 4511,
+   "kr_total": 50120,
+   "kr_rd": 87,
+   "skku_total": 4131,
+   "skku_rd": 8
+  },
+  "2023": {
+   "world_total": 1697836,
+   "world_rd": 4417,
+   "kr_total": 47308,
+   "kr_rd": 103,
+   "skku_total": 4261,
+   "skku_rd": 8
+  },
+  "2024": {
+   "world_total": 1739836,
+   "world_rd": 4392,
+   "kr_total": 47616,
+   "kr_rd": 72,
+   "skku_total": 4315,
+   "skku_rd": 8
+  },
+  "2025": {
+   "world_total": 1882068,
+   "world_rd": 4409,
+   "kr_total": 50476,
+   "kr_rd": 78,
+   "skku_total": 4651,
+   "skku_rd": 9
+  }
+ },
+ "diseases": {
+  "모야모야병": {
+   "world": 4850,
+   "korea": 419,
+   "skku": 61
+  },
+  "샤르코-마리-투스병": {
+   "world": 4182,
+   "korea": 164,
+   "skku": 97
+  },
+  "시신경척수염": {
+   "world": 7106,
+   "korea": 338,
+   "skku": 71
+  },
+  "발작성 야간혈색소뇨증": {
+   "world": 1731,
+   "korea": 67,
+   "skku": 19
+  },
+  "특발성 폐섬유증": {
+   "world": 13391,
+   "korea": 497,
+   "skku": 62
+  },
+  "다발성경화증": {
+   "world": 76765,
+   "korea": 681,
+   "skku": 82
+  },
+  "AL 아밀로이드증": {
+   "world": 3886,
+   "korea": 48,
+   "skku": 25
+  },
+  "프라더-윌리 증후군": {
+   "world": 2979,
+   "korea": 59,
+   "skku": 26
+  },
+  "뮤코다당증": {
+   "world": 3956,
+   "korea": 60,
+   "skku": 35
+  },
+  "베체트병": {
+   "world": 7948,
+   "korea": 511,
+   "skku": 36
+  },
+  "중증근무력증": {
+   "world": 9948,
+   "korea": 194,
+   "skku": 21
+  },
+  "마르판 증후군": {
+   "world": 4996,
+   "korea": 82,
+   "skku": 23
+  },
+  "근위축성측삭경화증(ALS)": {
+   "world": 28630,
+   "korea": 663,
+   "skku": 53
+  },
+  "전신홍반루푸스": {
+   "world": 43044,
+   "korea": 1032,
+   "skku": 33
+  },
+  "혈구탐식성 림프조직구증": {
+   "world": 5050,
+   "korea": 120,
+   "skku": 15
+  }
+ },
+ "totals": {
+  "world_total": 22858384,
+  "world_rd": 53793,
+  "kr_total": 611226,
+  "kr_rd": 1330,
+  "skku_total": 47613,
+  "skku_rd": 119
+ },
+ "peers": {
+  "서울대병원": {
+   "total": 45830,
+   "rd": 147
+  },
+  "연세대 세브란스": {
+   "total": 35954,
+   "rd": 114
+  },
+  "울산대 서울아산병원": {
+   "total": 27293,
+   "rd": 99
+  },
+  "가톨릭대 의대": {
+   "total": 28646,
+   "rd": 120
+  }
+ },
+ "skku_med": {
+  "total": 32045,
+  "rd": 114,
+  "years": {
+   "2006": {
+    "total": 466,
+    "rd": 0
+   },
+   "2007": {
+    "total": 574,
+    "rd": 3
+   },
+   "2008": {
+    "total": 588,
+    "rd": 3
+   },
+   "2009": {
+    "total": 630,
+    "rd": 2
+   },
+   "2010": {
+    "total": 863,
+    "rd": 2
+   },
+   "2011": {
+    "total": 1051,
+    "rd": 3
+   },
+   "2012": {
+    "total": 1177,
+    "rd": 9
+   },
+   "2013": {
+    "total": 1312,
+    "rd": 5
+   },
+   "2014": {
+    "total": 1758,
+    "rd": 13
+   },
+   "2015": {
+    "total": 2251,
+    "rd": 7
+   },
+   "2016": {
+    "total": 2448,
+    "rd": 8
+   },
+   "2017": {
+    "total": 2433,
+    "rd": 4
+   },
+   "2018": {
+    "total": 2335,
+    "rd": 5
+   },
+   "2019": {
+    "total": 2538,
+    "rd": 9
+   },
+   "2020": {
+    "total": 2770,
+    "rd": 11
+   },
+   "2021": {
+    "total": 2806,
+    "rd": 10
+   },
+   "2022": {
+    "total": 2664,
+    "rd": 7
+   },
+   "2023": {
+    "total": 2709,
+    "rd": 6
+   },
+   "2024": {
+    "total": 2698,
+    "rd": 8
+   },
+   "2025": {
+    "total": 2823,
+    "rd": 7
+   }
+  }
+ }
+}
