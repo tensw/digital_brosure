@@ -1,5 +1,5 @@
 {
- "computed": "2026-09-18 17:46",
+ "computed": "2026-09-18 18:11",
  "checks": [
   {
    "key": "kr_all_1625",
@@ -142,25 +142,25 @@
   {
    "key": "csv_rows",
    "label": "논문 단위 CSV 행",
-   "value": 35604,
+   "value": 33488,
    "unit": ""
   },
   {
    "key": "g22_works",
    "label": "22개 대학 고유 논문(덤프 K∪T, 2020–2025)",
-   "value": 32757,
+   "value": 30840,
    "unit": ""
   },
   {
    "key": "g22_works_R_K",
    "label": "22개 대학 R 고유 논문 — K",
-   "value": 34,
+   "value": 32,
    "unit": ""
   },
   {
    "key": "g22_works_R_T",
    "label": "22개 대학 R 고유 논문 — T",
-   "value": 2136,
+   "value": 1981,
    "unit": ""
   },
   {
@@ -171,6 +171,7 @@
   }
  ],
  "embedded_matches_data_file": true,
- "embedded_built": "2026-09-18 16:02",
- "data_file_built": "2026-09-18 17:44"
+ "embedded_built": "2026-09-18 18:10",
+ "data_file_built": "2026-09-18 18:10",
+ "data_dir": "data/v0"
 }
