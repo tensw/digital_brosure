@@ -1,40 +1,40 @@
 {
- "computed": "2026-09-18 18:11",
+ "computed": "2026-09-18 19:24",
  "checks": [
   {
    "key": "kr_all_1625",
    "label": "한국 전체 PubMed 편수 2016–2025",
-   "value": 458804,
+   "value": 439689,
    "unit": ""
   },
   {
    "key": "world_all_1625",
    "label": "세계 전체 PubMed 편수 2016–2025",
-   "value": 15892503,
+   "value": 14630769,
    "unit": ""
   },
   {
    "key": "g22_all_1625",
    "label": "22개 대학 전체 편수 합계(공저 중복) 2016–2025",
-   "value": 495595,
+   "value": 475643,
    "unit": ""
   },
   {
    "key": "skku_msum_1625",
    "label": "성균관대 M1~M11 합계 2016–2025",
-   "value": 4688,
+   "value": 27013,
    "unit": ""
   },
   {
    "key": "kr_msum_1625",
    "label": "한국 M1~M11 합계 2016–2025",
-   "value": 45593,
+   "value": 281595,
    "unit": ""
   },
   {
    "key": "skku_rca_1625",
    "label": "성균관대 문샷 특화지수 RCA 2016–2025",
-   "value": 1.185,
+   "value": 1.1,
    "unit": ""
   },
   {
@@ -46,43 +46,43 @@
   {
    "key": "top1_msum_1625",
    "label": "M 합계 1위 대학·편수 2016–2025",
-   "value": "서울대 8,490",
+   "value": "서울대 48,217",
    "unit": ""
   },
   {
    "key": "kr_all_2025",
    "label": "한국 전체 PubMed 편수 2020–2025",
-   "value": 296060,
+   "value": 283626,
    "unit": ""
   },
   {
    "key": "world_all_2025",
    "label": "세계 전체 PubMed 편수 2020–2025",
-   "value": 10531880,
+   "value": 9736009,
    "unit": ""
   },
   {
    "key": "g22_all_2025",
    "label": "22개 대학 전체 편수 합계(공저 중복) 2020–2025",
-   "value": 319480,
+   "value": 306257,
    "unit": ""
   },
   {
    "key": "skku_msum_2025",
    "label": "성균관대 M1~M11 합계 2020–2025",
-   "value": 3140,
+   "value": 17796,
    "unit": ""
   },
   {
    "key": "kr_msum_2025",
    "label": "한국 M1~M11 합계 2020–2025",
-   "value": 30771,
+   "value": 184830,
    "unit": ""
   },
   {
    "key": "skku_rca_2025",
    "label": "성균관대 문샷 특화지수 RCA 2020–2025",
-   "value": 1.183,
+   "value": 1.113,
    "unit": ""
   },
   {
@@ -94,25 +94,25 @@
   {
    "key": "top1_msum_2025",
    "label": "M 합계 1위 대학·편수 2020–2025",
-   "value": "서울대 5,637",
+   "value": "서울대 31,104",
    "unit": ""
   },
   {
    "key": "r_kr_2025",
    "label": "한국 R(PubMed) 2025년 편수",
-   "value": 80,
+   "value": 198,
    "unit": ""
   },
   {
    "key": "r_kr_1625",
    "label": "한국 R(PubMed) 2016–2025 편수",
-   "value": 876,
+   "value": 2012,
    "unit": ""
   },
   {
    "key": "r_world_K",
    "label": "세계 R 덤프 K(제목 문구) 2020–2025",
-   "value": 5936,
+   "value": 8710,
    "unit": ""
   },
   {
@@ -124,13 +124,13 @@
   {
    "key": "r_ratio_TK",
    "label": "R 주제명/문구 배수",
-   "value": 31.5,
+   "value": 21.5,
    "unit": "배"
   },
   {
    "key": "world_cat_K",
    "label": "세계 12카테고리 덤프 K 합계",
-   "value": 525992,
+   "value": 726590,
    "unit": ""
   },
   {
@@ -142,19 +142,19 @@
   {
    "key": "csv_rows",
    "label": "논문 단위 CSV 행",
-   "value": 33488,
+   "value": 37755,
    "unit": ""
   },
   {
    "key": "g22_works",
    "label": "22개 대학 고유 논문(덤프 K∪T, 2020–2025)",
-   "value": 30840,
+   "value": 34566,
    "unit": ""
   },
   {
    "key": "g22_works_R_K",
    "label": "22개 대학 R 고유 논문 — K",
-   "value": 32,
+   "value": 53,
    "unit": ""
   },
   {
@@ -166,12 +166,12 @@
   {
    "key": "skku_cat_ranks",
    "label": "성균관대 카테고리별 편수 순위(PubMed 2020–2025, 핵심 15)",
-   "value": "R 4위 · M1 3위 · M2 4위 · M3 3위 · M4 4위 · M5 3위 · M6 4위 · M7 4위 · M8 5위 · M9 2위 · M10 4위 · M11 6위",
+   "value": "M1 3위 · M2 3위 · M3 3위 · M4 5위 · M5 3위 · M6 3위 · M7 3위 · M8 4위 · M9 4위 · M10 3위 · M11 3위 · R1 4위 · RG1 2위 · RG2 6위 · RG3 4위 · RG4 4위 · RG5 4위 · RG6 5위 · RG7 3위 · RG8 4위 · RG9 4위 · RG10 4위 · RG11 2위 · RG12 3위 · RG13 2위 · RG14 4위 · RG15 3위 · RG16 3위 · RG17 5위 · P3 3위 · P4 2위 · P5 2위",
    "unit": ""
   }
  ],
  "embedded_matches_data_file": true,
- "embedded_built": "2026-09-18 18:10",
- "data_file_built": "2026-09-18 18:10",
- "data_dir": "data/v0"
+ "embedded_built": "2026-09-18 19:24",
+ "data_file_built": "2026-09-18 19:24",
+ "data_dir": "data"
 }
