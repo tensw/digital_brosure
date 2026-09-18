@@ -1,5 +1,5 @@
 {
- "computed": "2026-09-18 19:24",
+ "computed": "2026-09-18 19:35",
  "checks": [
   {
    "key": "kr_all_1625",
@@ -22,19 +22,19 @@
   {
    "key": "skku_msum_1625",
    "label": "성균관대 M1~M11 합계 2016–2025",
-   "value": 27013,
+   "value": 4107,
    "unit": ""
   },
   {
    "key": "kr_msum_1625",
    "label": "한국 M1~M11 합계 2016–2025",
-   "value": 281595,
+   "value": 33528,
    "unit": ""
   },
   {
    "key": "skku_rca_1625",
    "label": "성균관대 문샷 특화지수 RCA 2016–2025",
-   "value": 1.1,
+   "value": 1.405,
    "unit": ""
   },
   {
@@ -46,7 +46,7 @@
   {
    "key": "top1_msum_1625",
    "label": "M 합계 1위 대학·편수 2016–2025",
-   "value": "서울대 48,217",
+   "value": "서울대 6,417",
    "unit": ""
   },
   {
@@ -70,19 +70,19 @@
   {
    "key": "skku_msum_2025",
    "label": "성균관대 M1~M11 합계 2020–2025",
-   "value": 17796,
+   "value": 2715,
    "unit": ""
   },
   {
    "key": "kr_msum_2025",
    "label": "한국 M1~M11 합계 2020–2025",
-   "value": 184830,
+   "value": 22303,
    "unit": ""
   },
   {
    "key": "skku_rca_2025",
    "label": "성균관대 문샷 특화지수 RCA 2020–2025",
-   "value": 1.113,
+   "value": 1.407,
    "unit": ""
   },
   {
@@ -94,7 +94,7 @@
   {
    "key": "top1_msum_2025",
    "label": "M 합계 1위 대학·편수 2020–2025",
-   "value": "서울대 31,104",
+   "value": "서울대 4,224",
    "unit": ""
   },
   {
@@ -166,12 +166,12 @@
   {
    "key": "skku_cat_ranks",
    "label": "성균관대 카테고리별 편수 순위(PubMed 2020–2025, 핵심 15)",
-   "value": "M1 3위 · M2 3위 · M3 3위 · M4 5위 · M5 3위 · M6 3위 · M7 3위 · M8 4위 · M9 4위 · M10 3위 · M11 3위 · R1 4위 · RG1 2위 · RG2 6위 · RG3 4위 · RG4 4위 · RG5 4위 · RG6 5위 · RG7 3위 · RG8 4위 · RG9 4위 · RG10 4위 · RG11 2위 · RG12 3위 · RG13 2위 · RG14 4위 · RG15 3위 · RG16 3위 · RG17 5위 · P3 3위 · P4 2위 · P5 2위",
+   "value": "M1 3위 · M2 3위 · M3 3위 · M4 5위 · M5 3위 · M6 3위 · M7 3위 · M8 4위 · M9 5위 · M10 3위 · M11 5위 · R1 4위 · RG1 2위 · RG2 6위 · RG3 4위 · RG4 4위 · RG5 4위 · RG6 5위 · RG7 3위 · RG8 4위 · RG9 4위 · RG10 4위 · RG11 2위 · RG12 3위 · RG13 2위 · RG14 4위 · RG15 3위 · RG16 3위 · RG17 5위 · P3 3위 · P4 2위 · P5 2위",
    "unit": ""
   }
  ],
  "embedded_matches_data_file": true,
- "embedded_built": "2026-09-18 19:24",
- "data_file_built": "2026-09-18 19:24",
+ "embedded_built": "2026-09-18 19:35",
+ "data_file_built": "2026-09-18 19:35",
  "data_dir": "data"
 }
