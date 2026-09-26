@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
-<title>시간·장소 표준화</title>
+<title>시간 규칙과 장소 판정</title>
 <style>*{box-sizing:border-box;margin:0;padding:0}
 html{overflow-x:hidden}
 body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
@@ -40,33 +40,38 @@ td.res{font:600 11.5px ui-monospace,Menlo,monospace;color:#6b7488;letter-spacing
 .mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
 </style>
 </head><body>
+
 <div class="slide"><div id="stage"><div class="mappos-i0"><i>2</i>지도 2 · 정규화</div>
  <div class="kick">INDP · 3부 정규화 방법 · 03</div>
- <h1>사건 식별을 위한 <span class="ac">시간·장소 표준화</span></h1>
- <div class="h1s">완전일자부터 상대 표현까지의 시간, 계층·현행명·속칭이 겹치는 장소를 나눈다.</div>
- <div class="meta">표본 <b>이상재·유관순</b><br>본문 직접 확인 · 2026-09-10</div>
+ <h1>규칙이 맡는 시간과 <span class="ac">LLM이 판정하는 장소</span></h1>
+ <div class="h1s">시간 표현은 규칙이 관계 속성으로 잡고 LLM에게 묻지 않는다. 장소는 규칙이 후보와 계층을 만들고 LLM이 갈래·동일성을 판정한다.</div>
+ <div class="meta">새 엔진 실측 <b>26편</b><br>2026-09-27</div>
  <div class="body">
- <section class="sec" style="--c:#d97706;flex:8.3">
- <div class="band"><span class="sym">C</span><h2>시간</h2><span class="cnt">7유형</span></div>
+ <section class="sec" style="--c:#d97706;flex:6.55">
+ <div class="band"><span class="sym">C</span><h2>시간</h2><span class="cnt">7유형 · 규칙</span></div>
  <div class="tw"><table>
   <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
-  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
-  <tbody><tr><td class="code">C1</td><td class="ty">완전일자</td><td class="ex">1851년 10월 26일 · 1919년 4월 1일</td><td>그대로 확정</td><td class="res">1851-10-26 · 확정</td></tr><tr><td class="code">C2</td><td class="ty">연월</td><td class="ex">1902년 6월 · 1918년 3월</td><td>일자는 미상으로 둔다</td><td class="res">1902-06 · 일 미상</td></tr><tr><td class="code">C3</td><td class="ty">연도만</td><td class="ex">1867년 · 1884년 · 1915년경</td><td>“경”이 붙으면 추정으로 표시</td><td class="res">1867 · 1915 추정</td></tr><tr><td class="code">C4</td><td class="ty">시각</td><td class="ex">오후 1시</td><td>같은 날 사건의 선후를 가른다</td><td class="res">사건 순서 속성</td></tr><tr><td class="code">C5</td><td class="ty">음력 병기</td><td class="ex">4월 1일(음력 3월 1일)</td><td>양력을 기준값으로, 음력은 원문 표기로 보존</td><td class="res">기준 1919-04-01 · 원문 병기</td></tr><tr><td class="code">C6</td><td class="ty">상대 표현</td><td class="ex">그해 10월 · 이튿날인 3월 14일 · 6일 뒤 · 이보다 앞서 · 그후 · 잠시후 · 이때부터</td><td>앞 문장의 날짜를 기준점으로 잡아 푼다. 기준점이 없으면 풀지 않고 원문 그대로 둔다</td><td class="res">해소 시 일자 · 실패 시 미해소 표기</td></tr><tr><td class="code">C7</td><td class="ty">기간</td><td class="ex">약 1년간 · 두 달여 · 15년형</td><td>시작·끝을 알 수 있으면 구간, 아니면 길이만</td><td class="res">구간 또는 기간 값</td></tr></tbody>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>판정 규칙</th><th>결과 · 21편 실측</th></tr></thead>
+  <tbody><tr><td class="code">C1</td><td class="ty">완전일자</td><td class="ex">1851년 10월 26일 · 1919년 4월 1일</td><td>그대로 확정</td><td class="res">1851-10-26 · 확정</td></tr><tr><td class="code">C2</td><td class="ty">연월</td><td class="ex">1902년 6월 · 1918년 3월</td><td>일자는 미상으로 둔다</td><td class="res">1902-06 · 일 미상</td></tr><tr><td class="code">C3</td><td class="ty">연도만</td><td class="ex">1867년 · 1884년 · 1915년경</td><td>「경」이 붙으면 추정으로 표시</td><td class="res">1867 · 1915 추정</td></tr><tr><td class="code">C4</td><td class="ty">시각</td><td class="ex">오후 1시</td><td>같은 날 사건의 선후를 가른다</td><td class="res">사건 순서 속성</td></tr><tr><td class="code">C5</td><td class="ty">음력 병기</td><td class="ex">4월 1일(음력 3월 1일)</td><td>양력을 기준값으로, 음력은 원문 표기로 보존</td><td class="res">1919-04-01 · 원문 병기</td></tr><tr><td class="code">C6</td><td class="ty">상대 표현</td><td class="ex">그해 10월 · 이튿날인 3월 14일 · 6일 뒤</td><td>앞 문장의 날짜로 푼다. 기준점이 없으면 원문 그대로</td><td class="res">해소 시 일자 · 실패 시 원문</td></tr><tr><td class="code">C7</td><td class="ty">기간</td><td class="ex">약 1년간 · 두 달여 · 15년형</td><td>시작·끝을 알 수 있으면 구간, 아니면 길이만</td><td class="res">구간 또는 기간 값</td></tr></tbody>
  </table></div>
-</section><section class="sec" style="--c:#158a45;flex:6.3">
- <div class="band"><span class="sym">D</span><h2>장소</h2><span class="cnt">5유형</span></div>
+</section><section class="sec" style="--c:#158a45;flex:7.45">
+ <div class="band"><span class="sym">D</span><h2>장소</h2><span class="cnt">6유형 · LLM 판정</span></div>
  <div class="tw"><table>
   <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
-  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
-  <tbody><tr><td class="code">D1</td><td class="ty">행정 계층</td><td class="ex">충남 서천군(舒川郡) 한산면(韓山面) 종지리(種芝里)</td><td>도·군·면·리 네 단계로 쪼갠다</td><td class="res">계층별 place 4개</td></tr><tr><td class="code">D2</td><td class="ty">현행명 병기</td><td class="ex">용두리(현 천안시 동남구 병천면 용두리) · 남대문역(현 서울역)</td><td>옛 이름과 현행명을 한 개체의 두 표기로 묶는다</td><td class="res">옛 이름 · 현행명 각각 보존</td></tr><tr><td class="code">D3</td><td class="ty">속칭</td><td class="ex">용두리(속칭 지령지) · 지령리</td><td>같은 곳의 다른 부름을 이명으로 둔다</td><td class="res">지명 이명</td></tr><tr><td class="code">D4</td><td class="ty">시설 · 지점</td><td class="ex">탑골공원 · 덕수궁 · 아우내 장터 · 매봉산 · 한성감옥소</td><td>행정구역이 아닌 지점. 사적지와 이어지는 주요 축</td><td class="res">place · 유형 시설</td></tr><tr><td class="code">D5</td><td class="ty">외국 지명</td><td class="ex">일본 · 미국 · 워싱턴</td><td>국가와 도시를 나눈다</td><td class="res">place · 국외</td></tr></tbody>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>판정 규칙</th><th>결과 · 21편 실측</th></tr></thead>
+  <tbody><tr><td class="code">D1</td><td class="ty">행정 계층</td><td class="ex">황해도 > 해주부 > 광석동 · 신천군 > 청계동</td><td>규칙이 계층을 붙이고 LLM은 갈래만 확인</td><td class="res">place · 계층 속성</td></tr><tr><td class="code">D2</td><td class="ty">행정 단위 접미</td><td class="ex">온성 = 온성군 · 왕칭 = 왕칭현 · 해주 = 해주부</td><td>접미만 다르면 규칙으로 통합. 역·항(하얼빈≠하얼빈역)은 통합 제외</td><td class="res">합침 · 21편 15건</td></tr><tr><td class="code">D3</td><td class="ty">현행명·본관·현 주소</td><td class="ex">남대문역(현 서울역) · 본관 해주</td><td>현행명은 병기로 보존. 현 주소 설명과 본관은 속성</td><td class="res">attribute</td></tr><tr><td class="code">D4</td><td class="ty">시설·기관</td><td class="ex">러시아공사관 · 해인사 · 서적종람소</td><td>장소이자 조직인 것은 문맥으로 정한다. 두 모델이 갈리면 검수 표시</td><td class="res">place 또는 org · 검수 4</td></tr><tr><td class="code">D5</td><td class="ty">국가·광역</td><td class="ex">청국 · 중국 · 한국 · 대한제국 · 조선</td><td>시대가 다른 이름끼리 합치지 않는다. 합침은 상위 모델이 다시 본다</td><td class="res">keep · 검수</td></tr><tr><td class="code">D6</td><td class="ty">인명과 혼동되는 지명</td><td class="ex">석촌 · 한양 · 소영자</td><td>「~에서」「~로」 문맥으로 장소 판정. 인명↔지명 변경은 이상 항목</td><td class="res">reclass</td></tr></tbody>
  </table></div>
 </section>
  </div>
 </div></div>
-<script>const SW=1600,SH=900;
+
+<script>
+const SW=1600,SH=900;
 function fit(){const st=document.getElementById('stage');
  const k=Math.min(innerWidth/SW,innerHeight/SH);
  st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
 fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
 if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);</script></body></html>
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+</script>
+</body></html>

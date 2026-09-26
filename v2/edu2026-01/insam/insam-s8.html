@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
-<title>개체 정규화의 판정 기준</title>
+<title>확정·이상 항목·검수의 판정 기준</title>
 <style>*{box-sizing:border-box;margin:0;padding:0}
 html{overflow-x:hidden}
 body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
@@ -43,30 +43,35 @@ td.w{color:#6b7488}
 .mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
 </style>
 </head><body>
+
 <div class="slide"><div id="stage"><div class="mappos-i0"><i>2</i>지도 2 · 정규화</div>
  <div class="kick">INDP · 3부 정규화 방법 · 05</div>
- <h1>개체 정규화의 <span class="ac">판정 기준과 미해소 항목 처리</span></h1>
- <div class="h1s">본문에서 개체·관계·속성을 추출할 때 판단이 갈리는 여덟 가지 상황과 원칙이다. 없는 값은 만들지 않고, 근거 없는 값은 채택하지 않는다.</div>
- <div class="meta">표본 <b>이상재·유관순</b> 본문 직접 확인<br>표제어 15,037명 · 본문 100% · 평균 1,190자</div>
+ <h1>확정·이상 항목·검수의 <span class="ac">판정 기준</span></h1>
+ <div class="h1s">규칙과 LLM만으로 확정하되, 근거가 맞지 않거나 둘이 갈린 항목은 상위 모델이 다시 본다. 없는 값은 만들지 않고, 근거 없는 값은 확정하지 않는다.</div>
+ <div class="meta">새 엔진 실측 <b>26편</b> · 2026-09-27<br>발간본 15,167편 · 18,091,876자</div>
  <div class="wrap">
   <section class="sec rules">
-   <div class="band">정보 추출·정규화 지침 여덟 가지</div>
+   <div class="band">확정과 이상 항목의 판정 기준 여덟 가지</div>
    <div class="cw"><table>
     <colgroup><col class="c-k"><col class="c-d"><col></colgroup>
-    <thead><tr><th>상황</th><th>이렇게 한다</th><th>왜</th></tr></thead>
-    <tbody><tr><td class="k">본문에 없는 값을 채우고 싶을 때</td><td class="d">채우지 않고 미상으로 둔다</td><td class="w">원문에 없는 사실을 만들면 되짚을 수 없다</td></tr><tr><td class="k">상대 시점의 기준점이 없을 때</td><td class="d">풀지 않고 원문 표기 그대로 둔다</td><td class="w">잘못 푼 날짜가 뒤 사실을 모두 어긋나게 한다</td></tr><tr><td class="k">인물 표기가 표제어에 없을 때</td><td class="d">표기만 보존하고 연결하지 않는다</td><td class="w">표제어에 없는 인물을 새로 만들지 않는다</td></tr><tr><td class="k">한자가 없을 때</td><td class="d">한글로 대조하고 한자 필드는 비운다</td><td class="w">같은 본문 안에서도 병기 여부가 섞인다</td></tr><tr><td class="k">지명 표기가 원천마다 다를 때</td><td class="d">지명 사전에서 먼저 통일한다</td><td class="w">“충남”과 “충청남도”가 달라 그대로는 대조되지 않는다</td></tr><tr><td class="k">사건에 이름이 없을 때</td><td class="d">이름을 짓지 않고 행위·시점·장소·참여자로 저장</td><td class="w">본문에 없는 사건명을 만들면 근거가 사라진다</td></tr><tr><td class="k">한 표기에 여러 정보가 겹칠 때</td><td class="d">정보마다 나눠 저장하고 원문 표기도 함께 보존</td><td class="w">“용두리(속칭 지령지, 현 …)”처럼 3중으로 겹친다</td></tr><tr><td class="k">근거 문장을 붙일 수 없을 때</td><td class="d">채택하지 않는다</td><td class="w">근거 없는 값은 검수 대상에도 오르지 못한다</td></tr></tbody>
+    <thead><tr><th>상황</th><th>처리 방법</th><th>판정 근거</th></tr></thead>
+    <tbody><tr><td class="k">판정에 인용이 없거나 본문과 다를 때</td><td class="d">확정하지 않고 이상 항목으로 보낸다</td><td class="w">근거 없는 값은 되짚을 수 없다</td></tr><tr><td class="k">규칙 후보와 LLM 판정이 갈릴 때</td><td class="d">상위 모델이 근거 문장을 보고 다시 판정한다. 같으면 확정</td><td class="w">단일 모델 판정으로 규칙 판정을 대체하지 않는다</td></tr><tr><td class="k">두 모델도 갈릴 때</td><td class="d">상위 모델 판정을 「검수 필요」 표시와 함께 결과에 포함</td><td class="w">검수는 이상 항목만 보는 선택 단계다</td></tr><tr><td class="k">인명↔지명 변경 · 국가 이름 합침</td><td class="d">두 모델이 같아도 이상 항목으로 기록한다</td><td class="w">오류 위험이 큰 판정</td></tr><tr><td class="k">검수완료 객체사전과 충돌할 때</td><td class="d">사전 판정을 유지하고 충돌을 기록한다</td><td class="w">사람의 검수 결과는 LLM이 변경하지 않는다</td></tr><tr><td class="k">정형 필드에만 있고 본문에 없을 때</td><td class="d">필드 근거로 두고 본문 언급으로 세지 않는다</td><td class="w">본문 재현율 과대 산정 방지</td></tr><tr><td class="k">표제어에 없는 인물일 때</td><td class="d">인물로 보존하고 정본에 잇지 않는다</td><td class="w">후보 하나라는 이유로 동일인을 정하지 않는다</td></tr><tr><td class="k">LLM이 정식 이름을 약칭으로 고칠 때</td><td class="d">약칭 변경 미반영. 앞뒤 조각 제거만 표기 수정</td><td class="w">21편 첫 실행에서 19건이 약칭으로 바뀌었다</td></tr></tbody>
    </table></div>
   </section>
   <div class="samp">
-   <div class="b"><h3>표본과 방법</h3><p>이상재(ENTRY_ID 651)와 유관순(ENTRY_ID 614) 본문을 직접 읽어 나타난 표기만 유형으로 세웠다. 두 사람은 운동 계열과 시대가 달라 표기 양상이 겹치지 않는 편이다. 표본이 둘뿐이라 <b>여기 없는 유형이 더 있을 수 있다.</b> 표본 20인, 100~200인 단계에서 유형을 보강한다.</p></div>
-   <div class="b"><h3>이 문서의 쓰임</h3><p>정규화 규칙을 정하거나 바꿀 때, 추출기가 무엇을 놓쳤는지 확인할 때 기준으로 쓴다. 저장 위치의 테이블명은 인명 온톨로지 구축 설계서를 따른다. 수치는 <b>2026-09-14 개방 API</b> 확인분이다.</p></div>
+   <div class="b"><h3>표본과 방법</h3><p>대한민국장 21편과 무작위로 뽑은 대통령장 5편(모두 188,903자)을 새 엔진으로 돌렸다. 김구·유관순·안중근 3편은 규칙 후보를 LLM이 전부 재판정하던 앞 단계 엔진의 결과, 그리고 GPT 검토를 거친 사람 판정과 대조했다. <b>21편에서 결정 규칙의 결함 셋</b>이 나와 규칙을 고치고 저장 응답에 다시 적용했다.</p></div>
+   <div class="b"><h3>사전 두 층</h3><p><b>자동 확정 사전</b>은 LLM이 확정한 객체를 표제어 범위로 쌓아 다음 실행의 후보와 문맥으로 쓴다(21편 3,169행). <b>검수완료 객체사전</b>은 사람이 검수를 끝낸 것만 담고, LLM이 그 갈래·이름·식별자를 바꾸지 못한다. 초기값은 <b>0행</b>이다.</p></div>
   </div>
  </div>
 </div></div>
-<script>const SW=1600,SH=900;
+
+<script>
+const SW=1600,SH=900;
 function fit(){const st=document.getElementById('stage');
  const k=Math.min(innerWidth/SW,innerHeight/SH);
  st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
 fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
 if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);</script></body></html>
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+</script>
+</body></html>

@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
-<title>관계와 속성의 분리</title>
+<title>여덟 갈래 정의와 객체 아닌 상태</title>
 <style>*{box-sizing:border-box;margin:0;padding:0}
 html{overflow-x:hidden}
 body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
@@ -40,40 +40,45 @@ td.res{font:600 11.5px ui-monospace,Menlo,monospace;color:#6b7488;letter-spacing
 .mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
 </style>
 </head><body>
-<div class="slide"><div id="stage"><div class="mappos-i0 f"><i>3</i>지도 3 · 그래프 만들기</div>
- <div class="kick">INDP · 2부 그래프 구성 방법 · 04</div>
- <h1>관계와 속성의 분리, <span class="ac">원문 근거 보존</span></h1>
- <div class="h1s">관직·품계·직위, 책·글·법령, 인원·거리·형량·기간을 나눈다.</div>
- <div class="meta">표본 <b>이상재·유관순</b><br>본문 직접 확인 · 2026-09-10</div>
+
+<div class="slide"><div id="stage"><div class="mappos-i0"><i>1</i>지도 1 · 정보 추출</div>
+ <div class="kick">INDP · 2부 추출 방법 · 04</div>
+ <h1>여덟 갈래 정의와 <span class="ac">객체가 아닌 상태의 분리</span></h1>
+ <div class="h1s">LLM이 판정하는 갈래는 객체 여덟(대표 인물·주변 인물·사건·장소·조직·고유 물건·물건 유형·용어)이고, 객체가 아닌 것은 속성·제외·미확정 세 상태로 나눈다.</div>
+ <div class="meta">판정 지시문 <b>e2-2026-09-27a</b><br>21편 확정 객체 <b>3,223</b></div>
  <div class="body">
- <section class="sec" style="--c:#7c3aed;flex:4.3">
- <div class="band"><span class="sym">G</span><h2>직임</h2><span class="cnt">3유형</span></div>
+ <section class="sec" style="--c:#2563c7;flex:4.85">
+ <div class="band"><span class="sym">K</span><h2>객체 갈래 · 인물·사건·장소·조직</h2><span class="cnt">4갈래</span></div>
  <div class="tw"><table>
   <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
-  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
-  <tbody><tr><td class="code">G1</td><td class="ty">관직</td><td class="ex">인천분국장 · 주미외교서기관 · 학부 편집국 참서관 · 내각 총서 · 중추원 1등 의관 · 의정부 총무국장</td><td>소속 조직과 직명을 나눠 잡는다</td><td class="res">조직 관계 · 역할 코드</td></tr><tr><td class="code">G2</td><td class="ty">품계</td><td class="ex">종2품</td><td>직명과 별개 속성으로 둔다</td><td class="res">직임 속성</td></tr><tr><td class="code">G3</td><td class="ty">학내 · 단체 직위</td><td class="ex">교장 · 교사 · 문객 · 수행원 · 단장 · 주재소장</td><td>사람과 조직을 잇는 역할이 된다</td><td class="res">idic_role_type</td></tr></tbody>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>판정 규칙</th><th>결과 · 21편 실측</th></tr></thead>
+  <tbody><tr><td class="code">K1</td><td class="ty">대표 인물</td><td class="ex">안중근 · 응칠(자) · 자임 · 도마(영세명)</td><td>표제어 본인. 자·호·이명·필명·가명은 본인으로 합친다</td><td class="res">main_person · 합침 79건</td></tr><tr><td class="code">K2</td><td class="ty">주변 인물</td><td class="ex">안태훈 · 조인원(조병옥 부친) · 앨리스 제이 햄몬드</td><td>정본에 없어도 보존. 후보 하나라는 이유로 정본에 잇지 않는다</td><td class="res">person · 863</td></tr><tr><td class="code">K3</td><td class="ty">사건</td><td class="ex">하얼빈 의거 · 고종 강제퇴위 · 반탁운동</td><td>시기가 특정된 일. 활동 종류(계몽운동)는 용어</td><td class="res">event · 244</td></tr><tr><td class="code">K4</td><td class="ty">장소</td><td class="ex">해주부 · 광석동 · 석촌 · 하얼빈역</td><td>행정구역·자연 지명·시설·국가. 본관·현 주소는 속성</td><td class="res">place · 963</td></tr></tbody>
  </table></div>
-</section><section class="sec" style="--c:#9333ea;flex:4.3">
- <div class="band"><span class="sym">H</span><h2>문헌</h2><span class="cnt">3유형</span></div>
+</section><section class="sec" style="--c:#9333ea;flex:4.9">
+ <div class="band"><span class="sym">L</span><h2>객체 갈래 · 조직·물건·용어</h2><span class="cnt">4갈래</span></div>
  <div class="tw"><table>
   <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
-  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
-  <tbody><tr><td class="code">H1</td><td class="ty">책 · 매체</td><td class="ex">『교육입국조서』 · 『소학교령』 · 『신천지』</td><td>겹낫표는 단행본·정기간행물</td><td class="res">object · 유형 문헌</td></tr><tr><td class="code">H2</td><td class="ty">글 · 문서</td><td class="ex">「헌의육조(獻議六條)」 · 「약소민족에게 호소하여 단결을 제출함」</td><td>홑낫표는 개별 글·기사</td><td class="res">object · 유형 글</td></tr><tr><td class="code">H3</td><td class="ty">법령 · 관제 · 조약</td><td class="ex">한성사범학교 관제 · 영약삼단(另約三端) · 정치에 관한 범죄 처벌의 건</td><td>괄호 없이 나온다. 사건의 근거 법령으로 붙인다</td><td class="res">사실 속성 · 적용 법령</td></tr></tbody>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>판정 규칙</th><th>결과 · 21편 실측</th></tr></thead>
+  <tbody><tr><td class="code">L1</td><td class="ty">조직</td><td class="ex">삼흥학교(=오성학교) · 대동공보사 지국 · 군기시</td><td>지국·지회·분교는 본부와 다른 조직. 범칭(일본군)은 제외</td><td class="res">org · 815</td></tr><tr><td class="code">L2</td><td class="ty">고유 물건</td><td class="ex">『안응칠 역사』 · 권총 · 안중근 · 민족정기 현판</td><td>제목 있는 문헌·문서·법령, 인물과 결합한 개별 실물</td><td class="res">named_object · 262</td></tr><tr><td class="code">L3</td><td class="ty">물건 유형</td><td class="ex">서적 · 신문 · 사진 · 태극기 · 도시락</td><td>소장 자료가 될 수 있는 종류. 총알·열차는 제외</td><td class="res">object_type · 54</td></tr><tr><td class="code">L4</td><td class="ty">용어</td><td class="ex">경무국장 · 진사 · 역과 · 삼균주의 · 소요죄</td><td>직위·관직·제도·사상·죄명·활동 종류</td><td class="res">term · 용어 사전</td></tr></tbody>
  </table></div>
-</section><section class="sec" style="--c:#64748b;flex:5.3">
- <div class="band"><span class="sym">I</span><h2>수치</h2><span class="cnt">4유형</span></div>
+</section><section class="sec" style="--c:#64748b;flex:3.7">
+ <div class="band"><span class="sym">M</span><h2>객체가 아닌 상태</h2><span class="cnt">3상태</span></div>
  <div class="tw"><table>
   <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
-  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
-  <tbody><tr><td class="code">I1</td><td class="ty">인원</td><td class="ex">학생 200여 명 · 약 3천 명의 군중 · 114명의 유학생 · 3남 2녀</td><td>“여”, “약”이 붙으면 근사값으로 표시</td><td class="res">수치 + 근사 여부</td></tr><tr><td class="code">I2</td><td class="ty">거리 · 규모</td><td class="ex">약 10km · 약 30미터 · 24군데</td><td>단위를 함께 보존</td><td class="res">수치 + 단위</td></tr><tr><td class="code">I3</td><td class="ty">형량</td><td class="ex">징역 1년 · 15년형 · 미결구류일수 중 30일</td><td>재판 사실의 속성으로 붙인다</td><td class="res">사실 속성</td></tr><tr><td class="code">I4</td><td class="ty">기간</td><td class="ex">약 1년간 · 두 달여</td><td>시작·끝을 알 수 있으면 시작·끝으로</td><td class="res">기간 또는 구간</td></tr></tbody>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>판정 규칙</th><th>결과 · 21편 실측</th></tr></thead>
+  <tbody><tr><td class="code">M1</td><td class="ty">속성</td><td class="ex">본관 안동 · 건국훈장 대한민국장</td><td>객체에 붙는 값. 노드가 아니다</td><td class="res">attribute</td></tr><tr><td class="code">M2</td><td class="ty">제외</td><td class="ex">최우선 · 그리스(조각) · 총알 · 연합군</td><td>일반 명사·문장 조각·범칭·소모품</td><td class="res">excluded</td></tr><tr><td class="code">M3</td><td class="ty">미확정</td><td class="ex">본문만으로 판단할 수 없는 표기</td><td>미확정으로 유지. 다음 실행에서 재판정</td><td class="res">unresolved</td></tr></tbody>
  </table></div>
 </section>
  </div>
 </div></div>
-<script>const SW=1600,SH=900;
+
+<script>
+const SW=1600,SH=900;
 function fit(){const st=document.getElementById('stage');
  const k=Math.min(innerWidth/SW,innerHeight/SH);
  st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
 fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
 if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);</script></body></html>
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+</script>
+</body></html>

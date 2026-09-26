@@ -66,42 +66,41 @@ h1 span{background:linear-gradient(90deg,#5b9dff,#c084fc 55%,#4ade80);-webkit-ba
 .mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
 </style>
 </head><body>
+
 <div class="slide"><div id="stage"><div class="mappos-i0 f"><i>3</i>지도 3 · 그래프 만들기</div><div class="wrap">
- <div class="kick">INDP · 2부 그래프 구성 방법 · 01</div>
+ <div class="kick">INDP · 2부 추출 방법 · 01</div>
  <h1>분석 목적에 따른 <span>노드·간선 유형과 채택 기준</span></h1>
- <div class="lead">안중근 전기 본문에서 추출한 개체는 그래프의 <b>노드</b>에, 관계는 <b>간선</b>에 대응한다. 노드에는 개체 유형이, 간선에는 관계 유형이 지정된다. 왼쪽은 구성한 그래프의 규모와 간선 예시, 오른쪽은 이종 네트워크 모델의 정의다.</div>
- <div class="meta">표본 <b>안중근</b> (ID 676)<br>출처 인명사전 발간본 본문</div>
+ <div class="lead">안중근 편에서 새 엔진이 확정한 객체는 그래프의 <b>노드</b>에, 본문의 관계는 <b>간선</b>에 대응한다. 노드에는 여덟 갈래 중 객체 갈래가, 간선에는 관계 유형이 붙는다. 왼쪽은 확정 객체의 규모와 간선 예시, 오른쪽은 이종 네트워크 모델의 정의다.</div>
+ <div class="meta">표본 <b>안중근</b> (ID 676) · 새 엔진 실행 2026-09-27<br>출처 인명사전 발간본 본문</div>
  <div class="pair">
-  <!-- 좌: 안중근 실측 -->
   <section class="pane lite">
-   <div class="ph">◤ 실측 · 안중근 전기</div>
-   <div class="pt">그래프 규모와 간선 예시</div>
+   <div class="ph">◤ 실측 · 안중근 편 · 새 엔진 확정 결과</div>
+   <div class="pt">확정 객체의 규모와 간선 예시</div>
    <div class="stat">
-    <div class="st"><div class="v">61</div><div class="l">노드 (개체)</div></div>
-    <div class="st"><div class="v">72</div><div class="l">간선 (관계)</div></div>
-    <div class="st"><div class="v">6</div><div class="l">노드 유형</div></div>
+    <div class="st"><div class="v">115</div><div class="l">확정 객체 (노드)</div></div>
+    <div class="st"><div class="v">5</div><div class="l">통합한 표기 (합침)</div></div>
+    <div class="st"><div class="v">3</div><div class="l">검수 필요</div></div>
    </div>
    <div class="types">
-    <span class="ty" style="background:#2563c7">인물 26</span>
-    <span class="ty" style="background:#c2590a">사건 9</span>
-    <span class="ty" style="background:#0891b2">조직 10</span>
-    <span class="ty" style="background:#158a45">장소 9</span>
-    <span class="ty" style="background:#9333ea">물건 4</span>
-    <span class="ty" style="background:#94a3b8">이명 3</span>
+    <span class="ty" style="background:#2563c7">인물 27</span>
+    <span class="ty" style="background:#c2590a">사건 10</span>
+    <span class="ty" style="background:#0891b2">조직 20</span>
+    <span class="ty" style="background:#158a45">장소 46</span>
+    <span class="ty" style="background:#9333ea">물건 7</span>
+    <span class="ty" style="background:#94a3b8">객체 아님 6</span>
    </div>
    <div class="el">
     <div class="h">간선 목록 (edge list) 예시</div>
     <table><tbody>
      <tr><td class="s">안중근</td><td class="r">participated_in →</td><td class="t">하얼빈 의거</td></tr>
      <tr><td class="s">안중근</td><td class="r">parent_of ←</td><td class="t">안태훈 (아버지)</td></tr>
-     <tr><td class="s">우덕순</td><td class="r">participated_in →</td><td class="t">하얼빈 의거</td></tr>
-     <tr><td class="s">하얼빈 의거</td><td class="r">occurred_at →</td><td class="t">하얼빈 역</td></tr>
+     <tr><td class="s">안중근</td><td class="r">member_of →</td><td class="t">삼흥학교 (오성학교를 합침)</td></tr>
+     <tr><td class="s">하얼빈 의거</td><td class="r">occurred_at →</td><td class="t">하얼빈역</td></tr>
      <tr><td class="s">안중근</td><td class="r">authored →</td><td class="t">『동양평화론』</td></tr>
      <tr><td class="s">단지동맹</td><td class="r">preceded →</td><td class="t">하얼빈 의거</td></tr>
     </tbody></table>
    </div>
   </section>
-  <!-- 우: 모델 -->
   <section class="pane dark">
    <div class="ph">◢ 모델 정의 · 이종 네트워크 (heterogeneous network)</div>
    <div class="pt">G = (V, E, τ, φ)</div>
@@ -109,7 +108,7 @@ h1 span{background:linear-gradient(90deg,#5b9dff,#c084fc 55%,#4ade80);-webkit-ba
    <div class="mtab">
     <div class="h">노드 유형 τ</div>
     <table><tbody>
-     <tr><td class="k">인물·사건·조직·장소·물건</td><td>서로 다른 종류의 개체. 이름·한자·별칭은 원칙상 <b style="color:#fff">속성</b> (본 예시는 이명을 별도 노드로 표시)</td></tr>
+     <tr><td class="k">인물·사건·조직·장소·물건</td><td>여덟 갈래 중 객체 갈래. 대표·주변 인물은 같은 인물 노드이며 문서 안 역할로만 나뉜다. 자·호·이명은 인물의 <b style="color:#fff">속성</b>. 용어·속성·제외는 노드가 아니다</td></tr>
     </tbody></table>
     <div class="h">관계 유형 φ (방향·속성)</div>
     <table>
@@ -127,13 +126,15 @@ h1 span{background:linear-gradient(90deg,#5b9dff,#c084fc 55%,#4ade80);-webkit-ba
  </div>
  <div class="foot">
   <div class="fk">이종 네트워크 모델은 <span>개체 유형과 관계 유형</span>을 구분해 본문의 연결 관계를 표현한다</div>
-  <div class="fd">노드 61 · 간선 72 · 안중근 실측</div>
+  <div class="fd">확정 객체 115 · 접힘 5 · 검수 3 · 안중근 실측</div>
  </div>
 </div></div></div>
+
 <script>
 function fit(){var st=document.getElementById('stage');var k=Math.min(innerWidth/1600,innerHeight/900);
  st.style.transform='translate(-50%,-50%) scale('+k.toFixed(4)+')';}
 fit();addEventListener('resize',fit);addEventListener('load',fit);addEventListener('pageshow',fit);
 if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
-</script></body></html>
+</script>
+</body></html>

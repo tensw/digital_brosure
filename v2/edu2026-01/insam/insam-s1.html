@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
-<title>데이터 정제의 필요성</title>
+<title>본문 객체 추출·정제의 필요성</title>
 <style>
 .root-i1s1{--ink:#e9eefb;--ink2:#9fb0d4;--ink3:#5d7099;
  --per:#5b9dff;--evt:#fb923c;--doc:#c084fc;--plc:#4ade80;--tim:#fbbf24;
@@ -88,27 +88,27 @@ mark{background:transparent;padding:0 1px;border-radius:2px;font-weight:700}
 .mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
 </style>
 </head><body>
+
 <div class="slide"><div id="stage"><div class="mappos-i0"><i>1</i>지도 1 · 정보 추출</div>
 <div class="root-i1s1"><div class="wrap-i1s1">
 
  <div class="hd-i1s1">
   <div>
    <div class="kick-i1s1">INDP · 1부 정제 이유 · 01</div>
-   <h1 class="h1-i1s1">인물 공동참여 구조 분석을 위한 <span>데이터 정제의 필요성</span></h1>
-   <p class="lead-i1s1">독립기념관이 제공하는 독립운동 인명사전은 편찬과 인쇄본 발간을 위해 작성되었으며, 전기 본문은 <b>자연어 문장이 모인 말뭉치</b>에 가깝다.
-    본문에 서술된 <b>인물·사건·물건·장소·시간</b>의 관계는 문장을 읽으며 확인하는 구조다. 어떤 인물이 어떤 사건에 관여했고 어떤 물건·장소·시간과 연결되는지 함께 살펴보려면,
-    흩어진 정보를 추출해 <b>관계 그래프로 구성</b>할 필요가 있다. 이 화면에서는 안중근 전기를 예로 들어 관계를 정리할 항목을 다섯 정보 범주로 구분하였다.</p>
+   <h1 class="h1-i1s1">국가기록물 활용을 위한 <span>본문 객체 추출·정제의 필요성</span></h1>
+   <p class="lead-i1s1">독립기념관 인명사전은 편찬과 인쇄본 발간을 위해 쓰였고, 발간본 15,167편의 본문은 <b>한자 병기가 섞인 자연어 말뭉치</b>다.
+    인물·사건·장소·조직·물건을 검색하고 소장자료·사적지와 연계하고 관계 그래프로 보려면 본문에서 객체를 추출해 같은 대상끼리 묶어야 한다.
+    규칙만으로 뽑은 결과는 무작위 500건 감사에서 <b>7%가 객체가 아니거나 갈래가 틀렸다</b>. 안중근 편을 예로 새 엔진이 확정한 객체를 갈래별로 보인다.</p>
   </div>
   <div class="meta-i1s1">
-   표제어 <b>15,037명</b> · 본문 <b>100%</b><br>
+   발간본 <b>15,167편</b> · 본문 <b>18,091,876자</b><br>
    예시 <b>안중근</b>(ID 676) · 본문 <b>10,034자</b><br>
-   출처 <b>인명사전 발간본 · 개방 API</b>
+   출처 <b>인명사전 발간본 · 운영 DB</b>
   </div>
  </div>
 
  <div class="pair-i1s1">
 
-  <!-- 좌: 발간본 원본 -->
   <section class="pane-i1s1 lite-i1s1">
    <div class="pk-i1s1">◤ 인명사전 발간본 · 기본 항목과 본문 발췌 (ID 676)</div>
    <div class="pt-i1s1">안중근 <span>安重根</span></div>
@@ -125,22 +125,21 @@ mark{background:transparent;padding:0 1px;border-radius:2px;font-weight:700}
     <span class="kv">개수 <b>이재문</b></span>
     <span class="kv">감수 <b>조재곤</b></span>
    </div>
-   <div class="bhd-i1s1">전기 본문 발췌 · 전체 10,034자 · 색상은 오른쪽 다섯 정보 범주과 대응</div>
+   <div class="bhd-i1s1">전기 본문 발췌 · 전체 10,034자 · 색상은 오른쪽 갈래와 대응</div>
    <div class="body-i1s1">
-    <p><mark class="m-tim">1879년 9월 2일</mark> <mark class="m-plc">황해도 해주부 광석동</mark>에서 아버지 <mark class="m-per">안태훈</mark>과 어머니 <mark class="m-per">조마리아</mark> 사이에서 장남으로 태어났다. 본관은 <mark class="m-plc">순흥</mark>으로 고려 말 명유 <mark class="m-per">안향</mark>의 후예였고, 할아버지 <mark class="m-per">안인수</mark>가 <mark class="m-per">응칠</mark>이란 이름을 지어 주었다.</p>
+    <p><mark class="m-tim">1879년 9월 2일</mark> <mark class="m-plc">황해도 해주부 광석동</mark>에서 아버지 <mark class="m-per">안태훈</mark>과 어머니 <mark class="m-per">조마리아</mark> 사이에서 장남으로 태어났다. 본관은 순흥으로 고려 말 명유 <mark class="m-per">안향</mark>의 후예였고, 할아버지 <mark class="m-per">안인수</mark>가 <mark class="m-per">응칠</mark>이란 이름을 지어 주었다.</p>
     <p><mark class="m-tim">1885년</mark> 가솔을 이끌고 <mark class="m-plc">신천군 청계동</mark>으로 이주하였다. <mark class="m-tim">1897년</mark> 천주교에 입교해 <mark class="m-per">도마</mark>란 영세명을 받고, 프랑스인 <mark class="m-per">홍석구 신부</mark>를 수행하며 <mark class="m-plc">해주·옹진</mark> 등지를 순회하였다.</p>
-    <p><mark class="m-tim">1906년 봄</mark> <mark class="m-plc">진남포</mark>로 이사해 삼흥학교를 설립하고 교장을 맡았다. 두 아우 <mark class="m-per">안정근</mark>·<mark class="m-per">안공근</mark>도 힘을 합하였고, 이어 돈의학교를 인수하며 <mark class="m-evt">교육운동</mark>에 힘을 쏟았다.</p>
+    <p><mark class="m-tim">1906년 봄</mark> <mark class="m-plc">진남포</mark>로 이사해 삼흥학교를 설립하고 교장을 맡았다. 두 아우 <mark class="m-per">안정근</mark>·<mark class="m-per">안공근</mark>도 힘을 합하였고, 이어 돈의학교를 인수하며 교육운동에 힘을 쏟았다.</p>
     <p><mark class="m-tim">1907년 가을</mark> <mark class="m-plc">블라디보스토크</mark>로 망명해 동의회를 조직하고 <mark class="m-per">최재형</mark>을 회장으로 추대하였다. <mark class="m-tim">1908년 6월</mark> <mark class="m-per">엄인섭</mark>과 함께 <mark class="m-plc">함경북도 경흥</mark>의 일본군 수비대를 급습하였다. <mark class="m-tim">음력 1909년 1월</mark> 동지 11명과 <mark class="m-evt">단지동맹</mark>을 맺었다.</p>
     <p><mark class="m-tim">1909년 10월 26일</mark> 아침 <mark class="m-plc">하얼빈 역</mark>에서 <mark class="m-doc">브라우닝 8연발 권총</mark>으로 <mark class="m-evt">이토 히로부미를 저격</mark>하였다. 동지 <mark class="m-per">우덕순</mark>·<mark class="m-per">조도선</mark>은 <mark class="m-plc">채가구</mark>에 배치되었다.</p>
     <p>옥중에서 <mark class="m-doc">『안응칠 역사』</mark>와 <mark class="m-doc">『동양평화론』</mark>을 집필하였다. <mark class="m-tim">1910년 2월 14일</mark> 사형을 선고받고 <mark class="m-tim">3월 26일</mark> <mark class="m-plc">뤼순 감옥</mark>에서 순국하였다.</p>
    </div>
   </section>
 
-  <!-- 우: 다섯 정보 범주별 항목 -->
   <section class="pane-i1s1 dark-i1s1">
    <div class="dhd-i1s1">
-    <div class="pk-i1s1">◢ 안중근 전기 본문 · 다섯 정보 범주별 항목</div>
-    <div class="cnt">본문에서 확인한 항목</div>
+    <div class="pk-i1s1">◢ 안중근 편 · 새 엔진이 확정한 객체 · 갈래별</div>
+    <div class="cnt">확정 115 · 검수 필요 3</div>
    </div>
    <div class="axes-i1s1" id="axes-i1s1"></div>
   </section>
@@ -148,35 +147,20 @@ mark{background:transparent;padding:0 1px;border-radius:2px;font-weight:700}
  </div>
 
  <div class="foot-i1s1">
-  <div class="fk-i1s1">분석 질문에서 <span>노드·간선의 의미</span>를 정의하고, 그 정의를 위반하는 표기·개체·관계 오류를 정제한다</div>
-  <div class="fd-i1s1">추출 근거: 안중근 전기 본문 실측 · 출처: 인명사전 발간본<br>오른쪽에는 발췌문 외 본문에서 확인한 항목도 포함 · 개수는 화면에 표시한 항목 수</div>
+  <div class="fk-i1s1">규칙 후보를 LLM이 <span>여덟 갈래로 판정하고 근거 구절을 인용해 확정</span>한다. 규칙과 갈린 항목은 상위 모델이 다시 판정한다</div>
+  <div class="fd-i1s1">추출 근거: 새 엔진 실행 2026-09-27(1차 gemini-3.8-flash · 이상 항목 gemini-3.1-pro 재판정) · 출처: 인명사전 발간본<br>오른쪽은 확정 객체 일부 · 개수는 갈래별 확정 객체 수</div>
  </div>
 
 </div></div>
+</div></div>
+
 <script>
-(function(){
-const AX=[
- {c:'#5b9dff',nm:'인물',sub:'PERSON',w:14,vals:[
-   ['안태훈(아버지)',1],['조마리아(어머니)',0],['안인수(할아버지)',0],['안정근·안공근(동생)',0],
-   ['우덕순(동지)',0],['조도선',0],['유동하',0],['최재형',0],['엄인섭',0],
-   ['홍석구 신부(프랑스인)',0],['이토 히로부미(저격 대상)',0],['응칠(별칭)·도마(영세명)',0]]},
- {c:'#fb923c',nm:'사건',sub:'EVENT',w:7,vals:[
-   ['하얼빈 의거',1],['이토 히로부미 저격',0],['단지동맹',0],['국내진입작전(1908년)',0],
-   ['국채보상운동 참여',0],['갑오농민혁명 출전',0],['사형 집행(1910년)',0]]},
- {c:'#c084fc',nm:'물건',sub:'OBJECT',w:5,vals:[
-   ['『안응칠 역사』',1],['『동양평화론』(미완)',0],['브라우닝 8연발 권총',0],['『대동공보』',0]]},
- {c:'#4ade80',nm:'장소',sub:'PLACE',w:7,vals:[
-   ['해주부 광석동(출생지)',1],['청계동(이주지)',0],['진남포',0],['블라디보스토크',0],
-   ['하얼빈 역',0],['채가구',0],['뤼순 감옥',0]]},
- {c:'#fbbf24',nm:'시간',sub:'TIME',w:10,vals:[
-   ['1879년 9월 2일(출생)',1],['1909년 10월 26일(의거)',0],['1910년 3월 26일(순국)',0],
-   ['음력 1909년 1월',0],['이듬해인 1885년(상대 표현)',0],['20세 무렵(추정)',0]]}
-];
+(function(){const AX=[{"c": "#5b9dff", "nm": "인물", "sub": "PERSON · 대표 1 · 주변 26", "w": 12, "vals": [["안중근(대표 · 응칠·자임·도마를 본인으로 합침)", 1], ["안태훈(아버지)", 0], ["조마리아(어머니)", 0], ["안인수(할아버지)", 0], ["안정근·안공근(동생)", 0], ["최재형", 0], ["엄인섭", 0], ["홍범도", 0], ["우덕순", 0], ["홍석구 신부", 0], ["이토 히로부미", 0]]}, {"c": "#fb923c", "nm": "사건", "sub": "EVENT · 10", "w": 7, "vals": [["하얼빈 의거", 1], ["국내진입작전", 0], ["을사늑약", 0], ["군대해산", 0], ["국채보상운동", 0], ["러일전쟁", 0], ["갑오농민혁명", 0], ["갑신정변", 0]]}, {"c": "#4ade80", "nm": "장소", "sub": "PLACE · 46", "w": 7, "vals": [["황해도 > 해주부 > 광석동(출생지)", 1], ["신천군 청계동", 0], ["진남포", 0], ["블라디보스토크", 0], ["연추", 0], ["북간도", 0], ["하얼빈역", 0], ["뤼순", 0]]}, {"c": "#22d3ee", "nm": "조직", "sub": "ORG · 20", "w": 7, "vals": [["삼흥학교(오성학교를 합침)", 1], ["돈의학교", 0], ["동의회", 0], ["단지동맹", 0], ["서우학회", 0], ["대동공보사 지국", 0], ["홍범도의병부대", 0], ["일본영사관", 0]]}, {"c": "#c084fc", "nm": "물건", "sub": "OBJECT · 고유 6 · 유형 1", "w": 7, "vals": [["『안응칠 역사』", 1], ["『동양평화론』", 0], ["『대동공보』", 0], ["권총 · 안중근", 0], ["유서 · 안중근", 0], ["편지 · 이강", 0], ["서적(유형)", 0]]}, {"c": "#94a3b8", "nm": "객체 아님", "sub": "제외 · 6", "w": 6, "vals": [["전답", 0], ["목총", 0], ["나팔", 0], ["장신구", 0], ["기차", 0], ["열차", 0]]}, {"c": "#fbbf24", "nm": "검수 필요", "sub": "두 모델이 갈림 · 3", "w": 6, "vals": [["신천 → 신천군에 합칠지", 0], ["동학농민군(조직인지)", 0], ["강제퇴위(사건인지)", 0]]}];
 document.getElementById('axes-i1s1').innerHTML=AX.map(a=>`
  <div class="ax-i1s1" style="flex:${a.w}">
   <div class="lb"><span class="dot" style="background:${a.c}"></span>
    <span class="nm" style="color:${a.c}">${a.nm}</span>
-   <span class="sub">${a.sub} · 항목 ${a.vals.length}</span></div>
+   <span class="sub">${a.sub}</span></div>
   <div class="vals">${a.vals.map(v=>`<span class="chip-i1s1">${v[1]?'<b>':''}${v[0]}${v[1]?'</b>':''}</span>`).join('')}</div>
  </div>`).join('');
 })();
@@ -187,6 +171,4 @@ fitStage();addEventListener('resize',fitStage);addEventListener('load',fitStage)
 if(window.ResizeObserver)new ResizeObserver(fitStage).observe(document.documentElement);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitStage);
 </script>
-<script></script>
-</div></div>
 </body></html>

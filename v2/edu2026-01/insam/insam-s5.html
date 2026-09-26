@@ -40,33 +40,38 @@ td.res{font:600 11.5px ui-monospace,Menlo,monospace;color:#6b7488;letter-spacing
 .mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
 </style>
 </head><body>
+
 <div class="slide"><div id="stage"><div class="mappos-i0"><i>2</i>지도 2 · 정규화</div>
  <div class="kick">INDP · 3부 정규화 방법 · 04</div>
  <h1>조직·사건의 <span class="ac">동일성 판정과 분석 단위 설정</span></h1>
- <div class="h1s">관청·단체·학교·일제기관 조직과, 이름 있는 사건·서술형 사건·재판을 나눈다.</div>
- <div class="meta">표본 <b>이상재·유관순</b><br>본문 직접 확인 · 2026-09-10</div>
+ <div class="h1s">조직은 개명·약칭·지부를 가리고, 사건은 고유 사건명과 활동 종류를 가른다. 판정은 LLM이 하고 규칙은 백과 항목·정형 필드 근거를 준다.</div>
+ <div class="meta">새 엔진 실측 <b>26편</b><br>2026-09-27</div>
  <div class="body">
  <section class="sec" style="--c:#0891b2;flex:6.3">
  <div class="band"><span class="sym">E</span><h2>조직</h2><span class="cnt">5유형</span></div>
  <div class="tw"><table>
   <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
-  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
-  <tbody><tr><td class="code">E1</td><td class="ty">관청</td><td class="ex">우정총국(현 우체국) · 학부 · 중추원 · 의정부 · 경위원</td><td>현행명 병기가 있으면 함께 보존</td><td class="res">org · 유형 관청</td></tr><tr><td class="code">E2</td><td class="ty">단체</td><td class="ex">독립협회 · 만민공동회 · 정동구락부 · 신사유람단</td><td>결사·모임·사절단을 모두 단체로 둔다</td><td class="res">org · 유형 단체</td></tr><tr><td class="code">E3</td><td class="ty">학교</td><td class="ex">이화학당 · 이화여자고등보통학교 · 한성사범학교 · 목천공립보통학교 · 관립외국어학교</td><td>같은 학교의 이름이 바뀐 경우 이명으로 묶는다</td><td class="res">org · 유형 학교</td></tr><tr><td class="code">E4</td><td class="ty">일제 기관</td><td class="ex">경무총감부 · 헌병 주재소 · 종로경찰서 · 경성지방법원 · 서대문형무소</td><td>사건이 일어난 자리이자 기관이다. 조직과 장소 양쪽으로 선다</td><td class="res">org + place</td></tr><tr><td class="code">E5</td><td class="ty">종교 · 선교</td><td class="ex">감리교 · 지령리 감리교회</td><td>교단과 개별 교회를 나눈다</td><td class="res">org · 유형 종교</td></tr></tbody>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>판정 규칙</th><th>결과 · 21편 실측</th></tr></thead>
+  <tbody><tr><td class="code">E1</td><td class="ty">개명·약칭</td><td class="ex">삼흥학교 = 오성학교 · 조지워싱턴대학교 = 콜롬비안대학교 · 코민테른 = 제3인터내셔널</td><td>본문에 개명이 적혀 있으면 한 객체로 합친다</td><td class="res">합침</td></tr><tr><td class="code">E2</td><td class="ty">지부·분교</td><td class="ex">대동공보사 지국 · 신간회 개성지회 · 중앙군관학교 낙양분교</td><td>본부와 다른 조직. 본부에 합치지 않는다</td><td class="res">org 유지</td></tr><tr><td class="code">E3</td><td class="ty">범칭</td><td class="ex">일본군 · 연합군 · 적군 · 북한군 · 감리교</td><td>특정 조직이 아니면 제외</td><td class="res">excluded</td></tr><tr><td class="code">E4</td><td class="ty">관청·회의체</td><td class="ex">군기시 · 공무아문 · 비상국민회의 · 주주총회</td><td>관청과 결성된 회의체는 조직. 회의를 연 것은 사건</td><td class="res">org · 검수 1</td></tr><tr><td class="code">E5</td><td class="ty">일제 기관·시설</td><td class="ex">경무총감부 · 헌병파출소 · 서대문형무소 · 러시아공사관</td><td>조직과 장소 양쪽 성격. 문맥으로 갈래를 정하고 갈리면 검수 표시</td><td class="res">org 또는 place</td></tr></tbody>
  </table></div>
-</section><section class="sec" style="--c:#c2590a;flex:4.3">
- <div class="band"><span class="sym">F</span><h2>사건</h2><span class="cnt">3유형</span></div>
+</section><section class="sec" style="--c:#c2590a;flex:5.3">
+ <div class="band"><span class="sym">F</span><h2>사건</h2><span class="cnt">4유형</span></div>
  <div class="tw"><table>
   <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
-  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
-  <tbody><tr><td class="code">F1</td><td class="ty">고유 사건명</td><td class="ex">갑신정변(甲申政變) · 아관파천(俄館播遷) · 개혁당 사건 · 3·1운동</td><td>이름이 있으므로 개체로 바로 선다</td><td class="res">event · 사전 등재</td></tr><tr><td class="code">F2</td><td class="ty">서술형 사건</td><td class="ex">“만세시위 대열에 합류하였다” · “횃불을 올렸다” · “태극기를 나누어 주었다” · “붙잡혔다”</td><td>이름이 없다. 행위 + 시점 + 장소 + 참여자로 사실을 만든다</td><td class="res">idic_fact · 이름 없는 사실</td></tr><tr><td class="code">F3</td><td class="ty">재판 · 처분</td><td class="ex">“징역 1년을 받았다” · “15년형을 받아” · “형집행정지로 가출옥”</td><td>선고·수감·석방을 각각 다른 사실로 나눈다</td><td class="res">사실 3건 · 각각 시점</td></tr></tbody>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>판정 규칙</th><th>결과 · 21편 실측</th></tr></thead>
+  <tbody><tr><td class="code">F1</td><td class="ty">고유 사건명</td><td class="ex">3·1운동 · 하얼빈 의거 · 안악사건(=안명근사건)</td><td>백과 항목의 정식 이름을 유지한다. 본문 병기 「안명근사건(안악사건)」은 합침</td><td class="res">event</td></tr><tr><td class="code">F2</td><td class="ty">시기 특정 행위</td><td class="ex">고종 강제퇴위 · 반탁운동 · 노백린 추도회</td><td>시기와 당사자가 특정되면 사건</td><td class="res">event</td></tr><tr><td class="code">F3</td><td class="ty">활동 종류</td><td class="ex">계몽운동 · 의병투쟁 · 군자금 모집 · 독립군 활동</td><td>사건이 아니라 용어. 정형 필드 참여 사건 칸에 실린 값도 같다</td><td class="res">term</td></tr><tr><td class="code">F4</td><td class="ty">서술형 사건</td><td class="ex">「만세시위 대열에 합류하였다」</td><td>이름 없는 사건. 이 엔진은 이름 있는 사건만 객체로 뽑는다</td><td class="res">범위 밖</td></tr></tbody>
  </table></div>
 </section>
  </div>
 </div></div>
-<script>const SW=1600,SH=900;
+
+<script>
+const SW=1600,SH=900;
 function fit(){const st=document.getElementById('stage');
  const k=Math.min(innerWidth/SW,innerHeight/SH);
  st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
 fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
 if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);</script></body></html>
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+</script>
+</body></html>

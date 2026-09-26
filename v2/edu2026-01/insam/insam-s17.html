@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
-<title>결과의 적용 범위와 잔여 편향</title>
+<title>적용 범위와 남은 한계</title>
 <style>
 /* 스킨: biblo-bottleneck (dark · KPI 4칸 + 서술 카드 + key 박스) — 가운데 행을 좌 실측 / 우 모델 1:1 */
 :root{--ink:#e6eefb;--ink2:#8ea6cf;--ink3:#54688f;--hi:#38bdf8;--weak:#f59e0b}
@@ -55,44 +55,46 @@ h1 b{color:var(--hi);font-weight:800}
 .mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
 </style>
 </head><body>
-<div class="slide"><div id="stage"><div class="mappos-i0"><i>6</i>지도 1·2·5·6 · 잔여 편향</div><div class="wrap">
+
+<div class="slide"><div id="stage"><div class="mappos-i0"><i>6</i>지도 1·2·5·6 · 남은 한계</div><div class="wrap">
 <div>
  <div class="kick">INDP · 4부 검증과 분석 결과 · 05</div>
- <h1>정제·정규화 결과의 <b>적용 범위</b>와 잔여 편향</h1>
- <div class="h1s">전수 9,096명 실측에서 확인한 <b>네 가지 편향</b>과, 각각에 대응하는 <b>완화 방법·후속 연구</b>를 1:1로 놓는다.</div>
+ <h1>새 엔진 결과의 <b>적용 범위</b>와 남은 한계</h1>
+ <div class="h1s">새 엔진 26편 실측에서 확인한 <b>네 가지 한계</b>와, 각각에 대응하는 <b>처리·후속 과제</b>를 1:1로 놓는다.</div>
  <div class="cols c4">
-  <div class="bx"><div class="t">BIAS 01 · 투영</div><h3>대형 사건 편향</h3><div class="v">77.4<em>%</em></div><div class="cap">최대 사건 1건 삭제 시 실제 감소 845,545</div><p>1,302명 사건 하나를 빼면 투영 간선의 <b>약 8할</b>이 사라진다.</p></div>
-  <div class="bx"><div class="t">BIAS 02 · 커버리지</div><h3>단일 사건 인물</h3><div class="v">90.1<em>%</em></div><div class="cap">8,194명 / 9,096명</div><p>사건이 1건뿐이라 <b>투영에서 고립</b>되거나 대형 사건에만 묶인다.</p></div>
-  <div class="bx"><div class="t">BIAS 03 · 개체 해소</div><h3>표기 분절</h3><div class="v">528<em>vs 41</em></div><div class="cap">"3.1운동" · "3·1운동"</div><p>같은 사건이 표기 차이로 <b>별개 노드</b>. 정규화 전 상태.</p></div>
-  <div class="bx"><div class="t">BIAS 04 · 고립</div><h3>공동참여 없음</h3><div class="v">2,452<em>명</em></div><div class="cap">투영망 고립 노드 27.0%</div><p>비고립 연결요소 <b>888개</b>. 거대성분(전체 39.4%) 밖 인물이 6할이다.</p></div>
+  <div class="bx"><div class="t">LIMIT 01 · 재현성</div><h3>실행별 판정 변동</h3><div class="v">10<em>~14</em></div><div class="cap">같은 편 세 번 실행에서 새로 찾음 수</div><p>온도 0에서도 LLM 판정이 실행마다 다르다. 저장 응답에 결정 규칙을 다시 적용하는 재판정으로 <b>규칙 변경은 재현</b>하지만 LLM 판정 자체는 고정하지 못한다.</p></div>
+  <div class="bx"><div class="t">LIMIT 02 · 위치</div><h3>본문 위치 미확인 신규 객체</h3><div class="v w">12<em>/ 101</em></div><div class="cap">8편에서 LLM이 새로 찾은 객체 중</div><p>LLM은 글자 위치를 내지 못한다. 표기를 서버가 본문에서 찾으며, 병기가 끼거나 표기가 다른 <b>12건은 위치 없이</b> 남는다.</p></div>
+  <div class="bx"><div class="t">LIMIT 03 · 사전</div><h3>검수완료 객체사전</h3><div class="v w">0<em>행</em></div><div class="cap">승인 사전 853행은 자동 확정 층</div><p>승인 사전 853행의 판정 주체는 미표기 726 · Codex 91 · GPT 36이다. <b>편찬팀이 검수한 행은 없어</b> 검수완료 층은 비어 있다.</p></div>
+  <div class="bx"><div class="t">LIMIT 04 · 비용</div><h3>1,000자당 비용</h3><div class="v">$0.013</div><div class="cap">21편 실측 · 편당 $0.10 · 55초</div><p>발간본 18,091,876자에 적용하면 약 <b>$230</b>. 이상 항목을 상위 모델이 재판정하는 비용이 전체의 4할이다.</p></div>
  </div>
 </div>
  <div class="cols c2">
   <div class="bx"><div class="t">실측 · 확인된 한계</div>
    <table><thead><tr><th>한계</th><th>실측 근거</th></tr></thead><tbody>
-    <tr><td class="k">단일 출처 편향</td><td>안중근 ego에서 안중근 betweenness <span class="w">0.914</span>. 표제어 인물이 구조상 허브</td></tr>
-    <tr><td class="k">투영 편향</td><td>100명↑ 사건 6건 제외 시 간선 <span class="w">1,091,842 → 25,509</span>, 평균 이웃(비고립 기준) 329 → 11.8</td></tr>
-    <tr><td class="k">개체 해소 오류</td><td>사건명 4,876종 중 표기 변형 다수. "1919년 만세운동" 76 · "서울 만세운동" 36 별개</td></tr>
-    <tr><td class="k">관계 방향 미정의</td><td>정형 필드에는 역할·방향이 없다. 가해·피해·수사가 모두 "참여"로 묶임</td></tr>
+    <tr><td class="k">규칙 의존</td><td>표본 126편 중 118편(객체 13,774개 · <span class="w">94%</span>)은 아직 규칙만의 판정. 새 엔진 적용은 26편</td></tr>
+    <tr><td class="k">정답셋 없음</td><td>정밀도·재현율 미측. 500건 감사·사람 판정 재현율(<span class="w">41/53</span>) 별도 제시</td></tr>
+    <tr><td class="k">서술형 사건</td><td>이름 없는 사건(「만세시위 합류」)은 객체로 뽑지 않음. 이름 있는 사건만</td></tr>
+    <tr><td class="k">결정 규칙 결함</td><td>21편에서 셋 발견·수정. 저장 응답 재적용만 했고 <span class="w">재실행은 미측</span></td></tr>
    </tbody></table></div>
-  <div class="bx m"><div class="t">모델 · 완화 방법과 후속 연구</div>
-   <table><thead><tr><th>대응</th><th>방법 · 수업 이론</th></tr></thead><tbody>
-    <tr><td class="k">다수 전기 통합</td><td class="h">본문 추출로 인물–사건 관계를 보강해 표제어 편향을 희석 (커버리지 60.5% → 확대)</td></tr>
-    <tr><td class="k">사건 규모 보정</td><td class="h">가중치 1/(n−1) 또는 대형 사건 분리 후 재투영. 편향 보고를 결과에 병기</td></tr>
-    <tr><td class="k">개체 해소·연결</td><td class="h">사건명 정규화 → 표제어 사전 entity linking → 재측정. 오병합·미병합 수 집계</td></tr>
-    <tr><td class="k">향후 · GNN</td><td class="h">Node Classification(역할·계열 예측) · Link Prediction(누락 관계) · 시간 네트워크. 시간 순서로 인과를 주장하지 않는다</td></tr>
+  <div class="bx m"><div class="t">모델 · 처리와 후속 과제</div>
+   <table><thead><tr><th>대응</th><th>방법</th></tr></thead><tbody>
+    <tr><td class="k">사전 축적</td><td class="h">자동 확정 사전(21편 3,169행)을 다음 실행의 후보·문맥으로 주입. 담당자 검수 완료 건만 검수완료 층에 반영</td></tr>
+    <tr><td class="k">재현성</td><td class="h">저장 응답·지시문·모델·사전 해시를 실행 기록에 고정. 결정 규칙 변경은 재호출 없이 재적용</td></tr>
+    <tr><td class="k">정답셋</td><td class="h">자연 표본과 도전 표본을 분리해 원문 정답을 만들고 규칙 단독·새 엔진을 같은 표본으로 비교</td></tr>
+    <tr><td class="k">확대 적용</td><td class="h">대한민국장 33편 → 500건 오류율 재측정(7% 기준) → 대통령장 90편 → 발간본 전체</td></tr>
    </tbody></table></div>
  </div>
 <div>
- <div class="key"><h2>WHAT TO DO NEXT</h2><p>이번 전후 비교는 정형 사건 필드의 표기 규칙 적용에 한정된다. <b>과병합·미병합의 원문 검증</b>과 투영 방식별 비교가 후속 과제다.</p></div>
- <div class="src">수치는 개방 API 수집본 15,027건 중 engagedEvents 보유 9,096명 실측 2026-09-14 · 투영 편향 이론: Vasques Filho &amp; O'Neale 2018</div>
+ <div class="key"><h2>WHAT TO DO NEXT</h2><p>표본 126편 전체를 새 엔진으로 다시 만들고, 무작위 500건 감사를 같은 방법으로 반복해 규칙 단독 7%와 견준다. 정형 사건 필드 기준의 그래프 전후 비교(4부 02~04)는 <b>본문에서 확정한 사건</b>으로 다시 계산한다.</p></div>
+ <div class="src">수치는 새 엔진 실행 2026-09-27(21편 재판정 적용본 · 8편 시험 실행) · 규칙 단독 오류율은 2026-09-25 무작위 500건 감사 · 승인 사전 출처는 2026-09-27 집계</div>
 </div>
 </div></div></div>
+
 <script>
 function fitStage(){const st=document.getElementById('stage');if(!st)return;st.style.height='900px';
  const k=Math.min(innerWidth/1600,innerHeight/900);st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
 fitStage();addEventListener('resize',fitStage);addEventListener('load',fitStage);addEventListener('pageshow',fitStage);
 if(window.ResizeObserver)new ResizeObserver(fitStage).observe(document.documentElement);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitStage);
-
-</script></body></html>
+</script>
+</body></html>

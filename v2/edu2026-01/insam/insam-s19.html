@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
-<title>사건명 정규화 규칙의 적용 결과와 판정 과제</title>
+<title>새 엔진 판정 결과 집계</title>
 <style>
 /* 스킨: bk21-status-09 (블루 blob · 흰 표 + 셀 내 진행바) */
 :root{--card:#fff;--ink:#111827;--ink2:#4b5563;--ink3:#98a1b2;--bl:#1e4be8;--line:#e3e8f2;--bg-7k:#1b9df2;--bg2-7k:#4fb8f7;--bg3-7k:#0d7ec9}
@@ -51,41 +51,34 @@ h1{position:absolute;left:82px;top:74px;font-size:44px;font-weight:800;letter-sp
 .mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
 </style>
 </head><body>
+
 <div class="slide">
  <span class="blob-7k b1-7k"></span><span class="blob-7k b2-7k"></span><span class="blob-7k b3-7k"></span>
  <div id="stage"><div class="mappos-i0"><i>2</i>지도 2 · 정규화</div>
  <div class="kick">INDP · 3부 정규화 방법 · 06</div>
- <h1>사건명 정규화 규칙의 적용 결과와 판정 과제</h1>
- <div class="h1s">규칙(괄호 부기·중점·마침표·공백 제거)을 정형 필드 사건명 4,876표기에 적용한 결과다. <b>자동 병합</b>·<b>판정 보류</b>·<b>과병합 경고</b> 세 층으로 나누고, 원표기 → 표준 키 → 판정 근거를 기록한다.</div>
- <div class="meta">병합 키 <b>192</b> / 4,324 · 표기 <b>−552</b><br>개방 API engagedEvents 실측</div>
+ <h1>새 엔진 판정 결과의 집계와 검수 표시 항목</h1>
+ <div class="h1s">대한민국장 21편(규칙 후보 3,293개)에 새 엔진을 적용한 결과다. <b>자동 확정</b>·<b>재판정 확정</b>·<b>검수 표시</b> 세 층으로 나누고, 후보 → 판정 → 근거를 기록한다. 결정 규칙의 결함을 고친 뒤 저장 응답에 다시 적용한 값이다.</div>
+ <div class="meta">후보 <b>3,293</b> → 확정 객체 <b>3,223</b><br>이상 <b>140</b> · 재판정 일치 <b>109</b> · 검수 <b>31</b></div>
  <div class="tblwrap">
   <table class="tbl-53fi">
-   <thead><tr><th>표준 키</th><th>원표기 (인원)</th><th>병합 규모</th><th style="text-align:right">합계</th><th>적용 규칙</th><th>판정</th></tr></thead>
-   <tbody>
-    <tr><td class="lt-53fi">3·1운동</td><td class="raw"><b>3.1운동</b> 528 · 3·1운동 41 · 3.1.운동 1 · 3.1 운동 1 · 기타 2</td><td class="lb-53fi"><i style="width:44%"></i></td><td class="lv-53fi">573</td><td class="rule">구두점·공백 제거</td><td class="st"><span class="ok">자동 병합</span></td></tr>
-    <tr><td class="lt-53fi">3·1운동(합천)</td><td class="raw">3·1운동(합천) 1 → 규칙상 3·1운동에 흡수</td><td class="lb-53fi"><i style="width:1%"></i></td><td class="lv-53fi">1</td><td class="rule">괄호 부기 제거</td><td class="st"><span class="hold">판정 보류</span></td></tr>
-    <tr><td class="lt-53fi">경신참변</td><td class="raw"><b>경신참변</b> 160 · 경신참변(간도참변) 55 · 경신참변(庚申慘變) 2 · 기타 1</td><td class="lb-53fi"><i style="width:17%"></i></td><td class="lv-53fi">218</td><td class="rule">괄호 부기·한자 제거</td><td class="st"><span class="ok">자동 병합</span></td></tr>
-    <tr><td class="lt-53fi">간도참변</td><td class="raw">간도참변 15 · 간도참변(경신참변) 23 · 간도참변(間島慘變) 3 — <b>경신참변과 동일 사건</b>이나 규칙으로는 안 합쳐짐</td><td class="lb-53fi"><i style="width:3%"></i></td><td class="lv-53fi">41</td><td class="rule">동의어 (규칙 밖)</td><td class="st"><span class="hold">사전 필요</span></td></tr>
-    <tr><td class="lt-53fi">후기의병</td><td class="raw"><b>후기의병</b> 893 + 괄호 부기 표기 409건(이강년 의병부대 26 · 이석용 19 · 안규홍 14 …)</td><td class="lb-53fi"><i style="width:100%"></i></td><td class="lv-53fi">1,302</td><td class="rule">괄호 부기 제거</td><td class="st"><span class="risk">과병합 경고</span></td></tr>
-    <tr><td class="lt-53fi">전기·중기의병</td><td class="raw">전기의병 102 + 부대명 부기 62 → 164 · 중기의병 98 + 40 → 138</td><td class="lb-53fi"><i style="width:23%"></i></td><td class="lv-53fi">302</td><td class="rule">괄호 부기 제거</td><td class="st"><span class="risk">과병합 경고</span></td></tr>
-    <tr><td class="lt-53fi">파리장서운동</td><td class="raw">파리장서운동 60 · 파리장서 운동 13</td><td class="lb-53fi"><i style="width:6%"></i></td><td class="lv-53fi">73</td><td class="rule">공백 제거</td><td class="st"><span class="ok">자동 병합</span></td></tr>
-    <tr><td class="lt-53fi">105인 사건</td><td class="raw">105인 사건 52 · 105인사건 15 · 105인 사건(신민회 사건) 1</td><td class="lb-53fi"><i style="width:5%"></i></td><td class="lv-53fi">68</td><td class="rule">공백·괄호 제거</td><td class="st"><span class="ok">자동 병합</span></td></tr>
-    <tr><td class="lt-53fi">군자금 모집</td><td class="raw">군자금 모집 31 · 군자금모집 9 — 사건이 아니라 <b>활동 유형</b></td><td class="lb-53fi"><i style="width:3%"></i></td><td class="lv-53fi">40</td><td class="rule">공백 제거</td><td class="st"><span class="hold">분석 단위 보류</span></td></tr>
+   <thead><tr><th>판정 종류</th><th>실례 (21편)</th><th>규모</th><th style="text-align:right">건수</th><th>적용 규칙</th><th>판정</th></tr></thead>
+   <tbody><tr><td class="lt-53fi">확정 유지</td><td class="raw">규칙 후보와 LLM 판정이 같고 인용이 본문에 있음</td><td class="lb-53fi"><i style="width:100%"></i></td><td class="lv-53fi">3,047</td><td class="rule">인용 일치 검사</td><td class="st"><span class="ok">자동 확정</span></td></tr><tr><td class="lt-53fi">표제어 본인으로 합침</td><td class="raw">김규식: 우사·죽적·김성·왕개석 등 13 · 이준 7 · 김구 8</td><td class="lb-53fi"><i style="width:3%"></i></td><td class="lv-53fi">79</td><td class="rule">자·호·이명·가명 → 본인</td><td class="st"><span class="ok">자동 확정</span></td></tr><tr><td class="lt-53fi">같은 대상 합침</td><td class="raw">자유시참변 = 흑하사변 · 상항 = 샌프란시스코 · 안악사건 = 안명근사건</td><td class="lb-53fi"><i style="width:1%"></i></td><td class="lv-53fi">33</td><td class="rule">문맥 동일성 · 상위 모델 일치</td><td class="st"><span class="ok">확정</span></td></tr><tr><td class="lt-53fi">행정 단위 표기 통합</td><td class="raw">보은 = 보은군 · 홍성 = 홍성군 · 지린 = 지린성</td><td class="lb-53fi"><i style="width:1%"></i></td><td class="lv-53fi">15</td><td class="rule">규칙(접미)</td><td class="st"><span class="ok">자동 확정</span></td></tr><tr><td class="lt-53fi">표기 복원</td><td class="raw">거류민단 → 재중국 거류민단 · 항고서 → 한국 독립 항고서 · 니콜라이 → 니콜라이 2세</td><td class="lb-53fi"><i style="width:1%"></i></td><td class="lv-53fi">18</td><td class="rule">본문에 있는 온전한 표기</td><td class="st"><span class="ok">확정</span></td></tr><tr><td class="lt-53fi">갈래 변경</td><td class="raw">김산(인물 → 장소) · 만주국(조직 → 장소) · 러시아공사관(장소 → 조직)</td><td class="lb-53fi"><i style="width:1%"></i></td><td class="lv-53fi">9</td><td class="rule">상위 모델 재판정</td><td class="st"><span class="ok">확정</span></td></tr><tr><td class="lt-53fi">용어·속성·제외</td><td class="raw">연합군·적군(범칭) · 열차·총탄(소모품) · 창씨개명·농민운동(용어)</td><td class="lb-53fi"><i style="width:1%"></i></td><td class="lv-53fi">41</td><td class="rule">LLM 판정 · 소장 자료 유형은 물건으로 유지</td><td class="st"><span class="ok">확정</span></td></tr><tr><td class="lt-53fi">새로 찾음</td><td class="raw">콜린 매켄지 · 사전트 · 만국평화회의 · 통일독립촉진회 · 『한국인의 목표와 열망』</td><td class="lb-53fi"><i style="width:4%"></i></td><td class="lv-53fi">121</td><td class="rule">본문 존재 검사 · 위치는 서버가 찾음</td><td class="st"><span class="ok">확정 120 · 검수 1</span></td></tr><tr><td class="lt-53fi">검수 표시</td><td class="raw">해인사(장소/조직) · 헤이그특사(용어/사건) · 단발령(사건/고유 물건) · 동아일보(조직/고유 물건)</td><td class="lb-53fi"><i style="width:1%"></i></td><td class="lv-53fi">31</td><td class="rule">두 모델이 갈림</td><td class="st"><span class="hold">검수 필요</span></td></tr>
    </tbody>
   </table>
  </div>
  <div class="foot">
-  <div class="fx"><div class="v">자동 병합</div><div class="l">구두점·공백·한자 병기 차이. 원표기를 보존하고 표준 키로 연결한다.</div></div>
-  <div class="fx"><div class="v">판정 보류</div><div class="l">지역 하위 사건·동의어·활동 유형. 규칙이 아니라 사전과 원문 대조로 결정한다.</div></div>
-  <div class="fx"><div class="v">과병합 경고</div><div class="l">괄호 부기가 부대·지역 단위 하위 사건일 때. 통합하면 분석 단위가 바뀌고 투영 편향이 커진다.</div></div>
+  <div class="fx"><div class="v">자동 확정</div><div class="l">규칙 후보와 LLM 판정이 같고 인용이 본문에 있다. 21편 후보의 92%.</div></div>
+  <div class="fx"><div class="v">재판정 확정</div><div class="l">규칙과 갈린 140건을 상위 모델이 다시 보아 109건이 일치했다. 갈래 변경·합침·복원이 여기서 확정된다.</div></div>
+  <div class="fx"><div class="v">검수 표시</div><div class="l">두 모델이 갈린 31건(후보의 0.9%). 사람 검수 없이 「검수 필요」 표시와 함께 결과를 출력한다.</div></div>
  </div>
- <div class="concl">괄호 부기 제거에서 후기의병 계열의 과병합이 확인되었고, 간도참변·경신참변은 미병합으로 남았다</div>
+ <div class="concl">후보 3,293개 가운데 사람 판단으로 남긴 것은 31개다. 나머지는 규칙과 LLM이 확정했다</div>
 </div></div>
+
 <script>
 const SW=1600,SH=900;
 function fit(){const st=document.getElementById('stage');const k=Math.min(innerWidth/SW,innerHeight/SH);st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
 fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
 if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
-
-</script></body></html>
+</script>
+</body></html>

@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
-<title>전체 지도 · 본문에서 관계망까지 여섯 단계</title>
+<title>전체 지도 · 여섯 단계와 확정 주체</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
@@ -82,40 +82,41 @@ h1 span{background:linear-gradient(90deg,#5b9dff,#c084fc 55%,#4ade80);-webkit-ba
 .band .fm{margin-left:auto;flex:none;max-width:400px;font:600 10.5px/1.5 ui-monospace,Menlo,monospace;color:#8b96d4;text-align:right;word-break:keep-all}
 .band .fm b{color:#fbbf24}
 </style></head><body>
+
 <div class="slide"><div id="stage"><div class="wrap">
 
  <div class="kick">INDP · 1부 정제 이유 · 02</div>
- <h1>전체 지도 · <span>본문에서 관계망까지 여섯 단계</span></h1>
- <div class="lead">각 장이 여섯 단계 중 어디를 설명하는지 위쪽에 «지도 ④»처럼 표시한다. 두 단계에 걸치는 장도 있다. 뒤에 나오는 세 식 중 <b>③·④는 관계망의 정의</b>이고 <b>⑤는 계산 방법</b>이다.</div>
- <div class="meta">기준 데이터 <b>개방 API</b> · 표제어 <b>15,037명</b><br>본문 <b>100%</b> · 평균 <b>1,190자</b></div>
+ <h1>전체 지도 · <span>본문에서 관계망까지 여섯 단계와 확정 주체</span></h1>
+ <div class="lead">각 장이 여섯 단계 중 어디를 설명하는지 위쪽에 «지도 ④»처럼 표시한다. <b>①②는 새 엔진이 맡는 단계</b>이고, 뒤에 나오는 세 식 중 <b>③·④는 관계망의 정의</b>, <b>⑤는 계산 방법</b>이다.</div>
+ <div class="meta">기준 데이터 <b>운영 발간본</b> · <b>15,167편</b><br>표본 <b>126편</b> · 새 엔진 실측 <b>26편</b></div>
 
  <div class="rq">
-  <div class="lb">묻는 것<br>RQ</div>
+  <div class="lb">연구 질문<br>RQ</div>
   <div class="bd">
-   <div class="q">같은 사건에 참여했다고 <em>기록된</em> 인물들은 어떤 관계망을 이루는가. 그 안에서 <em>서로 다른 집단을 잇는 인물</em>은 누구이고, 촘촘히 연결된 <em>집단</em>은 무엇(사건·지역·시기·계열)으로 설명되는가</div>
-   <div class="ex">각 인물의 기록에 같은 사건 참여가 확인되면, 서로를 직접 언급하지 않아도 공동참여망에서 연결된다.<br>예 · 유관순·조인원·김구응 ↔ <b>아우내 만세운동</b></div>
+   <div class="q">국가기록물 본문에서 객체를 사람 검수 없이 <em>규칙과 LLM만으로</em> 확정할 수 있는가. 규칙이 맡을 층과 LLM이 맡을 층을 어떻게 나누고, 그 판정이 <em>관계망의 연결</em>을 어떻게 바꾸는가</div>
+   <div class="ex">규칙은 사전에 있는 표기를 후보로 찾고, LLM은 한자 병기와 앞뒤 맥락으로 갈래·동일성을 판정한다. 갈린 항목만 상위 모델이 다시 본다.<br>예 · 「경기도 광주(廣州) 석촌(石村)으로 피신」 → 규칙은 정본 동명 인물, LLM은 <b>장소</b></div>
   </div>
  </div>
 
  <div class="flow">
   <div class="st">
    <div class="no"><i>1</i><b>정보 추출</b></div>
-   <div class="do">전기 본문에서 사람·사건·장소 등의 정보와, <b>누가 어느 사건에 참여했는지</b> 같은 관계를 뽑는다</div>
-   <div class="cr"><span class="k">처리 기준</span>정해진 규칙으로 찾을 수 있는 유형만 추출. 문맥을 읽어야 하는 유형은 표본으로만 확인. 결과는 이 단계에서 표본 검증</div>
-   <div class="eq none">수식 없음</div>
+   <div class="do">규칙 엔진이 사전·문형으로 후보를 찾고, LLM이 후보마다 <b>여덟 갈래와 근거 구절</b>을 판정한다. 규칙이 놓친 객체는 LLM이 보탠다</div>
+   <div class="cr"><span class="k">처리 기준</span>판정마다 본문 인용 필수. 인용이 본문과 맞지 않으면 확정하지 않는다. 정형 필드에만 있는 값은 필드 근거로만 둔다</div>
+   <div class="eq none">LLM 1회 + 이상 항목 1회</div>
    <div class="where">덱 · <b>2부</b></div>
   </div>
   <div class="st">
    <div class="no"><i>2</i><b>정규화</b></div>
-   <div class="do">이름·시간·장소·조직·사건의 표기를 정리하고, 같은 대상을 가리키는 기록을 모은다</div>
-   <div class="cr"><span class="k">처리 기준</span>표기만 다른 경우(3.1운동 = 3·1운동)와 사건 범위를 판단해야 하는 경우(전국 3.1 vs 영해면 3.1)를 구분. 판단 못 하면 합치지 않고 미확인. <em>어디까지 묶느냐가 ⑤의 연결을 바꾼다</em></div>
+   <div class="do">같은 대상을 가리키는 표기를 하나로 묶고(자·호·이명 → 본인, 개명 학교, 약칭), 용어·속성·범칭을 객체에서 뺀다</div>
+   <div class="cr"><span class="k">처리 기준</span>검수완료 객체사전 › LLM 판정 › 규칙 추정. 규칙과 LLM이 갈리거나 인명↔지명이 바뀌면 상위 모델 재판정, 그래도 갈리면 검수 표시. <em>통합 범위가 ⑤의 연결 구조를 바꾼다</em></div>
    <div class="eq none">수식 없음</div>
    <div class="where">덱 · <b>3부</b></div>
   </div>
   <div class="st f">
    <div class="no"><i>3</i><b>그래프 만들기</b></div>
-   <div class="do">추출한 인물·사건 등을 점으로, 참여·소속 등의 관계를 선으로 나타낸다. 점과 선에 종류를 붙인다</div>
-   <div class="cr"><span class="k">처리 기준</span>점 종류 5(인물·사건·조직·장소·물건) · 선 종류 5(참여·소속·부모·발생지·선후). 이름·한자·별칭은 원칙적으로 인물에 붙는 정보</div>
+   <div class="do">확정한 인물·사건 등을 점으로, 참여·소속 등의 관계를 선으로 나타낸다. 점과 선에 종류를 붙인다</div>
+   <div class="cr"><span class="k">처리 기준</span>점 종류 5(인물·사건·조직·장소·물건) · 선 종류 5(참여·소속·부모·발생지·선후). 이름·한자·별칭은 인물에 붙는 정보. 용어·속성은 점이 아니다</div>
    <div class="eq">G = (V, E, τ, φ)<small>V 점들의 모음 · E 선들의 모음 · τ, φ 점과 선의 종류 지정</small></div>
    <div class="where">덱 · <b>2부</b></div>
   </div>
@@ -161,7 +162,7 @@ h1 span{background:linear-gradient(90deg,#5b9dff,#c084fc 55%,#4ade80);-webkit-ba
     <tr><td>유관순·김구응</td><td>1×1 + 1×0</td><td class="n">1</td></tr>
     <tr><td>조인원·김구응</td><td>1×1 + 1×0</td><td class="n">1</td></tr>
    </table>
-   <div class="note">같은 줄끼리 곱해 더하면 «몇 사건을 함께했나»가 된다 · 자기 자신(대각)은 0</div>
+   <div class="note">같은 행끼리 곱해 더하면 공동참여 사건 수가 된다 · 자기 자신(대각)은 0</div>
   </div>
   <div class="bx">
    <div class="k">읽는 법</div>
@@ -172,11 +173,12 @@ h1 span{background:linear-gradient(90deg,#5b9dff,#c084fc 55%,#4ade80);-webkit-ba
 
  <div class="band">
   <span class="t">읽는 순서</span>
-  <span class="m">지도는 <b>처리 순서(①→⑥)</b>이고, 발표는 <b>만들 관계망을 먼저 정의</b>하고(③) 구성 사례와 접기(④⑤)까지 본 뒤, 그 연결을 좌우하는 정규화(②)로 돌아간다. <b>«사건 참여 관계만 남긴다»는 ④의 선택</b>이며, 이 덱의 질문이 사건 참여를 축으로 삼기 때문에 그렇게 자른다</span>
-  <span class="fm"><b>전수 수치(15,037명)는 정형 필드 engagedEvents에서 바로 ④로 들어간 것</b><br>①의 본문 추출은 표본 3인(안중근·유관순·이상재)에서만 수행</span>
+  <span class="m">지도는 <b>처리 순서(①→⑥)</b>이고, 발표는 ①②를 맡는 <b>새 엔진(2·3부)</b>을 먼저 보이고, 그 결과로 만드는 관계망의 정의와 접기(③④⑤)를 본 뒤, 정규화가 관계망 지표를 어떻게 바꾸는지(⑥ · 4부)로 간다. <b>«사건 참여 관계만 남긴다»는 ④의 선택</b>이며, 이 덱의 질문이 사건 참여를 축으로 삼기 때문에 그렇게 자른다</span>
+  <span class="fm"><b>전수 그래프 수치(9,096명)는 정형 필드 engagedEvents에서 바로 ④로 들어간 것</b><br>①②의 본문 추출 실측은 새 엔진 26편(대한민국장 21 · 대통령장 5)</span>
  </div>
 
 </div></div></div>
+
 <script>
 function fitStage(){const st=document.getElementById('stage');if(!st)return;
  const k=Math.min(innerWidth/1600,innerHeight/900);

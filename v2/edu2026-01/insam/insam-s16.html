@@ -53,36 +53,38 @@ h1 span{color:#7fd4ff}
 .mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
 </style>
 </head><body>
+
 <div class="slide"><div id="stage"><div class="mappos-i0"><i>6</i>지도 1·2·6 · 검증</div>
  <div class="rail"><span class="lb">INDP · 4부 검증과 분석 결과 · 01</span><span class="ln"></span><span class="pg">실측 vs 지표 정의</span></div>
  <h1>정확성 평가의<br><span>수행 현황</span>과 오류 분석</h1>
- <div class="mlab">실측 · MEASURED (전수 9,096명)</div>
+ <div class="mlab">실측 · MEASURED (표본 126편 · 새 엔진 26편)</div>
  <div class="meas">
-  <div class="mrow"><div class="k">그래프 민감도<br>(절제 실험)</div><div class="d">100명↑ 사건 <b>6건</b>만 제외해도 투영 간선 <b>1,091,842 → 25,509</b>, 평균 이웃(비고립 기준) <b>329 → 11.8</b>. 최대 사건 1건 삭제 시 간선 <b>77.4%</b> 실제 감소(1,091,842 → 246,297).</div><div class="st ok">측정</div></div>
-  <div class="mrow"><div class="k">개체 해소<br>(사건명 분절)</div><div class="d">"3.1운동" <b>528명</b>과 "3·1운동" <b>41명</b>, "1919년 만세운동" 76·"서울 만세운동" 36이 별개 노드. 정규화 전이라 같은 사건이 갈라져 있다.</div><div class="st ok">측정</div></div>
-  <div class="mrow"><div class="k">참여 관계 커버리지</div><div class="d">정형 필드 사건 보유 <b>9,096명(60.5%)</b>. 사건 보유 인물 9,096명 중 <b>90.1%</b>(8,194명)가 사건 1건만 기록. 본문 추출로 보강할 여지가 크다.</div><div class="st ok">측정</div></div>
-  <div class="mrow"><div class="k">정밀도·재현율<br>(개체·관계 추출)</div><div class="d">수작업 정답 표본(예: 20인 주석)이 아직 없다. 안중근 1인 실측(61노드·72간선)은 <b>표본 1</b>이라 통계값을 낼 수 없다.</div><div class="st no">미측</div></div>
+  <div class="mrow"><div class="k">규칙 단독 오류율<br>(무작위 500건 감사)</div><div class="d">126편 규칙 객체 14,627개에서 무작위 500건을 뽑아 GPT 검토와 사람 판정으로 대조. 객체가 아니거나 갈래가 틀린 것 <b>35건(7.0%)</b>. 지적 52건 중 17건은 물건 2층 설계상 기각.</div><div class="st ok">측정</div></div>
+  <div class="mrow"><div class="k">사람 판정 재현<br>(새 엔진 · 8편)</div><div class="d">GPT 검토 뒤 사람이 수용한 판정 53건 중 <b>41건(77%)</b>을 새 엔진이 사람 개입 없이 재현. 인명↔지명 뒤바뀜 4건(석촌·한양·소영자·중산)은 <b>4건 모두</b> 바로잡음.</div><div class="st ok">측정</div></div>
+  <div class="mrow"><div class="k">이상 항목 해소<br>(새 엔진 · 21편)</div><div class="d">규칙과 LLM이 갈린 <b>140건</b> 중 상위 모델과 일치 <b>109건(78%)</b>. 검수 표시로 남은 것 31건(후보 3,293의 0.9%). 8편 시험 실행은 78건 중 69건(88%).</div><div class="st ok">측정</div></div>
+  <div class="mrow"><div class="k">정밀도·재현율<br>(정답셋 기준)</div><div class="d">원문 정답 표본이 아직 없다. 위 수치는 감사 표본과 사람 판정 대비 일치율이며, 정답셋 기반 P·R·F1이 아니다.</div><div class="st no">미측</div></div>
  </div>
- <div class="lead">미해소 개체와 불확실 관계는 "미확인"으로 남기고 별도 집계한다. 그래프 지표는 실측했으며, 원문 정답 표본에 기반한 정밀도·재현율은 미측정이다(2026-09-14 개방 API).</div>
+ <div class="lead">21편 첫 실행에서 결함 셋(정식 이름을 약칭으로 19건 · 도시를 역·항에 합침 5건 · 소장 자료 유형 물건 삭제 12건)이 나왔다. 셋 다 LLM 판정이 아니라 결정 규칙의 결함이라 규칙을 고치고 저장 응답에 다시 적용했다. 재적용 뒤 이상 항목 186 → 140, 검수 표시 43 → 31.</div>
  <div class="glab">모델 · 평가 지표 정의</div>
  <div class="grid">
   <div class="cell"><div class="t">PRECISION · 정밀도</div>
-   <p>추출한 개체·관계 중 정답인 비율. 오추출(거짓 양성)을 잰다.</p>
+   <p>확정한 객체 중 정답인 비율. 오추출(거짓 양성)을 잰다.</p>
    <div class="eq">P = TP / (TP + FP)</div>
-   <div class="btm"><div class="bt"><span class="k">현재</span><span class="v no">미측</span></div><div class="sub">정답 표본 확보 후 산출</div></div></div>
+   <div class="btm"><div class="bt"><span class="k">현재</span><span class="v no">미측</span></div><div class="sub">정답셋 확보 후 산출 · 현재는 500건 감사 결과 제시</div></div></div>
   <div class="cell"><div class="t">RECALL · 재현율</div>
-   <p>정답 개체·관계 중 실제로 추출한 비율. 누락(거짓 음성)을 잰다.</p>
+   <p>정답 객체 중 실제로 확정한 비율. 누락(거짓 음성)을 잰다.</p>
    <div class="eq">R = TP / (TP + FN)</div>
-   <div class="btm"><div class="bt"><span class="k">현재</span><span class="v no">미측</span></div><div class="sub">정답 표본 확보 후 산출</div></div></div>
+   <div class="btm"><div class="bt"><span class="k">현재</span><span class="v no">미측</span></div><div class="sub">21편에서 규칙이 놓친 121건을 LLM이 보탬</div></div></div>
   <div class="cell"><div class="t">F1 · 조화평균</div>
-   <p>정밀도와 재현율의 조화평균. 둘의 균형을 한 값으로 요약한다. 개체 해소는 오병합·미병합 수로 따로 센다.</p>
+   <p>정밀도와 재현율의 조화평균. 동일성은 오병합·미병합 수로 따로 센다.</p>
    <div class="eq">F1 = 2PR / (P + R)</div>
-   <div class="btm"><div class="bt"><span class="k">현재</span><span class="v no">미측</span></div><div class="sub">관계 유형별로 산출 예정</div></div></div>
-  <div class="cell"><div class="t">ABLATION · 절제 실험</div>
-   <p>입력 조건(사건 규모·전기 길이·미해소 비율)을 바꿔 결과 지표가 얼마나 흔들리는지 본다. 결과의 견고성 검증.</p>
-   <div class="btm"><div class="bt"><span class="k">대형 사건 1건 기여</span><span class="v">77.4<s>%</s></span></div><div class="sub">삭제 시 실제 감소 845,545 / 1,091,842 · 측정 완료</div></div></div>
+   <div class="btm"><div class="bt"><span class="k">현재</span><span class="v no">미측</span></div><div class="sub">갈래별로 산출 예정</div></div></div>
+  <div class="cell"><div class="t">AGREEMENT · 재판정 일치율</div>
+   <p>규칙과 LLM이 갈린 항목을 상위 모델이 독립 판정해 일치한 비율. 두 모델이 같은 판정을 냈다는 뜻이며 정답임을 뜻하지 않는다.</p>
+   <div class="btm"><div class="bt"><span class="k">21편 140건 중</span><span class="v">78<s>%</s></span></div><div class="sub">109건 일치 · 8편 78건 중 69건(88%) · 측정 완료</div></div></div>
  </div>
 </div></div>
+
 <script>
 const SW=1600,SH=900;
 function fit(){const st=document.getElementById('stage');const k=Math.min(innerWidth/SW,innerHeight/SH);
@@ -90,4 +92,5 @@ function fit(){const st=document.getElementById('stage');const k=Math.min(innerW
 fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
 if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
-</script></body></html>
+</script>
+</body></html>

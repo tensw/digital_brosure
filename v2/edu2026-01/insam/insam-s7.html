@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
-<title>문단 단위 정보 추출 사례</title>
+<title>후보 단위 판정과 근거 검사 사례</title>
 <style>*{box-sizing:border-box;margin:0;padding:0}
 html{overflow-x:hidden}
 body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
@@ -48,54 +48,57 @@ td.k{font-weight:800;color:#111827;white-space:nowrap;width:120px}
 .mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
 </style>
 </head><body>
+
 <div class="slide"><div id="stage"><div class="mappos-i0"><i>1</i>지도 1 · 정보 추출</div>
- <div class="kick">INDP · 2부 그래프 구성 방법 · 03</div>
- <h1>문단 단위 <span class="ac">정보 추출과 관계 판정 사례</span></h1>
- <div class="meta">표본 <b>유관순</b> · 아우내 장터 문단<br>본문 직접 확인</div>
+ <div class="kick">INDP · 2부 추출 방법 · 03</div>
+ <h1>후보 단위 <span class="ac">LLM 판정과 근거 검사 사례</span></h1>
+ <div class="meta">표본 <b>오세창</b>(ID 296) · 8편 시험 실행<br>1차 gemini-3.8-flash · 재판정 gemini-3.1-pro</div>
  <div class="sent">
-  <span class="lb">본문 두 문장</span>
-  <p><mark class="m-tim">1919년 4월 1일</mark> <mark class="m-tim">오후 1시</mark> <mark class="m-plc">병천 아우내 장터</mark>에는 약 <mark class="m-num">3천 명</mark>의 군중이 모여들었다. <mark class="m-plc">갈전면</mark>은 물론이고, 서쪽의 <mark class="m-plc">목천면</mark>과 <mark class="m-plc">북면</mark>, 남쪽의 <mark class="m-plc">성남면</mark>과 <mark class="m-plc">수신면</mark> 방면, 동쪽의 <mark class="m-plc">동면</mark>과 <mark class="m-plc">진천군</mark> 등 각 방면에서 모여든 사람들이었다.</p>
-  <span class="src">유관순 · 아우내 장터 문단 (두 문장) · 추출 항목 11개와 사건 인스턴스 1건</span>
+  <span class="lb">본문 세 문장</span>
+  <p><mark class="m-tim">1884년</mark> 갑신정변에 연루되어 가족을 데리고 유대치와 함께 <mark class="m-plc">경기도 광주(廣州) 석촌(石村)</mark>으로 피신 중 체포되었으나 무혐의로 풀려났다. ··· 청나라 사신을 맞는 업무와 <mark class="m-plc">군기시(軍器寺)</mark>의 차량 관리 업무를 수행하기도 하였다. ··· 그러기에 좌우 정치세력 모두에게 <mark class="m-num">최우선</mark> 영입 대상이 되었다.</p>
+  <span class="src">오세창 · 규칙 후보 112개 중 규칙과 LLM이 갈린 12건 가운데 3건</span>
  </div>
  <div class="two">
   <section class="card" style="--c:#1e4be8">
-   <div class="band">뽑히는 추출 항목</div>
+   <div class="band">규칙 후보와 1차 LLM 판정 · 근거 검사</div>
    <div class="cw"><table>
-    <colgroup><col style="width:70px"><col></colgroup>
-    <thead><tr><th>유형</th><th>뽑히는 값</th></tr></thead>
+    <colgroup><col style="width:118px"><col></colgroup>
+    <thead><tr><th>규칙 후보</th><th>1차 판정 · 인용 · 검사 결과</th></tr></thead>
     <tbody>
-     <tr><td><span class="tag" style="background:#d97706">C1</span></td><td>1919-04-01</td></tr>
-     <tr><td><span class="tag" style="background:#d97706">C4</span></td><td>오후 1시 · 같은 날 사건 순서</td></tr>
-     <tr><td><span class="tag" style="background:#158a45">D4</span></td><td>아우내 장터 (시위 발생 지점)</td></tr>
-     <tr><td><span class="tag" style="background:#64748b">I1</span></td><td>3,000 · 근사</td></tr>
-     <tr><td><span class="tag" style="background:#158a45">D1</span></td><td>군중이 모여든 출발 지역: 갈전면 · 목천면 · 북면 · 성남면 · 수신면 · 동면 · 진천군 (발생 장소와 구분)</td></tr>
+     <tr><td><span class="tag" style="background:#2563c7">인물</span> 정본 연결</td><td><b>석촌 石村</b> → 장소 · 인용 「경기도 광주(廣州) 석촌(石村)으로 피신 중 체포되었으나」 · 검사: 인명↔지명 변경 → <b>이상 항목</b></td></tr>
+     <tr><td><span class="tag" style="background:#158a45">장소</span></td><td><b>군기시 軍器寺</b> → 조직 · 인용 「군기시(軍器寺)의 차량 관리 업무를 수행하기도 하였다」 · 검사: 갈래 변경 → <b>이상 항목</b></td></tr>
+     <tr><td><span class="tag" style="background:#2563c7">인물</span> 정본 연결 · 한자 미확인</td><td><b>최우선</b> → 제외(우선순위를 뜻하는 일반 어휘) · 인용 「좌우 정치세력 모두에게 최우선 영입 대상이 되었다」 · 검사: 규칙과 갈림 → <b>이상 항목</b></td></tr>
+     <tr><td><span class="tag" style="background:#64748b">검사</span></td><td>인용 구절이 본문에 그대로 있는지, 고친 표기가 본문에 있는지, 갈래가 허용 범위인지를 규칙이 확인한다. 검사 통과·규칙 판정 일치 시 확정</td></tr>
     </tbody>
    </table></div>
   </section>
   <section class="card" style="--c:#c2590a">
-   <div class="band">구성한 사건 인스턴스 1건</div>
+   <div class="band">상위 모델 재판정과 확정</div>
    <div class="cw"><table>
     <colgroup><col style="width:120px"><col></colgroup>
     <tbody>
-     <tr><td class="k">유형</td><td>만세시위 (서술형 · 이름 없음)</td></tr>
-     <tr><td class="k">시점</td><td>1919-04-01 오후 1시</td></tr>
-     <tr><td class="k">발생 장소</td><td>아우내 장터</td></tr>
-     <tr><td class="k">참여자</td><td>유관순 · 유중권 · 이소제 · 유중무 · 조인원 (문단 내 다른 문장 근거)</td></tr>
-     <tr><td class="k">규모</td><td>약 3,000명 (수치 속성 · 인물 노드로 만들지 않음)</td></tr>
-     <tr><td class="k">근거</td><td>참여자마다 해당 서술 문장을 연결해 저장</td></tr>
+     <tr><td class="k">석촌</td><td>2차 장소 「행정구역 지명이므로 장소」 → 두 모델 일치 · <b>장소로 확정</b></td></tr>
+     <tr><td class="k">군기시</td><td>2차 조직 「조선시대 관청」 → 일치 · <b>조직으로 확정</b></td></tr>
+     <tr><td class="k">최우선</td><td>2차 제외 「인명이 아니라 일반 어휘」 → 일치 · <b>객체에서 뺌</b></td></tr>
+     <tr><td class="k">기록</td><td>후보마다 규칙 근거 · 두 모델의 판정과 이유 · 인용 구절을 실행 기록에 남김</td></tr>
+     <tr><td class="k">검수 표시</td><td>두 모델이 갈렸을 때만 붙인다 · 오세창 편 2건(서부 · 주주총회) · 검수 표시와 함께 결과에 포함</td></tr>
     </tbody>
    </table></div>
   </section>
  </div>
  <div class="foot">
-  <div class="big">이름 없는 사건도 <b>행위·시점·장소·참여자</b>가 있으면 사건 인스턴스가 된다</div>
-  <div class="fm">추출 항목 11개 + 사건 인스턴스 1건 · 유관순 본문</div>
+  <div class="big">규칙이 정본 동명 인물에 이은 석촌·최우선을 <b>LLM이 앞뒤 맥락으로 바로잡았다</b></div>
+  <div class="fm">이상 항목 12건 중 두 모델 일치 10건 · 검수 필요 2건 · 비용 $0.083 · 47초 · 오세창 본문 6,444자</div>
  </div>
 </div></div>
-<script>const SW=1600,SH=900;
+
+<script>
+const SW=1600,SH=900;
 function fit(){const st=document.getElementById('stage');
  const k=Math.min(innerWidth/SW,innerHeight/SH);
  st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
 fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
 if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);</script></body></html>
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+</script>
+</body></html>

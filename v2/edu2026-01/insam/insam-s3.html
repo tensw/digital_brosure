@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
-<title>이름 표기 정규화</title>
+<title>이름 표기 판정</title>
 <style>*{box-sizing:border-box;margin:0;padding:0}
 html{overflow-x:hidden}
 body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
@@ -40,33 +40,38 @@ td.res{font:600 11.5px ui-monospace,Menlo,monospace;color:#6b7488;letter-spacing
 .mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
 </style>
 </head><body>
+
 <div class="slide"><div id="stage"><div class="mappos-i0"><i>2</i>지도 2 · 정규화</div>
  <div class="kick">INDP · 3부 정규화 방법 · 02</div>
- <h1>인물 식별을 위한 <span class="ac">이름 표기 정규화</span></h1>
- <div class="h1s">한 편에 등장하는 사람과, 한 사람이 갖는 여러 이름 표기를 유형으로 나눈다.</div>
- <div class="meta">표본 <b>이상재·유관순</b><br>본문 직접 확인 · 2026-09-10</div>
+ <h1>인물 식별을 위한 <span class="ac">이름 표기 판정</span></h1>
+ <div class="h1s">한 편에 등장하는 사람과 한 사람이 갖는 여러 표기를 LLM이 앞뒤 맥락으로 판정한다. 규칙은 후보와 한자·정본 연결 근거를 준다.</div>
+ <div class="meta">새 엔진 실측 <b>26편</b><br>2026-09-27</div>
  <div class="body">
- <section class="sec" style="--c:#2563c7;flex:7.3">
+ <section class="sec" style="--c:#2563c7;flex:7.4">
  <div class="band"><span class="sym">A</span><h2>사람</h2><span class="cnt">6유형</span></div>
  <div class="tw"><table>
   <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
-  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
-  <tbody><tr><td class="code">A1</td><td class="ty">표제어 본인</td><td class="ex">주어가 생략된 채 “태어났다”, “임명되었다”로 이어짐</td><td>문장 주어가 없으면 표제어 본인으로 본다</td><td class="res">person · 표제어 ID 그대로</td></tr><tr><td class="code">A2</td><td class="ty">친족</td><td class="ex">아버지 이희택 · 어머니 밀양 박씨 · 숙부 유중무 · 사촌언니 유예도 · 자녀 승륜·승인·승간·승준</td><td>관계어를 함께 잡아 친족 유형으로 구분</td><td class="res">idic_kinship_type · 부·모·숙부·사촌·자녀</td></tr><tr><td class="code">A3</td><td class="ty">동지 · 관련인물</td><td class="ex">박정양 · 홍영식 · 유길준(한자 없음) · 이승만</td><td>표제어 사전과 대조. 해소되면 연결, 안 되면 표기만 보존</td><td class="res">idic_entity 또는 미해소 표기</td></tr><tr><td class="code">A4</td><td class="ty">외국인</td><td class="ex">앨리스 제이 햄몬드(Alice J. Hammond Sharp) · 한국이름 사애리시 · 별칭 사부인 · 클리블랜드</td><td>한 사람이 세 이름을 가짐. 로마자·한국이름·별칭을 이명으로 묶는다</td><td class="res">idic_entity_alias 3행</td></tr><tr><td class="code">A5</td><td class="ty">일제 관헌</td><td class="ex">주재소장 고야마 · 일본 공사 이노우에 가오루</td><td>일본 한자 표기를 함께 보존</td><td class="res">idic_entity · 표기 유형 일본</td></tr><tr><td class="code">A6</td><td class="ty">제3자 관계 부기</td><td class="ex">조인원(조병옥 부친) · 이색의 후손</td><td>괄호 안 설명이 다른 인물과의 관계. 관계도 함께 뽑는다</td><td class="res">idic_entity_relation · 부자 관계</td></tr></tbody>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>판정 규칙</th><th>결과 · 21편 실측</th></tr></thead>
+  <tbody><tr><td class="code">A1</td><td class="ty">표제어 본인</td><td class="ex">김구: 백범 · 창암 · 창수 · 원종 · 김두래 · 김창수</td><td>자·호·이명·가명을 본인으로 합친다</td><td class="res">합침 · 21편 79건</td></tr><tr><td class="code">A2</td><td class="ty">주변 인물</td><td class="ex">안태훈 · 성주식 · 콜린 매켄지 · 사전트</td><td>정본 미연결이어도 보존. 규칙이 놓친 인물은 LLM이 보탠다</td><td class="res">person · 새로 찾음 포함</td></tr><tr><td class="code">A3</td><td class="ty">인명과 지명</td><td class="ex">석촌(石村) · 한양(漢陽) · 소영자(小營子)</td><td>「~으로 피신」「~ 전투」면 장소, 「호는 ~」이면 인물. 갈래 변경은 상위 모델이 다시 본다</td><td class="res">4건 모두 바로잡음</td></tr><tr><td class="code">A4</td><td class="ty">외국인</td><td class="ex">햄몬드 → 앨리스 제이 햄몬드 · 영친왕 → 이은</td><td>로마자·한국 이름·칭호를 한 인물로 묶고 온전한 이름으로</td><td class="res">합침 · 표기 복원</td></tr><tr><td class="code">A5</td><td class="ty">괄호 속 인물</td><td class="ex">조인원(조병옥 부친) · 안훈(조경한)</td><td>괄호 설명 속 인물도 객체. 다른 후보의 표기로 고치자는 판정은 합침</td><td class="res">person · 합침</td></tr><tr><td class="code">A6</td><td class="ty">동명 일반 어휘</td><td class="ex">최우선 영입 대상 · 대구 서씨</td><td>정본 동명 인물에 이어진 일반 어휘는 제외. 본관 성씨는 속성</td><td class="res">excluded · attribute</td></tr></tbody>
  </table></div>
-</section><section class="sec" style="--c:#4f46e5;flex:6.3">
+</section><section class="sec" style="--c:#4f46e5;flex:6.0">
  <div class="band"><span class="sym">B</span><h2>이름 표기</h2><span class="cnt">5유형</span></div>
  <div class="tw"><table>
   <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
-  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
-  <tbody><tr><td class="code">B1</td><td class="ty">한자 병기</td><td class="ex">박정양(朴定陽) 있음 · 유길준 없음 · 이완용 없음</td><td>같은 본문에서도 섞인다. 없다고 다른 사람으로 보지 않는다</td><td class="res">한자 필드는 비우고 한글로 대조</td></tr><tr><td class="code">B2</td><td class="ty">본관</td><td class="ex">본관은 한산(韓山) · 본관은 고흥(高興)</td><td>성씨의 관향이다. 출생지가 아니다</td><td class="res">인물 속성 · 좌표 부여 안 함</td></tr><tr><td class="code">B3</td><td class="ty">자 · 호</td><td class="ex">자는 계호(季皓) · 호는 월남(月南)</td><td>이명으로 등재해 사적지·문헌의 다른 표기와 잇는다</td><td class="res">idic_entity_alias · 유형 자/호</td></tr><tr><td class="code">B4</td><td class="ty">이명 · 한자 다름</td><td class="ex">유관순(柳冠順), 표제어는 柳寬順</td><td>한글이 같고 한자가 다른 표기를 이명으로 묶는다</td><td class="res">idic_entity_alias · 유형 이표기</td></tr><tr><td class="code">B5</td><td class="ty">직함 붙은 표기</td><td class="ex">월남이상재선생 · 백야김좌진장군 (사적지명)</td><td>호 + 이름 + 직함이 붙어 있다. 분리해야 대조된다</td><td class="res">표기 분해 후 이명 대조</td></tr></tbody>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>판정 규칙</th><th>결과 · 21편 실측</th></tr></thead>
+  <tbody><tr><td class="code">B1</td><td class="ty">한자 병기</td><td class="ex">유관순(柳冠順) vs 柳寬順 · 曺/曹 이체자</td><td>한자가 다르면 다른 대상, 이체자는 규칙 사전으로 같게. 없으면 한글로</td><td class="res">규칙 층</td></tr><tr><td class="code">B2</td><td class="ty">잘린·붙은 표기</td><td class="ex">거류민단 → 재중국 거류민단 · 진남포 예수교회 에벗 → 에벗청년회</td><td>본문에 있는 온전한 표기로 고친다. 본문에 없으면 이상 항목</td><td class="res">rename · 21편 18건</td></tr><tr><td class="code">B3</td><td class="ty">정식 이름 유지</td><td class="ex">3·1운동(본문 만세운동) · 충청북도(본문 충북) · 조선총독부(본문 총독부)</td><td>정식 이름을 약칭으로 바꾸지 않는다. 첫 실행 19건을 규칙으로 막음</td><td class="res">keep</td></tr><tr><td class="code">B4</td><td class="ty">본관</td><td class="ex">본관은 안동 · 순흥 · 고흥</td><td>성씨의 관향. 장소 객체가 아니라 인물의 속성</td><td class="res">attribute</td></tr><tr><td class="code">B5</td><td class="ty">직함·존칭</td><td class="ex">고종 → 고종황제 · 방 신부 → 방</td><td>직함을 붙이거나 떼는 것은 표기 고침이 아니다</td><td class="res">keep</td></tr></tbody>
  </table></div>
 </section>
  </div>
 </div></div>
-<script>const SW=1600,SH=900;
+
+<script>
+const SW=1600,SH=900;
 function fit(){const st=document.getElementById('stage');
  const k=Math.min(innerWidth/SW,innerHeight/SH);
  st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
 fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
 if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);</script></body></html>
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+</script>
+</body></html>
