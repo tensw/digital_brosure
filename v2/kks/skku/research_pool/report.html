@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="ko" data-i815-paginated="true"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FWCI 상위 10~15% 구간 연구성과 분석 보고서 (THE 2027판)</title>
+<link rel="stylesheet" href="i815-doc-standard.css">
+<script src="i815-paginate.js" defer=""></script>
+<style>
+  /* 본 문서 전용 보강 — 표준 서식은 바꾸지 않는다 */
+  .kpirow{display:flex; gap:2.5mm; margin:3mm 0 4mm calc(var(--i815-indent)*2)}
+  .kpi{flex:1; border:1px solid var(--i815-rule); border-top:2.4px solid #2a78d6; padding:2.5mm 2mm; text-align:center}
+  .kpi .n{font-size:15pt; font-weight:700; color:#12325b; line-height:1.15}
+  .kpi .l{font-size:7.6pt; color:#52514e; margin-top:1mm; line-height:1.3}
+  .formula2{text-align:center; border:1px solid var(--i815-rule); background:#f6f8fb; padding:3mm 2mm; margin:2mm 0 3mm calc(var(--i815-indent)*2); font-size:11pt; line-height:1.9}
+  .formula2 small{display:block; margin-top:1.5mm; font-size:8.5pt; color:#52514e; line-height:1.5}
+  .fig{margin:2mm 0 1mm calc(var(--i815-indent)*2); padding:2mm 0}
+  .twocol{display:flex; gap:6mm; margin-left:calc(var(--i815-indent)*2)}
+  .twocol > div{flex:1; min-width:0}
+  .subcap{font-size:9pt; font-weight:700; margin:1mm 0 1.5mm; color:#12325b}
+  .doi{display:inline-block; margin-top:.4mm; font-size:8pt; color:#52514e; line-height:1.4}
+  .i815-body table td b{font-weight:700}
+  /* 별첨 표(250행)는 10pt·좁은 안여백으로 조판한다 */
+  .i815-body table.app{font-size:10pt; line-height:1.4}
+  .i815-body table.app td b{font-weight:600}
+  .i815-body table.app th,.i815-body table.app td{padding:1.5mm 1.8mm}
+  .i815-body table.app thead th{font-size:10pt}
+  .i815-body table.app td.nw{white-space:nowrap}
+  /* 쪽나눔 뒤 문서 전체 순서로 다시 매긴 항목 번호 — CSS 카운터는 쪽(.i815-body)마다 끊긴다 */
+  .i815-body .d1[data-n]::before,.i815-body .d2[data-n]::before,.i815-body .d3[data-n]::before{content:attr(data-n)}
+</style>
+</head>
+<body class="i815-doc">
+
+<div class="i815-bar i815-noprint">
+  <b>FWCI 상위 10~15% 구간 연구성과 분석 보고서 (THE 2027판)</b>
+  <span>인쇄 → PDF로 저장 · A4 · 여백 <b>기본값</b> · 배율 <b>100%</b> · 머리말/바닥글 끄기 · 배경 그래픽 켜기</span>
+  <button onclick="window.print()">PDF로 저장 / 인쇄</button>
+</div>
+
+<!-- ═══ 표지 ═══ -->
+<div class="sheet no-header no-footer">
+  <div class="i815-cover">
+    <div class="project">성균관대학교 학술정보관 연구성과 분석</div>
+    <div class="title">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</div>
+    <div class="subtitle">THE 2027판 기준 · 연도별 성균관대 주저자 최상위 예비군 250편 (2021~2025)</div>
+    <div class="date">2026.09</div>
+    <div class="spacer"></div>
+    <table class="docinfo">
+      <tbody><tr><th>관리번호</th><td>SKKU_LIB_FWCI_002</td></tr>
+      <tr><th>보존기간</th><td>영구</td></tr>
+      <tr><th>제출처</th><td>성균관대학교 학술정보관</td></tr>
+      
+      <tr><th>작성일</th><td>2026.09.28</td></tr>
+      <tr><th>검토자</th><td></td></tr>
+      <tr><th>검토일</th><td></td></tr>
+      <tr><th>승인자</th><td></td></tr>
+      <tr><th>승인일</th><td></td></tr>
+    </tbody></table>
+    <div class="logo"><img src="skku-logo.jpg" alt="성균관대학교"></div>
+    <div class="org">성균관대학교 학술정보관 제출</div>
+
+  </div>
+</div>
+
+<!-- ═══ 개정이력 ═══ -->
+<div class="sheet no-header no-footer">
+  <div class="i815-section-title">개 정 이 력</div>
+  <table class="i815-revision">
+    <thead><tr><th style="width:11%">버전</th><th style="width:16%">작성일</th><th>변경내용</th><th style="width:15%">작성</th><th style="width:12%">검토</th><th style="width:11%">비고</th></tr></thead>
+    <tbody>
+      <tr><td>1.0</td><td>2026.09.28</td><td class="change">최초작성. THE 2027판 전수조사 데이터 분석서(2026.09.28) 기준 250편 수록 (SciVal 2026.09.20 · Scopus 2026.09.28 스냅샷)</td><td></td><td></td><td></td></tr>
+      <tr><td>&nbsp;</td><td></td><td class="change"></td><td></td><td></td><td></td></tr>
+      <tr><td>&nbsp;</td><td></td><td class="change"></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:9pt; margin-top:4mm; color:var(--i815-ink-sub)">변경내용에는 변경이 발생한 위치(장·절)와 변경 내용을 함께 기술한다.</p>
+</div>
+
+<!-- ═══ 목차 ═══ -->
+<div class="sheet no-header no-footer">
+  <div class="i815-section-title">목 차</div>
+  <nav class="i815-toc"><ul>
+<li class="lv1"><a data-toc="1. 조사 개요"><span>1. 조사 개요</span><span class="dots"></span><span class="pg">1</span></a></li>
+<li class="lv2"><a data-toc="가. 조사 목적과 대상"><span>가. 조사 목적과 대상</span><span class="dots"></span><span class="pg">1</span></a></li>
+<li class="lv2"><a data-toc="나. 조사 절차"><span>나. 조사 절차</span><span class="dots"></span><span class="pg">1</span></a></li>
+<li class="lv2"><a data-toc="다. 상위 10% 경계와 구간의 정의"><span>다. 상위 10% 경계와 구간의 정의</span><span class="dots"></span><span class="pg">2</span></a></li>
+<li class="lv2"><a data-toc="라. 상위 10% 도달 필요 피인용 산출식"><span>라. 상위 10% 도달 필요 피인용 산출식</span><span class="dots"></span><span class="pg">3</span></a></li>
+<li class="lv2"><a data-toc="마. 기준 데이터"><span>마. 기준 데이터</span><span class="dots"></span><span class="pg">3</span></a></li>
+<li class="lv1"><a data-toc="2. 조사 결과 요약"><span>2. 조사 결과 요약</span><span class="dots"></span><span class="pg">4</span></a></li>
+<li class="lv2"><a data-toc="가. 핵심 지표"><span>가. 핵심 지표</span><span class="dots"></span><span class="pg">4</span></a></li>
+<li class="lv2"><a data-toc="나. 연도별 추가 필요 피인용 분포"><span>나. 연도별 추가 필요 피인용 분포</span><span class="dots"></span><span class="pg">4</span></a></li>
+<li class="lv2"><a data-toc="다. 후보군 대비 수록 현황"><span>다. 후보군 대비 수록 현황</span><span class="dots"></span><span class="pg">5</span></a></li>
+<li class="lv2"><a data-toc="라. 주저자 역할 구성과 피인용 추이"><span>라. 주저자 역할 구성과 피인용 추이</span><span class="dots"></span><span class="pg">5</span></a></li>
+<li class="lv2"><a data-toc="마. 단과대학·기관 분포"><span>마. 단과대학·기관 분포</span><span class="dots"></span><span class="pg">6</span></a></li>
+<li class="lv1"><a data-toc="3. 연도별 분석"><span>3. 연도별 분석</span><span class="dots"></span><span class="pg">6</span></a></li>
+<li class="lv2"><a data-toc="가. 2021년"><span>가. 2021년</span><span class="dots"></span><span class="pg">6</span></a></li>
+<li class="lv2"><a data-toc="나. 2022년"><span>나. 2022년</span><span class="dots"></span><span class="pg">7</span></a></li>
+<li class="lv2"><a data-toc="다. 2023년"><span>다. 2023년</span><span class="dots"></span><span class="pg">7</span></a></li>
+<li class="lv2"><a data-toc="라. 2024년"><span>라. 2024년</span><span class="dots"></span><span class="pg">7</span></a></li>
+<li class="lv2"><a data-toc="마. 2025년"><span>마. 2025년</span><span class="dots"></span><span class="pg">8</span></a></li>
+<li class="lv1"><a data-toc="4. 활용 방안"><span>4. 활용 방안</span><span class="dots"></span><span class="pg">8</span></a></li>
+<li class="lv1"><a data-toc="5. 해석 시 유의사항"><span>5. 해석 시 유의사항</span><span class="dots"></span><span class="pg">9</span></a></li>
+<li class="lv1"><a data-toc="별첨 1. 2021년 성균관대 주저자 최상위 50편"><span>별첨 1. 2021년 성균관대 주저자 최상위 50편</span><span class="dots"></span><span class="pg">9</span></a></li>
+<li class="lv1"><a data-toc="별첨 2. 2022년 성균관대 주저자 최상위 50편"><span>별첨 2. 2022년 성균관대 주저자 최상위 50편</span><span class="dots"></span><span class="pg">17</span></a></li>
+<li class="lv1"><a data-toc="별첨 3. 2023년 성균관대 주저자 최상위 50편"><span>별첨 3. 2023년 성균관대 주저자 최상위 50편</span><span class="dots"></span><span class="pg">24</span></a></li>
+<li class="lv1"><a data-toc="별첨 4. 2024년 성균관대 주저자 최상위 50편"><span>별첨 4. 2024년 성균관대 주저자 최상위 50편</span><span class="dots"></span><span class="pg">31</span></a></li>
+<li class="lv1"><a data-toc="별첨 5. 2025년 성균관대 주저자 최상위 50편"><span>별첨 5. 2025년 성균관대 주저자 최상위 50편</span><span class="dots"></span><span class="pg">39</span></a></li>
+  </ul></nav>
+</div>
+
+<!-- ═══ 본문 · 별첨 ═══ -->
+<div class="i815-pages"><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="d1" data-n="1. ">조사 개요</p><p class="d2" data-n="가. ">조사 목적과 대상</p><p class="t2">본 보고서는 THE 세계대학평가(Times Higher Education World University Rankings) 2027판이 산정하는 성균관대학교 논문 가운데, 세계 상위 10%에는 아직 들지 못했지만 바로 아래 구간(상위 10~15%)에 있어 소수의 추가 인용만으로 최상위 10%에 진입할 수 있는, 성균관대학교 연구자가 주도한 논문을 연도별로 추려낸 자료이다. THE 는 「세계 상위 10% 피인용 논문 비율」을 연구의 질 지표로 쓰므로, 이 구간은 최상위 논문의 다음 단계 후보군(상비 예비군)에 해당한다. 분야가중인용지수(Field-Weighted Citation Impact : FWCI)를 기준으로 하며, FWCI 1.0은 세계 평균을 뜻한다.</p><p class="t2">조사 대상은 THE 2027판 산정 창(2021~2025년 출판)에 드는 성균관대학교 및 하위 소속 기관(부속병원 포함) 논문 <b>33,751편</b>이며, 이 가운데 성균관대 연구자가 주저자(제1·공동제1·교신) 자리에 있는 <b>24,068편(71.3%)</b>이 선별 대상이다. 원천은 「THE 2027판 전수조사 — 성균관대 주저자 논문 한정 데이터 분석서」(2026.09.28)이다.</p><p class="d2" data-n="나. ">조사 절차</p><p class="t2">다음 여섯 단계로 조사하였다.</p><p class="tbl-caption">[표 1] 조사 절차</p><table>
+<colgroup><col style="width:8%"><col style="width:22%"><col></colgroup>
+<thead><tr><th>단계</th><th>구분</th><th>내용</th></tr></thead>
+<tbody>
+<tr><td class="c">1</td><td>모집단 설정</td><td>THE 2027판 산정 창(2021~2025년 출판) 안에서 성균관대학교와 하위 소속 기관(삼성서울병원·강북삼성병원 등 부속병원 포함)이 쓴 논문 <b>33,751편</b>을 모집단으로 하였다. 이 가운데 FWCI 값이 있는 논문은 33,748편이다.</td></tr>
+<tr><td class="c">2</td><td>구간 절단</td><td>SciVal 피인용 백분위(세계·분야가중, 작을수록 상위)가 11~15인 논문만 남겼다. THE 심사 기준인 세계 상위 10%(백분위 1~10)에는 못 미치지만 바로 아래에 있는 <b>상위 10~15% 구간</b>으로, 모집단에서 <b>2,318편</b>이다.</td></tr>
+<tr><td class="c">3</td><td>주저자 조건</td><td>이 구간에서 다시 성균관대 소속 연구자가 주저자(제1·공동제1·교신) 자리에 있는 논문만 남겼다. 단순 참여가 아니라 성균관대 연구자가 주도한 논문을 보기 위함이며, <b>1,618편</b>이 조건을 충족한다.</td></tr>
+<tr><td class="c">4</td><td>연도별 선정</td><td>출판연도(2021~2025)별로 나누어 각 연도에서 FWCI가 높은 순으로 50편씩(동일 DOI 중복은 1건으로 병합) 선정하여 총 <b>250편</b>을 수록하였다.</td></tr>
+
+
+</tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table><colgroup><col style="width:8%"><col style="width:22%"><col></colgroup><thead><tr><th>단계</th><th>구분</th><th>내용</th></tr></thead><tbody><tr><td class="c">5</td><td>필요 피인용 산출</td><td>각 논문의 현재 피인용(Scopus)과 FWCI로부터 기대 피인용을 역산하여, 연도별 상위 10% 경계 FWCI에 도달하는 데 필요한 추가 피인용을 산출하였다.</td></tr><tr><td class="c">6</td><td>결과 정리</td><td>각 논문의 FWCI·주저자·역할·현재 피인용·추가 필요 피인용을 연도별 표로 배열하였다.</td></tr></tbody></table><p class="d2" data-n="다. ">상위 10% 경계와 구간의 정의</p><p class="t2">SciVal 피인용 백분위는 같은 분야·연도·문헌유형의 세계 논문 안에서 매긴 순위이므로, 백분위 10 이하가 곧 THE 가 세는 「세계 상위 10% 피인용 논문」이다. 이번 스냅샷에서는 출판연도별로 백분위와 FWCI 가 겹침 없이 대응하여, 상위 10%에 든 논문의 최소 FWCI 를 그 연도의 <b>상위 10% 진입 경계</b>로 삼았다. 연도별 경계와 구간의 FWCI 범위는 다음과 같다.</p><p class="tbl-caption">[표 2] 연도별 상위 10% 경계 FWCI 와 상위 10~15% 구간</p><table><colgroup><col style="width:12%"><col style="width:18%"><col style="width:22%"><col style="width:16%"><col style="width:16%"><col></colgroup>
+<thead><tr><th>출판연도</th><th>상위 10% 경계 FWCI</th><th>구간 FWCI 범위</th><th>구간 논문(전체)</th><th>구간 논문(주저자)</th><th>주저자 상위 10% 논문</th></tr></thead><tbody>
+<tr><td class="c">2021</td><td class="c"><b>2.29</b></td><td class="c">1.72 ~ 2.28</td><td class="r">378편</td><td class="r">259편</td><td class="r">499편</td></tr>
+<tr><td class="c">2022</td><td class="c"><b>2.30</b></td><td class="c">1.73 ~ 2.29</td><td class="r">440편</td><td class="r">295편</td><td class="r">510편</td></tr>
+<tr><td class="c">2023</td><td class="c"><b>2.30</b></td><td class="c">1.73 ~ 2.29</td><td class="r">481편</td><td class="r">333편</td><td class="r">628편</td></tr>
+<tr><td class="c">2024</td><td class="c"><b>2.35</b></td><td class="c">1.78 ~ 2.34</td><td class="r">485편</td><td class="r">349편</td><td class="r">641편</td></tr>
+<tr><td class="c">2025</td><td class="c"><b>2.52</b></td><td class="c">1.86 ~ 2.51</td><td class="r">537편</td><td class="r">382편</td><td class="r">794편</td></tr>
+<tr><td class="c">합계</td><td class="c">—</td><td class="c">—</td><td class="r">2,318편</td><td class="r">1,618편</td><td class="r">3,072편</td></tr>
+</tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><div class="fig"><svg viewBox="0 0 640 210" width="100%" role="img" aria-label="연도별 상위 10~15% 구간 FWCI 범위와 상위 10% 경계">
+<text x="52" y="12" font-size="11" fill="#898781">막대 = 상위 10~15% 구간의 FWCI 범위 · 진한 눈금 = 상위 10% 진입 경계 FWCI</text>
+<line x1="52.0" y1="24" x2="52.0" y2="188" stroke="#e1e0d9"></line><text x="52.0" y="202" font-size="10" fill="#898781" text-anchor="middle">1.6</text>
+<line x1="165.6" y1="24" x2="165.6" y2="188" stroke="#e1e0d9"></line><text x="165.6" y="202" font-size="10" fill="#898781" text-anchor="middle">1.8</text>
+<line x1="279.2" y1="24" x2="279.2" y2="188" stroke="#e1e0d9"></line><text x="279.2" y="202" font-size="10" fill="#898781" text-anchor="middle">2.0</text>
+<line x1="392.8" y1="24" x2="392.8" y2="188" stroke="#e1e0d9"></line><text x="392.8" y="202" font-size="10" fill="#898781" text-anchor="middle">2.2</text>
+<line x1="506.4" y1="24" x2="506.4" y2="188" stroke="#e1e0d9"></line><text x="506.4" y="202" font-size="10" fill="#898781" text-anchor="middle">2.4</text>
+<line x1="620.0" y1="24" x2="620.0" y2="188" stroke="#e1e0d9"></line><text x="620.0" y="202" font-size="10" fill="#898781" text-anchor="middle">2.6</text>
+<text x="44" y="38.4" font-size="12" fill="#0b0b0b" text-anchor="end">2021</text><rect x="120.2" y="24" width="318.1" height="20" rx="3" fill="#9ec5f4"></rect><rect x="442.4" y="21" width="3" height="26" fill="#184f95"></rect><text x="114.2" y="38.4" font-size="10.5" fill="#52514e" text-anchor="end">1.72</text><text x="450.9" y="38.4" font-size="11" font-weight="600" fill="#0b0b0b">경계 2.29</text>
+<text x="44" y="70.4" font-size="12" fill="#0b0b0b" text-anchor="end">2022</text><rect x="125.8" y="56" width="318.1" height="20" rx="3" fill="#9ec5f4"></rect><rect x="448.1" y="53" width="3" height="26" fill="#184f95"></rect><text x="119.8" y="70.4" font-size="10.5" fill="#52514e" text-anchor="end">1.73</text><text x="456.6" y="70.4" font-size="11" font-weight="600" fill="#0b0b0b">경계 2.30</text>
+<text x="44" y="102.4" font-size="12" fill="#0b0b0b" text-anchor="end">2023</text><rect x="125.8" y="88" width="318.1" height="20" rx="3" fill="#9ec5f4"></rect><rect x="448.1" y="85" width="3" height="26" fill="#184f95"></rect><text x="119.8" y="102.4" font-size="10.5" fill="#52514e" text-anchor="end">1.73</text><text x="456.6" y="102.4" font-size="11" font-weight="600" fill="#0b0b0b">경계 2.30</text>
+<text x="44" y="134.4" font-size="12" fill="#0b0b0b" text-anchor="end">2024</text><rect x="154.2" y="120" width="318.1" height="20" rx="3" fill="#9ec5f4"></rect><rect x="476.5" y="117" width="3" height="26" fill="#184f95"></rect><text x="148.2" y="134.4" font-size="10.5" fill="#52514e" text-anchor="end">1.78</text><text x="485.0" y="134.4" font-size="11" font-weight="600" fill="#0b0b0b">경계 2.35</text>
+<text x="44" y="166.4" font-size="12" fill="#0b0b0b" text-anchor="end">2025</text><rect x="199.7" y="152" width="369.2" height="20" rx="3" fill="#9ec5f4"></rect><rect x="573.1" y="149" width="3" height="26" fill="#184f95"></rect><text x="193.7" y="166.4" font-size="10.5" fill="#52514e" text-anchor="end">1.86</text><text x="581.6" y="166.4" font-size="11" font-weight="600" fill="#0b0b0b">경계 2.52</text>
+</svg></div><p class="fig-caption">[그림 1] 연도별 상위 10~15% 구간의 FWCI 범위와 상위 10% 진입 경계</p><p class="t2">경계 FWCI 는 최근 연도일수록 높다(2021년 2.29 → 2025년 2.52). 출판 후 기간이 짧을수록 세계 인용 분포가 소수 논문에 치우쳐 있어 같은 상위 10%라도 세계 평균 대비 더 높은 배율이 요구되는 것으로 해석된다(추정). 참고로 성균관대 논문 내부 분포에서 FWCI 90백분위를 잡는 방식(전체 3.16, 주저자 2.75)은 THE 기준인 세계 분야가중 상위 10%와 뜻이 달라 쓰지 않았다.</p><p class="d2" data-n="라. ">상위 10% 도달 필요 피인용 산출식</p><p class="t2">FWCI는 실제 피인용을 분야·연도·문헌유형 평균으로 나눈 값이다. 이 관계를 뒤집어 각 논문의 기대 피인용을 <b>현재 피인용 ÷ 현재 FWCI</b>로 역산하고, 목표 FWCI(그 연도의 상위 10% 경계)에 도달하는 데 필요한 추가 피인용을 다음과 같이 구하였다.</p><div class="formula2">총 피인용(목표) = 목표 FWCI × ( 현재 피인용 ÷ 현재 FWCI )<br>추가 필요 피인용 = ⌈ 현재 피인용 × ( 목표 FWCI ÷ 현재 FWCI − 1 ) ⌉<small>소수점은 올림 처리한다. 목표 FWCI = 2.29(2021) · 2.30(2022) · 2.30(2023) · 2.35(2024) · 2.52(2025). 현재 피인용이 0인 논문은 산출할 수 없다.</small></div><p class="d2" data-n="마. ">기준 데이터</p><p class="b1">FWCI·피인용 백분위·상위 10% 판정 : SciVal 2026.09.20 스냅샷</p><p class="b1">피인용 : Scopus 피인용 수(SCP_TC, COMPLETE 보기) 2026.09.28 스냅샷</p><p class="b1">판 구성 : THE 2027판 전수조사(시나리오 B·부속병원 포함, 2026.05 스냅샷 기준) — 2021~2025년 출판 33,751편</p><p class="b1">주저자 판정 : Biblo-RIMS 원문 분석 결과(정답지)를 우선 적용하고, 원문이 없는 논문은 메타데이터 규칙(정답지 대비 96~97% 일치)으로 판정. 수록 250편 중 원문 분석 184편, 메타데이터 규칙 64편, Scopus 교신 조회 2편</p><p class="b1">산출 시스템 : Biblo-RIMS 연구실적 관리 시스템 · THE 2027판 전수조사 데이터 분석서(2026.09.28)</p></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="d1" data-n="2. ">조사 결과 요약</p><p class="d2" data-n="가. ">핵심 지표</p><div class="kpirow"><div class="kpi"><div class="n">24,068</div><div class="l">2027판 성대 주저자 논문</div></div><div class="kpi"><div class="n">3,072</div><div class="l">이미 상위 10% (주저자)</div></div><div class="kpi"><div class="n">1,618</div><div class="l">상위 10~15% 후보군 (주저자)</div></div><div class="kpi"><div class="n">250</div><div class="l">수록 논문 (연도별 50편)</div></div><div class="kpi"><div class="n">178</div><div class="l">추가 1편으로 진입 가능</div></div></div><p class="t2">수록 250편 가운데 <b>178편(71.2%)</b>이 인용 1편만 더 받으면 상위 10%에 진입한다. 2편까지 넓히면 227편으로 91%에 이르고, 250편이 모두 경계에 도달하는 데 필요한 추가 피인용은 합계 368편이다. 수록되지 않은 후보군까지 넓혀 보면 후보 1,618편 중 307편이 1편, 604편이 2편 이내로 경계에 닿는다. 성균관대 주저자 논문의 상위 10% 비율은 현재 12.76%(3,072편)이며, 수록 250편이 모두 진입하면 13.80%가 된다.</p><p class="d2" data-n="나. ">연도별 추가 필요 피인용 분포</p><div class="fig"><svg viewBox="0 0 640 222" width="100%" role="img" aria-label="연도별 필요 추가 피인용 편수 분포">
+<text x="52" y="12" font-size="11" fill="#898781">각 연도 수록 50편의 구성 · 숫자는 논문 편수</text>
+<text x="44" y="42.32" font-size="12" fill="#0b0b0b" text-anchor="end">2021</text>
+<rect x="52.0" y="26" width="239.1" height="24" rx="3" fill="#9ec5f4"></rect>
+<text x="171.5" y="42.32" font-size="11.5" font-weight="600" fill="#0b0b0b" text-anchor="middle">21</text>
+<rect x="293.1" y="26" width="135.8" height="24" rx="3" fill="#5598e7"></rect>
+<text x="361.0" y="42.32" font-size="11.5" font-weight="600" fill="#0b0b0b" text-anchor="middle">12</text>
+<rect x="430.8" y="26" width="89.8" height="24" rx="3" fill="#2a78d6"></rect>
+<text x="475.8" y="42.32" font-size="11.5" font-weight="600" fill="#fff" text-anchor="middle">8</text>
+<rect x="522.7" y="26" width="89.8" height="24" rx="3" fill="#184f95"></rect>
+<text x="567.6" y="42.32" font-size="11.5" font-weight="600" fill="#fff" text-anchor="middle">8</text>
+<rect x="614.5" y="26" width="9.5" height="24" rx="3" fill="#0d366b"></rect>
+<text x="44" y="78.32" font-size="12" fill="#0b0b0b" text-anchor="end">2022</text>
+<rect x="52.0" y="62" width="250.6" height="24" rx="3" fill="#9ec5f4"></rect>
+<text x="177.3" y="78.32" font-size="11.5" font-weight="600" fill="#0b0b0b" text-anchor="middle">22</text>
+<rect x="304.6" y="62" width="250.6" height="24" rx="3" fill="#5598e7"></rect>
+<text x="429.8" y="78.32" font-size="11.5" font-weight="600" fill="#0b0b0b" text-anchor="middle">22</text>
+<rect x="557.1" y="62" width="43.9" height="24" rx="3" fill="#2a78d6"></rect>
+<text x="579.1" y="78.32" font-size="11.5" font-weight="600" fill="#fff" text-anchor="middle">4</text>
+<rect x="603.0" y="62" width="21.0" height="24" rx="3" fill="#0d366b"></rect>
+<text x="44" y="114.32" font-size="12" fill="#0b0b0b" text-anchor="end">2023</text>
+<rect x="52.0" y="98" width="422.8" height="24" rx="3" fill="#9ec5f4"></rect>
+<text x="263.4" y="114.32" font-size="11.5" font-weight="600" fill="#0b0b0b" text-anchor="middle">37</text>
+<rect x="476.8" y="98" width="147.2" height="24" rx="3" fill="#5598e7"></rect>
+<text x="550.4" y="114.32" font-size="11.5" font-weight="600" fill="#0b0b0b" text-anchor="middle">13</text>
+<text x="44" y="150.32" font-size="12" fill="#0b0b0b" text-anchor="end">2024</text>
+<rect x="52.0" y="134" width="549.0" height="24" rx="3" fill="#9ec5f4"></rect>
+<text x="326.5" y="150.32" font-size="11.5" font-weight="600" fill="#0b0b0b" text-anchor="middle">48</text>
+<rect x="603.0" y="134" width="21.0" height="24" rx="3" fill="#5598e7"></rect>
+<text x="44" y="186.32" font-size="12" fill="#0b0b0b" text-anchor="end">2025</text>
+<rect x="52.0" y="170" width="572.0" height="24" rx="3" fill="#9ec5f4"></rect>
+<text x="338.0" y="186.32" font-size="11.5" font-weight="600" fill="#0b0b0b" text-anchor="middle">50</text>
+<rect x="52" y="210" width="9" height="9" rx="2" fill="#9ec5f4"></rect><text x="65" y="218" font-size="10.5" fill="#52514e">1편</text>
+<rect x="94" y="210" width="9" height="9" rx="2" fill="#5598e7"></rect><text x="107" y="218" font-size="10.5" fill="#52514e">2편</text>
+<rect x="136" y="210" width="9" height="9" rx="2" fill="#2a78d6"></rect><text x="149" y="218" font-size="10.5" fill="#52514e">3편</text>
+<rect x="178" y="210" width="9" height="9" rx="2" fill="#184f95"></rect><text x="191" y="218" font-size="10.5" fill="#52514e">4편</text>
+<rect x="220" y="210" width="9" height="9" rx="2" fill="#0d366b"></rect><text x="233" y="218" font-size="10.5" fill="#52514e">5편 이상</text>
+</svg></div><p class="fig-caption">[그림 2] 연도별 수록 50편의 추가 필요 피인용 편수 구성</p><p class="t2">출판 시점이 최근일수록 경계까지의 거리가 짧아진다. 2021년은 추가 1편으로 진입하는 논문이 21편에 그치고 3편 이상이 필요한 논문이 17편인 반면, 2024년은 50편 중 48편, 2025년은 50편이 1편이면 경계에 닿는다. 오래된 논문일수록 실제 피인용과 기대 피인용이 모두 커서 같은 FWCI 차이를 메우는 데 더 많은 인용이 들기 때문이다.</p></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="d2" data-n="다. ">후보군 대비 수록 현황</p><div class="fig"><svg viewBox="0 0 640 190" width="100%" role="img" aria-label="연도별 조건 충족 후보 편수와 수록 50편">
+<line x1="46" y1="150.0" x2="620" y2="150.0" stroke="#e1e0d9" stroke-width="1"></line><text x="38" y="154.0" font-size="10" fill="#898781" text-anchor="end">0</text>
+<line x1="46" y1="117.5" x2="620" y2="117.5" stroke="#e1e0d9" stroke-width="1"></line><text x="38" y="121.5" font-size="10" fill="#898781" text-anchor="end">100</text>
+<line x1="46" y1="85.0" x2="620" y2="85.0" stroke="#e1e0d9" stroke-width="1"></line><text x="38" y="89.0" font-size="10" fill="#898781" text-anchor="end">200</text>
+<line x1="46" y1="52.5" x2="620" y2="52.5" stroke="#e1e0d9" stroke-width="1"></line><text x="38" y="56.5" font-size="10" fill="#898781" text-anchor="end">300</text>
+<line x1="46" y1="20.0" x2="620" y2="20.0" stroke="#e1e0d9" stroke-width="1"></line><text x="38" y="24.0" font-size="10" fill="#898781" text-anchor="end">400</text>
+<rect x="74.4" y="65.8" width="58" height="84.2" rx="4" fill="#9ec5f4"></rect><rect x="74.4" y="133.8" width="58" height="16.2" rx="4" fill="#2a78d6"></rect><text x="103.4" y="59.8" font-size="11.5" font-weight="600" fill="#0b0b0b" text-anchor="middle">259</text><text x="103.4" y="165.0" font-size="11.5" fill="#0b0b0b" text-anchor="middle">2021</text><text x="103.4" y="179.0" font-size="10" fill="#898781" text-anchor="middle">수록률 19%</text>
+<rect x="189.2" y="54.1" width="58" height="95.9" rx="4" fill="#9ec5f4"></rect><rect x="189.2" y="133.8" width="58" height="16.2" rx="4" fill="#2a78d6"></rect><text x="218.2" y="48.1" font-size="11.5" font-weight="600" fill="#0b0b0b" text-anchor="middle">295</text><text x="218.2" y="165.0" font-size="11.5" fill="#0b0b0b" text-anchor="middle">2022</text><text x="218.2" y="179.0" font-size="10" fill="#898781" text-anchor="middle">수록률 17%</text>
+<rect x="304.0" y="41.8" width="58" height="108.2" rx="4" fill="#9ec5f4"></rect><rect x="304.0" y="133.8" width="58" height="16.2" rx="4" fill="#2a78d6"></rect><text x="333.0" y="35.8" font-size="11.5" font-weight="600" fill="#0b0b0b" text-anchor="middle">333</text><text x="333.0" y="165.0" font-size="11.5" fill="#0b0b0b" text-anchor="middle">2023</text><text x="333.0" y="179.0" font-size="10" fill="#898781" text-anchor="middle">수록률 15%</text>
+<rect x="418.8" y="36.6" width="58" height="113.4" rx="4" fill="#9ec5f4"></rect><rect x="418.8" y="133.8" width="58" height="16.2" rx="4" fill="#2a78d6"></rect><text x="447.8" y="30.6" font-size="11.5" font-weight="600" fill="#0b0b0b" text-anchor="middle">349</text><text x="447.8" y="165.0" font-size="11.5" fill="#0b0b0b" text-anchor="middle">2024</text><text x="447.8" y="179.0" font-size="10" fill="#898781" text-anchor="middle">수록률 14%</text>
+<rect x="533.6" y="25.8" width="58" height="124.2" rx="4" fill="#9ec5f4"></rect><rect x="533.6" y="133.8" width="58" height="16.2" rx="4" fill="#2a78d6"></rect><text x="562.6" y="19.8" font-size="11.5" font-weight="600" fill="#0b0b0b" text-anchor="middle">382</text><text x="562.6" y="165.0" font-size="11.5" fill="#0b0b0b" text-anchor="middle">2025</text><text x="562.6" y="179.0" font-size="10" fill="#898781" text-anchor="middle">수록률 13%</text>
+<line x1="46" y1="150" x2="620" y2="150" stroke="#c3c2b7" stroke-width="1"></line><rect x="52" y="4" width="9" height="9" rx="2" fill="#9ec5f4"></rect><text x="65" y="12" font-size="10.5" fill="#52514e">조건 충족 후보</text><rect x="156" y="4" width="9" height="9" rx="2" fill="#2a78d6"></rect><text x="169" y="12" font-size="10.5" fill="#52514e">수록 50편</text></svg></div><p class="fig-caption">[그림 3] 연도별 조건 충족 후보 편수와 수록 50편</p><p class="t2">조사 조건을 만족하는 후보는 다섯 개 연도 모두 50편을 크게 넘어(259~382편), 수록 목록은 각 연도 후보군의 상위 13~19%에 해당한다. 후보군은 2021년 259편에서 2025년 382편으로 해마다 두터워지는데, 성균관대 주저자 논문 수 자체가 늘고(2021년 4,574편 → 2025년 5,173편) 상위 10% 논문 수도 같은 방향으로 늘고 있기 때문이다.</p><p class="d2" data-n="라. ">주저자 역할 구성과 피인용 추이</p><div class="twocol"><div><p class="subcap">주저자 역할 구성 (전체 250편)</p><svg viewBox="0 0 310 107" width="100%" role="img">
+<text x="76" y="23.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">제1·교신 겸직</text><rect x="84" y="8" width="182.0" height="22" rx="3" fill="#2a78d6"></rect><text x="273.0" y="23.4" font-size="11.5" font-weight="600" fill="#0b0b0b">169편</text>
+<text x="76" y="56.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">교신저자</text><rect x="84" y="41" width="64.6" height="22" rx="3" fill="#2a78d6"></rect><text x="155.6" y="56.4" font-size="11.5" font-weight="600" fill="#0b0b0b">60편</text>
+<text x="76" y="89.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">제1저자</text><rect x="84" y="74" width="22.6" height="22" rx="3" fill="#2a78d6"></rect><text x="113.6" y="89.4" font-size="11.5" font-weight="600" fill="#0b0b0b">21편</text>
+</svg></div><div><p class="subcap">연도별 현재 피인용 중앙값</p><svg viewBox="0 0 310 173" width="100%" role="img">
+<text x="66" y="23.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">2021</text><rect x="74" y="8" width="192.0" height="22" rx="3" fill="#2a78d6"></rect><text x="273.0" y="23.4" font-size="11.5" font-weight="600" fill="#0b0b0b">42회</text>
+<text x="66" y="56.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">2022</text><rect x="74" y="41" width="162.3" height="22" rx="3" fill="#2a78d6"></rect><text x="243.3" y="56.4" font-size="11.5" font-weight="600" fill="#0b0b0b">35.5회</text>
+<text x="66" y="89.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">2023</text><rect x="74" y="74" width="137.1" height="22" rx="3" fill="#2a78d6"></rect><text x="218.1" y="89.4" font-size="11.5" font-weight="600" fill="#0b0b0b">30회</text>
+<text x="66" y="122.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">2024</text><rect x="74" y="107" width="84.6" height="22" rx="3" fill="#2a78d6"></rect><text x="165.6" y="122.4" font-size="11.5" font-weight="600" fill="#0b0b0b">18.5회</text>
+<text x="66" y="155.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">2025</text><rect x="74" y="140" width="41.1" height="22" rx="3" fill="#2a78d6"></rect><text x="122.1" y="155.4" font-size="11.5" font-weight="600" fill="#0b0b0b">9회</text>
+</svg></div></div><p class="fig-caption">[그림 4] 주저자 역할 구성(좌)과 연도별 피인용 중앙값(우)</p><p class="t2">주저자 역할은 성균관대 연구자가 제1저자와 교신저자를 모두 맡은 제1·교신 겸직이 169편(68%)으로 가장 많고, 교신저자만 맡은 논문 60편, 제1저자(공동 제1저자 포함)만 맡은 논문 21편이 뒤를 잇는다. 제1저자 자리를 포함한 논문은 190편(76%)으로, 수록 논문 대부분이 성균관대 연구자의 직접 주도로 생산되었음을 보여준다. 피인용 중앙값은 출판 후 경과 기간에 따라 42회에서 9회까지 단계적으로 감소한다.</p></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="d2" data-n="마. ">단과대학·기관 분포</p><div class="fig" style="max-width:120mm"><svg viewBox="0 0 420 272" width="100%" role="img">
+<text x="110" y="23.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">의과대학</text><rect x="118" y="8" width="258.0" height="22" rx="3" fill="#2a78d6"></rect><text x="383.0" y="23.4" font-size="11.5" font-weight="600" fill="#0b0b0b">64편</text>
+<text x="110" y="56.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">대학 미상(rims 연결)</text><rect x="118" y="41" width="181.4" height="22" rx="3" fill="#2a78d6"></rect><text x="306.4" y="56.4" font-size="11.5" font-weight="600" fill="#0b0b0b">45편</text>
+<text x="110" y="89.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">공과대학</text><rect x="118" y="74" width="125.0" height="22" rx="3" fill="#2a78d6"></rect><text x="250.0" y="89.4" font-size="11.5" font-weight="600" fill="#0b0b0b">31편</text>
+<text x="110" y="122.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">자연과학대학</text><rect x="118" y="107" width="80.6" height="22" rx="3" fill="#2a78d6"></rect><text x="205.6" y="122.4" font-size="11.5" font-weight="600" fill="#0b0b0b">20편</text>
+<text x="110" y="155.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">일반대학원</text><rect x="118" y="140" width="72.6" height="22" rx="3" fill="#2a78d6"></rect><text x="197.6" y="155.4" font-size="11.5" font-weight="600" fill="#0b0b0b">18편</text>
+<text x="110" y="188.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">정보통신대학</text><rect x="118" y="173" width="48.4" height="22" rx="3" fill="#2a78d6"></rect><text x="173.4" y="188.4" font-size="11.5" font-weight="600" fill="#0b0b0b">12편</text>
+<text x="110" y="221.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">소프트웨어융합대학</text><rect x="118" y="206" width="36.3" height="22" rx="3" fill="#2a78d6"></rect><text x="161.3" y="221.4" font-size="11.5" font-weight="600" fill="#0b0b0b">9편</text>
+<text x="110" y="254.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">성균융합원</text><rect x="118" y="239" width="36.3" height="22" rx="3" fill="#2a78d6"></rect><text x="161.3" y="254.4" font-size="11.5" font-weight="600" fill="#0b0b0b">9편</text>
+</svg></div><p class="fig-caption">[그림 5] 수록 논문의 주저자 소속 단과대학·기관 상위 8개 (Biblo-RIMS 대표 소속 기준)</p><p class="t2">주저자 소속은 의과대학이 64편으로 가장 많고 공과대학 31편, 자연과학대학 20편, 일반대학원 18편, 정보통신대학 12편 순이다. 「대학 미상(rims 연결)」 45편은 Biblo-RIMS 에 연결됐으나 대표 단과대학 값이 비어 있는 논문으로, 홍보·연계 대상으로 삼을 때 소속 확인이 먼저 필요하다.</p><p class="d1" data-n="3. ">연도별 분석</p><p class="d2" data-n="가. ">2021년</p><table>
+<colgroup><col style="width:20%"><col style="width:22%"><col style="width:14%"><col style="width:14%"><col></colgroup>
+<thead><tr><th>조건 충족 후보</th><th>FWCI 범위 (중앙값)</th><th>경계 FWCI</th><th>피인용 중앙값</th><th>추가 필요 피인용 구성</th></tr></thead>
+<tbody><tr>
+<td class="c">259편 중 50편 수록</td>
+<td class="c">2.12 ~ 2.28 (2.21)</td>
+<td class="c">2.29</td>
+<td class="c">42회</td>
+<td class="c">1편 21 · 2편 12 · 3편 8 · 4편 8 · 5편 이상 1</td>
+</tr></tbody></table><p class="t2">THE 2027판 산정 창의 첫해로 피인용이 가장 오래 쌓여 중앙값이 42회로 다섯 연도 중 가장 높다. 그만큼 기대 피인용도 커서 3편 이상이 필요한 논문이 17편으로 가장 많고, 최대 11편이 필요한 논문도 있다. 경계까지의 거리가 가장 먼 연도이며, 2021년 출판 논문은 다음 판(2028판, 2022~2026년 창)부터 산정 창에서 빠지므로 인용 유도의 실익이 가장 짧은 연도이기도 하다. 상세 목록은 별첨 1에 수록하였다.</p></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="d2" data-n="나. ">2022년</p><table>
+<colgroup><col style="width:20%"><col style="width:22%"><col style="width:14%"><col style="width:14%"><col></colgroup>
+<thead><tr><th>조건 충족 후보</th><th>FWCI 범위 (중앙값)</th><th>경계 FWCI</th><th>피인용 중앙값</th><th>추가 필요 피인용 구성</th></tr></thead>
+<tbody><tr>
+<td class="c">295편 중 50편 수록</td>
+<td class="c">2.17 ~ 2.29 (2.22)</td>
+<td class="c">2.30</td>
+<td class="c">35.5회</td>
+<td class="c">1편 22 · 2편 22 · 3편 4 · 5편 이상 2</td>
+</tr></tbody></table><p class="t2">피인용 중앙값 35.5회로 2021년보다 낮아지면서 2편 이내로 경계에 닿는 논문이 44편(88%)에 이른다. 주저자 역할은 제1·교신 겸직이 34편으로 과반을 넘어, 성균관대 연구자가 연구를 직접 이끈 논문이 대부분이다. 이 연도부터 2025년까지는 2028판 창에도 남으므로 중기 관리 대상의 출발점이 된다. 상세 목록은 별첨 2에 수록하였다.</p><p class="d2" data-n="다. ">2023년</p><table>
+<colgroup><col style="width:20%"><col style="width:22%"><col style="width:14%"><col style="width:14%"><col></colgroup>
+<thead><tr><th>조건 충족 후보</th><th>FWCI 범위 (중앙값)</th><th>경계 FWCI</th><th>피인용 중앙값</th><th>추가 필요 피인용 구성</th></tr></thead>
+<tbody><tr>
+<td class="c">333편 중 50편 수록</td>
+<td class="c">2.20 ~ 2.29 (2.24)</td>
+<td class="c">2.30</td>
+<td class="c">30회</td>
+<td class="c">1편 37 · 2편 13</td>
+</tr></tbody></table><p class="t2">50편 전부가 2편 이내로 경계에 닿는다(1편 37편 · 2편 13편). 피인용 중앙값은 30회로 기대 피인용과 실제 피인용이 함께 줄어 경계까지의 거리가 짧다. 주저자 역할은 제1·교신 겸직 32편, 교신저자 15편이다. 상세 목록은 별첨 3에 수록하였다.</p><p class="d2" data-n="라. ">2024년</p><table>
+<colgroup><col style="width:20%"><col style="width:22%"><col style="width:14%"><col style="width:14%"><col></colgroup>
+<thead><tr><th>조건 충족 후보</th><th>FWCI 범위 (중앙값)</th><th>경계 FWCI</th><th>피인용 중앙값</th><th>추가 필요 피인용 구성</th></tr></thead>
+<tbody><tr>
+<td class="c">349편 중 50편 수록</td>
+<td class="c">2.25 ~ 2.34 (2.29)</td>
+<td class="c">2.35</td>
+<td class="c">18.5회</td>
+<td class="c">1편 48 · 2편 2</td>
+</tr></tbody></table><p class="t2">50편 중 48편이 추가 1편으로 경계에 도달한다. 피인용 중앙값은 18.5회이며, 제1·교신 겸직이 38편(76%)으로 다섯 연도 중 비중이 가장 높다. 단기간에 성과를 낼 수 있는 우선 대상이 가장 많은 연도이다. 상세 목록은 별첨 4에 수록하였다.</p></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="d2" data-n="마. ">2025년</p><table>
+<colgroup><col style="width:20%"><col style="width:22%"><col style="width:14%"><col style="width:14%"><col></colgroup>
+<thead><tr><th>조건 충족 후보</th><th>FWCI 범위 (중앙값)</th><th>경계 FWCI</th><th>피인용 중앙값</th><th>추가 필요 피인용 구성</th></tr></thead>
+<tbody><tr>
+<td class="c">382편 중 50편 수록</td>
+<td class="c">2.42 ~ 2.51 (2.47)</td>
+<td class="c">2.52</td>
+<td class="c">9회</td>
+<td class="c">1편 50</td>
+</tr></tbody></table><p class="t2">출판 후 경과 기간이 짧아 피인용 중앙값이 9회에 그치고, 50편 모두 1편이면 경계에 닿는 것으로 산출된다. 다만 상위 10% 경계 FWCI 가 2.52로 가장 높고 기대 피인용이 매우 작아, 산술상 1편은 실제로는 소수점 이하를 뜻하는 경우가 많으므로 해석에 주의가 필요하다. 학술대회 논문이 8편으로 다른 연도보다 많다. 상세 목록은 별첨 5에 수록하였다.</p><p class="d1" data-n="4. ">활용 방안</p><p class="t1">본 목록은 소수의 추가 인용만으로 THE 가 세는 세계 상위 10% 논문으로 끌어올릴 수 있는 우선 후보군이므로, 다음 네 가지 용도에 바로 활용할 수 있다.</p><p class="d2" data-n="가. ">THE 대응 관리 대상 논문 풀</p><p class="t2">상위 10% 논문 비율은 THE 연구의 질(Research Quality) 지표의 구성 요소이다. 수록 250편은 경계까지 남은 거리가 편수로 표시되어 있어 관리 대상 논문 풀로 삼아 반기마다 SciVal 스냅샷과 대조하며 진입 여부를 추적할 수 있다. 같은 기준으로 만든 대시보드에서 연도·역할·소속별로 걸러 볼 수 있다.</p><p class="d2" data-n="나. ">성과 홍보 대상 선정</p><p class="t2">추가 1편으로 경계에 닿는 논문을 우선 대상으로 삼아 학술정보관 누리집·소식지·연구자 프로필에 노출하면, 적은 홍보 자원으로 최상위 10% 논문 수를 늘릴 수 있다. 대상은 178편이며, 특히 2022~2025년 논문은 다음 판 산정 창에도 남아 효과가 이어진다.</p><p class="d2" data-n="다. ">후속 연구 연계</p><p class="t2">주저자 정보가 함께 제공되므로 해당 연구자의 후속 과제·리뷰 논문에서 자기 인용이 아닌 형태의 연계 인용이 발생할 여지를 확인할 수 있다. 제1저자 자리를 포함한 논문이 190편으로 다수여서 연구자 접촉 경로가 명확하다.</p><p class="d2" data-n="라. ">우수성과 선정 기초자료</p><p class="t2">교내 우수연구자 포상·연구비 배분 심사에서 최상위 10% 도달 가능성을 정량 지표로 제시할 수 있다. 각 논문의 경계까지 남은 거리가 편수로 표시되어 있어 심사 기준으로 바로 쓸 수 있다.</p></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="d1" data-n="5. ">해석 시 유의사항</p><p class="b1">FWCI 재계산은 SciVal이 수행하며, 본 보고서의 값은 피인용과 FWCI의 역산에 기반한 <b>근사 추정치</b>이다. 경계 FWCI 도 2026.09.20 스냅샷의 값이며 세계 인용이 쌓이면서 함께 움직이므로 실제 재계산 결과와 차이가 있을 수 있다.</p><p class="b1">피인용은 Scopus 2026.09.28 값이고 FWCI 는 SciVal 2026.09.20 값이라 기준일이 8일 다르다. FWCI 와 같은 시점의 피인용으로 역산하면 수록 250편 중 52편에서 필요 편수가 1편 적게 나오며, 이는 그 사이 새로 받은 인용만으로 이미 경계에 근접했을 가능성을 뜻한다. 1편으로 표기된 논문은 다음 SciVal 갱신에서 진입할 수 있다.</p><p class="b1">출판 후 경과 기간이 짧은 논문, 특히 2024~2025년 논문은 기대 피인용이 작아 산술상 1편으로 표기되더라도 실제로는 소수점 이하를 뜻한다. 1편만 더 인용되어도 경계에 도달한다는 의미로 읽어야 한다.</p><p class="b1">THE 2027판 산정 창은 2021~2025년이며, 2021년 출판 논문은 2028판 창(2022~2026년)에서 빠진다. 중기 관리 대상은 2022~2025년 논문이다.</p><p class="b1">주저자 한정 결과는 THE 지표값이 아니다. THE 는 저자 역할로 논문을 거르지 않으므로, 본 보고서의 편수·비율을 THE 점수나 순위 추정에 그대로 쓰면 안 된다. 성균관대가 주도한 논문의 관리 관점에서 읽는 보조 자료이다.</p><p class="b1">주저자 판정은 원문 분석 결과(정답지)를 우선 적용하였고, 원문이 없는 66편은 메타데이터 규칙(정답지 대비 96~97% 일치)으로 판정하였다. 규칙 판정 논문은 공동 제1저자를 절반쯤만 잡으므로 대외 활용 전 원문 확인을 권한다. 별첨의 「주저자」는 성균관대 소속으로 판정된 주저자만 Scopus 표기(성·이니셜)로 적은 것이며, 한글 성명은 Biblo-RIMS 와 대조가 필요하다.</p><p class="b1">현재 피인용이 0인 논문은 기대 피인용을 역산할 수 없어 <b>산출 불가</b>로 표기한다. 이번 수록 목록에는 0편이다. DOI 가 없는 논문은 2편이며 EID 로 식별한다.</p><p class="b1">단과대학·기관은 Biblo-RIMS 대표 소속(현재 소속) 기준이며, 논문 발표 당시의 소속과 다를 수 있다. 모든 수치는 스냅샷 값이며, 공식 통계로 인용할 때는 SciVal 원자료와 대조가 필요하다.</p><p class="i815-title">별첨 1. 2021년 성균관대 주저자 최상위 50편</p><p class="t1">FWCI 상위 10~15% 구간에서 2021년 출판 논문을 FWCI 높은 순(동률은 추가 필요 피인용 적은 순)으로 정렬한 목록이다. 「추가 필요」는 상위 10% 경계 FWCI 2.29 도달에 필요한 추가 피인용 편수이며, 「피인용」은 Scopus 기준 현재 피인용 횟수, 「역할」은 성균관대 연구자가 맡은 주저자 역할이다.</p></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><table class="app">
+<colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup>
+<thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead>
+<tbody>
+<tr><td class="c nw">1</td><td class="r nw">2.28</td><td>Lim S.; Suk J.W.</td><td class="c">제1·교신</td><td class="r nw">101</td><td class="r nw">1편</td><td><b>Measurements of the electrical conductivity of monolayer graphene flakes using conductive atomic force microscopy</b><br><span class="doi">Nanomaterials · 10.3390/nano11102575 · 공과대학</span></td></tr>
+<tr><td class="c nw">2</td><td class="r nw">2.28</td><td>Kim M.H.; Park S.</td><td class="c">제1·교신</td><td class="r nw">43</td><td class="r nw">1편</td><td><b>Organ-on-a-chip for studying gut-brain interaction mediated by extracellular vesicles in the gut microenvironment</b><br><span class="doi">International Journal of Molecular Sciences · 10.3390/ijms222413513 · 대학 미상(rims 연결)</span></td></tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<tr><td class="c nw">3</td><td class="r nw">2.28</td><td>Kothavale S.; Lee J.Y.</td><td class="c">제1·교신</td><td class="r nw">40</td><td class="r nw">1편</td><td><b>High efficiency and long lifetime orange-red thermally activated delayed fluorescent organic light emitting diodes by donor and acceptor engineering</b><br><span class="doi">Journal of Materials Chemistry C · 10.1039/d0tc04465b · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">4</td><td class="r nw">2.28</td><td>Kim M.Y.; Kim G.; Kim J.H.</td><td class="c">제1·교신</td><td class="r nw">29</td><td class="r nw">1편</td><td><b>The Association between Continuous Glucose Monitoring-Derived Metrics and Cardiovascular Autonomic Neuropathy in Outpatients with Type 2 Diabetes</b><br><span class="doi">Diabetes Technology and Therapeutics · 10.1089/dia.2020.0599 · 의과대학</span></td></tr><tr><td class="c nw">5</td><td class="r nw">2.27</td><td>Kim H.; Lee J.</td><td class="c">제1·교신</td><td class="r nw">53</td><td class="r nw">1편</td><td><b>Preparation and characterization of various chitin-glucan complexes derived from white button mushroom using a deep eutectic solvent-based ecofriendly method</b><br><span class="doi">International Journal of Biological Macromolecules · 10.1016/j.ijbiomac.2020.12.081 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">6</td><td class="r nw">2.27</td><td>Kim Y.</td><td class="c">교신</td><td class="r nw">43</td><td class="r nw">1편</td><td><b>Diversity climate on turnover intentions: a sequential mediating effect of personal diversity value and affective commitment</b><br><span class="doi">Personnel Review · 10.1108/pr-11-2019-0636 · 경영대학</span></td></tr><tr><td class="c nw">7</td><td class="r nw">2.27</td><td>Song J.U.</td><td class="c">공동제1</td><td class="r nw">37</td><td class="r nw">1편</td><td><b>Diagnostic accuracy of the Cepheid Xpert Xpress and the Abbott ID NOW assay for rapid detection of SARS-CoV-2: A systematic review and meta-analysis</b><br><span class="doi">Journal of Medical Virology · 10.1002/jmv.26994 · 대학 미상(rims 연결)</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">8</td><td class="r nw">2.26</td><td>Kim S.</td><td class="c">제1</td><td class="r nw">69</td><td class="r nw">1편</td><td><b>Artificial stimulus-response system capable of conscious response</b><br><span class="doi">Science Advances · 10.1126/sciadv.abe3996 · 성균나노과학기술원</span></td></tr><tr><td class="c nw">9</td><td class="r nw">2.26</td><td>Liu X.</td><td class="c">교신</td><td class="r nw">46</td><td class="r nw">1편</td><td><b>Engineering cationic sulfur-doped Co3O4 architectures with exposing high-reactive (112) facets for photoelectrocatalytic water purification</b><br><span class="doi">ACS Applied Materials and Interfaces · 10.1021/acsami.0c20353 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">10</td><td class="r nw">2.26</td><td>Jin S.M.; Lee S.N.; Lim Y.T.</td><td class="c">제1·교신</td><td class="r nw">45</td><td class="r nw">1편</td><td><b>Overcoming Chemoimmunotherapy-Induced Immunosuppression by Assemblable and Depot Forming Immune Modulating Nanosuspension</b><br><span class="doi">Advanced Science · 10.1002/advs.202102043 · 성균나노과학기술원</span></td></tr><tr><td class="c nw">11</td><td class="r nw">2.26</td><td>Yoo J.H.; Park S.W.; Kang M.; Kim G.; Kim J.H.</td><td class="c">제1·교신</td><td class="r nw">41</td><td class="r nw">1편</td><td><b>Relationship between low skeletal muscle mass, sarcopenic obesity and left ventricular diastolic dysfunction in Korean adults</b><br><span class="doi">Diabetes Metabolism Research and Reviews · 10.1002/dmrr.3363 · 의과대학</span></td></tr><tr><td class="c nw">12</td><td class="r nw">2.26</td><td>Sakthivel R.</td><td class="c">교신</td><td class="r nw">29</td><td class="r nw">1편</td><td><b>Disturbance rejection for singular semi-Markov jump neural networks with input saturation</b><br><span class="doi">Applied Mathematics and Computation · 10.1016/j.amc.2021.126301 · 자연과학대학</span></td></tr><tr><td class="c nw">13</td><td class="r nw">2.26</td><td>Choi M.; Lee J.</td><td class="c">제1·교신</td><td class="r nw">21</td><td class="r nw">1편</td><td><b>Local Collaborative Autoencoders</b><br><span class="doi">Wsdm 2021 Proceedings of the 14th ACM International Conference on Web Search and Data Mining · 10.1145/3437963.3441808 · 소프트웨어융합대학</span></td></tr><tr><td class="c nw">14</td><td class="r nw">2.26</td><td>Kang J.</td><td class="c">교신</td><td class="r nw">121</td><td class="r nw">2편</td><td><b>Recent Advances on Multivalued Logic Gates: A Materials Perspective</b><br><span class="doi">Advanced Science · 10.1002/advs.202004216 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">15</td><td class="r nw">2.25</td><td>Kim S.W.; Bhang S.H.</td><td class="c">제1·교신</td><td class="r nw">50</td><td class="r nw">1편</td><td><b>Delivery of a spheroids-incorporated human dermal fibroblast sheet increases angiogenesis and M2 polarization for wound healing</b><br><span class="doi">Biomaterials · 10.1016/j.biomaterials.2021.120954 · 공과대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">16</td><td class="r nw">2.25</td><td>Kim H.; Sim S.H.</td><td class="c">제1·교신</td><td class="r nw">41</td><td class="r nw">1편</td><td><b>Crack identification method for concrete structures considering angle of view using RGB-D camera-based sensor fusion</b><br><span class="doi">Structural Health Monitoring · 10.1177/1475921720934758 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">17</td><td class="r nw">2.25</td><td>Kawai S.</td><td class="c">제1·교신</td><td class="r nw">36</td><td class="r nw">1편</td><td><b>CMB from a Gauss-Bonnet-induced de Sitter fixed point</b><br><span class="doi">Physical Review D · 10.1103/physrevd.104.043525 · 자연과학대학</span></td></tr><tr><td class="c nw">18</td><td class="r nw">2.25</td><td>Kim C.H.</td><td class="c">교신</td><td class="r nw">152</td><td class="r nw">3편</td><td><b>Physiologically active molecules and functional properties of soybeans in human health—a current perspective</b><br><span class="doi">International Journal of Molecular Sciences · 10.3390/ijms22084054 · 자연과학대학</span></td></tr><tr><td class="c nw">19</td><td class="r nw">2.24</td><td>Kim C.H.</td><td class="c">교신</td><td class="r nw">41</td><td class="r nw">1편</td><td><b>Coordination of multiple electric vehicle aggregators for peak shaving and valley filling in distribution feeders</b><br><span class="doi">Energies · 10.3390/en14020352 · 일반대학원</span></td></tr><tr><td class="c nw">20</td><td class="r nw">2.24</td><td>Ryu D.</td><td class="c">제1</td><td class="r nw">38</td><td class="r nw">1편</td><td><b>The impact of net buying pressure on index options prices</b><br><span class="doi">Journal of Futures Markets · 10.1002/fut.22158 · 경제대학</span></td></tr><tr><td class="c nw">21</td><td class="r nw">2.24</td><td>Kim N.</td><td class="c">제1</td><td class="r nw">36</td><td class="r nw">1편</td><td><b>Dose-Response Relationship in Stereotactic Body Radiation Therapy for Hepatocellular Carcinoma: A Pooled Analysis of an Asian Liver Radiation Therapy Group Study</b><br><span class="doi">International Journal of Radiation Oncology Biology Physics · 10.1016/j.ijrobp.2020.09.038 · 의과대학</span></td></tr><tr><td class="c nw">22</td><td class="r nw">2.22</td><td>Shaban S.M.; Kim D.H.</td><td class="c">교신</td><td class="r nw">44</td><td class="r nw">2편</td><td><b>Synthesis and evaluation of nonionic surfactants based on dimethylaminoethylamine: Electrochemical investigation and theoretical modeling as inhibitors during electropolishing in-ortho-phosphoric acid</b><br><span class="doi">Journal of Molecular Liquids · 10.1016/j.molliq.2021.115421 · 대학 미상(rims 연결)</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">23</td><td class="r nw">2.21</td><td>Lee J.H.</td><td class="c">교신</td><td class="r nw">22</td><td class="r nw">1편</td><td><b>Efficacy and safety of brodalumab in the Korean population for the treatment of moderate to severe plaque psoriasis: A randomized, phase III, double-blind, placebo-controlled study</b><br><span class="doi">Journal of Dermatology · 10.1111/1346-8138.15733 · 의과대학</span></td></tr><tr><td class="c nw">24</td><td class="r nw">2.21</td><td>Hussain A.</td><td class="c">제1·교신</td><td class="r nw">46</td><td class="r nw">2편</td><td><b>Long-term scenario pathways to assess the potential of best available technologies and cost reduction of avoided carbon emissions in an existing 100% renewable regional power system: A case study of Gilgit-Baltistan (GB), Pakistan</b><br><span class="doi">Energy · 10.1016/j.energy.2021.119855 · 일반대학원</span></td></tr><tr><td class="c nw">25</td><td class="r nw">2.21</td><td>Ghergherehchi M.</td><td class="c">교신</td><td class="r nw">44</td><td class="r nw">2편</td><td><b>Effect of adsorption and substitutional B doping at different concentrations on the electronic and magnetic properties of a BeO monolayer: a first-principles study</b><br><span class="doi">Physical Chemistry Chemical Physics · 10.1039/d1cp03196a · 정보통신대학</span></td></tr><tr><td class="c nw">26</td><td class="r nw">2.20</td><td>Ma C.; Kim B.; Kim S.W.; Park N.G.</td><td class="c">제1·교신</td><td class="r nw">48</td><td class="r nw">2편</td><td><b>Dynamic halide perovskite heterojunction generates direct current</b><br><span class="doi">Energy and Environmental Science · 10.1039/d0ee03487h · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">27</td><td class="r nw">2.20</td><td>Jeong H.E.; Shin J.Y.</td><td class="c">제1·교신</td><td class="r nw">32</td><td class="r nw">2편</td><td><b>Association between Nonsteroidal Antiinflammatory Drug Use and Adverse Clinical Outcomes among Adults Hospitalized with Coronavirus 2019 in South Korea: A Nationwide Study</b><br><span class="doi">Clinical Infectious Diseases · 10.1093/cid/ciaa1056 · 일반대학원</span></td></tr><tr><td class="c nw">28</td><td class="r nw">2.20</td><td>Park B.; Cho J.</td><td class="c">제1·교신</td><td class="r nw">31</td><td class="r nw">2편</td><td><b>Older adults’ avoidance of public transportation after the outbreak of COVID-19: Korean subway evidence</b><br><span class="doi">Healthcare Switzerland · 10.3390/healthcare9040448 · 경제대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">29</td><td class="r nw">2.20</td><td>La J.W.; Lee J.H.</td><td class="c">제1·교신</td><td class="r nw">60</td><td class="r nw">3편</td><td><b>Evaluation of solvent effects on the DPPH reactivity for determining the antioxidant activity in oil matrix</b><br><span class="doi">Food Science and Biotechnology · 10.1007/s10068-020-00874-9 · 생명공학대학</span></td></tr><tr><td class="c nw">30</td><td class="r nw">2.20</td><td>Lee Y.H.</td><td class="c">교신</td><td class="r nw">53</td><td class="r nw">3편</td><td><b>Real-space imaging of acoustic plasmons in large-area graphene grown by chemical vapor deposition</b><br><span class="doi">Nature Communications · 10.1038/s41467-021-21193-5 · 일반대학원</span></td></tr><tr><td class="c nw">31</td><td class="r nw">2.20</td><td>Lee Y.; Lee J.S.; Park J.C.</td><td class="c">제1·교신</td><td class="r nw">79</td><td class="r nw">4편</td><td><b>Combined exposure to microplastics and zinc produces sex-specific responses in the water flea Daphnia magna</b><br><span class="doi">Journal of Hazardous Materials · 10.1016/j.jhazmat.2021.126652 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">32</td><td class="r nw">2.19</td><td>Kang W.; Tönnis C.; Rott C.</td><td class="c">제1·교신</td><td class="r nw">1</td><td class="r nw">1편</td><td><b>The camera system for the IceCube Upgrade</b><br><span class="doi">Proceedings of Science · DOI 없음 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">33</td><td class="r nw">2.19</td><td>Choi H.</td><td class="c">제1·교신</td><td class="r nw">26</td><td class="r nw">2편</td><td><b>Giving or receiving spouse care and marital satisfaction among older Korean individuals</b><br><span class="doi">Social Science and Medicine · 10.1016/j.socscimed.2018.12.012 · 사회과학대학</span></td></tr><tr><td class="c nw">34</td><td class="r nw">2.18</td><td>Chun S.; Shin D.W.; Han K.</td><td class="c">제1·교신</td><td class="r nw">33</td><td class="r nw">2편</td><td><b>The Timed up and Go test and the ageing heart: Findings from a national health screening of 1,084,875 community-dwelling older adults</b><br><span class="doi">European Journal of Preventive Cardiology · 10.1177/2047487319882118 · 의과대학</span></td></tr><tr><td class="c nw">35</td><td class="r nw">2.18</td><td>Kim J.Y.</td><td class="c">제1</td><td class="r nw">46</td><td class="r nw">3편</td><td><b>Comparative Analysis of MSC-Derived Exosomes Depending on Cell Culture Media for Regenerative Bioactivity</b><br><span class="doi">Tissue Engineering and Regenerative Medicine · 10.1007/s13770-021-00352-1 · 성균융합원</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">36</td><td class="r nw">2.18</td><td>Im S.J.; Viet N.D.; Jang A.</td><td class="c">제1·교신</td><td class="r nw">65</td><td class="r nw">4편</td><td><b>Real-time monitoring of forward osmosis membrane fouling in wastewater reuse process performed with a deep learning model</b><br><span class="doi">Chemosphere · 10.1016/j.chemosphere.2021.130047 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">37</td><td class="r nw">2.18</td><td>Yan Y.; Xu S.; Lee H.; Yoo P.J.</td><td class="c">제1·교신</td><td class="r nw">64</td><td class="r nw">4편</td><td><b>Perpendicularly anchored ReSe2 nanoflakes on reduced graphene oxide support for highly efficient hydrogen evolution reactions</b><br><span class="doi">Chemical Engineering Journal · 10.1016/j.cej.2020.126728 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">38</td><td class="r nw">2.17</td><td>Kim N.; Yu J.I.</td><td class="c">제1·교신</td><td class="r nw">41</td><td class="r nw">3편</td><td><b>Incorporating sarcopenia and inflammation with radiation therapy in patients with hepatocellular carcinoma treated with nivolumab</b><br><span class="doi">Cancer Immunology Immunotherapy · 10.1007/s00262-020-02794-3 · 의과대학</span></td></tr><tr><td class="c nw">39</td><td class="r nw">2.17</td><td>Byun J.; Cha S.</td><td class="c">제1</td><td class="r nw">61</td><td class="r nw">4편</td><td><b>FBI-Denoiser: Fast Blind Image Denoiser for Poisson-Gaussian Noise</b><br><span class="doi">Proceedings of the IEEE Computer Society Conference on Computer Vision and Pattern Recognition · 10.1109/cvpr46437.2021.00571 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">40</td><td class="r nw">2.16</td><td>Biswas C.; Lee Y.H.; Sebait R.</td><td class="c">제1·교신</td><td class="r nw">54</td><td class="r nw">4편</td><td><b>Identifying defect-induced trion in monolayer ws2 via carrier screening engineering</b><br><span class="doi">ACS Nano · 10.1021/acsnano.0c08828 · 나노구조물리연구단</span></td></tr><tr><td class="c nw">41</td><td class="r nw">2.15</td><td>Park J.H.</td><td class="c">제1·교신</td><td class="r nw">19</td><td class="r nw">2편</td><td><b>Effect of photobiomodulation therapy on radiodermatitis in a mouse model: an experimental animal study</b><br><span class="doi">Lasers in Medical Science · 10.1007/s10103-020-03123-x · 의과대학</span></td></tr><tr><td class="c nw">42</td><td class="r nw">2.15</td><td>Yeon J.S.; Park H.S.</td><td class="c">공동제1·교신</td><td class="r nw">52</td><td class="r nw">4편</td><td><b>Extremely Foldable and Highly Porous Reduced Graphene Oxide Films for Shape-Adaptive Triboelectric Nanogenerators</b><br><span class="doi">Small · 10.1002/smll.201903089 · 대학 미상(rims 연결)</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">43</td><td class="r nw">2.14</td><td>Joo E.Y.</td><td class="c">교신</td><td class="r nw">39</td><td class="r nw">3편</td><td><b>Altered regional cerebral blood flow in obstructive sleep apnea is associated with sleep fragmentation and oxygen desaturation</b><br><span class="doi">Journal of Cerebral Blood Flow and Metabolism · 10.1177/0271678x211012109 · 의과대학</span></td></tr><tr><td class="c nw">44</td><td class="r nw">2.14</td><td>Saqlain S.; Kim Y.D.</td><td class="c">제1·교신</td><td class="r nw">48</td><td class="r nw">4편</td><td><b>Impact of humidity on the removal of volatile organic compounds over Fe loaded TiO2 under visible light irradiation: Insight into photocatalysis mechanism by operando DRIFTS</b><br><span class="doi">Materials Today Communications · 10.1016/j.mtcomm.2021.102119 · 자연과학대학</span></td></tr><tr><td class="c nw">45</td><td class="r nw">2.14</td><td>Song C.</td><td class="c">교신</td><td class="r nw">154</td><td class="r nw">11편</td><td><b>Structure Code for Advanced Polymer Electrolyte in Lithium-Ion Batteries</b><br><span class="doi">Advanced Functional Materials · 10.1002/adfm.202008208 · 자연과학대학</span></td></tr><tr><td class="c nw">46</td><td class="r nw">2.13</td><td>Shin J.H.</td><td class="c">교신</td><td class="r nw">21</td><td class="r nw">2편</td><td><b>Comparison of the diagnostic performance of the modified korean thyroid imaging reporting and data system for thyroid malignancy with three international guidelines</b><br><span class="doi">Ultrasonography · 10.14366/usg.21056 · 의과대학</span></td></tr><tr><td class="c nw">47</td><td class="r nw">2.13</td><td>Kim H.S.</td><td class="c">교신</td><td class="r nw">36</td><td class="r nw">3편</td><td><b>Chemopreventive effects of Melastoma malabathricum L. extract in mammary tumor model via inhibition of oxidative stress and inflammatory cytokines</b><br><span class="doi">Biomedicine and Pharmacotherapy · 10.1016/j.biopha.2021.111298 · 약학대학</span></td></tr><tr><td class="c nw">48</td><td class="r nw">2.13</td><td>Min J.H.; Kim Y.K.</td><td class="c">제1·교신</td><td class="r nw">30</td><td class="r nw">3편</td><td><b>Intraductal papillary mucinous neoplasm of the pancreas: diagnostic performance of the 2017 international consensus guidelines using CT and MRI</b><br><span class="doi">European Radiology · 10.1007/s00330-020-07583-1 · 의과대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">49</td><td class="r nw">2.13</td><td>Ho B.T.; Suk J.W.</td><td class="c">제1·교신</td><td class="r nw">41</td><td class="r nw">4편</td><td><b>Graphene Fibers Containing Activated Graphene for High-Performance Solid-State Flexible Supercapacitors</b><br><span class="doi">ACS Applied Energy Materials · 10.1021/acsaem.1c01095 · 공과대학</span></td></tr><tr><td class="c nw">50</td><td class="r nw">2.12</td><td>Oh S.Y.</td><td class="c">교신</td><td class="r nw">21</td><td class="r nw">2편</td><td><b>The clinical features and outcomes of Tolosa-Hunt syndrome</b><br><span class="doi">BMC Ophthalmology · 10.1186/s12886-021-02007-0 · 의과대학</span></td></tr></tbody></table><p class="i815-title">별첨 2. 2022년 성균관대 주저자 최상위 50편</p><p class="t1">FWCI 상위 10~15% 구간에서 2022년 출판 논문을 FWCI 높은 순(동률은 추가 필요 피인용 적은 순)으로 정렬한 목록이다. 「추가 필요」는 상위 10% 경계 FWCI 2.30 도달에 필요한 추가 피인용 편수이며, 「피인용」은 Scopus 기준 현재 피인용 횟수, 「역할」은 성균관대 연구자가 맡은 주저자 역할이다.</p><table class="app">
+<colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup>
+<thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead>
+<tbody>
+<tr><td class="c nw">1</td><td class="r nw">2.29</td><td>Cho S.Y.</td><td class="c">교신</td><td class="r nw">40</td><td class="r nw">1편</td><td><b>Top-Down Approaches for 10 nm-Scale Nanochannel: Toward Exceptional H2S Detection</b><br><span class="doi">ACS Nano · 10.1021/acsnano.2c07785 · 공과대학</span></td></tr>
+<tr><td class="c nw">2</td><td class="r nw">2.29</td><td>Gonuguntla V.; Kim J.H.</td><td class="c">제1·교신</td><td class="r nw">30</td><td class="r nw">1편</td><td><b>Brain signatures based on structural MRI: Classification for MCI, PMCI, and AD</b><br><span class="doi">Human Brain Mapping · 10.1002/hbm.25820 · 의과대학</span></td></tr>
+<tr><td class="c nw">3</td><td class="r nw">2.29</td><td>Byeon E.; Kim M.S.; Lee Y.H.; Lee J.S.</td><td class="c">제1·교신</td><td class="r nw">28</td><td class="r nw">1편</td><td><b>The freshwater water flea Daphnia magna NIES strain genome as a resource for CRISPR/Cas9 gene targeting: The glutathione S-transferase omega 2 gene</b><br><span class="doi">Aquatic Toxicology · 10.1016/j.aquatox.2021.106021 · 대학 미상(rims 연결)</span></td></tr>
+<tr><td class="c nw">4</td><td class="r nw">2.29</td><td>Jo D.G.; Arumugam T.V.</td><td class="c">교신</td><td class="r nw">20</td><td class="r nw">1편</td><td><b>Integrative epigenomic and transcriptomic analyses reveal metabolic switching by intermittent fasting in brain</b><br><span class="doi">Geroscience · 10.1007/s11357-022-00537-z · 약학대학</span></td></tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">5</td><td class="r nw">2.28</td><td>Kim W.J.; Kim G.H.</td><td class="c">제1·교신</td><td class="r nw">38</td><td class="r nw">1편</td><td><b>A bioprinted complex tissue model for myotendinous junction with biochemical and biophysical cues</b><br><span class="doi">Bioengineering and Translational Medicine · 10.1002/btm2.10321 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">6</td><td class="r nw">2.28</td><td>Park Y.</td><td class="c">제1·교신</td><td class="r nw">20</td><td class="r nw">1편</td><td><b>Eliciting student participation in synchronous online L2 lessons: The use of oral and written DIUs</b><br><span class="doi">Linguistics and Education · 10.1016/j.linged.2022.101085 · 문과대학</span></td></tr><tr><td class="c nw">7</td><td class="r nw">2.27</td><td>Kang D.H.; Woo H.M.</td><td class="c">제1·교신</td><td class="r nw">41</td><td class="r nw">1편</td><td><b>RoboMoClo: A Robotics-Assisted Modular Cloning Framework for Multiple Gene Assembly in Biofoundry</b><br><span class="doi">ACS Synthetic Biology · 10.1021/acssynbio.1c00628 · 생명공학대학</span></td></tr><tr><td class="c nw">8</td><td class="r nw">2.27</td><td>Sohn A.; Jung J.H.; Kim S.W.</td><td class="c">제1·교신</td><td class="r nw">39</td><td class="r nw">1편</td><td><b>Precise Layer Control and Electronic State Modulation of a Transition Metal Dichalcogenide via Phase-Transition-Induced Growth</b><br><span class="doi">Advanced Materials · 10.1002/adma.202103286 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">9</td><td class="r nw">2.27</td><td>Kim Y.H.</td><td class="c">교신</td><td class="r nw">140</td><td class="r nw">2편</td><td><b>Progress of Materials and Devices for Neuromorphic Vision Sensors</b><br><span class="doi">Nano Micro Letters · 10.1007/s40820-022-00945-y · 공과대학</span></td></tr><tr><td class="c nw">10</td><td class="r nw">2.26</td><td>Kim D.I.</td><td class="c">교신</td><td class="r nw">38</td><td class="r nw">1편</td><td><b>Learning to Schedule Joint Radar-Communication With Deep Multi-Agent Reinforcement Learning</b><br><span class="doi">IEEE Transactions on Vehicular Technology · 10.1109/tvt.2021.3124810 · 정보통신대학</span></td></tr><tr><td class="c nw">11</td><td class="r nw">2.26</td><td>Das K.C.</td><td class="c">제1</td><td class="r nw">33</td><td class="r nw">1편</td><td><b>On Zagreb connection indices</b><br><span class="doi">European Physical Journal Plus · 10.1140/epjp/s13360-022-03437-5 · 자연과학대학</span></td></tr><tr><td class="c nw">12</td><td class="r nw">2.26</td><td>Lee J.</td><td class="c">제1</td><td class="r nw">30</td><td class="r nw">1편</td><td><b>Machine learning prediction of suicidal ideation, planning, and attempt among Korean adults: A population-based study</b><br><span class="doi">Ssm Population Health · 10.1016/j.ssmph.2022.101231 · 대학 미상(rims 연결)</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">13</td><td class="r nw">2.25</td><td>Jeon H.; Kim D.</td><td class="c">제1·교신</td><td class="r nw">43</td><td class="r nw">1편</td><td><b>Flexible PVA/BMIMOTf/LLZTO composite electrolyte with liquid-comparable ionic conductivity for solid-state lithium metal battery</b><br><span class="doi">Journal of Energy Chemistry · 10.1016/j.jechem.2022.07.014 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">14</td><td class="r nw">2.25</td><td>Oh S.</td><td class="c">제1</td><td class="r nw">35</td><td class="r nw">1편</td><td><b>Chemo-Mechanical Energy Harvesters with Enhanced Intrinsic Electrochemical Capacitance in Carbon Nanotube Yarns</b><br><span class="doi">Advanced Science · 10.1002/advs.202203767 · 일반대학원</span></td></tr><tr><td class="c nw">15</td><td class="r nw">2.25</td><td>Shim J.; Park J.; Lee D.</td><td class="c">제1·교신</td><td class="r nw">33</td><td class="r nw">1편</td><td><b>Comparative Spatial Transcriptomic and Single-Cell Analyses of Human Nail Units and Hair Follicles Show Transcriptional Similarities between the Onychodermis and Follicular Dermal Papilla</b><br><span class="doi">Journal of Investigative Dermatology · 10.1016/j.jid.2022.06.022 · 의과대학</span></td></tr><tr><td class="c nw">16</td><td class="r nw">2.25</td><td>Jung Y.S.</td><td class="c">제1</td><td class="r nw">13</td><td class="r nw">1편</td><td><b>Impact of antiplatelet agents and anticoagulants on the performance of fecal immunochemical tests: a systematic review and meta-analysis</b><br><span class="doi">Surgical Endoscopy · 10.1007/s00464-021-08774-7 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">17</td><td class="r nw">2.24</td><td>Han J.H.; Shin H.E.; Park W.</td><td class="c">제1·교신</td><td class="r nw">51</td><td class="r nw">2편</td><td><b>Combination of Metal-Phenolic Network-Based Immunoactive Nanoparticles and Bipolar Irreversible Electroporation for Effective Cancer Immunotherapy</b><br><span class="doi">Small · 10.1002/smll.202200316 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">18</td><td class="r nw">2.24</td><td>Kim S.; Lee Y.</td><td class="c">제1·교신</td><td class="r nw">50</td><td class="r nw">2편</td><td><b>Nanostructured conductive polymer shield for highly reversible dendrite-free zinc metal anode</b><br><span class="doi">Chemical Engineering Journal · 10.1016/j.cej.2021.131954 · 공과대학</span></td></tr><tr><td class="c nw">19</td><td class="r nw">2.24</td><td>Kim J.</td><td class="c">교신</td><td class="r nw">50</td><td class="r nw">2편</td><td><b>Gas-Phase Alkali Metal-Assisted MOCVD Growth of 2D Transition Metal Dichalcogenides for Large-Scale Precise Nucleation Control</b><br><span class="doi">Small · 10.1002/smll.202106368 · 나노튜브및나노복합구조연구센터</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">20</td><td class="r nw">2.24</td><td>Kang B.; Lee J.Y.</td><td class="c">제1·교신</td><td class="r nw">46</td><td class="r nw">2편</td><td><b>Synergistic ultra-high activity of double B doped graphyne for electrocatalytic nitrogen reduction</b><br><span class="doi">Chemical Engineering Journal · 10.1016/j.cej.2021.131318 · 자연과학대학</span></td></tr><tr><td class="c nw">21</td><td class="r nw">2.24</td><td>Ahn M.J.</td><td class="c">제1·교신</td><td class="r nw">39</td><td class="r nw">2편</td><td><b>Efficacy and Safety of Brigatinib Compared With Crizotinib in Asian vs. Non-Asian Patients With Locally Advanced or Metastatic ALK–Inhibitor-Naive ALK+ Non–Small Cell Lung Cancer: Final Results From the Phase III ALTA-1L Study</b><br><span class="doi">Clinical Lung Cancer · 10.1016/j.cllc.2022.07.008 · 의과대학</span></td></tr><tr><td class="c nw">22</td><td class="r nw">2.24</td><td>Park S.K.; Park D.I.</td><td class="c">제1·교신</td><td class="r nw">38</td><td class="r nw">2편</td><td><b>Additive effect of probiotics (Mutaflor) on 5-aminosalicylic acid therapy in patients with ulcerative colitis</b><br><span class="doi">Korean Journal of Internal Medicine · 10.3904/kjim.2021.458 · 의과대학</span></td></tr><tr><td class="c nw">23</td><td class="r nw">2.23</td><td>Park J.; Kim G.; Kim J.H.</td><td class="c">제1·교신</td><td class="r nw">30</td><td class="r nw">1편</td><td><b>The associations between changes in hepatic steatosis and heart failure and mortality: a nationwide cohort study</b><br><span class="doi">Cardiovascular Diabetology · 10.1186/s12933-022-01725-z · 의과대학</span></td></tr><tr><td class="c nw">24</td><td class="r nw">2.23</td><td>Choi J.W.</td><td class="c">교신</td><td class="r nw">19</td><td class="r nw">1편</td><td><b>Ultrasound-guided erector spinae plane block for pain management after gastrectomy: a randomized, single-blinded, controlled trial</b><br><span class="doi">Korean Journal of Pain · 10.3344/kjp.2022.35.3.303 · 의과대학</span></td></tr><tr><td class="c nw">25</td><td class="r nw">2.22</td><td>Park C.; Lee J.</td><td class="c">공동제1·교신</td><td class="r nw">46</td><td class="r nw">2편</td><td><b>Upcycling of cattle manure for simultaneous energy recovery and supercapacitor electrode production</b><br><span class="doi">Energy · 10.1016/j.energy.2022.124877 · 공과대학</span></td></tr><tr><td class="c nw">26</td><td class="r nw">2.22</td><td>Kim J.; Han J.H.</td><td class="c">공동제1·교신</td><td class="r nw">30</td><td class="r nw">2편</td><td><b>Rank-2 toric code in two dimensions</b><br><span class="doi">Physical Review B · 10.1103/physrevb.105.045128 · 자연과학대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">27</td><td class="r nw">2.21</td><td>Lee S.; An J.; Woo S.S.</td><td class="c">제1·교신</td><td class="r nw">21</td><td class="r nw">1편</td><td><b>BZNet: Unsupervised Multi-scale Branch Zooming Network for Detecting Low-quality Deepfake Videos</b><br><span class="doi">Www 2022 Proceedings of the ACM Web Conference 2022 · 10.1145/3485447.3512245 · 소프트웨어융합대학</span></td></tr><tr><td class="c nw">28</td><td class="r nw">2.21</td><td>Nam H.</td><td class="c">제1</td><td class="r nw">20</td><td class="r nw">1편</td><td><b>An Efficiency Measurement of E-Government Performance for Network Readiness: Non-Parametric Frontier Approach</b><br><span class="doi">Journal of Open Innovation Technology Market and Complexity · 10.3390/joitmc8010010 · 국정전문대학원</span></td></tr><tr><td class="c nw">29</td><td class="r nw">2.21</td><td>Rhu J.; Choi G.S.</td><td class="c">제1·교신</td><td class="r nw">20</td><td class="r nw">1편</td><td><b>Complete transition from open surgery to laparoscopy: 8-year experience with more than 500 laparoscopic living donor hepatectomies</b><br><span class="doi">Liver Transplantation · 10.1002/lt.26429 · 의과대학</span></td></tr><tr><td class="c nw">30</td><td class="r nw">2.21</td><td>Binh L.; Oinar C.; Woo S.</td><td class="c">제1·교신</td><td class="r nw">16</td><td class="r nw">1편</td><td><b>Samba: Identifying Inappropriate Videos for Young Children on YouTube</b><br><span class="doi">International Conference on Information and Knowledge Management Proceedings · 10.1145/3511808.3557442 · 소프트웨어융합대학</span></td></tr><tr><td class="c nw">31</td><td class="r nw">2.21</td><td>Kim K.; Han J.; Jeon I.</td><td class="c">제1·교신</td><td class="r nw">49</td><td class="r nw">2편</td><td><b>Homogeneously Miscible Fullerene inducing Vertical Gradient in Perovskite Thin-Film toward Highly Efficient Solar Cells</b><br><span class="doi">Advanced Energy Materials · 10.1002/aenm.202200877 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">32</td><td class="r nw">2.21</td><td>Jaafreh R.; Kim J.G.; Hamad K.</td><td class="c">제1·교신</td><td class="r nw">37</td><td class="r nw">2편</td><td><b>Machine learning guided discovery of super-hard high entropy ceramics</b><br><span class="doi">Materials Letters · 10.1016/j.matlet.2021.130899 · 일반대학원</span></td></tr><tr><td class="c nw">33</td><td class="r nw">2.21</td><td>Pico N.; Moon H.</td><td class="c">제1·교신</td><td class="r nw">31</td><td class="r nw">2편</td><td><b>Climbing control of autonomous mobile robot with estimation of wheel slip and wheel-ground contact angle</b><br><span class="doi">Journal of Mechanical Science and Technology · 10.1007/s12206-022-0142-6 · 공과대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">34</td><td class="r nw">2.20</td><td>Ali S.; Abuhmed T.</td><td class="c">제1·교신</td><td class="r nw">38</td><td class="r nw">2편</td><td><b>Multitask Deep Learning for Cost-Effective Prediction of Patient's Length of Stay and Readmission State Using Multimodal Physical Activity Sensory Data</b><br><span class="doi">IEEE Journal of Biomedical and Health Informatics · 10.1109/jbhi.2022.3202178 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">35</td><td class="r nw">2.20</td><td>Jo H.S.; An S.</td><td class="c">제1·교신</td><td class="r nw">36</td><td class="r nw">2편</td><td><b>Wearable multifunctional soft sensor and contactless 3D scanner using supersonically sprayed silver nanowires, carbon nanotubes, zinc oxide, and PEDOT:PSS</b><br><span class="doi">Npg Asia Materials · 10.1038/s41427-022-00370-y · 일반대학원</span></td></tr><tr><td class="c nw">36</td><td class="r nw">2.20</td><td>Lee J.; Cho J.; Kim H.K.</td><td class="c">제1·교신</td><td class="r nw">35</td><td class="r nw">2편</td><td><b>Reclassifying the International Association for the Study of Lung Cancer Residual Tumor Classification According to the Extent of Nodal Dissection for NSCLC: One Size Does Not Fit All</b><br><span class="doi">Journal of Thoracic Oncology · 10.1016/j.jtho.2022.03.015 · 의과대학</span></td></tr><tr><td class="c nw">37</td><td class="r nw">2.20</td><td>Choi K.Y.</td><td class="c">교신</td><td class="r nw">35</td><td class="r nw">2편</td><td><b>Emergent nematicity and intrinsic versus extrinsic electronic scattering processes in the kagome metal CsV3Sb5</b><br><span class="doi">Physical Review Research · 10.1103/physrevresearch.4.023215 · 자연과학대학</span></td></tr><tr><td class="c nw">38</td><td class="r nw">2.19</td><td>Kim S.D.; Jin S.; Son D.; Shin M.</td><td class="c">제1·교신</td><td class="r nw">38</td><td class="r nw">2편</td><td><b>Tyramine-Functionalized Alginate-Collagen Hybrid Hydrogel Inks for 3D-Bioprinting</b><br><span class="doi">Polymers · 10.3390/polym14153173 · 일반대학원</span></td></tr><tr><td class="c nw">39</td><td class="r nw">2.19</td><td>Chung M.P.</td><td class="c">교신</td><td class="r nw">27</td><td class="r nw">2편</td><td><b>Clinical Features, Diagnosis, Management, and Outcomes of Idiopathic Pulmonary Fibrosis in Korea: Analysis of the Korea IPF Cohort (KICO) Registry</b><br><span class="doi">Tuberculosis and Respiratory Diseases · 10.4046/trd.2021.0123 · 의과대학</span></td></tr><tr><td class="c nw">40</td><td class="r nw">2.19</td><td>Son Y.H.; Noh S.D.</td><td class="c">제1·교신</td><td class="r nw">83</td><td class="r nw">5편</td><td><b>Past, present, and future research of digital twin for smart manufacturing</b><br><span class="doi">Journal of Computational Design and Engineering · 10.1093/jcde/qwab067 · 대학 미상(rims 연결)</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">41</td><td class="r nw">2.19</td><td>Zhang H.; Park N.G.</td><td class="c">제1·교신</td><td class="r nw">144</td><td class="r nw">8편</td><td><b>Strain Control to Stabilize Perovskite Solar Cells</b><br><span class="doi">Angewandte Chemie International Edition · 10.1002/anie.202212268 · 공과대학</span></td></tr><tr><td class="c nw">42</td><td class="r nw">2.18</td><td>Kim D.; Cha W.C.</td><td class="c">제1·교신</td><td class="r nw">13</td><td class="r nw">1편</td><td><b>Effect of fever or respiratory symptoms on leaving without being seen during the COVID-19 pandemic in South Korea</b><br><span class="doi">Clinical and Experimental Emergency Medicine · 10.15441/ceem.21.105 · 의과대학</span></td></tr><tr><td class="c nw">43</td><td class="r nw">2.18</td><td>Jeon Y.S.; Wang J.H.</td><td class="c">제1·교신</td><td class="r nw">26</td><td class="r nw">2편</td><td><b>Posterior Horn Lateral Meniscal Oblique Radial Tear in Acute Anterior Cruciate Ligament Reconstruction Incidence and Outcomes After All-Inside Repair: Clinical and Second-Look Arthroscopic Evaluation</b><br><span class="doi">American Journal of Sports Medicine · 10.1177/03635465221126506 · 의과대학</span></td></tr><tr><td class="c nw">44</td><td class="r nw">2.18</td><td>Lee L.P.</td><td class="c">교신</td><td class="r nw">54</td><td class="r nw">3편</td><td><b>A solution to the biophysical fractionation of extracellular vesicles: Acoustic Nanoscale Separation via Wave-pillar Excitation Resonance (ANSWER)</b><br><span class="doi">Science Advances · 10.1126/sciadv.ade0640 · 성균융합원</span></td></tr><tr><td class="c nw">45</td><td class="r nw">2.18</td><td>Jeong S.G.; Choi W.S.</td><td class="c">제1·교신</td><td class="r nw">48</td><td class="r nw">3편</td><td><b>Unconventional interlayer exchange coupling via chiral phonons in synthetic magnetic oxide heterostructures</b><br><span class="doi">Science Advances · 10.1126/sciadv.abm4005 · 자연과학대학</span></td></tr><tr><td class="c nw">46</td><td class="r nw">2.17</td><td>Park J.; Lee S.H.</td><td class="c">제1·교신</td><td class="r nw">31</td><td class="r nw">2편</td><td><b>Association between cardiologist evaluation and mortality in myocardial injury after noncardiac surgery</b><br><span class="doi">Heart · 10.1136/heartjnl-2021-319511 · 의과대학</span></td></tr><tr><td class="c nw">47</td><td class="r nw">2.17</td><td>Baek J.H.</td><td class="c">제1</td><td class="r nw">26</td><td class="r nw">2편</td><td><b>Clinical outcomes of rescue stenting for failed endovascular thrombectomy: a multicenter prospective registry</b><br><span class="doi">Journal of Neurointerventional Surgery · 10.1136/neurintsurg-2021-018308 · 의과대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">48</td><td class="r nw">2.17</td><td>Kwon W.; Yang J.H.</td><td class="c">제1·교신</td><td class="r nw">23</td><td class="r nw">2편</td><td><b>Impact of the Obesity Paradox Between Sexes on In-Hospital Mortality in Cardiogenic Shock: A Retrospective Cohort Study</b><br><span class="doi">Journal of the American Heart Association · 10.1161/jaha.121.024143 · 의과대학</span></td></tr><tr><td class="c nw">49</td><td class="r nw">2.17</td><td>Koo C.M.</td><td class="c">교신</td><td class="r nw">43</td><td class="r nw">3편</td><td><b>Fast and High-Yield Anhydrous Synthesis of Ti3C2Tx MXene with High Electrical Conductivity and Exceptional Mechanical Strength</b><br><span class="doi">Small · 10.1002/smll.202203767 · 공과대학</span></td></tr><tr><td class="c nw">50</td><td class="r nw">2.17</td><td>Lee J.S.; Kim T.i.</td><td class="c">공동제1·교신</td><td class="r nw">42</td><td class="r nw">3편</td><td><b>Implantable micro-scale LED device guided photodynamic therapy to potentiate antitumor immunity with mild visible light</b><br><span class="doi">Biomaterials Research · 10.1186/s40824-022-00305-2 · 대학 미상(rims 연결)</span></td></tr></tbody></table><p class="i815-title">별첨 3. 2023년 성균관대 주저자 최상위 50편</p><p class="t1">FWCI 상위 10~15% 구간에서 2023년 출판 논문을 FWCI 높은 순(동률은 추가 필요 피인용 적은 순)으로 정렬한 목록이다. 「추가 필요」는 상위 10% 경계 FWCI 2.30 도달에 필요한 추가 피인용 편수이며, 「피인용」은 Scopus 기준 현재 피인용 횟수, 「역할」은 성균관대 연구자가 맡은 주저자 역할이다.</p><table class="app">
+<colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup>
+<thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead>
+<tbody>
+<tr><td class="c nw">1</td><td class="r nw">2.29</td><td>Sakthivel R.</td><td class="c">교신</td><td class="r nw">38</td><td class="r nw">1편</td><td><b>Event-Triggered Finite-Time Dissipative Filtering for Interval Type-2 Fuzzy Complex Dynamical Networks with Cyber Attacks</b><br><span class="doi">IEEE Transactions on Systems Man and Cybernetics Systems · 10.1109/tsmc.2022.3221641 · 자연과학대학</span></td></tr>
+<tr><td class="c nw">2</td><td class="r nw">2.29</td><td>Khan S.A.; Byun D.</td><td class="c">교신</td><td class="r nw">30</td><td class="r nw">1편</td><td><b>Low profile wind savonius turbine triboelectric nanogenerator for powering small electronics</b><br><span class="doi">Sensors and Actuators A Physical · 10.1016/j.sna.2023.114535 · 두뇌한국21사업단</span></td></tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">3</td><td class="r nw">2.29</td><td>Ngo T.D.; Yoo W.J.</td><td class="c">제1·교신</td><td class="r nw">28</td><td class="r nw">1편</td><td><b>Modulation of Contact Resistance of Dual-Gated MoS2 FETs Using Fermi-Level Pinning-Free Antimony Semi-Metal Contacts</b><br><span class="doi">Advanced Science · 10.1002/advs.202301400 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">4</td><td class="r nw">2.29</td><td>Choi M.</td><td class="c">교신</td><td class="r nw">27</td><td class="r nw">1편</td><td><b>Triple collocation-based multi-source evaporation and transpiration merging</b><br><span class="doi">Agricultural and Forest Meteorology · 10.1016/j.agrformet.2023.109353 · 수자원전문대학원</span></td></tr><tr><td class="c nw">5</td><td class="r nw">2.28</td><td>Kim G.H.; Kim M.G.</td><td class="c">제1·교신</td><td class="r nw">31</td><td class="r nw">1편</td><td><b>Room temperature-grown highly oriented p-type nanocrystalline tellurium thin-films transistors for large-scale CMOS circuits</b><br><span class="doi">Applied Surface Science · 10.1016/j.apsusc.2023.157801 · 공과대학</span></td></tr><tr><td class="c nw">6</td><td class="r nw">2.28</td><td>Lee S.; Jeon U.; Cha H.S.</td><td class="c">제1·교신</td><td class="r nw">30</td><td class="r nw">1편</td><td><b>Artificial intelligence for the detection of sacroiliitis on magnetic resonance imaging in patients with axial spondyloarthritis</b><br><span class="doi">Frontiers in Immunology · 10.3389/fimmu.2023.1278247 · 의과대학</span></td></tr><tr><td class="c nw">7</td><td class="r nw">2.28</td><td>Purbia R.; Baik J.M.</td><td class="c">공동제1·교신</td><td class="r nw">29</td><td class="r nw">1편</td><td><b>High-performance and self-calibrating multi-gas sensor interface to trace multiple gas species with sub-ppm level</b><br><span class="doi">Sensors and Actuators B Chemical · 10.1016/j.snb.2022.132939 · 공과대학</span></td></tr><tr><td class="c nw">8</td><td class="r nw">2.28</td><td>Park D.I.</td><td class="c">교신</td><td class="r nw">26</td><td class="r nw">1편</td><td><b>Potential Oral Microbial Markers for Differential Diagnosis of Crohn’s Disease and Ulcerative Colitis Using Machine Learning Models</b><br><span class="doi">Microorganisms · 10.3390/microorganisms11071665 · 의과대학</span></td></tr><tr><td class="c nw">9</td><td class="r nw">2.27</td><td>Rhee E.J.</td><td class="c">교신</td><td class="r nw">64</td><td class="r nw">1편</td><td><b>Big Data Research in the Field of Endocrine Diseases Using the Korean National Health Information Database</b><br><span class="doi">Endocrinology and Metabolism · 10.3803/enm.2023.102 · 의과대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">10</td><td class="r nw">2.27</td><td>Oh N.; Rodrigue H.</td><td class="c">제1·교신</td><td class="r nw">35</td><td class="r nw">1편</td><td><b>Torsional Pneumatic Actuator Based on Pre-Twisted Pneumatic Tubes for Soft Robotic Manipulators</b><br><span class="doi">IEEE ASME Transactions on Mechatronics · 10.1109/tmech.2023.3262235 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">11</td><td class="r nw">2.27</td><td>Qureshi N.M.F.</td><td class="c">교신</td><td class="r nw">34</td><td class="r nw">1편</td><td><b>AI-Empowered Trajectory Anomaly Detection and Classification in 6G-V2X</b><br><span class="doi">IEEE Transactions on Intelligent Transportation Systems · 10.1109/tits.2022.3197446 · 사범대학</span></td></tr><tr><td class="c nw">12</td><td class="r nw">2.27</td><td>Haddadnezhad M.N.; Jung I.; Park S.</td><td class="c">제1·교신</td><td class="r nw">33</td><td class="r nw">1편</td><td><b>Plasmonic Double-Walled Nanoframes with Face-to-Face Nanogaps for Strong SERS Activity</b><br><span class="doi">Nano Letters · 10.1021/acs.nanolett.3c00679 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">13</td><td class="r nw">2.27</td><td>An Y.; Oh H.</td><td class="c">제1·교신</td><td class="r nw">33</td><td class="r nw">1편</td><td><b>Marketing Insights from Reviews Using Topic Modeling with BERTopic and Deep Clustering Network</b><br><span class="doi">Applied Sciences Switzerland · 10.3390/app13169443 · 소프트웨어융합대학</span></td></tr><tr><td class="c nw">14</td><td class="r nw">2.27</td><td>Kim J.Y.; Shin J.H.; Lee K.Y.</td><td class="c">제1·교신</td><td class="r nw">31</td><td class="r nw">1편</td><td><b>β‐arrestin 2 negatively regulates lung cancer progression by inhibiting the TRAF6 signaling axis for NF-κB activation and autophagy induced by TLR3 and TLR4</b><br><span class="doi">Cell Death and Disease · 10.1038/s41419-023-05945-3 · 의과대학</span></td></tr><tr><td class="c nw">15</td><td class="r nw">2.27</td><td>Hong T.; Lim W.</td><td class="c">공동제1·교신</td><td class="r nw">20</td><td class="r nw">1편</td><td><b>Effects of Agarum clathratum extract on cell death and calcium ion levels of ovarian cancer cell</b><br><span class="doi">Molecular and Cellular Toxicology · 10.1007/s13273-022-00259-5 · 자연과학대학</span></td></tr><tr><td class="c nw">16</td><td class="r nw">2.27</td><td>Baabu P.R.S.</td><td class="c">제1</td><td class="r nw">102</td><td class="r nw">2편</td><td><b>Iron Oxide Nanoparticles: A Review on the Province of Its Compounds, Properties and Biological Applications</b><br><span class="doi">Materials · 10.3390/ma16010059 · 대학 미상(rims 연결)</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">17</td><td class="r nw">2.26</td><td>Mahdi Javidan M.; Kim J.</td><td class="c">제1·교신</td><td class="r nw">30</td><td class="r nw">1편</td><td><b>Seismic retrofit of low-rise structures using rotational viscoelastic dampers</b><br><span class="doi">Structures · 10.1016/j.istruc.2023.105403 · 두뇌한국21사업단</span></td></tr><tr><td class="c nw">18</td><td class="r nw">2.26</td><td>Kim H.G.; Kim S.M.</td><td class="c">제1·교신</td><td class="r nw">28</td><td class="r nw">1편</td><td><b>Experimental investigation and analysis of two-phase flow instability of flow boiling in a mini-channel heat sink</b><br><span class="doi">International Journal of Heat and Mass Transfer · 10.1016/j.ijheatmasstransfer.2023.124309 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">19</td><td class="r nw">2.26</td><td>Jo H.; Park D.; Joo M.; Kim K.H.; An S.</td><td class="c">제1·교신</td><td class="r nw">27</td><td class="r nw">1편</td><td><b>Performance-enhanced eco-friendly triboelectric nanogenerator via wettability manipulation of lignin</b><br><span class="doi">Ecomat · 10.1002/eom2.12413 · 일반대학원</span></td></tr><tr><td class="c nw">20</td><td class="r nw">2.26</td><td>Kim S.C.</td><td class="c">교신</td><td class="r nw">24</td><td class="r nw">1편</td><td><b>New insights into the phylogenetic relationships among wild onions (Allium, Amaryllidaceae), with special emphasis on the subgenera Anguinum and Rhizirideum, as revealed by plastomes</b><br><span class="doi">Frontiers in Plant Science · 10.3389/fpls.2023.1124277 · 자연과학대학</span></td></tr><tr><td class="c nw">21</td><td class="r nw">2.26</td><td>Lee S.W.</td><td class="c">교신</td><td class="r nw">17</td><td class="r nw">1편</td><td><b>Assisting the Human Embryo Viability Assessment by Deep Learning for In Vitro Fertilization</b><br><span class="doi">Mathematics · 10.3390/math11092023 · 의과대학</span></td></tr><tr><td class="c nw">22</td><td class="r nw">2.25</td><td>Lee S.; Ko W.; Kim J.</td><td class="c">제1·교신</td><td class="r nw">40</td><td class="r nw">1편</td><td><b>Gradational anionic redox enabling high-energy P2-type Na-layered oxide cathode</b><br><span class="doi">Chemical Engineering Journal · 10.1016/j.cej.2022.138883 · 성균융합원</span></td></tr><tr><td class="c nw">23</td><td class="r nw">2.25</td><td>Min Yang K.; Lee Y.</td><td class="c">제1·교신</td><td class="r nw">40</td><td class="r nw">1편</td><td><b>Self-assembled functional layers onto separator toward practical lithium metal batteries</b><br><span class="doi">Chemical Engineering Journal · 10.1016/j.cej.2022.140191 · 공과대학</span></td></tr><tr><td class="c nw">24</td><td class="r nw">2.25</td><td>Park S.J.</td><td class="c">제1·교신</td><td class="r nw">4</td><td class="r nw">1편</td><td><b>The Dynamic Characteristics of “Jeong 情”: A New Perspective on the Korean Neo-Confucian Four–Seven Debate †</b><br><span class="doi">Religions · 10.3390/rel14050663 · 유학대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">25</td><td class="r nw">2.24</td><td>Lee D.H.; Bhang S.H.</td><td class="c">공동제1·교신</td><td class="r nw">34</td><td class="r nw">1편</td><td><b>A Self-Reporting Mineralized Conductive Hydrogel Sensor with Cancer-Selective Viscosity, Adhesiveness, and Stretchability</b><br><span class="doi">Advanced Functional Materials · 10.1002/adfm.202212977 · 공과대학</span></td></tr><tr><td class="c nw">26</td><td class="r nw">2.24</td><td>Yang W.</td><td class="c">교신</td><td class="r nw">34</td><td class="r nw">1편</td><td><b>Hybrid Perovskite-Based Wireless Integrated Device Exceeding a Solar to Hydrogen Conversion Efficiency of 11%</b><br><span class="doi">Small · 10.1002/smll.202300174 · 공과대학</span></td></tr><tr><td class="c nw">27</td><td class="r nw">2.24</td><td>Khanh T.D.; Kim J.W.</td><td class="c">제1·교신</td><td class="r nw">33</td><td class="r nw">1편</td><td><b>Breathable, self-healable, washable and durable all-fibrous triboelectric nanogenerator for wearable electronics</b><br><span class="doi">Materials Today Advances · 10.1016/j.mtadv.2023.100427 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">28</td><td class="r nw">2.24</td><td>Kang M.; Choi M.</td><td class="c">제1·교신</td><td class="r nw">27</td><td class="r nw">1편</td><td><b>The effects of flash drought on the terrestrial ecosystem in Korea</b><br><span class="doi">Journal of Hydrology · 10.1016/j.jhydrol.2023.129874 · 수자원전문대학원</span></td></tr><tr><td class="c nw">29</td><td class="r nw">2.24</td><td>Sakthivel R.</td><td class="c">교신</td><td class="r nw">19</td><td class="r nw">1편</td><td><b>Reduced-order filtering for semi-Markovian jump systems against randomly occurring false data injection attacks</b><br><span class="doi">Applied Mathematics and Computation · 10.1016/j.amc.2023.127832 · 자연과학대학</span></td></tr><tr><td class="c nw">30</td><td class="r nw">2.24</td><td>Song C.; Min J.H.</td><td class="c">제1·교신</td><td class="r nw">19</td><td class="r nw">1편</td><td><b>Use of individualized 3D-printed models of pancreatic cancer to improve surgeons’ anatomic understanding and surgical planning</b><br><span class="doi">European Radiology · 10.1007/s00330-023-09756-0 · 의과대학</span></td></tr><tr><td class="c nw">31</td><td class="r nw">2.24</td><td>Muhammad K.</td><td class="c">교신</td><td class="r nw">19</td><td class="r nw">1편</td><td><b>ARTIFICIAL INTELLIGENCE-DRIVEN APPROACH TO IDENTIFY AND RECOMMEND THE WINNER IN A TIED EVENT IN SPORTS SURVEILLANCE</b><br><span class="doi">Fractals · 10.1142/s0218348x23401497 · 소프트웨어융합대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">32</td><td class="r nw">2.23</td><td>Kim H.; Jeong B.C.; Park S.H.</td><td class="c">제1·교신</td><td class="r nw">28</td><td class="r nw">1편</td><td><b>Neoadjuvant Nivolumab Plus Gemcitabine/Cisplatin Chemotherapy in Muscle-Invasive Urothelial Carcinoma of the Bladder</b><br><span class="doi">Cancer Research and Treatment · 10.4143/crt.2022.343 · 의과대학</span></td></tr><tr><td class="c nw">33</td><td class="r nw">2.23</td><td>Kim S.D.; Shin M.; Son D.</td><td class="c">제1·교신</td><td class="r nw">26</td><td class="r nw">1편</td><td><b>Injectable and tissue-conformable conductive hydrogel for MRI-compatible brain-interfacing electrodes</b><br><span class="doi">Soft Science · 10.20517/ss.2023.08 · 학부대학</span></td></tr><tr><td class="c nw">34</td><td class="r nw">2.23</td><td>Choi G.H.; Clament Sagaya Selvam N.; Yoon W.S.; Yoo P.J.</td><td class="c">제1·교신</td><td class="r nw">38</td><td class="r nw">2편</td><td><b>High-valent metal site incorporated heterointerface catalysts for high-performance anion-exchange membrane water electrolysers</b><br><span class="doi">Applied Catalysis B Environmental · 10.1016/j.apcatb.2023.122816 · 성균융합원</span></td></tr><tr><td class="c nw">35</td><td class="r nw">2.23</td><td>Hwangbo H.; Lee H.; Woo H.M.; Ryu D.; Kim G.H.</td><td class="c">제1·교신</td><td class="r nw">36</td><td class="r nw">2편</td><td><b>Photosynthetic Cyanobacteria can Clearly Induce Efficient Muscle Tissue Regeneration of Bioprinted Cell-Constructs</b><br><span class="doi">Advanced Functional Materials · 10.1002/adfm.202209157 · 의과대학</span></td></tr><tr><td class="c nw">36</td><td class="r nw">2.23</td><td>Kim S.</td><td class="c">교신</td><td class="r nw">34</td><td class="r nw">2편</td><td><b>Investigating effects of multimodal explanations using multiple In-vehicle displays for takeover request in conditionally automated driving</b><br><span class="doi">Transportation Research Part F Traffic Psychology and Behaviour · 10.1016/j.trf.2023.05.014 · 일반대학원</span></td></tr><tr><td class="c nw">37</td><td class="r nw">2.22</td><td>Kim M.</td><td class="c">교신</td><td class="r nw">20</td><td class="r nw">1편</td><td><b>Achromatic elastic metalens for high-performance confocal piezoelectric energy harvesting</b><br><span class="doi">Applied Physics Letters · 10.1063/5.0153290 · 일반대학원</span></td></tr><tr><td class="c nw">38</td><td class="r nw">2.22</td><td>Jang D.; Jang A.</td><td class="c">제1·교신</td><td class="r nw">33</td><td class="r nw">2편</td><td><b>Effect of biocarriers on the nitrification and microbial community in moving bed biofilm reactor for anaerobic digestion effluent treatment</b><br><span class="doi">Environmental Research · 10.1016/j.envres.2023.116350 · 공과대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">39</td><td class="r nw">2.22</td><td>Choi H.; Moon D.; Kim Y.J.</td><td class="c">제1·교신</td><td class="r nw">33</td><td class="r nw">2편</td><td><b>A Solvent-Free Process Enabled by Polytetrafluoroethlyene/Carbon Black Composites for Fabricating Electrodes for Lithium-Ion Batteries with a High Volumetric Energy</b><br><span class="doi">Journal of the Electrochemical Society · 10.1149/1945-7111/acf525 · 성균나노과학기술원</span></td></tr><tr><td class="c nw">40</td><td class="r nw">2.22</td><td>Park J.H.</td><td class="c">제1·교신</td><td class="r nw">30</td><td class="r nw">2편</td><td><b>D-Band ×8 Frequency Multiplier Using Complementary Differential Frequency Doubler</b><br><span class="doi">IEEE Microwave and Wireless Technology Letters · 10.1109/lmwc.2022.3216019 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">41</td><td class="r nw">2.21</td><td>Mondal S.; Das K.C.</td><td class="c">제1·교신</td><td class="r nw">24</td><td class="r nw">1편</td><td><b>Degree-Based Graph Entropy in Structure–Property Modeling</b><br><span class="doi">Entropy · 10.3390/e25071092 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">42</td><td class="r nw">2.21</td><td>Yoon H.J.</td><td class="c">제1·교신</td><td class="r nw">5</td><td class="r nw">1편</td><td><b>Design of Propulsion Motor for EV to Mitigate Shaft Voltage Considering Electromagnetic Performance</b><br><span class="doi">2023 26th International Conference on Electrical Machines and Systems Icems 2023 · 10.1109/icems59686.2023.10345156 · 미연결</span></td></tr><tr><td class="c nw">43</td><td class="r nw">2.21</td><td>Lee Y.</td><td class="c">제1</td><td class="r nw">4</td><td class="r nw">1편</td><td><b>Privacy Preserving Stress Detection System Using Physiological Data from Wearable Device</b><br><span class="doi">Applied Human Factors and Ergonomics International · 10.54941/ahfe1002853 · 일반대학원</span></td></tr><tr><td class="c nw">44</td><td class="r nw">2.21</td><td>Kang S.</td><td class="c">교신</td><td class="r nw">35</td><td class="r nw">2편</td><td><b>Learning from single-defect wafer maps to classify mixed-defect wafer maps</b><br><span class="doi">Expert Systems with Applications · 10.1016/j.eswa.2023.120923 · 공과대학</span></td></tr><tr><td class="c nw">45</td><td class="r nw">2.21</td><td>Chae K.; Kim Y.</td><td class="c">제1·교신</td><td class="r nw">33</td><td class="r nw">2편</td><td><b>DS2MA: A Deep Learning-Based Spectrum Sensing Scheme for a Multi-Antenna Receiver</b><br><span class="doi">IEEE Wireless Communications Letters · 10.1109/lwc.2023.3250257 · 소프트웨어융합대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">46</td><td class="r nw">2.21</td><td>Jang M.S.; Lee J.H.</td><td class="c">공동제1·교신</td><td class="r nw">33</td><td class="r nw">2편</td><td><b>CD44-mediated tumor homing of hyaluronic acid nanogels for hypoxia-activated photodynamic therapy against tumor</b><br><span class="doi">Colloids and Surfaces B Biointerfaces · 10.1016/j.colsurfb.2023.113395 · 의과대학</span></td></tr><tr><td class="c nw">47</td><td class="r nw">2.21</td><td>Li Y.; Park H.S.; Li W.</td><td class="c">제1·교신</td><td class="r nw">31</td><td class="r nw">2편</td><td><b>Single-Phase Ternary Compounds with a Disordered Lattice and Liquid Metal Phase for High-Performance Li-Ion Battery Anodes</b><br><span class="doi">Nano Micro Letters · 10.1007/s40820-023-01026-4 · 공과대학</span></td></tr><tr><td class="c nw">48</td><td class="r nw">2.21</td><td>Jeong D.Y.; Lee H.Y.</td><td class="c">공동제1·교신</td><td class="r nw">29</td><td class="r nw">2편</td><td><b>Tumor-infiltrating lymphocyte enrichment predicted by CT radiomics analysis is associated with clinical outcomes of non-small cell lung cancer patients receiving immune checkpoint inhibitors</b><br><span class="doi">Frontiers in Immunology · 10.3389/fimmu.2022.1038089 · 의과대학</span></td></tr><tr><td class="c nw">49</td><td class="r nw">2.21</td><td>Kim S.J.</td><td class="c">제1</td><td class="r nw">29</td><td class="r nw">2편</td><td><b>Self-assembled peptide-substance P hydrogels alleviate inflammation and ameliorate the cartilage regeneration in knee osteoarthritis</b><br><span class="doi">Biomaterials Research · 10.1186/s40824-023-00387-6 · 의과대학</span></td></tr><tr><td class="c nw">50</td><td class="r nw">2.20</td><td>Kang S.W.</td><td class="c">교신</td><td class="r nw">20</td><td class="r nw">1편</td><td><b>An Outbreak of Fungal Endophthalmitis after Cataract Surgery in South Korea</b><br><span class="doi">JAMA Ophthalmology · 10.1001/jamaophthalmol.2022.5927 · 의과대학</span></td></tr></tbody></table><p class="i815-title">별첨 4. 2024년 성균관대 주저자 최상위 50편</p><p class="t1">FWCI 상위 10~15% 구간에서 2024년 출판 논문을 FWCI 높은 순(동률은 추가 필요 피인용 적은 순)으로 정렬한 목록이다. 「추가 필요」는 상위 10% 경계 FWCI 2.35 도달에 필요한 추가 피인용 편수이며, 「피인용」은 Scopus 기준 현재 피인용 횟수, 「역할」은 성균관대 연구자가 맡은 주저자 역할이다.</p></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><table class="app">
+<colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup>
+<thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead>
+<tbody>
+<tr><td class="c nw">1</td><td class="r nw">2.34</td><td>Yuan Y.; Song X.; Lee J.Y.</td><td class="c">제1·교신</td><td class="r nw">78</td><td class="r nw">1편</td><td><b>Recent Progress and Regulation Strategies of Layered Materials as Cathode of Aqueous Zinc-Ion Batteries</b><br><span class="doi">Energy and Environmental Materials · 10.1002/eem2.12632 · 자연과학대학</span></td></tr>
+<tr><td class="c nw">2</td><td class="r nw">2.34</td><td>Baik J.M.</td><td class="c">교신</td><td class="r nw">25</td><td class="r nw">1편</td><td><b>In Situ Phase Separation-Induced Self-Healing Catalyst for Efficient Direct Seawater Electrolysis</b><br><span class="doi">ACS Nano · 10.1021/acsnano.4c06220 · 공과대학</span></td></tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<tr><td class="c nw">3</td><td class="r nw">2.34</td><td>Kim J.H.; Lee W.</td><td class="c">제1·교신</td><td class="r nw">21</td><td class="r nw">1편</td><td><b>Reducing Peptidoglycan Crosslinking by Chemical Modulator Reverts β-lactam Resistance in Methicillin-Resistant Staphylococcus aureus</b><br><span class="doi">Advanced Science · 10.1002/advs.202400858 · 약학대학</span></td></tr><tr><td class="c nw">4</td><td class="r nw">2.34</td><td>Shin W.</td><td class="c">공동제1</td><td class="r nw">21</td><td class="r nw">1편</td><td><b>All-Ferroelectric Spiking Neural Networks via Morphotropic Phase Boundary Neurons</b><br><span class="doi">Advanced Science · 10.1002/advs.202407870 · 정보통신대학</span></td></tr><tr><td class="c nw">5</td><td class="r nw">2.34</td><td>Tan S.W.; Jackman J.A.</td><td class="c">제1·교신</td><td class="r nw">20</td><td class="r nw">1편</td><td><b>Membrane-Disruptive Effects of Fatty Acid and Monoglyceride Mitigants on E. coli Bacteria-Derived Tethered Lipid Bilayers</b><br><span class="doi">Molecules · 10.3390/molecules29010237 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">6</td><td class="r nw">2.34</td><td>Kwon M.r.; Youn I.</td><td class="c">제1·교신</td><td class="r nw">14</td><td class="r nw">1편</td><td><b>Diagnostic Performance of Artificial Intelligence–Based Computer-Aided Detection Software for Automated Breast Ultrasound</b><br><span class="doi">Academic Radiology · 10.1016/j.acra.2023.09.013 · 의과대학</span></td></tr><tr><td class="c nw">7</td><td class="r nw">2.34</td><td>Kim Y.H.</td><td class="c">교신</td><td class="r nw">14</td><td class="r nw">1편</td><td><b>Use of cortical hemodynamic responses in digital therapeutics for upper limb rehabilitation in patients with stroke</b><br><span class="doi">Journal of Neuroengineering and Rehabilitation · 10.1186/s12984-024-01404-y · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">8</td><td class="r nw">2.34</td><td>Kang D.; Lee H.Y.</td><td class="c">공동제1·교신</td><td class="r nw">13</td><td class="r nw">1편</td><td><b>Computed tomography characteristics of cN0 primary non-small cell lung cancer predict occult lymph node metastasis</b><br><span class="doi">European Radiology · 10.1007/s00330-024-10835-z · 의과대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">9</td><td class="r nw">2.34</td><td>Park S.J.; Kim H.J.</td><td class="c">제1·교신</td><td class="r nw">11</td><td class="r nw">1편</td><td><b>Clinical Significance of Lordosis Orientation on Proximal Junctional Kyphosis Development in Long-Segment Fusion Surgery for Adult Spinal Deformity</b><br><span class="doi">World Neurosurgery · 10.1016/j.wneu.2023.12.082 · 의과대학</span></td></tr><tr><td class="c nw">10</td><td class="r nw">2.34</td><td>Lee S.W.</td><td class="c">교신</td><td class="r nw">11</td><td class="r nw">1편</td><td><b>Artificial Neural Network-Based Data-Driven Parameter Estimation Approach: Applications in PMDC Motors</b><br><span class="doi">Mathematics · 10.3390/math12213407 · 의과대학</span></td></tr><tr><td class="c nw">11</td><td class="r nw">2.33</td><td>Kim S.B.; Bae H.Y.</td><td class="c">제1·교신</td><td class="r nw">28</td><td class="r nw">1편</td><td><b>“On-Water” accelerated dearomative cycloaddition via aquaphotocatalysis</b><br><span class="doi">Nature Communications · 10.1038/s41467-024-47861-w · 자연과학대학</span></td></tr><tr><td class="c nw">12</td><td class="r nw">2.33</td><td>Kim J.; Pang C.</td><td class="c">제1·교신</td><td class="r nw">27</td><td class="r nw">1편</td><td><b>A Reversible, Versatile Skin-Attached Haptic Interface Platform with Bioinspired Interconnection Architectures Capable of Resisting Sweat and Vibration</b><br><span class="doi">Advanced Functional Materials · 10.1002/adfm.202311167 · 공과대학</span></td></tr><tr><td class="c nw">13</td><td class="r nw">2.33</td><td>Kang Y.K.; Kim M.G.</td><td class="c">제1·교신</td><td class="r nw">24</td><td class="r nw">1편</td><td><b>Enhancement of photosensitivity and stability of Sn-12 EUV resist by integrating photoactive nitrate anion</b><br><span class="doi">Applied Surface Science · 10.1016/j.apsusc.2024.159564 · 일반대학원</span></td></tr><tr><td class="c nw">14</td><td class="r nw">2.33</td><td>Choi G.; Jeon J.</td><td class="c">제1·교신</td><td class="r nw">19</td><td class="r nw">1편</td><td><b>Radiation effects on multi-channel Forksheet-FET and Nanosheet-FET considering the bottom dielectric isolation scheme</b><br><span class="doi">Nuclear Engineering and Technology · 10.1016/j.net.2024.06.031 · 정보통신대학</span></td></tr><tr><td class="c nw">15</td><td class="r nw">2.33</td><td>Han S.</td><td class="c">제1</td><td class="r nw">14</td><td class="r nw">1편</td><td><b>Local ablation for hepatocellular carcinoma: 2024 expert consensus-based practical recommendation of the Korean Liver Cancer Association</b><br><span class="doi">Journal of Liver Cancer · 10.17998/jlc.2024.08.04 · 의과대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">16</td><td class="r nw">2.32</td><td>Chung J.H.</td><td class="c">교신</td><td class="r nw">17</td><td class="r nw">1편</td><td><b>Mortality rate and causes of death in papillary thyroid microcarcinoma</b><br><span class="doi">Endocrine · 10.1007/s12020-023-03510-8 · 의과대학</span></td></tr><tr><td class="c nw">17</td><td class="r nw">2.31</td><td>Yu K.M.; Lim S.K.</td><td class="c">제1·교신</td><td class="r nw">14</td><td class="r nw">1편</td><td><b>Analysis of the influence of host lifestyle (coffee consumption, drinking, and smoking) on Korean oral microbiome</b><br><span class="doi">Forensic Science International Genetics · 10.1016/j.fsigen.2023.102942 · 일반대학원</span></td></tr><tr><td class="c nw">18</td><td class="r nw">2.31</td><td>Lee J.; Lee W.T.; Youn Y.S.</td><td class="c">제1·교신</td><td class="r nw">13</td><td class="r nw">1편</td><td><b>Cancer cell membrane-decorated hybrid liposomes for treating metastatic breast cancer based on enhanced cancer immunotherapy</b><br><span class="doi">Journal of Pharmaceutical Investigation · 10.1007/s40005-023-00661-8 · 약학대학</span></td></tr><tr><td class="c nw">19</td><td class="r nw">2.31</td><td>Park S.Y.; Lee J.; Shim Y.M.</td><td class="c">제1·교신</td><td class="r nw">12</td><td class="r nw">1편</td><td><b>Clinical and Pathologic Supraclavicular Lymph Node Metastases in Esophageal Squamous Cell Carcinoma Treated by Esophagectomy with Three-Field Lymph Node Dissection</b><br><span class="doi">Annals of Surgical Oncology · 10.1245/s10434-023-14555-4 · 의과대학</span></td></tr><tr><td class="c nw">20</td><td class="r nw">2.31</td><td>Park S.; Yoon H.; Jin Chung M.</td><td class="c">제1·교신</td><td class="r nw">10</td><td class="r nw">1편</td><td><b>Artificial intelligence-based evaluation of carotid artery compressibility via point-of-care ultrasound in determining the return of spontaneous circulation during cardiopulmonary resuscitation</b><br><span class="doi">Resuscitation · 10.1016/j.resuscitation.2024.110302 · 의과대학</span></td></tr><tr><td class="c nw">21</td><td class="r nw">2.31</td><td>Lhee D.; Yoon H.S.</td><td class="c">제1·교신</td><td class="r nw">2</td><td class="r nw">1편</td><td><b>The Evolutionary Origin of Primary Plastids</b><br><span class="doi">Endosymbiotic Organelle Acquisition Solutions to the Problem of Protein Localization and Membrane Passage · 10.1007/978-3-031-57446-7_1 · 자연과학대학</span></td></tr><tr><td class="c nw">22</td><td class="r nw">2.31</td><td>Jo Y.; Kim I.</td><td class="c">제1·교신</td><td class="r nw">64</td><td class="r nw">2편</td><td><b>Advanced biological imaging techniques based on metasurfaces</b><br><span class="doi">Opto Electronic Advances · 10.29026/oea.2024.240122 · 양자생명물리과학원</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">23</td><td class="r nw">2.30</td><td>Ghergherehchi M.</td><td class="c">교신</td><td class="r nw">23</td><td class="r nw">1편</td><td><b>Controlling the Electro-Optical Properties of an AlSb Monolayer with a DLHC Structure through Phosphorus Alloying: A DFT Study</b><br><span class="doi">Journal of Physical Chemistry C · 10.1021/acs.jpcc.3c08348 · 정보통신대학</span></td></tr><tr><td class="c nw">24</td><td class="r nw">2.29</td><td>Jin Y.; Lee I.H.; Whang D.</td><td class="c">제1·교신</td><td class="r nw">28</td><td class="r nw">1편</td><td><b>Vertically Aligned Conductive Metal–Organic Frameworks with Switchable Electrical Conductivity for Li Metal Anode</b><br><span class="doi">Advanced Functional Materials · 10.1002/adfm.202310097 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">25</td><td class="r nw">2.29</td><td>Kwon O.S.</td><td class="c">교신</td><td class="r nw">26</td><td class="r nw">1편</td><td><b>N-Heterocyclic Carbene–Graphene Nanotransistor Based on Covalent Bond for Ultrastable Biosensors</b><br><span class="doi">Advanced Functional Materials · 10.1002/adfm.202310377 · 성균나노과학기술원</span></td></tr><tr><td class="c nw">26</td><td class="r nw">2.29</td><td>Ji D.; Kim J.</td><td class="c">제1·교신</td><td class="r nw">26</td><td class="r nw">1편</td><td><b>Thermal Interface Hydrogel Composites Mechanically Compliant with Curvy Skins and Rigid Electronic Modules</b><br><span class="doi">Advanced Functional Materials · 10.1002/adfm.202402144 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">27</td><td class="r nw">2.29</td><td>Park H.; Shin H.</td><td class="c">제1·교신</td><td class="r nw">22</td><td class="r nw">1편</td><td><b>Practical and Thermal Atomic Layer Deposition of NiO as Hole-Transporting Layers for Inverted Perovskite Solar Cells</b><br><span class="doi">Solar Rrl · 10.1002/solr.202300858 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">28</td><td class="r nw">2.29</td><td>Chung J.W.; Bang O.Y.</td><td class="c">제1·교신</td><td class="r nw">16</td><td class="r nw">1편</td><td><b>Edoxaban for the treatment of hypercoagulability and cerebral thromboembolism associated with cancer: A randomized clinical trial of biomarker targets</b><br><span class="doi">International Journal of Stroke · 10.1177/17474930241239266 · 의과대학</span></td></tr><tr><td class="c nw">29</td><td class="r nw">2.29</td><td>Zhang M.</td><td class="c">제1·교신</td><td class="r nw">13</td><td class="r nw">1편</td><td><b>Transboundary fine dust pollution in China and Korea: How has international politics impeded environmental negotiations?</b><br><span class="doi">Asia and the Pacific Policy Studies · 10.1002/app5.384 · 동아시아학술원</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">30</td><td class="r nw">2.29</td><td>Sun X.; Park E.</td><td class="c">제1·교신</td><td class="r nw">13</td><td class="r nw">1편</td><td><b>F-3DGS: Factorized Coordinates and Representations for 3D Gaussian Splatting</b><br><span class="doi">Mm 2024 Proceedings of the 32nd ACM International Conference on Multimedia · 10.1145/3664647.3681116 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">31</td><td class="r nw">2.28</td><td>Nguyen D.A.; Jang A.</td><td class="c">제1·교신</td><td class="r nw">30</td><td class="r nw">1편</td><td><b>Integrated adsorption using ultrahigh-porosity magnesium oxide with multi-output predictive deep belief networks: A robust approach for fluoride treatment</b><br><span class="doi">Chemical Engineering Journal · 10.1016/j.cej.2024.149586 · 수자원전문대학원</span></td></tr><tr><td class="c nw">32</td><td class="r nw">2.28</td><td>Verma D.; Kim J.</td><td class="c">제1·교신</td><td class="r nw">29</td><td class="r nw">1편</td><td><b>Critical interplay between ruthenium oxide and water for the catalytic conversion of lignin to sustainable aviation fuel</b><br><span class="doi">Chemical Engineering Journal · 10.1016/j.cej.2024.151420 · 공과대학</span></td></tr><tr><td class="c nw">33</td><td class="r nw">2.28</td><td>Sharbirin A.S.; Kim J.</td><td class="c">제1·교신</td><td class="r nw">22</td><td class="r nw">1편</td><td><b>Highly enhanced UV absorption and light emission of monolayer WS2 through hybridization with Ti2N MXene quantum dots and g-C3N4 quantum dots</b><br><span class="doi">Opto Electronic Advances · 10.29026/oea.2024.240029 · 성균융합원</span></td></tr><tr><td class="c nw">34</td><td class="r nw">2.28</td><td>Chin S.H.</td><td class="c">제1·교신</td><td class="r nw">20</td><td class="r nw">1편</td><td><b>Stabilizing Single-Source Evaporated Perovskites with Organic Interlayers for Amplified Spontaneous Emission</b><br><span class="doi">Advanced Optical Materials · 10.1002/adom.202302701 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">35</td><td class="r nw">2.28</td><td>Park J.; Lee J.Y.</td><td class="c">제1·교신</td><td class="r nw">19</td><td class="r nw">1편</td><td><b>A Design Strategy for Multiple Resonance-Induced Pure Violet Thermally Activated Delayed Fluorescence Emitters with a Narrow Emission Band</b><br><span class="doi">Advanced Optical Materials · 10.1002/adom.202301626 · 대학 미상(rims 연결)</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">36</td><td class="r nw">2.28</td><td>Park J.; Chang Y.</td><td class="c">제1·교신</td><td class="r nw">10</td><td class="r nw">1편</td><td><b>Menopausal stages and overactive bladder symptoms in middle-aged women: A cross-sectional study</b><br><span class="doi">BJOG an International Journal of Obstetrics and Gynaecology · 10.1111/1471-0528.17912 · 의과대학</span></td></tr><tr><td class="c nw">37</td><td class="r nw">2.28</td><td>You S.J.; Kang D.; Cho J.; Oh S.Y.</td><td class="c">제1·교신</td><td class="r nw">10</td><td class="r nw">1편</td><td><b>The influence of advanced maternal age on congenital malformations, short- and long-term outcomes in offspring of nulligravida: a Korean National Cohort Study over 15 years</b><br><span class="doi">Obstetrics and Gynecology Science · 10.5468/ogs.24005 · 의과대학</span></td></tr><tr><td class="c nw">38</td><td class="r nw">2.27</td><td>Mondal S.; Das K.C.</td><td class="c">제1·교신</td><td class="r nw">18</td><td class="r nw">1편</td><td><b>The minimal chemical tree for the difference between geometric–arithmetic and Randić indices</b><br><span class="doi">International Journal of Quantum Chemistry · 10.1002/qua.27336 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">39</td><td class="r nw">2.27</td><td>Kim S.G.</td><td class="c">교신</td><td class="r nw">18</td><td class="r nw">1편</td><td><b>Anterior cingulate cortex-related functional hyperconnectivity underlies sensory hypersensitivity in Grin2b-mutant mice</b><br><span class="doi">Molecular Psychiatry · 10.1038/s41380-024-02572-y · 성균융합원</span></td></tr><tr><td class="c nw">40</td><td class="r nw">2.27</td><td>Oh D.</td><td class="c">교신</td><td class="r nw">14</td><td class="r nw">1편</td><td><b>Prognostic impact of muscle mass loss in elderly patients with oesophageal cancer receiving neoadjuvant chemoradiation therapy</b><br><span class="doi">Journal of Cachexia Sarcopenia and Muscle · 10.1002/jcsm.13462 · 의과대학</span></td></tr><tr><td class="c nw">41</td><td class="r nw">2.27</td><td>Cho Y.; Jeon H.J.</td><td class="c">제1·교신</td><td class="r nw">14</td><td class="r nw">1편</td><td><b>Effect of virtual reality-based biofeedback for depressive and anxiety symptoms: Randomized controlled study</b><br><span class="doi">Journal of Affective Disorders · 10.1016/j.jad.2024.06.031 · 의과대학</span></td></tr><tr><td class="c nw">42</td><td class="r nw">2.27</td><td>Song B.; Moon I.J.</td><td class="c">제1·교신</td><td class="r nw">8</td><td class="r nw">1편</td><td><b>Changes in Revision Cochlear Implantation and Device Failure Profiles</b><br><span class="doi">Clinical and Experimental Otorhinolaryngology · 10.21053/ceo.2023.00010 · 의과대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">43</td><td class="r nw">2.27</td><td>Kim Y.</td><td class="c">교신</td><td class="r nw">6</td><td class="r nw">1편</td><td><b>PeRF: Preemption-enabled RDMA Framework</b><br><span class="doi">Proceedings of the 2024 Usenix Annual Technical Conference Atc 2024 · DOI 없음 · 소프트웨어융합대학</span></td></tr><tr><td class="c nw">44</td><td class="r nw">2.26</td><td>Han J.H.</td><td class="c">제1·교신</td><td class="r nw">25</td><td class="r nw">1편</td><td><b>Public enemies? The differential effects of reputation and celebrity on corporate misconduct scandalization</b><br><span class="doi">Strategic Management Journal · 10.1002/smj.3638 · 경영전문대학원</span></td></tr><tr><td class="c nw">45</td><td class="r nw">2.26</td><td>Kim D.; Song H.</td><td class="c">제1·교신</td><td class="r nw">24</td><td class="r nw">1편</td><td><b>Designing an age-friendly conversational AI agent for mobile banking: the effects of voice modality and lip movement</b><br><span class="doi">International Journal of Human Computer Studies · 10.1016/j.ijhcs.2024.103262 · 일반대학원</span></td></tr><tr><td class="c nw">46</td><td class="r nw">2.26</td><td>Jang S.Y.</td><td class="c">제1·교신</td><td class="r nw">23</td><td class="r nw">1편</td><td><b>Automatic generation of virtual architecture using user activities in metaverse</b><br><span class="doi">International Journal of Human Computer Studies · 10.1016/j.ijhcs.2023.103163 · 건설환경연구소</span></td></tr><tr><td class="c nw">47</td><td class="r nw">2.26</td><td>Fang Y.; Suhr J.</td><td class="c">제1·교신</td><td class="r nw">22</td><td class="r nw">1편</td><td><b>Multi-scale hybrid reinforced super duplex stainless steel matrix composites with high strength and ductility via laser powder bed fusion and an in-situ synthesis strategy</b><br><span class="doi">Additive Manufacturing · 10.1016/j.addma.2024.104152 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">48</td><td class="r nw">2.26</td><td>Jackman J.A.</td><td class="c">제1·교신</td><td class="r nw">14</td><td class="r nw">1편</td><td><b>Antiviral screening of natural, anti-inflammatory compound library against African swine fever virus</b><br><span class="doi">Virology Journal · 10.1186/s12985-024-02374-2 · 공과대학</span></td></tr><tr><td class="c nw">49</td><td class="r nw">2.26</td><td>Lee H.K.; Park S.U.; Kong S.; Chun I.Y.; Park H.Y.; Won S.M.</td><td class="c">제1·교신</td><td class="r nw">26</td><td class="r nw">2편</td><td><b>Real-time deep learning-assisted mechano-acoustic system for respiratory diagnosis and multifunctional classification</b><br><span class="doi">Npj Flexible Electronics · 10.1038/s41528-024-00355-7 · 삼성융합의과학원</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">50</td><td class="r nw">2.25</td><td>Kim K.</td><td class="c">제1</td><td class="r nw">17</td><td class="r nw">1편</td><td><b>Associations of Urban Blue and Green Spaces with Coronary Artery Calcification in Black Individuals and Disadvantaged Neighborhoods</b><br><span class="doi">Circulation · 10.1161/circulationaha.123.067992 · 의과대학</span></td></tr></tbody></table><p class="i815-title">별첨 5. 2025년 성균관대 주저자 최상위 50편</p><p class="t1">FWCI 상위 10~15% 구간에서 2025년 출판 논문을 FWCI 높은 순(동률은 추가 필요 피인용 적은 순)으로 정렬한 목록이다. 「추가 필요」는 상위 10% 경계 FWCI 2.52 도달에 필요한 추가 피인용 편수이며, 「피인용」은 Scopus 기준 현재 피인용 횟수, 「역할」은 성균관대 연구자가 맡은 주저자 역할이다.</p><table class="app">
+<colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup>
+<thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead>
+<tbody>
+<tr><td class="c nw">1</td><td class="r nw">2.51</td><td>Kovalenko M.V.</td><td class="c">교신</td><td class="r nw">45</td><td class="r nw">1편</td><td><b>A Decade of Lead Halide Perovskites for Direct-Conversion X-ray and Gamma Detection: Technology Readiness Level and Challenges</b><br><span class="doi">Advanced Materials · 10.1002/adma.202418465 · 성균에너지과학기술원</span></td></tr>
+<tr><td class="c nw">2</td><td class="r nw">2.51</td><td>Park B.</td><td class="c">교신</td><td class="r nw">22</td><td class="r nw">1편</td><td><b>Label-free optical microscopy with artificial intelligence: a new paradigm in pathology</b><br><span class="doi">Biophotonics Discovery · 10.1117/1.bios.2.2.020901 · 일반대학원</span></td></tr>
+<tr><td class="c nw">3</td><td class="r nw">2.51</td><td>Kim S.</td><td class="c">제1·교신</td><td class="r nw">16</td><td class="r nw">1편</td><td><b>Unveiling product imagination and decision comfort through personalized virtual try-on: the moderating role of spatial processing perception</b><br><span class="doi">Journal of Research in Interactive Marketing · 10.1108/jrim-01-2024-0015 · 예술대학</span></td></tr>
+<tr><td class="c nw">4</td><td class="r nw">2.51</td><td>Gyeong Kim M.; Chang Lee K.</td><td class="c">제1·교신</td><td class="r nw">15</td><td class="r nw">1편</td><td><b>Proposing the “Digital Agenticity Theory” to analyze user engagement in conversational AI chatbot</b><br><span class="doi">Journal of Business Research · 10.1016/j.jbusres.2024.115162 · 일반대학원</span></td></tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">5</td><td class="r nw">2.51</td><td>Lee H.; Jung H.S.</td><td class="c">제1·교신</td><td class="r nw">14</td><td class="r nw">1편</td><td><b>From corporate earnings calls to social impact: Exploring ESG signals in S&amp;P 500 ESG index companies through transformer-based models</b><br><span class="doi">Journal of Cleaner Production · 10.1016/j.jclepro.2025.145320 · 소프트웨어융합대학</span></td></tr><tr><td class="c nw">6</td><td class="r nw">2.51</td><td>Kim J.; Park H.J.</td><td class="c">제1·교신</td><td class="r nw">9</td><td class="r nw">1편</td><td><b>Structure–activity relationship studies of Imidazo[1′,2′:1,6]pyrido[2,3-d]pyrimidine derivatives to develop selective FGFR inhibitors as anticancer agents for FGF19-overexpressed hepatocellular carcinoma</b><br><span class="doi">European Journal of Medicinal Chemistry · 10.1016/j.ejmech.2024.117047 · 약학대학</span></td></tr><tr><td class="c nw">7</td><td class="r nw">2.51</td><td>Park Y.J.; Kim S.J.</td><td class="c">제1·교신</td><td class="r nw">6</td><td class="r nw">1편</td><td><b>Different Level and Difficulties with Financial Burden in Multiple Myeloma Patients and Caregivers: A Dyadic Qualitative Study</b><br><span class="doi">Seminars in Oncology Nursing · 10.1016/j.soncn.2025.151848 · 삼성융합의과학원</span></td></tr><tr><td class="c nw">8</td><td class="r nw">2.51</td><td>Heo S.; Lee G.T.; Shin T.G.</td><td class="c">제1·교신</td><td class="r nw">4</td><td class="r nw">1편</td><td><b>Scale to predict risk for refractory septic shock based on a hybrid approach using machine learning and regression modeling</b><br><span class="doi">Emergencias · 10.55633/s3me/108.2024 · 의과대학</span></td></tr><tr><td class="c nw">9</td><td class="r nw">2.50</td><td>Jeong J.; Grätzel M.</td><td class="c">제1·교신</td><td class="r nw">21</td><td class="r nw">1편</td><td><b>Carbazole Treated Waterproof Perovskite Films with Improved Solar Cell Performance</b><br><span class="doi">Advanced Energy Materials · 10.1002/aenm.202401965 · 성균융합원</span></td></tr><tr><td class="c nw">10</td><td class="r nw">2.50</td><td>Jeong H.M.</td><td class="c">교신</td><td class="r nw">17</td><td class="r nw">1편</td><td><b>Zeolitic imidazolate framework-derived bifunctional CoO-Mn3O4 heterostructure cathode enhancing oxygen reduction/evolution via dynamic O-vacancy formation and healing for high-performance Zn-air batteries</b><br><span class="doi">Energy Storage Materials · 10.1016/j.ensm.2025.104040 · 공과대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">11</td><td class="r nw">2.50</td><td>Wei Q.</td><td class="c">교신</td><td class="r nw">16</td><td class="r nw">1편</td><td><b>Magnetic separation assisted NiTiO3/CdIn2S4 Z-scheme heterojunction photoelectrochemical aptasensor for zearalenone detection</b><br><span class="doi">Journal of Colloid and Interface Science · 10.1016/j.jcis.2025.138481 · 자연과학대학</span></td></tr><tr><td class="c nw">12</td><td class="r nw">2.50</td><td>Son J.; Pang C.</td><td class="c">제1·교신</td><td class="r nw">15</td><td class="r nw">1편</td><td><b>Suction-forced triboelectricity escalation by incorporating biomimetic 3-dimensional surface architectures</b><br><span class="doi">Nano Energy · 10.1016/j.nanoen.2024.110480 · 공과대학</span></td></tr><tr><td class="c nw">13</td><td class="r nw">2.50</td><td>Park S.</td><td class="c">교신</td><td class="r nw">14</td><td class="r nw">1편</td><td><b>Internal carbonation of calcium silicate cement incorporated with Na2CO3 and NaHCO3</b><br><span class="doi">Construction and Building Materials · 10.1016/j.conbuildmat.2024.139732 · 공과대학</span></td></tr><tr><td class="c nw">14</td><td class="r nw">2.50</td><td>Sung J.; Cho S.Y.</td><td class="c">제1·교신</td><td class="r nw">10</td><td class="r nw">1편</td><td><b>Long-term outcomes of enzyme replacement therapy from a large cohort of Korean patients with mucopolysaccharidosis IVA (Morquio A syndrome)</b><br><span class="doi">Molecular Genetics and Metabolism Reports · 10.1016/j.ymgmr.2025.101189 · 의과대학</span></td></tr><tr><td class="c nw">15</td><td class="r nw">2.49</td><td>Son M.</td><td class="c">제1</td><td class="r nw">1</td><td class="r nw">1편</td><td><b>SPORTING EVENTS AND CRIME: A Meta-Analysis</b><br><span class="doi">Routledge Handbook of Sport Security · 10.4324/9781032641300-16 · 스포츠과학대학</span></td></tr><tr><td class="c nw">16</td><td class="r nw">2.48</td><td>Gaur A.; Han H.S.</td><td class="c">제1·교신</td><td class="r nw">36</td><td class="r nw">1편</td><td><b>Chloride-Ion Blocking in Seawater Electrolysis: Narrating the Tale of Likes and Dislikes Between Anode and Ions</b><br><span class="doi">Energy and Environmental Materials · 10.1002/eem2.12817 · 대학 미상(rims 연결)</span></td></tr><tr><td class="c nw">17</td><td class="r nw">2.48</td><td>Kang S.; Kim S.</td><td class="c">제1·교신</td><td class="r nw">12</td><td class="r nw">1편</td><td><b>An 18-g haptic feedback ring with a three-axis force-sensing skin</b><br><span class="doi">Nature Electronics · 10.1038/s41928-025-01515-x · 공과대학</span></td></tr><tr><td class="c nw">18</td><td class="r nw">2.48</td><td>Oh H.J.; Jung S.Y.</td><td class="c">제1·교신</td><td class="r nw">12</td><td class="r nw">1편</td><td><b>Performance Improvement of Wound Field Synchronous Motor for EV Propulsion Applying Grain-Oriented Electrical Steel</b><br><span class="doi">IEEE Transactions on Magnetics · 10.1109/tmag.2024.3518457 · 정보통신대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">19</td><td class="r nw">2.48</td><td>Sim H.J.; Jeon J.W.</td><td class="c">제1·교신</td><td class="r nw">2</td><td class="r nw">1편</td><td><b>Real-Time Autonomous Driving in High-Illumination Conditions Using Kalman Filter</b><br><span class="doi">2025 International Technical Conference on Circuits Systems Computers and Communications Itc Cscc 2025 · 10.1109/itc-cscc66376.2025.11137647 · 정보통신대학</span></td></tr><tr><td class="c nw">20</td><td class="r nw">2.48</td><td>Choi M.K.</td><td class="c">제1·교신</td><td class="r nw">2</td><td class="r nw">1편</td><td><b>FPGA-Based Low Power Autonomous Driving System Using Accelerated Hough Transform</b><br><span class="doi">2025 International Technical Conference on Circuits Systems Computers and Communications Itc Cscc 2025 · 10.1109/itc-cscc66376.2025.11137663 · 정보통신대학</span></td></tr><tr><td class="c nw">21</td><td class="r nw">2.48</td><td>Hwang G.H.; Wook Jeon J.</td><td class="c">제1·교신</td><td class="r nw">2</td><td class="r nw">1편</td><td><b>Deep Learning-Based Autonomous Vehicle on SoC</b><br><span class="doi">2025 International Technical Conference on Circuits Systems Computers and Communications Itc Cscc 2025 · 10.1109/itc-cscc66376.2025.11137739 · 정보통신대학</span></td></tr><tr><td class="c nw">22</td><td class="r nw">2.47</td><td>Phan N.M.; Kim J.</td><td class="c">제1·교신</td><td class="r nw">13</td><td class="r nw">1편</td><td><b>Mesoporous polydopamine nanoparticle-based tolerogenic vaccine induces antigen-specific immune tolerance to prevent and treat autoimmune multiple sclerosis</b><br><span class="doi">Biomaterials · 10.1016/j.biomaterials.2024.122997 · 공과대학</span></td></tr><tr><td class="c nw">23</td><td class="r nw">2.47</td><td>Kim J.; Lee S.C.</td><td class="c">공동제1·교신</td><td class="r nw">8</td><td class="r nw">1편</td><td><b>Prognostic Implication of Left Ventricular Global Longitudinal Strain in Patients With Hypertrophic Cardiomyopathy and Coexisting Hypertension</b><br><span class="doi">Korean Circulation Journal · 10.4070/kcj.2024.0213 · 의과대학</span></td></tr><tr><td class="c nw">24</td><td class="r nw">2.47</td><td>Choi H.I.</td><td class="c">제1·교신</td><td class="r nw">6</td><td class="r nw">1편</td><td><b>Segment-Specific Analysis of Carotid Intima-Media Thickness and Its Association with Cardiovascular Risk Factors in a Large Healthy Cohort</b><br><span class="doi">Journal of Clinical Medicine · 10.3390/jcm14061918 · 의과대학</span></td></tr><tr><td class="c nw">25</td><td class="r nw">2.47</td><td>Jang Y.J.; Lim S.W.; Kim D.K.</td><td class="c">제1·교신</td><td class="r nw">6</td><td class="r nw">1편</td><td><b>Oxidative Stress and Risk of Dementia in Older Patients with Depression: A Longitudinal Cohort Study Using Plasma Biomarkers</b><br><span class="doi">Medicina Lithuania · 10.3390/medicina61010108 · 삼성융합의과학원</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">26</td><td class="r nw">2.47</td><td>Hwang Y.; Kwon J.Y.</td><td class="c">제1·교신</td><td class="r nw">5</td><td class="r nw">1편</td><td><b>Home-Based Telerehabilitation to Prevent Post-Modified Constraint-Induced Movement Therapy Regression in Unilateral Cerebral Palsy: A Randomized Controlled Trial</b><br><span class="doi">Physical and Occupational Therapy in Pediatrics · 10.1080/01942638.2025.2482257 · 의과대학</span></td></tr><tr><td class="c nw">27</td><td class="r nw">2.47</td><td>Sharbirin A.S.; Kim J.</td><td class="c">제1·교신</td><td class="r nw">1</td><td class="r nw">1편</td><td><b>Synthesis and optical characterization of high-quantum yield UV-emitting MXene quantum dots</b><br><span class="doi">Proceedings of SPIE the International Society for Optical Engineering · 10.1117/12.3060050 · 성균융합원</span></td></tr><tr><td class="c nw">28</td><td class="r nw">2.45</td><td>Kang D.J.</td><td class="c">교신</td><td class="r nw">16</td><td class="r nw">1편</td><td><b>Tuning the catalytic microenvironment by incorporating P atoms into Co9S8 with enhanced water splitting catalytic activity</b><br><span class="doi">Chemical Engineering Journal · 10.1016/j.cej.2025.163531 · 자연과학대학</span></td></tr><tr><td class="c nw">29</td><td class="r nw">2.45</td><td>Yoo C.J.</td><td class="c">교신</td><td class="r nw">16</td><td class="r nw">1편</td><td><b>Upgrading polyethylene plastic waste into a biodegradable polymer: Harnessing a hybrid chemical oxidation–biological conversion approach</b><br><span class="doi">Chemical Engineering Journal · 10.1016/j.cej.2024.158823 · 공과대학</span></td></tr><tr><td class="c nw">30</td><td class="r nw">2.45</td><td>Yao C.; Kim T.</td><td class="c">제1·교신</td><td class="r nw">14</td><td class="r nw">1편</td><td><b>Exploring the Influence of Applied Potential and Catalyst Morphology on the Selectivities of Copper Toward Carbon Dioxide Electroreduction Using Machine Learning</b><br><span class="doi">Advanced Intelligent Systems · 10.1002/aisy.202500311 · 공과대학</span></td></tr><tr><td class="c nw">31</td><td class="r nw">2.45</td><td>Choi J.H.; Cho H.K.</td><td class="c">제1·교신</td><td class="r nw">13</td><td class="r nw">1편</td><td><b>High-Density CuBi2O4 Photocathodes Using Well-Textured Buffer Layers and Their Unassisted Solar Hydrogen Production Performances</b><br><span class="doi">Small · 10.1002/smll.202411800 · 공과대학</span></td></tr><tr><td class="c nw">32</td><td class="r nw">2.45</td><td>Brito S.; Weon B.M.</td><td class="c">제1·교신</td><td class="r nw">10</td><td class="r nw">1편</td><td><b>Age-associated interplay between zinc deficiency and Golgi stress hinders microtubule-dependent cellular signaling and epigenetic control</b><br><span class="doi">Developmental Cell · 10.1016/j.devcel.2024.12.024 · 공과대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">33</td><td class="r nw">2.45</td><td>Park G.H.; Park S.; Lee S.H.</td><td class="c">제1·교신</td><td class="r nw">9</td><td class="r nw">1편</td><td><b>Prospective investigation of biomarker and resistance mechanism using longitudinal cell-free NGS in non-small cell lung cancer with EGFR exon 20 insertion treated with amivantamab</b><br><span class="doi">European Journal of Cancer · 10.1016/j.ejca.2025.115631 · 의과대학</span></td></tr><tr><td class="c nw">34</td><td class="r nw">2.45</td><td>Joung Y.S.</td><td class="c">교신</td><td class="r nw">8</td><td class="r nw">1편</td><td><b>AST-001 versus placebo for social communication in children with autism spectrum disorder: A randomized clinical trial</b><br><span class="doi">Psychiatry and Clinical Neurosciences · 10.1111/pcn.13757 · 의과대학</span></td></tr><tr><td class="c nw">35</td><td class="r nw">2.45</td><td>Cho Y.; Shin J.Y.</td><td class="c">제1·교신</td><td class="r nw">8</td><td class="r nw">1편</td><td><b>Effect of Biological Therapy for Psoriasis on the Development of Psoriatic Arthritis: A Population-Based Cohort Study</b><br><span class="doi">Biodrugs · 10.1007/s40259-024-00689-8 · 약학대학</span></td></tr><tr><td class="c nw">36</td><td class="r nw">2.45</td><td>Choi S.J.</td><td class="c">제1·교신</td><td class="r nw">6</td><td class="r nw">1편</td><td><b>Legislation of Medical Support Tasks in the Nursing Act as a Foundation for Nursing Professionalism and Role Expansion</b><br><span class="doi">Korean Journal of Adult Nursing · 10.7475/kjan.2025.0403 · 의과대학</span></td></tr><tr><td class="c nw">37</td><td class="r nw">2.45</td><td>Omer M.; Choo H.</td><td class="c">제1·교신</td><td class="r nw">2</td><td class="r nw">1편</td><td><b>Integrating Temporal Analysis with Hybrid Machine Learning and Deep Learning Models for Enhanced Air Quality Prediction</b><br><span class="doi">Proceedings of the 2025 19th International Conference on Ubiquitous Information Management and Communication Imcom 2025 · 10.1109/imcom64595.2025.10857575 · 두뇌한국21사업단</span></td></tr><tr><td class="c nw">38</td><td class="r nw">2.45</td><td>Cho J.; Lee S.</td><td class="c">제1·교신</td><td class="r nw">2</td><td class="r nw">1편</td><td><b>Ultrasound Standard Liver Section Classification Independent of Imaging Device</b><br><span class="doi">Proceedings of the 2025 19th International Conference on Ubiquitous Information Management and Communication Imcom 2025 · 10.1109/imcom64595.2025.10857488 · 정보통신대학</span></td></tr><tr><td class="c nw">39</td><td class="r nw">2.44</td><td>Lim W.M.</td><td class="c">교신</td><td class="r nw">18</td><td class="r nw">1편</td><td><b>Service quality in mobile banking</b><br><span class="doi">International Journal of Bank Marketing · 10.1108/ijbm-02-2024-0105 · 성균글로벌리서치센터</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">40</td><td class="r nw">2.44</td><td>Moon S.J.; Kim M.S.; Chung E.S.; Park C.Y.</td><td class="c">제1·교신</td><td class="r nw">8</td><td class="r nw">1편</td><td><b>Use of an insulin titration protocol based on continuous glucose monitoring in postoperative cardiac surgery patients with type 2 diabetes and prediabetes: a randomized controlled trial</b><br><span class="doi">Cardiovascular Diabetology · 10.1186/s12933-025-02747-z · 의과대학</span></td></tr><tr><td class="c nw">41</td><td class="r nw">2.44</td><td>Park S.J.</td><td class="c">제1·교신</td><td class="r nw">7</td><td class="r nw">1편</td><td><b>Different Risk Factors Between Bony and Ligamentous Proximal Junctional Failure in Patients Undergoing Thoracolumbar Fusion to Pelvis for Adult Spinal Deformity</b><br><span class="doi">Spine · 10.1097/brs.0000000000005151 · 의과대학</span></td></tr><tr><td class="c nw">42</td><td class="r nw">2.44</td><td>Park S.J.</td><td class="c">제1·교신</td><td class="r nw">6</td><td class="r nw">1편</td><td><b>Validation of Sagittal Age-adjusted Score in Predicting Proximal Junctional Kyphosis/Failure and Clinical Outcomes Following Adult Spinal Deformity Surgery</b><br><span class="doi">Spine · 10.1097/brs.0000000000005144 · 의과대학</span></td></tr><tr><td class="c nw">43</td><td class="r nw">2.44</td><td>Alam I.; Woo S.S.</td><td class="c">제1·교신</td><td class="r nw">4</td><td class="r nw">1편</td><td><b>SpecXNet: A Dual-Domain Convolutional Network for Robust Deepfake Detection</b><br><span class="doi">Mm 2025 Proceedings of the 33rd ACM International Conference on Multimedia Co Located with mm 2025 · 10.1145/3746027.3755707 · 소프트웨어융합대학</span></td></tr><tr><td class="c nw">44</td><td class="r nw">2.43</td><td>Oh S.</td><td class="c">제1</td><td class="r nw">17</td><td class="r nw">1편</td><td><b>Reduced graphene oxide composite fiber with hierarchical pores for all-solid-state fiber supercapacitors</b><br><span class="doi">Carbon · 10.1016/j.carbon.2025.119998 · 성균융합원</span></td></tr><tr><td class="c nw">45</td><td class="r nw">2.43</td><td>Kim J.; Park B.</td><td class="c">공동제1·교신</td><td class="r nw">14</td><td class="r nw">1편</td><td><b>Light in, sound keys out: photoacoustic PUFs from stochastic nanocomposites</b><br><span class="doi">Nature Communications · 10.1038/s41467-025-62747-1 · 일반대학원</span></td></tr><tr><td class="c nw">46</td><td class="r nw">2.43</td><td>You W.; Ryu D.</td><td class="c">제1·교신</td><td class="r nw">9</td><td class="r nw">1편</td><td><b>Harnessing market mechanisms for greenhouse gas reduction: A comprehensive review</b><br><span class="doi">Environmental Impact Assessment Review · 10.1016/j.eiar.2025.107974 · 경제대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div><div class="sheet numbered">
+    <div class="i815-header">
+      <table>
+        <colgroup><col style="width:38mm"><col style="width:20mm"><col><col style="width:18mm"><col style="width:26mm"></colgroup>
+        <tbody><tr><td class="doc-name" rowspan="4">FWCI 상위 10~15% 구간<br>연구성과 분석 보고서</td><th>프로젝트명</th><td>성균관대학교 학술정보관 연구성과 분석</td><th>작성기관</th><td></td></tr>
+        <tr><th>단계명</th><td>연구성과 분석</td><th>작성일</th><td>2026.09.28</td></tr>
+        <tr><th>활동명</th><td>FWCI 상위구간 추출 (THE 2027판)</td><th>버전</th><td>1.0</td></tr>
+        <tr><th>작업명</th><td colspan="3">성균관대 주저자 최상위 예비군 연도별 선정 (2021~2025)</td></tr>
+      </tbody></table>
+    </div>
+  <div class="i815-body"><p class="tbl-caption">(표 계속)</p><table class="app"><colgroup>
+<col style="width:5%"><col style="width:8%"><col style="width:14%"><col style="width:11%">
+<col style="width:7.5%"><col style="width:8%"><col>
+</colgroup><thead><tr><th>순번</th><th>FWCI</th><th>주저자(Scopus)</th><th>역할</th><th>피인용</th><th>추가 필요</th><th>제목 · 저널 · DOI · 소속</th></tr></thead><tbody><tr><td class="c nw">47</td><td class="r nw">2.43</td><td>Kim H.D.</td><td class="c">교신</td><td class="r nw">8</td><td class="r nw">1편</td><td><b>Efficacy and safety of everolimus for patients with focal cortical dysplasia type 2</b><br><span class="doi">Epilepsia Open · 10.1002/epi4.13104 · 의과대학</span></td></tr><tr><td class="c nw">48</td><td class="r nw">2.43</td><td>Jang H.; Lim W.</td><td class="c">제1·교신</td><td class="r nw">8</td><td class="r nw">1편</td><td><b>Toxic effects of dibutyl phthalate on trophoblast through mitochondria mediated cellular dysfunction</b><br><span class="doi">Toxicology and Applied Pharmacology · 10.1016/j.taap.2024.117186 · 자연과학대학</span></td></tr><tr><td class="c nw">49</td><td class="r nw">2.43</td><td>Hwang J.</td><td class="c">제1</td><td class="r nw">1</td><td class="r nw">1편</td><td><b>Co-Optimization of Floorplanning and Decap Placement for TI and PI Based on Machine Learning</b><br><span class="doi">IEEE International Symposium on Electromagnetic Compatibility · 10.1109/emcsipi52291.2025.11169893 · 정보통신대학</span></td></tr><tr><td class="c nw">50</td><td class="r nw">2.42</td><td>Lee J.</td><td class="c">교신</td><td class="r nw">12</td><td class="r nw">1편</td><td><b>Autonomous self-healing and stretchable triboelectric nanogenerator with hybrid double-network elastomer for self-powered multifunctional electronics</b><br><span class="doi">Advanced Composites and Hybrid Materials · 10.1007/s42114-025-01479-8 · 정보통신대학</span></td></tr></tbody></table></div>
+    <div class="i815-footer">
+      <img src="skku-logo.jpg" alt="성균관대학교">
+      <span></span>
+    </div>
+  </div></div>
+
+<script>
+/* 목차 쪽번호 — 쪽나눔(i815-paginate.js)이 끝난 뒤 각 제목이 놓인 쪽 번호를 채운다 */
+(function(){
+  function fill(){
+    var pages=[].slice.call(document.querySelectorAll('.i815-pages .sheet.numbered'));
+    if(!pages.length) return false;
+    var where={};
+    pages.forEach(function(sh,i){
+      [].forEach.call(sh.querySelectorAll('.d1,.d2,.i815-title'),function(h){
+        var t=h.textContent.trim(); if(!(t in where)) where[t]=i+1;
+      });
+    });
+    [].forEach.call(document.querySelectorAll('.i815-toc a[data-toc]'),function(a){
+      var key=a.getAttribute('data-toc').replace(/^(\d+\.|[가-힣]\.)\s*/,'');
+      var pg=where[key]||where[a.getAttribute('data-toc')];
+      if(pg) a.querySelector('.pg').textContent=pg;
+    });
+    return true;
+  }
+  function renumber(){
+    var c1=0,c2=0,c3=0,HG='가나다라마바사아자차카타파하';
+    [].forEach.call(document.querySelectorAll('.i815-pages .i815-body .d1,.i815-pages .i815-body .d2,.i815-pages .i815-body .d3'),function(h){
+      if(h.classList.contains('d1')){c1++;c2=0;c3=0;h.setAttribute('data-n',c1+'. ');}
+      else if(h.classList.contains('d2')){c2++;c3=0;h.setAttribute('data-n',HG.charAt(c2-1)+'. ');}
+      else{c3++;h.setAttribute('data-n',c3+') ');}
+    });
+  }
+  var n=0, t=setInterval(function(){ if(document.documentElement.getAttribute('data-i815-paginated')==='true'||n++>200){ clearInterval(t); renumber(); fill(); } },50);
+})();
+</script>
+
+
+</body></html>

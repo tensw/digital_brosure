@@ -1,0 +1,384 @@
+/* ==========================================================================
+   I815 문서표준 스타일시트 (HTML 구현본)
+   근거 : 문서표준 지침서 I815_PM_121 v1.0 — 나라지식정보 컨소시엄, 2026.7.20
+   대상 : hwp/hwpx 대신 HTML로 작성하는 모든 문서 (PDF 출력 기준 A4 세로)
+   작성 : 2026.09.22
+
+   적용 등급
+     정식 산출물 : 표지 → 개정이력 → 목차 → 본문 → 별첨 전체 구성
+     간이 문서   : 본문 + 쪽번호만. 서식(글꼴·여백·번호·표)은 동일
+   ========================================================================== */
+
+:root{
+  /* --- 쪽 설정 : 지침서 2.나.(2) 문서 여백 설정 --------------------------
+     위 10 / 아래 20 / 왼쪽 20 / 오른쪽 20 mm, 머리말 30 / 꼬리말 15 mm
+     아래아한글 배치 순서 = 용지끝 → 위쪽여백 → 머리말 → 본문 → 꼬리말 → 아래쪽여백
+     따라서 본문 상단 오프셋 = 10+30 = 40mm, 하단 = 20+15 = 35mm            */
+  --i815-paper-w: 210mm;
+  --i815-paper-h: 297mm;
+  --i815-margin-top: 10mm;
+  --i815-margin-bottom: 20mm;
+  --i815-margin-left: 20mm;
+  --i815-margin-right: 20mm;
+  --i815-header-h: 30mm;
+  --i815-footer-h: 15mm;
+
+  /* --- 글꼴 : 지침서 2.나.(1) 서식 설정 ---------------------------------
+     맑은 고딕은 Windows 기본 글꼴이므로 macOS에서는 Apple SD Gothic Neo 로
+     대체된다. 제출본을 Windows 에서 다시 출력하면 지정 글꼴로 렌더링된다.  */
+  --i815-font: "맑은 고딕","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  --i815-font-toc: "HY견명조","HYSMyeongJo","AppleMyungjo","Nanum Myeongjo",serif;
+
+  --i815-size-title: 16pt;   /* 본문 제목            */
+  --i815-size-d1: 14pt;      /* Depth 1  진하게      */
+  --i815-size-d2: 12pt;      /* Depth 2  진하게      */
+  --i815-size-d3: 11pt;      /* Depth 3              */
+  --i815-size-d4: 10pt;      /* Depth 4 = 본문       */
+  --i815-size-th: 11pt;      /* 표 제목  진하게      */
+  --i815-size-td: 11pt;      /* 표 내용              */
+  --i815-size-toc: 13pt;     /* 목차 HY견명조        */
+
+  /* --- 표머리 음영 --------------------------------------------------------
+     지침서 2.다.(2) 원문은 "표머리의 음영은 회색으로 한다" 이다.
+     기본값은 사용자 지정 푸른 계열로 두고, 마더 표준을 문자 그대로 지켜야 하는
+     제출물에는 <body class="i815-doc i815-official"> 로 회색을 복원한다.       */
+  --i815-table-head-bg: #cfe0f0;
+  --i815-table-head-fg: #12325b;
+  --i815-header-label-bg: #e8eff7;
+  --i815-rule: #000000;
+  --i815-ink: #000000;
+  --i815-ink-sub: #333333;
+
+  /* --- 항목 들여쓰기 : 지침서 2.다.(1) 항목 당 두 간격 ------------------
+     본문 10pt 기준 두 간격 = 약 3.9mm. 깊이마다 글꼴 크기가 달라지므로
+     ch 가 아닌 고정 길이로 두어야 단계 간격이 균일하게 유지된다.        */
+  --i815-indent: 4mm;
+  --i815-line: 1.6;
+}
+
+/* 지침서 원문 준수 모드 — 표머리를 회색으로 되돌린다 */
+.i815-doc.i815-official{
+  --i815-table-head-bg:#d9d9d9;
+  --i815-table-head-fg:#000000;
+  --i815-header-label-bg:#efefef;
+}
+
+/* ==========================================================================
+   1. 문서 · 쪽 골격
+   ========================================================================== */
+/* 표의 열 너비 지정이 안여백·테두리에 잠식되지 않도록 문서 전체에 적용한다.
+   table-layout:fixed 에서 content-box 를 쓰면 지정 %가 그대로 지켜지지 않는다. */
+.i815-doc *,
+.i815-doc *::before,
+.i815-doc *::after{box-sizing:border-box}
+
+.i815-doc{
+  margin:0; background:#e8eaef; color:var(--i815-ink);
+  font-family:var(--i815-font); font-size:var(--i815-size-d4);
+  line-height:var(--i815-line);
+  word-break:keep-all; overflow-wrap:break-word;
+  font-feature-settings:"tnum";
+  /* 쪽번호와 항목 번호의 기준점. 쪽이 나뉘어도 번호가 이어지도록
+     .i815-body 가 아니라 문서 단위에서 한 번만 초기화한다. */
+  counter-reset:i815-page d1;
+}
+
+/* 한 장 = A4 한 쪽. 쪽 넘김을 직접 통제해 한글 출력물과 동일한 조판을 얻는다. */
+.i815-doc .sheet{
+  position:relative; box-sizing:border-box;
+  width:var(--i815-paper-w); min-height:var(--i815-paper-h);
+  margin:0 auto; background:#fff;
+  padding:calc(var(--i815-margin-top) + var(--i815-header-h))
+          var(--i815-margin-right)
+          calc(var(--i815-margin-bottom) + var(--i815-footer-h))
+          var(--i815-margin-left);
+  box-shadow:0 1px 3px rgba(0,0,0,.14);
+}
+.i815-doc .sheet + .sheet{margin-top:8mm}
+
+/* 머리말 없는 쪽(고객 제출용·간이 문서)은 상단 여백을 위쪽 여백만 남긴다 */
+.i815-doc .sheet.no-header{padding-top:var(--i815-margin-top)}
+.i815-doc .sheet.no-footer{padding-bottom:var(--i815-margin-bottom)}
+
+/* --- 머리말 : 지침서 2.나.(3) 내부 문서에만 적용, 고객 제출용은 없음 -----
+   지침서의 머리말 적용 예와 같이 표 형식으로 짠다. 왼쪽 칸에 문서명을 두고
+   오른쪽에 프로젝트명·단계명·활동명·작업명·작성자·작성일·버전을 배치한다.     */
+.i815-header{
+  position:absolute; left:var(--i815-margin-left); right:var(--i815-margin-right);
+  top:var(--i815-margin-top); height:var(--i815-header-h);
+  overflow:hidden;
+}
+.i815-header table{
+  width:100%; height:100%; border-collapse:collapse; table-layout:fixed;
+}
+.i815-header th,
+.i815-header td{
+  border:1px solid var(--i815-rule); padding:.5mm 2mm;
+  vertical-align:middle; text-align:left; font-weight:400;
+  font-size:8pt; line-height:1.25;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.i815-header th{
+  background:var(--i815-header-label-bg); color:var(--i815-ink-sub);
+  font-size:7.5pt; text-align:center;
+}
+.i815-header .doc-name{
+  width:38mm; text-align:center; white-space:normal;
+  font-size:10.5pt; font-weight:700; background:transparent; color:var(--i815-ink);
+}
+
+/* --- 꼬리말 : 좌 주관기관 로고 / 우 컨소시엄 이미지 --------------------- */
+.i815-footer{
+  position:absolute; left:var(--i815-margin-left); right:var(--i815-margin-right);
+  bottom:var(--i815-margin-bottom); height:var(--i815-footer-h);
+  display:flex; align-items:center; justify-content:space-between;
+  font-size:9pt; color:var(--i815-ink-sub);
+}
+.i815-footer img{max-height:calc(var(--i815-footer-h) - 3mm); width:auto}
+
+/* --- 쪽번호 : 본문부터, 아래 가운데, 줄표 형식 (- 1 -) ------------------ */
+.i815-doc .sheet.numbered{counter-increment:i815-page}
+.i815-doc .sheet.numbered::after{
+  content:"- " counter(i815-page) " -";
+  position:absolute; left:0; right:0;
+  bottom:calc(var(--i815-margin-bottom) + 2mm);
+  text-align:center; font-size:10pt; color:var(--i815-ink);
+}
+/* 표지·개정이력·목차에는 쪽번호를 부여하지 않는다 (지침서 2.나.(4)) */
+
+/* ==========================================================================
+   2. 표지 — 지침서 2.가.(1)
+   ========================================================================== */
+.i815-cover{
+  display:flex; flex-direction:column; align-items:center;
+  min-height:calc(var(--i815-paper-h) - var(--i815-margin-top)
+                  - var(--i815-margin-bottom));
+  text-align:center;
+}
+.i815-cover .project{font-size:14pt; font-weight:700; margin-top:18mm}
+.i815-cover .project::before{content:"『 "}
+.i815-cover .project::after{content:" 』"}
+.i815-cover .title{font-size:26pt; font-weight:700; letter-spacing:.06em; margin-top:12mm}
+.i815-cover .subtitle{font-size:13pt; margin-top:4mm; color:var(--i815-ink-sub)}
+.i815-cover .date{font-size:13pt; margin-top:24mm}
+.i815-cover .spacer{flex:1}
+
+/* 문서정보 표 : 관리번호·보존기간·작성자·작성일·검토자·검토일·승인자·승인일 */
+.i815-cover .docinfo{width:90mm; margin:0 auto; border-collapse:collapse; font-size:11pt}
+.i815-cover .docinfo th,
+.i815-cover .docinfo td{border:1px solid var(--i815-rule); padding:1.5mm 3mm; text-align:center}
+.i815-cover .docinfo th{background:var(--i815-table-head-bg); color:var(--i815-table-head-fg);
+  font-weight:700; letter-spacing:.3em; width:38%}
+.i815-cover .logo{margin-top:14mm}
+.i815-cover .logo img{height:16mm; width:auto}
+.i815-cover .org{margin-top:4mm; font-size:13pt; font-weight:700}
+.i815-cover .copyright{margin-top:6mm; font-size:9pt; color:var(--i815-ink-sub); line-height:1.5}
+
+/* 고객 승인용 표지 : 사업명·문서명·제출일자·작성기관명만 (문서정보·저작권 없음) */
+.i815-cover.customer .docinfo,
+.i815-cover.customer .copyright{display:none}
+
+/* ==========================================================================
+   3. 개정이력 — 지침서 2.가.(2)
+   ========================================================================== */
+.i815-section-title{
+  font-size:16pt; font-weight:700; text-align:center;
+  letter-spacing:.5em; margin:0 0 8mm; padding-bottom:3mm;
+}
+.i815-revision{width:100%; border-collapse:collapse; font-size:var(--i815-size-td)}
+.i815-revision th,
+.i815-revision td{border:1px solid var(--i815-rule); padding:2mm 3mm; text-align:center; vertical-align:top}
+.i815-revision th{background:var(--i815-table-head-bg); color:var(--i815-table-head-fg);
+  font-weight:700; font-size:var(--i815-size-th)}
+.i815-revision td.change{text-align:left}
+
+/* ==========================================================================
+   4. 목차 — 지침서 2.가.(3) 한글 '차례' 기능 / HY견명조 13
+   ========================================================================== */
+.i815-toc{font-family:var(--i815-font-toc); font-size:var(--i815-size-toc)}
+.i815-toc ul{list-style:none; margin:0; padding:0}
+.i815-toc li{margin:0 0 2.5mm}
+.i815-toc .lv2{padding-left:var(--i815-indent)}
+.i815-toc .lv3{padding-left:calc(var(--i815-indent) * 2)}
+.i815-toc a{
+  display:flex; align-items:baseline; gap:2mm;
+  color:inherit; text-decoration:none;
+}
+.i815-toc .dots{flex:1; border-bottom:1px dotted var(--i815-ink-sub); transform:translateY(-3px)}
+.i815-toc .pg{font-variant-numeric:tabular-nums}
+
+/* ==========================================================================
+   5. 본문 항목 번호 — 지침서 2.다.(1)
+      1. → 가. → 1) → 가) → (1) → (가)
+      최상위는 들여쓰기 없음, 하위부터 두 간격씩
+   ========================================================================== */
+/* 자식의 바깥 여백이 본문 상자 밖으로 상쇄되어 나가면 쪽 높이 계산이 어긋난다.
+   flow-root 로 블록 서식 문맥을 만들어 여백을 상자 안에 가둔다. */
+.i815-body{display:flow-root}
+
+.i815-body h1,
+.i815-body h2,
+.i815-body h3,
+.i815-body h4,
+.i815-body h5,
+.i815-body h6,
+.i815-body p{margin:0 0 2mm}
+
+/* 본문 제목 (문서표지 이외 본문에 제목 부여 시) */
+.i815-title{font-size:var(--i815-size-title); font-weight:700; margin:0 0 6mm}
+
+.i815-body .d1,
+.i815-body .d2,
+.i815-body .d3,
+.i815-body .d4,
+.i815-body .d5,
+.i815-body .d6{
+  padding-left:1.2em; text-indent:-1.2em;   /* 내어쓰기 : 둘째 줄을 글자에 맞춘다 */
+}
+.i815-body .d1{counter-increment:d1; counter-reset:d2;
+  font-size:var(--i815-size-d1); font-weight:700; margin:7mm 0 3mm}
+.i815-body .d1:first-child{margin-top:0}
+.i815-body .d1::before{content:counter(d1) ". "}
+
+.i815-body .d2{counter-increment:d2; counter-reset:d3;
+  font-size:var(--i815-size-d2); font-weight:700; margin:5mm 0 2.5mm;
+  margin-left:var(--i815-indent)}
+.i815-body .d2::before{content:counter(d2,hangul) ". "}
+
+.i815-body .d3{counter-increment:d3; counter-reset:d4;
+  font-size:var(--i815-size-d3); margin:3.5mm 0 2mm;
+  margin-left:calc(var(--i815-indent) * 2)}
+.i815-body .d3::before{content:counter(d3) ") "}
+
+.i815-body .d4{counter-increment:d4; counter-reset:d5;
+  font-size:var(--i815-size-d4); margin:2.5mm 0 1.5mm;
+  margin-left:calc(var(--i815-indent) * 3)}
+.i815-body .d4::before{content:counter(d4,hangul) ") "}
+
+.i815-body .d5{counter-increment:d5; counter-reset:d6;
+  font-size:var(--i815-size-d4); margin-left:calc(var(--i815-indent) * 4)}
+.i815-body .d5::before{content:"(" counter(d5) ") "}
+
+.i815-body .d6{counter-increment:d6;
+  font-size:var(--i815-size-d4); margin-left:calc(var(--i815-indent) * 5)}
+.i815-body .d6::before{content:"(" counter(d6,hangul) ") "}
+
+/* 본문 문단 — 제목 부분에 맞추어 표기 */
+.i815-body .t1{margin-left:var(--i815-indent)}
+.i815-body .t2{margin-left:calc(var(--i815-indent) * 2)}
+.i815-body .t3{margin-left:calc(var(--i815-indent) * 3)}
+.i815-body .t4{margin-left:calc(var(--i815-indent) * 4)}
+
+/* 번호 매김이 곤란한 경우의 글머리표 : ㅇ, - */
+.i815-body .b1,
+.i815-body .b2{padding-left:1.2em; text-indent:-1.2em; margin:0 0 1.2mm}
+.i815-body .b1{margin-left:calc(var(--i815-indent) * 2)}
+.i815-body .b1::before{content:"ㅇ "}
+.i815-body .b2{margin-left:calc(var(--i815-indent) * 3)}
+.i815-body .b2::before{content:"- "}
+
+/* ==========================================================================
+   6. 표 — 지침서 2.다.(2)
+      표 삽입 기능 사용 / 표머리 음영 회색 / 한 쪽 내 표 크기 균일
+   ========================================================================== */
+.i815-body table{
+  width:100%; border-collapse:collapse; table-layout:fixed;
+  font-size:var(--i815-size-td); margin:2mm 0 4mm;
+}
+.i815-body table th,
+.i815-body table td{
+  border:1px solid var(--i815-rule); padding:1.8mm 2.5mm;
+  text-align:left; vertical-align:top;
+}
+.i815-body table thead th,
+.i815-body table th.head{
+  background:var(--i815-table-head-bg); color:var(--i815-table-head-fg);
+  font-size:var(--i815-size-th); font-weight:700; text-align:center;
+}
+.i815-body table td.c,
+.i815-body table th.c{text-align:center}
+.i815-body table td.r,
+.i815-body table th.r{text-align:right; font-variant-numeric:tabular-nums}
+
+/* 표 번호·제목 : 장번호를 순서대로 입력 */
+.i815-body .tbl-caption{
+  font-size:var(--i815-size-th); font-weight:700; margin:4mm 0 1mm;
+  margin-left:calc(var(--i815-indent) * 2);
+}
+.i815-body .fig-caption{
+  font-size:10pt; text-align:center; margin:1mm 0 4mm; color:var(--i815-ink-sub);
+}
+
+/* ==========================================================================
+   7. 인쇄
+
+   @page 여백을 0 으로 두면 프린터가 찍을 수 없는 가장자리까지 그리라는 뜻이 되어
+   Chrome 이 "축소하여 맞추기"를 걸고 문서 전체가 줄어든다. 그래서 지침서의
+   실제 여백을 @page 에 주고, .sheet 는 머리말·꼬리말 띠만 안여백으로 갖는다.
+
+     용지 297mm − 위 10mm − 아래 20mm = 쪽 상자 267mm
+     쪽 상자 267mm − 머리말 30mm − 꼬리말 15mm = 본문 222mm
+
+   인쇄 대화상자에서는 여백 '기본값', 머리말/바닥글 끄기, 배경 그래픽 켜기.
+   ========================================================================== */
+@page{
+  size:A4 portrait;
+  margin:10mm 20mm 20mm 20mm;   /* @page 안에서는 var() 가 해석되지 않으므로 리터럴로 적는다 */
+}
+
+@media print{
+  .i815-doc{background:#fff}
+
+  .i815-doc .sheet{
+    width:auto; margin:0; box-shadow:none;
+    min-height:calc(var(--i815-paper-h) - var(--i815-margin-top) - var(--i815-margin-bottom));
+    padding:var(--i815-header-h) 0 var(--i815-footer-h);
+    page-break-after:always; break-after:page;
+  }
+  .i815-doc .sheet.no-header{padding-top:0}
+  .i815-doc .sheet.no-footer{padding-bottom:0}
+  .i815-doc .sheet:last-child{page-break-after:auto; break-after:auto}
+  .i815-doc .sheet + .sheet{margin-top:0}
+
+  /* 머리말·꼬리말은 @page 여백 안쪽 끝에 붙는다 */
+  .i815-header{left:0; right:0; top:0}
+  .i815-footer{left:0; right:0; bottom:0}
+  .i815-doc .sheet.numbered::after{bottom:2mm}
+
+  .i815-cover{
+    min-height:calc(var(--i815-paper-h) - var(--i815-margin-top) - var(--i815-margin-bottom));
+  }
+
+  .i815-noprint{display:none !important}
+  .i815-body table,
+  .i815-body tr,
+  .i815-revision tr{page-break-inside:avoid; break-inside:avoid}
+  .i815-body .d1,
+  .i815-body .d2,
+  .i815-body .d3{page-break-after:avoid; break-after:avoid}
+  a{color:inherit; text-decoration:none}
+}
+
+/* ==========================================================================
+   8. 화면 전용 도구막대 (인쇄 시 사라진다)
+   ========================================================================== */
+.i815-bar{
+  position:sticky; top:0; z-index:9;
+  background:rgba(232,234,239,.94); backdrop-filter:blur(6px);
+  border-bottom:1px solid #d2d6de; padding:9px 16px;
+  display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+  font-family:var(--i815-font);
+}
+.i815-bar b{font-size:11.5px; font-weight:600; color:#4a5160}
+.i815-bar span{font-size:11px; color:#828a9a}
+.i815-bar button{
+  margin-left:auto; border:1px solid #1b3a6b; background:#1b3a6b; color:#fff;
+  font:600 12px/1 inherit; padding:8px 14px; border-radius:5px; cursor:pointer;
+}
+.i815-bar button:hover{background:#15305a}
+
+/* 좁은 화면에서도 A4 기하를 바꾸지 않는다.
+   쪽 폭을 줄이면 한 줄에 들어가는 글자 수가 달라져 쪽나눔 계산이 어긋난다.
+   가로 스크롤을 허용하고 용지 크기는 그대로 두어, 화면과 인쇄가 항상 같은
+   조판이 되게 한다. */
+.i815-doc{overflow-x:auto}
