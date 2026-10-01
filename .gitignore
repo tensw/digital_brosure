@@ -18,3 +18,6 @@ v2/bk21/board/people.json
 
 # BK21 외부 API 키. 서버에만 둔다. {"GEMINI_API_KEY":"..."} · 권한 600
 .bk21-secrets.json
+
+# 성균관대 미래 연구 관리 풀 — DB(대학원생 학번·성명 포함)와 관리자 비밀. 서버에만 둔다.
+.skku-pool/

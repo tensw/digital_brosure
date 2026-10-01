@@ -3,6 +3,7 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const auth = require('./auth');
+const pool = require('./skku_pool');   // biblo.ai/skku/future_research_pool — 자체 로그인·DB(깃 밖)
 /* ── AI 크롤러 차단 ──
    로그인 게이트가 이미 대부분을 막지만, 학습 수집은 명시적으로 거절한다. */
 const AI_UA = /(GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|Claude-Web|anthropic-ai|CCBot|Google-Extended|PerplexityBot|Applebot-Extended|Bytespider|Amazonbot|meta-externalagent|cohere-ai|Diffbot|ImagesiftBot|Omgili|Timpibot|YouBot|Scrapy|python-requests|node-fetch)/i;
@@ -410,6 +411,9 @@ const server = http.createServer((req, res) => {
     return;
   }
   if (urlPath.startsWith('/api/auth/')) return handleAuthApi(req, res, urlPath);
+
+  /* 성균관대 미래 연구 관리 풀. 정적 파일로 내보내지 않고 모듈이 화면과 API 를 모두 맡는다(학번·성명이 있는 DB). */
+  if (pool.matches(urlPath)) return pool.handle(req, res, urlPath);
 
   /* BK21 질문 라우팅. 로그인한 사람만 부른다.
      LLM 은 «레시피 id 하나 고르기» 만 한다. 숫자와 문장은 화면이 데이터로 만든다.

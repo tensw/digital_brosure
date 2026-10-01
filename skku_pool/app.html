@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>미래 연구 관리 풀 · 성균관대학교 학술정보관</title>
+<style>
+  :root{
+    --bg:#f5f6f8; --panel:#fff; --ink:#15181d; --ink2:#4b5260; --muted:#8a919e; --line:#e3e6eb;
+    --brand:#1f5fbf; --brand2:#e8f0fc; --ok:#1d7a46; --okbg:#e5f4ec; --warn:#a15c00; --warnbg:#fdf1de;
+    --bad:#b42318; --badbg:#fde9e7; --violet:#5b3fb5; --violetbg:#efeafc; --chip:#eef0f3;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Pretendard,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif}
+  a{color:var(--brand);text-decoration:none} a:hover{text-decoration:underline}
+  button,input,select,textarea{font:inherit;color:inherit}
+  .hide{display:none!important}
+  /* 로그인 */
+  #login{min-height:100vh;display:grid;place-items:center;padding:16px}
+  .lbox{width:100%;max-width:360px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:28px 24px;box-shadow:0 8px 30px rgba(20,30,50,.06)}
+  .lbox .logo{display:block;width:100%;max-width:260px;height:auto;margin:0 0 18px}
+  .hlogo{height:26px;width:auto;display:block}
+  .lbox h1{font-size:18px;margin:0 0 4px} .lbox p{margin:0 0 18px;color:var(--muted);font-size:13px}
+  .lbox label{display:block;font-size:12px;color:var(--ink2);margin:10px 0 4px}
+  .lbox input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#fff}
+  .lbox button{width:100%;margin-top:18px}
+  .err{color:var(--bad);font-size:13px;min-height:20px;margin-top:10px}
+  /* 공통 */
+  .btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;cursor:pointer;white-space:nowrap}
+  .btn:hover{border-color:#c9ced6} .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn.pri{background:var(--brand);border-color:var(--brand);color:#fff} .btn.pri:hover{background:#174f9f}
+  .btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+  .btn.ghost{border-color:transparent;background:transparent;color:var(--ink2)}
+  .btn.sm{padding:4px 9px;font-size:12.5px}
+  header.top{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+  .bar{max-width:1440px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .brand b{font-size:16px} .brand span{display:block;font-size:12px;color:var(--muted)}
+  .grow{flex:1}
+  .upd{font-size:12.5px;color:var(--ink2);text-align:right}
+  .upd .due{font-weight:600} .upd .over{color:var(--bad)}
+  .seg{display:inline-flex;background:var(--chip);border-radius:9px;padding:3px}
+  .seg button{border:0;background:transparent;padding:6px 12px;border-radius:7px;cursor:pointer;color:var(--ink2);font-weight:600}
+  .seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  main{max-width:1440px;margin:0 auto;padding:16px 20px 60px}
+  .kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-bottom:14px}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .kpi .n{font-size:22px;font-weight:700;line-height:1.1} .kpi .l{font-size:12px;color:var(--muted);margin-top:4px}
+  nav.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:12px;overflow-x:auto}
+  nav.tabs button{border:0;background:none;padding:10px 14px;cursor:pointer;color:var(--ink2);font-weight:600;border-bottom:2px solid transparent;white-space:nowrap}
+  nav.tabs button.on{color:var(--brand);border-bottom-color:var(--brand)}
+  nav.tabs .cnt{display:inline-block;min-width:20px;padding:0 6px;margin-left:6px;border-radius:10px;background:var(--chip);font-size:11.5px;color:var(--ink2)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px}
+  .tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:12px 14px;border-bottom:1px solid var(--line)}
+  .tools select,.tools input[type=search],.tools input[type=date],.tools input[type=url],.tools input[type=text]{border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:#fff}
+  .tools input[type=search]{min-width:220px}
+  .tools label.chk{display:inline-flex;gap:6px;align-items:center;font-size:13px;color:var(--ink2)}
+  .actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 14px;background:#f9fafb;border-bottom:1px solid var(--line);font-size:13px}
+  .actions .sel{font-weight:600}
+  .tw{overflow:auto;max-height:calc(100vh - 330px)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;border-bottom:1px solid #eef0f3;text-align:left;vertical-align:top}
+  thead th{position:sticky;top:0;background:#fafbfc;z-index:2;font-size:12px;color:var(--ink2);font-weight:600;white-space:nowrap;border-bottom:1px solid var(--line)}
+  thead th.sort{cursor:pointer} thead th.sort:after{content:" ↕";color:#c0c5cd} thead th.asc:after{content:" ↑";color:var(--brand)} thead th.desc:after{content:" ↓";color:var(--brand)}
+  tbody tr:hover{background:#fafcff} tbody tr.picked{background:#f0f6ff}
+  td.c{text-align:center} td.r{text-align:right;font-variant-numeric:tabular-nums} td.nw{white-space:nowrap}
+  .ttl{font-weight:600;color:var(--ink);line-height:1.4} .sub{font-size:12px;color:var(--muted);margin-top:2px}
+  .badge{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11.5px;font-weight:600;white-space:nowrap}
+  .b-none{background:var(--chip);color:var(--muted)} .b-req{background:var(--warnbg);color:var(--warn)} .b-prod{background:var(--brand2);color:var(--brand)}
+  .b-done{background:var(--okbg);color:var(--ok)} .b-pro{background:var(--violetbg);color:var(--violet)} .b-a{background:#e6f4f1;color:#0f6b5c} .b-b{background:var(--chip);color:var(--ink2)}
+  .b-left{background:var(--badbg);color:var(--bad)}
+  .gs{font-size:12.5px;line-height:1.5} .gs .who{font-weight:600} .gs .pos{color:var(--muted)}
+  .meter{position:relative;height:6px;background:#eef0f3;border-radius:3px;margin-top:5px;min-width:70px}
+  .meter i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--brand)}
+  .empty{padding:40px;text-align:center;color:var(--muted)}
+  .grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .card h3{margin:0 0 10px;font-size:15px}
+  .card ol,.card ul{margin:6px 0 0;padding-left:20px;color:var(--ink2)} .card li{margin:4px 0}
+  code{background:#f2f4f7;border-radius:4px;padding:1px 5px;font-size:12px}
+  .drop{border:1.5px dashed #c9ced6;border-radius:10px;padding:22px;text-align:center;color:var(--ink2);background:#fbfcfd;cursor:pointer}
+  .drop.on{border-color:var(--brand);background:var(--brand2)}
+  .msg{margin-top:10px;font-size:13px} .msg.ok{color:var(--ok)} .msg.bad{color:var(--bad)}
+  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1d2330;color:#fff;padding:10px 16px;border-radius:9px;font-size:13px;z-index:50;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+  dialog{border:1px solid var(--line);border-radius:12px;padding:0;max-width:440px;width:calc(100% - 32px)}
+  dialog::backdrop{background:rgba(15,20,30,.35)}
+  .dlg{padding:20px} .dlg h3{margin:0 0 12px;font-size:16px} .dlg label{display:block;font-size:12px;color:var(--ink2);margin:10px 0 4px}
+  .dlg input,.dlg textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px}
+  .dlg .row{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+  .note{font-size:12px;color:var(--muted)}
+  @media (max-width:900px){ .hlogo{height:20px}  .kpis{grid-template-columns:repeat(3,minmax(0,1fr))} .grid2{grid-template-columns:1fr} .upd{text-align:left} .bar,main{padding-left:16px;padding-right:16px} }
+</style>
+</head>
+<body>
+
+<!-- 로그인 -->
+<section id="login" class="hide">
+  <form class="lbox" id="loginForm" autocomplete="on">
+    <img class="logo" src="skkulib_logo.png" alt="성균관대학교 학술정보관">
+    <h1>미래 연구 관리 풀</h1>
+    <p>성균관대학교 학술정보관 · THE 상위 10%·25% 예비군 관리</p>
+    <label for="lid">아이디</label><input id="lid" name="username" autocomplete="username" required>
+    <label for="lpw">비밀번호</label><input id="lpw" name="password" type="password" autocomplete="current-password" required>
+    <button class="btn pri" type="submit">로그인</button>
+    <div class="err" id="lerr"></div>
+  </form>
+</section>
+
+<!-- 본 화면 -->
+<section id="app" class="hide">
+  <header class="top"><div class="bar">
+    <img class="hlogo" src="skkulib_logo.png" alt="성균관대학교 학술정보관">
+    <div class="brand"><b>미래 연구 관리 풀</b><span>THE 2027판 · 성대 주저자 · 재학 대학원생 참여 논문</span></div>
+    <div class="seg" id="tierSeg">
+      <button data-tier="10" class="on">상위 10% 후보군</button>
+      <button data-tier="25">상위 25% 후보군</button>
+    </div>
+    <div class="grow"></div>
+    <div class="upd" id="upd"></div>
+    <button class="btn ghost sm" id="pwBtn">비밀번호 변경</button>
+    <button class="btn sm" id="logoutBtn">로그아웃</button>
+  </div></header>
+
+  <main>
+    <div class="kpis" id="kpis"></div>
+    <nav class="tabs" id="tabs">
+      <button data-tab="pool" class="on">관리 풀<span class="cnt" id="c-pool"></span></button>
+      <button data-tab="video">홍보영상 제작 리스트<span class="cnt" id="c-video"></span></button>
+      <button data-tab="promo">승격 완료<span class="cnt" id="c-promo"></span></button>
+      <button data-tab="data">데이터 갱신</button>
+      <button data-tab="log">변경 이력</button>
+    </nav>
+
+    <!-- 관리 풀 -->
+    <div class="panel" id="t-pool">
+      <div class="tools">
+        <select id="fYear"><option value="">전체 연도</option></select>
+        <select id="fCond">
+          <option value="cur">대학원생: 현재 재학 (기준 A)</option>
+          <option value="pub">대학원생: 출판 당시 재학 (기준 B)</option>
+          <option value="any">대학원생: A 또는 B</option>
+        </select>
+        <select id="fVideo">
+          <option value="">홍보영상: 전체</option><option value="none">미요청</option><option value="requested">요청</option>
+          <option value="in_production">제작 중</option><option value="done">생성 완료</option>
+        </select>
+        <label class="chk"><input type="checkbox" id="fReport"> 보고서 수록 논문만</label>
+        <label class="chk"><input type="checkbox" id="fPromoted"> 승격 논문 포함</label>
+        <label class="chk"><input type="checkbox" id="fLeft"> 풀 이탈 논문 포함</label>
+        <div class="grow"></div>
+        <input type="search" id="fQ" placeholder="제목·저자·학생·학번·DOI 검색">
+      </div>
+      <div class="actions">
+        <span><span class="sel" id="selN">0</span>편 선택</span>
+        <button class="btn pri sm" id="reqBtn" disabled>홍보영상 제작 리스트에 올리기</button>
+        <button class="btn ghost sm" id="clrBtn">선택 해제</button>
+        <div class="grow"></div>
+        <span class="note" id="poolNote"></span>
+      </div>
+      <div class="tw"><table id="poolTbl"></table></div>
+    </div>
+
+    <!-- 홍보영상 -->
+    <div class="panel hide" id="t-video">
+      <div class="tools">
+        <select id="vStatus">
+          <option value="open">진행 중 (요청 · 제작 중)</option><option value="requested">요청</option>
+          <option value="in_production">제작 중</option><option value="done">생성 완료</option><option value="">전체</option>
+        </select>
+        <div class="grow"></div>
+        <a class="btn sm" id="csvBtn" href="api/export/vendor.csv">업체 전달용 CSV 내려받기</a>
+      </div>
+      <div class="actions">
+        <span><span class="sel" id="vSelN">0</span>편 선택</span>
+        <button class="btn sm" data-vop="start" disabled>제작 시작</button>
+        <button class="btn ok sm" data-vop="done" disabled>생성 완료 처리</button>
+        <button class="btn sm" data-vop="reopen" disabled>완료 취소</button>
+        <button class="btn ghost sm" data-vop="cancel" disabled>요청 취소</button>
+        <div class="grow"></div>
+        <span class="note">업체가 제작을 마쳐 보고하면 「생성 완료 처리」로 제작일·영상 주소를 남깁니다.</span>
+      </div>
+      <div class="tw"><table id="videoTbl"></table></div>
+    </div>
+
+    <!-- 승격 -->
+    <div class="panel hide" id="t-promo">
+      <div class="tools">
+        <select id="pYear"><option value="">전체 연도</option></select>
+        <label class="chk"><input type="checkbox" id="pVideo"> 홍보영상 생성 완료 논문만</label>
+        <div class="grow"></div>
+        <span class="note" id="promoNote"></span>
+      </div>
+      <div class="tw"><table id="promoTbl"></table></div>
+    </div>
+
+    <!-- 데이터 갱신 -->
+    <div class="hide" id="t-data">
+      <div class="grid2">
+        <div class="card">
+          <h3>갱신 정책</h3>
+          <ul>
+            <li><b>주기</b>: 2주(14일)에 한 번, 담당자가 수동으로 갱신한다.</li>
+            <li><b>원천</b>: Biblo-RIMS 의 최신 SciVal FWCI · Scopus 피인용, 대학원 학적(재학 여부).</li>
+            <li><b>승격</b>: 갱신 때 FWCI 가 그 등급·출판연도의 경계(상위 10% 또는 25%) 이상이면 「승격 완료」로 옮긴다. 승격은 누적이며 이후 FWCI 가 내려가도 지우지 않는다.</li>
+            <li><b>보존</b>: 홍보영상 요청·제작 상태와 제작일은 갱신해도 그대로 남는다. 스냅샷에서 빠진 논문은 「풀 이탈」로 표시한다.</li>
+          </ul>
+          <h3 style="margin-top:16px">갱신 절차</h3>
+          <ol>
+            <li>VPN(SecuwaySSL) 연결</li>
+            <li>분석 저장소에서 <code>tools/sync_pool.sh</code> 실행 — 학적·FWCI 를 다시 뽑아 스냅샷을 만들고 이 사이트에 바로 올린다</li>
+            <li>또는 <code>tools/export_pool_snapshot.py</code> 결과 파일을 아래에 직접 올린다</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h3>스냅샷 올리기</h3>
+          <label class="drop" id="drop"><input type="file" id="file" accept=".json,application/json" class="hide">
+            <div><b>pool_snapshot_YYYYMMDD.json</b> 파일을 끌어 놓거나 눌러서 고르세요</div>
+            <div class="note" style="margin-top:4px">같은 파일은 두 번 반영되지 않습니다</div>
+          </label>
+          <div class="msg" id="upMsg"></div>
+          <h3 style="margin-top:18px">갱신 기록</h3>
+          <div class="tw" style="max-height:320px"><table id="snapTbl"></table></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 이력 -->
+    <div class="panel hide" id="t-log"><div class="tw"><table id="logTbl"></table></div></div>
+  </main>
+</section>
+
+<dialog id="dlg"><form class="dlg" method="dialog" id="dlgForm"></form></dialog>
+
+<script>
+(function(){
+  'use strict';
+  const $ = (s, el) => (el || document).querySelector(s);
+  const $$ = (s, el) => Array.from((el || document).querySelectorAll(s));
+  const esc = (v) => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const f2 = (v) => v == null ? '—' : Number(v).toFixed(2);
+  const VS = { requested: ['요청', 'b-req'], in_production: ['제작 중', 'b-prod'], done: ['생성 완료', 'b-done'] };
+  const TAB_KEY = 'frp.tab', TIER_KEY = 'frp.tier';
+  const store = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(e){} } };
+
+  let S = null, tier = Number(store.get(TIER_KEY)) === 25 ? 25 : 10, tab = store.get(TAB_KEY) || 'pool';
+  const picked = new Set(), vpicked = new Set();
+  let sortKey = 'fwci', sortDir = -1;
+
+  async function api(path, opt) {
+    const r = await fetch(path, Object.assign({ credentials: 'same-origin', headers: { 'Content-Type': 'application/json' } }, opt || {}));
+    let j = {}; try { j = await r.json(); } catch (e) {}
+    if (r.status === 401 && path !== 'api/login') { show('login'); throw new Error('login'); }
+    if (!r.ok || j.ok === false) throw new Error(j.msg || ('오류 ' + r.status));
+    return j;
+  }
+  function toast(t) { const d = document.createElement('div'); d.className = 'toast'; d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), 2600); }
+  function show(which) { $('#login').classList.toggle('hide', which !== 'login'); $('#app').classList.toggle('hide', which !== 'app'); }
+
+  /* ── 로그인 ── */
+  $('#loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault(); $('#lerr').textContent = '';
+    try { await api('api/login', { method: 'POST', body: JSON.stringify({ id: $('#lid').value, password: $('#lpw').value }) });
+          $('#lpw').value = ''; await load(); }
+    catch (err) { if (err.message !== 'login') $('#lerr').textContent = err.message; }
+  });
+  $('#logoutBtn').onclick = async () => { await fetch('api/logout', { credentials: 'same-origin' }); S = null; show('login'); };
+  $('#pwBtn').onclick = () => dialog('비밀번호 변경', [
+      { id: 'cur', label: '현재 비밀번호', type: 'password' }, { id: 'next', label: '새 비밀번호 (10자 이상)', type: 'password' }],
+    async (v) => { await api('api/password', { method: 'POST', body: JSON.stringify({ current: v.cur, next: v.next }) }); toast('비밀번호를 바꿨습니다.'); });
+
+  /* ── 대화상자 ── */
+  function dialog(title, fields, onOk, okLabel) {
+    const f = $('#dlgForm');
+    f.innerHTML = `<h3>${esc(title)}</h3>` + fields.map(x => x.html ? x.html :
+      `<label for="d-${x.id}">${esc(x.label)}</label>` + (x.type === 'textarea'
+        ? `<textarea id="d-${x.id}" rows="3">${esc(x.value || '')}</textarea>`
+        : `<input id="d-${x.id}" type="${x.type || 'text'}" value="${esc(x.value || '')}" ${x.ph ? `placeholder="${esc(x.ph)}"` : ''}>`)).join('') +
+      `<div class="err" id="d-err"></div><div class="row"><button class="btn" value="cancel" formnovalidate>취소</button><button class="btn pri" id="d-ok" value="ok">${esc(okLabel || '확인')}</button></div>`;
+    const d = $('#dlg'); d.showModal();
+    $('#d-ok').onclick = async (e) => {
+      e.preventDefault();
+      const v = {}; fields.forEach(x => { if (x.id) v[x.id] = $('#d-' + x.id).value; });
+      try { await onOk(v); d.close(); } catch (err) { if (err.message !== 'login') $('#d-err').textContent = err.message; }
+    };
+  }
+
+  /* ── 데이터 ── */
+  async function load() {
+    S = await api('api/state');
+    show('app'); render();
+  }
+  const T = () => S.papers.filter(p => p.tier === tier);
+  const today = () => { const d = new Date(Date.now() + 9 * 3600e3); return d.toISOString().slice(0, 10); };
+
+  function render() {
+    $$('#tierSeg button').forEach(b => b.classList.toggle('on', Number(b.dataset.tier) === tier));
+    $$('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+    ['pool', 'video', 'promo', 'data', 'log'].forEach(t => $('#t-' + t).classList.toggle('hide', t !== tab));
+    // 갱신 상태
+    const L = S.last;
+    if (!L) $('#upd').innerHTML = '<span class="over">아직 데이터가 없습니다 — 「데이터 갱신」에서 스냅샷을 올리세요</span>';
+    else {
+      const over = S.due && S.due < today();
+      $('#upd').innerHTML = `최종 갱신 ${esc(L.uploaded_at.slice(0, 10))} · RIMS ${esc((L.rims_db_time || '').slice(0, 10))}<br>` +
+        `<span class="due ${over ? 'over' : ''}">다음 갱신 ${esc(S.due)}${over ? ' (지남)' : ''}</span>`;
+    }
+    const P = T();
+    const inPool = P.filter(p => p.in_latest && !p.promoted_on);
+    const vid = (s) => P.filter(p => p.video_status === s).length;
+    const promo = P.filter(p => p.promoted_on);
+    $('#kpis').innerHTML = [
+      [inPool.length, `관리 풀 (상위 ${tier}% 후보)`], [inPool.filter(p => p.cond_cur).length, '현재 재학생 참여'],
+      [vid('requested'), '영상 요청'], [vid('in_production'), '영상 제작 중'], [vid('done'), '영상 생성 완료'],
+      [promo.length, `누적 승격 (상위 ${tier}% 진입)`]
+    ].map(([n, l]) => `<div class="kpi"><div class="n">${n.toLocaleString()}</div><div class="l">${esc(l)}</div></div>`).join('');
+    $('#c-pool').textContent = inPool.length;
+    $('#c-video').textContent = vid('requested') + vid('in_production');
+    $('#c-promo').textContent = promo.length;
+    const years = [...new Set(S.papers.map(p => p.year))].sort();
+    ['#fYear', '#pYear'].forEach(sel => { const el = $(sel), v = el.value;
+      el.innerHTML = '<option value="">전체 연도</option>' + years.map(y => `<option ${String(y) === v ? 'selected' : ''}>${y}</option>`).join(''); });
+    if (tab === 'pool') renderPool(); else if (tab === 'video') renderVideo(); else if (tab === 'promo') renderPromo();
+    else if (tab === 'data') renderData(); else renderLog();
+  }
+
+  function gradCell(p, mode) {
+    const g = p.grad.filter(x => mode === 'cur' ? x.enrolled_now : true);
+    if (!g.length) return '<span class="note">—</span>';
+    return '<div class="gs">' + g.map(x => `<div><span class="who">${esc(x.name_ko || x.name_scopus)}</span> ${esc(x.student_no || '')}` +
+      ` <span class="pos">${esc(x.pos)}${x.dept ? ' · ' + esc(x.dept) : ''}${mode !== 'cur' && !x.enrolled_now ? ' · 졸업/제적' : ''}</span></div>`).join('') + '</div>';
+  }
+  function paperCell(p) {
+    const doi = p.doi ? `<a href="https://doi.org/${esc(p.doi)}" target="_blank" rel="noopener">${esc(p.doi)}</a>` : esc(p.eid);
+    return `<div class="ttl">${esc(p.title)}</div><div class="sub">${esc(p.journal || '')} · ${doi}${p.college ? ' · ' + esc(p.college) : ''}</div>` +
+           `<div class="sub">성대 주저자 ${esc(p.main_authors || '')} (${esc(p.main_role || '')})</div>`;
+  }
+  function fwciCell(p) {
+    const ratio = Math.max(0, Math.min(1, p.fwci / p.target_fwci));
+    return `<b>${f2(p.fwci)}</b> <span class="note">/ ${f2(p.target_fwci)}</span><div class="meter"><i style="width:${(ratio * 100).toFixed(1)}%"></i></div>`;
+  }
+  const vBadge = (p) => p.video_status ? `<span class="badge ${VS[p.video_status][1]}">${VS[p.video_status][0]}</span>` : '<span class="badge b-none">미요청</span>';
+  const promoBadge = (p) => p.promoted_on ? `<span class="badge b-pro">포함 · ${esc(p.promoted_on)}</span>` : '<span class="note">—</span>';
+  const condBadges = (p) => (p.cond_cur ? '<span class="badge b-a">A 현재</span> ' : '') + (p.cond_pub ? '<span class="badge b-b">B 당시</span>' : '');
+
+  function poolRows() {
+    const y = $('#fYear').value, c = $('#fCond').value, v = $('#fVideo').value, q = $('#fQ').value.trim().toLowerCase();
+    const rep = $('#fReport').checked, incP = $('#fPromoted').checked, incL = $('#fLeft').checked;
+    let rows = T().filter(p => (incL || p.in_latest) && (incP || !p.promoted_on));
+    if (y) rows = rows.filter(p => String(p.year) === y);
+    if (c === 'cur') rows = rows.filter(p => p.cond_cur); else if (c === 'pub') rows = rows.filter(p => p.cond_pub);
+    if (v) rows = rows.filter(p => (p.video_status || 'none') === v);
+    if (rep) rows = rows.filter(p => c === 'pub' ? p.report_rank_b : p.report_rank_a);
+    if (q) rows = rows.filter(p => [p.title, p.journal, p.doi, p.eid, p.main_authors, p.college,
+      ...p.grad.map(g => [g.name_ko, g.student_no, g.name_scopus, g.dept].join(' '))].join(' ').toLowerCase().includes(q));
+    const k = sortKey, d = sortDir;
+    rows.sort((a, b) => { const x = a[k], z = b[k];
+      if (x == null && z == null) return 0; if (x == null) return 1; if (z == null) return -1;
+      return (x > z ? 1 : x < z ? -1 : 0) * d || (b.fwci - a.fwci); });
+    return rows;
+  }
+  function renderPool() {
+    const rows = poolRows(), c = $('#fCond').value;
+    const th = (k, l, cls) => `<th class="sort ${sortKey === k ? (sortDir > 0 ? 'asc' : 'desc') : ''} ${cls || ''}" data-k="${k}">${l}</th>`;
+    const all = rows.length && rows.every(p => picked.has(p.eid));
+    $('#poolTbl').innerHTML = `<thead><tr><th class="c"><input type="checkbox" id="allChk" ${all ? 'checked' : ''} aria-label="전체 선택"></th>` +
+      th('year', '연도') + th('fwci', 'FWCI / 경계') + th('need', '추가 필요') + '<th>논문</th><th>재학 대학원생</th>' +
+      th(c === 'pub' ? 'report_rank_b' : 'report_rank_a', '보고서') + th('video_status', '홍보영상') + th('done_at', '제작일') + th('promoted_on', '최상위 포함(누적)') +
+      '</tr></thead><tbody>' + (rows.length ? rows.map(p => {
+        const rk = c === 'pub' ? p.report_rank_b : p.report_rank_a;
+        return `<tr class="${picked.has(p.eid) ? 'picked' : ''}" data-eid="${esc(p.eid)}">` +
+          `<td class="c"><input type="checkbox" class="pk" ${picked.has(p.eid) ? 'checked' : ''} ${p.video_status ? 'disabled title="이미 영상 리스트에 있음"' : ''}></td>` +
+          `<td class="nw">${p.year}${p.in_latest ? '' : '<br><span class="badge b-left">풀 이탈</span>'}</td>` +
+          `<td class="nw">${fwciCell(p)}</td><td class="r nw">${p.need == null ? '—' : p.need + '편'}</td>` +
+          `<td style="min-width:320px">${paperCell(p)}<div style="margin-top:4px">${condBadges(p)}</div></td>` +
+          `<td style="min-width:200px">${gradCell(p, c === 'pub' ? 'pub' : 'cur')}</td>` +
+          `<td class="nw">${rk ? rk + '위' : '<span class="note">—</span>'}</td>` +
+          `<td class="nw">${vBadge(p)}</td><td class="nw">${esc(p.done_at || '')}${p.video_url ? `<br><a href="${esc(p.video_url)}" target="_blank" rel="noopener">영상</a>` : ''}</td>` +
+          `<td class="nw">${promoBadge(p)}</td></tr>`; }).join('') : `<tr><td colspan="10" class="empty">조건에 맞는 논문이 없습니다.</td></tr>`) + '</tbody>';
+    $('#poolNote').textContent = `${rows.length.toLocaleString()}편 표시 · FWCI 는 최종 갱신 기준`;
+    syncPick();
+  }
+  function syncPick() {
+    const n = [...picked].filter(e => S.papers.some(p => p.eid === e && !p.video_status)).length;
+    $('#selN').textContent = n; $('#reqBtn').disabled = !n;
+  }
+  $('#poolTbl').addEventListener('change', (e) => {
+    if (e.target.id === 'allChk') { poolRows().forEach(p => { if (p.video_status) return; e.target.checked ? picked.add(p.eid) : picked.delete(p.eid); }); renderPool(); return; }
+    if (e.target.classList.contains('pk')) { const eid = e.target.closest('tr').dataset.eid;
+      e.target.checked ? picked.add(eid) : picked.delete(eid); e.target.closest('tr').classList.toggle('picked', e.target.checked); syncPick(); }
+  });
+  $('#poolTbl').addEventListener('click', (e) => {
+    const h = e.target.closest('th.sort'); if (!h) return;
+    const k = h.dataset.k; if (sortKey === k) sortDir = -sortDir; else { sortKey = k; sortDir = (k === 'year' || k === 'need') ? 1 : -1; }
+    renderPool();
+  });
+  ['#fYear', '#fCond', '#fVideo', '#fReport', '#fPromoted', '#fLeft'].forEach(s => $(s).addEventListener('change', renderPool));
+  $('#fQ').addEventListener('input', renderPool);
+  $('#clrBtn').onclick = () => { picked.clear(); renderPool(); };
+  $('#reqBtn').onclick = () => {
+    const eids = [...picked].filter(e => S.papers.some(p => p.eid === e && !p.video_status));
+    dialog(`홍보영상 제작 리스트에 ${eids.length}편 올리기`, [
+      { id: 'date', label: '요청일', type: 'date', value: today() }, { id: 'note', label: '메모 (업체 전달용, 선택)', type: 'textarea' }],
+      async (v) => { const r = await api('api/video', { method: 'POST', body: JSON.stringify({ op: 'request', eids, date: v.date, note: v.note }) });
+        picked.clear(); await load(); toast(`${r.changed}편을 제작 리스트에 올렸습니다.`); }, '올리기');
+  };
+
+  /* ── 홍보영상 ── */
+  function renderVideo() {
+    const st = $('#vStatus').value;
+    let rows = T().filter(p => p.video_status && (st === '' ? true : st === 'open' ? p.video_status !== 'done' : p.video_status === st));
+    rows.sort((a, b) => (a.requested_at || '').localeCompare(b.requested_at || '') || b.fwci - a.fwci);
+    const all = rows.length && rows.every(p => vpicked.has(p.eid));
+    $('#videoTbl').innerHTML = `<thead><tr><th class="c"><input type="checkbox" id="vAll" ${all ? 'checked' : ''} aria-label="전체 선택"></th><th>상태</th><th>요청일</th><th>제작 시작</th><th>제작일</th>` +
+      '<th>논문</th><th>FWCI / 경계</th><th>재학 대학원생</th><th>영상 · 메모</th><th>최상위 포함(누적)</th><th></th></tr></thead><tbody>' +
+      (rows.length ? rows.map(p => `<tr class="${vpicked.has(p.eid) ? 'picked' : ''}" data-eid="${esc(p.eid)}">` +
+        `<td class="c"><input type="checkbox" class="vk" ${vpicked.has(p.eid) ? 'checked' : ''}></td><td class="nw">${vBadge(p)}</td>` +
+        `<td class="nw">${esc(p.requested_at || '')}</td><td class="nw">${esc(p.started_at || '')}</td><td class="nw"><b>${esc(p.done_at || '')}</b></td>` +
+        `<td style="min-width:320px">${paperCell(p)}</td><td class="nw">${fwciCell(p)}</td><td style="min-width:180px">${gradCell(p, 'cur')}</td>` +
+        `<td style="min-width:140px">${p.video_url ? `<a href="${esc(p.video_url)}" target="_blank" rel="noopener">영상 보기</a>` : ''}${p.video_note ? `<div class="sub">${esc(p.video_note)}</div>` : ''}</td>` +
+        `<td class="nw">${promoBadge(p)}</td><td><button class="btn sm ghost ed">수정</button></td></tr>`).join('')
+        : `<tr><td colspan="11" class="empty">해당 상태의 논문이 없습니다. 「관리 풀」에서 논문을 골라 올리세요.</td></tr>`) + '</tbody>';
+    syncV();
+  }
+  function syncV() {
+    const sel = T().filter(p => vpicked.has(p.eid) && p.video_status);
+    $('#vSelN').textContent = sel.length;
+    const has = (f) => sel.some(f);
+    $('[data-vop=start]').disabled = !has(p => p.video_status === 'requested');
+    $('[data-vop=done]').disabled = !has(p => p.video_status !== 'done');
+    $('[data-vop=reopen]').disabled = !has(p => p.video_status === 'done');
+    $('[data-vop=cancel]').disabled = !has(p => p.video_status !== 'done');
+  }
+  $('#vStatus').addEventListener('change', renderVideo);
+  $('#videoTbl').addEventListener('change', (e) => {
+    if (e.target.id === 'vAll') { $$('#videoTbl tbody tr[data-eid]').forEach(tr => e.target.checked ? vpicked.add(tr.dataset.eid) : vpicked.delete(tr.dataset.eid)); renderVideo(); return; }
+    if (e.target.classList.contains('vk')) { const eid = e.target.closest('tr').dataset.eid; e.target.checked ? vpicked.add(eid) : vpicked.delete(eid);
+      e.target.closest('tr').classList.toggle('picked', e.target.checked); syncV(); }
+  });
+  $('#videoTbl').addEventListener('click', (e) => {
+    const b = e.target.closest('.ed'); if (!b) return;
+    const p = S.papers.find(x => x.eid === b.closest('tr').dataset.eid);
+    const f = [{ id: 'url', label: '영상 주소', type: 'url', value: p.video_url || '', ph: 'https://' }, { id: 'note', label: '메모', type: 'textarea', value: p.video_note || '' }];
+    if (p.video_status === 'done') f.unshift({ id: 'date', label: '제작일', type: 'date', value: p.done_at || today() });
+    dialog('영상 정보 수정', f, async (v) => { await api('api/video', { method: 'POST', body: JSON.stringify(Object.assign({ op: 'edit', eids: [p.eid] }, v)) }); await load(); toast('저장했습니다.'); }, '저장');
+  });
+  $$('[data-vop]').forEach(b => b.onclick = () => {
+    const op = b.dataset.vop, eids = [...vpicked];
+    const run = async (v) => { const r = await api('api/video', { method: 'POST', body: JSON.stringify(Object.assign({ op, eids }, v || {})) });
+      vpicked.clear(); await load(); toast(`${r.changed}편 처리했습니다.`); };
+    if (op === 'done') return dialog(`생성 완료 처리 (${eids.length}편)`, [
+      { id: 'date', label: '제작일 (업체 보고 기준)', type: 'date', value: today() },
+      { id: 'url', label: '영상 주소 (한 편일 때만 권장)', type: 'url', ph: 'https://' }, { id: 'note', label: '메모', type: 'textarea' }], run, '생성 완료');
+    if (op === 'start') return dialog(`제작 시작 (${eids.length}편)`, [{ id: 'date', label: '제작 시작일', type: 'date', value: today() }], run, '제작 시작');
+    if (op === 'cancel') return dialog(`요청 취소 (${eids.length}편)`, [{ html: '<p class="note">진행 중인 요청을 리스트에서 뺍니다. 생성 완료된 논문은 빠지지 않습니다.</p>' }], run, '요청 취소');
+    if (op === 'reopen') return dialog(`완료 취소 (${eids.length}편)`, [{ html: '<p class="note">생성 완료를 「제작 중」으로 되돌립니다. 제작일이 지워집니다.</p>' }], run, '되돌리기');
+  });
+
+  /* ── 승격 ── */
+  function renderPromo() {
+    const y = $('#pYear').value, onlyV = $('#pVideo').checked;
+    let rows = T().filter(p => p.promoted_on);
+    if (y) rows = rows.filter(p => String(p.year) === y);
+    if (onlyV) rows = rows.filter(p => p.video_status === 'done');
+    rows.sort((a, b) => b.promoted_on.localeCompare(a.promoted_on) || b.fwci - a.fwci);
+    $('#promoTbl').innerHTML = '<thead><tr><th>승격일</th><th>연도</th><th>승격 시 FWCI</th><th>현재 FWCI / 경계</th><th>논문</th><th>재학 대학원생</th><th>홍보영상</th><th>제작일</th><th>영상 후 승격</th></tr></thead><tbody>' +
+      (rows.length ? rows.map(p => `<tr><td class="nw"><span class="badge b-pro">${esc(p.promoted_on)}</span></td><td>${p.year}</td><td class="r">${f2(p.promoted_fwci)}</td>` +
+        `<td class="nw">${fwciCell(p)}</td><td style="min-width:320px">${paperCell(p)}</td><td style="min-width:180px">${gradCell(p, 'pub')}</td>` +
+        `<td class="nw">${vBadge(p)}</td><td class="nw">${esc(p.done_at || '')}</td>` +
+        `<td class="c">${p.done_at && p.done_at <= p.promoted_on ? '<span class="badge b-done">예</span>' : '<span class="note">—</span>'}</td></tr>`).join('')
+        : `<tr><td colspan="9" class="empty">아직 상위 ${tier}% 경계에 닿은 논문이 없습니다.</td></tr>`) + '</tbody>';
+    $('#promoNote').textContent = `승격은 누적 집계 · 「영상 후 승격」= 제작일이 승격일보다 앞선 논문`;
+  }
+  ['#pYear', '#pVideo'].forEach(s => $(s).addEventListener('change', renderPromo));
+
+  /* ── 데이터 갱신 ── */
+  function renderData() {
+    $('#snapTbl').innerHTML = '<thead><tr><th>#</th><th>올린 때</th><th>올린 사람</th><th>RIMS 기준</th><th class="r">논문</th><th class="r">신규</th><th class="r">이탈</th><th class="r">승격</th></tr></thead><tbody>' +
+      (S.snapshots.length ? S.snapshots.map(s => `<tr><td>${s.id}</td><td class="nw">${esc(s.uploaded_at.replace('T', ' ').slice(0, 16))}</td><td>${esc(s.uploaded_by)}</td>` +
+        `<td class="nw">${esc((s.rims_db_time || '').slice(0, 16))}</td><td class="r">${s.n_papers}</td><td class="r">${s.n_new ?? ''}</td><td class="r">${s.n_left ?? ''}</td><td class="r">${s.n_promoted ?? ''}</td></tr>`).join('')
+        : '<tr><td colspan="8" class="empty">아직 올린 스냅샷이 없습니다.</td></tr>') + '</tbody>';
+  }
+  const drop = $('#drop');
+  drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('on'); });
+  drop.addEventListener('dragleave', () => drop.classList.remove('on'));
+  drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('on'); if (e.dataTransfer.files[0]) upload(e.dataTransfer.files[0]); });
+  $('#file').addEventListener('change', e => { if (e.target.files[0]) upload(e.target.files[0]); e.target.value = ''; });
+  async function upload(file) {
+    const m = $('#upMsg'); m.className = 'msg'; m.textContent = `${file.name} 반영 중…`;
+    try {
+      const r = await fetch('api/snapshot', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: await file.text() });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.ok) throw new Error(j.msg || ('오류 ' + r.status));
+      m.className = 'msg ok'; m.textContent = `반영했습니다 — 논문 ${j.n} · 신규 ${j.n_new} · 이탈 ${j.n_left} · 새 승격 ${j.n_promoted}`;
+      await load();
+    } catch (err) { m.className = 'msg bad'; m.textContent = err.message; }
+  }
+
+  /* ── 이력 ── */
+  const ACT = { login: '로그인', snapshot_import: '데이터 갱신', promoted: '승격', video_request: '영상 요청', video_start: '제작 시작', video_done: '생성 완료',
+                video_reopen: '완료 취소', video_cancel: '요청 취소', video_edit: '영상 정보 수정', vendor_csv: '업체 CSV 내려받기', password_changed: '비밀번호 변경', admin_created: '관리자 생성' };
+  function renderLog() {
+    const title = (eid) => { const p = eid && S.papers.find(x => x.eid === eid); return p ? p.title : (eid || ''); };
+    $('#logTbl').innerHTML = '<thead><tr><th>때</th><th>누가</th><th>무엇</th><th>논문</th><th>내용</th></tr></thead><tbody>' +
+      S.events.map(e => `<tr><td class="nw">${esc(e.at.replace('T', ' ').slice(0, 19))}</td><td>${esc(e.who || '')}</td><td class="nw">${esc(ACT[e.action] || e.action)}</td>` +
+        `<td>${esc(title(e.eid)).slice(0, 200)}</td><td class="note">${e.action === 'login' ? '' : esc(e.detail || '')}</td></tr>`).join('') + '</tbody>';
+  }
+
+  /* ── 탭·등급 ── */
+  $('#tabs').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; tab = b.dataset.tab; store.set(TAB_KEY, tab); render(); });
+  $('#tierSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; tier = Number(b.dataset.tier); store.set(TIER_KEY, tier);
+    picked.clear(); vpicked.clear(); render(); });
+
+  api('api/me').then(load).catch(() => show('login'));
+})();
+</script>
+</body>
+</html>
