@@ -153,6 +153,7 @@
       <div class="actions">
         <span><span class="sel" id="selN">0</span>편 선택</span>
         <button class="btn pri sm" id="reqBtn" disabled>홍보영상 제작 리스트에 올리기</button>
+        <button class="btn sm" id="unreqBtn" disabled>제작 요청 취소</button>
         <button class="btn ghost sm" id="clrBtn">선택 해제</button>
         <div class="grow"></div>
         <span class="note" id="poolNote"></span>
@@ -368,27 +369,43 @@
       '</tr></thead><tbody>' + (rows.length ? rows.map(p => {
         const rk = c === 'pub' ? p.report_rank_b : p.report_rank_a;
         return `<tr class="${picked.has(p.eid) ? 'picked' : ''}" data-eid="${esc(p.eid)}">` +
-          `<td class="c"><input type="checkbox" class="pk" ${picked.has(p.eid) ? 'checked' : ''} ${p.video_status ? 'disabled title="이미 영상 리스트에 있음"' : ''}></td>` +
+          `<td class="c"><input type="checkbox" class="pk" ${picked.has(p.eid) ? 'checked' : ''}></td>` +
           `<td class="nw">${p.year}${p.in_latest ? '' : '<br><span class="badge b-left">풀 이탈</span>'}</td>` +
           `<td class="nw">${fwciCell(p)}</td><td class="r nw">${p.need == null ? '—' : p.need + '편'}</td>` +
           `<td style="min-width:320px">${paperCell(p)}<div style="margin-top:4px">${condBadges(p)}</div></td>` +
           `<td style="min-width:200px">${gradCell(p, c === 'pub' ? 'pub' : 'cur')}</td>` +
           `<td class="nw">${rk ? rk + '위' : '<span class="note">—</span>'}</td>` +
-          `<td class="nw">${vBadge(p)}</td><td class="nw">${esc(p.done_at || '')}${p.video_url ? `<br><a href="${esc(p.video_url)}" target="_blank" rel="noopener">영상</a>` : ''}</td>` +
+          `<td class="nw">${vBadge(p)}${cancelable(p) ? '<br><button class="btn sm ghost rc" title="제작 리스트에서 뺀다">요청 취소</button>' : ''}</td><td class="nw">${esc(p.done_at || '')}${p.video_url ? `<br><a href="${esc(p.video_url)}" target="_blank" rel="noopener">영상</a>` : ''}</td>` +
           `<td class="nw">${promoBadge(p)}</td></tr>`; }).join('') : `<tr><td colspan="10" class="empty">조건에 맞는 논문이 없습니다.</td></tr>`) + '</tbody>';
     $('#poolNote').textContent = `${rows.length.toLocaleString()}편 표시 · FWCI 는 최종 갱신 기준`;
     syncPick();
   }
+  const cancelable = (p) => p.video_status === 'requested' || p.video_status === 'in_production';
+  const pickedPapers = () => S.papers.filter(p => picked.has(p.eid));
   function syncPick() {
-    const n = [...picked].filter(e => S.papers.some(p => p.eid === e && !p.video_status)).length;
-    $('#selN').textContent = n; $('#reqBtn').disabled = !n;
+    const P = pickedPapers(), nNew = P.filter(p => !p.video_status).length, nCan = P.filter(cancelable).length;
+    $('#selN').textContent = P.length;
+    $('#reqBtn').disabled = !nNew; $('#reqBtn').textContent = '홍보영상 제작 리스트에 올리기' + (nNew ? ` (${nNew})` : '');
+    $('#unreqBtn').disabled = !nCan; $('#unreqBtn').textContent = '제작 요청 취소' + (nCan ? ` (${nCan})` : '');
+  }
+  /* 요청 취소 — 「요청」·「제작 중」인 논문을 제작 리스트에서 뺀다. 생성 완료는 빠지지 않는다(완료 취소를 먼저). */
+  function cancelReq(eids, after) {
+    const P = S.papers.filter(p => eids.includes(p.eid) && cancelable(p));
+    if (!P.length) return toast('취소할 요청이 없습니다(생성 완료는 「완료 취소」를 먼저 하세요).');
+    const inProd = P.filter(p => p.video_status === 'in_production').length;
+    dialog(`제작 요청 취소 (${P.length}편)`, [{ html: `<p class="note">제작 리스트에서 빼고 관리 풀의 「미요청」으로 되돌립니다.` +
+        (inProd ? ` 이 가운데 <b>${inProd}편은 이미 제작 중</b>이니 업체에도 알려 주세요.` : '') + '</p>' +
+        P.slice(0, 5).map(p => `<div class="sub">· ${esc(p.title).slice(0, 80)}</div>`).join('') + (P.length > 5 ? `<div class="sub">… 외 ${P.length - 5}편</div>` : '') }],
+      async () => { const r = await api('api/video', { method: 'POST', body: JSON.stringify({ op: 'cancel', eids: P.map(p => p.eid) }) });
+        if (after) after(); await load(); toast(`${r.changed}편의 제작 요청을 취소했습니다.`); }, '요청 취소');
   }
   $('#poolTbl').addEventListener('change', (e) => {
-    if (e.target.id === 'allChk') { poolRows().forEach(p => { if (p.video_status) return; e.target.checked ? picked.add(p.eid) : picked.delete(p.eid); }); renderPool(); return; }
+    if (e.target.id === 'allChk') { poolRows().forEach(p => { e.target.checked ? picked.add(p.eid) : picked.delete(p.eid); }); renderPool(); return; }
     if (e.target.classList.contains('pk')) { const eid = e.target.closest('tr').dataset.eid;
       e.target.checked ? picked.add(eid) : picked.delete(eid); e.target.closest('tr').classList.toggle('picked', e.target.checked); syncPick(); }
   });
   $('#poolTbl').addEventListener('click', (e) => {
+    const rc = e.target.closest('.rc'); if (rc) { const eid = rc.closest('tr').dataset.eid; return cancelReq([eid], () => picked.delete(eid)); }
     const h = e.target.closest('th.sort'); if (!h) return;
     const k = h.dataset.k; if (sortKey === k) sortDir = -sortDir; else { sortKey = k; sortDir = (k === 'year' || k === 'need') ? 1 : -1; }
     renderPool();
@@ -396,6 +413,7 @@
   ['#fYear', '#fCond', '#fVideo', '#fReport', '#fPromoted', '#fLeft'].forEach(s => $(s).addEventListener('change', renderPool));
   $('#fQ').addEventListener('input', renderPool);
   $('#clrBtn').onclick = () => { picked.clear(); renderPool(); };
+  $('#unreqBtn').onclick = () => cancelReq([...picked], () => picked.clear());
   $('#reqBtn').onclick = () => {
     const eids = [...picked].filter(e => S.papers.some(p => p.eid === e && !p.video_status));
     dialog(`홍보영상 제작 리스트에 ${eids.length}편 올리기`, [
@@ -417,7 +435,7 @@
         `<td class="nw">${esc(p.requested_at || '')}</td><td class="nw">${esc(p.started_at || '')}</td><td class="nw"><b>${esc(p.done_at || '')}</b></td>` +
         `<td style="min-width:320px">${paperCell(p)}</td><td class="nw">${fwciCell(p)}</td><td style="min-width:180px">${gradCell(p, 'cur')}</td>` +
         `<td style="min-width:140px">${p.video_url ? `<a href="${esc(p.video_url)}" target="_blank" rel="noopener">영상 보기</a>` : ''}${p.video_note ? `<div class="sub">${esc(p.video_note)}</div>` : ''}</td>` +
-        `<td class="nw">${promoBadge(p)}</td><td><button class="btn sm ghost ed">수정</button></td></tr>`).join('')
+        `<td class="nw">${promoBadge(p)}</td><td class="nw"><button class="btn sm ghost ed">수정</button>${cancelable(p) ? '<br><button class="btn sm ghost rc">요청 취소</button>' : ''}</td></tr>`).join('')
         : `<tr><td colspan="11" class="empty">해당 상태의 논문이 없습니다. 「관리 풀」에서 논문을 골라 올리세요.</td></tr>`) + '</tbody>';
     syncV();
   }
@@ -437,6 +455,7 @@
       e.target.closest('tr').classList.toggle('picked', e.target.checked); syncV(); }
   });
   $('#videoTbl').addEventListener('click', (e) => {
+    const rc = e.target.closest('.rc'); if (rc) { const eid = rc.closest('tr').dataset.eid; return cancelReq([eid], () => vpicked.delete(eid)); }
     const b = e.target.closest('.ed'); if (!b) return;
     const p = S.papers.find(x => x.eid === b.closest('tr').dataset.eid);
     const f = [{ id: 'url', label: '영상 주소', type: 'url', value: p.video_url || '', ph: 'https://' }, { id: 'note', label: '메모', type: 'textarea', value: p.video_note || '' }];
@@ -514,6 +533,16 @@
   $('#tabs').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; tab = b.dataset.tab; store.set(TAB_KEY, tab); render(); });
   $('#tierSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; tier = Number(b.dataset.tier); store.set(TIER_KEY, tier);
     picked.clear(); vpicked.clear(); render(); });
+
+  /* 여러 사람이 같이 쓴다 — 1분마다, 그리고 창으로 돌아올 때 서버의 최신 상태를 다시 읽는다(대화상자가 열려 있으면 미룬다) */
+  async function refresh() {
+    if (!S || document.hidden || $('#dlg').open) return;
+    try { const n = await api('api/state'); const before = S.last && S.last.id; S = n; render();
+      if (n.last && n.last.id !== before) toast('새 데이터가 반영됐습니다.'); } catch (e) {}
+  }
+  setInterval(refresh, 60000);
+  window.addEventListener('focus', refresh);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
 
   api('api/me').then(load).catch(() => show('login'));
 })();
