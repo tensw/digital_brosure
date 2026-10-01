@@ -1,10 +1,11 @@
 /* biblo.ai/skku/future_research_pool — 성균관대 THE 최상위 예비군 관리 풀
    ─ 관리 풀(상위 10~15% · 성대 주저자 · 재학 대학원생 참여) 논문을 관리한다.
      관리 풀 → (관리자 선택) 홍보영상 제작 리스트 → (업체 제작 · 보고) 생성 완료 → (데이터 갱신 때 경계 FWCI 도달) 승격 완료(누적)
+   ─ DB 엔진: node:sqlite(Node 22.13+) 또는 vendor/sqljs(sql.js WASM) — 아래 SqlJsDb 참고
    ─ 데이터 갱신은 2주에 한 번 수동: 분석 저장소의 tools/export_pool_snapshot.py 가 만든 JSON 을 「데이터 갱신」 탭에 올린다.
 
    저장소가 공개라서 데이터와 비밀은 모두 깃 밖에 둔다.
-     .skku-pool/pool.db       SQLite (node:sqlite, Node 22.13+). 학번·성명이 들어 있다.
+     .skku-pool/pool.db       SQLite 파일. 학번·성명이 들어 있다.
      .skku-pool/secrets.json  {"admin_id":"...","admin_pw":"..."} — 처음 한 번 관리자 계정을 만들 때만 읽는다(배포 시 GitHub 시크릿에서 씀)
    git reset --hard 는 추적하지 않는 파일을 지우지 않으므로 배포해도 남는다. 둘 다 .gitignore 에 있다.
 
@@ -22,18 +23,73 @@ const COOKIE = 'fp_s';
 const TTL = 8 * 60 * 60 * 1000;                 // 8시간
 const UPDATE_DAYS = 14;                         // 갱신 주기 정책
 
-let db = null, dbErr = null;
+let db = null, dbErr = null, engine = null;
+
+/* SQLite 엔진: Node 22.13+ 이면 내장 node:sqlite, 아니면 저장소에 함께 둔 sql.js(WASM · MIT, vendor/sqljs).
+   서버가 Node 20 이라 sql.js 로 돈다. 둘 다 같은 SQLite 파일을 쓴다.
+   sql.js 는 DB 를 메모리에 올리고, 쓰기(트랜잭션 커밋)마다 파일 전체를 임시 파일로 쓴 뒤 바꿔 끼운다(원자적). 이 규모(수 MB)에서 충분하다. */
+class SqlJsDb {
+  constructor(SQL, file) {
+    this.file = file; this.inTx = false;
+    this.d = new SQL.Database(fs.existsSync(file) ? fs.readFileSync(file) : undefined);
+  }
+  persist() {
+    const tmp = this.file + '.tmp';
+    fs.writeFileSync(tmp, Buffer.from(this.d.export()), { mode: 0o600 });
+    fs.renameSync(tmp, this.file);
+  }
+  exec(sql) {
+    const head = sql.trim().slice(0, 8).toUpperCase();
+    this.d.exec(sql);
+    if (head.startsWith('BEGIN')) this.inTx = true;
+    else if (head.startsWith('ROLLBACK')) this.inTx = false;
+    else if (head.startsWith('COMMIT')) { this.inTx = false; this.persist(); }
+    else if (!this.inTx) this.persist();
+  }
+  prepare(sql) {
+    const self = this;
+    const rows = (a) => { const st = self.d.prepare(sql); try { st.bind(a.map(v => v === undefined ? null : v)); const out = [];
+      while (st.step()) out.push(st.getAsObject()); return out; } finally { st.free(); } };
+    return {
+      all: (...a) => rows(a),
+      get: (...a) => rows(a)[0],
+      run: (...a) => {
+        self.d.run(sql, a.map(v => v === undefined ? null : v));
+        const changes = self.d.getRowsModified();
+        const lastInsertRowid = self.d.exec('SELECT last_insert_rowid() AS id')[0].values[0][0];
+        if (!self.inTx) self.persist();
+        return { changes, lastInsertRowid };
+      },
+    };
+  }
+}
+let readyP = null;
+function ready() {
+  if (readyP) return readyP;
+  readyP = (async () => {
+    fs.mkdirSync(DIR, { recursive: true, mode: 0o700 });
+    let Native = null;
+    if (process.env.SKKU_POOL_ENGINE !== 'sqljs') { try { Native = require('node:sqlite').DatabaseSync; } catch (e) {} }   // 시험용으로 sql.js 를 강제할 수 있다
+    if (Native) { db = new Native(DBFILE); engine = 'node:sqlite'; }
+    else {
+      const VEN = path.join(__dirname, 'vendor', 'sqljs');
+      const SQL = await require(path.join(VEN, 'sql-wasm.js'))({ locateFile: (f) => path.join(VEN, f) });
+      db = new SqlJsDb(SQL, DBFILE); engine = 'sql.js';
+    }
+    try { fs.chmodSync(DBFILE, 0o600); } catch (e) {}
+    open();
+  })().catch((e) => { dbErr = String(e && e.message || e); db = null; console.error('[future_research_pool] DB 엔진을 올리지 못했다:', dbErr); });
+  return readyP;
+}
 
 /* ── DB ─────────────────────────────────────────────────────────── */
+let schemaDone = false;
 function open() {
-  if (db || dbErr) return db;
+  if (!db || dbErr) return null;
+  if (schemaDone) return db;
   try {
-    const { DatabaseSync } = require('node:sqlite');
-    fs.mkdirSync(DIR, { recursive: true, mode: 0o700 });
-    db = new DatabaseSync(DBFILE);
-    try { fs.chmodSync(DBFILE, 0o600); } catch (e) {}
+    if (engine === 'node:sqlite') db.exec('PRAGMA journal_mode = WAL;');
     db.exec(`
-      PRAGMA journal_mode = WAL;
       PRAGMA foreign_keys = ON;
       CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, v TEXT);
       CREATE TABLE IF NOT EXISTS users (
@@ -67,6 +123,7 @@ function open() {
     if (!get('SELECT v FROM meta WHERE k = ?', 'secret'))
       run('INSERT INTO meta (k, v) VALUES (?, ?)', 'secret', crypto.randomBytes(32).toString('hex'));
     bootstrapAdmin();
+    schemaDone = true;
   } catch (e) {
     dbErr = String(e && e.message || e);
     db = null;
@@ -312,6 +369,11 @@ function csvVendor() {
 
 /* ── 라우팅 ─────────────────────────────────────────────────────── */
 function handle(req, res, urlPath) {
+  ready().then(() => route(req, res, urlPath)).catch((e) => {
+    console.error('[future_research_pool]', e); try { json(res, 500, { ok: false, msg: '서버 오류' }); } catch (e2) {}
+  });
+}
+function route(req, res, urlPath) {
   if (urlPath === BASE) { res.writeHead(301, { Location: BASE + '/' }); res.end(); return; }
   const sub = urlPath.slice(BASE.length);              // '/', '/api/...'
 
@@ -333,11 +395,11 @@ function handle(req, res, urlPath) {
 
   if (sub === '/api/health') {
     open();
-    return json(res, 200, { ok: !!db, db: db ? 'sqlite' : 'unavailable', node: process.version,
-      reason: dbErr ? 'Node 22.13 이상(node:sqlite)이 필요합니다' : undefined,
+    return json(res, 200, { ok: !!db, db: db ? engine : 'unavailable', node: process.version,
+      reason: dbErr || undefined,
       has_admin: db ? get('SELECT COUNT(*) AS n FROM users').n > 0 : false });
   }
-  if (!open()) return json(res, 503, { ok: false, msg: '관리 풀 DB 를 열 수 없습니다. 서버 Node 버전을 확인하세요(22.13 이상).' });
+  if (!open()) return json(res, 503, { ok: false, msg: '관리 풀 DB 를 열 수 없습니다.' });
 
   if (sub === '/api/login') {
     if (req.method !== 'POST') return json(res, 405, { ok: false, msg: 'POST 만 허용' });
