@@ -440,7 +440,12 @@ function route(req, res, urlPath) {
     req.on('data', d => { if (dead) return; n += d.length; if (n > 20 * 1024 * 1024) { dead = true; json(res, 413, { ok: false, msg: '파일이 너무 큽니다(20MB).' }); req.destroy(); return; } chunks.push(d); });
     req.on('end', () => {
       if (dead) return;
-      const raw = Buffer.concat(chunks);
+      let raw = Buffer.concat(chunks);
+      /* nginx 가 본문을 1MB 로 자른다(413). 스냅샷은 gzip 으로 압축해 보낸다. sha256 은 풀린 본문으로 잰다. */
+      if ((req.headers['content-encoding'] || '').toLowerCase() === 'gzip') {
+        try { raw = require('zlib').gunzipSync(raw, { maxOutputLength: 100 * 1024 * 1024 }); }
+        catch (e) { return json(res, 400, { ok: false, msg: '압축을 풀지 못했습니다.' }); }
+      }
       let snap; try { snap = JSON.parse(raw.toString('utf8')); } catch (e) { return json(res, 400, { ok: false, msg: 'JSON 파일이 아닙니다.' }); }
       try { const r = importSnapshot(snap, s.u, raw); json(res, r.ok ? 200 : 400, r); }
       catch (e) { console.error('[future_research_pool] import', e); json(res, 500, { ok: false, msg: '반영하지 못했습니다: ' + String(e.message || e).slice(0, 120) }); }

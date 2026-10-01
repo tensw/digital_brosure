@@ -487,7 +487,12 @@
   async function upload(file) {
     const m = $('#upMsg'); m.className = 'msg'; m.textContent = `${file.name} 반영 중…`;
     try {
-      const r = await fetch('api/snapshot', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: await file.text() });
+      // 서버 앞단(nginx)이 1MB 넘는 본문을 막으므로 gzip 으로 줄여 보낸다
+      const headers = { 'Content-Type': 'application/json' }; let body = file;
+      if (typeof CompressionStream === 'function') {
+        body = await new Response(file.stream().pipeThrough(new CompressionStream('gzip'))).blob(); headers['Content-Encoding'] = 'gzip';
+      }
+      const r = await fetch('api/snapshot', { method: 'POST', credentials: 'same-origin', headers, body });
       const j = await r.json().catch(() => ({}));
       if (!r.ok || !j.ok) throw new Error(j.msg || ('오류 ' + r.status));
       m.className = 'msg ok'; m.textContent = `반영했습니다 — 논문 ${j.n} · 신규 ${j.n_new} · 이탈 ${j.n_left} · 새 승격 ${j.n_promoted}`;
