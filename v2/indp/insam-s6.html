@@ -1,0 +1,79 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>관계와 속성의 분리</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;overflow:visible;background:transparent}
+h1{position:absolute;left:82px;top:66px;font-size:42px;font-weight:800;letter-spacing:-1.5px;line-height:1.2;color:#111827}
+h1 .ac{color:#1e4be8}
+.h1s{position:absolute;left:82px;top:130px;font-size:15.5px;font-weight:600;letter-spacing:-.3px;color:#4b5563}
+.kick{position:absolute;left:82px;top:40px;font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color:#98a1b2}
+.meta{position:absolute;right:82px;top:52px;text-align:right;font:700 12px/1.8 ui-monospace,Menlo,monospace;color:#98a1b2}
+.meta b{color:#4b5563}
+.body{position:absolute;left:82px;right:82px;top:176px;bottom:40px;display:flex;flex-direction:column;gap:14px}
+.sec{background:#fff;border-radius:12px;border:1px solid #e6eaf3;box-shadow:0 3px 12px rgba(30,50,90,.06);overflow:hidden;display:flex;flex-direction:column;min-height:0}
+.sec .band{background:var(--c);display:flex;align-items:center;gap:11px;padding:9px 20px;flex:none}
+.sec .band .sym{font:800 22px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.2px;color:rgba(255,255,255,.92);transform:skewX(-9deg)}
+.sec .band h2{font-size:18px;font-weight:800;letter-spacing:-.5px;color:#fff}
+.sec .band .cnt{margin-left:auto;font:700 11px ui-monospace,Menlo,monospace;color:#fff;background:rgba(255,255,255,.2);padding:3px 10px;border-radius:20px}
+.tw{flex:1;overflow:hidden}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+col.c-code{width:52px} col.c-ty{width:132px} col.c-cri{width:290px} col.c-res{width:210px}
+th{background:#f4f6fb;color:#6b7488;font:700 11px/1.3 "Pretendard",sans-serif;text-align:left;padding:7px 16px;border-bottom:1px solid #e2e7f1;letter-spacing:-.2px}
+td{padding:7px 16px;border-bottom:1px solid #eef1f7;color:#455066;vertical-align:top;line-height:1.5;font-size:12.5px;word-break:keep-all}
+tbody tr:last-child td{border-bottom:none}
+td.code{color:var(--c);font-weight:800;font-family:ui-monospace,Menlo,monospace;font-size:12px}
+td.ty{font-weight:800;color:#111827}
+td.ex{color:#1f2a3d}
+td.res{font:600 11.5px ui-monospace,Menlo,monospace;color:#6b7488;letter-spacing:-.2px}</style><style>
+/* 전체 지도 위치 표시 (insam-map.html 기준) */
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;
+ display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;
+ background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+.mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
+</style>
+</head><body>
+<div class="slide"><div id="stage"><div class="mappos-i0 f"><i>3</i>지도 3 · 그래프 만들기</div>
+ <div class="kick">INDP · 2부 그래프 구성 방법 · 04</div>
+ <h1>관계와 속성의 분리, <span class="ac">원문 근거 보존</span></h1>
+ <div class="h1s">관직·품계·직위, 책·글·법령, 인원·거리·형량·기간을 나눈다.</div>
+ <div class="meta">표본 <b>이상재·유관순</b><br>본문 직접 확인 · 2026-09-10</div>
+ <div class="body">
+ <section class="sec" style="--c:#7c3aed;flex:4.3">
+ <div class="band"><span class="sym">G</span><h2>직임</h2><span class="cnt">3유형</span></div>
+ <div class="tw"><table>
+  <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
+  <tbody><tr><td class="code">G1</td><td class="ty">관직</td><td class="ex">인천분국장 · 주미외교서기관 · 학부 편집국 참서관 · 내각 총서 · 중추원 1등 의관 · 의정부 총무국장</td><td>소속 조직과 직명을 나눠 잡는다</td><td class="res">조직 관계 · 역할 코드</td></tr><tr><td class="code">G2</td><td class="ty">품계</td><td class="ex">종2품</td><td>직명과 별개 속성으로 둔다</td><td class="res">직임 속성</td></tr><tr><td class="code">G3</td><td class="ty">학내 · 단체 직위</td><td class="ex">교장 · 교사 · 문객 · 수행원 · 단장 · 주재소장</td><td>사람과 조직을 잇는 역할이 된다</td><td class="res">idic_role_type</td></tr></tbody>
+ </table></div>
+</section><section class="sec" style="--c:#9333ea;flex:4.3">
+ <div class="band"><span class="sym">H</span><h2>문헌</h2><span class="cnt">3유형</span></div>
+ <div class="tw"><table>
+  <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
+  <tbody><tr><td class="code">H1</td><td class="ty">책 · 매체</td><td class="ex">『교육입국조서』 · 『소학교령』 · 『신천지』</td><td>겹낫표는 단행본·정기간행물</td><td class="res">object · 유형 문헌</td></tr><tr><td class="code">H2</td><td class="ty">글 · 문서</td><td class="ex">「헌의육조(獻議六條)」 · 「약소민족에게 호소하여 단결을 제출함」</td><td>홑낫표는 개별 글·기사</td><td class="res">object · 유형 글</td></tr><tr><td class="code">H3</td><td class="ty">법령 · 관제 · 조약</td><td class="ex">한성사범학교 관제 · 영약삼단(另約三端) · 정치에 관한 범죄 처벌의 건</td><td>괄호 없이 나온다. 사건의 근거 법령으로 붙인다</td><td class="res">사실 속성 · 적용 법령</td></tr></tbody>
+ </table></div>
+</section><section class="sec" style="--c:#64748b;flex:5.3">
+ <div class="band"><span class="sym">I</span><h2>수치</h2><span class="cnt">4유형</span></div>
+ <div class="tw"><table>
+  <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
+  <tbody><tr><td class="code">I1</td><td class="ty">인원</td><td class="ex">학생 200여 명 · 약 3천 명의 군중 · 114명의 유학생 · 3남 2녀</td><td>“여”, “약”이 붙으면 근사값으로 표시</td><td class="res">수치 + 근사 여부</td></tr><tr><td class="code">I2</td><td class="ty">거리 · 규모</td><td class="ex">약 10km · 약 30미터 · 24군데</td><td>단위를 함께 보존</td><td class="res">수치 + 단위</td></tr><tr><td class="code">I3</td><td class="ty">형량</td><td class="ex">징역 1년 · 15년형 · 미결구류일수 중 30일</td><td>재판 사실의 속성으로 붙인다</td><td class="res">사실 속성</td></tr><tr><td class="code">I4</td><td class="ty">기간</td><td class="ex">약 1년간 · 두 달여</td><td>시작·끝을 알 수 있으면 시작·끝으로</td><td class="res">기간 또는 구간</td></tr></tbody>
+ </table></div>
+</section>
+ </div>
+</div></div>
+<script>const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
+if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);</script></body></html>

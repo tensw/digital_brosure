@@ -1,0 +1,115 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>정규화 전후의 규모·밀도·연결성 비교</title>
+<style>
+/* 스킨: bk21-status-14 (light · 좌 대형 카드 span2 + 우 소카드 2) */
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;overflow:visible;background:transparent}
+.kick{position:absolute;left:82px;top:52px;font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color:#98a1b2}
+h1{position:absolute;left:82px;top:74px;font-size:44px;font-weight:800;letter-spacing:-1.5px;line-height:1.2;color:#111827}
+h1 .ac{color:#1e4be8}
+.h1s{position:absolute;left:82px;top:140px;font-size:16px;font-weight:600;letter-spacing:-.3px;color:#4b5563}
+.h1s b{color:#111827}
+.meta{position:absolute;right:82px;top:60px;text-align:right;font:700 12px/1.8 ui-monospace,Menlo,monospace;color:#98a1b2}
+.meta b{color:#4b5563}
+.mid{position:absolute;left:82px;right:82px;top:196px}
+.grid-61iu{display:grid;grid-template-columns:1.15fr 1fr;gap:22px}
+.big-61iu{grid-row:span 2;background:#fff;border-radius:16px;padding:24px 28px 24px;position:relative;box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 30px -22px rgba(30,92,240,.35)}
+.sm-61iu{background:#fff;border-radius:16px;padding:20px 26px;position:relative;overflow:hidden;box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 30px -22px rgba(30,92,240,.35)}
+.lb{font:700 10.5px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#98a1b2}.lb.m{color:#1e4be8}
+.mid h2{font-size:20px;font-weight:800;letter-spacing:-.6px;line-height:1.4;color:#111827;margin-top:8px}
+.mid h2 span{color:#1e4be8}
+.mid h2 em{font-style:normal;font-size:13px;font-weight:700;color:#98a1b2;margin-left:6px;letter-spacing:0}
+table.st{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+table.st th{text-align:left;font:700 10.5px ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#98a1b2;padding:7px 10px;border-bottom:1px solid #e3e8f2}
+table.st td{padding:6px 10px;border-bottom:1px solid #f0f3f9;color:#4b5563;vertical-align:top}
+table.st td.k{font-weight:800;color:#111827;white-space:nowrap}
+table.st td.v{font:800 13px ui-monospace,Menlo,monospace;color:#1e4be8;white-space:nowrap}
+table.st td.r{font:700 13px ui-monospace,Menlo,monospace;color:#6b7488;white-space:nowrap}
+table.st td.d{font:700 12px ui-monospace,Menlo,monospace;white-space:nowrap}
+.up{color:#b45309}.dn{color:#158a45}
+.cmp-61iu{margin-top:14px;padding-left:14px;border-left:2px solid #dbe1ee}
+.cmp-61iu .t{font:700 10.5px ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#98a1b2}
+.rw-61iu{display:flex;align-items:center;gap:14px;margin-top:9px}
+.rw-61iu i{display:block;height:34px;border-radius:9px;flex:none}
+.rw-61iu .lb2{font:800 22px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.2px;color:#111827}
+.rw-61iu .lb2 u{display:block;text-decoration:none;font:600 11px/1 ui-monospace,Menlo,monospace;color:#98a1b2;margin-top:6px;letter-spacing:0}
+.p-61iu{font-size:13.5px;font-weight:500;line-height:1.5;letter-spacing:-.3px;color:#4b5563;margin-top:9px;word-break:keep-all}
+.p-61iu b{color:#111827;font-weight:700}
+.def{margin-top:8px;list-style:none}
+.def li{position:relative;padding:3px 0 3px 14px;font-size:13px;line-height:1.5;color:#4b5563;letter-spacing:-.3px}
+.def li::before{content:"";position:absolute;left:0;top:11px;width:5px;height:5px;border-radius:50%;background:#1e4be8}
+.def li b{color:#111827}
+.concl{position:absolute;left:0;right:0;top:822px;text-align:center;font-size:22px;font-weight:800;letter-spacing:-.4px;color:#111827}
+.concl b{color:#1e4be8}
+.emb-bg0,.emb-bg0 body,.emb-bg0 .slide{background:transparent!important}
+</style><style>
+/* 전체 지도 위치 표시 (insam-map.html 기준) */
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;
+ display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;
+ background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+.mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
+</style>
+</head><body>
+<div class="slide"><div id="stage"><div class="mappos-i0"><i>6</i>지도 6 · 재기</div>
+ <div class="kick">INDP · 4부 검증과 분석 결과 · 02</div>
+ <h1>사건명 정규화 전후의 <span class="ac">규모·밀도·연결성 비교</span></h1>
+ <div class="h1s">인물 9,096명을 고정하고 사건명 표기 통일(괄호 부기·중점·마침표·공백 제거)만 적용했다. 왼쪽은 전후 실측, 오른쪽은 지표가 왜 그 방향으로 움직였는지에 대한 <b>이론적 설명</b>이다. 고립률과 거대성분 비율의 분모는 전체 인물 9,096명이다.</div>
+ <div class="meta">인물 <b>9,096명</b> 고정 · 전체 기준 분모<br>도구 NetworkX · SciPy</div>
+ <div class="mid"><div class="grid-61iu">
+  <div class="big-61iu">
+   <div class="lb">실측 · MEASURED (BEFORE → AFTER)</div>
+   <h2>표기 통일만으로 <span>투영 간선 1.8배</span><em>사건 표기 4,876 → 4,324</em></h2>
+   <table class="st">
+    <thead><tr><th>지표</th><th>정규화 전</th><th>정규화 후</th><th>변화</th></tr></thead>
+    <tbody>
+     <tr><td class="k">사건 표기 수</td><td class="r">4,876</td><td class="v">4,324</td><td class="d dn">−552 병합</td></tr>
+     <tr><td class="k">이분 간선</td><td class="r">10,382</td><td class="v">10,381</td><td class="d">≈ 동일</td></tr>
+     <tr><td class="k">투영 간선</td><td class="r">594,271</td><td class="v">1,091,842</td><td class="d up">×1.84</td></tr>
+     <tr><td class="k">평균 이웃 (전체)</td><td class="r">130.7</td><td class="v">240.1</td><td class="d up">×1.84</td></tr>
+     <tr><td class="k">고립 인물</td><td class="r">2,883 (31.7%)</td><td class="v">2,452 (27.0%)</td><td class="d dn">−431</td></tr>
+     <tr><td class="k">연결요소 (고립 제외)</td><td class="r">943</td><td class="v">888</td><td class="d dn">−55</td></tr>
+     <tr><td class="k">거대성분 (전체)</td><td class="r">2,929 (32.2%)</td><td class="v">3,587 (39.4%)</td><td class="d up">+7.2%p</td></tr>
+     <tr><td class="k">최대 사건 규모</td><td class="r">893명</td><td class="v">1,302명</td><td class="d up">+409</td></tr>
+     <tr><td class="k">100명↑ 사건</td><td class="r">5건</td><td class="v">6건</td><td class="d up">+1</td></tr>
+    </tbody>
+   </table>
+   <div class="cmp-61iu">
+    <div class="t">투영 간선 · 정규화 전후</div>
+    <div class="rw-61iu"><i style="width:46%;background:#e3e8f2"></i><span class="lb2">594,271<u>정규화 전 · 최대 사건 893명</u></span></div>
+    <div class="rw-61iu"><i style="width:84%;background:#7ba6ff"></i><span class="lb2">1,091,842<u>정규화 후 · 최대 사건 1,302명 (후기의병 계열 통합)</u></span></div>
+   </div>
+  </div>
+  <div class="sm-61iu">
+   <div class="lb m">이론 · 왜 간선이 늘었는가</div>
+   <h2>사건 통합은 <span>인물 쌍을 늘린다</span></h2>
+   <p class="p-61iu">참여자 <i>n</i>명인 사건은 투영에서 <b><i>n(n−1)/2</i></b>개의 인물 쌍을 만든다. "후기의병" 893명과 괄호 부기 표기 409건이 하나로 합쳐져 1,302명 노드가 되면서 쌍이 <b>39.8만 → 84.7만</b>으로 뛰었다. 규칙 적용은 사건 묶음과 투영 구조를 바꾸며, 병합의 타당성은 <b>원문 대조로 검증</b>한다.</p>
+  </div>
+  <div class="sm-61iu">
+   <div class="lb m">이론 · 연결성이 오른 이유</div>
+   <h2>분절이 사라지면 <span>고립이 줄어든다</span></h2>
+   <ul class="def">
+    <li><b>고립 −431</b>: 표기가 달라 혼자였던 인물이 같은 사건 노드로 묶여 이웃을 얻는다.</li>
+    <li><b>거대성분 32 → 39%</b>: 분절된 사건이 성분 사이를 잇는 다리가 된다(비고립 연결요소 943 → 888).</li>
+    <li><b>이분 간선 거의 유지</b>(10,382 → 10,381): 한 인물이 같은 사건을 두 표기로 적은 경우가 통일되며 1개 준다. 참여 자체는 그대로고, 변한 것은 사건의 동일성 정의다.</li>
+   </ul>
+  </div>
+ </div></div>
+ <div class="concl">투영 간선 594,271 → <b>1,091,842</b>, 거대성분 32.2 → <b>39.4%</b>로 증가했다. 이 변화에는 후기의병 계열의 과병합이 포함된다</div>
+</div></div>
+<script>
+const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');const k=Math.min(innerWidth/SW,innerHeight/SH);st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
+if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+
+</script></body></html>

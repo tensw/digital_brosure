@@ -1,0 +1,72 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>개체 정규화의 판정 기준</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;overflow:visible;background:transparent}
+h1{position:absolute;left:82px;top:66px;font-size:42px;font-weight:800;letter-spacing:-1.5px;line-height:1.2;color:#111827}
+h1 .ac{color:#1e4be8}
+.h1s{position:absolute;left:82px;top:130px;font-size:15.5px;font-weight:600;letter-spacing:-.3px;color:#4b5563}
+.kick{position:absolute;left:82px;top:40px;font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color:#98a1b2}
+.meta{position:absolute;right:82px;top:52px;text-align:right;font:700 12px/1.8 ui-monospace,Menlo,monospace;color:#98a1b2}
+.meta b{color:#4b5563}
+.wrap{position:absolute;left:82px;right:82px;top:176px;bottom:40px;display:flex;flex-direction:column;gap:16px}
+.sec{background:#fff;border-radius:14px;border:1px solid #e6eaf3;box-shadow:0 3px 12px rgba(30,50,90,.06);overflow:hidden;display:flex;flex-direction:column}
+.sec.rules{flex:1;min-height:0}
+.sec .band{background:#1e4be8;color:#fff;font-size:16px;font-weight:800;letter-spacing:-.4px;padding:11px 22px;flex:none}
+.sec .cw{flex:1;overflow:hidden}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+col.c-k{width:300px} col.c-d{width:360px}
+th{background:#f4f6fb;color:#6b7488;font:700 11px "Pretendard",sans-serif;text-align:left;padding:8px 22px;border-bottom:1px solid #e2e7f1}
+td{padding:15px 22px;border-bottom:1px solid #eef1f7;vertical-align:top;line-height:1.5;font-size:13px;word-break:keep-all}
+tbody tr:last-child td{border-bottom:none}
+td.k{font-weight:800;color:#111827}
+td.d{color:#1e4be8;font-weight:700}
+td.w{color:#6b7488}
+.samp{flex:none;background:#eef2fb;border:1px solid #dbe3f3;border-radius:14px;padding:16px 24px;display:flex;gap:34px}
+.samp .b{flex:1}
+.samp .b h3{font:700 11px ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#1e4be8;margin-bottom:6px}
+.samp .b p{font-size:12.5px;line-height:1.6;color:#455066;word-break:keep-all}
+.samp .b p b{color:#111827}
+</style><style>
+/* 전체 지도 위치 표시 (insam-map.html 기준) */
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;
+ display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;
+ background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+.mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
+</style>
+</head><body>
+<div class="slide"><div id="stage"><div class="mappos-i0"><i>2</i>지도 2 · 정규화</div>
+ <div class="kick">INDP · 3부 정규화 방법 · 05</div>
+ <h1>개체 정규화의 <span class="ac">판정 기준과 미해소 항목 처리</span></h1>
+ <div class="h1s">본문에서 개체·관계·속성을 추출할 때 판단이 갈리는 여덟 가지 상황과 원칙이다. 없는 값은 만들지 않고, 근거 없는 값은 채택하지 않는다.</div>
+ <div class="meta">표본 <b>이상재·유관순</b> 본문 직접 확인<br>표제어 15,037명 · 본문 100% · 평균 1,190자</div>
+ <div class="wrap">
+  <section class="sec rules">
+   <div class="band">정보 추출·정규화 지침 여덟 가지</div>
+   <div class="cw"><table>
+    <colgroup><col class="c-k"><col class="c-d"><col></colgroup>
+    <thead><tr><th>상황</th><th>이렇게 한다</th><th>왜</th></tr></thead>
+    <tbody><tr><td class="k">본문에 없는 값을 채우고 싶을 때</td><td class="d">채우지 않고 미상으로 둔다</td><td class="w">원문에 없는 사실을 만들면 되짚을 수 없다</td></tr><tr><td class="k">상대 시점의 기준점이 없을 때</td><td class="d">풀지 않고 원문 표기 그대로 둔다</td><td class="w">잘못 푼 날짜가 뒤 사실을 모두 어긋나게 한다</td></tr><tr><td class="k">인물 표기가 표제어에 없을 때</td><td class="d">표기만 보존하고 연결하지 않는다</td><td class="w">표제어에 없는 인물을 새로 만들지 않는다</td></tr><tr><td class="k">한자가 없을 때</td><td class="d">한글로 대조하고 한자 필드는 비운다</td><td class="w">같은 본문 안에서도 병기 여부가 섞인다</td></tr><tr><td class="k">지명 표기가 원천마다 다를 때</td><td class="d">지명 사전에서 먼저 통일한다</td><td class="w">“충남”과 “충청남도”가 달라 그대로는 대조되지 않는다</td></tr><tr><td class="k">사건에 이름이 없을 때</td><td class="d">이름을 짓지 않고 행위·시점·장소·참여자로 저장</td><td class="w">본문에 없는 사건명을 만들면 근거가 사라진다</td></tr><tr><td class="k">한 표기에 여러 정보가 겹칠 때</td><td class="d">정보마다 나눠 저장하고 원문 표기도 함께 보존</td><td class="w">“용두리(속칭 지령지, 현 …)”처럼 3중으로 겹친다</td></tr><tr><td class="k">근거 문장을 붙일 수 없을 때</td><td class="d">채택하지 않는다</td><td class="w">근거 없는 값은 검수 대상에도 오르지 못한다</td></tr></tbody>
+   </table></div>
+  </section>
+  <div class="samp">
+   <div class="b"><h3>표본과 방법</h3><p>이상재(ENTRY_ID 651)와 유관순(ENTRY_ID 614) 본문을 직접 읽어 나타난 표기만 유형으로 세웠다. 두 사람은 운동 계열과 시대가 달라 표기 양상이 겹치지 않는 편이다. 표본이 둘뿐이라 <b>여기 없는 유형이 더 있을 수 있다.</b> 표본 20인, 100~200인 단계에서 유형을 보강한다.</p></div>
+   <div class="b"><h3>이 문서의 쓰임</h3><p>정규화 규칙을 정하거나 바꿀 때, 추출기가 무엇을 놓쳤는지 확인할 때 기준으로 쓴다. 저장 위치의 테이블명은 인명 온톨로지 구축 설계서를 따른다. 수치는 <b>2026-09-14 개방 API</b> 확인분이다.</p></div>
+  </div>
+ </div>
+</div></div>
+<script>const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
+if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);</script></body></html>

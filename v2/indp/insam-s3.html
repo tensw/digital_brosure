@@ -1,0 +1,72 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>이름 표기 정규화</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;overflow:visible;background:transparent}
+h1{position:absolute;left:82px;top:66px;font-size:42px;font-weight:800;letter-spacing:-1.5px;line-height:1.2;color:#111827}
+h1 .ac{color:#1e4be8}
+.h1s{position:absolute;left:82px;top:130px;font-size:15.5px;font-weight:600;letter-spacing:-.3px;color:#4b5563}
+.kick{position:absolute;left:82px;top:40px;font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color:#98a1b2}
+.meta{position:absolute;right:82px;top:52px;text-align:right;font:700 12px/1.8 ui-monospace,Menlo,monospace;color:#98a1b2}
+.meta b{color:#4b5563}
+.body{position:absolute;left:82px;right:82px;top:176px;bottom:40px;display:flex;flex-direction:column;gap:14px}
+.sec{background:#fff;border-radius:12px;border:1px solid #e6eaf3;box-shadow:0 3px 12px rgba(30,50,90,.06);overflow:hidden;display:flex;flex-direction:column;min-height:0}
+.sec .band{background:var(--c);display:flex;align-items:center;gap:11px;padding:9px 20px;flex:none}
+.sec .band .sym{font:800 22px/1 ui-monospace,Menlo,monospace;letter-spacing:-1.2px;color:rgba(255,255,255,.92);transform:skewX(-9deg)}
+.sec .band h2{font-size:18px;font-weight:800;letter-spacing:-.5px;color:#fff}
+.sec .band .cnt{margin-left:auto;font:700 11px ui-monospace,Menlo,monospace;color:#fff;background:rgba(255,255,255,.2);padding:3px 10px;border-radius:20px}
+.tw{flex:1;overflow:hidden}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+col.c-code{width:52px} col.c-ty{width:132px} col.c-cri{width:290px} col.c-res{width:210px}
+th{background:#f4f6fb;color:#6b7488;font:700 11px/1.3 "Pretendard",sans-serif;text-align:left;padding:7px 16px;border-bottom:1px solid #e2e7f1;letter-spacing:-.2px}
+td{padding:7px 16px;border-bottom:1px solid #eef1f7;color:#455066;vertical-align:top;line-height:1.5;font-size:12.5px;word-break:keep-all}
+tbody tr:last-child td{border-bottom:none}
+td.code{color:var(--c);font-weight:800;font-family:ui-monospace,Menlo,monospace;font-size:12px}
+td.ty{font-weight:800;color:#111827}
+td.ex{color:#1f2a3d}
+td.res{font:600 11.5px ui-monospace,Menlo,monospace;color:#6b7488;letter-spacing:-.2px}</style><style>
+/* 전체 지도 위치 표시 (insam-map.html 기준) */
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;
+ display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;
+ background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+.mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
+</style>
+</head><body>
+<div class="slide"><div id="stage"><div class="mappos-i0"><i>2</i>지도 2 · 정규화</div>
+ <div class="kick">INDP · 3부 정규화 방법 · 02</div>
+ <h1>인물 식별을 위한 <span class="ac">이름 표기 정규화</span></h1>
+ <div class="h1s">한 편에 등장하는 사람과, 한 사람이 갖는 여러 이름 표기를 유형으로 나눈다.</div>
+ <div class="meta">표본 <b>이상재·유관순</b><br>본문 직접 확인 · 2026-09-10</div>
+ <div class="body">
+ <section class="sec" style="--c:#2563c7;flex:7.3">
+ <div class="band"><span class="sym">A</span><h2>사람</h2><span class="cnt">6유형</span></div>
+ <div class="tw"><table>
+  <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
+  <tbody><tr><td class="code">A1</td><td class="ty">표제어 본인</td><td class="ex">주어가 생략된 채 “태어났다”, “임명되었다”로 이어짐</td><td>문장 주어가 없으면 표제어 본인으로 본다</td><td class="res">person · 표제어 ID 그대로</td></tr><tr><td class="code">A2</td><td class="ty">친족</td><td class="ex">아버지 이희택 · 어머니 밀양 박씨 · 숙부 유중무 · 사촌언니 유예도 · 자녀 승륜·승인·승간·승준</td><td>관계어를 함께 잡아 친족 유형으로 구분</td><td class="res">idic_kinship_type · 부·모·숙부·사촌·자녀</td></tr><tr><td class="code">A3</td><td class="ty">동지 · 관련인물</td><td class="ex">박정양 · 홍영식 · 유길준(한자 없음) · 이승만</td><td>표제어 사전과 대조. 해소되면 연결, 안 되면 표기만 보존</td><td class="res">idic_entity 또는 미해소 표기</td></tr><tr><td class="code">A4</td><td class="ty">외국인</td><td class="ex">앨리스 제이 햄몬드(Alice J. Hammond Sharp) · 한국이름 사애리시 · 별칭 사부인 · 클리블랜드</td><td>한 사람이 세 이름을 가짐. 로마자·한국이름·별칭을 이명으로 묶는다</td><td class="res">idic_entity_alias 3행</td></tr><tr><td class="code">A5</td><td class="ty">일제 관헌</td><td class="ex">주재소장 고야마 · 일본 공사 이노우에 가오루</td><td>일본 한자 표기를 함께 보존</td><td class="res">idic_entity · 표기 유형 일본</td></tr><tr><td class="code">A6</td><td class="ty">제3자 관계 부기</td><td class="ex">조인원(조병옥 부친) · 이색의 후손</td><td>괄호 안 설명이 다른 인물과의 관계. 관계도 함께 뽑는다</td><td class="res">idic_entity_relation · 부자 관계</td></tr></tbody>
+ </table></div>
+</section><section class="sec" style="--c:#4f46e5;flex:6.3">
+ <div class="band"><span class="sym">B</span><h2>이름 표기</h2><span class="cnt">5유형</span></div>
+ <div class="tw"><table>
+  <colgroup><col class="c-code"><col class="c-ty"><col><col class="c-cri"><col class="c-res"></colgroup>
+  <thead><tr><th>코드</th><th>유형</th><th>본문 표기 실례</th><th>정규화 규칙</th><th>결과 · 저장</th></tr></thead>
+  <tbody><tr><td class="code">B1</td><td class="ty">한자 병기</td><td class="ex">박정양(朴定陽) 있음 · 유길준 없음 · 이완용 없음</td><td>같은 본문에서도 섞인다. 없다고 다른 사람으로 보지 않는다</td><td class="res">한자 필드는 비우고 한글로 대조</td></tr><tr><td class="code">B2</td><td class="ty">본관</td><td class="ex">본관은 한산(韓山) · 본관은 고흥(高興)</td><td>성씨의 관향이다. 출생지가 아니다</td><td class="res">인물 속성 · 좌표 부여 안 함</td></tr><tr><td class="code">B3</td><td class="ty">자 · 호</td><td class="ex">자는 계호(季皓) · 호는 월남(月南)</td><td>이명으로 등재해 사적지·문헌의 다른 표기와 잇는다</td><td class="res">idic_entity_alias · 유형 자/호</td></tr><tr><td class="code">B4</td><td class="ty">이명 · 한자 다름</td><td class="ex">유관순(柳冠順), 표제어는 柳寬順</td><td>한글이 같고 한자가 다른 표기를 이명으로 묶는다</td><td class="res">idic_entity_alias · 유형 이표기</td></tr><tr><td class="code">B5</td><td class="ty">직함 붙은 표기</td><td class="ex">월남이상재선생 · 백야김좌진장군 (사적지명)</td><td>호 + 이름 + 직함이 붙어 있다. 분리해야 대조된다</td><td class="res">표기 분해 후 이명 대조</td></tr></tbody>
+ </table></div>
+</section>
+ </div>
+</div></div>
+<script>const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');
+ const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
+if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);</script></body></html>

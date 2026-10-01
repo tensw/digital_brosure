@@ -1,0 +1,135 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>구조적 역할 분석과 해석 범위</title>
+<style>
+/* 스킨: bk21-status-11b (light · 헤더 색띠 비교 카드) — 2카드 */
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+ background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%);background-attachment:fixed;color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:linear-gradient(160deg,#f7f9fd 0%,#f2f5fb 46%,#eef2fa 100%)}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;overflow:visible;background:transparent}
+.kick{position:absolute;left:82px;top:52px;font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color:#98a1b2}
+h1{position:absolute;left:82px;top:74px;font-size:44px;font-weight:800;letter-spacing:-1.5px;line-height:1.2;color:#111827}
+h1 .ac{color:#1e4be8}
+.h1s{position:absolute;left:82px;top:140px;font-size:16px;font-weight:600;letter-spacing:-.3px;color:#4b5563}
+.h1s b{color:#111827}
+.meta{position:absolute;right:82px;top:60px;text-align:right;font:700 12px/1.8 ui-monospace,Menlo,monospace;color:#98a1b2}
+.meta b{color:#4b5563}
+.cols{position:absolute;left:82px;right:82px;top:196px;bottom:80px;display:flex;gap:22px;align-items:stretch}
+.col{flex:1;position:relative;min-width:0;display:flex;flex-direction:column;background:#fff;border-radius:14px;overflow:hidden;
+ box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 30px -22px rgba(30,92,240,.35)}
+.ch{display:flex;align-items:baseline;justify-content:center;gap:9px;color:#fff;text-align:center;padding:14px 16px;font-size:20px;font-weight:800;letter-spacing:-.6px}
+.ch .chs{font:700 11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:rgba(255,255,255,.72)}
+.col.c .ch{background:linear-gradient(100deg,#4b8cff,#1e4be8)}
+.col.b .ch{background:linear-gradient(100deg,#7d8798,#5b6474)}
+.bd{flex:1;padding:20px 24px 22px;display:flex;flex-direction:column;min-height:0}
+.bd p{font-size:14px;font-weight:500;line-height:1.5;letter-spacing:-.3px;color:#4b5563;word-break:keep-all}
+.bd p b{color:#111827;font-weight:700}
+/* 실측 */
+.motif{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mbox{background:#f7f9fd;border:1px solid #e3e8f2;border-radius:10px;padding:10px 12px;display:flex;flex-direction:column}
+.mbox .t{font:700 10.5px ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#98a1b2}
+.mbox svg{width:100%;height:120px;margin-top:4px}
+.mbox .d{font-size:12px;color:#4b5563;line-height:1.45;margin-top:4px}
+.mbox .d b{color:#111827}
+table.rk{width:100%;border-collapse:collapse;margin-top:12px;font-size:12.5px}
+table.rk th{text-align:left;font:700 10.5px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#98a1b2;padding:6px 8px;border-bottom:1px solid #e3e8f2}
+table.rk td{padding:6px 8px;border-bottom:1px solid #f0f3f9;color:#4b5563;vertical-align:middle}
+table.rk td.k{font-weight:800;color:#111827}
+table.rk td.v{font:800 12.5px ui-monospace,Menlo,monospace;color:#1e4be8;text-align:right;white-space:nowrap}
+table.rk .bar{display:block;height:6px;border-radius:99px;background:linear-gradient(90deg,#1e4be8,#7ea0ff)}
+.role{display:inline-block;font:700 10.5px ui-monospace,Menlo,monospace;padding:2px 7px;border-radius:5px;background:#eef2ff;color:#1e4be8;letter-spacing:.06em}
+.role.g{background:#eef5ee;color:#158a45}.role.o{background:#fbeee2;color:#c2590a}
+/* 모델 */
+table.def{width:100%;border-collapse:collapse;margin-top:12px;font-size:12.5px}
+table.def th{text-align:left;font:700 10.5px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#98a1b2;padding:6px 8px;border-bottom:1px solid #e3e8f2}
+table.def td{padding:7px 8px;border-bottom:1px solid #f0f3f9;color:#4b5563;vertical-align:top;line-height:1.45}
+table.def td.k{font-weight:800;color:#111827;white-space:nowrap}
+table.def code{font:600 11px ui-monospace,Menlo,monospace;color:#3f4a63;background:#eef1f7;padding:1px 5px;border-radius:4px}
+.axes{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ax{border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.5;color:#4b5563}
+.ax.l{background:#fbeee2;border:1px solid #f1d5b8}.ax.s{background:#eef2ff;border:1px solid #d5deff}
+.ax b{display:block;font-size:12.5px;color:#111827;margin-bottom:3px}
+.note{margin-top:auto;background:#fff7e6;border:1px solid #f0d9a6;border-radius:9px;padding:10px 13px;font-size:12.5px;color:#6b551a;line-height:1.5}
+.note b{color:#5a4610}
+.concl{position:absolute;left:0;right:0;top:834px;text-align:center;font-size:22px;font-weight:800;letter-spacing:-.4px;color:#111827}
+.concl b{color:#1e4be8}
+.emb-bg0,.emb-bg0 body,.emb-bg0 .slide{background:transparent!important}
+</style><style>
+/* 전체 지도 위치 표시 (insam-map.html 기준) */
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;
+ display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;
+ background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+.mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
+</style>
+</head><body>
+<div class="slide"><div id="stage"><div class="mappos-i0"><i>6</i>지도 6 · 재기</div>
+ <div class="kick">INDP · 부록 · 구조적 역할</div>
+ <h1>단일 전기 그래프의 <span class="ac">구조적 역할 분석과 해석 범위</span></h1>
+ <div class="h1s">왼쪽은 안중근 ego 네트워크에서 실측한 <b>매개 위치와 모티프</b>, 오른쪽은 <b>모티프·그래프렛·RolX</b>의 정의다. "가족·동지"는 부여한 관계 라벨이고, 구조적 역할은 다른 축이다.</div>
+ <div class="meta">안중근 ego <b>61노드 · 72간선</b><br>전수 RolX는 후속 산출 (미측)</div>
+ <div class="cols">
+  <div class="col c">
+   <div class="ch">실측<span class="chs">안중근 ego · MEASURED</span></div>
+   <div class="bd">
+    <p>안중근이 <b>betweenness 0.914</b>로 거의 모든 최단경로를 매개한다(단일 전기의 구조적 결과). 사건 노드 <b>하얼빈 의거(0.251)</b>와 <b>뤼순 재판(0.130)</b>이 그다음 매개자로, 인물이 아니라 <b>사건이 경로를 잇는다</b>.</p>
+    <table class="rk">
+     <thead><tr><th>노드</th><th style="width:120px">betweenness</th><th style="text-align:right">값</th><th>구조적 역할</th></tr></thead>
+     <tbody>
+      <tr><td class="k">안중근</td><td><i class="bar" style="width:100%"></i></td><td class="v">0.914</td><td><span class="role">허브 · HUB</span></td></tr>
+      <tr><td class="k">하얼빈 의거</td><td><i class="bar" style="width:27%"></i></td><td class="v">0.251</td><td><span class="role o">사건 매개 · BRIDGE</span></td></tr>
+      <tr><td class="k">뤼순 재판</td><td><i class="bar" style="width:14%"></i></td><td class="v">0.130</td><td><span class="role o">체인 연결 · BRIDGE</span></td></tr>
+      <tr><td class="k">안태훈</td><td><i class="bar" style="width:11%"></i></td><td class="v">0.099</td><td><span class="role g">가족 클러스터 관문</span></td></tr>
+      <tr><td class="k">대동공보사</td><td><i class="bar" style="width:5%"></i></td><td class="v">0.049</td><td><span class="role g">조직 관문</span></td></tr>
+     </tbody>
+    </table>
+    <div class="motif">
+     <div class="mbox"><div class="t">MOTIF · 삼각형 (닫힌 3자)</div>
+      <svg viewBox="0 0 200 110"><g stroke="#c07a4a" stroke-width="2"><line x1="100" y1="18" x2="40" y2="92"/><line x1="100" y1="18" x2="160" y2="92"/><line x1="40" y1="92" x2="160" y2="92"/></g>
+       <circle cx="100" cy="18" r="11" fill="#c9a227" stroke="#fff" stroke-width="2"/><circle cx="40" cy="92" r="9" fill="#8a6d3b" stroke="#fff" stroke-width="2"/><circle cx="160" cy="92" r="9" fill="#8a6d3b" stroke="#fff" stroke-width="2"/>
+       <g font-size="10.5" font-weight="700" fill="#1f2a3d" text-anchor="middle"><text x="100" y="42">안중근</text><text x="40" y="108">안태훈</text><text x="160" y="108">조마리아</text></g></svg>
+      <div class="d">가족 관계가 <b>닫힌 삼각형</b>을 만든다. 이 홀수 순환 때문에 전체 그래프는 이분 그래프가 아니다.</div></div>
+     <div class="mbox"><div class="t">MOTIF · 별형 (허브–스포크)</div>
+      <svg viewBox="0 0 200 110"><g stroke="#2f6db0" stroke-width="1.6" opacity=".8"><line x1="100" y1="55" x2="30" y2="20"/><line x1="100" y1="55" x2="30" y2="90"/><line x1="100" y1="55" x2="170" y2="20"/><line x1="100" y1="55" x2="170" y2="90"/><line x1="100" y1="55" x2="100" y2="12"/><line x1="100" y1="55" x2="100" y2="98"/></g>
+       <circle cx="100" cy="55" r="12" fill="#c9a227" stroke="#fff" stroke-width="2"/>
+       <g fill="#2f6db0" stroke="#fff" stroke-width="1.5"><circle cx="30" cy="20" r="7"/><circle cx="30" cy="90" r="7"/><circle cx="170" cy="20" r="7"/><circle cx="170" cy="90" r="7"/><circle cx="100" cy="12" r="7"/><circle cx="100" cy="98" r="7"/></g></svg>
+      <div class="d">동지 관계는 안중근을 중심으로 <b>별형</b>이다. 동지끼리 직접 연결이 본문에 없으면 스포크로만 남는다.</div></div>
+    </div>
+   </div>
+  </div>
+  <div class="col b">
+   <div class="ch">모델<span class="chs">Motifs · Graphlets · RolX</span></div>
+   <div class="bd">
+    <p>구조적 역할은 <b>이웃 구조의 패턴</b>으로 정의한다. 누구와 연결됐는지(라벨)가 아니라 <b>어떤 모양으로 연결됐는지</b>다.</p>
+    <table class="def">
+     <thead><tr><th style="width:110px">개념</th><th>정의</th><th style="width:120px">도구</th></tr></thead>
+     <tbody>
+      <tr><td class="k">모티프</td><td>무작위 그래프보다 유의하게 자주 나타나는 소규모 부분구조(삼각형·별형·경로)</td><td><code>motifs</code></td></tr>
+      <tr><td class="k">그래프렛</td><td>노드 2~5개의 연결된 부분구조 전부. 노드별 그래프렛 궤도 빈도가 구조 지문</td><td><code>orca</code></td></tr>
+      <tr><td class="k">RolX</td><td>구조 특징(차수·이웃 차수·재귀 집계)을 행렬분해해 역할로 군집. soft assignment</td><td><code>graphrole</code></td></tr>
+     </tbody>
+    </table>
+    <div class="axes">
+     <div class="ax l"><b>관계 라벨 (부여)</b>가족 · 동지 · 적대 · 소속. 본문에서 읽어 사람이 붙인 의미 축.</div>
+     <div class="ax s"><b>구조적 역할 (계산)</b>허브 · 중개자 · 주변부 · 클러스터 관문. 그래프 모양에서 계산되는 위치 축.</div>
+    </div>
+    <div class="note"><b>분석의 기여:</b> 두 축의 일치·불일치를 비교한다. 예: 라벨상 "조력자"인 김형재가 구조상 대동공보사와 이강을 잇는 중개자 위치라면, 라벨이 놓친 역할을 구조가 드러낸다. 전수 RolX는 사건 규모 보정 후 산출한다(현재 미측).</div>
+   </div>
+  </div>
+ </div>
+ <div class="concl">사건 노드가 경로를 매개한다. 구조적 역할과 <b>원문에서 부여한 관계 라벨</b>을 대조한다</div>
+</div></div>
+<script>
+const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');const k=Math.min(innerWidth/SW,innerHeight/SH);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
+if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+
+</script></body></html>

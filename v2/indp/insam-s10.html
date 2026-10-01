@@ -1,0 +1,139 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>노드·간선 유형과 채택 기준</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow:hidden}
+body{margin:0;font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:#060a16}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;
+ background:radial-gradient(1200px 900px at 50% 8%,#0b1226 0%,#060a16 60%,#03050c 100%)}
+.wrap{position:absolute;inset:0;padding:34px 74px 22px;display:flex;flex-direction:column}
+.kick{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:#5d7099}
+h1{font-size:38px;font-weight:800;letter-spacing:-1.3px;color:#eef1ff;margin-top:9px;line-height:1.15}
+h1 span{background:linear-gradient(90deg,#5b9dff,#c084fc 55%,#4ade80);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lead{color:#9fb0d4;font-size:14.5px;font-weight:600;margin-top:8px;max-width:130ch;line-height:1.5}
+.lead b{color:#eef1ff}
+.meta{position:absolute;right:74px;top:36px;text-align:right;font:600 11px/1.85 ui-monospace,Menlo,monospace;color:#5d7099}
+.meta b{color:#9fb0d4}
+.pair{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:18px;position:relative}
+.pair::after{content:"vs";position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;z-index:6;
+ display:grid;place-items:center;border-radius:50%;font:800 15px/1 ui-monospace,Menlo,monospace;color:#fff;
+ background:linear-gradient(150deg,#1a2044,#0d1230);border:1px solid rgba(160,180,255,.34);box-shadow:0 12px 30px -10px rgba(0,0,0,.8)}
+.pane{position:relative;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;min-height:0;padding:24px 28px}
+.lite{background:#f6f5fb;color:#191934}
+.dark{background:linear-gradient(168deg,#182058,#12173f);border:1px solid rgba(150,160,240,.22);color:#eef1ff}
+.ph{display:flex;align-items:center;gap:8px;font:700 11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.05em}
+.lite .ph{color:#6a5ad6} .dark .ph{color:#b3a6ff}
+.pt{margin-top:12px;font-size:21px;font-weight:800;letter-spacing:-.5px}
+.lite .pt{color:#191934} .dark .pt{color:#eef1ff}
+/* 좌 실측 */
+.stat{margin-top:16px;display:flex;gap:10px}
+.st{flex:1;background:#fff;border:1px solid #e3def2;border-radius:12px;padding:12px 14px;text-align:center}
+.st .v{font:800 26px/1 ui-monospace,Menlo,monospace;color:#1e3f8c;letter-spacing:-1px}
+.st .l{font-size:11.5px;font-weight:700;color:#6b6b8f;margin-top:6px}
+.types{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px}
+.ty{font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px;color:#fff}
+.el{margin-top:16px;background:#fff;border:1px solid #e3def2;border-radius:12px;padding:12px 15px;flex:1;overflow:hidden}
+.el .h{font:700 10.5px ui-monospace,Menlo,monospace;color:#8a8aad;letter-spacing:.06em;margin-bottom:8px}
+.el table{width:100%;border-collapse:collapse;font-size:12.5px}
+.el td{padding:4px 4px;color:#33334f;border-bottom:1px solid #eef0f6;vertical-align:middle}
+.el tr:last-child td{border-bottom:none}
+.el .s{font-weight:800;color:#1e3f8c} .el .r{font:700 10.5px ui-monospace,Menlo,monospace;color:#6a5ad6;text-align:center}
+.el .t{color:#455066}
+/* 우 모델 */
+.eq{margin-top:16px;background:rgba(255,255,255,.06);border:1px solid rgba(150,165,255,.2);border-radius:12px;
+ padding:14px 18px;font-family:"Times New Roman",Georgia,serif;font-style:italic;font-size:19px;color:#dfe6ff;text-align:center}
+.mtab{margin-top:14px;flex:1;overflow:hidden}
+.mtab .h{font:700 10.5px ui-monospace,Menlo,monospace;color:#8b96d4;letter-spacing:.06em;margin:10px 0 6px}
+.mtab table{width:100%;border-collapse:collapse;font-size:12.5px}
+.mtab th{text-align:left;font:700 10.5px ui-monospace,Menlo,monospace;color:#8b96d4;padding:5px 8px;border-bottom:1px solid rgba(150,165,255,.2)}
+.mtab td{padding:6px 8px;color:#cdd6f5;border-bottom:1px solid rgba(150,165,255,.09);vertical-align:top;line-height:1.45}
+.mtab tr:last-child td{border-bottom:none}
+.mtab td.k{color:#fff;font-weight:700;font-family:ui-monospace,Menlo,monospace;font-size:11.5px}
+.foot{margin-top:14px;display:flex;align-items:center;gap:14px}
+.fk{font-size:15px;font-weight:800;color:#eef1ff}.fk span{color:#fbbf24}
+.fd{margin-left:auto;font:600 11px ui-monospace,Menlo,monospace;color:#5d7099}
+</style><style>
+/* 전체 지도 위치 표시 (insam-map.html 기준) */
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;
+ display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;
+ background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+.mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
+</style>
+</head><body>
+<div class="slide"><div id="stage"><div class="mappos-i0 f"><i>3</i>지도 3 · 그래프 만들기</div><div class="wrap">
+ <div class="kick">INDP · 2부 그래프 구성 방법 · 01</div>
+ <h1>분석 목적에 따른 <span>노드·간선 유형과 채택 기준</span></h1>
+ <div class="lead">안중근 전기 본문에서 추출한 개체는 그래프의 <b>노드</b>에, 관계는 <b>간선</b>에 대응한다. 노드에는 개체 유형이, 간선에는 관계 유형이 지정된다. 왼쪽은 구성한 그래프의 규모와 간선 예시, 오른쪽은 이종 네트워크 모델의 정의다.</div>
+ <div class="meta">표본 <b>안중근</b> (ID 676)<br>출처 인명사전 발간본 본문</div>
+ <div class="pair">
+  <!-- 좌: 안중근 실측 -->
+  <section class="pane lite">
+   <div class="ph">◤ 실측 · 안중근 전기</div>
+   <div class="pt">그래프 규모와 간선 예시</div>
+   <div class="stat">
+    <div class="st"><div class="v">61</div><div class="l">노드 (개체)</div></div>
+    <div class="st"><div class="v">72</div><div class="l">간선 (관계)</div></div>
+    <div class="st"><div class="v">6</div><div class="l">노드 유형</div></div>
+   </div>
+   <div class="types">
+    <span class="ty" style="background:#2563c7">인물 26</span>
+    <span class="ty" style="background:#c2590a">사건 9</span>
+    <span class="ty" style="background:#0891b2">조직 10</span>
+    <span class="ty" style="background:#158a45">장소 9</span>
+    <span class="ty" style="background:#9333ea">물건 4</span>
+    <span class="ty" style="background:#94a3b8">이명 3</span>
+   </div>
+   <div class="el">
+    <div class="h">간선 목록 (edge list) 예시</div>
+    <table><tbody>
+     <tr><td class="s">안중근</td><td class="r">participated_in →</td><td class="t">하얼빈 의거</td></tr>
+     <tr><td class="s">안중근</td><td class="r">parent_of ←</td><td class="t">안태훈 (아버지)</td></tr>
+     <tr><td class="s">우덕순</td><td class="r">participated_in →</td><td class="t">하얼빈 의거</td></tr>
+     <tr><td class="s">하얼빈 의거</td><td class="r">occurred_at →</td><td class="t">하얼빈 역</td></tr>
+     <tr><td class="s">안중근</td><td class="r">authored →</td><td class="t">『동양평화론』</td></tr>
+     <tr><td class="s">단지동맹</td><td class="r">preceded →</td><td class="t">하얼빈 의거</td></tr>
+    </tbody></table>
+   </div>
+  </section>
+  <!-- 우: 모델 -->
+  <section class="pane dark">
+   <div class="ph">◢ 모델 정의 · 이종 네트워크 (heterogeneous network)</div>
+   <div class="pt">G = (V, E, τ, φ)</div>
+   <div class="eq">τ : V → 노드 유형 &nbsp;·&nbsp; φ : E → 관계 유형</div>
+   <div class="mtab">
+    <div class="h">노드 유형 τ</div>
+    <table><tbody>
+     <tr><td class="k">인물·사건·조직·장소·물건</td><td>서로 다른 종류의 개체. 이름·한자·별칭은 원칙상 <b style="color:#fff">속성</b> (본 예시는 이명을 별도 노드로 표시)</td></tr>
+    </tbody></table>
+    <div class="h">관계 유형 φ (방향·속성)</div>
+    <table>
+     <thead><tr><th style="width:150px">관계</th><th>방향 · 속성</th></tr></thead>
+     <tbody>
+      <tr><td class="k">participated_in</td><td>인물 → 사건 · 역할·근거</td></tr>
+      <tr><td class="k">member_of</td><td>인물 → 조직 · 직위·기간</td></tr>
+      <tr><td class="k">parent_of</td><td>부모 → 자녀 · 근거</td></tr>
+      <tr><td class="k">occurred_at</td><td>사건 → 장소</td></tr>
+      <tr><td class="k">preceded</td><td>사건 → 사건 · 선후(인과 아님)</td></tr>
+     </tbody>
+    </table>
+   </div>
+  </section>
+ </div>
+ <div class="foot">
+  <div class="fk">이종 네트워크 모델은 <span>개체 유형과 관계 유형</span>을 구분해 본문의 연결 관계를 표현한다</div>
+  <div class="fd">노드 61 · 간선 72 · 안중근 실측</div>
+ </div>
+</div></div></div>
+<script>
+function fit(){var st=document.getElementById('stage');var k=Math.min(innerWidth/1600,innerHeight/900);
+ st.style.transform='translate(-50%,-50%) scale('+k.toFixed(4)+')';}
+fit();addEventListener('resize',fit);addEventListener('load',fit);addEventListener('pageshow',fit);
+if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+</script></body></html>

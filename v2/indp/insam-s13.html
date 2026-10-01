@@ -1,0 +1,125 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>정규화 전후의 중심성 순위 비교</title>
+<style>
+/* 스킨: bk21-status-09 (블루 blob 배경 · 흰 표 + 셀 내 진행바) */
+:root{--card:#fff;--ink:#111827;--ink2:#4b5563;--ink3:#98a1b2;--bl:#1e4be8;--line:#e3e8f2;--bg-7k:#1b9df2;--bg2-7k:#4fb8f7;--bg3-7k:#0d7ec9}
+*{box-sizing:border-box;margin:0;padding:0}
+html{overflow-x:hidden}
+body{font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:var(--bg-7k);color:#111827;-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:var(--bg-7k)}
+.blob-7k{position:absolute;border-radius:50%;pointer-events:none}
+.b1-7k{width:1180px;height:1180px;background:var(--bg2-7k);opacity:.55;left:34%;top:-30%}
+.b2-7k{width:820px;height:820px;background:var(--bg2-7k);opacity:.38;left:64%;top:44%}
+.b3-7k{width:560px;height:560px;background:var(--bg3-7k);opacity:.22;left:-12%;top:52%}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;overflow:visible;background:transparent}
+.kick{position:absolute;left:82px;top:52px;font:700 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.22em;color:rgba(255,255,255,.7)}
+h1{position:absolute;left:82px;top:74px;font-size:44px;font-weight:800;letter-spacing:-1.5px;line-height:1.2;color:#fff}
+.h1s{position:absolute;left:82px;top:140px;font-size:16px;font-weight:600;letter-spacing:-.3px;color:rgba(255,255,255,.88)}
+.h1s b{color:#fff}
+.meta{position:absolute;right:82px;top:60px;text-align:right;font:700 12px/1.8 ui-monospace,Menlo,monospace;color:rgba(255,255,255,.7)}
+.meta b{color:#fff}
+.two{position:absolute;left:82px;right:82px;top:192px;bottom:66px;display:grid;grid-template-columns:1.3fr 1fr;gap:22px}
+.card{background:var(--card);border-radius:16px;overflow:hidden;box-shadow:0 10px 28px -20px rgba(17,24,39,.3);display:flex;flex-direction:column;min-height:0}
+.ch{padding:13px 20px;font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:var(--ink3);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.ch b{font:800 15px "Pretendard",sans-serif;letter-spacing:-.4px;color:#111827}
+.ch.m{background:#eef2ff;color:var(--bl)}.ch.m b{color:var(--bl)}
+.tbl-53fi{width:100%;border-collapse:collapse}
+.tbl-53fi th{text-align:left;font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:var(--ink3);padding:11px 16px;border-bottom:1px solid var(--line)}
+.tbl-53fi td{padding:10px 16px;font-size:12.5px;border-bottom:1px solid #f0f3f9;vertical-align:top;line-height:1.5}
+.tbl-53fi tr:last-child td{border-bottom:0}
+.lt-53fi{font-weight:800;white-space:nowrap;width:120px;color:#111827}
+.lt-53fi small{display:block;font:600 10px ui-monospace,Menlo,monospace;color:var(--ink3);margin-top:3px;letter-spacing:.06em}
+.nm{color:var(--ink2)} .nm b{color:#111827}
+.nm .new{color:#b45309;font-weight:800}
+.nm .out{color:#98a1b2;text-decoration:line-through}
+.lb-53fi{width:150px}
+.lb-53fi i{display:block;height:7px;min-width:6px;border-radius:99px;background:linear-gradient(90deg,var(--bl),#7ea0ff)}
+.lb-53fi u{display:block;text-decoration:none;font:800 12px ui-monospace,Menlo,monospace;color:var(--bl);margin-top:5px}
+.bd{padding:12px 20px;flex:1;overflow:hidden}
+.ego{display:flex;gap:10px}
+.eg{flex:1;background:#f3f6fc;border-radius:10px;padding:8px 11px}
+.eg .v{font:800 22px/1 ui-monospace,Menlo,monospace;color:var(--bl);letter-spacing:-1px}
+.eg .l{font-size:11px;font-weight:700;color:var(--ink3);margin-top:5px;line-height:1.35}
+.def{margin-top:9px;border-collapse:collapse;width:100%;font-size:12.5px}
+.def th{text-align:left;font:700 10.5px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:var(--ink3);padding:6px 8px;border-bottom:1px solid var(--line)}
+.def td{padding:5px 8px;border-bottom:1px solid #f0f3f9;color:var(--ink2);vertical-align:top;line-height:1.45}
+.def td.k{font-weight:800;color:#111827;white-space:nowrap}
+.note{margin-top:9px;background:#fff7e6;border:1px solid #f0d9a6;border-radius:9px;padding:8px 11px;font-size:11.5px;color:#6b551a;line-height:1.5}
+.note b{color:#5a4610}
+.concl{position:absolute;left:0;right:0;top:834px;text-align:center;font-size:22px;font-weight:800;letter-spacing:-.4px;color:#fff}
+.emb-bg0,.emb-bg0 body,.emb-bg0 .slide{background:transparent!important}
+</style><style>
+/* 전체 지도 위치 표시 (insam-map.html 기준) */
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;
+ display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;
+ background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+.mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
+</style>
+</head><body>
+<div class="slide">
+ <span class="blob-7k b1-7k"></span><span class="blob-7k b2-7k"></span><span class="blob-7k b3-7k"></span>
+ <div id="stage"><div class="mappos-i0"><i>6</i>지도 6 · 재기</div>
+ <div class="kick">INDP · 4부 검증과 분석 결과 · 03</div>
+ <h1>사건명 정규화 전후의 중심성 순위 비교</h1>
+ <div class="h1s">전체 인물 9,096명을 고정하고 사건명 표기만 통일한 뒤, 정규화 전후 각 거대성분에서 산출한 <b>중심성 상위 10명의 전후 중복 인원</b>을 비교한다. 왼쪽은 전후 실측 순위, 오른쪽은 지표 정의와 민감도 해석이다.</div>
+ <div class="meta">거대성분 전 <b>2,929</b> · 후 <b>3,587</b> 노드<br>매개중심성 k=400 근사 · seed 7</div>
+ <div class="two">
+  <div class="card">
+   <div class="ch">실측 · BEFORE → AFTER <b>중심성 상위 5명과 상위 10 겹침</b></div>
+   <table class="tbl-53fi">
+    <thead><tr><th>지표</th><th>정규화 전 상위 5</th><th>정규화 후 상위 5</th><th>상위 10 겹침</th></tr></thead>
+    <tbody>
+     <tr><td class="lt-53fi">degree<small>활동 폭</small></td>
+      <td class="nm">전재호 · 한창선 · 박장호 · 강순희 · 정술원</td>
+      <td class="nm">전재호 · 한창선 · 박장호 · 강순희 · 정술원</td>
+      <td class="lb-53fi"><i style="width:90%"></i><u>9 / 10</u></td></tr>
+     <tr><td class="lt-53fi">betweenness<small>집단 간 중개</small></td>
+      <td class="nm">전재호 · 한창선 · 유복영 · 박장호 · 편강렬</td>
+      <td class="nm">전재호 · 한창선 · 박장호 · <span class="new">김성숙</span> · 유복영</td>
+      <td class="lb-53fi"><i style="width:70%"></i><u>7 / 10</u></td></tr>
+     <tr><td class="lt-53fi">PageRank<small>영향 전파</small></td>
+      <td class="nm">홍충희 · 박장호 · 윤기섭 · 김병조 · 정광호</td>
+      <td class="nm"><span class="new">우재룡</span> · 윤기섭 · 박장호 · 홍충희 · 정광호</td>
+      <td class="lb-53fi"><i style="width:70%"></i><u>7 / 10</u></td></tr>
+    </tbody>
+   </table>
+   <div class="bd" style="flex:none;padding-top:12px">
+    <div class="note"><b>읽는 법:</b> 상위 10명 중복 인원 기준으로 차수가 가장 안정적이며(9/10), 매개중심성과 PageRank는 각각 7/10이다. 우재룡은 정규화 전 상위 10 밖이었으나 후기의병 계열이 하나로 묶이면서 PageRank 1위가 되었다. 순위 변동은 인물의 활동이 아니라 <b>사건 동일성 정의의 결과</b>다.</div>
+   </div>
+  </div>
+  <div class="card">
+   <div class="ch m">모델 · DEFINITION <b>중심성 지표와 민감도</b></div>
+   <div class="bd">
+    <div class="ego">
+     <div class="eg"><div class="v">7/10</div><div class="l">betweenness 겹침<br>성분 통합에 민감</div></div>
+     <div class="eg"><div class="v">7/10</div><div class="l">PageRank 겹침<br>대형 노드 통합에 민감</div></div>
+     <div class="eg"><div class="v">0.914</div><div class="l">안중근 ego betweenness<br>(단일 전기 · 허브 편향)</div></div>
+    </div>
+    <table class="def">
+     <thead><tr><th style="width:105px">지표</th><th>정의 · 정규화가 값을 바꾸는 경로</th></tr></thead>
+     <tbody>
+      <tr><td class="k">degree</td><td>직접 연결 수 / (N−1). 사건 통합으로 이웃이 늘면 그 사건 참여자 전원의 값이 동시에 오른다.</td></tr>
+      <tr><td class="k">betweenness</td><td>최단경로가 지나는 비율. 사건 통합으로 성분이 이어지면 다리 역할의 위치가 바뀐다.</td></tr>
+      <tr><td class="k">PageRank</td><td>중요한 이웃과의 연결. 초대형 노드가 생기면 그 안의 인물 점수가 재분배되어 순위가 바뀐다.</td></tr>
+      <tr><td class="k">closeness</td><td>평균 거리의 역수. 거대성분이 커지면 도달 범위가 달라진다.</td></tr>
+     </tbody>
+    </table>
+    <div class="note"><b>해석 한계:</b> 값은 그래프 정의의 산물이며 "역사적 중요도"로 등치하지 않는다. 전후 차이는 후기의병 계열 통합(괄호 부기 제거)을 포함하므로, 그 통합의 타당성은 3부 동일성 판정에 달려 있다.</div>
+   </div>
+  </div>
+ </div>
+ <div class="concl">상위 10명 중 공통 인물은 차수 9명, 매개중심성 7명, PageRank 7명이다</div>
+</div></div>
+<script>
+const SW=1600,SH=900;
+function fit(){const st=document.getElementById('stage');const k=Math.min(innerWidth/SW,innerHeight/SH);st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fit();addEventListener('resize',fit);addEventListener('pageshow',fit);addEventListener('load',fit);
+if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+
+</script></body></html>

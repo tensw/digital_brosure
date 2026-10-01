@@ -1,0 +1,168 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>사건 규모와 투영의 영향</title>
+<style>
+/* 스킨: biblo-answer-dna (좌 lite / 우 dark 2톤 카드 + 중앙 배지) */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow:hidden}
+body{margin:0;font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:#060a16}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%;
+ background:radial-gradient(1200px 900px at 50% 8%,#0b1226 0%,#060a16 60%,#03050c 100%)}
+.wrap{position:absolute;inset:0;padding:34px 74px 22px;display:flex;flex-direction:column}
+.kick{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:#5d7099}
+h1{font-size:38px;font-weight:800;letter-spacing:-1.3px;color:#eef1ff;margin-top:9px;line-height:1.15}
+h1 span{background:linear-gradient(90deg,#38bdf8,#a78bfa 55%,#f472b6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lead{color:#9fb0d4;font-size:14.5px;font-weight:600;margin-top:8px;max-width:130ch;line-height:1.5}
+.lead b{color:#eef1ff}
+.meta{position:absolute;right:74px;top:36px;text-align:right;font:600 11px/1.85 ui-monospace,Menlo,monospace;color:#5d7099}
+.meta b{color:#9fb0d4}
+.pair{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:18px;position:relative}
+.pair::after{content:"vs";position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;z-index:6;
+ display:grid;place-items:center;border-radius:50%;font:800 15px/1 ui-monospace,Menlo,monospace;color:#fff;
+ background:linear-gradient(150deg,#1a2044,#0d1230);border:1px solid rgba(160,180,255,.34);box-shadow:0 12px 30px -10px rgba(0,0,0,.8)}
+.pane{position:relative;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;min-height:0;padding:22px 26px}
+.lite{background:#f6f5fb;color:#191934}
+.dark{background:linear-gradient(168deg,#182058,#12173f);border:1px solid rgba(150,160,240,.22);color:#eef1ff}
+.ph{font:700 11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.05em}
+.lite .ph{color:#6a5ad6}.dark .ph{color:#b3a6ff}
+.pt{margin-top:10px;font-size:20px;font-weight:800;letter-spacing:-.5px}
+.lite .pt{color:#191934}.dark .pt{color:#eef1ff}
+/* 좌 실측: 이분 SVG + 투영 SVG */
+.two{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;margin-top:12px;flex:1;min-height:0;align-items:stretch}
+.gbox{background:#fff;border:1px solid #e3def2;border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;min-height:0}
+.gbox .h{font:700 10.5px ui-monospace,Menlo,monospace;color:#8a8aad;letter-spacing:.06em}
+.gbox svg{flex:1;width:100%;min-height:0;max-height:430px}
+.chips{margin-top:12px;display:flex;gap:8px}
+.chip{flex:1;background:#fff;border:1px solid #e3def2;border-radius:10px;padding:9px 12px}
+.chip .v{font:800 19px/1 ui-monospace,Menlo,monospace;color:#1e3f8c;letter-spacing:-.8px}
+.chip .l{font-size:11px;font-weight:700;color:#6b6b8f;margin-top:5px;line-height:1.35}
+.chip.w .v{color:#b45309}
+/* 우 모델 */
+.eq{margin-top:12px;background:rgba(255,255,255,.06);border:1px solid rgba(150,165,255,.2);border-radius:12px;
+ padding:12px 16px;font-family:"Times New Roman",Georgia,serif;font-style:italic;font-size:18px;color:#dfe6ff;text-align:center;line-height:1.6}
+.eq b{font-style:normal;font-weight:700}
+.mt{margin-top:12px;flex:1;overflow:hidden}
+.mt .h{font:700 10.5px ui-monospace,Menlo,monospace;color:#8b96d4;letter-spacing:.06em;margin:8px 0 5px}
+.mt table{width:100%;border-collapse:collapse;font-size:12.5px}
+.mt th{text-align:left;font:700 10.5px ui-monospace,Menlo,monospace;color:#8b96d4;padding:5px 8px;border-bottom:1px solid rgba(150,165,255,.2)}
+.mt td{padding:6px 8px;color:#cdd6f5;border-bottom:1px solid rgba(150,165,255,.09);vertical-align:top;line-height:1.45}
+.mt tr:last-child td{border-bottom:none}.mt td.k{color:#fff;font-weight:700}
+.warn{margin-top:10px;border:1px solid rgba(251,191,36,.35);background:rgba(251,191,36,.08);border-radius:10px;padding:10px 13px;font-size:12.5px;color:#f5deb0;line-height:1.5}
+.warn b{color:#fbbf24}
+.foot{margin-top:12px;display:flex;align-items:center;gap:14px}
+.fk{font-size:15px;font-weight:800;color:#eef1ff}.fk span{color:#fbbf24}
+.fd{margin-left:auto;font:600 11px ui-monospace,Menlo,monospace;color:#5d7099}
+.emb-bg0,.emb-bg0 body,.emb-bg0 .slide{background:transparent!important}
+</style><style>
+/* 전체 지도 위치 표시 (insam-map.html 기준) */
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;
+ display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;
+ background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);
+ font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+ font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+.mappos-i0.f i{background:#c084fc}.mappos-i0.f{border-color:rgba(192,132,252,.45)}
+</style>
+</head><body>
+<div class="slide"><div id="stage"><div class="mappos-i0 f"><i>4</i>지도 4·5 · 자르기 · 접기</div><div class="wrap">
+ <div class="kick">INDP · 2부 그래프 구성 방법 · 06</div>
+ <h1>공동참여망 분석에서 <span>사건 규모와 투영의 영향</span></h1>
+ <div class="lead">사건 참여 관계만 남기면 인물 집합 P와 사건 집합 F 사이의 <b>이분 그래프</b>가 된다. 같은 사건에 참여한 인물끼리 잇는 <b>투영</b>으로 인물 공동참여망을 구성한다. 왼쪽은 안중근 전기의 실제 이분 그래프와 투영, 오른쪽은 모델 정의다.</div>
+ <div class="meta">표본 <b>안중근</b> (ID 676) · 수집본 중 사건 보유 인물 전수 <b>9,096명</b><br>출처 인명사전 발간본</div>
+ <div class="pair">
+  <section class="pane lite">
+   <div class="ph">◤ 실측 · 안중근 전기</div>
+   <div class="pt">이분 그래프 → 인물 투영</div>
+   <div class="two">
+    <div class="gbox"><div class="h">이분 그래프 G_B · 인물 5 — 사건 6 · 참여 간선 10</div>
+     <svg viewBox="0 0 420 300" preserveAspectRatio="xMidYMid meet">
+      <defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6Z" fill="#9aa7bd"/></marker></defs>
+      <text x="60" y="18" font-size="10" font-weight="800" fill="#6a5ad6" text-anchor="middle">P 인물</text>
+      <text x="345" y="18" font-size="10" font-weight="800" fill="#c2590a" text-anchor="middle">F 사건</text>
+      <!-- persons y: 안중근 70, 우덕순 120, 조도선 170, 유동하 220, 엄인섭 270 -->
+      <!-- events y: 하얼빈의거 50, 단지동맹 95, 국내진입작전 140, 갑오농민혁명 185, 국채보상운동 230, 러일전쟁 275 -->
+      <g stroke="#b7c0d2" stroke-width="1.3" opacity=".7">
+       <line x1="78" y1="70" x2="300" y2="50"/><line x1="78" y1="70" x2="300" y2="95"/><line x1="78" y1="70" x2="300" y2="140"/>
+       <line x1="78" y1="70" x2="300" y2="185"/><line x1="78" y1="70" x2="300" y2="230"/><line x1="78" y1="70" x2="300" y2="275"/>
+      </g>
+      <g stroke="#2f6db0" stroke-width="1.8" opacity=".85">
+       <line x1="78" y1="120" x2="300" y2="50"/><line x1="78" y1="170" x2="300" y2="50"/><line x1="78" y1="220" x2="300" y2="50"/>
+      </g>
+      <line x1="78" y1="270" x2="300" y2="140" stroke="#1f4e79" stroke-width="1.5" opacity=".8"/>
+      <g font-size="11" font-weight="700" fill="#1f2a3d" text-anchor="end">
+       <circle cx="66" cy="70" r="11" fill="#c9a227" stroke="#fff" stroke-width="2"/><text x="52" y="74">안중근</text>
+       <circle cx="66" cy="120" r="8" fill="#2f6db0" stroke="#fff" stroke-width="2"/><text x="52" y="124">우덕순</text>
+       <circle cx="66" cy="170" r="8" fill="#2f6db0" stroke="#fff" stroke-width="2"/><text x="52" y="174">조도선</text>
+       <circle cx="66" cy="220" r="8" fill="#2f6db0" stroke="#fff" stroke-width="2"/><text x="52" y="224">유동하</text>
+       <circle cx="66" cy="270" r="8" fill="#1f4e79" stroke="#fff" stroke-width="2"/><text x="52" y="274">엄인섭</text>
+      </g>
+      <g font-size="10.5" font-weight="700" fill="#6b4e12">
+       <rect x="300" y="38" width="104" height="24" rx="6" fill="#f3e7c4" stroke="#c9a227"/><text x="352" y="54" text-anchor="middle">하얼빈 의거</text>
+       <rect x="300" y="83" width="104" height="24" rx="6" fill="#f3e7c4" stroke="#c9a227"/><text x="352" y="99" text-anchor="middle">단지동맹</text>
+       <rect x="300" y="128" width="104" height="24" rx="6" fill="#f3e7c4" stroke="#c9a227"/><text x="352" y="144" text-anchor="middle">국내진입작전</text>
+       <rect x="300" y="173" width="104" height="24" rx="6" fill="#f3e7c4" stroke="#c9a227"/><text x="352" y="189" text-anchor="middle">갑오농민혁명</text>
+       <rect x="300" y="218" width="104" height="24" rx="6" fill="#f3e7c4" stroke="#c9a227"/><text x="352" y="234" text-anchor="middle">국채보상운동</text>
+       <rect x="300" y="263" width="104" height="24" rx="6" fill="#f3e7c4" stroke="#c9a227"/><text x="352" y="279" text-anchor="middle">러일전쟁</text>
+      </g>
+     </svg>
+    </div>
+    <div class="gbox"><div class="h">투영 G_P · 인물 5 · 간선 7 (하얼빈 의거 4인 = K₄)</div>
+     <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+      <!-- 안중근 150,60 / 우덕순 60,150 / 조도선 240,150 / 유동하 150,240 / 엄인섭 260,60 -->
+      <g stroke="#2f6db0" stroke-width="2" opacity=".7">
+       <line x1="150" y1="60" x2="60" y2="150"/><line x1="150" y1="60" x2="240" y2="150"/><line x1="150" y1="60" x2="150" y2="240"/>
+       <line x1="60" y1="150" x2="240" y2="150"/><line x1="60" y1="150" x2="150" y2="240"/><line x1="240" y1="150" x2="150" y2="240"/>
+      </g>
+      <line x1="150" y1="60" x2="260" y2="60" stroke="#1f4e79" stroke-width="1.6" opacity=".7"/>
+      <g font-size="11" font-weight="700" fill="#1f2a3d" text-anchor="middle">
+       <circle cx="150" cy="60" r="13" fill="#c9a227" stroke="#fff" stroke-width="2.5"/><text x="150" y="40">안중근</text>
+       <circle cx="60" cy="150" r="9" fill="#2f6db0" stroke="#fff" stroke-width="2"/><text x="60" y="176">우덕순</text>
+       <circle cx="240" cy="150" r="9" fill="#2f6db0" stroke="#fff" stroke-width="2"/><text x="240" y="176">조도선</text>
+       <circle cx="150" cy="240" r="9" fill="#2f6db0" stroke="#fff" stroke-width="2"/><text x="150" y="268">유동하</text>
+       <circle cx="260" cy="60" r="9" fill="#1f4e79" stroke="#fff" stroke-width="2"/><text x="260" y="40">엄인섭</text>
+      </g>
+      <text x="150" y="292" font-size="9.5" fill="#8a8aad" text-anchor="middle">간선 가중치 = 공동 사건 수 (여기서는 모두 1)</text>
+     </svg>
+    </div>
+   </div>
+   <div class="chips">
+    <div class="chip"><div class="v">10,381</div><div class="l">전수 이분 간선<br>(인물 9,096 · 사건 4,324)</div></div>
+    <div class="chip w"><div class="v">1,091,842</div><div class="l">전수 투영 간선<br>최대 사건 삭제 시 77.4% 감소</div></div>
+    <div class="chip"><div class="v">25,509</div><div class="l">100명↑ 사건 6건 제외 시<br>평균 이웃(비고립) 329 → 11.8</div></div>
+   </div>
+  </section>
+  <section class="pane dark">
+   <div class="ph">◢ 모델 정의 · bipartite graph → one-mode projection</div>
+   <div class="pt">G<sub>B</sub> = (P ∪ F, E) &nbsp;→&nbsp; P = B·Bᵀ</div>
+   <div class="eq">B ∈ {0,1}<sup>|P|×|F|</sup>, &nbsp;B<sub>if</sub> = 1 이면 인물 i가 사건 f에 참여<br>
+    P<sub>ij</sub> = Σ<sub>f</sub> B<sub>if</sub>B<sub>jf</sub> = 공동 사건 수 (i≠j), &nbsp;P<sub>ii</sub> := 0</div>
+   <div class="mt">
+    <div class="h">지표의 의미 (이분 vs 투영)</div>
+    <table>
+     <thead><tr><th style="width:130px">지표</th><th>이분 G<sub>B</sub></th><th>투영 G<sub>P</sub></th></tr></thead>
+     <tbody>
+      <tr><td class="k">인물 degree</td><td>참여 사건 수</td><td>공동참여가 있는 인물 수</td></tr>
+      <tr><td class="k">strength</td><td>—</td><td>공동 사건 수의 합(가중)</td></tr>
+      <tr><td class="k">사건 degree</td><td>참여 인원 수</td><td>—</td></tr>
+      <tr><td class="k">간선 채택 조건</td><td colspan="2"><code>participated_in</code>만. 인물–인물·사건–사건 간선은 제외. 역할(가해·피해·수사)을 제한한다.</td></tr>
+     </tbody>
+    </table>
+   </div>
+   <div class="warn"><b>투영 편향:</b> 참여자 n명인 사건 하나가 투영에 n(n−1)/2개의 간선을 만든다. 1,302명 사건 하나를 삭제하면 간선이 1,091,842에서 246,297로 준다(실제 감소 77.4%, 이론상 쌍 846,951). 투영망의 차수 분포는 원 이분 그래프 양쪽 차수 분포에 종속된다(Vasques Filho &amp; O'Neale, 2018).</div>
+  </section>
+ </div>
+ <div class="foot">
+  <div class="fk">공동참여는 <span>협력·친분과 같지 않다</span>. 역할 제한과 사건 규모 보정에 따른 분석 영향을 비교한다</div>
+  <div class="fd">안중근 ego 실측 · 전수 9,096명 실측</div>
+ </div>
+</div></div></div>
+<script>
+function fit(){var st=document.getElementById('stage');var k=Math.min(innerWidth/1600,innerHeight/900);
+ st.style.transform='translate(-50%,-50%) scale('+k.toFixed(4)+')';}
+fit();addEventListener('resize',fit);addEventListener('load',fit);addEventListener('pageshow',fit);
+if(window.ResizeObserver)new ResizeObserver(fit).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+
+</script></body></html>
