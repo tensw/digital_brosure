@@ -1,0 +1,190 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noai, noimageai, noindex, nofollow, noarchive">
+<title>역사기록물사전 · 전문가 자료를 사전으로 세워 AI 추출에 먼저 적용</title>
+<style>
+.root-idct{--ink:#e9eefb;--ink2:#9fb0d4;--ink3:#5d7099;--line:rgba(150,165,255,.14);
+ --per:#5b9dff;--evt:#fb923c;--doc:#c084fc;--plc:#4ade80;--tim:#fbbf24;--org:#4fd1e6;
+ font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--ink);
+ background:radial-gradient(1200px 900px at 50% 8%,#0b1226 0%,#060a16 58%,#03050c 100%);-webkit-font-smoothing:antialiased;position:relative}
+.root-idct *{box-sizing:border-box;margin:0;padding:0}
+body{margin:0;font:14px/1.6 "Pretendard","Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:#060a16}
+html,body{overflow:hidden}
+.slide{position:relative;width:100vw;height:100vh;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:50% 50%}
+.wrap-idct{position:relative;z-index:2;width:1600px;height:900px;padding:30px 74px 16px;display:flex;flex-direction:column}
+
+.hd-idct{display:flex;gap:24px;align-items:flex-start}
+.kick-idct{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.28em;color:var(--ink3)}
+.h1-idct{font-size:36px;font-weight:800;letter-spacing:-1.3px;margin-top:9px;line-height:1.15}
+.h1-idct span{background:linear-gradient(90deg,#5b9dff,#c084fc 42%,#4ade80 70%,#fbbf24);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lead-idct{color:var(--ink2);font-size:13px;font-weight:600;margin-top:7px;max-width:124ch;line-height:1.5;word-break:keep-all}
+.lead-idct b{color:var(--ink)}
+.meta-idct{margin-left:auto;text-align:right;font:600 11px/1.9 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.04em;white-space:nowrap}
+.meta-idct b{color:var(--ink2)}
+
+.grid-idct{flex:1;min-height:0;display:grid;grid-template-columns:430px 1fr 392px;gap:16px;margin-top:12px}
+.pane-idct{border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.03);padding:16px 18px 14px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.pk-idct{display:flex;align-items:baseline;gap:9px;font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:#b3a6ff}
+.pk-idct i{font-style:normal;width:18px;height:18px;border-radius:50%;display:inline-grid;place-items:center;background:#7dd3fc;color:#060a16;font:800 10px/1 ui-monospace,Menlo,monospace}
+.pk-idct .t{font:800 16px/1 "Pretendard",sans-serif;letter-spacing:-.4px;color:#eef1ff}
+.pk-idct .s{margin-left:auto;color:#8b96d4;font-weight:600;letter-spacing:.02em}
+
+/* 전체 숫자 */
+.kpi-idct{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.kpi-idct>div{border-radius:12px;background:rgba(150,170,255,.08);border:1px solid rgba(160,180,255,.14);padding:8px 12px 7px}
+.kpi-idct b{display:block;font-size:24px;font-weight:800;letter-spacing:-.8px;line-height:1.05;color:#fff}
+.kpi-idct b small{font-size:12px;font-weight:700;color:#b3a6ff;margin-left:2px;letter-spacing:0}
+.kpi-idct .l{font-size:11.5px;font-weight:700;color:#dde3ff;margin-top:4px}
+.kpi-idct .s{font:600 10px/1.45 ui-monospace,Menlo,monospace;color:#8b96d4;margin-top:3px;letter-spacing:-.01em}
+table.t-idct{width:100%;border-collapse:collapse;margin-top:11px;font-size:12px}
+table.t-idct th{font:700 10px ui-monospace,Menlo,monospace;letter-spacing:.06em;color:#8b96d4;text-align:left;padding:0 6px 6px 0;border-bottom:1px solid rgba(160,180,255,.22)}
+table.t-idct td{padding:3px 6px 3px 0;border-bottom:1px solid rgba(160,180,255,.09);vertical-align:top;line-height:1.4;color:#dde3ff}
+table.t-idct td.n,table.t-idct th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.t-idct td.n b{color:#fff;font-weight:800}
+table.t-idct td.d{color:#9fb0d4;font-size:11px}
+table.t-idct tr.sum td{border-top:1px solid rgba(160,180,255,.3);border-bottom:0;padding-top:6px;color:#fff;font-weight:800}
+.gtag{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:1px}
+
+/* 사전 우선 구축 방식 */
+table.w-idct{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px}
+table.w-idct th{font:700 10px ui-monospace,Menlo,monospace;letter-spacing:.06em;color:#8b96d4;text-align:left;padding:0 8px 6px 0;border-bottom:1px solid rgba(160,180,255,.22)}
+table.w-idct td{padding:5px 8px 5px 0;border-bottom:1px solid rgba(160,180,255,.09);vertical-align:top;line-height:1.45;color:#dde3ff;word-break:keep-all}
+table.w-idct td.no{width:30px;padding-right:0}
+table.w-idct td.no i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(150deg,#1a2044,#0d1230);border:1px solid rgba(160,180,255,.34);font:800 11px ui-monospace,Menlo,monospace;color:#fff}
+table.w-idct td.st{width:166px;font-weight:800;color:#fff;letter-spacing:-.3px}
+table.w-idct td.st small{display:block;font-weight:600;color:#9fb0d4;font-size:11px;letter-spacing:0;margin-top:1px}
+table.w-idct td.nm{width:208px;font:600 11px/1.5 ui-monospace,Menlo,monospace;color:#b3c0e8;letter-spacing:-.01em}
+table.w-idct td.nm b{color:#fff;font-weight:800}
+table.w-idct td.nm em{font-style:normal;color:#fbbf24;font-weight:800}
+.why-idct{margin-top:auto;padding-top:8px;border-top:1px solid rgba(160,180,255,.16);display:flex;gap:14px;align-items:flex-start}
+.why-idct .k{flex:none;font:800 13px/1.3 "Pretendard",sans-serif;color:#fbbf24;letter-spacing:-.3px;width:112px}
+.why-idct p{font-size:11px;line-height:1.5;color:#c5cff0;word-break:keep-all}
+.why-idct p b{color:#fff}
+
+/* 사례 */
+.cases-idct{margin-top:12px;display:flex;flex-direction:column;gap:8px;flex:1;min-height:0}
+.case-idct{border-radius:13px;background:rgba(255,255,255,.035);border:1px solid rgba(150,165,255,.12);padding:9px 12px 8px;flex:1;min-height:0;display:flex;flex-direction:column}
+.case-idct .ch{display:flex;align-items:baseline;gap:8px}
+.case-idct .ch b{font-size:14.5px;font-weight:800;letter-spacing:-.4px;color:#fff}
+.case-idct .ch span{margin-left:auto;font:700 10px ui-monospace,Menlo,monospace;letter-spacing:.04em;padding:2px 7px;border-radius:999px;border:1px solid rgba(160,180,255,.3);color:#b3c0e8;white-space:nowrap}
+.case-idct .cr{font-size:11.5px;line-height:1.45;color:#b3c0e8;margin-top:3px;word-break:keep-all}
+.case-idct .ce{margin-top:5px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.case-idct .ce b{font-size:18px;font-weight:800;letter-spacing:-.6px;color:#fff;line-height:1}
+.case-idct .ce b small{font-size:11px;font-weight:700;color:#b3a6ff;margin-left:1px}
+.case-idct .ce span{font:600 10.5px ui-monospace,Menlo,monospace;color:#8b96d4}
+.chip-idct{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:6px;background:rgba(150,170,255,.11);border:1px solid rgba(160,180,255,.16);color:#dde3ff;margin:3px 3px 0 0}
+.chip-idct b{color:#fff;font-weight:800;margin-left:3px}
+
+.foot-idct{margin-top:10px;display:flex;align-items:center;gap:16px}
+.fk-idct{font-size:15px;font-weight:800;letter-spacing:-.4px;color:#eef1ff;word-break:keep-all}
+.fk-idct span{color:#fbbf24}
+.fd-idct{font:600 10.5px/1.7 ui-monospace,Menlo,monospace;color:var(--ink3);letter-spacing:.02em;margin-left:auto;text-align:right;white-space:nowrap}
+.fd-idct b{color:var(--ink2)}
+.mappos-i0{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:60;pointer-events:none;display:inline-flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:20px;background:rgba(6,10,24,.78);border:1px solid rgba(125,211,252,.38);backdrop-filter:blur(4px);font:700 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#c9d3ee;white-space:nowrap}
+.mappos-i0 i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;font:800 10px/1 ui-monospace,Menlo,monospace;color:#060a16;background:#7dd3fc;letter-spacing:0}
+</style></head><body>
+<div class="slide"><div id="stage"><div class="mappos-i0"><i>1</i>지도 1 · 정보 추출</div>
+<div class="root-idct"><div class="wrap-idct">
+
+ <div class="hd-idct">
+  <div>
+   <div class="kick-idct">INDP · 1부 정제 이유 · 02 · 역사기록물사전</div>
+   <h1 class="h1-idct"><span>역사 전문가의 자료를 사전으로</span> 세워 AI 추출에 먼저 적용한다</h1>
+   <p class="lead-idct">앞 장의 인물·사건·물건·장소·시간을 본문에서 뽑을 때, <b>국가보훈부 공훈록 Open API 19,058건</b>, 한국민족문화대백과 등의 정식 한자, 집필 지침과 판정 규칙, 유니코드 표준을
+    <b>68종 241,614행의 역사기록물사전</b>으로 먼저 만들고 AI는 그 사전 위에서 판정한다. 같은 대상의 다른 표기를 사전에 모아 두면 <b>한 번 내린 판단이 943편 모두에 같은 결과</b>로 적용된다.
+    규칙만으로 처리했을 때 「국민회」 7,427건 · 「독립군」 1,310건이 다른 대상의 자료로 잘못 검색된 오탐이 사전 등록 방식을 택한 근거다.</p>
+  </div>
+  <div class="meta-idct">
+   사전 <b>68종</b> · <b>241,614행</b> · 묶음 <b>9</b><br>
+   출처 명시 <b>68 / 68종</b> · 기관 자료 <b>20종</b><br>
+   기준 <b>2026-10-01</b> · 역사기록물사전
+  </div>
+ </div>
+
+ <div class="grid-idct">
+
+  <!-- 1 전체 숫자 -->
+  <section class="pane-idct">
+   <div class="pk-idct"><i>1</i><span class="t">사전 전체 숫자</span><span class="s">2026-10-01 · 68종</span></div>
+   <div class="kpi-idct">
+    <div><b>241,614<small>행</small></b><div class="l">사전 68종 · 등록 항목</div><div class="s">직접 구축 150,303 · 공훈록 시드 91,311</div></div>
+    <div><b>5,448<small>건</small></b><div class="l">이형 표기 수록</div><div class="s">이체자 4,101 · 호환 한자 460 · 동의어 418 · 인물 한자 변형 399</div></div>
+    <div><b>82.9<small>%</small></b><div class="l">사전 적용 효과</div><div class="s">독립장 817편 확정 55,209건 중 사전·규칙 후보 일치 45,775건</div></div>
+    <div><b>1.0<small>%</small></b><div class="l">검사 오류율(최근 5회)</div><div class="s">처음 2.8% → 1.0% · 48회 · 표본 33,687건</div></div>
+   </div>
+   <table class="t-idct">
+    <thead><tr><th>묶음</th><th class="n">사전</th><th class="n">항목(행)</th><th>내용</th></tr></thead>
+    <tbody>
+     <tr><td><i class="gtag" style="background:#5b9dff"></i>동의어·판정</td><td class="n">8</td><td class="n"><b>95,232</b></td><td class="d">같은 대상의 다른 표기 · 동명이인 · 범칭·약칭</td></tr>
+     <tr><td><i class="gtag" style="background:#fbbf24"></i>공훈록 시드</td><td class="n">17</td><td class="n"><b>91,311</b></td><td class="d">공훈록 19,058건의 인물 · 사건명 · 훈격 · 독음</td></tr>
+     <tr><td><i class="gtag" style="background:#4fd1e6"></i>고유코드</td><td class="n">11</td><td class="n"><b>35,016</b></td><td class="d">운동계열 · 훈격 · 본적 · 본관 · 국가 코드 연결표</td></tr>
+     <tr><td><i class="gtag" style="background:#c084fc"></i>정규화</td><td class="n">5</td><td class="n"><b>15,745</b></td><td class="d">호환 한자 · 이체자 → 대표자 · 한자 독음</td></tr>
+     <tr><td><i class="gtag" style="background:#4ade80"></i>권위 시드</td><td class="n">3</td><td class="n"><b>1,783</b></td><td class="d">조직 · 학교 · 사건의 정식 한자(백과 확인)</td></tr>
+     <tr><td><i class="gtag" style="background:#4ade80"></i>지명</td><td class="n">5</td><td class="n"><b>1,223</b></td><td class="d">지명 변천표 · 국외 지명의 나라 · 병기 변형</td></tr>
+     <tr><td><i class="gtag" style="background:#fb923c"></i>지침·규칙</td><td class="n">5</td><td class="n"><b>1,139</b></td><td class="d">집필 지침 194문단 · 판정 규칙 570 · 역사용어 통일표</td></tr>
+     <tr><td><i class="gtag" style="background:#9fb0d4"></i>종교 · 예외</td><td class="n">14</td><td class="n"><b>165</b></td><td class="d">종교 실체·직위·이칭 · 사전별 제거·치환·예외</td></tr>
+     <tr class="sum"><td>합계</td><td class="n">68</td><td class="n">241,614</td><td class="d">9묶음 · 모든 사전에 출처 기록</td></tr>
+    </tbody>
+   </table>
+  </section>
+
+  <!-- 2 사전 우선 구축 방식 -->
+  <section class="pane-idct">
+   <div class="pk-idct"><i>2</i><span class="t">사전 우선 구축 방식</span><span class="s">전문가 자료 → 사전 → 규칙 후보 → AI 판정 → 검사 → 사전 보완</span></div>
+   <table class="w-idct">
+    <thead><tr><th></th><th>단계</th><th>하는 일</th><th>숫자</th></tr></thead>
+    <tbody>
+     <tr><td class="no"><i>1</i></td><td class="st">전문가 자료 수집<small>역사 전문가가 이미 만든 자료</small></td><td>국가보훈부 공훈록 Open API, 한국민족문화대백과의 정식 한자, 인명사전 집필 지침과 역사용어 통일표, 유니코드 한자 표준</td><td class="nm">공훈록 <b>19,058건</b> · 기관 자료 <b>20종</b><br>외부 표준 3 · 참고 문헌 3</td></tr>
+     <tr><td class="no"><i>2</i></td><td class="st">사전으로 정리<small>9묶음 68종 · 출처를 사전마다 기록</small></td><td>정규화(이체자·호환 한자·독음) · 동의어와 동명이인 판정 · 지명 변천 · 종교 · 고유코드 · 지침과 규칙</td><td class="nm"><b>241,614행</b> · 이형 표기 <b>5,448건</b></td></tr>
+     <tr><td class="no"><i>3</i></td><td class="st">사전·규칙이 먼저 후보를 만든다<small>본문을 읽을 때 사전과 대조</small></td><td>본문의 표기를 정규화한 뒤 사전과 대조해 인물·사건·장소·조직·물건 후보를 먼저 세운다</td><td class="nm">독립장 817편 후보 <b>52,422건</b></td></tr>
+     <tr><td class="no"><i>4</i></td><td class="st">AI 판정은 사전 위에서<small>두 모델 · 후보 확정과 보충만</small></td><td>사전·규칙 후보를 확정하고, 사전 밖의 새 객체 추가 · 같은 대상 통합 · 표기 고침만 더한다</td><td class="nm">확정 <b>55,209건</b> = 사전·규칙 일치 <em>45,775(82.9%)</em> · 새로 찾음 4,721 · 통합 2,514 · 표기 고침 1,685 · 정형 필드 514</td></tr>
+     <tr><td class="no"><i>5</i></td><td class="st">무작위 검사로 사전을 고친다<small>회차마다 표본을 뽑아 오등록 수정</small></td><td>검사에서 찾은 오등록은 사전에서 바로잡고, 그 결과가 943편 모두에 다시 적용된다</td><td class="nm">검사 <b>48회</b> · 표본 <b>33,687건</b> · 오류율 2.8% → <em>1.0%</em></td></tr>
+     <tr><td class="no"><i>6</i></td><td class="st">확정 객체가 다음 편의 사전이 된다<small>앞 편의 판단을 뒤 편이 참조</small></td><td>한 편의 처리가 끝나면 그 편에서 확정한 객체가 객체 사전에 들어가 다음 편의 판정 자료가 된다</td><td class="nm">객체 사전 <b>8,314 → 30,029개</b>(817편 처리 동안) · 앞 편과 연결 2,000개</td></tr>
+    </tbody>
+   </table>
+   <div class="why-idct"><div class="k">사전 우선을<br>택한 근거</div>
+    <p>같은 대상의 다른 표기를 사전에 모아 두면 <b>한 번 내린 판단을 모든 편에 동일하게 적용</b>한다. 추출 중에 그때그때 판단하면 다른 표기가 나올 때마다 다시 판단해야 하고 결과도 편마다 달라진다.
+    규칙만 썼을 때는 약칭 「국민회」가 <b>7,427건</b>, 「독립군」이 <b>1,310건</b>의 다른 자료를 잘못 불러왔고, 한글 두음법칙을 일괄 적용하자 「노즈」가 「로즈」로 바뀌어 15건이 잘못 검색됐다. 지금은 사전에 등록한 표기만 쓴다.</p>
+   </div>
+  </section>
+
+  <!-- 3 적용 사례 -->
+  <section class="pane-idct">
+   <div class="pk-idct"><i>3</i><span class="t">사전 적용 사례</span><span class="s">943편 실측</span></div>
+   <div class="cases-idct">
+    <div class="case-idct"><div class="ch"><b>서울 · 경성 · 한양</b><span>동의어</span></div>
+     <div class="cr">옛 이름을 하나의 정식 표기에 연결한다. 「한양 = 서울」은 한국 편에만 적용하고, 중국인 표제어 편의 한양(漢陽)은 우한으로 둔다.</div>
+     <div class="ce"><b>409<small>편</small></b><b>1,080<small>회</small></b><span>표기별 편 수</span></div>
+     <div><span class="chip-idct">서울<b>304</b></span><span class="chip-idct">한양<b>12</b></span><span class="chip-idct">경성<b>7</b></span></div></div>
+    <div class="case-idct"><div class="ch"><b>을사늑약 · 을사조약</b><span>동의어 · 자료 연결</span></div>
+     <div class="cr">사전의 다른 표기도 소장자료 검색어로 쓴다. 정식 표기로만 찾으면 「을사조약」으로만 적힌 자료가 빠진다.</div>
+     <div class="ce"><b>354<small>건</small></b><span>다른 표기로만 적힌 소장자료를 더 연결</span></div>
+     <div><span class="chip-idct">을사늑약<b>76편</b></span><span class="chip-idct">을사조약<b>4편</b></span><span class="chip-idct">경술국치·강제병합도 같은 방식<b>558건</b></span></div></div>
+    <div class="case-idct"><div class="ch"><b>안창호 安昌浩 · 안창호 安昌鎬</b><span>동명이인</span></div>
+     <div class="cr">이름이 같아도 공훈록의 생몰·본적·행적으로 다른 사람임이 확인되면 통합하지 않는다.</div>
+     <div class="ce"><b>135<small>편</small></b><b>326<small>회</small></b><span>安昌浩 · 따로 둔 安昌鎬는 3편 5회</span></div></div>
+    <div class="case-idct"><div class="ch"><b>가흥 可興 · 자싱 嘉興</b><span>검사로 오등록 수정</span></div>
+     <div class="cr">충주의 가흥과 중국 자싱을 같은 대상으로 묶었던 동의어 한 줄을 검사에서 찾아 삭제했다. 943편 모두에서 다시 구분됐다.</div>
+     <div class="ce"><b>6<small>편</small></b><b>14<small>편</small></b><span>가흥 · 자싱으로 되돌아간 편 수</span></div></div>
+   </div>
+  </section>
+
+ </div>
+
+ <div class="foot-idct">
+  <div class="fk-idct">AI는 사전이 세운 후보 위에서 판정한다 · 확정 <span>55,209건</span> 가운데 <span>82.9%</span>가 사전·규칙 후보와 일치</div>
+  <div class="fd-idct">출처 <b>역사기록물사전 2026-10-01</b> · 독립장 <b>817편</b> 1회 실행 · 무작위 검사 <b>48회</b><br>공훈록 시드는 국가보훈부 공훈록 Open API · 정식 한자는 한국민족문화대백과 확인</div>
+ </div>
+
+</div></div>
+<script>
+function fitStage(){const st=document.getElementById('stage');if(!st)return;
+ st.style.height='900px';const k=Math.min(innerWidth/1600,innerHeight/900);
+ st.style.transform=`translate(-50%,-50%) scale(${k.toFixed(4)})`;}
+fitStage();addEventListener('resize',fitStage);addEventListener('load',fitStage);addEventListener('pageshow',fitStage);
+if(window.ResizeObserver)new ResizeObserver(fitStage).observe(document.documentElement);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitStage);
+</script>
+</div></div>
+</body></html>
