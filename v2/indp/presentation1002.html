@@ -12,6 +12,15 @@ body{background:#060a16;overflow:hidden;
 .deck::-webkit-scrollbar{display:none}
 .slide{height:100vh;scroll-snap-align:start;scroll-snap-stop:always;position:relative;overflow:hidden}
 .slide iframe{border:0;width:100%;height:100%;display:block;background:transparent}
+/* 모바일 전용 사이트는 휴대전화 화면 꼴로 가운데에 보인다(2026-10-02 · 독립잇다) */
+.slide.mobile{display:flex;align-items:center;justify-content:center;gap:40px;background:radial-gradient(900px 700px at 50% 30%,#0b1226 0%,#060a16 60%,#03050c 100%)}
+.phone{position:relative;height:min(90vh,880px);aspect-ratio:430/880;flex:none;border-radius:44px;border:10px solid #1b2238;background:#000;overflow:hidden;
+ box-shadow:0 40px 90px -30px rgba(0,0,0,.9),0 0 0 1px rgba(150,180,235,.25),0 0 60px rgba(125,211,252,.08)}
+.phone::before{content:"";position:absolute;left:50%;top:10px;width:112px;height:26px;margin-left:-56px;border-radius:14px;background:#0a0d18;z-index:3}
+.phone iframe{width:100%;height:100%;background:#fff}
+.mobile .side{color:#8ba0c8;font:600 12px/1.9 ui-monospace,Menlo,monospace;letter-spacing:.06em;max-width:300px}
+.mobile .side b{display:block;color:#e6efff;font:800 24px/1.25 "Pretendard","Apple SD Gothic Neo",sans-serif;letter-spacing:-.6px;margin-bottom:10px}
+.mobile .side i{font-style:normal;color:#7dd3fc}
 
 /* 좌측 눈금 네비 */
 .nav{position:fixed;left:16px;top:50%;transform:translateY(-50%);z-index:10;
@@ -38,14 +47,15 @@ body{background:#060a16;overflow:hidden;
 </style></head><body>
 <div class="deck" id="deck"></div>
 <nav class="nav" id="nav"></nav>
-<div class="cap" id="cap"><b>1</b> / 24</div>
+<div class="cap" id="cap"><b>1</b> / 25</div>
 <script>
 var SLIDES=[
  ['insam-s0.html','표지 · 독립운동 인명사전 그래프 정제·정규화'],
  ['insam-s1.html','1부 정제 이유 · 데이터 정제의 필요성'],
  ['insam-dict.html','1부 정제 이유 · 역사기록물사전 · 전문가 자료를 사전으로 세워 AI 추출에 먼저 적용'],
  ['https://cms.i815.or.kr/review/b5d5fd98dc0ef8ec/index.html#p=8862','1부 정제 이유 · 본문 한 편의 추출·정제 요약(한용운 · 운영 화면)'],
- ['https://dooroo.net/museum/sdm','독립잇다 · dooroo.net/museum/sdm'],
+ ['https://dooroo.net/museum/sdm','독립잇다 · dooroo.net/museum/sdm · 모바일 화면','mobile'],
+ ['https://v0-indp.vercel.app/#k=tsw1234','INDP 산출물 문서 사이트 · 독립운동 사건 아카이브(v0-indp)'],
  ['insam-map.html','1부 정제 이유 · 전체 지도'],
  ['insam-s10.html','2부 그래프 구성 방법 · 노드·간선 유형과 채택 기준'],
  ['insam-s2.html','2부 그래프 구성 방법 · 개체·관계·속성 추출 절차'],
@@ -69,12 +79,20 @@ var SLIDES=[
 var deck=document.getElementById('deck'),nav=document.getElementById('nav'),cap=document.getElementById('cap');
 var N=SLIDES.length,cur=0;
 SLIDES.forEach(function(s,i){
- var sec=document.createElement('section');sec.className='slide';
+ var sec=document.createElement('section');sec.className='slide'+(s[2]==='mobile'?' mobile':'');
  var f=document.createElement('iframe');f.src=s[0];f.title=s[1];
+ f.setAttribute('allow','geolocation *; fullscreen');     /* 독립잇다는 위치 권한을 쓴다. 프레임에 권한을 넘겨야 브라우저가 묻는다 */
  if(i>0)f.loading='lazy';
+ if(s[2]==='mobile'){
+  var ph=document.createElement('div');ph.className='phone';ph.appendChild(f);
+  var sd=document.createElement('div');sd.className='side';
+  sd.innerHTML='<b>독립잇다</b>모바일 전용 서비스 · <i>dooroo.net/museum/sdm</i><br>휴대전화 화면 비율(430×880)로 표시<br>위치 권한을 쓰는 화면 · 브라우저가 묻면 「허용」';
+  sec.appendChild(ph);sec.appendChild(sd);deck.appendChild(sec);
+ }else{
  /* 같은 폴더의 슬라이드 안을 누른 뒤에도 방향키가 먹게: 그 문서의 키를 덱으로 넘긴다(바깥 사이트 화면은 넘기지 못함) */
  if(!/^https?:/.test(s[0]))f.addEventListener('load',function(){try{f.contentDocument.addEventListener('keydown',onKey);}catch(e){}});
  sec.appendChild(f);deck.appendChild(sec);
+ }
  var b=document.createElement('button');b.className='ns';b.setAttribute('aria-label',(i+1)+'. '+s[1]);
  b.innerHTML='<i></i><b>'+(i+1)+'. '+s[1]+'</b>';
  b.onclick=function(){go(i)};nav.appendChild(b);
