@@ -35,6 +35,10 @@ body{background:#060a16;overflow:hidden;
  color:#e6efff;padding:5px 9px;border-radius:7px;background:rgba(6,10,24,.9);border:1px solid rgba(150,180,235,.24);
  box-shadow:0 8px 22px -10px rgba(0,0,0,.95);transition:opacity .18s ease,transform .22s cubic-bezier(.2,.8,.2,1)}
 .ns:hover b,.ns[aria-current="true"] b{opacity:1;transform:translate(20px,-50%) scale(1)}
+/* 손을 떼면 3초 뒤 네비가 사라진다(2026-10-02 대표 「좌측 미리보기가 시간 지나면 사라지게」) · 마우스를 움직이거나 왼쪽 가장자리에 대면 다시 보인다 */
+.nav{transition:opacity .45s ease}
+body.idle .nav{opacity:0;pointer-events:none}
+.navzone{position:fixed;left:0;top:0;width:72px;height:100vh;z-index:9}
 
 /* 우하단 카운터 */
 .cap{position:fixed;right:22px;bottom:20px;z-index:10;
@@ -46,6 +50,7 @@ body{background:#060a16;overflow:hidden;
  .slide{page-break-after:always;height:100vh}}
 </style></head><body>
 <div class="deck" id="deck"></div>
+<div class="navzone" id="navzone" aria-hidden="true"></div>
 <nav class="nav" id="nav"></nav>
 <div class="cap" id="cap"><b>1</b> / 8</div>
 <script>
@@ -76,7 +81,7 @@ SLIDES.forEach(function(s,i){
   sec.appendChild(ph);sec.appendChild(sd);deck.appendChild(sec);
  }else{
  /* 같은 폴더의 슬라이드 안을 누른 뒤에도 방향키가 먹게: 그 문서의 키를 덱으로 넘긴다(바깥 사이트 화면은 넘기지 못함) */
- if(!/^https?:/.test(s[0]))f.addEventListener('load',function(){try{f.contentDocument.addEventListener('keydown',onKey);}catch(e){}});
+ if(!/^https?:/.test(s[0]))f.addEventListener('load',function(){try{var cd=f.contentDocument;cd.addEventListener('keydown',onKey);['mousemove','mousedown','touchstart','wheel'].forEach(function(ev){cd.addEventListener(ev,function(){if(typeof wake==='function')wake();},{passive:true});});}catch(e){}});
  sec.appendChild(f);deck.appendChild(sec);
  }
  var b=document.createElement('button');b.className='ns';b.setAttribute('aria-label',(i+1)+'. '+s[1]);
@@ -89,7 +94,7 @@ function setActive(i){cur=i;cap.innerHTML='<b>'+(i+1)+'</b> / '+N;
  navs.forEach(function(n,k){n.setAttribute('aria-current',k===i?'true':'false')});
  /* 바깥 사이트 장은 스크롤이 그 장에 멈춘 뒤에 읽는다(지나가는 길에 읽으면 그 사이트가 덱을 끌어당길 수 있다) */
  clearTimeout(setActive.t);setActive.t=setTimeout(function(){if(cur!==i)return;var f=slides[i].querySelector('iframe');if(f&&f.dataset.src){f.src=f.dataset.src;delete f.dataset.src;}},450);}
-function go(i){i=Math.max(0,Math.min(N-1,i));slides[i].scrollIntoView({behavior:'smooth'});setActive(i);}
+function go(i){i=Math.max(0,Math.min(N-1,i));slides[i].scrollIntoView({behavior:'smooth'});setActive(i);if(typeof wake==='function')wake();}
 if('IntersectionObserver' in window){
  var io=new IntersectionObserver(function(es){
   es.forEach(function(e){if(e.isIntersecting&&e.intersectionRatio>=0.5){setActive(slides.indexOf(e.target));}});
@@ -104,4 +109,9 @@ function onKey(e){
  else if(e.key==='End'){e.preventDefault();go(N-1);}
 }
 document.addEventListener('keydown',onKey);
+/* 네비 자동 숨김: 마우스·키·터치가 3초 없으면 숨기고, 움직임이 있으면 보인다. 바깥 사이트 장 위에서는 마우스 움직임이 덱에 안 오므로 왼쪽 띠(navzone)에 대면 보인다 */
+var idleT=null;function wake(){document.body.classList.remove('idle');clearTimeout(idleT);idleT=setTimeout(function(){document.body.classList.add('idle');},3000);}
+['mousemove','mousedown','keydown','touchstart','wheel'].forEach(function(ev){document.addEventListener(ev,wake,{passive:true});});
+document.getElementById('navzone').addEventListener('mouseenter',wake);nav.addEventListener('mouseenter',wake);
+wake();
 </script></body></html>
