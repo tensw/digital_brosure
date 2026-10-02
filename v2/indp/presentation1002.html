@@ -67,6 +67,8 @@ SLIDES.forEach(function(s,i){
  f.setAttribute('allow','geolocation *; fullscreen');     /* 독립잇다는 위치 권한을 쓴다. 프레임에 권한을 넘겨야 브라우저가 묻는다 */
  /* 바깥 사이트 장은 그 장에 왔을 때 읽는다. 미리 읽으면 그 사이트가 입력칸에 focus() 를 걸 때 덱이 그 장으로 튀어 버린다(2026-10-02 실측 · v0-indp 비밀번호 칸) */
  if(/^https?:/.test(s[0])){f.dataset.src=s[0];}else{f.src=s[0];if(i>0)f.loading='lazy';}
+ /* 바깥 사이트가 읽히면서 키보드 초점을 가져가면(입력칸 focus) 방향키가 덱에 안 온다 → 읽힌 직후 한 번만 초점을 덱으로 되돌린다(발표자가 프레임 안을 누른 뒤에는 그대로 둔다) */
+ f.addEventListener('load',function(){setTimeout(function(){if(document.activeElement===f){f.blur();window.focus();}},400);});
  if(s[2]==='mobile'){
   var ph=document.createElement('div');ph.className='phone';ph.appendChild(f);
   var sd=document.createElement('div');sd.className='side';
@@ -85,7 +87,8 @@ var slides=[].slice.call(deck.querySelectorAll('.slide'));
 var navs=[].slice.call(nav.querySelectorAll('.ns'));
 function setActive(i){cur=i;cap.innerHTML='<b>'+(i+1)+'</b> / '+N;
  navs.forEach(function(n,k){n.setAttribute('aria-current',k===i?'true':'false')});
- var f=slides[i].querySelector('iframe');if(f&&f.dataset.src){f.src=f.dataset.src;delete f.dataset.src;}}
+ /* 바깥 사이트 장은 스크롤이 그 장에 멈춘 뒤에 읽는다(지나가는 길에 읽으면 그 사이트가 덱을 끌어당길 수 있다) */
+ clearTimeout(setActive.t);setActive.t=setTimeout(function(){if(cur!==i)return;var f=slides[i].querySelector('iframe');if(f&&f.dataset.src){f.src=f.dataset.src;delete f.dataset.src;}},450);}
 function go(i){i=Math.max(0,Math.min(N-1,i));slides[i].scrollIntoView({behavior:'smooth'});setActive(i);}
 if('IntersectionObserver' in window){
  var io=new IntersectionObserver(function(es){
