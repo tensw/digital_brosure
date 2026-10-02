@@ -80,9 +80,10 @@ var deck=document.getElementById('deck'),nav=document.getElementById('nav'),cap=
 var N=SLIDES.length,cur=0;
 SLIDES.forEach(function(s,i){
  var sec=document.createElement('section');sec.className='slide'+(s[2]==='mobile'?' mobile':'');
- var f=document.createElement('iframe');f.src=s[0];f.title=s[1];
+ var f=document.createElement('iframe');f.title=s[1];
  f.setAttribute('allow','geolocation *; fullscreen');     /* 독립잇다는 위치 권한을 쓴다. 프레임에 권한을 넘겨야 브라우저가 묻는다 */
- if(i>0)f.loading='lazy';
+ /* 바깥 사이트 장은 그 장에 왔을 때 읽는다. 미리 읽으면 그 사이트가 입력칸에 focus() 를 걸 때 덱이 그 장으로 튀어 버린다(2026-10-02 실측 · v0-indp 비밀번호 칸) */
+ if(/^https?:/.test(s[0])){f.dataset.src=s[0];}else{f.src=s[0];if(i>0)f.loading='lazy';}
  if(s[2]==='mobile'){
   var ph=document.createElement('div');ph.className='phone';ph.appendChild(f);
   var sd=document.createElement('div');sd.className='side';
@@ -100,7 +101,8 @@ SLIDES.forEach(function(s,i){
 var slides=[].slice.call(deck.querySelectorAll('.slide'));
 var navs=[].slice.call(nav.querySelectorAll('.ns'));
 function setActive(i){cur=i;cap.innerHTML='<b>'+(i+1)+'</b> / '+N;
- navs.forEach(function(n,k){n.setAttribute('aria-current',k===i?'true':'false')});}
+ navs.forEach(function(n,k){n.setAttribute('aria-current',k===i?'true':'false')});
+ var f=slides[i].querySelector('iframe');if(f&&f.dataset.src){f.src=f.dataset.src;delete f.dataset.src;}}
 function go(i){i=Math.max(0,Math.min(N-1,i));slides[i].scrollIntoView({behavior:'smooth'});setActive(i);}
 if('IntersectionObserver' in window){
  var io=new IntersectionObserver(function(es){
